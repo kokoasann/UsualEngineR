@@ -160,12 +160,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="d3dx12.h" />
+    <ClInclude Include="Debug\Debug.h" />
+    <ClInclude Include="Debug\DebugLog.h" />
+    <ClInclude Include="Debug\DebugSwitch.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\GameObjectManager.h" />
+    <ClInclude Include="Graphics\Animation.h" />
+    <ClInclude Include="Graphics\AnimationClip.h" />
+    <ClInclude Include="Graphics\AnimationPlayController.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\ConstantBuffer.h" />
     <ClInclude Include="Graphics\DescriptorHeap.h" />
     <ClInclude Include="Graphics\DescriptorHeap_inline.h" />
+    <ClInclude Include="Graphics\Font.h" />
     <ClInclude Include="Graphics\GraphicsEngine.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\IShaderResource.h" />
@@ -196,15 +203,23 @@
     <ClInclude Include="tkFile\TkmFile.h" />
     <ClInclude Include="tkFile\TksFile.h" />
     <ClInclude Include="UsualEngine.h" />
+    <ClInclude Include="util\GameTime.h" />
     <ClInclude Include="util\Stopwatch.h" />
     <ClInclude Include="util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Debug\Debug.cpp" />
+    <ClCompile Include="Debug\DebugLog.cpp" />
+    <ClCompile Include="Debug\DebugSwitch.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\GameObjectManager.cpp" />
+    <ClCompile Include="Graphics\Animation.cpp" />
+    <ClCompile Include="Graphics\AnimationClip.cpp" />
+    <ClCompile Include="Graphics\AnimationPlayController.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\ConstantBuffer.cpp" />
     <ClCompile Include="Graphics\DescriptorHeap.cpp" />
+    <ClCompile Include="Graphics\Font.cpp" />
     <ClCompile Include="Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Material.cpp" />
@@ -236,6 +251,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="util\GameTime.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

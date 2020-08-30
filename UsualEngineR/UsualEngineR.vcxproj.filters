@@ -112,6 +112,30 @@
     <ClInclude Include="util\Util.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="Debug\Debug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug\DebugLog.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug\DebugSwitch.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="util\GameTime.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Font.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\AnimationClip.h">
+      <Filter>Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\AnimationPlayController.h">
+      <Filter>Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Animation.h">
+      <Filter>Graphics\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -202,6 +226,30 @@
     <ClCompile Include="GameObject\GameObjectManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Debug\DebugLog.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\DebugSwitch.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\Debug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="util\GameTime.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Font.cpp">
+      <Filter>Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\AnimationClip.cpp">
+      <Filter>Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\AnimationPlayController.cpp">
+      <Filter>Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Animation.cpp">
+      <Filter>Graphics\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -230,6 +278,12 @@
     </Filter>
     <Filter Include="GameObject">
       <UniqueIdentifier>{62e44687-e3a6-425f-8c8c-8657808b1e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{fa3988c7-3412-4ffc-aa80-217e33b3ddf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation">
+      <UniqueIdentifier>{93b527c0-02e8-409d-acb6-0e8d4be950ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

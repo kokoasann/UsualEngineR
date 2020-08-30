@@ -3,7 +3,7 @@
  */
 #pragma once
 
-namespace UsualEngine
+namespace UER
 {
 	class Util {
 	public:

@@ -2,8 +2,10 @@
 #include "aaa"
 #include "bnbb"
 
+CVector3
 stdafx
 “ì–³ˆ¢–í‘É•§
 ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ 
 ŒÜ‘Ÿ˜ZäD
 ˆ¢•@‹©Š«
+CVector3
