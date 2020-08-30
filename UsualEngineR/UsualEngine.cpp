@@ -23,15 +23,24 @@ namespace UER
 		for (int i = 0; i < GamePad::CONNECT_PAD_MAX; i++) {
 			g_pad[i] = &m_pad[i];
 		}
+
+		m_pGameObjectManeger = GameObjectManager::Get();
 	}
 	void UsualEngine::GameLoop()
 	{
 		// ここからゲームループ。
 		while (DispatchWindowMessage())
 		{
+			Stopwatch sw;
+			sw.Start();
+
 			//レンダリング開始。
 			g_engine->BeginFrame();
-			/*
+
+
+			/*#
+			###	RayTracingの奴の残留思念。
+			###
 			if (isInit == false) {
 				//g_graphicsEngine->RegistGeometoryToRaytracingEngine(model);
 				//g_graphicsEngine->RegistGeometoryToRaytracingEngine(bgModel);
@@ -46,11 +55,18 @@ namespace UER
 				//g_graphicsEngine->DispatchRaytracing(renderContext);
 			}
 			*/
+
+			m_pGameObjectManeger->Update();
+
+
 			//////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
 			//////////////////////////////////////
 			//レンダリング終了。
 			g_engine->EndFrame();
+
+			auto frameTime = sw.Stop();
+			gameTime()->PushFrameDeltaTime(frameTime);
 		}
 	}
 	void UsualEngine::BeginFrame()

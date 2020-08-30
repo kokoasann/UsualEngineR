@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
+#include "util/Util.h"
+
 namespace UER
 {
 	struct DeadData

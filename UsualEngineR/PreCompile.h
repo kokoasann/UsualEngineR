@@ -61,6 +61,10 @@
 
 #include "util/Util.h"
 #include "util/GameTime.h"
+#include "util/Stopwatch.h"
+
+#include "GameObject/GameObject.h"
+#include "GameObject/GameObjectManager.h"
 
 #if DEBUG_FUNC
 //#include "Debug/DebugPopup.h"

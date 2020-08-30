@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HID/GamePad.h"
-
+#include "GameObject/GameObjectManager.h"
 
 namespace UER
 {
@@ -31,7 +31,7 @@ namespace UER
 	private:
 		GraphicsEngine* m_graphicsEngine = nullptr;		//グラフィックエンジン。
 		GamePad m_pad[GamePad::CONNECT_PAD_MAX];		//ゲームパッド。
-		
+		GameObjectManager* m_pGameObjectManeger = nullptr;			//ゲームオブジェクトマネージャー
 	};
 	
 	extern UsualEngine* g_engine;	//TKエンジン。

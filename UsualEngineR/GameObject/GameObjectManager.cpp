@@ -27,6 +27,7 @@ namespace UER
 			{
 				if (go->IsCreatedInGameObjedtManager())
 				{
+					go->Release();
 					delete go;
 				}
 			}
@@ -34,6 +35,7 @@ namespace UER
 
 		for (auto go : m_trashBox)
 		{
+			go->Release();
 			delete go;
 		}
 	}

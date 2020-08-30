@@ -22,9 +22,6 @@
     <ClInclude Include="Graphics\StructuredBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Texture.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\VertexBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -142,6 +139,9 @@
     <ClInclude Include="Debug\DebugPopup.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Texture.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -158,9 +158,6 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\StructuredBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Texture.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\VertexBuffer.cpp">
@@ -261,6 +258,12 @@
     </ClCompile>
     <ClCompile Include="Debug\DebugPopup.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Texture.cpp">
+      <Filter>Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="util\Stopwatch.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
