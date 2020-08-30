@@ -1,0 +1,9 @@
+#pragma once
+#include "aaa"
+#include "bnbb"
+
+stdafx
+“ì–³ˆ¢–í‘É•§
+‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ 
+ŒÜ‘Ÿ˜ZäD
+ˆ¢•@‹©Š«
