@@ -1,5 +1,8 @@
 #coding:utf-8
 
+#一括でnamespaceを付けるためだけのスクリプト
+#多分もういらない
+
 import glob
 import os
 import chardet

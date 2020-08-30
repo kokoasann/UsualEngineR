@@ -1,5 +1,8 @@
 #coding:utf-8
 
+#TKEngine仕様をUsualEngine仕様に変換!
+#多分もう使わない
+
 import glob
 import os
 import chardet

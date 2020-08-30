@@ -1,5 +1,8 @@
 #coding:utf-8
 
+#IntelliSenseじゃ反応してくれないようなモノのリネーム等を一括で行うスクリプト
+#舛添(巻き添え)に注意
+
 import glob
 import os
 import chardet
