@@ -162,6 +162,7 @@
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="Debug\Debug.h" />
     <ClInclude Include="Debug\DebugLog.h" />
+    <ClInclude Include="Debug\DebugPopup.h" />
     <ClInclude Include="Debug\DebugSwitch.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\GameObjectManager.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="Resource\IResource.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="tkFile\TkaFile.h" />
     <ClInclude Include="tkFile\TkmFile.h" />
@@ -210,6 +212,7 @@
   <ItemGroup>
     <ClCompile Include="Debug\Debug.cpp" />
     <ClCompile Include="Debug\DebugLog.cpp" />
+    <ClCompile Include="Debug\DebugPopup.cpp" />
     <ClCompile Include="Debug\DebugSwitch.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\GameObjectManager.cpp" />
@@ -240,6 +243,7 @@
     <ClCompile Include="math\Math.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Vector.cpp" />
+    <ClCompile Include="Resource\IResource.cpp" />
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="tkFile\TkaFile.cpp" />
     <ClCompile Include="tkFile\TkmFile.cpp" />

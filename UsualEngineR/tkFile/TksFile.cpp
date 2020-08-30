@@ -5,7 +5,7 @@
 namespace UER
 {
 	
-	void TksFile::Load(const char* filePath)
+	void TksFile::LoadImplement(const char* filePath)
 	{
 		auto fp = fopen(filePath, "rb");
 		if (fp == nullptr) {

@@ -11,7 +11,8 @@
 namespace UER
 {
 	
-	class TkaFile {
+	class TkaFile :public IResource
+	{
 	public:
 		/// <summary>
 		/// アニメーションクリップのヘッダー。
@@ -40,7 +41,7 @@ namespace UER
 		/// 読み込み処理。
 		/// </summary>
 		/// <param name="filePath"></param>
-		void Load(const char* filePath) ;
+		void LoadImplement(const char* filePath)  override;
 		/// <summary>
 		/// アニメーションイベントにクエリを行う。
 		/// </summary>

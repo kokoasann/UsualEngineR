@@ -50,17 +50,29 @@
 
 #include "system/system.h"
 
+#include "Resource/IResource.h"
+#include "Animation.h"
+
+#include "Skeleton.h"
 #include "Sprite.h"
 #include "Model.h"
 #include "HID/GamePad.h"
 #include "Font.h"
 
+#include "util/Util.h"
 #include "util/GameTime.h"
 
 #if DEBUG_FUNC
+//#include "Debug/DebugPopup.h"
 #include "Debug/Debug.h"
 #include "Debug/DebugSwitch.h"
+
 #endif
 
-const UINT FRAME_BUFFER_W = 1280;				//フレームバッファの幅。
-const UINT FRAME_BUFFER_H = 720;				//フレームバッファの高さ。
+namespace UER
+{
+	static const UINT FRAME_BUFFER_W = 1280;				//フレームバッファの幅。
+	static const UINT FRAME_BUFFER_H = 720;				//フレームバッファの高さ。
+	static const int MRT_MAX = 8;					//MRTの最大数。
+	static const int MAX_BONE = 512;				//ボーンの最大数。
+}

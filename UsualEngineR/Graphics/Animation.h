@@ -132,7 +132,8 @@ namespace UER{
 		{
 			if (nextClip->IsLoaded() == false) {
 				//アニメーションクリップがロードされていない。
-				TK_WARNING_MESSAGE_BOX("警告 : アニメーションクリップがロードされていません。");
+				//TK_WARNING_MESSAGE_BOX("警告 : アニメーションクリップがロードされていません。");
+				MessageBoxA(nullptr, "警告 : アニメーションクリップがロードされていません。", "WARNING", MB_OK);
 				return;
 			}
 			int index = GetLastAnimationControllerIndex();

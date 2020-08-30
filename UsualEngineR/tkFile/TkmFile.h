@@ -16,7 +16,8 @@ namespace UER
 	/// <summary>
 	/// tkmファイルクラス。
 	/// </summary>
-	class  TkmFile {
+	class  TkmFile :public IResource
+	{
 	public:
 		/// <summary>
 		/// マテリアル
@@ -71,7 +72,7 @@ namespace UER
 		/// 3Dモデルをロード。
 		/// </summary>
 		/// <param name="filePath">ファイルパス。</param>
-		void Load(const char* filePath);
+		void LoadImplement(const char* filePath) override;
 			
 		/// <summary>
 		/// メッシュパーツに対してクエリを行う。

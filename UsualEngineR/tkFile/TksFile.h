@@ -11,7 +11,8 @@
 namespace UER
 {
 	
-	class TksFile {
+	class TksFile :public IResource
+	{
 	public:
 		/// <summary>
 		/// ボーン。
@@ -27,7 +28,7 @@ namespace UER
 		/// TKSファイルをロードする。
 		/// </summary>
 		/// <param name="filePath"></param>
-		void Load(const char* filePath);
+		void LoadImplement(const char* filePath) override;
 		/// <summary>
 		/// ボーンに対してクエリを行う。
 		/// </summary>

@@ -54,8 +54,8 @@ namespace UER
 		
 
 
-		auto& pe = usualEngine()->GetGraphicsEngine()->GetPostEffect();
-		pe.Render();
+		//auto& pe = usualEngine()->GetGraphicsEngine()->GetPostEffect();
+		//pe.Render();
 
 		UpdatePostRender();
 
@@ -159,7 +159,7 @@ namespace UER
 
 	void GameObjectManager::UpdatePreRender()
 	{
-		usualEngine()->GetGraphicsEngine()->PreRenderDraw();
+		//usualEngine()->GetGraphicsEngine()->PreRenderDraw();
 	}
 
 	void GameObjectManager::UpdateRender()

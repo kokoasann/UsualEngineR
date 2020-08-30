@@ -297,7 +297,7 @@ namespace UER
 			}
 		}
 	}
-	void TkmFile::Load(const char* filePath)
+	void TkmFile::LoadImplement(const char* filePath)
 	{
 		FILE* fp = fopen(filePath, "rb");
 		if (fp == nullptr) {

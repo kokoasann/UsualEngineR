@@ -1,5 +1,5 @@
 /*!
- *@brief	ƒAƒjƒ[ƒVƒ‡ƒ“ƒNƒŠƒbƒvB
+ *@brief	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒªãƒƒãƒ—ã€‚
  */
 
 #include "PreCompile.h"
@@ -16,11 +16,11 @@ namespace UER {
 		m_tkaFile.Load(filePath);
 		if(m_tkaFile.IsLoaded() == false){
 		
-			TK_WARNING_MESSAGE_BOX_W(L"ƒAƒjƒ[ƒVƒ‡ƒ“ƒNƒŠƒbƒv‚ÌƒI[ƒvƒ“‚É¸”s‚µ‚Ü‚µ‚½Bƒtƒ@ƒCƒ‹ƒpƒX : %s\n"
-									 L"Œ´ˆö‚Æ‚µ‚ÄA‰º‹L‚Ì‚Q“_‚ªl‚¦‚ç‚ê‚Ü‚·B\n"
-									 L"‡@ ƒtƒ@ƒCƒ‹ƒpƒX‚ªŠÔˆá‚¦‚Ä‚¢‚éB\n"
-									 L"‡A AssetsƒtƒHƒ‹ƒ_‚Ì’†‚Éƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢B\n"
-									 L"‚±‚Ì‚Q“_‚ğŠm”F‚µ‚ÄA–â‘è‚ª‘¶İ‚µ‚È‚¢ê‡‚ÍAˆê“xVisualStudio‚Ìƒrƒ‹ƒh/ƒŠƒrƒ‹ƒh‚ğs‚Á‚Ä‚İ‚Ä‚­‚¾‚³‚¢B\n", filePath);
+			MessageBoxA(nullptr,"ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒªãƒƒãƒ—ã®ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ : %s\n"
+									 "åŸå› ã¨ã—ã¦ã€ä¸‹è¨˜ã®ï¼’ç‚¹ãŒè€ƒãˆã‚‰ã‚Œã¾ã™ã€‚\n"
+									 "â‘  ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãŒé–“é•ãˆã¦ã„ã‚‹ã€‚\n"
+									 "â‘¡ Assetsãƒ•ã‚©ãƒ«ãƒ€ã®ä¸­ã«ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„ã€‚\n"
+									 "ã“ã®ï¼’ç‚¹ã‚’ç¢ºèªã—ã¦ã€å•é¡ŒãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ã€ä¸€åº¦VisualStudioã®ãƒ“ãƒ«ãƒ‰/ãƒªãƒ“ãƒ«ãƒ‰ã‚’è¡Œã£ã¦ã¿ã¦ãã ã•ã„ã€‚\n", filePath,MB_OK);
 			
 			return;
 		}
@@ -28,12 +28,12 @@ namespace UER {
 
 	void CAnimationClip::BuildKeyFramesAndAnimationEvents()
 	{
-		//ƒAƒjƒ[ƒVƒ‡ƒ“ƒCƒxƒ“ƒg‚Ì\’zB
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆã®æ§‹ç¯‰ã€‚
 		auto numAnimEvent = m_tkaFile.GetNumAnimationEvent();
 		if (numAnimEvent > 0) {
 			m_animationEvent = std::make_unique<CAnimationEvent[]>(numAnimEvent);
 			int eventNo = 0;
-			m_tkaFile.QueryAnimationEvents([&](const CTkaFile::AnimationEvent & animEvent) {
+			m_tkaFile.QueryAnimationEvents([&](const TkaFile::AnimationEvent & animEvent) {
 				static wchar_t wEventName[256];
 
 				mbstowcs(wEventName, animEvent.eventName.c_str(), 255);
@@ -43,12 +43,12 @@ namespace UER {
 				});
 
 		}
-		//ƒL[ƒtƒŒ[ƒ€î•ñ‚Ì\’zB
+		//ã‚­ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ æƒ…å ±ã®æ§‹ç¯‰ã€‚
 		m_keyframes.reserve(m_tkaFile.GetNumKeyFrame());
-		m_tkaFile.QueryKeyFrames([&](const CTkaFile::KeyFrame & tkaKeyFrame) {
+		m_tkaFile.QueryKeyFrames([&](const TkaFile::KeyFrame & tkaKeyFrame) {
 			auto keyframe = std::make_unique<KeyFrame>();
 			keyframe->boneIndex = tkaKeyFrame.boneIndex;
-			keyframe->transform = CMatrix::Identity;
+			keyframe->transform = Matrix::Identity;
 			keyframe->time = tkaKeyFrame.time;
 			for (auto j = 0; j < 4; j++) {
 				keyframe->transform.m[j][0] = tkaKeyFrame.transform[j].x;
@@ -57,7 +57,7 @@ namespace UER {
 			}
 			m_keyframes.push_back(std::move(keyframe));
 			});
-		//ƒ{[ƒ“ƒCƒ“ƒfƒbƒNƒX‚²‚Æ‚ÌƒL[ƒtƒŒ[ƒ€‚Ì˜AŒ‹ƒŠƒXƒg‚ğì¬‚·‚éB
+		//ãƒœãƒ¼ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã”ã¨ã®ã‚­ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã®é€£çµãƒªã‚¹ãƒˆã‚’ä½œæˆã™ã‚‹ã€‚
 		m_keyFramePtrListArray.resize(MAX_BONE);
 		for (auto& keyframe : m_keyframes) {
 			m_keyFramePtrListArray[keyframe->boneIndex].push_back(keyframe.get());

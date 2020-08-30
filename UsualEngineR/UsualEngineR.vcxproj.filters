@@ -136,6 +136,12 @@
     <ClInclude Include="Graphics\Animation.h">
       <Filter>Graphics\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Resource\IResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug\DebugPopup.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -250,6 +256,12 @@
     <ClCompile Include="Graphics\Animation.cpp">
       <Filter>Graphics\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Resource\IResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\DebugPopup.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -284,6 +296,9 @@
     </Filter>
     <Filter Include="Graphics\Animation">
       <UniqueIdentifier>{93b527c0-02e8-409d-acb6-0e8d4be950ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{d2342c2f-a1ae-416c-a955-ac0ef1398d8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
