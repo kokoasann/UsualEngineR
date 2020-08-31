@@ -271,6 +271,8 @@ namespace UER
 		Camera m_camera2D;						//2Dカメラ。
 		Camera m_camera3D;						//3Dカメラ。
 		RaytracingEngine m_raytracingEngine;	//レイトレエンジン。
+
+		bool m_isEnableRaytracing = false;
 	};
 	extern GraphicsEngine* g_graphicsEngine;	//グラフィックスエンジン
 	extern Camera* g_camera2D;					//2Dカメラ。

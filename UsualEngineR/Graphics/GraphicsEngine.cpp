@@ -170,6 +170,12 @@ namespace UER
 	
 		g_camera2D = &m_camera2D;
 		g_camera3D = &m_camera3D;
+
+		//レイトレ使える~?CHECK!!
+		D3D12_FEATURE_DATA_D3D12_OPTIONS5 feature;
+		m_d3dDevice->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS5, &feature, sizeof(feature));
+		m_isEnableRaytracing = feature.RaytracingTier == D3D12_RAYTRACING_TIER_1_0;
+
 		//
 		g_graphicsEngine = this;
 	

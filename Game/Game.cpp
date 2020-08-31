@@ -9,12 +9,24 @@ void Game::OnDestroy()
 {
 }
 
+void Game::Awake()
+{
+}
+
 bool Game::Start()
 {
 	return true;
 }
 
+void Game::PreUpdate()
+{
+}
+
 void Game::Update()
+{
+}
+
+void Game::PostUpdate()
 {
 }
 
