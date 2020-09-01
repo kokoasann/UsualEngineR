@@ -303,5 +303,16 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{d2342c2f-a1ae-416c-a955-ac0ef1398d8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{904ff22b-df7f-4e7d-ab4a-35e19f0793e4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="dxcompiler.dll">
+      <Filter>DLL</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="dxil.dll">
+      <Filter>DLL</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
