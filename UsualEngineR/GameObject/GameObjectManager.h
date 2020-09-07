@@ -171,7 +171,7 @@ namespace UER
 	/// <param name="isTakeTrush">Žg‚¢‚Ü‚í‚µ‚·‚é</param>
 	/// <returns></returns>
 	template<class T>
-	static T* NewGO(int prio, const char* name="",bool isTakeTrush=true)
+	static T* NewGO(int prio, const char* name="",bool isTakeTrush=false)
 	{
 		return GameObjectManager::Get()->NewGameObject<T>(prio, name, isTakeTrush);
 	}

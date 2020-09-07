@@ -15,7 +15,7 @@ namespace UER
 			m_isActiveGO = true;
 			m_nameGO = 0;
 			m_prioGO = 0;
-			m_isTrashTakeGO = true;
+			m_isTrashTakeGO = false;
 		}
 
 		virtual void Release() = 0;

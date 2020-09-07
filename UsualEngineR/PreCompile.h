@@ -56,6 +56,7 @@
 #include "Skeleton.h"
 #include "Sprite.h"
 #include "Model.h"
+
 #include "HID/GamePad.h"
 #include "Font.h"
 
@@ -65,6 +66,8 @@
 
 #include "GameObject/GameObject.h"
 #include "GameObject/GameObjectManager.h"
+
+#include "ModelRender.h"
 
 #if DEBUG_FUNC
 //#include "Debug/DebugPopup.h"

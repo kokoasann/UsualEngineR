@@ -51,7 +51,7 @@ namespace UER
 		sprintf(str, "%.3f\n", t);
 		OutputDebugString(str);*/
 
-		//UpdateRender();
+		UpdateRender();
 		UpdatePreRender();
 		
 

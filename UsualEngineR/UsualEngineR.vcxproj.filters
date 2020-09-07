@@ -142,6 +142,9 @@
     <ClInclude Include="Graphics\Texture.h">
       <Filter>Graphics\2D</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\ModelRender.h">
+      <Filter>Graphics\3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -264,6 +267,9 @@
     </ClCompile>
     <ClCompile Include="util\Stopwatch.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\ModelRender.cpp">
+      <Filter>Graphics\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

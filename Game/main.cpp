@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 
-
+#include "Game.h"
 
 
 const int NUM_DIRECTIONAL_LIGHT = 4;	//ディレクションライトの数。
@@ -62,6 +62,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	bool isInit = false;
 	
+	NewGO<Game>(0);
+
 	g_engine->GameLoop();
 	
 	return 0;

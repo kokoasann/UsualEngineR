@@ -18,6 +18,14 @@ namespace UER
 		mbstowcs(wfxFilePath, initData.m_fxFilePath, 256);
 	
 		m_tkmFile.Load(initData.m_tkmFilePath);
+
+		if (initData.m_tksFilePath)
+		{
+			m_skeleton.Init(initData.m_tksFilePath);
+			m_skeleton.BuildBoneMatrices();
+			BindSkeleton(m_skeleton);
+		}
+
 		m_meshParts.InitFromTkmFile(
 			m_tkmFile, 
 			wfxFilePath, 
@@ -28,6 +36,8 @@ namespace UER
 			initData.m_expandShaderResoruceView
 		);
 	
+		
+
 		UpdateWorldMatrix(g_vec3Zero, g_quatIdentity, g_vec3One);
 	}
 	

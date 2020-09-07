@@ -18,9 +18,11 @@ namespace UER
 		const char* m_vsEntryPointFunc = "VSMain";	//頂点シェーダーのエントリーポイント。
 		const char* m_psEntryPointFunc = "PSMain";	//ピクセルシェーダーのエントリーポイント。
 		const char* m_fxFilePath = nullptr;			//.fxファイルのファイルパス。
+		const char* m_tksFilePath = nullptr;		//tksファイルパス。
 		void* m_expandConstantBuffer = nullptr;		//ユーザー拡張の定数バッファ。
 		int m_expandConstantBufferSize = 0;			//ユーザー拡張の定数バッファのサイズ。
 		IShaderResource* m_expandShaderResoruceView = nullptr;	//ユーザー拡張のシェーダーリソース。
+
 	};
 	/// <summary>
 	/// モデルクラス。
@@ -70,6 +72,11 @@ namespace UER
 		void QueryMeshs(std::function<void(const SMesh& mesh)> queryFunc)
 		{
 			m_meshParts.QueryMeshs(queryFunc);
+		}
+
+		Skeleton* GetSkelton()
+		{
+			return &m_skeleton;
 		}
 	private:
 	

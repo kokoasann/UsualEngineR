@@ -181,6 +181,7 @@
     <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\MeshParts.h" />
     <ClInclude Include="Graphics\Model.h" />
+    <ClInclude Include="Graphics\ModelRender.h" />
     <ClInclude Include="Graphics\PipelineState.h" />
     <ClInclude Include="Graphics\RaytracingEngine.h" />
     <ClInclude Include="Graphics\RenderContext.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\MeshParts.cpp" />
     <ClCompile Include="Graphics\Model.cpp" />
+    <ClCompile Include="Graphics\ModelRender.cpp" />
     <ClCompile Include="Graphics\PipelineState.cpp" />
     <ClCompile Include="Graphics\RaytracingEngine.cpp" />
     <ClCompile Include="Graphics\RenderTarget.cpp" />

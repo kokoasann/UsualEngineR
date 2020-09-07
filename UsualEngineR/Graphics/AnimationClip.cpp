@@ -9,6 +9,7 @@ namespace UER {
 
 	CAnimationClip::~CAnimationClip()
 	{
+		
 	}
 
 	void CAnimationClip::Load(const char* filePath)
