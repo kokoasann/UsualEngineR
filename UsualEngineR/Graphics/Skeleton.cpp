@@ -125,14 +125,27 @@ namespace UER
 	void Skeleton::Update(const Matrix& mWorld)
 	{
 		//ワールド行列を構築していく
-		for (auto& bone : m_bones) {
-			if (bone->GetParentBoneNo() != -1) {
-				continue;
+		if (m_isPlayAnimation)
+		{
+			//ボーン行列をルートボーンの空間からワールド空間を構築していく。
+			for (auto& bone : m_bones) {
+				Matrix mBoneWorld;
+				Matrix localMatrix = bone->GetLocalMatrix();
+				//親の行列とローカル行列を乗算して、ワールド行列を計算する。
+				mBoneWorld = localMatrix * mWorld;
+				bone->SetWorldMatrix(mBoneWorld);
 			}
-			//ルート。
-			UpdateBoneWorldMatrix(*bone, mWorld);
 		}
-	
+		else
+		{
+			for (auto& bone : m_bones) {
+				if (bone->GetParentBoneNo() != -1) {
+					continue;
+				}
+				//ルート。
+				UpdateBoneWorldMatrix(*bone, mWorld);
+			}
+		}
 		//ボーン行列を計算。
 		int boneNo = 0;
 		for (auto& bonePtr : m_bones) {

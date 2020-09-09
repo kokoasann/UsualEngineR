@@ -11,6 +11,7 @@ void Game::OnDestroy()
 
 void Game::Awake()
 {
+	g_camera3D->SetPosition({ 0,0,500 });
 	ModelInitData mid;
 	mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
@@ -25,6 +26,7 @@ void Game::Awake()
 	m_animlist[0] = std::make_unique<CAnimationClip>();
 	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");
 	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[0]->SetLoopFlag(true);
 	
 	m_model->InitAnimation(m_animlist,1);
 	m_model->Play(0);

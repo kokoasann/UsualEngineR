@@ -46,7 +46,7 @@ namespace UER
 		Matrix mBias;
 	//todo	if (enUpdateAxis == enFbxUpAxisZ) {
 			//Z-up
-			mBias.MakeRotationX(Math::PI * -0.5f);
+			//mBias.MakeRotationX(Math::PI * -0.5f);
 	//	}
 		Matrix mTrans, mRot, mScale;
 		mTrans.MakeTranslation(pos);

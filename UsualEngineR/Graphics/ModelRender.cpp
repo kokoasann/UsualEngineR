@@ -19,7 +19,9 @@ namespace UER
 	}
 	void ModelRender::InitAnimation(const std::vector<CAnimationClipPtr> &anim, int animNum)
 	{
+		auto ske = m_model.GetSkelton();
 		m_animation.Init(*m_model.GetSkelton(), anim);
+		ske->SetPlayFlag(true);
 	}
 	void ModelRender::Awake()
 	{
@@ -27,8 +29,10 @@ namespace UER
 	void ModelRender::Update()
 	{
 		float dtime = gameTime()->GetDeltaTime();
-		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 		m_animation.Progress(dtime);
+		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		
+		m_model.GetSkelton()->Update(m_model.GetWorldMatrix());
 	}
 	void ModelRender::Render()
 	{

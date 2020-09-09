@@ -245,6 +245,15 @@ namespace UER
 		/// <param name="parentMatrix">親のボーンのワールド行列。</param>
 		static 	void UpdateBoneWorldMatrix(Bone& bone, const Matrix& parentMatrix);
 	
+
+		/// <summary>
+		/// 再生しているかどうかのフラグの設定。
+		/// </summary>
+		/// <param name="b"></param>
+		void SetPlayFlag(bool b)
+		{
+			m_isPlayAnimation = b;
+		}
 	private:
 		TksFile m_tksFile;								//TKSファイル。
 		static const int BONE_MAX = 512;				//ボーンの最大数。
@@ -252,6 +261,8 @@ namespace UER
 		std::vector<BonePtr>	m_bones;				//ボーンの配列。
 		std::unique_ptr<Matrix[]>	m_boneMatrixs;		//ボーン行列。
 		bool m_isInited = false;						//初期化済み？
+
+		bool m_isPlayAnimation = false;
 	};
 
 }

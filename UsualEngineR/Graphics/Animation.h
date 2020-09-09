@@ -57,6 +57,7 @@ namespace UER{
 			if (clipNo < m_animationClips.size()) {
 				PlayCommon(m_animationClips[clipNo], interpolateTime);
 			}
+			
 		}
 		/// <summary>
 		/// アニメーションクリップのループフラグを設定します。
@@ -153,6 +154,8 @@ namespace UER{
 			m_animationPlayController[index].SetInterpolateTime(interpolateTime);
 			m_interpolateTime = 0.0f;
 			m_interpolateTimeEnd = interpolateTime;
+
+			
 		}
 		/// <summary>
 		/// ローカルポーズの更新。
