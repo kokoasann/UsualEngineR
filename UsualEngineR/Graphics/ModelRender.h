@@ -38,6 +38,32 @@ namespace UER
 		{
 			m_animation.Play(animNum, interpolateTime);
 		}
+
+		void SetPosition(const Vector3& v)
+		{
+			m_position = v;
+		}
+		void SetScale(const Vector3& v)
+		{
+			m_scale = v;
+		}
+		void SetRotation(const Quaternion& v)
+		{
+			m_rotation = v;
+		}
+
+		const Vector3& GetPosition() const
+		{
+			return m_position;
+		}
+		const Vector3& GetScale() const
+		{
+			return m_scale;
+		}
+		const Quaternion& GetRotation() const
+		{
+			return m_rotation;
+		}
 	private:
 		Model m_model;
 		CAnimation m_animation;

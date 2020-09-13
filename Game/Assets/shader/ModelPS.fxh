@@ -22,6 +22,7 @@ sampler g_sampler : register(s0);
 //テクスチャなしプリミティブ描画用のピクセルシェーダー。
 float4 PSMain( SPSIn psIn ) : SV_Target0
 {
+	//return float4(0,0,0,1);
 	//法線を計算。
 	float3 normal = psIn.normal;
 	
@@ -31,9 +32,9 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
     float3 eyePos = {0,0,0};
 	float3 toEye = normalize(eyePos - psIn.worldPos);
 	//メタリックは固定。
-	float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
-	
-	for( int ligNo = 0; ligNo < NUM_DIRECTIONAL_LIGHT; ligNo++ ){
+	//float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
+	#if 0
+	for( int ligNo = 0; ligNo < 0; ligNo++ ){
 		//Disney
 		float NdotL = saturate( dot( normal, -directionalLight[ligNo].direction ));
 		
@@ -42,12 +43,13 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 		float3 spec = BRDF(-directionalLight[ligNo].direction, toEye, normal) * directionalLight[ligNo].color * metaric;
 		lig += (diffuse + spec) ;
 	}
+	#endif
 	//シンプルな環境光。
-	lig += ambientLight;
+	//lig += ambientLight;
 
 	//アルベドカラー
 	float4 albedoColor = g_texture.Sample(g_sampler, psIn.uv);
 	float4 finalColor = 1.0f;
-	finalColor.xyz = albedoColor.xyz * lig;
+	finalColor.xyz = albedoColor.xyz;// * lig;
 	return finalColor;
 }

@@ -273,7 +273,7 @@ namespace UER
 					fclose(texFileFp);
 				}
 				else {
-					MessageBoxA(nullptr, "テクスチャのロードに失敗しました。%s", "エラー", MB_OK);
+					MessageBoxW(nullptr, L"テクスチャのロードに失敗しました。%s", L"エラー", MB_OK);
 				}
 			}
 		};

@@ -39,21 +39,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
 
-	//////////////////////////////////////
-	// ここから初期化を行うコードを記述する。
-	//////////////////////////////////////
-
-	//3Dモデルを作成。
-	Model model, bgModel;
-	ModelInitData initData;
-
-	initData.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
-	initData.m_fxFilePath = "Assets/shader/NoAnimModel_PBR.fx";
-	
-	model.Init(initData);
-
-	initData.m_tkmFilePath = "Assets/modelData/bg/bg.tkm";
-	bgModel.Init(initData);
 
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！

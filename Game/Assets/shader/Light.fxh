@@ -14,4 +14,5 @@ cbuffer LightCb : register(b1){
 	float3 eyePos;					//カメラの視点。
 	float specPow;					//スペキュラの絞り。
 	float3 ambientLight;			//環境光。
+	int numDirectionLight;
 };
