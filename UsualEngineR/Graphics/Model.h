@@ -9,6 +9,12 @@ namespace UER
 {
 	
 	class IShaderResource;
+
+	enum EUpAxis
+	{
+		enUpAxisY,
+		enUpAxisZ,
+	};
 	
 	/// <summary>
 	/// モデルの初期化データ
@@ -22,8 +28,10 @@ namespace UER
 		void* m_expandConstantBuffer = nullptr;		//ユーザー拡張の定数バッファ。
 		int m_expandConstantBufferSize = 0;			//ユーザー拡張の定数バッファのサイズ。
 		IShaderResource* m_expandShaderResoruceView = nullptr;	//ユーザー拡張のシェーダーリソース。
-
+		EUpAxis m_upAxis = enUpAxisZ;
 	};
+
+	
 	/// <summary>
 	/// モデルクラス。
 	/// </summary>
@@ -74,16 +82,29 @@ namespace UER
 			m_meshParts.QueryMeshs(queryFunc);
 		}
 
+		/// <summary>
+		/// tkmFileからメッシュに対して問い合わせを行う。
+		/// </summary>
+		/// <param name="queryFunc">問い合わせ関数</param>
+		void QueryMeshsFromTkm(std::function<void(const TkmFile::SMesh& mesh)> queryFunc) const
+		{
+			m_tkmFile.QueryMeshParts(queryFunc);
+		}
+
 		Skeleton* GetSkelton()
 		{
 			return &m_skeleton;
 		}
+
+		
 	private:
 	
 		Matrix m_world;			//ワールド行列。
 		TkmFile m_tkmFile;		//tkmファイル。
 		Skeleton m_skeleton;	//スケルトン。
 		MeshParts m_meshParts;	//メッシュパーツ。
+
+		EUpAxis m_upAxis = enUpAxisZ;
 	};
 
 

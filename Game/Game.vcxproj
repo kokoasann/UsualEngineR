@@ -77,25 +77,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(ProjectDir);$(SolutionDir)$(SolutionName)\bulletPhysics\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(SolutionDir)$(SolutionName)\;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(ProjectDir);$(SolutionDir)$(SolutionName)\bulletPhysics\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(SolutionDir)$(SolutionName)\;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(ProjectDir);$(SolutionDir)$(SolutionName)\bulletPhysics\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(SolutionDir)$(SolutionName)\;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)$(SolutionName)\;$(SolutionDir)$(SolutionName)\Graphics\;$(ProjectDir);$(SolutionDir)$(SolutionName)\bulletPhysics\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(SolutionDir)$(SolutionName)\;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
@@ -178,6 +178,8 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Test\Test.h" />
+    <ClInclude Include="Test\ThreadTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -188,6 +190,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Test\Test.cpp" />
+    <ClCompile Include="Test\ThreadTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">

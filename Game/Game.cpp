@@ -19,6 +19,7 @@ void Game::Awake()
 	mid.m_psEntryPointFunc = "PSMain";
 	mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
 	mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
+	mid.m_upAxis = enUpAxisY;
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
@@ -37,6 +38,7 @@ void Game::Awake()
 	mid.m_psEntryPointFunc = "PSMain";
 	mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
 	mid.m_tksFilePath = nullptr;
+	mid.m_upAxis = enUpAxisZ;
 	m_test = NewGO<ModelRender>(0);
 	m_test->Init(mid);
 	m_test->SetPosition({ 0,0,0 });

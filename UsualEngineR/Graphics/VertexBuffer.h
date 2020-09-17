@@ -15,6 +15,9 @@ namespace UER
 		/// デストラクタ。
 		/// </summary>
 		~VertexBuffer();
+
+		void Release();
+
 		/// <summary>
 		/// 初期化。
 		/// </summary>

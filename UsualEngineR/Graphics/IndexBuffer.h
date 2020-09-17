@@ -13,6 +13,9 @@ namespace UER
 		/// デストラクタ。
 		/// </summary>
 		~IndexBuffer(); 
+
+		void Release();
+
 		/// <summary>
 		/// 初期化。
 		/// </summary>

@@ -1,0 +1,66 @@
+#include "stdafx.h"
+#include "XXX.h"
+
+
+XXX::XXX()
+{
+
+}
+
+XXX::~XXX()
+{
+
+}
+
+
+
+void XXX::Release()
+{
+
+}
+
+void XXX::OnDestroy()
+{
+
+}
+
+
+
+void XXX::Awake()
+{
+
+}
+
+bool XXX::Start()
+{
+	return true;
+}
+
+
+
+void XXX::PreUpdate()
+{
+
+}
+
+void XXX::Update()
+{
+
+}
+
+void XXX::PostUpdate()
+{
+
+}
+
+
+
+void XXX::Render()
+{
+
+}
+
+void XXX::PostRender()
+{
+
+}

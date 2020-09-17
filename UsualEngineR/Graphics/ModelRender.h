@@ -4,6 +4,7 @@
 
 namespace UER
 {
+	//
 	class ModelRender:public GameObject
 	{
 	public:
@@ -64,12 +65,23 @@ namespace UER
 		{
 			return m_rotation;
 		}
-	private:
-		Model m_model;
-		CAnimation m_animation;
 
-		Vector3 m_position = Vector3::Zero;
-		Vector3 m_scale = Vector3::One;
-		Quaternion m_rotation = Quaternion::Identity;
+		void SetIsRender(bool b)
+		{
+			m_isRender = b;
+		}
+		bool IsRender() const
+		{
+			return m_isRender;
+		}
+	private:
+		Model m_model;				//モデル
+		CAnimation m_animation;		//アニメーション
+
+		Vector3 m_position = Vector3::Zero;				//位置。
+		Vector3 m_scale = Vector3::One;					//大きさ
+		Quaternion m_rotation = Quaternion::Identity;	//回転。
+
+		bool m_isRender = false;	//レンダリングする?
 	};
 }

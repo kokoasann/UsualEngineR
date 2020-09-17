@@ -10,9 +10,12 @@ namespace UER
 	
 	IndexBuffer::~IndexBuffer()
 	{
-		if (m_indexBuffer) {
+		Release();
+	}
+	void IndexBuffer::Release()
+	{
+		if (m_indexBuffer)
 			m_indexBuffer->Release();
-		}
 	}
 	void IndexBuffer::Init(int size, int stride)
 	{

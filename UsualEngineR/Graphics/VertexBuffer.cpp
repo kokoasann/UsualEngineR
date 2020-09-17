@@ -8,9 +8,12 @@ namespace UER
 	
 	VertexBuffer::~VertexBuffer()
 	{
-		if (m_vertexBuffer) {
+		Release();
+	}
+	void VertexBuffer::Release()
+	{
+		if (m_vertexBuffer)
 			m_vertexBuffer->Release();
-		}
 	}
 	void VertexBuffer::Init(int size, int stride)
 	{

@@ -16,6 +16,8 @@ namespace UER
 	void ModelRender::Init(const ModelInitData& initdata)
 	{
 		m_model.Init(initdata);
+
+		m_isRender = true;
 	}
 	void ModelRender::InitAnimation(const std::vector<CAnimationClipPtr> &anim, int animNum)
 	{
@@ -36,6 +38,9 @@ namespace UER
 	}
 	void ModelRender::Render()
 	{
+		if (!m_isRender)
+			return;
+
 		auto& rc = g_graphicsEngine->GetRenderContext();
 		m_model.Draw(rc);
 	}

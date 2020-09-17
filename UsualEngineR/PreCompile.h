@@ -25,6 +25,9 @@
 #include <dxcapi.h>
 #include <atlbase.h>
 
+#include "btBulletDynamicsCommon.h"
+#include "BulletCollision\CollisionDispatch\btGhostObject.h"
+
 #include "d3dx12.h"
 #include "math/Math.h"
 #include "math/Vector.h"
@@ -53,9 +56,12 @@
 #include "Resource/IResource.h"
 #include "Animation.h"
 
+#include "tkFile/TkmFile.h"
+
 #include "Skeleton.h"
 #include "Sprite.h"
 #include "Model.h"
+#include "Primitive.h"
 
 #include "HID/GamePad.h"
 #include "Font.h"
@@ -64,10 +70,15 @@
 #include "util/GameTime.h"
 #include "util/Stopwatch.h"
 
+#include "Physics/Physics.h"
+#include "Physics/PhysicsStaticObject.h"
+#include "Physics/RigidBody.h"
+
 #include "GameObject/GameObject.h"
 #include "GameObject/GameObjectManager.h"
 
 #include "ModelRender.h"
+#include "Physics/CollisionAttr.h"
 
 #if DEBUG_FUNC
 //#include "Debug/DebugPopup.h"

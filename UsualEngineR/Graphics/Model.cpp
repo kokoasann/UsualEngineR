@@ -8,6 +8,8 @@ namespace UER
 	
 	void Model::Init(const ModelInitData& initData)
 	{
+		m_upAxis = initData.m_upAxis;
+
 		//内部のシェーダーをロードする処理が求めているのが
 		//wchar_t型の文字列なので、ここで変換しておく。
 		wchar_t wfxFilePath[256];
@@ -44,10 +46,10 @@ namespace UER
 	void Model::UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale)
 	{
 		Matrix mBias;
-	//todo	if (enUpdateAxis == enFbxUpAxisZ) {
+		if (m_upAxis == enUpAxisZ) {
 			//Z-up
-			//mBias.MakeRotationX(Math::PI * -0.5f);
-	//	}
+			mBias.MakeRotationX(Math::PI * -0.5f);
+		}
 		Matrix mTrans, mRot, mScale;
 		mTrans.MakeTranslation(pos);
 		mRot.MakeRotationFromQuaternion(rot);

@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "UsualEngine.h"
 #include "GraphicsEngine.h"
-
+#include "Physics/Physics.h"
 
 namespace UER
 {
@@ -13,6 +13,8 @@ namespace UER
 		if (m_graphicsEngine) {
 			delete m_graphicsEngine;
 		}
+		m_physicsWorld->Release();
+		delete m_physicsWorld;
 	}
 	void UsualEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
 	{
@@ -25,6 +27,9 @@ namespace UER
 		}
 
 		m_pGameObjectManeger = GameObjectManager::Get();
+
+		m_physicsWorld = new PhysicsWorld();
+		m_physicsWorld->Init();
 	}
 	void UsualEngine::GameLoop()
 	{
@@ -58,6 +63,7 @@ namespace UER
 
 			m_pGameObjectManeger->Update();
 
+			m_physicsWorld->Update();
 
 			//////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
