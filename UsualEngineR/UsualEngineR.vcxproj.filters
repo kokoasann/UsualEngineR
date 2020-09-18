@@ -378,6 +378,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{e55d18c9-e713-4371-96d1-859f4490e7a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{44c99fd7-e653-43aa-8759-f28eda8a05b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="dxcompiler.dll">
