@@ -3,6 +3,10 @@
 
 void ThreadTest::Release()
 {
+	if (m_thread.get() != nullptr)
+	{
+		m_thread->detach();
+	}
 }
 
 void ThreadTest::OnDestroy()
@@ -34,6 +38,7 @@ void ThreadTest::Update()
 	{
 		m_thread->detach();
 		m_thread.release();
+		m_thread = nullptr;
 		m_isEndThred = true;
 	}
 }

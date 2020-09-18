@@ -163,6 +163,14 @@ namespace UER
 			vec.y = _y;
 			vec.z = _z;
 		}
+
+		void Set(btVector3 v)
+		{
+			vec.x = v.x();
+			vec.y = v.y();
+			vec.z = v.z();
+		}
+
 		template<class TVector>
 		void Set(TVector& _v)
 		{

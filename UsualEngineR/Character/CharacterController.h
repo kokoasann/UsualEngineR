@@ -1,5 +1,5 @@
 /*!
-* @brief	ƒLƒƒƒ‰ƒNƒ^ƒRƒ“ƒgƒ[ƒ‰[B
+* @brief	ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã€‚
 */
 
 #pragma once
@@ -7,10 +7,10 @@
 #include "Physics/CapsuleCollider.h"
 #include "Physics/RigidBody.h"
 
-namespace UsualEngine
+namespace UER
 {
 	/*!
-	* @brief	ƒLƒƒƒ‰ƒNƒ^ƒRƒ“ƒgƒ[ƒ‰[B
+	* @brief	ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã€‚
 	*/
 	class CharacterController {
 	public:
@@ -22,74 +22,74 @@ namespace UsualEngine
 			RemoveRigidBoby();
 		}
 		/*!
-			* @brief	‰Šú‰»B
-			*@param[in]	radius		ƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[‚Ì”¼ŒaB
-			*@param[in]	height		ƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[‚Ì‚‚³B
-			*@param[in]	position	‰ŠúˆÊ’uB
+			* @brief	åˆæœŸåŒ–ã€‚
+			*@param[in]	radius		ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åŠå¾„ã€‚
+			*@param[in]	height		ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®é«˜ã•ã€‚
+			*@param[in]	position	åˆæœŸä½ç½®ã€‚
 			*/
-		void Init(float radius, float height, const CVector3& position, bool isUseRigidBody=true);
+		void Init(float radius, float height, const Vector3& position, bool isUseRigidBody=true);
 		/*!
-			* @brief	ÀsB
-			*@param[in]	deltaTime		Œo‰ßŠÔB’PˆÊ‚Í•bB
-			*@param[in, out]	moveSpeed		ˆÚ“®‘¬“xB“à•”‚Åd—Í‰Á‘¬‚ªŒvZ‚³‚êA‚»‚ÌŒ‹‰Ê‚ªmoveSpeed‚É”½‰f‚³‚ê‚Ü‚·B
-			*@return ˆÚ“®Œã‚ÌƒLƒƒƒ‰ƒNƒ^[‚ÌÀ•WB
+			* @brief	å®Ÿè¡Œã€‚
+			*@param[in]	deltaTime		çµŒéæ™‚é–“ã€‚å˜ä½ã¯ç§’ã€‚
+			*@param[in, out]	moveSpeed		ç§»å‹•é€Ÿåº¦ã€‚å†…éƒ¨ã§é‡åŠ›åŠ é€ŸãŒè¨ˆç®—ã•ã‚Œã€ãã®çµæœãŒmoveSpeedã«åæ˜ ã•ã‚Œã¾ã™ã€‚
+			*@return ç§»å‹•å¾Œã®ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®åº§æ¨™ã€‚
 			*/
-		const CVector3& Execute(float deltaTime, CVector3& moveSpeed);
+		const Vector3& Execute(float deltaTime, Vector3& moveSpeed);
 		/*!
-			* @brief	À•W‚ğæ“¾B
+			* @brief	åº§æ¨™ã‚’å–å¾—ã€‚
 			*/
-		const CVector3& GetPosition() const
+		const Vector3& GetPosition() const
 		{
 			return m_position;
 		}
 		/*!
-			* @brief	À•W‚ğİ’èB
+			* @brief	åº§æ¨™ã‚’è¨­å®šã€‚
 			*/
-		void SetPosition(const CVector3& pos)
+		void SetPosition(const Vector3& pos)
 		{
 			m_position = pos;
 		}
 
 		/*!
-			* @brief	ƒWƒƒƒ“ƒv’†‚©”»’è
+			* @brief	ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã‹åˆ¤å®š
 			*/
 		bool IsJump() const
 		{
 			return m_isJump;
 		}
 		/*!
-		* @brief	’n–Êã‚É‚¢‚é‚©”»’èB
+		* @brief	åœ°é¢ä¸Šã«ã„ã‚‹ã‹åˆ¤å®šã€‚
 		*/
 		bool IsOnGround() const
 		{
 			return m_isOnGround;
 		}
 		/*!
-		* @brief	ƒRƒ‰ƒCƒ_[‚ğæ“¾B
+		* @brief	ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’å–å¾—ã€‚
 		*/
 		CapsuleCollider* GetCollider()
 		{
 			return &m_collider;
 		}
 		/*!
-		* @brief	„‘Ì‚ğæ“¾B
+		* @brief	å‰›ä½“ã‚’å–å¾—ã€‚
 		*/
 		RigidBody* GetRigidBody()
 		{
 			return &m_rigidBody;
 		}
 		/*!
-		* @brief	„‘Ì‚ğ•¨—ƒGƒ“ƒWƒ“‚©‚çíœBB
+		* @brief	å‰›ä½“ã‚’ç‰©ç†ã‚¨ãƒ³ã‚¸ãƒ³ã‹ã‚‰å‰Šé™¤ã€‚ã€‚
 		*/
 		void RemoveRigidBoby();
 	private:
-		CVector3 			m_position = CVector3::Zero();	//À•WB
-		bool 				m_isJump = false;				//ƒWƒƒƒ“ƒv’†H
-		bool				m_isOnGround = true;			//’n–Ê‚Ìã‚É‚¢‚éH
-		CapsuleCollider		m_collider;						//ƒRƒ‰ƒCƒ_[B
+		Vector3 			m_position = g_vec3Zero;	//åº§æ¨™ã€‚
+		bool 				m_isJump = false;				//ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ï¼Ÿ
+		bool				m_isOnGround = true;			//åœ°é¢ã®ä¸Šã«ã„ã‚‹ï¼Ÿ
+		CapsuleCollider		m_collider;						//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã€‚
 		float				m_radius = 0.0f;
 		float				m_height = 0.0f;
-		RigidBody			m_rigidBody;					//„‘ÌB
-		bool				m_isUseRigidBody = true;		//ƒŠƒWƒbƒhƒ{ƒfƒ…[‚ğg‚¤H
+		RigidBody			m_rigidBody;					//å‰›ä½“ã€‚
+		bool				m_isUseRigidBody = true;		//ãƒªã‚¸ãƒƒãƒ‰ãƒœãƒ‡ãƒ¥ãƒ¼ã‚’ä½¿ã†ï¼Ÿ
 	};
 }

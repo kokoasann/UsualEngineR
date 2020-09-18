@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletDynamics", "UsualEngi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearMath", "UsualEngineR\bulletPhysics\src\LinearMath\LinearMath.vcxproj", "{4DCE52A5-106C-3D94-815D-C8EBC6133B5E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{C04B2628-B99D-4DA4-82D4-8FFD6043F695}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Low|ARM = Debug_Low|ARM
@@ -519,6 +521,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0} = {C04B2628-B99D-4DA4-82D4-8FFD6043F695}
+		{28EF574A-84DB-3CB0-9B45-DB3545B2D05C} = {C04B2628-B99D-4DA4-82D4-8FFD6043F695}
+		{9BF1ADF3-EB57-35E8-B156-ADE8FFC7E2F0} = {C04B2628-B99D-4DA4-82D4-8FFD6043F695}
+		{4DCE52A5-106C-3D94-815D-C8EBC6133B5E} = {C04B2628-B99D-4DA4-82D4-8FFD6043F695}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F536F706-1415-461C-81B5-8C58D1AD62CF}

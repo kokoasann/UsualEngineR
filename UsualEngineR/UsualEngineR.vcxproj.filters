@@ -181,6 +181,18 @@
     <ClInclude Include="Graphics\Primitive.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Character\CharacterController.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\ThreadObject.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\Lock.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\ThreadManager.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -334,6 +346,18 @@
     <ClCompile Include="Graphics\Primitive.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Character\CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\ThreadObject.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\Lock.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\ThreadManager.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -380,6 +404,9 @@
     </Filter>
     <Filter Include="Character">
       <UniqueIdentifier>{44c99fd7-e653-43aa-8759-f28eda8a05b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{e7b7b6de-7408-410b-bca9-657a28fff3e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
