@@ -9,6 +9,18 @@
     <ClInclude Include="Test\Test.h">
       <Filter>test</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerFlyingState.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerGroundState.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\IPlayerSstate.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -19,6 +31,18 @@
     </ClCompile>
     <ClCompile Include="Test\Test.cpp">
       <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerFlyingState.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerGroundState.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\IPlayerSstate.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +57,9 @@
     </Filter>
     <Filter Include="test">
       <UniqueIdentifier>{01d172b2-43fa-499d-8403-68570eb66410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{de703569-5717-4754-963a-655926b051ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
