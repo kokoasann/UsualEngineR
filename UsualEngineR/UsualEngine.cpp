@@ -34,8 +34,15 @@ namespace UER
 	void UsualEngine::GameLoop()
 	{
 		// ここからゲームループ。
-		while (DispatchWindowMessage())
+		while (true)
 		{
+			bool isGO = DispatchWindowMessage();
+			if (!isGO)
+			{
+				m_pGameObjectManeger->Release();
+
+				break;
+			}
 			Stopwatch sw;
 			sw.Start();
 
@@ -74,6 +81,7 @@ namespace UER
 			auto frameTime = sw.Stop();
 			gameTime()->PushFrameDeltaTime(frameTime);
 		}
+		delete g_engine;
 	}
 	void UsualEngine::BeginFrame()
 	{

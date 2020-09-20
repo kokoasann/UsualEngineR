@@ -89,9 +89,11 @@ namespace UER
 			o->SetName(hash);
 			o->CreatInGameObjectManager();
 			//m_gameObjectList[prio].push_back((GameObject*)go);
+			m_newGOPush_Mutex.lock();
 			m_newGOBuffer.push_back({ go,(char)prio });
 			if (isCheckIned && m_checkInCountList[prio]>0)
 				m_checkInCountList[prio] -= 1;
+			m_newGOPush_Mutex.unlock();
 			return go;
 		}
 
@@ -153,6 +155,7 @@ namespace UER
 		void CheckIN(int prio, int count);
 	private:
 		static const size_t m_maxSize = 32;					//priorityの最大値。
+		static std::mutex m_newGOPush_Mutex;
 		std::array<std::vector<GameObject*>,m_maxSize> m_gameObjectList;	//生きているゲームオブジェクトのリスト
 		std::vector<NewGOData> m_newGOBuffer;				//そのフレームに生成されたオブジェクトのリスト
 		
@@ -162,6 +165,7 @@ namespace UER
 
 		bool m_isReleaseProcess = false;					//全オブジェクトの開放処理中？
 	};
+	extern Lock<GameObjectManager> g_lockGameObjectManager;
 
 	/// <summary>
 	/// オブジェクトを生成する

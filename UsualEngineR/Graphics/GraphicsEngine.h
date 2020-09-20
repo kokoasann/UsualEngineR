@@ -278,5 +278,8 @@ namespace UER
 	extern Camera* g_camera2D;					//2Dカメラ。
 	extern Camera* g_camera3D;					//3Dカメラ。
 
+	extern Lock<GraphicsEngine> g_lockGraphicsEngine;	
+	extern Lock<Camera> g_lockCamera3D;					//スレッドの排他処理用の3Dかめら
+
 
 }

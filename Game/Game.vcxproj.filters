@@ -25,7 +25,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Test\ThreadTest.cpp">
       <Filter>test</Filter>
     </ClCompile>
@@ -44,6 +43,7 @@
     <ClCompile Include="Player\IPlayerSstate.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -63,6 +63,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\test\test.png" />
+    <ImageContentTask Include="Assets\modelData\test\test.png">
+      <Filter>Assets\modelData\test</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

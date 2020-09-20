@@ -193,6 +193,9 @@
     <ClInclude Include="Thread\ThreadManager.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="Thread\ConstMutex.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -356,6 +359,9 @@
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="Thread\ThreadManager.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\ConstMutex.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>

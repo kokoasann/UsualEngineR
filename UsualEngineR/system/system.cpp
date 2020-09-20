@@ -21,7 +21,7 @@ namespace UER
 		{
 		case WM_DESTROY:
 			//スエンジンの破棄。
-			delete g_engine;
+			
 			PostQuitMessage(0);
 			break;	
 		default:

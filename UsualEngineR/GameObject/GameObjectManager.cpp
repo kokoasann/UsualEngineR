@@ -7,9 +7,13 @@
 
 namespace UER
 {
+	Lock<GameObjectManager> g_lockGameObjectManager = Lock<GameObjectManager>(nullptr);
+	std::mutex GameObjectManager::m_newGOPush_Mutex;
+
 	GameObjectManager::GameObjectManager()
 	{
 		m_newGOBuffer.reserve(16);
+		g_lockGameObjectManager.Set(this);
 	}
 
 	GameObjectManager::~GameObjectManager()
@@ -31,13 +35,15 @@ namespace UER
 					delete go;
 				}
 			}
+			golist.clear();
 		}
-
+		
 		for (auto go : m_trashBox)
 		{
 			go->Release();
 			delete go;
 		}
+		m_trashBox.clear();
 	}
 
 	void GameObjectManager::Update()

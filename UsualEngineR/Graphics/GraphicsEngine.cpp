@@ -8,6 +8,9 @@ namespace UER
 	GraphicsEngine* g_graphicsEngine = nullptr;	//グラフィックスエンジン
 	Camera* g_camera2D = nullptr;				//2Dカメラ。
 	Camera* g_camera3D = nullptr;				//3Dカメラ。
+
+	Lock<GraphicsEngine> g_lockGraphicsEngine = Lock<GraphicsEngine>(nullptr);	//スレッドの排他処理用のグラフィックスエンジン
+	Lock<Camera> g_lockCamera3D = Lock<Camera>(nullptr);	//スレッドの排他処理用の3Dカメラ
 	
 	GraphicsEngine::~GraphicsEngine()
 	{
@@ -170,6 +173,8 @@ namespace UER
 	
 		g_camera2D = &m_camera2D;
 		g_camera3D = &m_camera3D;
+		g_lockCamera3D.Set(&m_camera3D);
+
 
 		//レイトレ使える~?CHECK!!
 		D3D12_FEATURE_DATA_D3D12_OPTIONS5 feature;
@@ -178,7 +183,7 @@ namespace UER
 
 		//
 		g_graphicsEngine = this;
-	
+		g_lockGraphicsEngine.Set(this);
 		return true;
 	}
 	IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()

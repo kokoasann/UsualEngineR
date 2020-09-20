@@ -30,6 +30,9 @@ namespace UER
 	}
 	void ModelRender::Update()
 	{
+		if (!m_isRender)
+			return;
+
 		float dtime = gameTime()->GetDeltaTime();
 		m_animation.Progress(dtime);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);

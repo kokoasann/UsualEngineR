@@ -24,6 +24,7 @@
 #include <array>
 #include <dxcapi.h>
 #include <atlbase.h>
+#include <mutex>
 
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
@@ -32,6 +33,9 @@
 #include "math/Math.h"
 #include "math/Vector.h"
 #include "math/Matrix.h"
+
+#include "Thread/Lock.h"
+#include "Thread/ThreadObject.h"
 
 #include "UsualEngine.h"
 #include "VertexBuffer.h"
@@ -79,6 +83,8 @@
 
 #include "ModelRender.h"
 #include "Physics/CollisionAttr.h"
+
+
 
 #if DEBUG_FUNC
 //#include "Debug/DebugPopup.h"
