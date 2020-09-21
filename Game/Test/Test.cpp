@@ -4,6 +4,7 @@
 
 void Test::Release()
 {
+	
 }
 
 void Test::OnDestroy()
@@ -12,5 +13,9 @@ void Test::OnDestroy()
 
 void Test::Awake()
 {
-	m_threadTest = NewGO<ThreadTest>(0);
+	m_threadObj.Execute([&]()
+		{
+			m_threadTest = NewGO<ThreadTest>(0);
+		});
+	
 }

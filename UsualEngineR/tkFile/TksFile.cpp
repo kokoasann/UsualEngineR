@@ -4,7 +4,8 @@
 
 namespace UER
 {
-	
+	TkFileManager<TksFile> TksFile::m_manager;
+
 	void TksFile::LoadImplement(const char* filePath)
 	{
 		auto fp = fopen(filePath, "rb");

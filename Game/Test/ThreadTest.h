@@ -11,6 +11,7 @@ public:
 
 	virtual void OnDestroy() override;
 
+	void Awake() override;
 	bool Start() override;
 	void Update() override;
 private:

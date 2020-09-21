@@ -21,14 +21,14 @@ void ThreadTest::OnDestroy()
 {
 }
 
-bool ThreadTest::Start()
+void ThreadTest::Awake()
 {
-	m_thread = std::make_unique < std::thread>([&]() 
+	m_thread = std::make_unique < std::thread>([&]()
 		{
 			auto cont = gCount.Get();
 			cont.Get() += 3;
 			//Sleep(5000);
-			
+
 			ModelInitData mid;
 			mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
@@ -37,7 +37,7 @@ bool ThreadTest::Start()
 			mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
 			m_model = NewGO<ModelRender>(0);
 			m_model->Init(mid);
-			m_model->SetScale(g_vec3One * 0.05*1.5);
+			m_model->SetScale(g_vec3One * 0.05 * 1.5);
 			m_isOK = true;
 		});
 
@@ -51,7 +51,7 @@ bool ThreadTest::Start()
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
-			
+
 			m_model_1 = NewGO<ModelRender>(0);
 			m_model_1->Init(mid);
 			m_model_1->SetScale(g_vec3One * 1.5);
@@ -72,6 +72,11 @@ bool ThreadTest::Start()
 			m_model_2->Init(mid);
 			m_model_2->SetScale(g_vec3One * 1.7);
 		});
+}
+
+bool ThreadTest::Start()
+{
+	
 	return true;
 }
 

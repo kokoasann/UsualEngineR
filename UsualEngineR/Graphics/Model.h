@@ -88,7 +88,7 @@ namespace UER
 		/// <param name="queryFunc">問い合わせ関数</param>
 		void QueryMeshsFromTkm(std::function<void(const TkmFile::SMesh& mesh)> queryFunc) const
 		{
-			m_tkmFile.QueryMeshParts(queryFunc);
+			m_tkmFile->QueryMeshParts(queryFunc);
 		}
 
 		Skeleton* GetSkelton()
@@ -100,7 +100,7 @@ namespace UER
 	private:
 	
 		Matrix m_world;			//ワールド行列。
-		TkmFile m_tkmFile;		//tkmファイル。
+		TkmFile* m_tkmFile;		//tkmファイル。
 		Skeleton m_skeleton;	//スケルトン。
 		MeshParts m_meshParts;	//メッシュパーツ。
 

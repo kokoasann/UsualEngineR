@@ -89,11 +89,15 @@ namespace UER
 			o->SetName(hash);
 			o->CreatInGameObjectManager();
 			//m_gameObjectList[prio].push_back((GameObject*)go);
+
 			m_newGOPush_Mutex.lock();
+
 			m_newGOBuffer.push_back({ go,(char)prio });
 			if (isCheckIned && m_checkInCountList[prio]>0)
 				m_checkInCountList[prio] -= 1;
+
 			m_newGOPush_Mutex.unlock();
+
 			return go;
 		}
 

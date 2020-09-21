@@ -6,7 +6,7 @@
 /// このクラスを利用することでtksファイルを扱うことができます。
 /// </remarks>
 #pragma once
-
+#include "TkFileManager.h"
 
 namespace UER
 {
@@ -39,9 +39,16 @@ namespace UER
 				query(bone);
 			}
 		}
+
+		static TkFileManager<TksFile>& GetManager()
+		{
+			return m_manager;
+		}
 	private:
 		int m_numBone = 0;			//骨の数。
 		std::vector<SBone> m_bones;	//骨のリスト。
+
+		static TkFileManager<TksFile> m_manager;
 	};
 	
 

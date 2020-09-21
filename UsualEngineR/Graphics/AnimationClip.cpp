@@ -14,8 +14,9 @@ namespace UER {
 
 	void CAnimationClip::Load(const char* filePath)
 	{
-		m_tkaFile.Load(filePath);
-		if(m_tkaFile.IsLoaded() == false){
+		m_tkaFile = TkaFile::GetManager().Load(filePath);
+		//m_tkaFile.Load(filePath);
+		if(m_tkaFile->IsLoaded() == false){
 		
 			MessageBoxA(nullptr,"アニメーションクリップのオープンに失敗しました。ファイルパス : %s\n"
 									 "原因として、下記の２点が考えられます。\n"
@@ -30,11 +31,11 @@ namespace UER {
 	void CAnimationClip::BuildKeyFramesAndAnimationEvents()
 	{
 		//アニメーションイベントの構築。
-		auto numAnimEvent = m_tkaFile.GetNumAnimationEvent();
+		auto numAnimEvent = m_tkaFile->GetNumAnimationEvent();
 		if (numAnimEvent > 0) {
 			m_animationEvent = std::make_unique<CAnimationEvent[]>(numAnimEvent);
 			int eventNo = 0;
-			m_tkaFile.QueryAnimationEvents([&](const TkaFile::AnimationEvent & animEvent) {
+			m_tkaFile->QueryAnimationEvents([&](const TkaFile::AnimationEvent & animEvent) {
 				static wchar_t wEventName[256];
 
 				mbstowcs(wEventName, animEvent.eventName.c_str(), 255);
@@ -45,8 +46,8 @@ namespace UER {
 
 		}
 		//キーフレーム情報の構築。
-		m_keyframes.reserve(m_tkaFile.GetNumKeyFrame());
-		m_tkaFile.QueryKeyFrames([&](const TkaFile::KeyFrame & tkaKeyFrame) {
+		m_keyframes.reserve(m_tkaFile->GetNumKeyFrame());
+		m_tkaFile->QueryKeyFrames([&](const TkaFile::KeyFrame & tkaKeyFrame) {
 			auto keyframe = std::make_unique<KeyFrame>();
 			keyframe->boneIndex = tkaKeyFrame.boneIndex;
 			keyframe->transform = Matrix::Identity;

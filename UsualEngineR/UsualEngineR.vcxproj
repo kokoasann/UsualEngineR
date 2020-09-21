@@ -231,7 +231,9 @@
     <ClInclude Include="Thread\Lock.h" />
     <ClInclude Include="Thread\ThreadManager.h" />
     <ClInclude Include="Thread\ThreadObject.h" />
+    <ClInclude Include="tkFile\ITkFileManagerClient.h" />
     <ClInclude Include="tkFile\TkaFile.h" />
+    <ClInclude Include="tkFile\TkFileManager.h" />
     <ClInclude Include="tkFile\TkmFile.h" />
     <ClInclude Include="tkFile\TksFile.h" />
     <ClInclude Include="UsualEngine.h" />
@@ -290,7 +292,9 @@
     <ClCompile Include="Thread\Lock.cpp" />
     <ClCompile Include="Thread\ThreadManager.cpp" />
     <ClCompile Include="Thread\ThreadObject.cpp" />
+    <ClCompile Include="tkFile\ITkFileManagerClient.cpp" />
     <ClCompile Include="tkFile\TkaFile.cpp" />
+    <ClCompile Include="tkFile\TkFileManager.cpp" />
     <ClCompile Include="tkFile\TkmFile.cpp" />
     <ClCompile Include="tkFile\TksFile.cpp" />
     <ClCompile Include="UsualEngine.cpp">

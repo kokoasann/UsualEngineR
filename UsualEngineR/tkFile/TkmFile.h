@@ -7,7 +7,7 @@
 /// </remarks>
 
 #pragma once
-
+#include "TkFileManager.h"
 
 namespace UER
 {
@@ -92,6 +92,11 @@ namespace UER
 		{
 			return (int)(m_meshParts.size());
 		}
+
+		static TkFileManager<TkmFile>& GetManager()
+		{
+			return m_manager;
+		}
 	private:
 		/// <summary>
 		/// テクスチャ名をロード。
@@ -118,6 +123,8 @@ namespace UER
 		void BuildTangentAndBiNormal();
 	private:
 		std::vector< SMesh>	m_meshParts;		//メッシュパーツ。
+
+		static TkFileManager<TkmFile> m_manager;
 	};
 
 

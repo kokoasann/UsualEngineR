@@ -50,13 +50,14 @@ namespace UER
 	}
 	bool Skeleton::Init(const char* tksFilePath)
 	{
-		m_tksFile.Load(tksFilePath);
+		m_tksFile = TksFile::GetManager().Load(tksFilePath);
+		//m_tksFile.Load(tksFilePath);
 			
 		return true;
 	}
 	void Skeleton::BuildBoneMatrices()
 	{
-		m_tksFile.QueryBone([&](TksFile::SBone & tksBone) {
+		m_tksFile->QueryBone([&](TksFile::SBone & tksBone) {
 			//バインドポーズ。
 			Matrix bindPoseMatrix;
 			memcpy(bindPoseMatrix.m[0], &tksBone.bindPose[0], sizeof(tksBone.bindPose[0]));

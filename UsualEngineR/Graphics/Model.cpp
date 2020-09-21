@@ -19,7 +19,8 @@ namespace UER
 		}
 		mbstowcs(wfxFilePath, initData.m_fxFilePath, 256);
 	
-		m_tkmFile.Load(initData.m_tkmFilePath);
+		m_tkmFile = TkmFile::GetManager().Load(initData.m_tkmFilePath);
+		//m_tkmFile.Load(initData.m_tkmFilePath);
 
 		if (initData.m_tksFilePath)
 		{
@@ -29,7 +30,7 @@ namespace UER
 		}
 
 		m_meshParts.InitFromTkmFile(
-			m_tkmFile, 
+			*m_tkmFile, 
 			wfxFilePath, 
 			initData.m_vsEntryPointFunc,
 			initData.m_psEntryPointFunc,

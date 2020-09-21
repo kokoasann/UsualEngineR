@@ -5,7 +5,8 @@
 
 namespace UER
 {
-	
+	TkFileManager<TkaFile> TkaFile::m_manager;
+
 	void TkaFile::LoadImplement(const char* filePath)
 	{
 		FILE* fp = fopen( filePath, "rb");

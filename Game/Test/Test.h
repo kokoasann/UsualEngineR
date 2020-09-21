@@ -9,5 +9,5 @@ public:
 	void Awake() override;
 private:
 	ThreadTest* m_threadTest = nullptr;
-	
+	ThreadObject m_threadObj;
 };

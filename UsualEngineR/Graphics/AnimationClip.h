@@ -99,7 +99,7 @@ namespace UER{
 		/// <param name="filePath"></param>
 		void LoadAsync(const char* filePath)
 		{
-			m_tkaFile.LoadAsync(filePath);
+			m_tkaFile->LoadAsync(filePath);
 		}
 		/// <summary>
 		/// 読み込みが終わっているか判定。
@@ -107,7 +107,7 @@ namespace UER{
 		/// <returns></returns>
 		bool IsLoaded() const
 		{
-			return m_tkaFile.IsLoaded();
+			return m_tkaFile->IsLoaded();
 		}
 		/// <summary>
 		/// キーフレームとアニメーションイベントを構築する。
@@ -162,7 +162,7 @@ namespace UER{
 		/// <returns></returns>
 		int GetNumAnimationEvent() const
 		{
-			return m_tkaFile.GetNumAnimationEvent();
+			return m_tkaFile->GetNumAnimationEvent();
 		}
 	private:
 		using KeyframePtr = std::unique_ptr<KeyFrame>;
@@ -173,7 +173,7 @@ namespace UER{
 		std::unique_ptr<CAnimationEvent[]>		m_animationEvent;			//アニメーションイベント。
 		int									m_numAnimationEvent = 0;	//アニメーションイベントの数。
 		keyFramePtrList*					m_topBoneKeyFramList = nullptr;
-		TkaFile							m_tkaFile;			//tkaファイル
+		TkaFile*							m_tkaFile;			//tkaファイル
 	};
 	using CAnimationClipPtr = std::unique_ptr<CAnimationClip>;
 }

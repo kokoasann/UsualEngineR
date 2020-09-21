@@ -6,7 +6,7 @@
 /// 本クラスを利用するとこではtkaファイルを扱うことができます。
 /// </remarks>
 #pragma once
-
+#include"TkFileManager.h"
 
 namespace UER
 {
@@ -78,11 +78,19 @@ namespace UER
 		{
 			return static_cast<int>(m_keyFrames.size());
 		}
+
+		static TkFileManager<TkaFile>& GetManager()
+		{
+			return m_manager;
+		}
 	private:
 		std::vector< AnimationEvent> m_animationEvents;	//アニメーションイベント。
 		std::vector< KeyFrame> m_keyFrames;				//キーフレーム。
+
+
+		static TkFileManager<TkaFile> m_manager;
 	};
 	
-
+	
 
 }

@@ -4,7 +4,7 @@
 
 namespace UER
 {
-	
+	TkFileManager<TkmFile> TkmFile::m_manager;
 	
 	//法線スムージング。
 	class NormalSmoothing {

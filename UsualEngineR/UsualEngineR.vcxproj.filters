@@ -196,6 +196,12 @@
     <ClInclude Include="Thread\ConstMutex.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="tkFile\TkFileManager.h">
+      <Filter>TKFile</Filter>
+    </ClInclude>
+    <ClInclude Include="tkFile\ITkFileManagerClient.h">
+      <Filter>TKFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -363,6 +369,12 @@
     </ClCompile>
     <ClCompile Include="Thread\ConstMutex.cpp">
       <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="tkFile\TkFileManager.cpp">
+      <Filter>TKFile</Filter>
+    </ClCompile>
+    <ClCompile Include="tkFile\ITkFileManagerClient.cpp">
+      <Filter>TKFile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
