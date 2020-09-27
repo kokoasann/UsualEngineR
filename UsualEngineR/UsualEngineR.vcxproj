@@ -199,6 +199,8 @@
     <ClInclude Include="Graphics\PipelineState.h" />
     <ClInclude Include="Graphics\Primitive.h" />
     <ClInclude Include="Graphics\RaytracingEngine.h" />
+    <ClInclude Include="Graphics\RaytracingHelper.h" />
+    <ClInclude Include="Graphics\RaytracingInstance.h" />
     <ClInclude Include="Graphics\RenderContext.h" />
     <ClInclude Include="Graphics\RenderContext_inline.h" />
     <ClInclude Include="Graphics\RenderTarget.h" />
@@ -231,7 +233,6 @@
     <ClInclude Include="Thread\Lock.h" />
     <ClInclude Include="Thread\ThreadManager.h" />
     <ClInclude Include="Thread\ThreadObject.h" />
-    <ClInclude Include="tkFile\ITkFileManagerClient.h" />
     <ClInclude Include="tkFile\TkaFile.h" />
     <ClInclude Include="tkFile\TkFileManager.h" />
     <ClInclude Include="tkFile\TkmFile.h" />
@@ -265,6 +266,8 @@
     <ClCompile Include="Graphics\PipelineState.cpp" />
     <ClCompile Include="Graphics\Primitive.cpp" />
     <ClCompile Include="Graphics\RaytracingEngine.cpp" />
+    <ClCompile Include="Graphics\RaytracingHelper.cpp" />
+    <ClCompile Include="Graphics\RaytracingInstance.cpp" />
     <ClCompile Include="Graphics\RenderTarget.cpp" />
     <ClCompile Include="Graphics\RootSignature.cpp" />
     <ClCompile Include="Graphics\RWStructuredBuffer.cpp" />
@@ -292,7 +295,6 @@
     <ClCompile Include="Thread\Lock.cpp" />
     <ClCompile Include="Thread\ThreadManager.cpp" />
     <ClCompile Include="Thread\ThreadObject.cpp" />
-    <ClCompile Include="tkFile\ITkFileManagerClient.cpp" />
     <ClCompile Include="tkFile\TkaFile.cpp" />
     <ClCompile Include="tkFile\TkFileManager.cpp" />
     <ClCompile Include="tkFile\TkmFile.cpp" />

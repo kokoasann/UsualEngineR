@@ -8,8 +8,87 @@
 
 namespace UER
 {
+	class ShaderManager
+	{
+	private:
+		
+	public:
+		ShaderManager() {}
+		~ShaderManager()
+		{
+			for (auto d : m_shaderDict)
+			{
+				d.second.blob->Release();
+			}
+		}
+		
+		ID3D10Blob* Load(const wchar_t* filePath, const char* entryFuncName, const char* shaderModel)
+		{
+			int hash = Util::MakeHash(filePath);
+			ID3DBlob* res;
+			m_loadMutex.lock();
+			auto it = m_shaderDict.find(hash);
+			if (it == m_shaderDict.end())
+			{
+				Data data;
+				m_shaderDict.insert(std::make_pair(hash, data));
+				m_loadMutex.unlock();
+
+				ID3DBlob* blob;
+				ID3DBlob* errorBlob;
+#ifdef _DEBUG
+				// Enable better shader debugging with the graphics debugging tools.
+				UINT compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+#else
+				UINT compileFlags = 0;
+#endif
+				auto hr = D3DCompileFromFile(filePath, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, entryFuncName, shaderModel, compileFlags, 0, &blob, &errorBlob);
+
+				if (FAILED(hr)) {
+					if (hr == STIERR_OBJECTNOTFOUND) {
+						std::wstring errorMessage;
+						errorMessage = L"指定されたfxファイルが開けませんでした";
+						errorMessage += filePath;
+						MessageBoxW(nullptr, errorMessage.c_str(), L"エラー", MB_OK);
+					}
+					if (errorBlob) {
+						static char errorMessage[10 * 1024];
+						sprintf_s(errorMessage, "filePath : %s, %s", "hoge", (char*)errorBlob->GetBufferPointer());
+						MessageBoxA(NULL, errorMessage, "シェーダーコンパイルエラー", MB_OK);
+						return nullptr;
+					}
+				}
+
+				m_shaderDict.at(hash).isLoaded = true;
+				m_shaderDict.at(hash).blob = blob;
+
+				res = blob;
+			}
+			else
+			{
+				m_loadMutex.unlock();
+				Data& fd = m_shaderDict.at(hash);
+				while (!fd.isLoaded)
+				{
+					Sleep(10);
+				}
+				res = fd.blob;
+			}
+
+			return res;
+		}
+	private:
+		struct Data
+		{
+			bool isLoaded = false;
+			ID3D10Blob* blob = nullptr;
+		};
+		std::mutex m_loadMutex;
+		std::map<int, Data> m_shaderDict;
+	};
 	
-	
+	static ShaderManager s_shaderManager;
+
 	namespace {
 		const char* g_vsShaderModelName = "vs_5_0";	//頂点シェーダーのシェーダーモデル名。
 		const char* g_psShaderModelName = "ps_5_0";	//ピクセルシェーダーのシェーダモデル名。
@@ -40,6 +119,8 @@ namespace UER
 				return;
 			}
 		}
+
+		//m_blob = s_shaderManager.Load(filePath, entryFuncName, shaderModel);
 	}
 	void Shader::LoadPS(const wchar_t* filePath, const char* entryFuncName)
 	{

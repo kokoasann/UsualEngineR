@@ -60,7 +60,7 @@ namespace UER
 		UpdateRender();
 		UpdatePreRender();
 		
-
+		
 
 		//auto& pe = usualEngine()->GetGraphicsEngine()->GetPostEffect();
 		//pe.Render();

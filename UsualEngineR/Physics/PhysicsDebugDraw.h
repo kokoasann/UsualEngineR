@@ -43,11 +43,15 @@ namespace UER
 
 	private:
 		ConstantBuffer m_constbuff;
+		DescriptorHeap m_decsHeap;
+		PipelineState m_pipState;
+		RootSignature m_rootSign;
 		Primitive m_primi;
 		Shader m_vs;
 		Shader m_ps;
-		static const unsigned int MAX_VERTEX = 500000;
+		static const unsigned int MAX_VERTEX = 10000;
 		std::array<Vector4, MAX_VERTEX> m_vertexBuffer;
+		std::array<int, MAX_VERTEX> m_indexBuffer;
 		int m_numLine = 0;
 
 		int m_debugMode = btIDebugDraw::DBG_DrawWireframe;

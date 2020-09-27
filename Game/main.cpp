@@ -50,6 +50,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	NewGO<Game>(0);
 	NewGO<Test>(0);
+
 	g_engine->GameLoop();
 	
 	return 0;

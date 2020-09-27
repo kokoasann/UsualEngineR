@@ -12,10 +12,14 @@ namespace UER
 	bool Primitive::Cteate(D3D_PRIMITIVE_TOPOLOGY topo, int vertexNum, int stride, const void* vertexData, int indexNum, EIndexType indexType, const void* indexData)
 	{
 		m_vertexBuffer.Init(vertexNum, stride);
-		m_vertexBuffer.Copy((void*)vertexData);
+		if(vertexData)
+			m_vertexBuffer.Copy((void*)vertexData);
 
-		m_indexBuffer.Init(indexNum, indexType);
-		m_indexBuffer.Copy((void*)indexData);
+		if (indexNum || 1)
+		{
+			m_indexBuffer.Init(indexNum, indexType);
+			m_indexBuffer.Copy((void*)indexData);
+		}
 
 		m_topology = topo;
 		return true;
@@ -48,12 +52,18 @@ namespace UER
 
 		dc->DrawIndexed(m_indexBuffer.GetIndexNum(), 0, 0);*/
 	}
-	void Primitive::Draw(RenderContext* dc, int vertexnum)
+	void Primitive::Draw(RenderContext& rc, int vertexnum)
 	{
-		/*UINT ofs = 0;
-		UINT stride = m_vertexBuffer.GetStride();
-		dc->IASetVertexBuffers(0, 1, &m_vertexBuffer.GetBody(), &stride, &ofs);
-		dc->IASetPrimitiveTopology(m_topology);
-		dc->Draw(vertexnum, 0);*/
+		//UINT ofs = 0;
+		//UINT stride = m_vertexBuffer.GetStride();
+		//rc->IASetVertexBuffers(0, 1, &m_vertexBuffer.GetBody(), &stride, &ofs);
+		//rc->IASetPrimitiveTopology(m_topology);
+		//rc->Draw(vertexnum, 0);
+
+		rc.SetPrimitiveTopology(m_topology);
+		rc.SetIndexBuffer(m_indexBuffer);
+		rc.SetVertexBuffer(m_vertexBuffer);
+		rc.DrawIndexed(vertexnum);
+		
 	}
 }

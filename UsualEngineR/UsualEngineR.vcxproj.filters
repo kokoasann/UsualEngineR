@@ -55,9 +55,6 @@
     <ClInclude Include="Graphics\PipelineState.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\RaytracingEngine.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\RenderContext.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -199,8 +196,14 @@
     <ClInclude Include="tkFile\TkFileManager.h">
       <Filter>TKFile</Filter>
     </ClInclude>
-    <ClInclude Include="tkFile\ITkFileManagerClient.h">
-      <Filter>TKFile</Filter>
+    <ClInclude Include="Graphics\RaytracingInstance.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RaytracingEngine.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RaytracingHelper.h">
+      <Filter>Graphics\Raytracing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +245,6 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\PipelineState.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\RaytracingEngine.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Skeleton.cpp">
@@ -373,8 +373,14 @@
     <ClCompile Include="tkFile\TkFileManager.cpp">
       <Filter>TKFile</Filter>
     </ClCompile>
-    <ClCompile Include="tkFile\ITkFileManagerClient.cpp">
-      <Filter>TKFile</Filter>
+    <ClCompile Include="Graphics\RaytracingEngine.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RaytracingInstance.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RaytracingHelper.cpp">
+      <Filter>Graphics\Raytracing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,6 +431,9 @@
     </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{e7b7b6de-7408-410b-bca9-657a28fff3e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Raytracing">
+      <UniqueIdentifier>{4880cfae-f556-4c50-a939-c6726168234e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -34,6 +34,10 @@ namespace UER
 		{
 			return m_vertexBuffer;
 		}
+		IndexBuffer& GetIndexBuffer()
+		{
+			return m_indexBuffer;
+		}
 
 		int GetIndexCount()
 		{
@@ -47,10 +51,11 @@ namespace UER
 		/// <param name="rc"></param>
 		/// <returns>indexBufferの数</returns>
 		int SendData(RenderContext& rc);
-		
+		void Draw(RenderContext& rc, int vertexnum);
+
 	private:
 		void Draw();
-		void Draw(RenderContext* dc, int vertexnum);
+		//void Draw(RenderContext* dc, int vertexnum);
 	private:
 		VertexBuffer m_vertexBuffer;		//頂点バッファ
 		IndexBuffer m_indexBuffer;		//インデックスバッファ

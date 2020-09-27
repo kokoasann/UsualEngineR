@@ -23,8 +23,8 @@ namespace UER
 		/// 初期化。
 		/// </summary>
 		/// <param name="desc"></param>
-		void Init(D3D12_GRAPHICS_PIPELINE_STATE_DESC desc);
-		void Init(D3D12_COMPUTE_PIPELINE_STATE_DESC desc);
+		void Init(const D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc);
+		void Init(const D3D12_COMPUTE_PIPELINE_STATE_DESC& desc);
 		ID3D12PipelineState* Get()
 		{
 			return m_pipelineState;

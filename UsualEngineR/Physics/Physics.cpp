@@ -49,8 +49,8 @@ namespace UER
 
 		dynamicWorld->setGravity(btVector3(0, -10, 0));
 
-		m_debugDraw.Init();
-		dynamicWorld->setDebugDrawer(&m_debugDraw);
+		//m_debugDraw.Init();
+		//dynamicWorld->setDebugDrawer(&m_debugDraw);
 	}
 	void PhysicsWorld::Update()
 	{
@@ -69,9 +69,9 @@ namespace UER
 	void PhysicsWorld::DebugDraw()
 	{
 #if DEBUG_FUNC
-		m_debugDraw.BeginRender();
-		//dynamicWorld->debugDrawWorld();
-		m_debugDraw.EndRender();
+		/*m_debugDraw.BeginRender();
+		dynamicWorld->debugDrawWorld();
+		m_debugDraw.EndRender();*/
 #endif
 	}
 }

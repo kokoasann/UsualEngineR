@@ -46,7 +46,7 @@ namespace UER
 			else
 			{
 				load_mutex.unlock();
-				FileData& fd = m_resources.at(hash);
+				const FileData& fd = m_resources.at(hash);
 				while(!fd.isLoaded)
 				{
 					Sleep(10);

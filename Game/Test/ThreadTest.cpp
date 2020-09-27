@@ -21,12 +21,16 @@ void ThreadTest::OnDestroy()
 {
 }
 
+static std::vector<double> thretime;
 void ThreadTest::Awake()
 {
 	m_thread = std::make_unique < std::thread>([&]()
 		{
-			auto cont = gCount.Get();
-			cont.Get() += 3;
+			Stopwatch sw;
+			sw.Start();
+
+			//auto cont = gCount.Get();
+			//cont.Get() += 3;
 			//Sleep(5000);
 
 			ModelInitData mid;
@@ -35,32 +39,45 @@ void ThreadTest::Awake()
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
 			mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
+
+			
+			
 			m_model = NewGO<ModelRender>(0);
 			m_model->Init(mid);
 			m_model->SetScale(g_vec3One * 0.05 * 1.5);
 			m_isOK = true;
+
+			thretime.push_back(sw.Stop());
 		});
 
 	m_thread_2 = new std::thread([&]()
 		{
-			auto c = gCount.Get();
-			c.Get() += 4;
+			Stopwatch sw;
+			sw.Start();
+
+			//auto c = gCount.Get();
+			//c.Get() += 4;
 
 			ModelInitData mid;
 			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
-
+			
 			m_model_1 = NewGO<ModelRender>(0);
 			m_model_1->Init(mid);
 			m_model_1->SetScale(g_vec3One * 1.5);
+
+			thretime.push_back(sw.Stop());
 		});
 
 	m_threadObj.Execute([&]()
 		{
-			auto c = gCount.Get();
-			c.Get() += 2;
+			Stopwatch sw;
+			sw.Start();
+
+			//auto c = gCount.Get();
+			//c.Get() += 2;
 
 			ModelInitData mid;
 			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
@@ -68,9 +85,12 @@ void ThreadTest::Awake()
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
 
+			
 			m_model_2 = NewGO<ModelRender>(0);
 			m_model_2->Init(mid);
 			m_model_2->SetScale(g_vec3One * 1.7);
+
+			thretime.push_back( sw.Stop());
 		});
 }
 

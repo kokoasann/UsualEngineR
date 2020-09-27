@@ -11,10 +11,26 @@ namespace UER
 	using ID3DBlobPtr = CComPtr<ID3DBlob>;
 	using ID3D12StateObjectPtr = CComPtr<ID3D12StateObject>;
 	using ID3D12DescriptorHeapPtr = CComPtr<ID3D12DescriptorHeap>;
+
+	
 	
 	class RaytracingEngine
 	{
 	public:
+		struct AccelerationStructureBuffers {
+			ID3D12Resource* pScratch = nullptr;
+			ID3D12Resource* pResult = nullptr;
+			ID3D12Resource* pInstanceDesc = nullptr;
+		};
+
+		/// <summary>
+		/// レイトレのインスタンスデータ。
+		/// </summary>
+		struct RaytracingInstance {
+			D3D12_RAYTRACING_GEOMETRY_DESC geometoryDesc;	//ジオメトリ情報。
+			Texture* m_albedoTexture = nullptr;		//アルベドテクスチャ。
+		};
+
 		/// <summary>
 		/// レイトレーシングをディスパッチ。
 		/// </summary>
@@ -54,19 +70,7 @@ namespace UER
 		/// </summary>
 		void CreateShaderResources();
 	private:
-		struct AccelerationStructureBuffers {
-			ID3D12Resource* pScratch = nullptr;
-			ID3D12Resource* pResult = nullptr;
-			ID3D12Resource* pInstanceDesc = nullptr;
-		};
 		
-		/// <summary>
-		/// レイトレのインスタンスデータ。
-		/// </summary>
-		struct RaytracingInstance {
-			D3D12_RAYTRACING_GEOMETRY_DESC geometoryDesc;	//ジオメトリ情報。
-			Texture* m_albedoTexture = nullptr;		//アルベドテクスチャ。
-		};
 		std::vector<RaytracingInstance> m_instances;	//レイトレーシングエンジンに登録するジオメトリ情報の配列。
 		std::vector< AccelerationStructureBuffers> m_bottomLevelASBuffers;
 		AccelerationStructureBuffers m_topLevelASBuffers;

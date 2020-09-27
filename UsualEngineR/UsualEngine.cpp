@@ -10,11 +10,13 @@ namespace UER
 	
 	UsualEngine::~UsualEngine()
 	{
+		m_physicsWorld->Release();
+		delete m_physicsWorld;
+
 		if (m_graphicsEngine) {
 			delete m_graphicsEngine;
 		}
-		m_physicsWorld->Release();
-		delete m_physicsWorld;
+		
 	}
 	void UsualEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
 	{
@@ -46,10 +48,13 @@ namespace UER
 			Stopwatch sw;
 			sw.Start();
 
+			m_physicsWorld->Update();
+
 			//レンダリング開始。
 			g_engine->BeginFrame();
 
 
+			
 			/*#
 			###	RayTracingの奴の残留思念。
 			###
@@ -69,8 +74,6 @@ namespace UER
 			*/
 
 			m_pGameObjectManeger->Update();
-
-			m_physicsWorld->Update();
 
 			//////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
