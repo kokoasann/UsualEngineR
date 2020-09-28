@@ -30,7 +30,7 @@ namespace UER
 		 * @brief	CSkinModelからメッシュコライダーを生成。
 		 *@param[in]	model		スキンモデル。
 		 */
-		void CreateFromSkinModel(const Model& model, const Matrix* offsetMatrix);
+		void CreateFromSkinModel(const Model& model, const Matrix* offsetMatrix = nullptr);
 		btCollisionShape* GetBody() const override
 		{
 			return m_meshShape.get();

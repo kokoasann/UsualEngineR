@@ -96,7 +96,10 @@ namespace UER
 			return &m_skeleton;
 		}
 
-		
+		EUpAxis GetUpAxis() const
+		{
+			return m_upAxis;
+		}
 	private:
 	
 		Matrix m_world;			//ワールド行列。

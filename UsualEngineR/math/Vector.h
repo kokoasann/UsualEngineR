@@ -104,6 +104,14 @@ namespace UER
 			vec = _v.vec;
 			return *this;
 		}
+
+		/*Vector3& operator=(const btVector3& _v)
+		{
+			vec.x = _v.x();
+			vec.y = _v.y();
+			vec.z = _v.z();
+			return *this;
+		}*/
 		/// <summary>
 		/// コンストラクタ。
 		/// </summary>
@@ -123,6 +131,11 @@ namespace UER
 		Vector3(float x, float y, float z)
 		{
 			Set(x, y, z);
+		}
+
+		Vector3(const btVector3& bv)
+		{
+			Set(bv.x(), bv.y(), bv.z());
 		}
 		/// <summary>
 		/// 線形補完

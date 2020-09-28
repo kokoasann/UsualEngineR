@@ -74,6 +74,11 @@ namespace UER
 		{
 			return m_isRender;
 		}
+
+		const Model& GetModel() const
+		{
+			return m_model;
+		}
 	private:
 		Model m_model;				//モデル
 		CAnimation m_animation;		//アニメーション

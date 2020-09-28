@@ -40,8 +40,12 @@ namespace UER
 	 */
 	void MeshCollider::CreateFromSkinModel(const Model& model, const Matrix* offsetMatrix)
 	{
-		Matrix mBias;
-		mBias.MakeRotationX(Math::PI * -0.5f);
+		Matrix mBias = g_matIdentity;
+		if (model.GetUpAxis() == enUpAxisZ) {
+			//Z-up
+			mBias.MakeRotationX(Math::PI * -0.5f);
+		}
+		//mBias.MakeRotationX(Math::PI * -0.5f);
 		if (offsetMatrix != nullptr) {
 			mBias = mBias * (*offsetMatrix);
 		}

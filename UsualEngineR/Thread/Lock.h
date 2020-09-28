@@ -50,9 +50,9 @@ namespace UER
 			}
 
 
-			T& operator->()
+			T* operator->()
 			{
-				return *content;
+				return content;
 			}
 			
 			T& Get()

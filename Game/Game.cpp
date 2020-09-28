@@ -11,8 +11,10 @@ void Game::OnDestroy()
 
 void Game::Awake()
 {
-	g_camera3D->SetPosition({ 0,0,10 });
-	g_camera3D->SetTarget({ 0,0,0 });
+	auto cam = g_lockCamera3D.Get();
+	cam->SetPosition({ 0,0,10 });
+	cam->SetTarget({ 0,0,0 });
+
 	ModelInitData mid;
 	mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";

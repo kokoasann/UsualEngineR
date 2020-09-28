@@ -473,6 +473,6 @@ def out_test():
     with open(path,"wb") as f:
         build_data(o,f)
         
-out_test()
+#out_test()
 #DataTest()
 #test()
