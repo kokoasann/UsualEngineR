@@ -1,13 +1,15 @@
 #pragma once
+class Player;
 
 /// <summary>
 /// 
 /// </summary>
-class IPlayerSstate
+class IPlayerState
 {
 public:
-	virtual ~IPlayerSstate();
-	virtual void Enter() = 0;
-	virtual IPlayerSstate* Update() = 0;
-	virtual void Exit() = 0;
+	IPlayerState() {};
+	virtual ~IPlayerState() {};
+	virtual void Enter(Player*) = 0;
+	virtual IPlayerState* Update(Player*) = 0;
+	virtual void Exit(Player*) = 0;
 };

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "PlayerFlyingState.h"
 
-
 PlayerFlyingState::PlayerFlyingState()
 {
 
@@ -12,55 +11,14 @@ PlayerFlyingState::~PlayerFlyingState()
 
 }
 
-
-
-void PlayerFlyingState::Release()
-{
-
+void PlayerFlyingState::Enter(Player* p) {
+	printf("fly enter\n");
 }
 
-void PlayerFlyingState::OnDestroy()
-{
-
+IPlayerState*  PlayerFlyingState::Update(Player* p) {
+	return this;
 }
 
-
-
-void PlayerFlyingState::Awake()
-{
-
-}
-
-bool PlayerFlyingState::Start()
-{
-	return true;
-}
-
-
-
-void PlayerFlyingState::PreUpdate()
-{
-
-}
-
-void PlayerFlyingState::Update()
-{
-
-}
-
-void PlayerFlyingState::PostUpdate()
-{
-
-}
-
-
-
-void PlayerFlyingState::Render()
-{
-
-}
-
-void PlayerFlyingState::PostRender()
-{
-
+void PlayerFlyingState::Exit(Player* p) {
+	printf("Fly Exit\n");
 }

@@ -1,17 +1,18 @@
 #pragma once
-#include "IPlayerSstate.h"
+#include"IPlayerSstate.h"
+#include "Player.h"
 
 /// <summary>
 /// 
 /// </summary>
-class PlayerGroundState :public IPlayerSstate
+class PlayerGroundState :public IPlayerState
 {
 public:
 	PlayerGroundState();
-	~PlayerGroundState();
-	void Enter() override;
-	IPlayerSstate* Update() override;
-	void Exit() override;
+	~PlayerGroundState() override;
+	void Enter(Player*) override;
+	IPlayerState* Update(Player*) override;
+	void Exit(Player*) override;
 private:
 
 };

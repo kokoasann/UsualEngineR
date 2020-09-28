@@ -1,5 +1,6 @@
 #pragma once
-#include "PlayerGroundState.h"
+#include "IPlayerSstate.h"
+
 /// <summary>
 /// 
 /// </summary>
@@ -57,7 +58,14 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
+
+	/*
+	static struct PlayerStates {
+		PlayerGroundState m_playerGroundState;
+		PlayerFlyingState m_playerFlyingState;
+	};
+	*/
 private:
-	IPlayerSstate* m_playerState = nullptr;
-	IPlayerSstate* m_currentState = nullptr;
+	IPlayerState* m_playerState = nullptr;
+	IPlayerState* m_currentState = nullptr;
 };
