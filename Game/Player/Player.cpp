@@ -1,12 +1,18 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "IPlayerSstate.h"
+#include "PlayerFlyingState.h"
+#include "PlayerGroundState.h"
 
-static PlayerGroundState m_playerGroundState;
+PlayerFlyingState m_playerFlyingState;
+PlayerGroundState m_playerGroundState;
 
 Player::Player()
 {
+	AllocConsole();
 
+	freopen("CON", "r", stdin);
+	freopen("CON", "w", stdout);
+	freopen("CON", "w", stderr);
 }
 
 Player::~Player()
@@ -35,7 +41,8 @@ void Player::Awake()
 
 bool Player::Start()
 {
-	m_playerState = &m_playerGroundState;
+	m_currentState = m_playerState = &m_playerGroundState;
+	m_playerState->Enter(this);
 	return true;
 }
 
@@ -48,11 +55,11 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
-	auto state = m_playerState->Update();
+	auto state = m_playerState->Update(this);
 	if (state != m_currentState) {
-		state->Exit();
+		state->Exit(this);
 		m_currentState = state;
-		state->Enter();
+		state->Enter(this);
 	}
 }
 
@@ -72,3 +79,4 @@ void Player::PostRender()
 {
 
 }
+
