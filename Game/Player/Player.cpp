@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <algorithm>
 #include "Player.h"
 #include "PlayerFlyingState.h"
 #include "PlayerGroundState.h"
@@ -24,12 +25,12 @@ Player::~Player()
 
 void Player::Release()
 {
-
+	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
 }
 
 void Player::OnDestroy()
 {
-
+	Release();
 }
 
 
@@ -41,8 +42,14 @@ void Player::Awake()
 
 bool Player::Start()
 {
+
+	m_stateList.resize(EnState::enNumState);
+	m_stateList[enGround] = new PlayerGroundState();
+	m_stateList[enFlying] = new PlayerFlyingState();
+
 	m_currentState = m_playerState = &m_playerGroundState;
 	m_playerState->Enter(this);
+
 	return true;
 }
 
