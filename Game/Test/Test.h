@@ -1,5 +1,6 @@
 #pragma once
 #include "Physics/SphereCollider.h"
+#include "Physics/BoxCollider.h"
 
 class ThreadTest;
 class Test:public GameObject
@@ -16,6 +17,7 @@ private:
 	ModelRender* m_pModel;
 	MeshCollider m_meshColl;
 	SphereCollider m_sphere;
+	BoxCollider m_box;
 	RigidBody m_rb;
 	
 

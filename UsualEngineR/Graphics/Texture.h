@@ -25,13 +25,35 @@ namespace UER
 		/// DDSファイルからテクスチャを初期化する。
 		/// </summary>
 		/// <param name="filePath">ロードするテクスチャのファイルパス。</param>
-		void InitFromDDSFile(const wchar_t* filePath);
+		void InitFromDDSFile(const wchar_t* filePath)
+		{
+			//DDSファイルからテクスチャをロード。
+			LoadTextureFromDDSFile(filePath);
+		}
 		/// <summary>
 		/// メモリからテクスチャを初期化する。
 		/// </summary>
 		/// <param name="memory">テクスチャデータが格納されているメモリの先頭アドレス</param>
 		/// <param name="size">テクスチャのサイズ。</param>
-		void InitFromMemory(const char* memory, unsigned int size);
+		void InitFromMemory(const char* memory, unsigned int size,const wchar_t* path)
+		{
+			//DDSファイルからテクスチャをロード。
+			LoadTextureFromMemory(memory, size,path);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="memory"></param>
+		/// <param name="size"></param>
+		/// <param name="path"></param>
+		void InitFromMemory(const char* memory, unsigned int size,std::string path)
+		{
+			std::wstring wpath = std::wstring(path.begin(), path.end());
+			//DDSファイルからテクスチャをロード。
+			LoadTextureFromMemory(memory, size, wpath.c_str());
+		}
+
 		/// <summary>
 		/// D3Dリソースからテクスチャを初期化する。
 		/// </summary>
@@ -67,7 +89,7 @@ namespace UER
 		/// <param name="size">テクスチャのサイズ。</param>
 		/// <param name="ge12">Dx12版のグラフィックスエンジン</param>
 		/// <param name="device">D3Dデバイス</param>
-		void LoadTextureFromMemory(const char* memory, unsigned int size );
+		void LoadTextureFromMemory(const char* memory, unsigned int size, const wchar_t* path);
 			
 	private:
 		ID3D12Resource*	m_texture = nullptr;	//テクスチャ。

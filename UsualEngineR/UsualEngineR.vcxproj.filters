@@ -205,6 +205,9 @@
     <ClInclude Include="Graphics\RaytracingHelper.h">
       <Filter>Graphics\Raytracing</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\TextureManager.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -381,6 +384,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\RaytracingHelper.cpp">
       <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextureManager.cpp">
+      <Filter>Graphics\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

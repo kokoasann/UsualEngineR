@@ -15,13 +15,13 @@ namespace UER
 	void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 	{
 		if (tkmMat.albedoMap != nullptr) {
-			m_albedoMap.InitFromMemory(tkmMat.albedoMap.get(), tkmMat.albedoMapSize);
+			m_albedoMap.InitFromMemory(tkmMat.albedoMap.get(), tkmMat.albedoMapSize,tkmMat.albedoMapFileName);
 		}
 		if (tkmMat.normalMap != nullptr) {
-			m_normalMap.InitFromMemory(tkmMat.normalMap.get(), tkmMat.normalMapSize);
+			m_normalMap.InitFromMemory(tkmMat.normalMap.get(), tkmMat.normalMapSize,tkmMat.albedoMapFileName);
 		}
 		if (tkmMat.specularMap != nullptr) {
-			m_specularMap.InitFromMemory(tkmMat.specularMap.get(), tkmMat.specularMapSize);
+			m_specularMap.InitFromMemory(tkmMat.specularMap.get(), tkmMat.specularMapSize,tkmMat.albedoMapFileName);
 		}
 	}
 	void Material::InitFromTkmMaterila(
