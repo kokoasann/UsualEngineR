@@ -16,6 +16,10 @@ void PlayerGroundState::Enter(Player* p){
 }
 
 IPlayerState* PlayerGroundState::Update(Player* p) {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
+		 auto nextState =  p->GetState(Player::EnState::enFlying);
+		return nextState;
+	}
 	return this;
 }
 

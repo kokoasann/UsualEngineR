@@ -7,6 +7,13 @@
 class Player :public GameObject
 {
 public:
+
+	enum EnState {
+		enGround,
+		enFlying,
+		enNumState
+	};
+
 	Player();
 	virtual ~Player();
 
@@ -59,13 +66,12 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	/*
-	static struct PlayerStates {
-		PlayerGroundState m_playerGroundState;
-		PlayerFlyingState m_playerFlyingState;
+	IPlayerState* GetState(int state) {
+		return m_stateList[state];
 	};
-	*/
+
 private:
 	IPlayerState* m_playerState = nullptr;
 	IPlayerState* m_currentState = nullptr;
+	std::vector<IPlayerState*> m_stateList;
 };
