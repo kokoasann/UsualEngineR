@@ -5,6 +5,7 @@ class IEnemy : public GameObject
 {
 public:
 	virtual~IEnemy() {};
+
 	virtual void Init() {};
 	virtual void Execute() {};
 	virtual void Terminate() {};
@@ -17,7 +18,6 @@ public:
 
 	//ƒpƒXŒŸõ‚Æ‚©d‚ß‚Ì‹¤’Êˆ—
 	void PathFind(Vector3 start, Vector3 end) { Sleep(1000); };
-
 
 	enum EnState {
 		enIdleState,

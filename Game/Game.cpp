@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Game.h"
-#include "Enemy/EnemyTest.h"
+#include "Player/Player.h"
 
 void Game::Release()
 {
+	DeleteGO(m_player);
 }
 
 void Game::OnDestroy()
@@ -16,6 +17,7 @@ void Game::Awake()
 	cam->SetPosition({ 0,0,10 });
 	cam->SetTarget({ 0,0,0 });
 
+	/*
 	ModelInitData mid;
 	mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
@@ -46,12 +48,12 @@ void Game::Awake()
 	m_test->Init(mid);
 	m_test->SetPosition({ 0,0,0 });
 	m_test->SetScale(g_vec3One);
+	*/
 }
 
 bool Game::Start()
 {
-
-	NewGO<EnemyTest>(0);
+	m_player = NewGO<Player>(0);
 	return true;
 }
 
@@ -61,6 +63,7 @@ void Game::PreUpdate()
 
 void Game::Update()
 {
+	/*
 	Quaternion addR;
 	addR.SetRotationDegY(0.5);
 	auto rot = m_test->GetRotation();
@@ -70,6 +73,7 @@ void Game::Update()
 	addR.SetRotationDegX(0.3);
 	rot.Multiply(addR);
 	m_test->SetRotation(rot);
+	*/
 }
 
 void Game::PostUpdate()
