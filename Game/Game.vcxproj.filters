@@ -21,6 +21,21 @@
     <ClInclude Include="Player\IPlayerSstate.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\IEnemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\IEnemyState.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyIdleState.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyTest.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyBattleState.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -44,6 +59,21 @@
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Enemy\IEnemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\IEnemyState.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyIdleState.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyTest.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyBattleState.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -60,6 +90,9 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{de703569-5717-4754-963a-655926b051ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

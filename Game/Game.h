@@ -61,4 +61,6 @@ private:
 	std::vector<CAnimationClipPtr> m_animlist;
 
 	ModelRender* m_test;
+
+
 };

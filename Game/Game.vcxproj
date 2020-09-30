@@ -176,6 +176,11 @@
     </ImageContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy\EnemyBattleState.h" />
+    <ClInclude Include="Enemy\EnemyIdleState.h" />
+    <ClInclude Include="Enemy\EnemyTest.h" />
+    <ClInclude Include="Enemy\IEnemy.h" />
+    <ClInclude Include="Enemy\IEnemyState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player\IPlayerSstate.h" />
     <ClInclude Include="Player\Player.h" />
@@ -186,6 +191,11 @@
     <ClInclude Include="Test\ThreadTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy\EnemyBattleState.cpp" />
+    <ClCompile Include="Enemy\EnemyIdleState.cpp" />
+    <ClCompile Include="Enemy\EnemyTest.cpp" />
+    <ClCompile Include="Enemy\IEnemy.cpp" />
+    <ClCompile Include="Enemy\IEnemyState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player\IPlayerSstate.cpp" />
