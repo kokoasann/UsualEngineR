@@ -1,17 +1,27 @@
 #include "stdafx.h"
 #include "IEnemy.h"
 #include "IEnemyState.h"
+#include "EnemyIdleState.h"
+#include "EnemyBattleState.h"
+
+void IEnemy::Awake() {
+	m_stateList.resize(EnState::enNumState);
+	m_stateList[enIdleState] = new EnemyIdleState();
+	m_stateList[enBattleState] = new EnemyBattleState();
+}
 
 bool IEnemy::Start() {
+	Init();
 	return true;
 }
 
 void IEnemy::Release() {
-
+	Terminate();
+	std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
 }
 
 void IEnemy::OnDestroy() {
-
+	Release();
 }
 
 void IEnemy::Update() {

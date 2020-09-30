@@ -50,11 +50,6 @@ void Game::Awake()
 
 bool Game::Start()
 {
-	AllocConsole();
-
-	freopen("CON", "r", stdin);
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
 
 	NewGO<EnemyTest>(0);
 	return true;

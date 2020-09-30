@@ -5,11 +5,11 @@ class EnemyIdleState;
 class EnemyTest : public IEnemy
 {
 public:
-	virtual bool Start() override final;
-	virtual void Update() override final;
-	virtual void Release() override final;
-	virtual void OnDestroy() override final;
+	void Init() override;
+	void Execute() override;
+	void Terminate() override;
 private:
-	EnemyIdleState* m_idleState = nullptr;
+	//model
+	//position etc
 };
 
