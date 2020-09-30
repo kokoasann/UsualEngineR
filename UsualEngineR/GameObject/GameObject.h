@@ -5,6 +5,22 @@ namespace UER
 	class GameObject
 	{
 	public:
+		enum ThreadingFunction
+		{
+			tf_None = 0,
+
+			tf_Awake = 1,
+			tf_Start = 2,
+			
+			tf_Update = 4,
+			tf_PreUpdate = 8,
+			tf_PostUpdate = 16,
+
+			tf_Render = 32,
+			tf_PreRender = 64,
+			tf_PostRender = 128,
+		};
+
 		GameObject();
 		virtual ~GameObject();
 
@@ -120,6 +136,19 @@ namespace UER
 			return m_isCreatedInGOM;
 		}
 
+		void SetThreadingFunction(UINT flag)
+		{
+			m_threadingFunctionFlag = flag;
+		}
+		void AddThreadingFunciton(UINT flag)
+		{
+			m_threadingFunctionFlag |= flag;
+		}
+		UINT GetThreadingFunction() const
+		{
+			return m_threadingFunctionFlag;
+		}
+
 	private:
 		bool m_isStartGO = false;			//スタート関数呼ばれた？
 		bool m_isDeadGO = false;			//死んだ？
@@ -130,6 +159,8 @@ namespace UER
 
 		bool m_isTrashTakeGO = true;	//ゴミ拾う？
 		bool m_isCreatedInGOM = false; //ゲームオブジェクトマネージャーで作成された。
+
+		UINT m_threadingFunctionFlag = tf_None;
 	protected:
 	};
 

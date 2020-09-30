@@ -16,6 +16,7 @@ namespace UER
 		GameObjectManager();
 		~GameObjectManager();
 	public:
+		
 
 		void Release();
 
@@ -157,6 +158,9 @@ namespace UER
 		/// <param name="prio">プライオリティ</param>
 		/// <param name="count">カウント</param>
 		void CheckIN(int prio, int count);
+
+		void AddThread(GameObject* obj, void(GameObject::* func)(void));
+		void ReleaseThread();
 	private:
 		static const size_t m_maxSize = 32;					//priorityの最大値。
 		static std::mutex m_newGOPush_Mutex;
@@ -168,6 +172,13 @@ namespace UER
 		std::vector<GameObject*> m_trashBox;				//再利用されるオブジェクトのリスト
 
 		bool m_isReleaseProcess = false;					//全オブジェクトの開放処理中？
+
+		struct ThreadState
+		{
+			ThreadObject* thread;
+
+		};
+		std::vector<ThreadObject*> m_threadList;
 	};
 	extern Lock<GameObjectManager> g_lockGameObjectManager;
 

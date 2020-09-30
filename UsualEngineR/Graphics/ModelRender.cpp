@@ -17,7 +17,7 @@ namespace UER
 	{
 		m_model.Init(initdata);
 
-		m_isRender = true;
+		m_isInit = true;
 	}
 	void ModelRender::InitAnimation(const std::vector<CAnimationClipPtr> &anim, int animNum)
 	{
@@ -27,21 +27,28 @@ namespace UER
 	}
 	void ModelRender::Awake()
 	{
+		SetThreadingFunction(GameObject::tf_Update);
 	}
+
 	void ModelRender::Update()
 	{
-		if (!m_isRender)
+		if (!m_isInit)
+		{
 			return;
+		}
+		m_isRender = true;
 
 		float dtime = gameTime()->GetDeltaTime();
 		m_animation.Progress(dtime);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 		
 		m_model.GetSkelton()->Update(m_model.GetWorldMatrix());
+		
+		
 	}
 	void ModelRender::Render()
 	{
-		if (!m_isRender)
+		if (!m_isRender && !m_isInit)
 			return;
 
 		auto& rc = g_graphicsEngine->GetRenderContext();

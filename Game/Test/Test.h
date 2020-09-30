@@ -6,6 +6,7 @@ class ThreadTest;
 class Test:public GameObject
 {
 public:
+	Test() {}
 	virtual void Release() override;
 	virtual void OnDestroy() override;
 	void Awake() override;
@@ -23,4 +24,11 @@ private:
 
 	ModelRender* m_physicsModel;
 	PhysicsStaticObject m_pso;
+
+	ThreadObject m_threads[50];
+	std::vector<ModelRender*> m_models;
+	Vector3 m_pos = g_vec3Zero;
+	Lock<std::vector<ModelRender*>> m_lockModels = Lock<std::vector<ModelRender*>>(&m_models);
+
+	std::vector<CAnimationClipPtr> m_animlist;
 };
