@@ -211,6 +211,7 @@
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\StructuredBuffer.h" />
     <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\TextureManager.h" />
     <ClInclude Include="Graphics\VertexBuffer.h" />
     <ClInclude Include="HID\GamePad.h" />
     <ClInclude Include="math\Math.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\StructuredBuffer.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\TextureManager.cpp" />
     <ClCompile Include="Graphics\VertexBuffer.cpp" />
     <ClCompile Include="HID\GamePad.cpp" />
     <ClCompile Include="math\Math.cpp" />

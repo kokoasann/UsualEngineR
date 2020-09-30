@@ -17,7 +17,7 @@ namespace UER
 			Physics().RemoveRigidBody(m_rigidBody);
 	}
 
-	void PhysicsStaticObject::CreateMeshObject(const Model& skinModel, Vector3 pos, Quaternion rot, Vector3 sca)
+	void PhysicsStaticObject::CreateMeshObject(const Model& skinModel, const Vector3& pos, const Quaternion& rot, const Vector3& sca)
 	{
 		Matrix mTra, mRot, mSca;
 		mTra.MakeTranslation(pos);

@@ -695,6 +695,15 @@ namespace UER
 			Vector4(x, y, z, w)
 		{
 		}
+
+		//
+		Quaternion(const btQuaternion& bt)
+		{
+			x = bt.x();
+			y = bt.y();
+			z = bt.z();
+			w = bt.w();
+		}
 		/// <summary>
 		/// X軸周りの回転クォータニオンを作成。
 		/// </summary>

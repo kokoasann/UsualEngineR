@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Texture.h"
 
+#include "TextureManager.h"
 
 namespace UER
 {
@@ -12,15 +13,10 @@ namespace UER
 	Texture::~Texture()
 	{
 		if (m_texture) {
-			m_texture->Release();
+			//m_texture->Release();
 		}
 	}
-	void Texture::InitFromDDSFile(const wchar_t* filePath)
-	{
-		//DDSファイルからテクスチャをロード。
-		LoadTextureFromDDSFile(filePath);
-		
-	}
+	
 	void Texture::InitFromD3DResource(ID3D12Resource* texture)
 	{
 		if (m_texture) {
@@ -30,60 +26,58 @@ namespace UER
 		m_texture->AddRef();
 		m_textureDesc = m_texture->GetDesc();
 	}
-	void Texture::InitFromMemory(const char* memory, unsigned int size)
-	{
-		//DDSファイルからテクスチャをロード。
-		LoadTextureFromMemory(memory, size);
 	
-	}
-	void Texture::LoadTextureFromMemory(const char* memory, unsigned int size
-	)
+	void Texture::LoadTextureFromMemory(const char* memory, unsigned int size, const wchar_t* path)
 	{
-		auto device = g_graphicsEngine->GetD3DDevice();
-		DirectX::ResourceUploadBatch re(device);
-		re.Begin();
-		ID3D12Resource* texture;
-		auto hr = DirectX::CreateDDSTextureFromMemoryEx(
-			device,
-			re,
-			(const uint8_t*)memory,
-			size,
-			0,
-			D3D12_RESOURCE_FLAG_NONE,
-			0,
-			&texture
-		);
-		re.End(g_graphicsEngine->GetCommandQueue());
+		//auto device = g_graphicsEngine->GetD3DDevice();
+		//DirectX::ResourceUploadBatch re(device);
+		//re.Begin();
+		//ID3D12Resource* texture;
+		//auto hr = DirectX::CreateDDSTextureFromMemoryEx(
+		//	device,
+		//	re,
+		//	(const uint8_t*)memory,
+		//	size,
+		//	0,
+		//	D3D12_RESOURCE_FLAG_NONE,
+		//	0,
+		//	&texture
+		//);
+		//re.End(g_graphicsEngine->GetCommandQueue());
 	
-		if (FAILED(hr)) {
-			//テクスチャの作成に失敗しました。
-			return;
-		}
+		//if (FAILED(hr)) {
+		//	//テクスチャの作成に失敗しました。
+		//	return;
+		//}
+
+		auto texture = TextureManager::Get().Load(memory, size, path);
 	
 		m_texture = texture;
 		m_textureDesc = m_texture->GetDesc();
 	}
 	void Texture::LoadTextureFromDDSFile(const wchar_t* filePath)
 	{
-		auto device = g_graphicsEngine->GetD3DDevice();
-		DirectX::ResourceUploadBatch re(device);
-		re.Begin();
-		ID3D12Resource* texture;
-		auto hr = DirectX::CreateDDSTextureFromFileEx(
-			device,
-			re,
-			filePath,
-			0,
-			D3D12_RESOURCE_FLAG_NONE,
-			0,
-			&texture
-		);
-		re.End(g_graphicsEngine->GetCommandQueue());
+		//auto device = g_graphicsEngine->GetD3DDevice();
+		//DirectX::ResourceUploadBatch re(device);
+		//re.Begin();
+		//ID3D12Resource* texture;
+		//auto hr = DirectX::CreateDDSTextureFromFileEx(
+		//	device,
+		//	re,
+		//	filePath,
+		//	0,
+		//	D3D12_RESOURCE_FLAG_NONE,
+		//	0,
+		//	&texture
+		//);
+		//re.End(g_graphicsEngine->GetCommandQueue());
 	
-		if (FAILED(hr)) {
-			//テクスチャの作成に失敗しました。
-			return;
-		}
+		//if (FAILED(hr)) {
+		//	//テクスチャの作成に失敗しました。
+		//	return;
+		//}
+
+		auto texture = TextureManager::Get().Load(filePath);
 	
 		m_texture = texture;
 		m_textureDesc = m_texture->GetDesc();
