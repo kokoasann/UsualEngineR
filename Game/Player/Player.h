@@ -71,7 +71,14 @@ public:
 	};
 
 private:
-	IPlayerState* m_playerState = nullptr;
+	//State
+	IPlayerState* m_nextState = nullptr;
 	IPlayerState* m_currentState = nullptr;
 	std::vector<IPlayerState*> m_stateList;
+
+	//Model
+	ModelRender* m_model = nullptr;
+	CAnimationClip m_animClip[1];
+	std::vector<CAnimationClipPtr> m_animlist;
+
 };

@@ -16,6 +16,14 @@ void PlayerGroundState::Enter(Player* p){
 }
 
 IPlayerState* PlayerGroundState::Update(Player* p) {
+	//Move
+	auto lxf = g_pad[0]->GetLStickXF();
+	auto lyf = g_pad[0]->GetLStickYF();
+
+	m_vecVelocityGoal.x = lxf;
+	m_vecVelocityGoal.z = lyf;
+
+
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		 auto nextState =  p->GetState(Player::EnState::enFlying);
 		return nextState;

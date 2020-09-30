@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlayerFlyingState.h"
+#include "Player.h"
 
 PlayerFlyingState::PlayerFlyingState()
 {
@@ -16,6 +17,10 @@ void PlayerFlyingState::Enter(Player* p) {
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
+		auto nextState = p->GetState(Player::EnState::enGround);
+		return nextState;
+	}
 	return this;
 }
 

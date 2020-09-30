@@ -49,7 +49,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	bool isInit = false;
 	
 	//NewGO<Game>(0);
-	NewGO<Test>(0);
+	NewGO<Game>(0);
 
 	g_engine->GameLoop();
 	
