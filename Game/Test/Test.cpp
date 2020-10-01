@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Test.h"
 #include "ThreadTest.h"
-#include "level/Level.h"
+
 
 void Test::Release()
 {
@@ -16,14 +16,14 @@ void Test::Awake()
 {
 	{
 		auto cam = g_lockCamera3D.Get();
-		cam->SetPosition({ 0,0,50 });
+		cam->SetPosition({ 0,20,10 });
 		cam->SetTarget({ 0,0,0 });
 	}
 
-	m_threadObj.Execute([&]()
+	/*m_threadObj.Execute([&]()
 		{
 			m_threadTest = NewGO<ThreadTest>(0);
-		});
+		});*/
 	
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
@@ -74,14 +74,61 @@ void Test::Awake()
 	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[0]->SetLoopFlag(true);
 
-	Level level;
-	level.Init("Assets/level/map_level.tkl",[&](LevelObjectData& objData)->bool
-		{
-			objData.name;
-			return false;
-		});
 	
-	m_threads[0].Execute([&]()
+	m_threads[1].Execute([&]()
+		{
+			Stopwatch sw;
+			sw.Start();
+			ModelInitData mid;
+			mid.m_upAxis = EUpAxis::enUpAxisZ;
+			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsEntryPointFunc = "VSMain";
+			mid.m_psEntryPointFunc = "PSMain";
+			m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
+				{
+					std::string name(objData.name.begin(), objData.name.end());
+					char filePath[256];
+					sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
+					ModelRender* mr = NewGO<ModelRender>(0);
+					mid.m_tkmFilePath = filePath;
+					mr->Init(mid);
+					m_mapmodel.push_back(mr);
+					return true;
+				});
+			m_isEndLoad = true;
+			m_loadTime = sw.Stop();
+		});
+	/*m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			std::string name(objData.name.begin(), objData.name.end());
+			m_tkms.push_back(std::move(name));
+			return true;
+		});
+	for (int i = 0; i < 10; i++)
+	{
+		m_threads[i].Execute([&,i]()
+			{
+				ModelInitData mid;
+				mid.m_upAxis = EUpAxis::enUpAxisZ;
+				mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+				mid.m_vsEntryPointFunc = "VSMain";
+				mid.m_psEntryPointFunc = "PSMain";
+
+				for (int j = 0; j < 10; j++)
+				{
+					char filePath[256];
+					sprintf_s(filePath, "Assets/modelData/map/%s.tkm", m_tkms[i*10+j].c_str());
+					mid.m_tkmFilePath = filePath;
+					ModelRender* mr = NewGO<ModelRender>(0);
+
+					mr->Init(mid);
+					std::lock_guard<std::mutex>lock (m_loadMutex);
+					m_mapmodel.push_back(mr);
+				}
+			});
+	}*/
+
+	/*m_threads[0].Execute([&]()
 		{
 			ModelInitData mid;
 			mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
@@ -103,7 +150,7 @@ void Test::Awake()
 
 				m_pos += Vector3{2, 0, 2};
 			}
-		});
+		});*/
 }
 
 void Test::Update()
@@ -111,4 +158,15 @@ void Test::Update()
 	auto& trans = m_rb.GetBody()->getWorldTransform();
 	m_pModel->SetPosition(trans.getOrigin());
 	m_pModel->SetRotation(trans.getRotation());
+
+	auto cam = g_lockCamera3D.Get();
+	Quaternion rot;
+	rot.SetRotationDegY(0.5f);
+	auto pos = cam->GetPosition();
+	rot.Apply(pos);
+	cam->SetPosition(pos);
+}
+
+void Test::Render()
+{
 }

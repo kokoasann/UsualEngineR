@@ -108,5 +108,8 @@
     <ImageContentTask Include="Assets\modelData\test\test.png">
       <Filter>Assets\modelData\test</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
+      <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>
