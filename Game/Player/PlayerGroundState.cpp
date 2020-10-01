@@ -4,12 +4,10 @@
 
 PlayerGroundState::PlayerGroundState()
 {
-
 }
 
 PlayerGroundState::~PlayerGroundState()
 {
-
 }
 
 void PlayerGroundState::Enter(Player* p){
@@ -21,14 +19,14 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
 
-	m_vecVelocityGoal.x = lxf * -m_MAX_VELOCITY;
-	m_vecVelocityGoal.z = lyf * -m_MAX_VELOCITY;
+	m_vecVelocityGoal.x = lxf * -m_VELOCITY_MAX;
+	m_vecVelocityGoal.z = lyf * -m_VELOCITY_MAX;
 
 	if (g_pad[0]->IsPress(enButtonLeft)) {
-		m_vecVelocityGoal.x = m_MAX_VELOCITY;
+		m_vecVelocityGoal.x = m_VELOCITY_MAX;
 	}
 	if (g_pad[0]->IsPress(enButtonRight)) {
-		m_vecVelocityGoal.x = -m_MAX_VELOCITY;
+		m_vecVelocityGoal.x = -m_VELOCITY_MAX;
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
