@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Player/Player.h"
 #include "Enemy/EnemyTest.h"
+#include "Camera/GameCamera.h"
 
 void Game::Release()
 {
@@ -18,10 +19,6 @@ void Game::Awake()
 	freopen("CON", "r", stdin);
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
-
-	auto cam = g_lockCamera3D.Get();
-	cam->SetPosition({ 0,0,10 });
-	cam->SetTarget({ 0,0,0 });
 
 	/*
 	ModelInitData mid;
@@ -60,11 +57,17 @@ void Game::Awake()
 bool Game::Start()
 {
 	m_player = NewGO<Player>(0);
+	m_camera = NewGO<GameCamera>(0);
+	auto tarPos = m_player->GetPosition();
+	m_camera->SetTarget(tarPos);
+
 	return true;
 }
 
 void Game::PreUpdate()
 {
+	auto tarPos = m_player->GetPosition();
+	m_camera->SetTarget(tarPos);
 }
 
 void Game::Update()

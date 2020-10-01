@@ -176,6 +176,7 @@
     </ImageContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\GameCamera.h" />
     <ClInclude Include="Enemy\EnemyBattleState.h" />
     <ClInclude Include="Enemy\EnemyIdleState.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Test\ThreadTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\GameCamera.cpp" />
     <ClCompile Include="Enemy\EnemyBattleState.cpp" />
     <ClCompile Include="Enemy\EnemyIdleState.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />

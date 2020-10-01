@@ -36,6 +36,9 @@
     <ClInclude Include="Enemy\EnemyBattleState.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Camera\GameCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -74,6 +77,9 @@
     <ClCompile Include="Enemy\EnemyBattleState.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Camera\GameCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -93,6 +99,9 @@
     </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
