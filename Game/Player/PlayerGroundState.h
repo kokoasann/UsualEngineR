@@ -13,9 +13,12 @@ public:
 	void Enter(Player*) override;
 	IPlayerState* Update(Player*) override;
 	void Exit(Player*) override;
+
 private:
+	const float m_MAX_VELOCITY = 20.f;
+	const float m_QUICKNESS = 40.f;
+
 	float Approach(float goal, float current, float dt);
-	Vector3 Approach(Vector3 goal, Vector3 current, float dt);
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_vecVelocityGoal = Vector3::Zero;
 };

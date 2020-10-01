@@ -59,7 +59,7 @@ void Game::Awake()
 
 bool Game::Start()
 {
-	m_player = NewGO<EnemyTest>(0);
+	m_player = NewGO<Player>(0);
 	return true;
 }
 

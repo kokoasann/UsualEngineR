@@ -64,5 +64,5 @@ private:
 
 	ModelRender* m_test;
 
-	EnemyTest* m_player = nullptr;
+	Player* m_player = nullptr;
 };
