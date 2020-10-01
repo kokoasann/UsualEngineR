@@ -17,8 +17,6 @@ public:
 private:
 	const float m_MAX_VELOCITY = 20.f;
 	const float m_QUICKNESS = 40.f;
-
-	float Approach(float goal, float current, float dt);
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_vecVelocityGoal = Vector3::Zero;
 };

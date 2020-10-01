@@ -13,10 +13,17 @@ PlayerFlyingState::~PlayerFlyingState()
 }
 
 void PlayerFlyingState::Enter(Player* p) {
-	printf("fly enter\n");
+	printf("Enter Flying\n");
+
+
+
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
+
+
+
+
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		auto nextState = p->GetState(Player::EnState::enGround);
 		return nextState;
@@ -25,5 +32,5 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 }
 
 void PlayerFlyingState::Exit(Player* p) {
-	printf("Fly Exit\n");
+	printf("Exit Flying\n");
 }

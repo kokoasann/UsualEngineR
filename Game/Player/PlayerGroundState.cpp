@@ -24,22 +24,20 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	m_vecVelocityGoal.x = lxf * -m_MAX_VELOCITY;
 	m_vecVelocityGoal.z = lyf * -m_MAX_VELOCITY;
 
-	/*
-	if (g_pad[0]->IsPress(enButtonA)) {
-		m_vecVelocityGoal.x = 20;
+	if (g_pad[0]->IsPress(enButtonLeft)) {
+		m_vecVelocityGoal.x = m_MAX_VELOCITY;
 	}
-	if (g_pad[0]->IsPress(enButtonB)) {
-		m_vecVelocityGoal.x = -20;
+	if (g_pad[0]->IsPress(enButtonRight)) {
+		m_vecVelocityGoal.x = -m_MAX_VELOCITY;
 	}
-	*/
 
 	auto delta = gameTime()->GetDeltaTime();
 
 	m_velocity.x = Approach(m_vecVelocityGoal.x, m_velocity.x, delta * m_QUICKNESS);
 	m_velocity.z = Approach(m_vecVelocityGoal.z, m_velocity.z, delta * m_QUICKNESS);
 
-	auto nextPos = p->GetPosition() + m_velocity * gameTime()->GetDeltaTime();
-	p->SetPosition(nextPos);
+	auto vel = m_velocity * gameTime()->GetDeltaTime() * p->GetSpeed();
+	p->SetVelocity(vel);
 	
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		 auto nextState =  p->GetState(Player::EnState::enFlying);
@@ -51,15 +49,4 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 void PlayerGroundState::Exit(Player* p) {
 	printf("Exit Ground\n");
-}
-
-float PlayerGroundState::Approach(float goal, float current, float dt) {
-	auto diff = goal - current;
-	if (diff > dt) {
-		return current + dt;
-	}
-	if (diff < dt) {
-		return current - dt;
-	}	
-	return goal;
 }

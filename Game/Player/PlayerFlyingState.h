@@ -14,5 +14,6 @@ public:
 	IPlayerState* Update(Player*) override;
 	void Exit(Player*) override;
 private:
-
+	const float m_MAX_VELOCITY = 20.f;
+	const float m_QUICKNESS = 40.f;
 };

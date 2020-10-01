@@ -1,5 +1,6 @@
 #pragma once
 #include "IPlayerSstate.h"
+#include "../../UsualEngineR/Character/CharacterController.h"
 
 /// <summary>
 /// 
@@ -80,6 +81,15 @@ public:
 	void SetPosition(Vector3& pos) {
 		m_position = pos;
 	}
+
+	void SetVelocity(Vector3& velocity) {
+		m_velocity = velocity;
+	}
+
+	const float GetSpeed() const {
+		return m_speed;
+	}
+
 private:
 	//State
 	IPlayerState* m_nextState = nullptr;
@@ -91,4 +101,10 @@ private:
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
 	Vector3 m_position = Vector3::Zero;
+
+	//Move
+	CharacterController m_charaCon;
+	Vector3 m_velocity = Vector3::Zero;
+	float m_speed = 100.f;
+
 };
