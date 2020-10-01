@@ -6,12 +6,6 @@
 
 Player::Player()
 {
-	/*
-	AllocConsole();
-	freopen("CON", "r", stdin);
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
-	*/
 }
 
 Player::~Player()
@@ -24,13 +18,13 @@ Player::~Player()
 void Player::Release()
 {
 	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
+	DeleteGO(m_model);
 }
 
 void Player::OnDestroy()
 {
 	Release();
 }
-
 
 
 void Player::Awake()
@@ -66,6 +60,8 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[EnState::enGround];
 	m_nextState->Enter(this);
 
+	m_charaCon.Init(5, 15, m_position, /*isUseRigidBody */ true);
+
 	return true;
 }
 
@@ -73,7 +69,9 @@ bool Player::Start()
 
 void Player::PreUpdate()
 {
-
+	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
+	m_position = m_charaCon.GetPosition();
+	m_model->SetPosition(m_position);
 }
 
 void Player::Update()

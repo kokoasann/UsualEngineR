@@ -9,7 +9,9 @@ public:
 	void Execute() override;
 	void Terminate() override;
 private:
-	//model
-	//position etc
+	//Model
+	ModelRender* m_model = nullptr;
+	CAnimationClip m_animClip[1];
+	std::vector<CAnimationClipPtr> m_animlist;
 };
 

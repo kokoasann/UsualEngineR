@@ -1,5 +1,8 @@
 #pragma once
 class Player;
+class EnemyTest;
+class GameCamera;
+
 /// <summary>
 /// ÉQÅ[ÉÄ
 /// </summary>
@@ -62,5 +65,6 @@ private:
 
 	ModelRender* m_test;
 
+	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
 };
