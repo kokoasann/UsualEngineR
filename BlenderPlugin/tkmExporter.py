@@ -290,6 +290,7 @@ class PT_Panel(bpy.types.Panel):
     def draw(self, context):
         #print(type(context))
         self.layout.operator("tkmexporter.export")
+        self.layout.operator("tkmexporter.exportselect")
         
         row = self.layout.row()
         row.prop(context.object.MaterialProps,"texture_alb",text="albedo")
@@ -323,6 +324,26 @@ class OT_Export(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class OT_ExportSelect(bpy.types.Operator):
+    bl_idname = "tkmexporter.exportselect"
+    bl_label = "Export Select Material"
+    
+    filename_ext = ".tkm"
+    filepath : StringProperty(subtype = "FILE_PATH")
+    
+    def invoke(self,context,event):
+        filepath = "untitle"+self.filename_ext
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}
+
+    def execute(self,context):
+        objs = bpy.context.selected_objects
+        for i,obj in enumerate(objs):
+            path = self.filepath[:self.filepath.rfind(".")]
+            path += "_"+str(i)+self.filename_ext
+            with open(path,"wb") as f:
+                build_data(obj,f)
+        return {"FINISHED"}
 
 class OT_OpenTexture(bpy.types.Operator):
     bl_idname = "tkmexporter.open_texture"
@@ -373,6 +394,7 @@ class OT_OpenSpecular(bpy.types.Operator):
 classs = (
     PT_Panel,
     OT_Export,
+    OT_ExportSelect,
     OT_OpenTexture,
     OT_OpenNormal,
     OT_OpenSpecular,

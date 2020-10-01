@@ -25,7 +25,7 @@ private:
 	ModelRender* m_physicsModel;
 	PhysicsStaticObject m_pso;
 
-	ThreadObject m_threads[50];
+	ThreadObject m_threads[1];
 	std::vector<ModelRender*> m_models;
 	Vector3 m_pos = g_vec3Zero;
 	Lock<std::vector<ModelRender*>> m_lockModels = Lock<std::vector<ModelRender*>>(&m_models);

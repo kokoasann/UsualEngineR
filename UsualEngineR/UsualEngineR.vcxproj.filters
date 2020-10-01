@@ -208,6 +208,12 @@
     <ClInclude Include="Graphics\TextureManager.h">
       <Filter>Graphics\2D</Filter>
     </ClInclude>
+    <ClInclude Include="level\Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="level\MapChip.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -388,6 +394,12 @@
     <ClCompile Include="Graphics\TextureManager.cpp">
       <Filter>Graphics\2D</Filter>
     </ClCompile>
+    <ClCompile Include="level\Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="level\MapChip.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -440,6 +452,9 @@
     </Filter>
     <Filter Include="Graphics\Raytracing">
       <UniqueIdentifier>{4880cfae-f556-4c50-a939-c6726168234e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{94e28a51-9d7a-4b38-b6e6-049d3a72652c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

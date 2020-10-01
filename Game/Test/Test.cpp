@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Test.h"
 #include "ThreadTest.h"
+#include "level/Level.h"
 
 void Test::Release()
 {
@@ -72,19 +73,25 @@ void Test::Awake()
 	m_animlist[0]->Load("Assets/anim/unityChan/walk.tka");
 	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[0]->SetLoopFlag(true);
+
+	Level level;
+	level.Init("Assets/level/map_level.tkl",[&](LevelObjectData& objData)->bool
+		{
+			objData.name;
+			return false;
+		});
 	
-	
-	for (int i = 0; i < 50; i++)
-	{
-		m_threads[i].Execute([&]()
+	m_threads[0].Execute([&]()
+		{
+			ModelInitData mid;
+			mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
+			mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
+			mid.m_upAxis = EUpAxis::enUpAxisY;
+			mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
+			mid.m_vsEntryPointFunc = "VSMain";
+			mid.m_psEntryPointFunc = "PSMain";
+			for (int i = 0; i < 50; i++)
 			{
-				ModelInitData mid;
-				mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
-				mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
-				mid.m_upAxis = EUpAxis::enUpAxisY;
-				mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
-				mid.m_vsEntryPointFunc = "VSMain";
-				mid.m_psEntryPointFunc = "PSMain";
 				auto m = NewGO<ModelRender>(0);
 				m->Init(mid);
 				m->SetPosition(m_pos);
@@ -95,8 +102,8 @@ void Test::Awake()
 				list->push_back(m);
 
 				m_pos += Vector3{2, 0, 2};
-			});
-	}
+			}
+		});
 }
 
 void Test::Update()

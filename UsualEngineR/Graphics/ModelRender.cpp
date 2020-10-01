@@ -27,7 +27,7 @@ namespace UER
 	}
 	void ModelRender::Awake()
 	{
-		SetThreadingFunction(GameObject::tf_Update);
+		//SetThreadingFunction(GameObject::tf_Update);
 	}
 
 	void ModelRender::Update()
@@ -48,7 +48,7 @@ namespace UER
 	}
 	void ModelRender::Render()
 	{
-		if (!m_isRender && !m_isInit)
+		if (!m_isRender || !m_isInit)
 			return;
 
 		auto& rc = g_graphicsEngine->GetRenderContext();

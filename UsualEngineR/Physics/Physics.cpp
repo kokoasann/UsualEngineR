@@ -58,13 +58,17 @@ namespace UER
 	}
 	void PhysicsWorld::AddRigidBody(RigidBody & rb)
 	{
+		std::lock_guard<std::mutex> lg(m_physicsWorld_mutex);
 		dynamicWorld->addRigidBody(rb.GetBody());
 	}
 	void PhysicsWorld::RemoveRigidBody(RigidBody & rb)
 	{
 		auto body = rb.GetBody();
-		if(body != nullptr)
+		if (body != nullptr)
+		{
+			std::lock_guard<std::mutex> lg(m_physicsWorld_mutex);
 			dynamicWorld->removeRigidBody(body);
+		}
 	}
 	void PhysicsWorld::DebugDraw()
 	{

@@ -16,6 +16,8 @@ namespace UER
 		btDiscreteDynamicsWorld* dynamicWorld = nullptr;			//!<ƒ[ƒ‹ƒhB
 
 		PhysicsDebugDraw m_debugDraw;
+
+		std::mutex m_physicsWorld_mutex;
 	public:
 		~PhysicsWorld();
 		void Init();
