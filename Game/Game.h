@@ -1,5 +1,7 @@
 #pragma once
 class Player;
+class EnemyTest;
+
 /// <summary>
 /// ÉQÅ[ÉÄ
 /// </summary>
@@ -62,5 +64,5 @@ private:
 
 	ModelRender* m_test;
 
-	Player* m_player = nullptr;
+	EnemyTest* m_player = nullptr;
 };

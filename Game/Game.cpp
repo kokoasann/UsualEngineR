@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 #include "Player/Player.h"
+#include "Enemy/EnemyTest.h"
 
 void Game::Release()
 {
@@ -13,6 +14,11 @@ void Game::OnDestroy()
 
 void Game::Awake()
 {
+	AllocConsole();
+	freopen("CON", "r", stdin);
+	freopen("CON", "w", stdout);
+	freopen("CON", "w", stderr);
+
 	auto cam = g_lockCamera3D.Get();
 	cam->SetPosition({ 0,0,10 });
 	cam->SetTarget({ 0,0,0 });
@@ -53,7 +59,7 @@ void Game::Awake()
 
 bool Game::Start()
 {
-	m_player = NewGO<Player>(0);
+	m_player = NewGO<EnemyTest>(0);
 	return true;
 }
 

@@ -29,14 +29,25 @@ public:
 		return m_stateList[state];
 	}
 
+	void SetPosition(Vector3& pos) 
+	{
+		m_position = pos;
+	}
+
+	const Vector3& GetPosition() const {
+		return m_position;
+	}
+
 protected:
 
 	void SetState(IEnemyState* s);
 
 	std::vector<IEnemyState*> m_stateList;
+	Vector3 m_position;
 
 private:
 	IEnemyState* m_currentState = nullptr;
 	IEnemyState* m_nextState = nullptr;
+
 };
 

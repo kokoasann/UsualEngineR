@@ -25,6 +25,7 @@ void IEnemy::OnDestroy() {
 }
 
 void IEnemy::Update() {
+	Execute();
 	m_nextState = m_currentState->Update(this);
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);

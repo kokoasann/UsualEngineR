@@ -6,12 +6,6 @@
 
 Player::Player()
 {
-	/*
-	AllocConsole();
-	freopen("CON", "r", stdin);
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
-	*/
 }
 
 Player::~Player()
@@ -73,7 +67,7 @@ bool Player::Start()
 
 void Player::PreUpdate()
 {
-
+	m_model->SetPosition(m_position);
 }
 
 void Player::Update()
