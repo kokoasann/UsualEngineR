@@ -82,13 +82,24 @@ namespace UER
 		{
 			for (auto go : goList)
 			{
+				if (go->GetThreadingFunction() & GameObject::tf_Start)
+				{
+					AddThread(go, &GameObject::WrapStart);
+				}
+				else
+				{
+					go->WrapStart();
+				}
+
+
 				if (!go->IsStart() && !go->IsDead())
 				{
-					if (go->Start())
-						go->DoneStart();
 				}
 			}
 		}
+
+		ReleaseThread();
+		
 	}
 
 	void GameObjectManager::DeleteGameObject(GameObject* go)
@@ -106,23 +117,56 @@ namespace UER
 		{
 			for (auto go : goList)
 			{
-				go->WrapPreUpdate();
+				if (go->GetThreadingFunction() & GameObject::tf_PreUpdate)
+				{
+					AddThread(go, &GameObject::WrapPreUpdate);
+				}
+				else
+				{
+					go->WrapPreUpdate();
+				}
 			}
 		}
+
+		ReleaseThread();
+
+
 		for (auto& goList : m_gameObjectList)
 		{
 			for (auto go : goList)
 			{
-				go->WrapUpdate();
+				if (go->GetThreadingFunction() & GameObject::tf_Update)
+				{
+					AddThread(go, &GameObject::WrapUpdate);
+				}
+				else
+				{
+					go->Update();
+				}
+				
 			}
 		}
+
+		ReleaseThread();
+
+
 		for (auto& goList : m_gameObjectList)
 		{
 			for (auto go : goList)
 			{
-				go->WrapPostUpdate();
+				if (go->GetThreadingFunction() & GameObject::tf_PostUpdate)
+				{
+					AddThread(go, &GameObject::WrapPostUpdate);
+				}
+				else
+				{
+					go->WrapPostUpdate();
+				}
 			}
 		}
+
+		ReleaseThread();
+
 		
 		//Ž€‚ñ‚¾“z‚Ìˆ—B
 		for (auto& goList : m_gameObjectList)
@@ -179,8 +223,6 @@ namespace UER
 				go->Render();
 			}
 		}
-
-		
 	}
 
 	void GameObjectManager::UpdatePostRender()
@@ -212,5 +254,39 @@ namespace UER
 	void GameObjectManager::CheckIN(int prio, int count)
 	{
 		m_checkInCountList[prio] += count;
+	}
+
+
+	void GameObjectManager::AddThread(GameObject* obj, void(GameObject::* func)(void))
+	{
+		ThreadObject* thread = nullptr;
+		for (auto th : m_threadList)
+		{
+			if (th->IsEnd())
+			{
+				th->Release();
+				thread = th;
+				break;
+			}
+		}
+
+		if (thread == nullptr)
+		{
+			thread = new ThreadObject();
+			m_threadList.push_back(thread);
+		}
+
+		thread->Execute([obj,func]()
+			{
+				(obj->*func)();
+			});
+	}
+
+	void GameObjectManager::ReleaseThread()
+	{
+		for (auto th : m_threadList)
+		{
+			th->Release();
+		}
 	}
 }

@@ -15,14 +15,14 @@ void Test::Awake()
 {
 	{
 		auto cam = g_lockCamera3D.Get();
-		cam->SetPosition({ 10,0,0 });
+		cam->SetPosition({ 0,0,50 });
 		cam->SetTarget({ 0,0,0 });
 	}
 
-	/*m_threadObj.Execute([&]()
+	m_threadObj.Execute([&]()
 		{
 			m_threadTest = NewGO<ThreadTest>(0);
-		});*/
+		});
 	
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
@@ -48,7 +48,7 @@ void Test::Awake()
 
 	Matrix tra, sca, rot;
 	tra.MakeTranslation(m_pModel->GetPosition());
-	tra = g_matIdentity;
+	//tra = g_matIdentity;
 	sca.MakeScaling(m_pModel->GetScale());
 	rot.MakeRotationFromQuaternion(m_pModel->GetRotation());
 
@@ -58,7 +58,7 @@ void Test::Awake()
 
 	m_meshColl.CreateFromSkinModel(m_pModel->GetModel(),&mat);
 	m_sphere.Create(1);
-	m_box.Create(g_vec3One*2.f);
+	m_box.Create(m_pModel->GetScale() *2.f);
 	RigidBodyInfo info;
 	info.collider = &m_box;
 	info.mass = 1;
@@ -66,7 +66,37 @@ void Test::Awake()
 	
 	m_rb.Create(info);
 	Physics().AddRigidBody(m_rb);
+
+	m_animlist.resize(1);
+	m_animlist[0] = std::make_unique<CAnimationClip>();
+	m_animlist[0]->Load("Assets/anim/unityChan/walk.tka");
+	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[0]->SetLoopFlag(true);
 	
+	
+	for (int i = 0; i < 50; i++)
+	{
+		m_threads[i].Execute([&]()
+			{
+				ModelInitData mid;
+				mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
+				mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
+				mid.m_upAxis = EUpAxis::enUpAxisY;
+				mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
+				mid.m_vsEntryPointFunc = "VSMain";
+				mid.m_psEntryPointFunc = "PSMain";
+				auto m = NewGO<ModelRender>(0);
+				m->Init(mid);
+				m->SetPosition(m_pos);
+				m->SetScale(g_vec3One * 0.05);
+				m->InitAnimation(m_animlist, m_animlist.size());
+
+				auto list = m_lockModels.Get();
+				list->push_back(m);
+
+				m_pos += Vector3{2, 0, 2};
+			});
+	}
 }
 
 void Test::Update()

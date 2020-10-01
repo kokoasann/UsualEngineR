@@ -15,8 +15,6 @@ namespace UER
 	{
 		//std::lock_guard<std::mutex> lg(debugMute);
 		
-		Stopwatch ts;
-		ts.Start();
 
 		m_upAxis = initData.m_upAxis;
 
@@ -29,26 +27,17 @@ namespace UER
 		}
 		mbstowcs(wfxFilePath, initData.m_fxFilePath, 256);
 	
-
-		
-		Stopwatch sw;
-		sw.Start();
-
 		m_tkmFile = TkmFile::GetManager().Load(initData.m_tkmFilePath);
 		//m_tkmFile.Load(initData.m_tkmFilePath);
 
-		tkmtime.push_back(sw.Stop());
-
-		sw.Start();
+		
 		if (initData.m_tksFilePath)
 		{
 			m_skeleton.Init(initData.m_tksFilePath);
 			m_skeleton.BuildBoneMatrices();
 			BindSkeleton(m_skeleton);
 		}
-		tkstime.push_back(sw.Stop());
-
-		sw.Start();
+		
 		m_meshParts.InitFromTkmFile(
 			*m_tkmFile, 
 			wfxFilePath, 
@@ -58,14 +47,9 @@ namespace UER
 			initData.m_expandConstantBufferSize,
 			initData.m_expandShaderResoruceView
 		);
-		meshtime.push_back(sw.Stop());
-		
 
 		UpdateWorldMatrix(g_vec3Zero, g_quatIdentity, g_vec3One);
 
-
-		totaltime.push_back(ts.Stop());
-		
 
 	}
 	

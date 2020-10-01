@@ -87,6 +87,7 @@ namespace UER
 		Vector3 m_scale = Vector3::One;					//‘å‚«‚³
 		Quaternion m_rotation = Quaternion::Identity;	//‰ñ“]B
 
+		bool m_isInit = false;
 		bool m_isRender = false;	//ƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚é?
 	};
 }
