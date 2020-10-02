@@ -39,7 +39,7 @@ void Player::Awake()
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
-	m_model->SetScale(g_vec3One * 0.05);
+	m_model->SetScale(Vector3::One * m_scale);
 	m_animlist.resize(1);
 	m_animlist[0] = std::make_unique<CAnimationClip>();
 	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");
@@ -48,6 +48,7 @@ void Player::Awake()
 
 	m_model->InitAnimation(m_animlist, 1);
 	m_model->Play(0);
+
 }
 
 bool Player::Start()

@@ -100,7 +100,8 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-	Vector3 m_position = Vector3::Zero;
+	Vector3 m_position = { 0,5,0 };
+	const float m_scale = 0.05f;
 
 	//Move
 	CharacterController m_charaCon;

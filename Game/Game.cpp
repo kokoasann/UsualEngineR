@@ -7,6 +7,7 @@
 void Game::Release()
 {
 	DeleteGO(m_player);
+	std::for_each(m_mapmodel.begin(), m_mapmodel.end(), [](ModelRender* model) { DeleteGO(model); });
 }
 
 void Game::OnDestroy()
@@ -19,6 +20,32 @@ void Game::Awake()
 	freopen("CON", "r", stdin);
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
+
+
+	m_threadForLevel.Execute([&]()
+		{
+			Stopwatch sw;
+			sw.Start();
+			ModelInitData mid;
+			mid.m_upAxis = EUpAxis::enUpAxisZ;
+			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsEntryPointFunc = "VSMain";
+			mid.m_psEntryPointFunc = "PSMain";
+			m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
+				{
+					std::string name(objData.name.begin(), objData.name.end());
+					char filePath[256];
+					sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
+					ModelRender* mr = NewGO<ModelRender>(0);
+					mr->SetScale(Vector3::One * m_levelScale);
+					mid.m_tkmFilePath = filePath;
+					mr->Init(mid);
+					m_mapmodel.push_back(mr);
+					return true;
+				});
+			//m_isEndLoad = true;
+		});
+
 
 	/*
 	ModelInitData mid;
@@ -66,12 +93,13 @@ bool Game::Start()
 
 void Game::PreUpdate()
 {
-	auto tarPos = m_player->GetPosition();
-	m_camera->SetTarget(tarPos);
 }
 
 void Game::Update()
 {
+
+
+
 	/*
 	Quaternion addR;
 	addR.SetRotationDegY(0.5);
@@ -87,6 +115,8 @@ void Game::Update()
 
 void Game::PostUpdate()
 {
+	auto tarPos = m_player->GetPosition();
+	m_camera->SetTarget(tarPos);
 }
 
 void Game::Render()
