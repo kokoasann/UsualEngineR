@@ -36,8 +36,10 @@ private:
 	Level m_level;
 	std::vector<ModelRender*> m_mapmodel;
 	std::vector<std::string> m_tkms;
+	Model m_mapPhysicsList[100];
+	PhysicsStaticObject m_mapPSOList[100];
 	std::mutex m_loadMutex;
-	int m_count;
+	int m_count = 0;
 	bool m_isEndLoad = false;
 	float m_loadTime = 0.0f;
 };

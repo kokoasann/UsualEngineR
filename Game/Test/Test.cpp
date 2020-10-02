@@ -43,7 +43,7 @@ void Test::Awake()
 	mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
 	m_pModel = NewGO<ModelRender>(0);
 	m_pModel->Init(mid);
-	m_pModel->SetPosition({ 0,10,0 });
+	m_pModel->SetPosition({ 0,500,0 });
 	m_pModel->SetScale(g_vec3One);
 
 
@@ -75,7 +75,7 @@ void Test::Awake()
 	m_animlist[0]->SetLoopFlag(true);
 
 	
-	m_threads[1].Execute([&]()
+	m_threads[0].Execute([&]()
 		{
 			Stopwatch sw;
 			sw.Start();
@@ -93,6 +93,33 @@ void Test::Awake()
 					mid.m_tkmFilePath = filePath;
 					mr->Init(mid);
 					m_mapmodel.push_back(mr);
+					return true;
+				});
+			m_isEndLoad = true;
+			m_loadTime = sw.Stop();
+		});
+
+	m_threads[1].Execute([&]()
+		{
+			Stopwatch sw;
+			sw.Start();
+			ModelInitData mid;
+			mid.m_upAxis = EUpAxis::enUpAxisZ;
+			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsEntryPointFunc = "VSMain";
+			mid.m_psEntryPointFunc = "PSMain";
+
+			m_level.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
+				{
+					std::string name(objData.name.begin(), objData.name.end());
+					char filePath[256];
+					sprintf_s(filePath, "Assets/modelData/map_physics/%s.tkm", name.c_str());
+					mid.m_tkmFilePath = filePath;
+
+					Model model;
+					model.Init(mid);
+					m_mapPSOList[m_count].CreateMeshObject(model, objData.position, objData.rotation, objData.scale);
+					m_count++;
 					return true;
 				});
 			m_isEndLoad = true;
