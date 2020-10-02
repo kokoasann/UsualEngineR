@@ -22,6 +22,10 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	m_vecVelocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_vecVelocityGoal.z = lyf * m_VELOCITY_MAX;
 
+	if (g_pad[0]->IsPress(enButtonX)) {
+		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
+	}
+
 	auto delta = gameTime()->GetDeltaTime();
 	m_velocity.x = Approach(m_vecVelocityGoal.x, m_velocity.x, delta * m_QUICKNESS);
 	m_velocity.z = Approach(m_vecVelocityGoal.z, m_velocity.z, delta * m_QUICKNESS);
