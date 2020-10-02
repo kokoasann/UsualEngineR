@@ -41,6 +41,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x;
 	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
+	//vel.y = vel.y - 20.f;
 	p->SetVelocity(vel);
 
 	//Rotation
