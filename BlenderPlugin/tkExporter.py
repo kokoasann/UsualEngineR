@@ -336,10 +336,11 @@ class TkExporter_OT_Level(bpy.types.Operator):
     #レベル出力をやる関数
     def execute(self, context):
         colle = context.collection
+        objs = bpy.context.selected_objects
         with open(self.filepath, "wb") as target:
 
             #オブジェクトの総数を出力。(一番最初は無視されるので1プラス)
-            target.write(struct.pack("<I", len(colle.all_objects) + 1))
+            target.write(struct.pack("<I", len(objs) + 1))
 
             #一番最初の無視される用ダミー
             target.write(struct.pack("<B", 0))#名前の長さ
@@ -349,7 +350,7 @@ class TkExporter_OT_Level(bpy.types.Operator):
                 target.write(struct.pack("<f", 0))#行列(どうせ無視されるの)
             
             #ここから各オブジェクトの情報
-            for obj in colle.all_objects:
+            for obj in objs:
                 name = obj.name
                 #ドット以下削除
                 if self.isDeleteDot:

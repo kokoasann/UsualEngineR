@@ -10,6 +10,8 @@ namespace UER
 	{
 		auto fp = fopen(filePath, "rb");
 		if (fp == nullptr) {
+			MessageBoxA(NULL, "NOT FOUND TKLEVEL FILE", "ERROR", MB_OK);
+			std::abort();
 			return;
 		}
 		//骨の数を取得。
