@@ -47,6 +47,10 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
 
 	p->SetVelocity(vel);
+
+	//Rotation
+	Quaternion rot = Quaternion::Identity;
+	p->SetRotation(rot);
 	
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		 auto nextState =  p->GetState(Player::EnState::enFlying);

@@ -72,6 +72,7 @@ void Player::PreUpdate()
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
+	m_model->SetRotation(m_rotation);
 }
 
 void Player::Update()
