@@ -47,7 +47,9 @@ public:
 	}
 
 private:
+	const float m_swivelSpeed = 60.f;
 	Vector3 m_position = { 0,2,15 };
 	Vector3 m_dist = Vector3::Zero;
 	Vector3 m_targetPos = Vector3::Zero;
+	Quaternion m_rot = Quaternion::Identity;
 };

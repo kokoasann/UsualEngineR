@@ -61,11 +61,10 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[EnState::enGround];
 	m_nextState->Enter(this);
 
-	m_charaCon.Init(5, 15, m_position, /*isUseRigidBody */ true);
+	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 
 	return true;
 }
-
 
 
 void Player::PreUpdate()

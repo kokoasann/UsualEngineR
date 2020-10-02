@@ -106,6 +106,9 @@ private:
 	//Move
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
-	float m_speed = 100.f;
+	float m_speed = 300.f;
 
+	//Physics
+	float m_charaConRadius = 5.f;
+	float m_charaConHeight = 15.f;
 };
