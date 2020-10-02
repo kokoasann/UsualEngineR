@@ -273,7 +273,8 @@ namespace UER
 					fclose(texFileFp);
 				}
 				else {
-					MessageBoxW(nullptr, L"テクスチャのロードに失敗しました。%s", L"エラー", MB_OK);
+					MessageBoxW(nullptr, L"テクスチャのロードに失敗しました。\ntexture load error%s", L"エラー error", MB_OK);
+					std::abort();
 				}
 			}
 		};
@@ -302,6 +303,7 @@ namespace UER
 		FILE* fp = fopen(filePath, "rb");
 		if (fp == nullptr) {
 			MessageBox(nullptr, L"tkmファイルが開けません ", L"エラー", MB_OK);
+			std::abort();
 			return ;
 		}
 		//tkmファイルのヘッダーを読み込み。
@@ -310,6 +312,7 @@ namespace UER
 		if (header.version != tkmFileFormat::VERSION) {
 			//tkmファイルのバージョンが違う。
 			MessageBox(nullptr, L"tkmファイルのバージョンが異なっています ", L"エラー", MB_OK);
+			std::abort();
 		}
 		//メッシュ情報をロードしていく。
 		m_meshParts.resize(header.numMeshParts);

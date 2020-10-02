@@ -17,12 +17,13 @@ namespace UER
 		//スケルトンをロードする。
 		Skeleton skeleton;
 		skeleton.Init(levelDataFilePath);
+		skeleton.BuildBoneMatrices();
 		//構築構築。
 		//0番目はルートオブジェクトなので飛ばす。
 		for (auto i = 1; i < skeleton.GetNumBones(); i++) {
 			//骨を取得。
 			auto bone = skeleton.GetBone(i);
-			if (bone->GetNo() == 0) {	//親がルートの場合だけマップチップを生成する。
+			if (bone->GetParentBoneNo() == 0) {	//親がルートの場合だけマップチップを生成する。
 				LevelObjectData objData;
 				Vector3 scale;
 				bone->CalcWorldTRS(objData.position, objData.rotation, objData.scale);

@@ -85,7 +85,7 @@ def build_mesh(o):
         vertList.append(vert)
         
         
-    print("mesh split to a polygon for index")
+    #print("mesh split to a polygon for index")
     vlist = []
     pindlist = []
     count = 0
@@ -101,11 +101,12 @@ def build_mesh(o):
                     break
                 
     
-    print("set uv")
+    #print("set uv")
     for ly in msh.uv_layers:
         
         for idx, dat in enumerate(msh.uv_layers[ly.name].data):
-            vlist[idx].uv = dat.uv
+            vlist[idx].uv.x = dat.uv.x
+            vlist[idx].uv.y = 1.-dat.uv.y
                 
             
         
@@ -114,17 +115,17 @@ def build_mesh(o):
     # num polygon
     meshParts.numPolygon = len(msh.loop_triangles)
     indList = []
-    print("build index data")
+    #print("build index data")
     for tr in msh.loop_triangles:
-        print("poly: %d"%tr.polygon_index)
+        #print("poly: %d"%tr.polygon_index)
         for v in tr.vertices:
 
             for ve in vlist:
                 if ve.index == v and tr.polygon_index == ve.poly_index:
                     indList.append(ve.real_index)
-                    print(" %d"%ve.real_index,end="")
+                    #print(" %d"%ve.real_index,end="")
                     break
-        print("")
+        #print("")
 
     #print(len(indList))
     meshParts.vertList += vlist
@@ -174,7 +175,7 @@ def build_data(obj,f):
 
     # num's meshes
     numMesh = len(meshList)
-    print("num mesh: %d"%numMesh)
+    #print("num mesh: %d"%numMesh)
     
     # tkm version
     f.write(struct.pack("B",100))
@@ -230,7 +231,7 @@ def build_data(obj,f):
             for v in vert.weight:
                 f.write(struct.pack("<f",v))
             for v in vert.indices:
-                print(v)
+                #print(v)
                 f.write(struct.pack("<h",v))
                 
         f.write(struct.pack("<I",msh.numPolygon))
@@ -238,7 +239,7 @@ def build_data(obj,f):
         if indexSize == 4:
             format = "<I"
         for v in msh.indeces:
-            print(" %d"%v)
+            #print(" %d"%v)
             f.write(struct.pack(format,v+1))
             
         if indexSize == 2:
