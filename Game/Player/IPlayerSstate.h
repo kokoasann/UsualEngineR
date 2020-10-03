@@ -19,7 +19,7 @@ protected:
 		if (diff > dt) {
 			return current + dt;
 		}
-		if (diff < dt) {
+		if (diff < -dt) {
 			return current - dt;
 		}
 		return goal;
