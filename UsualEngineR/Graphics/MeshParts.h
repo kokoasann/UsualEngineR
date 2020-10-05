@@ -76,6 +76,13 @@ namespace UER
 				queryFunc(*mesh);
 			}
 		}
+
+		void QueryMeshAndDescriptorHeap(std::function<void(const SMesh& mesh, const DescriptorHeap& ds)> queryFunc)
+		{
+			for (int i = 0; i < m_meshs.size(); i++) {
+				queryFunc(*m_meshs[i], m_descriptorHeap[i]);
+			}
+		}
 	private:
 		/// <summary>
 		/// tkmメッシュからメッシュを作成。

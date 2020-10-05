@@ -12,6 +12,7 @@
 
 #include "RenderContext.h"
 #include "RaytracingEngine.h"
+#include "Raytracing/RaytracingEngine.h"
 
 #include "Camera.h"
 
@@ -85,6 +86,11 @@ namespace UER
 		UINT GetCbrSrvDescriptorSize() const
 		{
 			return m_cbrSrvDescriptorSize;
+		}
+
+		UINT GetSamplerDescriptorSize() const
+		{
+			return m_samplerDescriptorSize;
 		}
 		/// <summary>
 		/// レンダリングコンテキストを取得。
@@ -254,6 +260,7 @@ namespace UER
 		UINT m_rtvDescriptorSize = 0;							//フレームバッファのディスクリプタのサイズ。
 		UINT m_dsvDescriptorSize = 0;							//深度ステンシルバッファのディスクリプタのサイズ。
 		UINT m_cbrSrvDescriptorSize = 0;						//CBR_SRVのディスクリプタのサイズ。
+		UINT m_samplerDescriptorSize = 0;						//サンプラのディスクリプタのサイズ。
 		ID3D12Resource* m_renderTargets[FRAME_BUFFER_COUNT] = { nullptr };	//フレームバッファ用のレンダリングターゲット。
 		ID3D12Resource* m_depthStencilBuffer = nullptr;	//深度ステンシルバッファ。
 		D3D12_VIEWPORT m_viewport;			//ビューポート。
@@ -271,6 +278,7 @@ namespace UER
 		Camera m_camera2D;						//2Dカメラ。
 		Camera m_camera3D;						//3Dカメラ。
 		RaytracingEngine m_raytracingEngine;	//レイトレエンジン。
+		//raytracing::Engine m_raytracingEngine;
 
 		bool m_isEnableRaytracing = false;
 	};

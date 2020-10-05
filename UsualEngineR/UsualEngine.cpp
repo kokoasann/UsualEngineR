@@ -10,6 +10,9 @@ namespace UER
 	
 	UsualEngine::~UsualEngine()
 	{
+		m_pGameObjectManeger->Release();
+		delete m_pGameObjectManeger;
+
 		m_physicsWorld->Release();
 		delete m_physicsWorld;
 

@@ -7,6 +7,7 @@
 /// </remarks>
 #pragma once
 #include "TkFileManager.h"
+#include "Resource/IResource.h"
 
 namespace UER
 {

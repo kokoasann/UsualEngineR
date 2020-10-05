@@ -37,6 +37,14 @@ namespace UER
 		{
 			return m_vertexBufferView;
 		}
+		/// <summary>
+		/// ID3D12Resourceのアドレスを取得します。
+		/// </summary>
+		/// <returns></returns>
+		ID3D12Resource* GetID3DResourceAddress() const
+		{
+			return m_vertexBuffer;
+		}
 	private:
 		ID3D12Resource* m_vertexBuffer = nullptr;		//頂点バッファ。
 		D3D12_VERTEX_BUFFER_VIEW m_vertexBufferView;	//頂点バッファビュー。

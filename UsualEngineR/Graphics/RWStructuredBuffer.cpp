@@ -55,6 +55,52 @@ namespace UER
 		}
 		m_isInited = true;
 	}
+
+	void RWStructuredBuffer::Init(const VertexBuffer& vb, bool isUpdateByCPU)
+	{
+		const auto& vview = vb.GetView();
+		m_sizeOfElement =vview.StrideInBytes;
+		m_numElement = vview.SizeInBytes / m_sizeOfElement;
+		if (isUpdateByCPU) {
+			//未対応。
+			std::abort();
+		}
+		else {
+
+			for (auto& gpuBuffer : m_buffersOnGPU) {
+				gpuBuffer = vb.GetID3DResourceAddress();
+				gpuBuffer->AddRef();
+			}
+			//CPUからは変更できないのでマップしない。
+			for (auto& cpuBuffer : m_buffersOnCPU) {
+				cpuBuffer = nullptr;
+			}
+		}
+		m_isInited = true;
+	}
+	void RWStructuredBuffer::Init(const IndexBuffer& ib, bool isUpdateByCPU)
+	{
+		const auto& indView = ib.GetView();
+		m_sizeOfElement = indView.SizeInBytes / ib.GetCount();
+		m_numElement = indView.SizeInBytes / m_sizeOfElement;
+		if (isUpdateByCPU) {
+			//未対応。
+			std::abort();
+		}
+		else {
+			
+			for (auto& gpuBuffer : m_buffersOnGPU) {
+				gpuBuffer = ib.GetID3DResourceAddress();
+				
+				gpuBuffer->AddRef();
+			}
+			//CPUからは変更できないのでマップしない。
+			for (auto& cpuBuffer : m_buffersOnCPU) {
+				cpuBuffer = nullptr;
+			}
+		}
+		m_isInited = true;
+	}
 	
 	ID3D12Resource* RWStructuredBuffer::GetD3DResoruce()
 	{

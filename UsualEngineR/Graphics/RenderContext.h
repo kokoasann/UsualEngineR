@@ -148,6 +148,13 @@ namespace UER
 				std::abort();
 			}
 		}
+		void SetDescriptorHeaps(int numDescriptorHeap, ID3D12DescriptorHeap* descHeaps[])
+		{
+			for (int i = 0; i < numDescriptorHeap; i++) {
+				m_descriptorHeaps[i] = descHeaps[i];
+			}
+			m_commandList->SetDescriptorHeaps(numDescriptorHeap, m_descriptorHeaps);
+		}
 		/// <summary>
 		/// レンダリングターゲットとビューポートを同時に設定する。
 		/// </summary>

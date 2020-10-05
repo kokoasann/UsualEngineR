@@ -22,6 +22,26 @@ namespace UER
 		/// <param name="initData">初期データ。</param>
 		void Init(int sizeOfElement, int numElement, void* initData);
 		/// <summary>
+		/// 頂点バッファを使用して構造化バッファを初期化。
+		/// </summary>
+		/// <param name="vb">頂点バッファ</param>
+		/// <param name="isUpdateByCPU">
+		/// CPU側で頂点バッファを更新するかどうか。
+		/// CPU側で更新する場合、引数で渡された頂点バッファの複製を二つ複製します。
+		/// そのため、メモリの使用量は３倍になります。
+		/// </param>
+		void Init(const VertexBuffer& vb, bool isUpdateByCPU);
+		/// <summary>
+		/// インデックスバッファを利用して構造化バッファを初期化。
+		/// </summary>
+		/// <param name="ib">インデックスバッファ</param>
+		/// <param name="isUpdateByCPU">
+		/// CPU側でインデックスバッファを更新するかどうか。
+		/// CPU側で更新する場合、引数で渡されたインデックスバッファの複製を二つ複製します。
+		/// そのため、メモリの使用量は３倍になります。
+		/// </param>
+		void Init(const IndexBuffer& ib, bool isUpdateByCPU);
+		/// <summary>
 		/// UAVに登録。
 		/// </summary>
 		/// <param name=""></param>

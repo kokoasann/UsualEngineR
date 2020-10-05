@@ -43,6 +43,15 @@ namespace UER
 		{
 			return m_count;
 		}
+
+		/// <summary>
+		/// ID3D12Resourceのアドレスを取得します。
+		/// </summary>
+		/// <returns></returns>
+		ID3D12Resource* GetID3DResourceAddress() const
+		{
+			return m_indexBuffer;
+		}
 	private:
 		ID3D12Resource* m_indexBuffer = nullptr;	//インデックスバッファ。
 		D3D12_INDEX_BUFFER_VIEW m_indexBufferView;	//インデックスバッファビュー。

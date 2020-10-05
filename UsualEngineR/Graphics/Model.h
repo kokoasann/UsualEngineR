@@ -91,6 +91,15 @@ namespace UER
 			m_tkmFile->QueryMeshParts(queryFunc);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="queryFunc"></param>
+		void QueryMeshAndDescriptorHeap(std::function<void(const SMesh& mesh, const DescriptorHeap& ds)> queryFunc)
+		{
+			m_meshParts.QueryMeshAndDescriptorHeap(queryFunc);
+		}
+
 		Skeleton* GetSkelton()
 		{
 			return &m_skeleton;

@@ -14,10 +14,10 @@ namespace UER
 	{
 	private:
 		GameObjectManager();
-		~GameObjectManager();
+		
 	public:
 		
-
+		~GameObjectManager();
 		void Release();
 
 		/// <summary>
@@ -30,9 +30,11 @@ namespace UER
 		};
 		static GameObjectManager* Get()
 		{
-			static GameObjectManager ins;
+			static GameObjectManager* ins = nullptr;
+			if (ins == nullptr)
+				ins = new GameObjectManager();
 			
-			return &ins;
+			return ins;
 		}
 
 		/// <summary>

@@ -189,6 +189,7 @@
     <ClInclude Include="Graphics\DescriptorHeap_inline.h" />
     <ClInclude Include="Graphics\Font.h" />
     <ClInclude Include="Graphics\GaussBlur.h" />
+    <ClInclude Include="Graphics\GPUBuffer.h" />
     <ClInclude Include="Graphics\GraphicsEngine.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\IShaderResource.h" />
@@ -204,6 +205,15 @@
     <ClInclude Include="Graphics\RaytracingEngine.h" />
     <ClInclude Include="Graphics\RaytracingHelper.h" />
     <ClInclude Include="Graphics\RaytracingInstance.h" />
+    <ClInclude Include="Graphics\Raytracing\BLASBuffer.h" />
+    <ClInclude Include="Graphics\Raytracing\Raytracing.h" />
+    <ClInclude Include="Graphics\Raytracing\RaytracingDescriptorHeaps.h" />
+    <ClInclude Include="Graphics\Raytracing\RaytracingEngine.h" />
+    <ClInclude Include="Graphics\Raytracing\RaytracingInstance.h" />
+    <ClInclude Include="Graphics\Raytracing\RaytracingPSO.h" />
+    <ClInclude Include="Graphics\Raytracing\RaytracingShaderTable.h" />
+    <ClInclude Include="Graphics\Raytracing\RaytracingWorld.h" />
+    <ClInclude Include="Graphics\Raytracing\TLASBuffer.h" />
     <ClInclude Include="Graphics\RenderContext.h" />
     <ClInclude Include="Graphics\RenderContext_inline.h" />
     <ClInclude Include="Graphics\RenderTarget.h" />
@@ -265,6 +275,7 @@
     <ClCompile Include="Graphics\DescriptorHeap.cpp" />
     <ClCompile Include="Graphics\Font.cpp" />
     <ClCompile Include="Graphics\GaussBlur.cpp" />
+    <ClCompile Include="Graphics\GPUBuffer.cpp" />
     <ClCompile Include="Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Material.cpp" />
@@ -278,6 +289,14 @@
     <ClCompile Include="Graphics\RaytracingEngine.cpp" />
     <ClCompile Include="Graphics\RaytracingHelper.cpp" />
     <ClCompile Include="Graphics\RaytracingInstance.cpp" />
+    <ClCompile Include="Graphics\Raytracing\BLASBuffer.cpp" />
+    <ClCompile Include="Graphics\Raytracing\RaytracingDescriptorHeaps.cpp" />
+    <ClCompile Include="Graphics\Raytracing\RaytracingEngine.cpp" />
+    <ClCompile Include="Graphics\Raytracing\RaytracingInstance.cpp" />
+    <ClCompile Include="Graphics\Raytracing\RaytracingPSO.cpp" />
+    <ClCompile Include="Graphics\Raytracing\RaytracingShaderTable.cpp" />
+    <ClCompile Include="Graphics\Raytracing\RaytracingWorld.cpp" />
+    <ClCompile Include="Graphics\Raytracing\TLASBuffer.cpp" />
     <ClCompile Include="Graphics\RenderTarget.cpp" />
     <ClCompile Include="Graphics\RootSignature.cpp" />
     <ClCompile Include="Graphics\RWStructuredBuffer.cpp" />

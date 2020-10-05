@@ -17,7 +17,7 @@ namespace UER
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		ID3D12DescriptorHeap* Get();
+		ID3D12DescriptorHeap* Get() const;
 		/// <summary>
 		/// シェーダーリソースをディスクリプタヒープに登録。
 		/// </summary>
@@ -75,10 +75,37 @@ namespace UER
 				std::abort();
 			}
 		}
+
+		/// <summary>
+		/// サンプラ定義をディスクリプタヒープに追加。
+		/// </summary>
+		/// <param name="registerNo">
+		/// レジスタ番号。-1が指定されたら、現在登録されているリソース数の次のレジスタが使用される。
+		/// </param>
+		/// <param name="desc">
+		/// サンプラ定義
+		/// </param>
+		void RegistSamplerDesc(int registerNo, const D3D12_SAMPLER_DESC& desc)
+		{
+			RegistResource(
+				registerNo,
+				desc,
+				m_samplerDescs,
+				m_numSamplerDesc,
+				MAX_SAMPLER_STATE,
+				L"DescriptorHeap::RegistSamplerDesc() registerNo is OUT OF RANGE"
+			);
+		}
+
 		/// <summary>
 		/// ディスクリプタヒープへの登録を確定。
 		/// </summary>
 		void Commit();
+
+		/// <summary>
+		/// サンプラステート用のディスクリプタヒープへの登録。
+		/// </summary>
+		void CommitSamperHeap();
 		/// <summary>
 		/// 定数バッファのディスクリプタの開始ハンドルを取得。
 		/// </summary>
@@ -90,6 +117,25 @@ namespace UER
 		/// <returns></returns>
 		D3D12_GPU_DESCRIPTOR_HANDLE GetShaderResourceGpuDescritorStartHandle() const;
 		D3D12_GPU_DESCRIPTOR_HANDLE GetUavResourceGpuDescritorStartHandle() const;
+		/// <summary>
+		/// Samplerのディスクリプタの開始ハンドルを取得。
+		/// </summary>
+		D3D12_GPU_DESCRIPTOR_HANDLE GetSamplerResourceGpuDescritorStartHandle() const;
+
+		/// <summary>
+		/// UAVディスクリプタが始まる配列番号を取得する。
+		/// </summary>
+		/// <remarks>
+		/// UAVディスクリプタはSRVディスクリプタの次から登録されている。
+		/// なので、SRVディスクリプタが10個登録されていれば、
+		/// UAVディスクリプタは配列の10番目から登録されていることになる。
+		/// この関数は現在レイトレエンジンで使用されている。
+		/// </remarks>
+	/// <returns></returns>
+		int GetOffsetUAVDescriptorFromTableStart() const
+		{
+			return m_numShaderResource + m_numConstantBuffer;
+		}
 		/// <summary>
 		/// シェーダーリソースが一つでも登録されているか判定。
 		/// </summary>
@@ -106,9 +152,44 @@ namespace UER
 		{
 			return m_numUavResource != 0;
 		}
+
+private:
+	/// <summary>
+	/// リソースをディスクリプタヒープに登録。
+	/// </summary>
+	/// <param name="registerNo">登録番号</param>
+	/// <param name="res">登録するリソース</param>
+	/// <param name="resTbl">リソーステーブル。このテーブルにリソースが追加されます。</param>
+	/// <param name="numRes">登録されているリソースの数。本関数を呼び出すと、この数が１インクリメントされます。</param>
+	template<class T>
+	void RegistResource(
+		int registerNo,
+		T res,
+		T resTbl[],
+		int& numRes,
+		const int MAX_RESOURCE,
+		const wchar_t* errorMessage
+	)
+	{
+		if (registerNo == -1) {
+			//-1が指定されていたら、現在登録されている末尾のリソースの次に登録される。
+			registerNo = numRes;
+		}
+		if (registerNo < MAX_RESOURCE) {
+			resTbl[registerNo] = res;
+			if (numRes < registerNo + 1) {
+				numRes = registerNo + 1;
+			}
+		}
+		else {
+			MessageBox(nullptr, errorMessage, L"エラー", MB_OK);
+			std::abort();
+		}
+	}
 	private:
 		enum {
 			MAX_SHADER_RESOURCE = 128,	//シェーダーリソースの最大数。
+			MAX_SAMPLER_STATE = 128,	//シェーダーリソースの最大数。
 			MAX_CONSTANT_BUFFER = 64,	//定数バッファの最大数。
 		};
 		int m_numShaderResource = 0;	//シェーダーリソースの数。
@@ -121,6 +202,10 @@ namespace UER
 		D3D12_GPU_DESCRIPTOR_HANDLE m_cbGpuDescriptorStart[2];					//定数バッファのディスクリプタヒープの開始ハンドル。
 		D3D12_GPU_DESCRIPTOR_HANDLE m_srGpuDescriptorStart[2];					//シェーダーリソースのディスクリプタヒープの開始ハンドル。
 		D3D12_GPU_DESCRIPTOR_HANDLE m_uavGpuDescriptorStart[2];					//UAVリソースのディスクリプタヒープの開始ハンドル。
+
+		int m_numSamplerDesc = 0;		//サンプラの数。
+		D3D12_SAMPLER_DESC m_samplerDescs[MAX_SAMPLER_STATE];						//サンプラステート。
+		D3D12_GPU_DESCRIPTOR_HANDLE m_samplerGpuDescriptorStart[2];					//Samplerのでスクリプタヒープの開始ハンドル
 	};
 
 }

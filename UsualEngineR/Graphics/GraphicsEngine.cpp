@@ -157,6 +157,8 @@ namespace UER
 		//CBR_SVRのディスクリプタのサイズを取得。
 		m_cbrSrvDescriptorSize = m_d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	
+		//Samplerのディスクリプタのサイズを取得。
+		m_samplerDescriptorSize = m_d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER);
 	
 		//初期化が終わったのでDXGIを破棄。
 		dxgiFactory->Release();

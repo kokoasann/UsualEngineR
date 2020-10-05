@@ -197,13 +197,13 @@
       <Filter>TKFile</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\RaytracingInstance.h">
-      <Filter>Graphics\Raytracing</Filter>
+      <Filter>Graphics\_Raytracing</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\RaytracingEngine.h">
-      <Filter>Graphics\Raytracing</Filter>
+      <Filter>Graphics\_Raytracing</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\RaytracingHelper.h">
-      <Filter>Graphics\Raytracing</Filter>
+      <Filter>Graphics\_Raytracing</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\TextureManager.h">
       <Filter>Graphics\2D</Filter>
@@ -225,6 +225,36 @@
     </ClInclude>
     <ClInclude Include="Graphics\GaussBlur.h">
       <Filter>Graphics\TextureEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\RaytracingDescriptorHeaps.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\RaytracingEngine.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\RaytracingInstance.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\RaytracingPSO.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\RaytracingShaderTable.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\RaytracingWorld.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\TLASBuffer.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\BLASBuffer.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Raytracing\Raytracing.h">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GPUBuffer.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -395,13 +425,13 @@
       <Filter>TKFile</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\RaytracingEngine.cpp">
-      <Filter>Graphics\Raytracing</Filter>
+      <Filter>Graphics\_Raytracing</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\RaytracingInstance.cpp">
-      <Filter>Graphics\Raytracing</Filter>
+      <Filter>Graphics\_Raytracing</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\RaytracingHelper.cpp">
-      <Filter>Graphics\Raytracing</Filter>
+      <Filter>Graphics\_Raytracing</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\TextureManager.cpp">
       <Filter>Graphics\2D</Filter>
@@ -423,6 +453,33 @@
     </ClCompile>
     <ClCompile Include="Graphics\GaussBlur.cpp">
       <Filter>Graphics\TextureEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\RaytracingDescriptorHeaps.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\RaytracingEngine.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\RaytracingInstance.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\RaytracingPSO.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\RaytracingShaderTable.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\RaytracingWorld.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\TLASBuffer.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Raytracing\BLASBuffer.cpp">
+      <Filter>Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GPUBuffer.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -474,9 +531,6 @@
     <Filter Include="Thread">
       <UniqueIdentifier>{e7b7b6de-7408-410b-bca9-657a28fff3e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Raytracing">
-      <UniqueIdentifier>{4880cfae-f556-4c50-a939-c6726168234e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{94e28a51-9d7a-4b38-b6e6-049d3a72652c}</UniqueIdentifier>
     </Filter>
@@ -485,6 +539,12 @@
     </Filter>
     <Filter Include="Graphics\TextureEffect">
       <UniqueIdentifier>{9ee6ac11-e8dd-4a02-9320-471be517ae44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\_Raytracing">
+      <UniqueIdentifier>{4880cfae-f556-4c50-a939-c6726168234e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Raytracing">
+      <UniqueIdentifier>{88bd0b26-d118-4ded-a6e4-c0d870c2e3d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
