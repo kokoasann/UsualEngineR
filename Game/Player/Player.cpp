@@ -39,7 +39,7 @@ void Player::Awake()
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
-	m_model->SetScale(g_vec3One * 0.05);
+	m_model->SetScale(Vector3::One * m_scale);
 	m_animlist.resize(1);
 	m_animlist[0] = std::make_unique<CAnimationClip>();
 	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");
@@ -48,6 +48,7 @@ void Player::Awake()
 
 	m_model->InitAnimation(m_animlist, 1);
 	m_model->Play(0);
+
 }
 
 bool Player::Start()
@@ -60,11 +61,10 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[EnState::enGround];
 	m_nextState->Enter(this);
 
-	m_charaCon.Init(5, 15, m_position, /*isUseRigidBody */ true);
+	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 
 	return true;
 }
-
 
 
 void Player::PreUpdate()
@@ -72,6 +72,7 @@ void Player::PreUpdate()
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
+	m_model->SetRotation(m_rotation);
 }
 
 void Player::Update()

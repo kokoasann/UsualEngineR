@@ -1,4 +1,6 @@
 #pragma once
+#include "level/Level.h"
+
 class Player;
 class EnemyTest;
 class GameCamera;
@@ -58,13 +60,22 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
-
+	//Model
 	ModelRender* m_model;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
 
 	ModelRender* m_test;
 
+
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
+
+	//Level
+	ThreadObject m_threadForLevel;
+	Level m_level;
+	const float m_levelScale = 25;
+	std::vector<ModelRender*> m_mapmodel;
+	std::vector<std::string> m_tkms;
+
 };

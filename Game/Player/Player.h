@@ -86,6 +86,18 @@ public:
 		m_velocity = velocity;
 	}
 
+	/// <summary>
+	/// プレイヤーの回転を取得
+	/// </summary>
+	/// <returns>プレイヤーに適応されるクォータニオン</returns>
+	const Quaternion& GetRotation() const {
+		return m_rotation;
+	}
+
+	void SetRotation(Quaternion& rot) {
+		m_rotation = rot;
+	}
+
 	const float GetSpeed() const {
 		return m_speed;
 	}
@@ -100,11 +112,16 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-	Vector3 m_position = Vector3::Zero;
+	Vector3 m_position = { 0,5,0 };
+	Quaternion m_rotation = Quaternion::Identity;
+	const float m_scale = 0.05f;
 
 	//Move
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
-	float m_speed = 100.f;
+	float m_speed = 300.f;
 
+	//Physics
+	float m_charaConRadius = 5.f;
+	float m_charaConHeight = 15.f;
 };

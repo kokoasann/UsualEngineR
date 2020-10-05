@@ -214,6 +214,18 @@
     <ClInclude Include="level\MapChip.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\PostEffect\Bloom.h">
+      <Filter>Graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\PostEffect\PostEffect.h">
+      <Filter>Graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\TextureCopy.h">
+      <Filter>Graphics\TextureEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GaussBlur.h">
+      <Filter>Graphics\TextureEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -400,6 +412,18 @@
     <ClCompile Include="level\MapChip.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\PostEffect\Bloom.cpp">
+      <Filter>Graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PostEffect\PostEffect.cpp">
+      <Filter>Graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextureCopy.cpp">
+      <Filter>Graphics\TextureEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GaussBlur.cpp">
+      <Filter>Graphics\TextureEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -455,6 +479,12 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{94e28a51-9d7a-4b38-b6e6-049d3a72652c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\PostEffect">
+      <UniqueIdentifier>{868e3e07-e94c-4f6d-bd01-d845519fd7c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\TextureEffect">
+      <UniqueIdentifier>{9ee6ac11-e8dd-4a02-9320-471be517ae44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

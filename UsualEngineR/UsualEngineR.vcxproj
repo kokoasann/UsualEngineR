@@ -188,6 +188,7 @@
     <ClInclude Include="Graphics\DescriptorHeap.h" />
     <ClInclude Include="Graphics\DescriptorHeap_inline.h" />
     <ClInclude Include="Graphics\Font.h" />
+    <ClInclude Include="Graphics\GaussBlur.h" />
     <ClInclude Include="Graphics\GraphicsEngine.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\IShaderResource.h" />
@@ -197,6 +198,8 @@
     <ClInclude Include="Graphics\Model.h" />
     <ClInclude Include="Graphics\ModelRender.h" />
     <ClInclude Include="Graphics\PipelineState.h" />
+    <ClInclude Include="Graphics\PostEffect\Bloom.h" />
+    <ClInclude Include="Graphics\PostEffect\PostEffect.h" />
     <ClInclude Include="Graphics\Primitive.h" />
     <ClInclude Include="Graphics\RaytracingEngine.h" />
     <ClInclude Include="Graphics\RaytracingHelper.h" />
@@ -211,6 +214,7 @@
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\StructuredBuffer.h" />
     <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\TextureCopy.h" />
     <ClInclude Include="Graphics\TextureManager.h" />
     <ClInclude Include="Graphics\VertexBuffer.h" />
     <ClInclude Include="HID\GamePad.h" />
@@ -260,6 +264,7 @@
     <ClCompile Include="Graphics\ConstantBuffer.cpp" />
     <ClCompile Include="Graphics\DescriptorHeap.cpp" />
     <ClCompile Include="Graphics\Font.cpp" />
+    <ClCompile Include="Graphics\GaussBlur.cpp" />
     <ClCompile Include="Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Material.cpp" />
@@ -267,6 +272,8 @@
     <ClCompile Include="Graphics\Model.cpp" />
     <ClCompile Include="Graphics\ModelRender.cpp" />
     <ClCompile Include="Graphics\PipelineState.cpp" />
+    <ClCompile Include="Graphics\PostEffect\Bloom.cpp" />
+    <ClCompile Include="Graphics\PostEffect\PostEffect.cpp" />
     <ClCompile Include="Graphics\Primitive.cpp" />
     <ClCompile Include="Graphics\RaytracingEngine.cpp" />
     <ClCompile Include="Graphics\RaytracingHelper.cpp" />
@@ -279,6 +286,7 @@
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\StructuredBuffer.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\TextureCopy.cpp" />
     <ClCompile Include="Graphics\TextureManager.cpp" />
     <ClCompile Include="Graphics\VertexBuffer.cpp" />
     <ClCompile Include="HID\GamePad.cpp" />
