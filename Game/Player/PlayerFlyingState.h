@@ -15,9 +15,10 @@ public:
 	void Exit(Player*) override;
 private:
 	Vector3 m_velocity = Vector3::Zero;
-	Vector3 m_vecVelocityGoal = Vector3::Zero;
+	Vector3 m_velocityGoal = Vector3::Zero;
 	Vector3 m_bPos = Vector3::Zero;
-	const float m_height = 30.0f;
-	const float m_VELOCITY_MAX = 30.f;
-	const float m_QUICKNESS = 40.f;
+	const float m_rise = 10.0f;
+	const float m_BOOST = 2.f;
+	const float m_VELOCITY_MAX = 40.f;
+	const float m_QUICKNESS = 10.f;
 };
