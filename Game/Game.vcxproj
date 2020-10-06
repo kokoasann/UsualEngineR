@@ -183,6 +183,7 @@
     <ClInclude Include="Enemy\IEnemy.h" />
     <ClInclude Include="Enemy\IEnemyState.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Level\GameStage.h" />
     <ClInclude Include="Player\IPlayerSstate.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\PlayerFlyingState.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Enemy\IEnemy.cpp" />
     <ClCompile Include="Enemy\IEnemyState.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Level\GameStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player\IPlayerSstate.cpp" />
     <ClCompile Include="Player\Player.cpp" />

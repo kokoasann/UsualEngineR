@@ -29,6 +29,7 @@ void Player::OnDestroy()
 
 void Player::Awake()
 {
+
 	ModelInitData mid;
 	mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
@@ -48,7 +49,6 @@ void Player::Awake()
 
 	m_model->InitAnimation(m_animlist, 1);
 	m_model->Play(0);
-
 }
 
 bool Player::Start()
@@ -61,7 +61,7 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[EnState::enGround];
 	m_nextState->Enter(this);
 
-	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
+	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ false);
 
 	return true;
 }

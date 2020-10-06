@@ -122,6 +122,6 @@ private:
 	float m_speed = 300.f;
 
 	//Physics
-	float m_charaConRadius = 5.f;
-	float m_charaConHeight = 15.f;
+	float m_charaConRadius = 1.f;
+	float m_charaConHeight = 3.f;
 };

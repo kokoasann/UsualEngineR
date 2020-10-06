@@ -39,6 +39,9 @@
     <ClInclude Include="Camera\GameCamera.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Level\GameStage.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -80,6 +83,9 @@
     <ClCompile Include="Camera\GameCamera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Level\GameStage.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -103,6 +109,9 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{711edca2-e974-43b6-a9ce-677bcb9ad77c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -111,5 +120,8 @@
     <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
       <Filter>Assets\modelData</Filter>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Enemy\Zako\Ene_zako.txt" />
   </ItemGroup>
 </Project>
