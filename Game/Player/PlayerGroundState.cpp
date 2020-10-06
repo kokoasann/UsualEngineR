@@ -29,7 +29,6 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	auto delta = gameTime()->GetDeltaTime();
 	m_velocity.x = Approach(m_vecVelocityGoal.x, m_velocity.x, delta * m_QUICKNESS);
 	m_velocity.z = Approach(m_vecVelocityGoal.z, m_velocity.z, delta * m_QUICKNESS);
-
 	auto cam = g_lockCamera3D.Get();
 	auto forward = cam->GetForward();
 	forward.y = 0.f;
@@ -40,8 +39,8 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	right.Normalize();
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x;
+	vel.y += -9;
 	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
-	//vel.y = vel.y - 20.f;
 	p->SetVelocity(vel);
 
 	//Rotation
@@ -53,6 +52,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		p->SetRotation(rot);
 	}
 	
+	//State
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		 auto nextState =  p->GetState(Player::EnState::enFlying);
 		return nextState;

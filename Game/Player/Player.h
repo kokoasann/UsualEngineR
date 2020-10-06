@@ -86,6 +86,18 @@ public:
 		m_velocity = velocity;
 	}
 
+	const Vector3 GetVelocity() const {
+		return m_velocity;
+	}
+
+	void SetVelocityGoal(Vector3& velocityGoal) {
+		m_velocityGoal = velocityGoal;
+	}
+
+	const Vector3 GetVelocityGoal() const {
+		return m_velocityGoal;
+	}
+
 	/// <summary>
 	/// プレイヤーの回転を取得
 	/// </summary>
@@ -102,6 +114,9 @@ public:
 		return m_speed;
 	}
 
+	Vector3 m_velocity = Vector3::Zero;
+	Vector3 m_velocityGoal = Vector3::Zero;
+
 private:
 	//State
 	IPlayerState* m_nextState = nullptr;
@@ -112,16 +127,15 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-	Vector3 m_position = { 0,5,0 };
+	Vector3 m_position = { 0,15,0 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 0.05f;
 
 	//Move
 	CharacterController m_charaCon;
-	Vector3 m_velocity = Vector3::Zero;
 	float m_speed = 300.f;
 
 	//Physics
-	float m_charaConRadius = 5.f;
-	float m_charaConHeight = 15.f;
+	float m_charaConRadius = 1.f;
+	float m_charaConHeight = 3.f;
 };
