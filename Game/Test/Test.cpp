@@ -178,10 +178,18 @@ void Test::Awake()
 				m_pos += Vector3{2, 0, 2};
 			}
 		});*/
+
+	m_chara = NewGO<ModelRender>(0);
+	m_chara->Init(mid);
+	m_chara->SetPosition({ 10,100,0 });
+	m_characon.Init(1, 2, m_chara->GetPosition(), true);
+
 }
 
 void Test::Update()
 {
+	m_chara->SetPosition(m_characon.Execute(gameTime()->GetDeltaTime(), (Vector3&)(g_vec3AxisY * -10.f)));
+
 	auto& trans = m_rb.GetBody()->getWorldTransform();
 	m_pModel->SetPosition(trans.getOrigin());
 	m_pModel->SetRotation(trans.getRotation());

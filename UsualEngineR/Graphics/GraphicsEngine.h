@@ -277,8 +277,8 @@ namespace UER
 		UINT m_frameBufferHeight = 0;			//フレームバッファの高さ。
 		Camera m_camera2D;						//2Dカメラ。
 		Camera m_camera3D;						//3Dカメラ。
-		RaytracingEngine m_raytracingEngine;	//レイトレエンジン。
-		//raytracing::Engine m_raytracingEngine;
+		//RaytracingEngine m_raytracingEngine;	//レイトレエンジン。
+		raytracing::Engine m_raytracingEngine;
 
 		bool m_isEnableRaytracing = false;
 	};

@@ -2,6 +2,7 @@
 #include "Physics/SphereCollider.h"
 #include "Physics/BoxCollider.h"
 #include "level/Level.h"
+#include "Character/CharacterController.h"
 class ThreadTest;
 class Test:public GameObject
 {
@@ -32,6 +33,9 @@ private:
 	Lock<std::vector<ModelRender*>> m_lockModels = Lock<std::vector<ModelRender*>>(&m_models);
 
 	std::vector<CAnimationClipPtr> m_animlist;
+
+	ModelRender* m_chara;
+	CharacterController m_characon;
 
 	Level m_level;
 	std::vector<ModelRender*> m_mapmodel;

@@ -9,6 +9,7 @@ namespace UER
 {
 	
 	class IShaderResource;
+	class raytracing::Instance;
 
 	enum EUpAxis
 	{
@@ -109,6 +110,11 @@ namespace UER
 		{
 			return m_upAxis;
 		}
+
+		void AddRaytraceInstance(raytracing::Instance* instance)
+		{
+			m_raytracingInstanceList.push_back(instance);
+		}
 	private:
 	
 		Matrix m_world;			//ワールド行列。
@@ -117,6 +123,8 @@ namespace UER
 		MeshParts m_meshParts;	//メッシュパーツ。
 
 		EUpAxis m_upAxis = enUpAxisZ;
+		std::vector<raytracing::Instance*> m_raytracingInstanceList;
+		
 	};
 
 

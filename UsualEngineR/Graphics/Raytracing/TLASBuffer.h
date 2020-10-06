@@ -6,7 +6,8 @@ namespace UER
 {
 	class RenderContext;
 
-	namespace raytracing {
+	namespace raytracing 
+	{
 		/// <summary>
 		/// TLASBuffer
 		/// </summary>

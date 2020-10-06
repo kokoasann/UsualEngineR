@@ -33,7 +33,7 @@ namespace UER
 					instance->m_vertexBufferRWSB.Init(mesh.m_vertexBuffer, false);
 					instance->m_indexBufferRWSB.Init(*mesh.m_indexBufferArray[i], false);
 
-					//model.AddRaytraceInstance(instance.get());
+					model.AddRaytraceInstance(instance.get());
 					m_instances.emplace_back(std::move(instance));
 
 				}
