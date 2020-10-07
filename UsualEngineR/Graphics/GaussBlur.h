@@ -15,9 +15,14 @@ namespace UER
 
 		void Release();
 
-		void Init(int w, int h, Texture* inTex, Texture*& outTex);
+		void Init(int w, int h, RenderTarget* inTex, int inW, int inH, RenderTarget*& outTex);
 
-		void Render(RenderContext& rc);
+		void Render(RenderContext& rc, Primitive prim);
+
+		Texture* GetOutputTexture()
+		{
+			return &m_rtY.GetRenderTargetTexture();
+		}
 	private:
 		static const int MAX_WEIGHT = 8;
 		struct BlurData
@@ -48,5 +53,8 @@ namespace UER
 
 		int m_width = 0;
 		int m_height = 0;
+
+		int m_inWidth = 0;
+		int m_inHeight = 0;
 	};
 }

@@ -34,8 +34,13 @@ namespace UER
 		return m_indexBuffer.GetCount();
 	}
 
-	void Primitive::Draw()
+	void Primitive::Draw(RenderContext& rc)
 	{
+
+		rc.SetPrimitiveTopology(m_topology);
+		rc.SetIndexBuffer(m_indexBuffer);
+		rc.SetVertexBuffer(m_vertexBuffer);
+		rc.DrawIndexed(m_indexBuffer.GetCount());
 		/*ID3D11DeviceContext* dc = usualEngine()->GetGraphicsEngine()->GetD3DDeviceContext();
 		UINT offset = 0;
 		UINT stride = m_vertexBuffer.GetStride();

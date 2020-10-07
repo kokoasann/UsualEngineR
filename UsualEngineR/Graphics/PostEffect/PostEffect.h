@@ -19,8 +19,14 @@ namespace UER
 		void Init();
 
 		void Render();
+
+		Texture* GetCurrentBackBufferTexture()
+		{
+			return &m_backBufferTexture[g_graphicsEngine->GetBackBufferIndex()];
+		}
 	private:
 		Primitive m_primitive;
+		Texture m_backBufferTexture[2];
 
 		RenderTarget m_renderTarget;
 

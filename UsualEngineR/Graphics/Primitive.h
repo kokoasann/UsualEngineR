@@ -52,9 +52,9 @@ namespace UER
 		/// <returns>indexBufferの数</returns>
 		int SendData(RenderContext& rc);
 		void Draw(RenderContext& rc, int vertexnum);
-
+		void Draw(RenderContext& rc);
 	private:
-		void Draw();
+		
 		//void Draw(RenderContext* dc, int vertexnum);
 	private:
 		VertexBuffer m_vertexBuffer;		//頂点バッファ
