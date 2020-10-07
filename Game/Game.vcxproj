@@ -186,6 +186,7 @@
     <ClInclude Include="Level\GameStage.h" />
     <ClInclude Include="Player\IPlayerSstate.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\PlayerDiveState.h" />
     <ClInclude Include="Player\PlayerFlyingState.h" />
     <ClInclude Include="Player\PlayerGroundState.h" />
     <ClInclude Include="stdafx.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player\IPlayerSstate.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\PlayerDiveState.cpp" />
     <ClCompile Include="Player\PlayerFlyingState.cpp" />
     <ClCompile Include="Player\PlayerGroundState.cpp" />
     <ClCompile Include="stdafx.cpp">

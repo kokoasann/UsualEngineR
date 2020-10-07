@@ -12,6 +12,7 @@ public:
 	enum EnState {
 		enGround,
 		enFlying,
+		enDiving,
 		enNumState
 	};
 

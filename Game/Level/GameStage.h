@@ -51,7 +51,7 @@ private:
 	ThreadObject m_threadForLevel;
 	Level m_level;
 	Level m_phyLevel;;
-	const float m_levelScale = 25;
+	const float m_levelScale = 100;
 	std::vector<ModelRender*> m_mapmodel;
 	std::vector<std::string> m_tkms;
 

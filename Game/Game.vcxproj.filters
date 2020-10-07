@@ -42,6 +42,9 @@
     <ClInclude Include="Level\GameStage.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Player\PlayerDiveState.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -85,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="Level\GameStage.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerDiveState.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

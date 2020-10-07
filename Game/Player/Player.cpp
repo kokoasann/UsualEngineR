@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "PlayerFlyingState.h"
 #include "PlayerGroundState.h"
+#include "PlayerDiveState.h"
 
 Player::Player()
 {
@@ -57,6 +58,7 @@ bool Player::Start()
 	m_stateList.resize(EnState::enNumState);
 	m_stateList[enGround] = new PlayerGroundState();
 	m_stateList[enFlying] = new PlayerFlyingState();
+	m_stateList[enDiving] = new PlayerDiveState();
 
 	m_currentState = m_nextState = m_stateList[EnState::enFlying];
 	m_nextState->Enter(this);
@@ -73,6 +75,7 @@ void Player::PreUpdate()
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
+
 }
 
 void Player::Update()
@@ -84,7 +87,7 @@ void Player::Update()
 		m_currentState->Enter(this);
 	}
 
-	printf("Vel X : %f / Vel Y : %f / Vel Z : %f\n", m_velocity.x, m_velocity.y, m_velocity.z);
+	//printf("Vel X : %f / Vel Y : %f / Vel Z : %f\n", m_velocity.x, m_velocity.y, m_velocity.z);
 }
 
 void Player::PostUpdate()

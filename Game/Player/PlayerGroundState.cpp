@@ -60,6 +60,11 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		return nextState;
 	}
 
+	if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)){
+		auto nextState = p->GetState(Player::EnState::enDiving);
+		return nextState;
+	}
+
 	return this;
 }
 
