@@ -16,6 +16,7 @@ public:
 
 private:
 	const float m_VELOCITY_MAX = 20.f;
+	const float m_GRAVITY = -9.81f;
 	float m_QUICKNESS = 30.f;
 	const float m_RUN_SPEED_PARAM = 2.0f;
 	Vector3 m_velocity = Vector3::Zero;

@@ -39,9 +39,10 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	right.Normalize();
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x;
-	vel.y += -9;
+	vel.y += m_GRAVITY;
 	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
 	p->SetVelocity(vel);
+	p->SetLocalVelocity(m_velocity);
 
 	//Rotation
 	if (vel.x != 0.f or vel.z != 0.f) {

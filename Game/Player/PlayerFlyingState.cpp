@@ -16,7 +16,7 @@ void PlayerFlyingState::Enter(Player* p) {
 	printf("Enter Flying\n");
 
 	m_bPos = p->GetPosition();
-	m_velocity = p->GetVelocity();
+	m_velocity = p->GetLocalVelocity();
 	m_velocityGoal.y = 100 * m_VELOCITY_MAX;
 
 }
@@ -55,8 +55,10 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	m_velocity.y = Approach(m_velocityGoal.y, m_velocity.y, delta * m_QUICKNESS);
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x + up * m_velocity.y;
+
 	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
 	p->SetVelocity(vel);
+	p->SetLocalVelocity(m_velocity);
 
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		auto nextState = p->GetState(Player::EnState::enGround);

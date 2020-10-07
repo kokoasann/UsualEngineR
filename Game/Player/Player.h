@@ -90,6 +90,15 @@ public:
 		return m_velocity;
 	}
 
+	void SetLocalVelocity(Vector3& velocity) {
+		m_localVelocity = velocity;
+	}
+
+	const Vector3 GetLocalVelocity() const {
+		return m_localVelocity;
+	}
+
+	/*
 	void SetVelocityGoal(Vector3& velocityGoal) {
 		m_velocityGoal = velocityGoal;
 	}
@@ -97,6 +106,7 @@ public:
 	const Vector3 GetVelocityGoal() const {
 		return m_velocityGoal;
 	}
+	*/
 
 	/// <summary>
 	/// プレイヤーの回転を取得
@@ -115,7 +125,8 @@ public:
 	}
 
 	Vector3 m_velocity = Vector3::Zero;
-	Vector3 m_velocityGoal = Vector3::Zero;
+	Vector3 m_localVelocity = Vector3::Zero;
+	//Vector3 m_velocityGoal = Vector3::Zero;
 
 private:
 	//State

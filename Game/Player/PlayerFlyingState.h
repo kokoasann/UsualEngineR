@@ -20,5 +20,5 @@ private:
 	const float m_rise = 10.0f;
 	const float m_BOOST = 2.f;
 	const float m_VELOCITY_MAX = 40.f;
-	const float m_QUICKNESS = 10.f;
+	const float m_QUICKNESS = 40.f;
 };
