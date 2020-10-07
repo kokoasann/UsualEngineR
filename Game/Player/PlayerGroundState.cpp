@@ -11,6 +11,7 @@ PlayerGroundState::~PlayerGroundState()
 }
 
 void PlayerGroundState::Enter(Player* p){
+	m_velocity = p->GetLocalVelocity();
 	printf("Enter Ground\n");
 }
 

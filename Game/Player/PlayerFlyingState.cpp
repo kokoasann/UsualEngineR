@@ -60,6 +60,16 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	p->SetVelocity(vel);
 	p->SetLocalVelocity(m_velocity);
 
+	//Rotation
+	if (vel.x != 0.f or vel.z != 0.f) {
+		Quaternion rot = Quaternion::Identity;
+		auto theta = atan2(vel.x, vel.z);
+		theta = theta * (180.f / Math::PI);
+		rot.SetRotationDegY(theta);
+		p->SetRotation(rot);
+	}
+
+	//State
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		auto nextState = p->GetState(Player::EnState::enGround);
 		return nextState;
