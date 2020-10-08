@@ -40,7 +40,8 @@ namespace UER
 		short indices[] = { 0,1,2,3 };
 		m_primitive.Cteate(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST, 4, sizeof(SSimpleVertex), vertices, 4, Primitive::it_2byte, indices);
 
-
+		m_backBufferTexture[0].InitFromD3DResource(g_graphicsEngine->GetBuckBufferResource(0));
+		m_backBufferTexture[1].InitFromD3DResource(g_graphicsEngine->GetBuckBufferResource(1));
 	}
 	void PostEffect::Render()
 	{

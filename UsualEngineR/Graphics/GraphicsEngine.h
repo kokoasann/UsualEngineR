@@ -129,6 +129,16 @@ namespace UER
 		{
 			return m_currentFrameBufferRTVHandle;
 		}
+
+		ID3D12Resource* GetCurrentBuckBufferResource()
+		{
+			return m_renderTargets[m_currentBackBufferIndex];
+		}
+
+		ID3D12Resource* GetBuckBufferResource(int num)
+		{
+			return m_renderTargets[num];
+		}
 		/// <summary>
 		/// ジオメトリをレイトレーシングエンジンに登録。
 		/// </summary>

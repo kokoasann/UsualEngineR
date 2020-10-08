@@ -7,14 +7,20 @@ namespace UER
 {
 	void GaussBlur::Release()
 	{
+		
 	}
-	void GaussBlur::Init(int w, int h, Texture* inTex, Texture*& outTex)
+	void GaussBlur::Init(int w, int h, RenderTarget* inTex, int inW, int inH, RenderTarget*& outTex)
 	{
-		m_width = w;
-		m_height = h;
+		m_width = w<<1;
+		m_height = h<<1;
+
+		m_inWidth = inW;
+		m_inHeight = inH;
 
 		m_rtX.Create(w<<1, h, 0, 1, DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D16_UNORM, nullptr);
 		m_rtY.Create(w << 1, h<<1, 0, 1, DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D16_UNORM, nullptr);
+
+		outTex = &m_rtY;
 
 		m_rootSign.Init(
 			D3D12_FILTER_MIN_MAG_MIP_LINEAR,
@@ -31,7 +37,6 @@ namespace UER
 				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 			};
-
 			//パイプラインステートを作成。
 			D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = { 0 };
 			psoDesc.InputLayout = { inputElementDescs, _countof(inputElementDescs) };
@@ -53,7 +58,7 @@ namespace UER
 			psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsY.GetCompiledBlob());
 			m_pipStateY.Init(psoDesc);
 		}
-		m_inputTex.InitFromD3DResource(inTex->Get());
+		m_inputTex.InitFromD3DResource(inTex->GetRenderTargetTexture().Get());
 		m_constBuffer.Init(sizeof(BlurData));
 
 		m_descHeapX.RegistShaderResource(0,m_inputTex);
@@ -64,20 +69,44 @@ namespace UER
 		m_descHeapY.RegistConstantBuffer(0, m_constBuffer);
 		m_descHeapY.Commit();
 	}
-	void GaussBlur::Render(RenderContext& rc)
+	void GaussBlur::Render(RenderContext& rc,Primitive prim)
 	{
-		m_blurData.rttexRatio = 2;
+		m_blurData.rttexRatio = float(m_inWidth)/float(m_width);
 		m_blurData.offset.x = (8.f * (m_blurData.rttexRatio)) / m_width;
 		m_blurData.offset.y = 0.f;
 
 		m_constBuffer.CopyToVRAM(m_blurData);
 
+		rc.SetRenderTarget(m_rtX.GetRTVCpuDescriptorHandle(), m_rtX.GetDSVCpuDescriptorHandle());
+		D3D12_VIEWPORT viewport;
+		viewport.Height = m_rtX.GetHeight();
+		viewport.Width = m_rtX.GetWidth();
+		viewport.TopLeftX = 0;
+		viewport.TopLeftY = 0;
+		viewport.MinDepth = 0;
+		viewport.MaxDepth = 1;
+
+		rc.SetViewport(viewport);
+		rc.SetRootSignature(m_rootSign);
+		rc.SetPipelineState(m_pipStateX);
+		rc.SetDescriptorHeap(m_descHeapX);
+		prim.Draw(rc);
+		
 
 
-		m_blurData.rttexRatio = 2.f * (float(m_width<<1) / float(m_height<<1));
+		m_blurData.rttexRatio = 2.f * (float(m_width) / float(m_height));
 		m_blurData.offset.x = 0.f;
 		m_blurData.offset.y = (8.f * (m_blurData.rttexRatio)) / (float)m_height;
 
 		m_constBuffer.CopyToVRAM(m_blurData);
+
+		rc.SetRenderTarget(m_rtY.GetRTVCpuDescriptorHandle(), m_rtY.GetDSVCpuDescriptorHandle());
+		viewport.Height = m_rtY.GetHeight();
+		viewport.Width = m_rtY.GetWidth();
+
+		rc.SetViewport(viewport);
+		rc.SetPipelineState(m_pipStateY);
+		rc.SetDescriptorHeap(m_descHeapY);
+		rc.DrawIndexed(prim.GetIndexCount());
 	}
 }
