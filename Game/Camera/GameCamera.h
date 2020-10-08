@@ -53,13 +53,13 @@ public:
 
 private:
 
-	enum State {
+	enum class State {
 		enEnemyCamera,
 		enPlayerCamera,
 		enNumState
 	};
 	
-	State m_state = enEnemyCamera;
+	State m_state = State::enEnemyCamera;
 
 	const float m_swivelSpeed = 60.f;
 	Vector3 m_position = { 0,3,15 };

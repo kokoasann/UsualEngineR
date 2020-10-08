@@ -58,13 +58,13 @@ void GameCamera::PostUpdate() {
 	auto yf = g_pad[0]->GetRStickYF();
 
 	if (g_pad[0]->IsPress(enButtonY)) {
-		m_state = enEnemyCamera;
+		m_state = State::enEnemyCamera;
 	}
 	else {
-		m_state = enPlayerCamera;
+		m_state = State::enPlayerCamera;
 	}
 
-	if (m_state == enEnemyCamera) {
+	if (m_state == State::enEnemyCamera) {
 		static float distParam = 15.f;
 		static float cameraHeight = 5.f;
 		static float slideParam = 10.f;
@@ -86,7 +86,7 @@ void GameCamera::PostUpdate() {
 		cam->SetTarget(m_targetPos);
 	}
 
-	if (m_state == enPlayerCamera) {
+	if (m_state == State::enPlayerCamera) {
 
 		auto vecCharaToCamera = m_position - m_charaPos;
 
