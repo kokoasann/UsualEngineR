@@ -39,7 +39,7 @@ namespace UER
 			return m_indexBuffer;
 		}
 
-		int GetIndexCount()
+		int GetIndexCount() const
 		{
 			return m_indexBuffer.GetCount();
 		}
@@ -51,8 +51,8 @@ namespace UER
 		/// <param name="rc"></param>
 		/// <returns>indexBufferÇÃêî</returns>
 		int SendData(RenderContext& rc);
-		void Draw(RenderContext& rc, int vertexnum);
-		void Draw(RenderContext& rc);
+		void Draw(RenderContext& rc, int vertexnum) const;
+		void Draw(RenderContext& rc) const;
 	private:
 		
 		//void Draw(RenderContext* dc, int vertexnum);

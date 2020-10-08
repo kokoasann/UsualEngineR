@@ -18,7 +18,9 @@ namespace UER
 
 		void Init(PostEffect& pe);
 
-		void Render();
+		void Render(PostEffect& pe, RenderContext& rc);
+
+		void CombineRender(RenderContext& rc, RenderTarget* rt=nullptr);
 	private:
 		const static int MAX_GAUSS = 5;
 		GaussBlur m_blur[MAX_GAUSS];

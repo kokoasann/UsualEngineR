@@ -34,7 +34,7 @@ namespace UER
 		return m_indexBuffer.GetCount();
 	}
 
-	void Primitive::Draw(RenderContext& rc)
+	void Primitive::Draw(RenderContext& rc) const
 	{
 
 		rc.SetPrimitiveTopology(m_topology);
@@ -57,7 +57,7 @@ namespace UER
 
 		dc->DrawIndexed(m_indexBuffer.GetIndexNum(), 0, 0);*/
 	}
-	void Primitive::Draw(RenderContext& rc, int vertexnum)
+	void Primitive::Draw(RenderContext& rc, int vertexnum) const
 	{
 		//UINT ofs = 0;
 		//UINT stride = m_vertexBuffer.GetStride();

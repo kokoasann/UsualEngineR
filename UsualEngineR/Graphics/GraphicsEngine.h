@@ -181,6 +181,15 @@ namespace UER
 				D3D12_RESOURCE_STATE_RENDER_TARGET);
 			rc.ResourceBarrier(barrier2);
 		}
+
+		D3D12_CPU_DESCRIPTOR_HANDLE GetCurrentBackBufferRTVHandle() const
+		{
+			return m_currentFrameBufferRTVHandle;
+		}
+		D3D12_CPU_DESCRIPTOR_HANDLE GetCurrentBackBufferDSVHandle() const
+		{
+			return m_currentFrameBufferDSVHandle;
+		}
 	private:
 		/// <summary>
 		/// D3Dデバイスの作成。

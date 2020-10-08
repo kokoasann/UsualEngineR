@@ -11,6 +11,7 @@ namespace UER
 	}
 	void GaussBlur::Init(int w, int h, RenderTarget* inTex, int inW, int inH, RenderTarget*& outTex)
 	{
+
 		m_width = w<<1;
 		m_height = h<<1;
 

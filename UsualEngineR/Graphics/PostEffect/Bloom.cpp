@@ -84,7 +84,60 @@ namespace UER
 		}
 		m_descCombine.Commit();
 	}
-	void Bloom::Render()
+	void Bloom::Render(PostEffect& pe,RenderContext& rc)
 	{
+		const auto& prim = pe.GetPrimitive();
+		rc.SetRenderTarget(m_luminanceRT.GetRTVCpuDescriptorHandle(), m_luminanceRT.GetDSVCpuDescriptorHandle());
+		rc.SetDescriptorHeap(m_descLuminance);
+		rc.SetRootSignature(m_rootSign);
+		rc.SetPipelineState(m_pipeLuminance);
+		prim.Draw(rc);
+
+		for (int i = 0; i < MAX_GAUSS; i++)
+		{
+			m_blur->Render(rc, prim);
+		}
+
+		rc.SetRenderTarget(m_combineRT.GetRTVCpuDescriptorHandle(), m_combineRT.GetDSVCpuDescriptorHandle());
+		D3D12_VIEWPORT viewport;
+		viewport.Height = m_combineRT.GetHeight();
+		viewport.Width = m_combineRT.GetWidth();
+		viewport.TopLeftX = 0;
+		viewport.TopLeftY = 0;
+		viewport.MinDepth = 0;
+		viewport.MaxDepth = 1;
+		rc.SetViewport(viewport);
+		rc.SetDescriptorHeap(m_descCombine);
+		rc.SetPipelineState(m_pipeCombine);
+		prim.Draw(rc);
+	}
+	void Bloom::CombineRender(RenderContext& rc, RenderTarget* rt)
+	{
+		if (rt == nullptr)
+		{
+			rc.SetRenderTarget(g_graphicsEngine->GetCurrentBackBufferRTVHandle(), g_graphicsEngine->GetCurrentBackBufferDSVHandle());
+			D3D12_VIEWPORT viewport;
+			viewport.Height = FRAME_BUFFER_H;
+			viewport.Width = FRAME_BUFFER_W;
+			viewport.TopLeftX = 0;
+			viewport.TopLeftY = 0;
+			viewport.MinDepth = 0;
+			viewport.MaxDepth = 1;
+			rc.SetViewport(viewport);
+		}
+		else
+		{
+			rc.SetRenderTarget(rt->GetRTVCpuDescriptorHandle(), rt->GetDSVCpuDescriptorHandle());
+			D3D12_VIEWPORT viewport;
+			viewport.Height = rt->GetHeight();
+			viewport.Width = rt->GetWidth();
+			viewport.TopLeftX = 0;
+			viewport.TopLeftY = 0;
+			viewport.MinDepth = 0;
+			viewport.MaxDepth = 1;
+			rc.SetViewport(viewport);
+		}
+
+		
 	}
 }

@@ -42,8 +42,12 @@ namespace UER
 
 		m_backBufferTexture[0].InitFromD3DResource(g_graphicsEngine->GetBuckBufferResource(0));
 		m_backBufferTexture[1].InitFromD3DResource(g_graphicsEngine->GetBuckBufferResource(1));
+
+		m_bloom.Init(*this);
 	}
 	void PostEffect::Render()
 	{
+		auto& rc = g_graphicsEngine->GetRenderContext();
+		m_bloom.Render(*this, rc);
 	}
 }

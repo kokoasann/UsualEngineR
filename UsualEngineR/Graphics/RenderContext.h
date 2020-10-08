@@ -26,7 +26,7 @@ namespace UER
 		/// 頂点バッファを設定。
 		/// </summary>
 		/// <param name="vb">頂点バッファ。</param>
-		void SetVertexBuffer(VertexBuffer& vb)
+		void SetVertexBuffer(const VertexBuffer& vb)
 		{
 			m_commandList->IASetVertexBuffers(0, 1, &vb.GetView());
 		}
@@ -34,7 +34,7 @@ namespace UER
 		/// インデックスバッファを設定。
 		/// </summary>
 		/// <param name="ib"></param>
-		void SetIndexBuffer(IndexBuffer& ib)
+		void SetIndexBuffer(const IndexBuffer& ib)
 		{
 			m_commandList->IASetIndexBuffer(&ib.GetView());
 		}

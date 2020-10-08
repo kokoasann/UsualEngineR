@@ -56,5 +56,6 @@ namespace UER
 
 		int m_inWidth = 0;
 		int m_inHeight = 0;
+		
 	};
 }

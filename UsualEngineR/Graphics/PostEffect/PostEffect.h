@@ -24,6 +24,11 @@ namespace UER
 		{
 			return &m_backBufferTexture[g_graphicsEngine->GetBackBufferIndex()];
 		}
+
+		const Primitive& GetPrimitive() const
+		{
+			return m_primitive;
+		}
 	private:
 		Primitive m_primitive;
 		Texture m_backBufferTexture[2];
