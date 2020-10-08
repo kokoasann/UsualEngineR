@@ -5,17 +5,17 @@ void BossA::Init() {
 
 	//Model
 	ModelInitData mid;
-	mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
+	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
-	mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
-	mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
-	mid.m_upAxis = enUpAxisY;
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	//m_model->SetScale(g_vec3One * 0.05);
-	m_model->SetScale(g_vec3One);
+	m_model->SetScale(g_vec3One * 10);
+	m_position.y = 20.f;
 
 	//Init State
 	SetState(m_stateList[enIdleState]);
