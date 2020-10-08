@@ -55,11 +55,15 @@ private:
 
 	enum State {
 		enEnemyCamera,
-		enPlayerCamera
+		enPlayerCamera,
+		enNumState
 	};
+	
+	State m_state = enEnemyCamera;
 
 	const float m_swivelSpeed = 60.f;
 	Vector3 m_position = { 0,3,15 };
+	Vector3 m_old = { 0,3,15 };
 	Vector3 m_dist = Vector3::Zero;
 	Vector3 m_targetPos = Vector3::Zero;
 	Vector3 m_charaPos = Vector3::Zero;
