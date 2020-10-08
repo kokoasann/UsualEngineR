@@ -53,7 +53,7 @@ public:
 
 private:
 
-	enum class State {
+	enum class State{
 		enEnemyCamera,
 		enPlayerCamera,
 		enNumState

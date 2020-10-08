@@ -67,7 +67,8 @@ void GameCamera::PostUpdate() {
 	if (m_state == State::enEnemyCamera) {
 		static float distParam = 15.f;
 		static float cameraHeight = 5.f;
-		static float slideParam = 10.f;
+		static float charaSlideParam = 10.f;
+		static float targetSlideParam = 30.f;
 
 		auto vecTargetToChara = m_charaPos - m_targetPos;
 		auto length = vecTargetToChara.Length();
@@ -79,11 +80,11 @@ void GameCamera::PostUpdate() {
 		vecRight.y = 0.f;
 		vecRight.Cross({ 0,1,0 });
 		vecRight.Normalize();
-		vecRight *= slideParam;
+		m_position += vecRight * charaSlideParam;
 
-		m_position += vecRight;
-
-		cam->SetTarget(m_targetPos);
+		auto tarp = m_targetPos;
+		tarp -= vecRight * targetSlideParam;
+		cam->SetTarget(tarp);
 	}
 
 	if (m_state == State::enPlayerCamera) {
