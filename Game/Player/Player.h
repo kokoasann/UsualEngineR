@@ -139,7 +139,7 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-	Vector3 m_position = { 0,15,0 };
+	Vector3 m_position = { 0,15,-20 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 0.05f;
 

@@ -87,7 +87,6 @@ void Player::Update()
 		m_currentState->Enter(this);
 	}
 
-	//printf("Vel X : %f / Vel Y : %f / Vel Z : %f\n", m_velocity.x, m_velocity.y, m_velocity.z);
 }
 
 void Player::PostUpdate()

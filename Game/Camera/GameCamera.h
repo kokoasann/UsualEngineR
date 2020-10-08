@@ -52,10 +52,20 @@ public:
 	}
 
 private:
+
+	enum State {
+		enEnemyCamera,
+		enPlayerCamera
+	};
+
 	const float m_swivelSpeed = 60.f;
-	Vector3 m_position = { 0,2,15 };
+	Vector3 m_position = { 0,3,15 };
 	Vector3 m_dist = Vector3::Zero;
 	Vector3 m_targetPos = Vector3::Zero;
 	Vector3 m_charaPos = Vector3::Zero;
 	Quaternion m_rot = Quaternion::Identity;
 };
+
+static const void DebugLogVec3(const Vector3& vec) {
+	printf("Vec X : %f / Vec Y : %f / Vec Z : %f\n", vec.x, vec.y, vec.z);
+}
