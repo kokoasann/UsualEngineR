@@ -4,6 +4,7 @@ class GameStage;
 class Player;
 class EnemyTest;
 class GameCamera;
+class IEnemy;
 
 /// <summary>
 /// ÉQÅ[ÉÄ
@@ -70,6 +71,7 @@ private:
 
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
+	std::vector<IEnemy*> m_enemies;
 
 	//Level
 	GameStage* m_stage = nullptr;

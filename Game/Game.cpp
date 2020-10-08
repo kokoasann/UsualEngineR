@@ -3,6 +3,7 @@
 #include "Level/GameStage.h"
 #include "Player/Player.h"
 #include "Enemy/EnemyTest.h"
+#include "Enemy/Boss/BossA.h"
 #include "Camera/GameCamera.h"
 
 void Game::Release()
@@ -28,25 +29,33 @@ bool Game::Start()
 	m_player = NewGO<Player>(0);
 	m_camera = NewGO<GameCamera>(0);
 	m_stage = NewGO<GameStage>(0);
-	auto tarPos = m_player->GetPosition();
-	m_camera->SetTarget(tarPos);
+
+	auto ene = NewGO<BossA>(0);
+	m_enemies.push_back(ene);
+
+
+	m_camera->SetCharaPos(m_player->GetPosition());
+	const auto& epos = m_enemies[0]->GetPosition();
+	m_camera->SetTarget(epos);
 
 	return true;
 }
 
 void Game::PreUpdate()
 {
+
 }
 
 void Game::Update()
 {
-
+	m_camera->SetCharaPos(m_player->GetPosition());
+	const auto& epos = m_enemies[0]->GetPosition();
+	m_camera->SetTarget(epos);
 }
 
 void Game::PostUpdate()
 {
-	auto tarPos = m_player->GetPosition();
-	m_camera->SetTarget(tarPos);
+
 }
 
 void Game::Render()
