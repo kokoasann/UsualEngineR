@@ -98,14 +98,6 @@ void GameCamera::PostUpdate() {
 		auto x = vecCharaToCamera;
 		x.Normalize();
 		printf("y : %f\n", x.y);
-		/*
-		auto h = abs(m_charaPos.y - m_position.y);
-		const float limit = 10.f;
-		printf("H : %f\n", h);
-		if ((h >= limit && yf > 0) or (h <= -limit && yf <0)) {
-
-		}
-		*/
 
 		rotY.SetRotationDegY(xf);
 		auto vecRight = vecCharaToCamera;
@@ -115,6 +107,13 @@ void GameCamera::PostUpdate() {
 		rotX.SetRotationDeg(vecRight, yf);
 		rotY.Multiply(rotX);
 		rotY.Apply(m_dist);
+
+		auto nd = m_dist;
+		nd.Normalize();
+
+		if (nd.y > 0.7 or nd.y < -0.5)
+			m_dist = m_old;
+
 
 		m_position = m_charaPos + m_dist;
 
