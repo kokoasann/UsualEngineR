@@ -29,8 +29,8 @@ void GameCamera::Awake()
 {
 	auto cam = g_lockCamera3D.Get();
 	cam->SetTarget(m_targetPos);
-	m_position = m_targetPos + m_position;
-	m_dist = m_position - m_targetPos;
+	m_position = m_charaPos + m_position;
+	m_dist = m_position - m_charaPos;
 }
 
 bool GameCamera::Start()
@@ -63,7 +63,7 @@ void GameCamera::PostUpdate() {
 	rotY.Multiply(rotX);
 	rotY.Apply(m_dist);
 
-	m_position = m_targetPos + m_dist;
+	m_position = m_charaPos + m_dist;
 	auto cam = g_lockCamera3D.Get();
 	cam->SetTarget(m_targetPos);
 	cam->SetPosition(m_position);

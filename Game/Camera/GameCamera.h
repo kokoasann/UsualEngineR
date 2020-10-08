@@ -42,8 +42,13 @@ public:
 
 	void PostUpdate() override;
 
-	void SetTarget(Vector3& target) {
+	void SetTarget(const Vector3& target) {
 		m_targetPos = target;
+	}
+
+	void SetCharaPos(const Vector3& charaPos)
+	{
+		m_charaPos = charaPos;
 	}
 
 private:
@@ -51,5 +56,6 @@ private:
 	Vector3 m_position = { 0,2,15 };
 	Vector3 m_dist = Vector3::Zero;
 	Vector3 m_targetPos = Vector3::Zero;
+	Vector3 m_charaPos = Vector3::Zero;
 	Quaternion m_rot = Quaternion::Identity;
 };
