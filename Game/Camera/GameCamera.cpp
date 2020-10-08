@@ -88,6 +88,9 @@ void GameCamera::PostUpdate() {
 
 	if (m_state == State::enPlayerCamera) {
 
+		static const float upperLimit = 0.7f;
+		static const float lowerLimit = -0.5f;
+
 		auto vecCharaToCamera = m_position - m_charaPos;
 
 		Quaternion rotY = Quaternion::Identity;
@@ -111,7 +114,7 @@ void GameCamera::PostUpdate() {
 		auto nd = m_dist;
 		nd.Normalize();
 
-		if (nd.y > 0.7 or nd.y < -0.5)
+		if (nd.y > upperLimit or nd.y < lowerLimit)
 			m_dist = m_old;
 
 
