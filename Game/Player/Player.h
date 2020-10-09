@@ -1,5 +1,5 @@
 #pragma once
-#include "IPlayerSstate.h"
+#include "State/IPlayerSstate.h"
 #include "../../UsualEngineR/Character/CharacterController.h"
 
 /// <summary>
@@ -9,10 +9,11 @@ class Player :public GameObject
 {
 public:
 
-	enum EnState {
+	enum class EnState {
 		enGround,
 		enFlying,
 		enDiving,
+		enAttack,
 		enNumState
 	};
 
@@ -67,8 +68,8 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	IPlayerState* GetState(int state) {
-		return m_stateList[state];
+	IPlayerState* GetState(const EnState& state) const{
+		return m_stateList[static_cast<int>(state)];
 	};
 
 	/// <summary>
@@ -79,11 +80,11 @@ public:
 		return m_position;
 	}
 
-	void SetPosition(Vector3& pos) {
+	void SetPosition(const Vector3& pos) {
 		m_position = pos;
 	}
 
-	void SetVelocity(Vector3& velocity) {
+	void SetVelocity(const Vector3& velocity) {
 		m_velocity = velocity;
 	}
 
@@ -91,7 +92,7 @@ public:
 		return m_velocity;
 	}
 
-	void SetLocalVelocity(Vector3& velocity) {
+	void SetLocalVelocity(const Vector3& velocity) {
 		m_localVelocity = velocity;
 	}
 
@@ -117,7 +118,7 @@ public:
 		return m_rotation;
 	}
 
-	void SetRotation(Quaternion& rot) {
+	void SetRotation(const Quaternion& rot) {
 		m_rotation = rot;
 	}
 

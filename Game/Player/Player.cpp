@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include <algorithm>
 #include "Player.h"
-#include "PlayerFlyingState.h"
-#include "PlayerGroundState.h"
-#include "PlayerDiveState.h"
+#include "State/PlayerFlyingState.h"
+#include "State/PlayerGroundState.h"
+#include "State/PlayerDiveState.h"
+#include "State/PlayerAttackState.h"
 
 Player::Player()
 {
@@ -55,12 +56,13 @@ void Player::Awake()
 bool Player::Start()
 {
 
-	m_stateList.resize(EnState::enNumState);
-	m_stateList[enGround] = new PlayerGroundState();
-	m_stateList[enFlying] = new PlayerFlyingState();
-	m_stateList[enDiving] = new PlayerDiveState();
+	m_stateList.resize(static_cast<int>(EnState::enNumState));
+	m_stateList[static_cast<int>(EnState::enGround)] = new PlayerGroundState();
+	m_stateList[static_cast<int>(EnState::enFlying)] = new PlayerFlyingState();
+	m_stateList[static_cast<int>(EnState::enDiving)] = new PlayerDiveState();
+	m_stateList[static_cast<int>(EnState::enAttack)] = new PlayerAttackState();
 
-	m_currentState = m_nextState = m_stateList[EnState::enFlying];
+	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
 
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ false);

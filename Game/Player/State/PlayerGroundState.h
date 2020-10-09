@@ -1,6 +1,6 @@
 #pragma once
 #include"IPlayerSstate.h"
-#include "Player.h"
+#include "../Player.h"
 
 /// <summary>
 /// 

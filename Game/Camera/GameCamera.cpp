@@ -101,7 +101,6 @@ void GameCamera::PostUpdate() {
 
 		auto x = vecCharaToCamera;
 		x.Normalize();
-		printf("y : %f\n", x.y);
 
 		rotY.SetRotationDegY(xf);
 		auto vecRight = vecCharaToCamera;

@@ -12,15 +12,6 @@
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Player\PlayerFlyingState.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\PlayerGroundState.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\IPlayerSstate.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\IEnemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -36,9 +27,6 @@
     <ClInclude Include="Level\GameStage.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Player\PlayerDiveState.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\Boss\BossA.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
@@ -47,6 +35,27 @@
     </ClInclude>
     <ClInclude Include="Enemy\EnemyIdleState.h">
       <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\State\PlayerDiveState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\State\PlayerFlyingState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\State\PlayerGroundState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\State\IPlayerSstate.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\State\PlayerAttackState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\PlayerAttackSlash.h">
+      <Filter>Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\IPlayerAttack.h">
+      <Filter>Player\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,15 +68,6 @@
       <Filter>test</Filter>
     </ClCompile>
     <ClCompile Include="Player\Player.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\PlayerFlyingState.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\PlayerGroundState.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\IPlayerSstate.cpp">
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
@@ -86,9 +86,6 @@
     <ClCompile Include="Level\GameStage.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Player\PlayerDiveState.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\Boss\BossA.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
@@ -97,6 +94,27 @@
     </ClCompile>
     <ClCompile Include="Enemy\EnemyIdleState.cpp">
       <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\State\PlayerDiveState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\State\PlayerFlyingState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\State\PlayerGroundState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\State\IPlayerSstate.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\State\PlayerAttackState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\IPlayerAttack.cpp">
+      <Filter>Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\PlayerAttackSlash.cpp">
+      <Filter>Player\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +147,12 @@
     </Filter>
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\State">
+      <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack">
+      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
