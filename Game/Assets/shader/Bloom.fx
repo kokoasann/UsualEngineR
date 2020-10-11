@@ -1,7 +1,7 @@
 
 struct VSInput
 {
-	float4 pos:SV_POSITION;
+	float4 pos:POSITION;
 	float2 uv:TEXCOORD0;
 };
 struct PSInput
@@ -23,13 +23,15 @@ PSInput VSMain(VSInput In)
 
 float4 PSMain_SamplingLuminance(PSInput In) :SV_Target0
 {
-	float4 col = Texture.Sample(Sampler,In.uv);
 	
+	float4 col = Texture.Sample(Sampler,In.uv);
+	return col;
 	float t = dot(col.xyz, float3(0.2125f, 0.7154f, 0.0721f));
 	clip(t - 1.001f);
 	col.xyz *= t - 1.f;
 	col.w = 1.0f;
-	return col;
+	
+	//return col;
 }
 
 Texture2D<float4> tex0:register(t0);

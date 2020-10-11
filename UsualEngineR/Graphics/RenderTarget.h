@@ -33,6 +33,20 @@ namespace UER
 			DXGI_FORMAT depthStencilFormat,
 			float clearColor[4] = nullptr
 		);
+
+		bool Create(
+			ID3D12Resource* rtTex,
+			ID3D12Resource* dsTex,
+			ID3D12DescriptorHeap* rtHeap,
+			ID3D12DescriptorHeap* dsHeap,
+			UINT rtvDescriptorSize,
+			UINT sdvDescriptorSize,
+			int width,
+			int height,
+			float clearColor[4]
+		);
+
+		void Clear(RenderContext& rc);
 		/// <summary>
 		/// CPU側のレンダリングターゲットのディスクリプタハンドルを取得。
 		/// </summary>
@@ -89,6 +103,11 @@ namespace UER
 		{
 			return m_dsvClearValue;
 		}
+
+		void SetName(const wchar_t* name)
+		{
+			m_renderTargetTextureDx12->SetName(name);
+		}
 	private:
 		/// <summary>
 		/// ディスクリプタヒープを作成。
@@ -139,6 +158,7 @@ namespace UER
 		/// <param name="d3dDevice">D3Dデバイス</param>
 		/// <returns>trueが返ってｋチアら成功。</returns>
 		void CreateDescriptor(ID3D12Device*& d3dDevice);
+		
 	private:
 		Texture m_renderTargetTexture;
 		ID3D12Resource* m_renderTargetTextureDx12;	//レンダリングターゲットとなるテクスチャ。

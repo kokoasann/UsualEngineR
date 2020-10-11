@@ -67,6 +67,8 @@ namespace UER
 
 		UpdatePostRender();
 
+		g_graphicsEngine->RenderPostEffect();
+
 		Debug::Instance().DrawLog();
 
 		for (auto& ngd : m_newGOBuffer)

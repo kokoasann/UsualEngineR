@@ -1,7 +1,8 @@
 #pragma once
 
+#include "RenderTarget.h"
 #include "GaussBlur.h"
-
+#include "TextureCopy.h"
 namespace UER
 {
 	class PostEffect;
@@ -16,12 +17,14 @@ namespace UER
 
 		void Release();
 
-		void Init(PostEffect& pe);
+		void Init(PostEffect* pe);
 
-		void Render(PostEffect& pe, RenderContext& rc);
+		void Render(RenderContext& rc);
 
-		void CombineRender(RenderContext& rc, RenderTarget* rt=nullptr);
+		void CombineRender(RenderContext& rc, RenderTarget* rt);
 	private:
+		PostEffect* m_postEffect = nullptr;
+
 		const static int MAX_GAUSS = 5;
 		GaussBlur m_blur[MAX_GAUSS];
 
@@ -38,5 +41,7 @@ namespace UER
 
 		DescriptorHeap m_descLuminance;
 		DescriptorHeap m_descCombine;
+
+		TextureCopy m_copy;
 	};
 }

@@ -4,6 +4,8 @@
 
 namespace UER
 {
+	class Primitive;
+
 	class TextureCopy
 	{
 	public:

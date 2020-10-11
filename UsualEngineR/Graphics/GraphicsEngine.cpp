@@ -186,6 +186,83 @@ namespace UER
 		//
 		g_graphicsEngine = this;
 		g_lockGraphicsEngine.Set(this);
+
+		float ccolor[4] = { 0.5,0.5,0.5,1.f };
+		m_mainRT.Create(
+			FRAME_BUFFER_W, FRAME_BUFFER_H, 1, 1, DXGI_FORMAT_R32G32B32A32_FLOAT, DXGI_FORMAT_D32_FLOAT, ccolor);
+		m_mainRT.SetName(L"MainRT");
+
+		struct SSimpleVertex {
+			Vector4 pos;
+			Vector2 tex;
+		};
+		//四角形プリミティブを初期化。
+		SSimpleVertex vertices[] =
+		{
+			{
+				Vector4(-1.0f, -1.0f, 0.0f, 1.0f),
+				Vector2(0.0f, 1.0f),
+			},
+			{
+				Vector4(1.0f, -1.0f, 0.0f, 1.0f),
+				Vector2(1.0f, 1.0f),
+			},
+			{
+				Vector4(-1.0f, 1.0f, 0.0f, 1.0f),
+				Vector2(0.0f, 0.0f)
+			},
+			{
+				Vector4(1.0f, 1.0f, 0.0f, 1.0f),
+				Vector2(1.0f, 0.0f)
+			}
+
+		};
+		short indices[] = { 0,1,2,3 };
+		m_primitive.Cteate(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, 4, sizeof(SSimpleVertex), vertices, 4, Primitive::it_2byte, indices);
+
+		m_copyVS.LoadVS(L"Assets/shader/Copy.fx", "VSMain");
+		m_copyPS.LoadPS(L"Assets/shader/Copy.fx", "PSMain");
+		m_copyShader.LoadCS(L"Assets/shader/Copy.fx", "CSMain_thd4x4x1");
+		m_copyRootSign.Init(
+			D3D12_FILTER_MIN_MAG_MIP_LINEAR,
+			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+			D3D12_TEXTURE_ADDRESS_MODE_WRAP);
+		m_copyDescHeap.RegistShaderResource(0, m_mainRT.GetRenderTargetTexture());
+		m_copyDescHeap.Commit();
+		D3D12_COMPUTE_PIPELINE_STATE_DESC pipedesc = {};
+		pipedesc.CS = CD3DX12_SHADER_BYTECODE(m_copyShader.GetCompiledBlob());
+		pipedesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
+		pipedesc.NodeMask = 1;
+		pipedesc.pRootSignature = m_copyRootSign.Get();
+
+		D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
+		{
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		};
+		D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
+		psoDesc.InputLayout = { inputElementDescs, _countof(inputElementDescs) };
+		psoDesc.pRootSignature = m_copyRootSign.Get();
+		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_copyVS.GetCompiledBlob());
+		psoDesc.PS = CD3DX12_SHADER_BYTECODE(m_copyPS.GetCompiledBlob());
+		psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+		psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+		psoDesc.DepthStencilState.DepthEnable = FALSE;
+		psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+		psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+		psoDesc.DepthStencilState.StencilEnable = FALSE;
+		psoDesc.SampleMask = UINT_MAX;
+		psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		psoDesc.NumRenderTargets = 1;
+		psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;		//アルベドカラー出力用。
+		psoDesc.DSVFormat = DXGI_FORMAT_D16_UNORM;
+		psoDesc.SampleDesc.Count = 1;
+		m_copyPipeState.Init(psoDesc);
+
+
+		m_postEffect.Init();
 		return true;
 	}
 	IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()
@@ -352,6 +429,10 @@ namespace UER
 				m_renderTargets[n], nullptr, rtvHandle
 			);
 			rtvHandle.ptr += m_rtvDescriptorSize;
+			if(n==0)
+				m_renderTargets[n]->SetName(L"FrameBuffer_0");
+			else
+				m_renderTargets[n]->SetName(L"FrameBuffer_1");
 		}
 		return true;
 	}
@@ -447,15 +528,21 @@ namespace UER
 		m_currentFrameBufferRTVHandle.ptr += m_frameIndex * m_rtvDescriptorSize;
 		//深度ステンシルバッファのディスクリプタヒープの開始アドレスを取得。
 		m_currentFrameBufferDSVHandle = m_dsvHeap->GetCPUDescriptorHandleForHeapStart();
+
 		//バックバッファがレンダリングターゲットとして設定可能になるまで待つ。
-		m_renderContext.WaitUntilToPossibleSetRenderTarget(m_renderTargets[m_frameIndex]);
-	
+		//m_renderContext.WaitUntilToPossibleSetRenderTarget(m_renderTargets[m_frameIndex]);
+		m_renderContext.WaitUntilToPossibleSetRenderTarget(m_mainRT.GetRenderTargetTexture().Get());
+
 		//レンダリングターゲットを設定。
-		m_renderContext.SetRenderTarget(m_currentFrameBufferRTVHandle, m_currentFrameBufferDSVHandle);
+		//m_renderContext.SetRenderTarget(m_currentFrameBufferRTVHandle, m_currentFrameBufferDSVHandle);
+		m_renderContext.SetRenderTarget(m_mainRT.GetRTVCpuDescriptorHandle(), m_mainRT.GetDSVCpuDescriptorHandle());
+
+		m_mainRT.Clear(m_renderContext);
+		
 	
 		const float clearColor[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-		m_renderContext.ClearRenderTargetView(m_currentFrameBufferRTVHandle, clearColor);
-		m_renderContext.ClearDepthStencilView(m_currentFrameBufferDSVHandle, 1.0f);
+		//m_renderContext.ClearRenderTargetView(m_currentFrameBufferRTVHandle, clearColor);
+		//m_renderContext.ClearDepthStencilView(m_currentFrameBufferDSVHandle, 1.0f);
 	
 	}
 	void GraphicsEngine::ChangeRenderTargetToFrameBuffer(RenderContext& rc)
@@ -465,10 +552,29 @@ namespace UER
 	void GraphicsEngine::EndRender()
 	{
 		// レンダリングターゲットへの描き込み完了待ち
+		m_renderContext.WaitUntilFinishDrawingToRenderTarget(m_mainRT);
+
+		
+		m_renderContext.WaitUntilToPossibleSetRenderTarget(m_renderTargets[m_frameIndex]);
+		
+		m_renderContext.SetRenderTarget(m_currentFrameBufferRTVHandle, m_currentFrameBufferDSVHandle);
+
+		m_renderContext.SetRootSignature(m_copyRootSign);
+		m_renderContext.SetDescriptorHeap(m_copyDescHeap);
+		m_renderContext.SetPipelineState(m_copyPipeState);
+		//m_renderContext.Dispatch(320, 180, 1);
+		m_primitive.Draw(m_renderContext);
+
 		m_renderContext.WaitUntilFinishDrawingToRenderTarget(m_renderTargets[m_frameIndex]);
-	
+
+		/*m_renderContext.WaitUntilToPossibleSetRenderTarget(m_mainRT);
+		m_renderContext.CopyResource(m_renderTargets[m_frameIndex], m_mainRT.GetRenderTargetTexture().Get());
+		m_renderContext.WaitUntilFinishDrawingToRenderTarget(m_renderTargets[m_frameIndex]);*/
+
 		//レンダリングコンテキストを閉じる。
 		m_renderContext.Close();
+
+		
 	
 		//コマンドを実行。
 		ID3D12CommandList* ppCommandLists[] = { m_commandList };

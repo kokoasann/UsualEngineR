@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "Primitive.h"
 
 namespace UER
 {
@@ -17,7 +17,9 @@ namespace UER
 
 		void Init(int w, int h, RenderTarget* inTex, int inW, int inH, RenderTarget*& outTex);
 
-		void Render(RenderContext& rc, Primitive prim);
+		void Render(RenderContext& rc,const Primitive& prim);
+
+		void UpdateWeight();
 
 		Texture* GetOutputTexture()
 		{
@@ -28,12 +30,13 @@ namespace UER
 		struct BlurData
 		{
 			Vector4 offset;
-			float weight[MAX_WEIGHT] = {0.f};
+			float weights[MAX_WEIGHT] = {0.f};
 			float rttexRatio = 1.f;
 		};
 		BlurData m_blurData;
 
-		float m_power = 1.0f;
+		float m_dispersion = 1.0f;
+		bool m_isChangeWeight = true;
 
 		RenderTarget m_rtX;
 		RenderTarget m_rtY;
@@ -48,8 +51,10 @@ namespace UER
 		DescriptorHeap m_descHeapX;
 		DescriptorHeap m_descHeapY;
 
+		DescriptorHeap m_samplerHeap;
+
 		Texture m_inputTex;
-		ConstantBuffer m_constBuffer;
+		ConstantBuffer m_constBuffer[2];
 
 		int m_width = 0;
 		int m_height = 0;

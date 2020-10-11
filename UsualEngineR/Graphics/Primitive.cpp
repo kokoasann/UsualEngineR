@@ -11,13 +11,13 @@ namespace UER
 	}
 	bool Primitive::Cteate(D3D_PRIMITIVE_TOPOLOGY topo, int vertexNum, int stride, const void* vertexData, int indexNum, EIndexType indexType, const void* indexData)
 	{
-		m_vertexBuffer.Init(vertexNum, stride);
+		m_vertexBuffer.Init(vertexNum* stride, stride);
 		if(vertexData)
 			m_vertexBuffer.Copy((void*)vertexData);
 
 		if (indexNum || 1)
 		{
-			m_indexBuffer.Init(indexNum, indexType);
+			m_indexBuffer.Init(indexNum* indexType, indexType);
 			m_indexBuffer.Copy((void*)indexData);
 		}
 
@@ -36,10 +36,9 @@ namespace UER
 
 	void Primitive::Draw(RenderContext& rc) const
 	{
-
-		rc.SetPrimitiveTopology(m_topology);
 		rc.SetIndexBuffer(m_indexBuffer);
 		rc.SetVertexBuffer(m_vertexBuffer);
+		rc.SetPrimitiveTopology(m_topology);
 		rc.DrawIndexed(m_indexBuffer.GetCount());
 		/*ID3D11DeviceContext* dc = usualEngine()->GetGraphicsEngine()->GetD3DDeviceContext();
 		UINT offset = 0;

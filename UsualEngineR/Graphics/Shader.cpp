@@ -111,11 +111,13 @@ namespace UER
 				errorMessage = L"指定されたfxファイルが開けませんでした";
 				errorMessage += filePath;
 				MessageBoxW(nullptr, errorMessage.c_str(), L"エラー", MB_OK);
+				std::abort();
 			}
 			if (errorBlob) {
 				static char errorMessage[10 * 1024];
 				sprintf_s(errorMessage, "filePath : %s, %s", "hoge", (char*)errorBlob->GetBufferPointer());
 				MessageBoxA(NULL, errorMessage, "シェーダーコンパイルエラー", MB_OK);
+				std::abort();
 				return;
 			}
 		}

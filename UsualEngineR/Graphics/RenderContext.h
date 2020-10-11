@@ -21,6 +21,11 @@ namespace UER
 		{
 			m_commandList = commandList;
 		}
+
+		ID3D12GraphicsCommandList4* GetCommandList()
+		{
+			return m_commandList;
+		}
 	
 		/// <summary>
 		/// 頂点バッファを設定。

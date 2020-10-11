@@ -256,6 +256,9 @@
     <ClInclude Include="Graphics\GPUBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\SampleSampler.h">
+      <Filter>Graphics\Sample</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -481,6 +484,9 @@
     <ClCompile Include="Graphics\GPUBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\SampleSampler.cpp">
+      <Filter>Graphics\Sample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -545,6 +551,9 @@
     </Filter>
     <Filter Include="Graphics\Raytracing">
       <UniqueIdentifier>{88bd0b26-d118-4ded-a6e4-c0d870c2e3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sample">
+      <UniqueIdentifier>{00978af9-1239-4667-a840-23d2a49b71bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

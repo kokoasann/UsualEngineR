@@ -10,7 +10,7 @@ namespace UER
 		auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 		auto hr = d3dDevice->CreateGraphicsPipelineState(&desc, IID_PPV_ARGS(&m_pipelineState));
 		if (FAILED(hr)) {
-			MessageBoxA(nullptr, "パイプラインステートの作成に失敗しました。\n", "エラー", MB_OK);
+			MessageBoxA(nullptr, "PipelineState create failed パイプラインステートの作成に失敗しました。\n", "エラー", MB_OK);
 			std::abort();
 		}
 	}
@@ -19,7 +19,7 @@ namespace UER
 		auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 		auto hr = d3dDevice->CreateComputePipelineState(&desc, IID_PPV_ARGS(&m_pipelineState));
 		if (FAILED(hr)) {
-			MessageBoxA(nullptr, "パイプラインステートの作成に失敗しました。\n", "エラー", MB_OK);
+			MessageBoxA(nullptr, "PipelineState create failed パイプラインステートの作成に失敗しました。\n", "エラー", MB_OK);
 			std::abort();
 		}
 	}

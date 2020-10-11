@@ -14,6 +14,8 @@
 #include "RaytracingEngine.h"
 #include "Raytracing/RaytracingEngine.h"
 
+#include "PostEffect/PostEffect.h"
+
 #include "Camera.h"
 
 
@@ -54,6 +56,15 @@ namespace UER
 		/// 1フレームのレンダリングの終了時に呼び出してください。
 		/// </remarks>
 		void EndRender();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void RenderPostEffect()
+		{
+			m_postEffect.Render();
+		}
+
 		/// <summary>
 		/// D3Dデバイスを取得。
 		/// </summary>
@@ -182,13 +193,39 @@ namespace UER
 			rc.ResourceBarrier(barrier2);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		D3D12_CPU_DESCRIPTOR_HANDLE GetCurrentBackBufferRTVHandle() const
 		{
 			return m_currentFrameBufferRTVHandle;
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		D3D12_CPU_DESCRIPTOR_HANDLE GetCurrentBackBufferDSVHandle() const
 		{
 			return m_currentFrameBufferDSVHandle;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		RenderTarget* GetCurrentRenderTarget()
+		{
+			return &m_mainRT;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		ID3D12CommandAllocator* GetCommandAllocator() const
+		{
+			return m_commandAllocator;
 		}
 	private:
 		/// <summary>
@@ -298,6 +335,17 @@ namespace UER
 		Camera m_camera3D;						//3Dカメラ。
 		//RaytracingEngine m_raytracingEngine;	//レイトレエンジン。
 		raytracing::Engine m_raytracingEngine;
+
+		RenderTarget m_mainRT;
+		PostEffect m_postEffect;
+
+		Primitive m_primitive;
+		RootSignature m_copyRootSign;
+		DescriptorHeap m_copyDescHeap;
+		PipelineState m_copyPipeState;
+		Shader m_copyShader;
+		Shader m_copyVS;
+		Shader m_copyPS;
 
 		bool m_isEnableRaytracing = false;
 	};

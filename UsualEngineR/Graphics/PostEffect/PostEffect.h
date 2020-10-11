@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RenderTarget.h"
+#include "Primitive.h"
 #include "Bloom.h"
 
 
@@ -20,10 +22,8 @@ namespace UER
 
 		void Render();
 
-		Texture* GetCurrentBackBufferTexture()
-		{
-			return &m_backBufferTexture[g_graphicsEngine->GetBackBufferIndex()];
-		}
+		Texture* GetCurrentBackBufferTexture();
+		
 
 		const Primitive& GetPrimitive() const
 		{
@@ -33,6 +33,9 @@ namespace UER
 		Primitive m_primitive;
 		Texture m_backBufferTexture[2];
 
+		RenderContext m_rc4Bloom;
+
+		RenderTarget m_mainRT[2];
 		RenderTarget m_renderTarget;
 
 		Bloom m_bloom;

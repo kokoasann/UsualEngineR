@@ -41,9 +41,30 @@ namespace UER
 		//ディスクリプタを作成する。
 		CreateDescriptor(d3dDevice);
 		if (clearColor) {
-			memcpy(m_rtvClearColor, clearColor, sizeof(clearColor));
+			memcpy(m_rtvClearColor, clearColor, sizeof(float)*4);
 		}
 		return true;
+	}
+	bool RenderTarget::Create(ID3D12Resource* rtTex, ID3D12Resource* dsTex, ID3D12DescriptorHeap* rtHeap, ID3D12DescriptorHeap* dsHeap, UINT rtvDescriptorSize, UINT dsvDescriptorSize, int width, int height, float clearColor[4])
+	{
+		m_renderTargetTextureDx12 = rtTex;
+		m_depthStencilTexture = dsTex;
+		m_renderTargetTexture.InitFromD3DResource(rtTex);
+		m_rtvHeap = rtHeap;
+		m_dsvHeap = dsHeap;
+		m_rtvDescriptorSize = rtvDescriptorSize;
+		m_dsvDescriptorSize = dsvDescriptorSize;
+		m_width = width;
+		m_height = height;
+		if (clearColor) {
+			memcpy(m_rtvClearColor, clearColor, sizeof(float)*4);
+		}
+		return true;
+	}
+	void RenderTarget::Clear(RenderContext& rc)
+	{
+		rc.ClearRenderTargetView(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), m_rtvClearColor);
+		rc.ClearDepthStencilView(m_dsvHeap->GetCPUDescriptorHandleForHeapStart(), m_dsvClearValue);
 	}
 	bool RenderTarget::CreateDescriptorHeap(GraphicsEngine& ge, ID3D12Device*& d3dDevice)
 	{
