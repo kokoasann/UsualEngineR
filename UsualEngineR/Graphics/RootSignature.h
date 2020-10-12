@@ -3,7 +3,6 @@
 
 namespace UER
 {
-	
 	class Shader;
 	class RootSignature {
 	public:
@@ -37,6 +36,20 @@ namespace UER
 		{
 			return m_rootSignature;
 		}
+
+		struct TableInitData
+		{
+			UINT8 maxCBV = 8;
+			UINT8 maxSRV = 32;
+			UINT8 maxUAV = 8;
+		};
+		bool Init(
+			D3D12_FILTER samplerFilter,
+			D3D12_TEXTURE_ADDRESS_MODE textureAdressModeU,
+			D3D12_TEXTURE_ADDRESS_MODE textureAdressModeV,
+			D3D12_TEXTURE_ADDRESS_MODE textureAdressModeW, 
+			int numTables, TableInitData* table
+		);
 	private:
 		ID3D12RootSignature* m_rootSignature = nullptr;	//ルートシグネチャ。
 	};

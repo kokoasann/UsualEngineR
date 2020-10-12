@@ -216,4 +216,51 @@ namespace UER
 	#endif
 	}
 
+	void UER::MeshParts::Draw(RenderContext& rc, const Matrix& mWorld, Camera& cam)
+	{
+		//メッシュごとにドロー
+		//プリミティブのトポロジーはトライアングルリストのみ。
+		rc.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		//定数バッファを更新する。
+		SConstantBuffer cb;
+		cb.mWorld = mWorld;
+		cb.mView = cam.GetViewMatrix();// mView;
+		cb.mProj = cam.GetProjectionMatrix();
+
+		m_commonConstantBuffer.CopyToVRAM(&cb);
+
+		if (m_expandData) {
+			m_expandConstantBuffer.CopyToVRAM(m_expandData);
+		}
+		if (m_boneMatricesStructureBuffer.IsInited()) {
+			//ボーン行列を更新する。
+			m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
+		}
+		int descriptorHeapNo = 0;
+		for (auto& mesh : m_meshs) {
+			//頂点バッファを設定。
+			rc.SetVertexBuffer(mesh->m_vertexBuffer);
+			//マテリアルごとにドロー。
+			for (int matNo = 0; matNo < mesh->m_materials.size(); matNo++) {
+				//このマテリアルが貼られているメッシュの描画開始。
+				mesh->m_materials[matNo]->BeginRender(rc, mesh->skinFlags[matNo]);
+				//ディスクリプタヒープを登録。
+				ID3D12DescriptorHeap* dheaps[] = {
+					m_descriptorHeap[descriptorHeapNo].Get(),
+					cam.GetDiscriptorHeap().Get()
+				};
+				rc.SetDescriptorHeaps(2, dheaps);
+				//rc.SetDescriptorHeap(m_descriptorHeap.at(descriptorHeapNo));
+				//インデックスバッファを設定。
+				auto& ib = mesh->m_indexBufferArray[matNo];
+				rc.SetIndexBuffer(*ib);
+
+				//ドロー。
+				rc.DrawIndexed(ib->GetCount());
+				descriptorHeapNo++;
+			}
+		}
+	}
+
 }

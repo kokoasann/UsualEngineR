@@ -1,0 +1,25 @@
+#pragma once
+
+
+namespace UER
+{
+	
+
+	class LightBase :public GameObject
+	{
+	protected:
+		LightBase() {};
+		~LightBase() {};
+	public:
+		bool Start() override final;
+		/// <summary>
+		/// äJï˙ÅB
+		/// </summary>
+		void Release() override{}
+		void OnDestroy() override final;
+
+		
+	private:
+	
+	};
+}

@@ -194,6 +194,21 @@
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\IShaderResource.h" />
     <ClInclude Include="Graphics\IUnorderAccessResource.h" />
+    <ClInclude Include="Graphics\Light\LightBase.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightDirection.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightManager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightPoint.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightStruct.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\MeshParts.h" />
     <ClInclude Include="Graphics\Model.h" />
@@ -279,6 +294,21 @@
     <ClCompile Include="Graphics\GPUBuffer.cpp" />
     <ClCompile Include="Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
+    <ClCompile Include="Graphics\Light\LightBase.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightDirection.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightPoint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightStruct.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\MeshParts.cpp" />
     <ClCompile Include="Graphics\Model.cpp" />

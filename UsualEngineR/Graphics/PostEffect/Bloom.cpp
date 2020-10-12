@@ -71,21 +71,7 @@ namespace UER
 		}
 
 		m_descLuminance.RegistShaderResource(0, g_graphicsEngine->GetCurrentRenderTarget()->GetRenderTargetTexture());
-		D3D12_SAMPLER_DESC samplerDesc = {};
-		samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-		samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		samplerDesc.MipLODBias = 0;
-		samplerDesc.MaxAnisotropy = 1;
-		samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-		samplerDesc.BorderColor[0] = 1.0f;
-		samplerDesc.BorderColor[1] = 1.0f;
-		samplerDesc.BorderColor[2] = 1.0f;
-		samplerDesc.BorderColor[3] = 1.0f;
-		samplerDesc.MinLOD = 0.0f;
-		samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
-		//m_descLuminance.RegistSamplerDesc(0,samplerDesc);
+		
 		
 		m_descLuminance.Commit();
 

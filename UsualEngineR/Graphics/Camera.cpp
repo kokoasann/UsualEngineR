@@ -10,6 +10,13 @@ namespace UER
 	
 	
 	
+	void Camera::Init()
+	{
+		m_camBuffer.Init(sizeof(CamConstantBuffer));
+		m_camHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), m_camBuffer);
+		m_camHeap.Commit();
+	}
+
 	void Camera::Update()
 	{
 		//アスペクト比を計算する。
@@ -50,6 +57,12 @@ namespace UER
 		m_targetToPositionLen = toPos.Length();
 	
 		m_isDirty = false;
+
+
+		auto d = m_target - m_position;
+		d.Normalize();
+		CamConstantBuffer constBuffer(m_position, d, m_projectionMatrix, m_viewMatrix);
+		m_camBuffer.CopyToVRAM(constBuffer);
 	}
 	void Camera::CalcScreenPositionFromWorldPosition(Vector2& screenPos, const Vector3& worldPos) const
 	{
@@ -61,6 +74,7 @@ namespace UER
 		screenPos.x = (_screenPos.x / _screenPos.w)*half_w;
 		screenPos.y = (_screenPos.y / _screenPos.w)*half_h;
 	}
+	
 	void Camera::RotateOriginTarget(const Quaternion& qRot)
 	{
 		Vector3 cameraPos = m_position;

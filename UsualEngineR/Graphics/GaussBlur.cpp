@@ -115,7 +115,7 @@ namespace UER
 
 		m_blurData.rttexRatio = float(m_inWidth)/float(m_width);
 		//m_blurData.offset.x = -((8.f * (m_blurData.rttexRatio)) / m_width);
-		m_blurData.offset.x = 8.f / m_inWidth;
+		m_blurData.offset.x = 16.f / m_inWidth;
 		m_blurData.offset.y = 0.f;
 
 		m_constBuffer[0].CopyToVRAM(m_blurData);
@@ -148,7 +148,7 @@ namespace UER
 		m_blurData.rttexRatio = 2.f * (float(m_width) / float(m_height));
 		m_blurData.offset.x = 0.f;
 		//m_blurData.offset.y = -((8.f * (m_blurData.rttexRatio)) / (float)m_height);
-		m_blurData.offset.y = 8.f / m_inHeight;
+		m_blurData.offset.y = 16.f / m_inHeight;
 
 		m_constBuffer[1].CopyToVRAM(m_blurData);
 

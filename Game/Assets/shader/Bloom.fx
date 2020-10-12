@@ -27,7 +27,7 @@ float4 PSMain_SamplingLuminance(PSInput In) :SV_Target0
 	float4 col = Texture.Sample(Sampler,In.uv);
 	return col;
 	float t = dot(col.xyz, float3(0.2125f, 0.7154f, 0.0721f));
-	clip(t - 1.001f);
+	clip(t - 1.f);
 	col.xyz *= t - 1.f;
 	col.w = 1.0f;
 	
@@ -47,7 +47,7 @@ float4 PSMain_Combine(PSInput In) :SV_Target0
 	col += tex2.Sample(Sampler, In.uv);
 	col += tex3.Sample(Sampler, In.uv);
 	col += tex4.Sample(Sampler, In.uv);
-	col /= 5.0f;
+	col *= rcp(5.f);
 	col.w = 1.0f;
 	return col;
 }

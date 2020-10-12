@@ -17,8 +17,10 @@ namespace UER
 			Physics().RemoveRigidBody(m_rigidBody);
 	}
 
-	void PhysicsStaticObject::CreateMeshObject(const Model& skinModel, const Vector3& pos, const Quaternion& rot, const Vector3& sca)
+	RigidBody* PhysicsStaticObject::CreateMeshObject(const Model& skinModel, const Vector3& pos, const Quaternion& rot, const Vector3& sca,bool isNotMainThread)
 	{
+		m_isCreated = true;
+
 		Matrix mTra, mRot, mSca;
 		mTra.MakeTranslation(pos);
 		mRot.MakeRotationFromQuaternion(rot);
@@ -37,9 +39,13 @@ namespace UER
 		//rbInfo.sca = sca;
 		m_rigidBody.Create(rbInfo);
 		m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Ground);
-		//剛体を物理ワールドに追加する。
-		Physics().AddRigidBody(m_rigidBody);
 
-		m_isCreated = true;
+		if (!isNotMainThread)
+		{
+			//剛体を物理ワールドに追加する。
+			Physics().AddRigidBody(m_rigidBody);
+		}
+
+		return &m_rigidBody;
 	}
 }

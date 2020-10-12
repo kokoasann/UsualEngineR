@@ -15,7 +15,7 @@ namespace UER
 	class Skeleton;
 	class Material;
 	class IShaderResource;
-	
+	class Camera;
 	
 	/// <summary>
 	/// メッシュ
@@ -61,6 +61,7 @@ namespace UER
 		/// <param name="mProj">プロジェクション行列</param>
 		/// <param name="light">ライト</param>
 		void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj);
+		void Draw(RenderContext& rc, const Matrix& mWorld, Camera& cam);
 		/// <summary>
 		/// スケルトンを関連付ける。
 		/// </summary>

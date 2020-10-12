@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Light.fxh"
+//#include "Light.fxh"
+#include "ModelData.fxh"
+#include "CameraData.fxh"
+#include "LightData.fxh"
 #include "PBRFunc.fxh"
 
 //ピクセルシェーダーへの入力。
@@ -30,20 +33,37 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 	float3 lig = 0;
 	
     float3 eyePos = {0,0,0};
+	//float3 eyPos = cam_Pos;
 	float3 toEye = normalize(eyePos - psIn.worldPos);
 	//メタリックは固定。
+	float metaric;
 	//float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
+	metaric = 0;
 	#if 0
-	for( int ligNo = 0; ligNo < 0; ligNo++ ){
+	for( int ligNo = 0; ligNo < lig_DLcount; ligNo++ ){
 		//Disney
-		float NdotL = saturate( dot( normal, -directionalLight[ligNo].direction ));
+		float NdotL = saturate( dot( normal, -lig_DirLights[ligNo].dir ));
 		
-		float3 diffuse = NormalizedDisneyDiffuse(normal, -directionalLight[ligNo].direction, toEye, 1.0f-metaric) * directionalLight[ligNo].color *( 1.0f-metaric) * NdotL;
+		float3 diffuse = NormalizedDisneyDiffuse
+		(
+			normal,
+			-lig_DirLights[ligNo].dir,
+			toEye,
+			1.0f-metaric
+		) * lig_DirLights[ligNo].color *( 1.0f-metaric) * NdotL;
+
 		//スペキュラ反射
-		float3 spec = BRDF(-directionalLight[ligNo].direction, toEye, normal) * directionalLight[ligNo].color * metaric;
+		float3 spec = BRDF
+		(
+			-lig_DirLights[ligNo].dir,
+			toEye,
+			normal
+		) * lig_DirLights[ligNo].color * metaric;
+
 		lig += (diffuse + spec) ;
 	}
 	#endif
+
 	//シンプルな環境光。
 	//lig += ambientLight;
 

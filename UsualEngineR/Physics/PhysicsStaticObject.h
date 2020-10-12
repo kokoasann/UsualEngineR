@@ -28,7 +28,7 @@ namespace UER
 			*@param[in]	pos			座標。
 			*@param[in]	rot			回転。
 			*/
-		void CreateMeshObject(const Model& skinModel, const Vector3& pos, const Quaternion& rot, const Vector3& sca);
+		RigidBody* CreateMeshObject(const Model& skinModel, const Vector3& pos, const Quaternion& rot, const Vector3& sca,bool isNotMainThread = false);
 
 		MeshCollider& GetMeshCollider()
 		{

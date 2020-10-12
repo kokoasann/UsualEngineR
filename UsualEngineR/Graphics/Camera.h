@@ -20,6 +20,8 @@ namespace UER
 			enUpdateProjMatrixFunc_Perspective,		//透視射影行列。遠近法が効いた絵を作りたいならこっち。
 			enUpdateProjMatrixFunc_Ortho,			//平行投影。２Ｄ的な表現がしたいならこっち。
 		};
+
+		void Init();
 		/// <summary>
 		/// ビュー行列、プロジェクション行列を更新する。
 		/// </summary>
@@ -280,6 +282,10 @@ namespace UER
 		/// <param name="worldPos">ワールド座標</param>
 		void CalcScreenPositionFromWorldPosition(Vector2& screenPos, const Vector3& worldPos) const;
 	
+		DescriptorHeap& GetDiscriptorHeap()
+		{
+			return m_camHeap;
+		}
 	protected:
 		float		m_targetToPositionLen = 1.0f;			//注視点と視点まで距離。
 		Vector3		m_position = {0.0f, 0.0f, 1.0f};		//カメラ位置。
@@ -301,6 +307,21 @@ namespace UER
 		EnUpdateProjMatrixFunc m_updateProjMatrixFunc = enUpdateProjMatrixFunc_Perspective;	//プロジェクション行列の更新の仕方。
 		bool		m_isNeedUpdateProjectionMatrix = true;
 		bool		m_isDirty = false;						//ダーティフラグ。
+
+		struct CamConstantBuffer
+		{
+			CamConstantBuffer(const Vector3& p, const Vector3& d, const Matrix& v, const Matrix& pr):
+				pos(p),dir(d),view(v),proj(pr)
+			{
+			}
+
+			Vector4 pos;
+			Vector4 dir;
+			Matrix view;
+			Matrix proj;
+		};
+		ConstantBuffer m_camBuffer;
+		DescriptorHeap m_camHeap;
 	};
 
 

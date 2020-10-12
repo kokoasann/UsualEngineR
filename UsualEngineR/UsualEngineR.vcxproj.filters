@@ -259,6 +259,21 @@
     <ClInclude Include="Graphics\SampleSampler.h">
       <Filter>Graphics\Sample</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Light\LightBase.h">
+      <Filter>Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightDirection.h">
+      <Filter>Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightManager.h">
+      <Filter>Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightPoint.h">
+      <Filter>Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Light\LightStruct.h">
+      <Filter>Graphics\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -487,6 +502,21 @@
     <ClCompile Include="Graphics\SampleSampler.cpp">
       <Filter>Graphics\Sample</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Light\LightBase.cpp">
+      <Filter>Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightDirection.cpp">
+      <Filter>Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightManager.cpp">
+      <Filter>Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightPoint.cpp">
+      <Filter>Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Light\LightStruct.cpp">
+      <Filter>Graphics\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -554,6 +584,9 @@
     </Filter>
     <Filter Include="Graphics\Sample">
       <UniqueIdentifier>{00978af9-1239-4667-a840-23d2a49b71bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Light">
+      <UniqueIdentifier>{04235917-2e66-4557-a4b0-52f8520adb22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -52,14 +52,23 @@ PS_BlurInput VSMain_X(VSInput In)
 	// Out.tex6 = tex + float2(-13.0f / texSize.x, 0.0f);
 	// Out.tex7 = tex + float2(-15.0f / texSize.x, 0.0f);
 	
+	// Out.tex0 = tex + float2(pixSize*1.0f,0.f);
+	// Out.tex1 = tex + float2(pixSize*2.0f,0.f);
+	// Out.tex2 = tex + float2(pixSize*3.0f,0.f);
+	// Out.tex3 = tex + float2(pixSize*4.0f,0.f);
+	// Out.tex4 = tex + float2(pixSize*5.0f,0.f);
+	// Out.tex5 = tex + float2(pixSize*6.0f,0.f);
+	// Out.tex6 = tex + float2(pixSize*7.0f,0.f);
+	// Out.tex7 = tex + float2(pixSize*8.0f,0.f);
+
 	Out.tex0 = tex + float2(pixSize*1.0f,0.f);
-	Out.tex1 = tex + float2(pixSize*2.0f,0.f);
-	Out.tex2 = tex + float2(pixSize*3.0f,0.f);
-	Out.tex3 = tex + float2(pixSize*4.0f,0.f);
-	Out.tex4 = tex + float2(pixSize*5.0f,0.f);
-	Out.tex5 = tex + float2(pixSize*6.0f,0.f);
-	Out.tex6 = tex + float2(pixSize*7.0f,0.f);
-	Out.tex7 = tex + float2(pixSize*8.0f,0.f);
+	Out.tex1 = tex + float2(pixSize*3.0f,0.f);
+	Out.tex2 = tex + float2(pixSize*5.0f,0.f);
+	Out.tex3 = tex + float2(pixSize*7.0f,0.f);
+	Out.tex4 = tex + float2(pixSize*9.0f,0.f);
+	Out.tex5 = tex + float2(pixSize*11.0f,0.f);
+	Out.tex6 = tex + float2(pixSize*13.0f,0.f);
+	Out.tex7 = tex + float2(pixSize*15.0f,0.f);
 
 	// float addpix = pixSize;//*rttexRatio;
 	// Out.tex0 = tex + float2(pixSize, 0.0f);
@@ -99,14 +108,23 @@ PS_BlurInput VSMain_Y(VSInput In)
 	// Out.tex7 = tex + float2(0.0f, -15.0f / texSize.y);
 	
 	
+	// Out.tex0 = tex + float2(0.0f, pixSize*1.0f);
+	// Out.tex1 = tex + float2(0.0f, pixSize*2.0f);
+	// Out.tex2 = tex + float2(0.0f, pixSize*3.0f);
+	// Out.tex3 = tex + float2(0.0f, pixSize*4.0f);
+	// Out.tex4 = tex + float2(0.0f, pixSize*5.0f);
+	// Out.tex5 = tex + float2(0.0f, pixSize*6.0f);
+	// Out.tex6 = tex + float2(0.0f, pixSize*7.0f);
+	// Out.tex7 = tex + float2(0.0f, pixSize*8.0f);
+
 	Out.tex0 = tex + float2(0.0f, pixSize*1.0f);
-	Out.tex1 = tex + float2(0.0f, pixSize*2.0f);
-	Out.tex2 = tex + float2(0.0f, pixSize*3.0f);
-	Out.tex3 = tex + float2(0.0f, pixSize*4.0f);
-	Out.tex4 = tex + float2(0.0f, pixSize*5.0f);
-	Out.tex5 = tex + float2(0.0f, pixSize*6.0f);
-	Out.tex6 = tex + float2(0.0f, pixSize*7.0f);
-	Out.tex7 = tex + float2(0.0f, pixSize*8.0f);
+	Out.tex1 = tex + float2(0.0f, pixSize*3.0f);
+	Out.tex2 = tex + float2(0.0f, pixSize*5.0f);
+	Out.tex3 = tex + float2(0.0f, pixSize*7.0f);
+	Out.tex4 = tex + float2(0.0f, pixSize*9.0f);
+	Out.tex5 = tex + float2(0.0f, pixSize*11.0f);
+	Out.tex6 = tex + float2(0.0f, pixSize*13.0f);
+	Out.tex7 = tex + float2(0.0f, pixSize*15.0f);
 	
 	// float addpix = pixSize;//*rttexRatio;
 	// Out.tex0 = tex + float2(0.0f,pixSize);

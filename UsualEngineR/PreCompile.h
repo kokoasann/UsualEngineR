@@ -34,6 +34,8 @@
 #include "math/Vector.h"
 #include "math/Matrix.h"
 
+#include "BufferEnum.h"
+
 #include "Thread/Lock.h"
 #include "Thread/ThreadObject.h"
 

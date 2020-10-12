@@ -173,9 +173,12 @@ namespace UER
 		m_camera3D.SetPosition({0.0f, 50.0f, 200.0f} );
 		m_camera3D.SetTarget({ 0.0f, 50.0f, 0.0f });
 	
+		
 		g_camera2D = &m_camera2D;
 		g_camera3D = &m_camera3D;
 		g_lockCamera3D.Set(&m_camera3D);
+
+		
 
 
 		//レイトレ使える~?CHECK!!
@@ -263,6 +266,8 @@ namespace UER
 
 
 		m_postEffect.Init();
+
+		g_camera3D->Init();
 		return true;
 	}
 	IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()

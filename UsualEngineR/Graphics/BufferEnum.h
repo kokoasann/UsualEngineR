@@ -1,14 +1,16 @@
 #pragma once
 
+#define TO_INT(en) static_cast<int>(en)
+#define TO_UINT(en) static_cast<unsigned int>(en)
 
-enum EConstantBuffer
+enum class EConstantBuffer : char
 {
 	cb_modelData,
-	cb_lightData,
 	cb_cameraData,
+	cb_lightData,
 };
 
-enum ETextureBuffer
+enum class ETextureBuffer: char
 {
 	tb_albedo,
 	tb_normal,
