@@ -38,12 +38,22 @@ public:
 		return m_position;
 	}
 
+	const int GetHP() {
+		return m_HP;
+	}
+
+	void ApplyDamage(const float damage) {
+		m_HP -= damage;
+	}
+
 protected:
 
 	void SetState(IEnemyState* s);
 
 	std::vector<IEnemyState*> m_stateList;
 	Vector3 m_position;
+
+	float m_HP = 100.f;
 
 private:
 	IEnemyState* m_currentState = nullptr;

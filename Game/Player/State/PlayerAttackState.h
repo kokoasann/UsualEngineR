@@ -14,6 +14,7 @@ public:
 private:
 	IPlayerAttack* m_currentAttack = nullptr;
 	int m_combo = 0;
+	const int m_MAX_COMBO = 3;
 	float m_elpased = 0.f;
 };
 

@@ -180,6 +180,7 @@
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\EnemyBattleState.h" />
     <ClInclude Include="Enemy\EnemyIdleState.h" />
+    <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
     <ClInclude Include="Enemy\IEnemy.h" />
     <ClInclude Include="Enemy\IEnemyState.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\EnemyBattleState.cpp" />
     <ClCompile Include="Enemy\EnemyIdleState.cpp" />
+    <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
     <ClCompile Include="Enemy\IEnemy.cpp" />
     <ClCompile Include="Enemy\IEnemyState.cpp" />

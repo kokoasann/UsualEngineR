@@ -57,6 +57,9 @@
     <ClInclude Include="Player\Attack\IPlayerAttack.h">
       <Filter>Player\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\EnemyManager.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -115,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="Player\Attack\PlayerAttackSlash.cpp">
       <Filter>Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyManager.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

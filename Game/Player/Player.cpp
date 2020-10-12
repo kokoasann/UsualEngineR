@@ -43,13 +43,20 @@ void Player::Awake()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
-	m_animlist.resize(1);
-	m_animlist[0] = std::make_unique<CAnimationClip>();
-	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");
-	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[0]->SetLoopFlag(true);
 
-	m_model->InitAnimation(m_animlist, 1);
+	static const int numAnim = 2;
+	m_animlist.resize(numAnim);
+	m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/anim/unityChan/run.tka");
+	m_animlist[static_cast<int>(EnAnimation::enRun)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enRun)]->SetLoopFlag(true);
+
+	m_animlist[static_cast<int>(EnAnimation::enAttack)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enAttack)]->Load("Assets/anim/unityChan/jump.tka");
+	m_animlist[static_cast<int>(EnAnimation::enAttack)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enAttack)]->SetLoopFlag(false);
+
+	m_model->InitAnimation(m_animlist, m_animlist.size());
 	m_model->Play(0);
 }
 
@@ -77,7 +84,6 @@ void Player::PreUpdate()
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
-
 }
 
 void Player::Update()

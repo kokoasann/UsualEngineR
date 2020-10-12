@@ -17,6 +17,12 @@ public:
 		enNumState
 	};
 
+	enum class EnAnimation {
+		enRun,
+		enAttack,
+		enNumAnim
+	};
+
 	Player();
 	virtual ~Player();
 
@@ -98,6 +104,10 @@ public:
 
 	const Vector3 GetLocalVelocity() const {
 		return m_localVelocity;
+	}
+
+	void PlayAnimation(const EnAnimation& anim){
+		m_model->Play(static_cast<int>(anim));
 	}
 
 	/*

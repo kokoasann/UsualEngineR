@@ -16,11 +16,13 @@ void PlayerAttackState::Enter(Player* p) {
 	auto& vel = p->GetLocalVelocity();
 	p->SetVelocity(Vector3::Zero);
 
+	m_combo = 0;
+
 	//‚±‚Ì•Ó‚Å‰½‚ÌUŒ‚‚ª‚Å‚«‚é‚©”»’f‚·‚é
 	//m_currentAttack = p->GetNormalAttackSkill()
 	m_currentAttack = new PlayerAttackSlash();
 
-	m_currentAttack->Init(m_combo);
+	m_currentAttack->Init(p,m_combo);
 	m_currentAttack->GetInterval();
 }
 
@@ -30,7 +32,7 @@ void PlayerAttackState::Exit(Player* p) {
 
 IPlayerState* PlayerAttackState::Update(Player* p) {
 
-	m_currentAttack->Execute();
+	m_currentAttack->Execute(p);
 	
 	if (m_currentAttack->IsDone()) {
 		if (m_elpased <= m_currentAttack->GetInterval()) {
@@ -38,9 +40,9 @@ IPlayerState* PlayerAttackState::Update(Player* p) {
 			return this;
 		}
 		auto ca = m_currentAttack->IsContinueAttack();
-		if (ca) {
+		if (ca and m_combo < m_MAX_COMBO) {
 			m_combo++;
-			m_currentAttack->Init(m_combo);
+			m_currentAttack->Init(p,m_combo);
 		}
 		else {
 			auto nextState = p->GetState(Player::EnState::enGround);

@@ -7,8 +7,8 @@ public:
 	PlayerAttackSlash();
 	virtual ~PlayerAttackSlash() override;
 
-	virtual void Init(int combo) override;;
-	virtual void Execute() override;
+	virtual void Init(Player*, int combo) override;;
+	virtual void Execute(Player*) override;
 
 	virtual const bool IsDone() override{
 		return m_isDone;
@@ -23,6 +23,7 @@ public:
 private:
 	bool m_isDone = false;
 	bool m_isContinuAttack = false;
-	const float m_interval = 0.5f;
+	const float m_interval = 1.f;
+	float m_timer = 0.f;
 };
 
