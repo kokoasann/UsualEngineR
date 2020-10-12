@@ -74,7 +74,9 @@ bool GameStage::Start()
 
 				Model model;
 				model.Init(mid);
-				m_mapPSOList[m_count].CreateMeshObject(model, objData.position, objData.rotation, objData.scale * m_levelScale);
+
+				//スレッドでBulletにgiridBodyを積んでいくと競合する可能性があるので、ひとまずメンバにスタックしておくゾ。
+				m_rigidBodys.push_back(m_mapPSOList[m_count].CreateMeshObject(model, objData.position, objData.rotation, objData.scale * m_levelScale,true));
 				m_count++;
 				return true;
 			});
@@ -91,7 +93,15 @@ void GameStage::PreUpdate()
 
 void GameStage::Update()
 {
-
+	//メンバにスタックしたrigidBodyを一気にBulletに詰め込んでゆくゾ。
+	if (m_threadForCreatingMeshCol.IsEnd() && !m_isRegistRigidBody)
+	{
+		for (auto& rb : m_rigidBodys)
+		{
+			Physics().AddRigidBody(*rb);
+		}
+		m_isRegistRigidBody = true;
+	}
 }
 
 void GameStage::PostUpdate()
