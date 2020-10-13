@@ -22,6 +22,8 @@ public:
 	enum class EnState {
 		enIdleState,
 		enBattleState,
+		enAttackSlash,
+		enDeadState,
 		enNumState
 	};
 

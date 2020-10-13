@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EnemyTest.h"
-#include "IEnemyState.h"
+#include "State/IEnemyState.h"
 
 void EnemyTest::Init() {
 
