@@ -19,9 +19,7 @@ void PlayerAttackSlash::Init(Player* player, int combo) {
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
 	auto& enemyManager = EnemyManager::GetEnemyManager();
-	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), /*range*/ 5.0f, /*Damage Amount*/ 15.0f);
-	//enemy.applyDamage(m_DAMAGE);
-
+	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range,  m_damageAmount * combo);
 }
 
 void PlayerAttackSlash::Execute(Player* player) {

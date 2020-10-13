@@ -110,6 +110,18 @@ public:
 		m_model->Play(static_cast<int>(anim));
 	}
 
+	const float GetHP() {
+		return m_HP;
+	}
+
+	/// <summary>
+	/// プレイヤーにダメージを適用する
+	/// </summary>
+	/// <param name="damageAmount"> 攻撃力</param>
+	void ApplyDamage(const float damageAmount) {
+		m_HP -= damageAmount;
+	}
+
 	/*
 	void SetVelocityGoal(Vector3& velocityGoal) {
 		m_velocityGoal = velocityGoal;
@@ -161,4 +173,7 @@ private:
 	//Physics
 	float m_charaConRadius = 1.f;
 	float m_charaConHeight = 3.f;
+
+	//
+	float m_HP = 500.f;
 };

@@ -10,6 +10,11 @@ void EnemyManager::SpawnEnemies() {
 
 void EnemyManager::ApplyAoeDamage(const Vector3& attackOriginPos, float range, float damageAmount) {
 	for (int i = 0; i < m_enemies.size(); i++) {
-		//m_enemies[i]->get
+		const auto& pos = m_enemies[i]->GetPosition();
+		auto vecEnemyToPlayer = attackOriginPos - pos;
+		if (vecEnemyToPlayer.Length() < range) {
+			printf("Apply AoE Damage! Amount : %f\n", damageAmount);
+			m_enemies[i]->ApplyDamage(damageAmount);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 class IEnemy;
+class Player;
 
 class EnemyManager
 {
@@ -22,8 +23,20 @@ public:
 		return m_enemies[0];
 	}
 
+	void SetPlayer(Player* player) {
+		m_player = player;
+	}
+
+	Player* GetPlayer() const{
+		if (m_player == nullptr) {
+			printf("Please set a player instance");
+			assert(false);
+		}
+		return m_player;
+	}
+
 private:
 	std::vector<IEnemy*> m_enemies;
-
+	Player* m_player = nullptr;
 };
 

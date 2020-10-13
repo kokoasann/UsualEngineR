@@ -25,5 +25,8 @@ private:
 	bool m_isContinuAttack = false;
 	const float m_interval = 1.f;
 	float m_timer = 0.f;
+
+	float m_range = 50.f;
+	float m_damageAmount = 15.f;
 };
 

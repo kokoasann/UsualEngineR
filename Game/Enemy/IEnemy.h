@@ -19,14 +19,14 @@ public:
 	//ƒpƒXŒŸõ‚Æ‚©d‚ß‚Ì‹¤’Êˆ—
 	void PathFind(Vector3 start, Vector3 end) { Sleep(1000); };
 
-	enum EnState {
+	enum class EnState {
 		enIdleState,
 		enBattleState,
 		enNumState
 	};
 
-	IEnemyState* GetState(EnState state) {
-		return m_stateList[state];
+	IEnemyState* GetState(IEnemy::EnState state) {
+		return m_stateList[static_cast<int>(state)];
 	}
 
 	void SetPosition(Vector3& pos) 

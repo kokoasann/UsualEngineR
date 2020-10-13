@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "EnemyBattleState.h"
 #include "IEnemy.h"
+#include "EnemyManager.h"
+#include "../Player/Player.h"
 
 EnemyBattleState::EnemyBattleState() {
 }
@@ -13,9 +15,32 @@ void EnemyBattleState::Enter(IEnemy* e) {
 }
 
 IEnemyState* EnemyBattleState::Update(IEnemy* e) {
-	if (g_pad[0]->IsTrigger(enButtonA)) {
-		return e->GetState(IEnemy::EnState::enIdleState);
+
+	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+
+	auto& epos = e->GetPosition();
+	auto& ppos = player->GetPosition();
+	auto vecToPlayer = ppos - epos;
+	const float distLimit = 20.f;
+
+	if (vecToPlayer.Length() > distLimit) {
+		vecToPlayer.Normalize();
+		const float speed = 0.5;
+		auto velocity = vecToPlayer * speed;
+		auto npos = epos + velocity;
+		e->SetPosition(npos);
 	}
+
+	const float attackRange = 30.f;
+
+	if (vecToPlayer.Length() < attackRange) {
+		//return e->GetState(IEnemy::EnState::enAttackSlash);
+		//player->ApplyDamage(0.005f);
+	}
+
+	//if (g_pad[0]->IsTrigger(enButtonA)) {
+		//return e->GetState(IEnemy::EnState::enIdleState);
+	//}
 	return this;
 }
 
