@@ -143,7 +143,7 @@ namespace UER
 				}
 				else
 				{
-					go->Update();
+					go->WrapUpdate();
 				}
 				
 			}
