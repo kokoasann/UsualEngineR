@@ -5,9 +5,9 @@
 #include "EnemyBattleState.h"
 
 void IEnemy::Awake() {
-	m_stateList.resize(EnState::enNumState);
-	m_stateList[enIdleState] = new EnemyIdleState();
-	m_stateList[enBattleState] = new EnemyBattleState();
+	m_stateList.resize(static_cast<int>(EnState::enNumState));
+	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyIdleState();
+	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
 }
 
 bool IEnemy::Start() {

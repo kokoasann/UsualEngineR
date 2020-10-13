@@ -24,7 +24,7 @@ void EnemyTest::Init() {
 	m_model->InitAnimation(m_animlist, 1);
 	m_model->Play(0);
 
-	SetState(m_stateList[enIdleState]);
+	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 }
 
 

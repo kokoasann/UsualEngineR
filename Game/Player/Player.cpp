@@ -88,13 +88,16 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+	if (m_HP <= 0) {
+
+	}
+
 	m_nextState = m_currentState->Update(this);
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);
 		m_currentState = m_nextState;
 		m_currentState->Enter(this);
 	}
-
 }
 
 void Player::PostUpdate()

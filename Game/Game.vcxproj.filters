@@ -154,11 +154,14 @@
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player\Attack">
+      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Player\State">
       <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Attack">
-      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
+    <Filter Include="Enemy\Attack">
+      <UniqueIdentifier>{3a8398f7-1944-41de-bb41-4193c5cab665}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

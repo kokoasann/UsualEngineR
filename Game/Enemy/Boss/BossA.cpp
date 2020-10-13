@@ -18,7 +18,7 @@ void BossA::Init() {
 	m_position.y = 20.f;
 
 	//Init State
-	SetState(m_stateList[enIdleState]);
+	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enBattleState)]);
 }
 
 void BossA::Terminate() {

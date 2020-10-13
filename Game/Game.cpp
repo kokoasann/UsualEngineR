@@ -26,7 +26,7 @@ void Game::Awake()
 
 bool Game::Start()
 {
-	m_player = NewGO<Player>(0);
+	m_player = NewGO<Player>(0, "Player");
 	m_camera = NewGO<GameCamera>(0);
 	m_stage = NewGO<GameStage>(0);
 
@@ -34,6 +34,7 @@ bool Game::Start()
 
 	auto& eM = EnemyManager::GetEnemyManager();
 	eM.SpawnEnemies();
+	eM.SetPlayer(m_player);
 
 	auto enemy = eM.GetNearestEnemy();
 	m_camera->SetTarget(enemy->GetPosition());
