@@ -1,6 +1,6 @@
 #pragma once
 
-cbuffer CameraCB:register(b2)
+cbuffer CameraCB:register(b1)
 {
     float4 cam_Pos;
     float4 cam_Dir;

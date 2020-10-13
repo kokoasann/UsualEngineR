@@ -116,31 +116,51 @@ namespace UER
 		CD3DX12_ROOT_PARAMETER1* rootParameters = new CD3DX12_ROOT_PARAMETER1[numTables];
 		for (int i = 0; i < numTables; i++)
 		{
-			auto& tid = tableInitDatas[i];
+			const auto& tid = tableInitDatas[i];
 			//auto& DT = dtd[i];
-			int c = int(tid.maxCBV != 0) + int(tid.maxSRV != 0) + int(tid.maxUAV != 0);
+			//int c = int(tid.maxCBV != 0) + int(tid.maxSRV != 0) + int(tid.maxUAV != 0);
 			//DT.ranges = new CD3DX12_DESCRIPTOR_RANGE1[c];
 
 			int j = i * enNumDescriptorHeap;
 			if (tid.maxCBV)
 			{
-				ranges[j].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, tid.maxCBV, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
+				ranges[j].Init(
+					D3D12_DESCRIPTOR_RANGE_TYPE_CBV,
+					tid.maxCBV,
+					tid.baseRegisterCBV,
+					0,
+					D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC
+				);
 				j++;
 			}
 			if (tid.maxSRV)
 			{
-				ranges[j].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, tid.maxSRV, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
+				ranges[j].Init(
+					D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+					tid.maxSRV,
+					tid.baseRegisterSRV,
+					0,
+					D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC
+				);
 				j++;
 			}
 			if (tid.maxUAV)
 			{
-				ranges[j].Init(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, tid.maxUAV, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
+				ranges[j].Init(
+					D3D12_DESCRIPTOR_RANGE_TYPE_UAV,
+					tid.maxUAV,
+					tid.baseRegisterUAV,
+					0,
+					D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC
+				);
+				j++;
 			}
 
-			rootParameters[i].InitAsDescriptorTable(c, &ranges[i * enNumDescriptorHeap]);
+			rootParameters[i].InitAsDescriptorTable((j- i * enNumDescriptorHeap), &ranges[i * enNumDescriptorHeap]);
+
 			rootParameters[i].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-			rootParameters[i].DescriptorTable.NumDescriptorRanges = c;
-			rootParameters[i].DescriptorTable.pDescriptorRanges = &ranges[i* enNumDescriptorHeap];
+			rootParameters[i].DescriptorTable.NumDescriptorRanges = (j - i * enNumDescriptorHeap);
+			rootParameters[i].DescriptorTable.pDescriptorRanges = &ranges[i * enNumDescriptorHeap];
 			rootParameters[i].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 		}
 
@@ -151,12 +171,22 @@ namespace UER
 			D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS |
 			D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
 
+
+
 		CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc;
 		rootSignatureDesc.Init_1_1(numTables, rootParameters, 1, &sampler, rootSignatureFlags);
+
 		Microsoft::WRL::ComPtr<ID3DBlob> signature;
 		Microsoft::WRL::ComPtr<ID3DBlob> error;
-		D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error);
-		auto hr = d3dDevice->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature));
+		auto hr = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error);
+		/*error->GetBufferSize();
+		MessageBoxA(nullptr, (LPCSTR)error->GetBufferPointer(), "error", MB_OK);*/
+		hr = d3dDevice->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature));
+		
+		if (FAILED(hr)) {
+			MessageBoxA(nullptr, "rootSignature create failed", "error", MB_OK);
+			return false;
+		}
 
 		delete[] ranges;
 		delete[] rootParameters;

@@ -204,6 +204,7 @@ namespace UER
 				mesh->m_materials[matNo]->BeginRender(rc, mesh->skinFlags[matNo]);
 				//ディスクリプタヒープを登録。
 				rc.SetDescriptorHeap(m_descriptorHeap.at(descriptorHeapNo));
+				rc.SetGraphicsRootDescriptorTable(0, m_descriptorHeap.at(descriptorHeapNo));
 				//インデックスバッファを設定。
 				auto& ib = mesh->m_indexBufferArray[matNo];
 				rc.SetIndexBuffer(*ib);
@@ -250,8 +251,10 @@ namespace UER
 					m_descriptorHeap[descriptorHeapNo].Get(),
 					cam.GetDiscriptorHeap().Get()
 				};
-				rc.SetDescriptorHeaps(2, dheaps);
-				//rc.SetDescriptorHeap(m_descriptorHeap.at(descriptorHeapNo));
+				
+				rc.SetDescriptorHeaps(2,dheaps);
+				rc.SetGraphicsRootDescriptorTable(0, m_descriptorHeap.at(descriptorHeapNo));
+				rc.SetGraphicsRootDescriptorTable(1, cam.GetDiscriptorHeap());
 				//インデックスバッファを設定。
 				auto& ib = mesh->m_indexBufferArray[matNo];
 				rc.SetIndexBuffer(*ib);

@@ -160,6 +160,11 @@ namespace UER
 			}
 			m_commandList->SetDescriptorHeaps(numDescriptorHeap, m_descriptorHeaps);
 		}
+
+		void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, DescriptorHeap& descHeap)
+		{
+			m_commandList->SetGraphicsRootDescriptorTable(rootParameterIndex, descHeap.Get()->GetGPUDescriptorHandleForHeapStart());
+		}
 		/// <summary>
 		/// レンダリングターゲットとビューポートを同時に設定する。
 		/// </summary>

@@ -45,6 +45,34 @@ namespace UER
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP);
+
+		/*RootSignature::TableInitData tid[3] = {0};
+		tid[0].maxCBV = 1;
+		tid[0].maxSRV = 10;
+		tid[0].maxUAV = 0;
+		tid[0].baseRegisterCBV = 0;
+		tid[0].baseRegisterSRV = 0;
+		tid[0].baseRegisterUAV = 0;
+		tid[1].maxCBV = 1;
+		tid[1].maxSRV = 0;
+		tid[1].maxUAV = 0;
+		tid[1].baseRegisterCBV = 1;
+		tid[1].baseRegisterSRV = 0;
+		tid[1].baseRegisterUAV = 0;
+		tid[2].maxCBV = 1;
+		tid[2].maxSRV = 0;
+		tid[2].maxUAV = 0;
+		tid[2].baseRegisterCBV = 2;
+		tid[2].baseRegisterSRV = 0;
+		tid[2].baseRegisterUAV = 0;
+
+		m_rootSignature.Init(
+			D3D12_FILTER_MIN_MAG_MIP_LINEAR,
+			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+			3, tid
+		);*/
 	
 		//シェーダーを初期化。
 		InitShaders(fxFilePath, vsEntryPointFunc, psEntryPointFunc);

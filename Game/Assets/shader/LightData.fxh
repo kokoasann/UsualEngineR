@@ -10,7 +10,7 @@ struct SDirectionLight
 	float4 color;		//色
 };
 
-StructuredBuffer<SDirectionLight> lig_DirLights : register(t50);
+StructuredBuffer<SDirectionLight> lig_DirLights : register(t10);
 
 struct SPointLight
 {
@@ -21,9 +21,9 @@ struct SPointLight
 	float radius;
 };
 
-StructuredBuffer<SPointLight> lig_PntLights : register(t51);
+StructuredBuffer<SPointLight> lig_PntLights : register(t11);
 
-cbuffer LightCB : register(b1)
+cbuffer LightCB : register(b2)
 {
 	float4 lig_screenSize : packoffset(c0);		//スクリーンのサイズ
 	//float3 lig_eyepos : packoffset(c1);			//視点
