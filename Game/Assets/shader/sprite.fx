@@ -4,6 +4,7 @@ cbuffer cb :register (b0)
 {
 	matrix mvp;			//ビュープロジェクション行列
 	float4 mulcol;		//乗算色
+	float4 screenParam;
 }
 struct VSInput {
 	float4 pos : POSITION;
@@ -21,12 +22,12 @@ sampler Sampler : register(s0);
 PSInput VSMain(VSInput In)
 {
 	PSInput psIn;
-	psIn.pos = mul(mvp, In.pos);
+	psIn.pos = mul(mvp,In.pos);
 	psIn.uv = In.uv;
 	return psIn;
 }
 float4 PSMain(PSInput In) : SV_Target0
 {
-	float4 res = colorTexture.Sample(Sampler, In.uv) * mulcol;
+	float4 res = colorTexture.Sample(Sampler, In.uv);// * mulcol;
 	return res;
 }

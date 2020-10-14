@@ -143,8 +143,8 @@ namespace UER
 			psoDesc.SampleMask = UINT_MAX;
 			psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 			psoDesc.NumRenderTargets = 1;
-			psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-			psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+			psoDesc.RTVFormats[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			psoDesc.DSVFormat = DXGI_FORMAT_D16_UNORM;
 			psoDesc.SampleDesc.Count = 1;
 			m_pipelineState.Init(psoDesc);
 		}
@@ -205,11 +205,15 @@ namespace UER
 			mPivotTrans.MakeTranslation(
 				{ halfSize.x * localPivot.x, halfSize.y * localPivot.y, 0.0f }
 			);
+
+			//yRot *= rot;
+			Matrix yMat;
+			yMat.MakeRotationY(Math::PI);
 			Matrix mTrans, mRot, mScale;
 			mTrans.MakeTranslation(pos);
 			mRot.MakeRotationFromQuaternion(rot);
 			mScale.MakeScaling(scale);
-			m_world = mPivotTrans * mScale;
+			m_world = mPivotTrans * yMat * mScale;
 			m_world = m_world * mRot;
 			m_world = m_world * mTrans;
 		}
