@@ -1,5 +1,7 @@
 #pragma once
 #include "../UsualEngineR/Graphics/SpriteRender.h"
+class Player;
+class IEnemy;
 
 /// <summary>
 /// 
@@ -55,6 +57,45 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
+
+	void SetPlayer(Player* player) {
+		m_pPlayer = player;
+	}
+
 private:
-	SpriteRender* m_spriteRender = nullptr;
+
+	//Ref
+	Player* m_pPlayer = nullptr;
+
+	const Vector3 ANCHOR_BOTTOM_LEFT = { -(FRAME_BUFFER_W / 2.f), -(FRAME_BUFFER_H / 2.f), 0 };
+
+	//Player HP
+	SpriteRender* m_spPlayerHP = nullptr;
+
+	const float m_flSpHpHeight = 20;
+	const float m_flSpHpWidth = 250;
+	Vector3 m_playerHpScale = Vector3::One;
+
+	Vector3 m_hpPos = { 
+		ANCHOR_BOTTOM_LEFT.x + m_flSpHpWidth / 2.f - 90.f,
+		ANCHOR_BOTTOM_LEFT.y + m_flSpHpHeight / 2.f +60.f, 
+		0.f 
+	};
+
+
+	//Player Boost
+	SpriteRender* m_spPlayerBoost = nullptr;
+
+	const float m_flSpBoostHeight = 150;
+	const float m_flSpBoostWidth = 50;
+
+	Vector3 m_boostPos = {
+		ANCHOR_BOTTOM_LEFT.x - m_flSpBoostWidth / 2.f + 20.f,
+		ANCHOR_BOTTOM_LEFT.y + m_flSpBoostHeight / 2.f + 20.f,
+		0.f
+	};
+
+	//Enemy HP
+	SpriteRender* m_spEnemyHP = nullptr;
+
 };

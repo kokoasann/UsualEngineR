@@ -40,7 +40,7 @@ public:
 		return m_position;
 	}
 
-	const int GetHP() {
+	const int GetCurrentHP() {
 		return m_HP;
 	}
 

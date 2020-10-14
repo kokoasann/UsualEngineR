@@ -1,7 +1,7 @@
 #pragma once
 #include "IEnemyState.h"
 
-class EnemyBattleState : public IEnemyState
+class EnemyBattleState final : public IEnemyState
 {
 public:
 	EnemyBattleState();

@@ -17,7 +17,7 @@ void EnemyBattleState::Enter(IEnemy* e) {
 IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
-	if (player->GetHP() <= 0) {
+	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(IEnemy::EnState::enIdleState);
 	}
 

@@ -35,6 +35,7 @@ bool Game::Start()
 	m_stage = NewGO<GameStage>(0);
 	m_gameHUD = NewGO<GameHUD>(0);
 
+	m_gameHUD->SetPlayer(m_player);
 	m_camera->SetCharaPos(m_player->GetPosition());
 
 	auto& eM = EnemyManager::GetEnemyManager();
