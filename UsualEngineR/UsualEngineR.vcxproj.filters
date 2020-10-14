@@ -274,6 +274,9 @@
     <ClInclude Include="Graphics\Light\LightStruct.h">
       <Filter>Graphics\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\SpriteRender.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -516,6 +519,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\Light\LightStruct.cpp">
       <Filter>Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\SpriteRender.cpp">
+      <Filter>Graphics\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
