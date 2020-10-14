@@ -12,9 +12,10 @@ namespace UER
 	
 	void Camera::Init()
 	{
-		m_camBuffer.Init(sizeof(CamConstantBuffer));
-		m_camHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), m_camBuffer);
-		m_camHeap.Commit();
+		//m_camBuffer.Init(sizeof(CamConstantBuffer));
+		////m_camHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), m_camBuffer);
+		//m_camHeap.RegistConstantBuffer(0, m_camBuffer);
+		//m_camHeap.Commit();
 	}
 
 	void Camera::Update()

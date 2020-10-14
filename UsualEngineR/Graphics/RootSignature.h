@@ -42,6 +42,9 @@ namespace UER
 			UINT8 maxCBV = 8;
 			UINT8 maxSRV = 32;
 			UINT8 maxUAV = 8;
+			UINT8 baseRegisterCBV = 0;
+			UINT8 baseRegisterSRV = 0;
+			UINT8 baseRegisterUAV = 0;
 		};
 		bool Init(
 			D3D12_FILTER samplerFilter,
