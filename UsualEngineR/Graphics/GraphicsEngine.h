@@ -14,6 +14,7 @@
 #include "RaytracingEngine.h"
 #include "Raytracing/RaytracingEngine.h"
 
+#include "Light/LightManager.h"
 #include "PostEffect/PostEffect.h"
 
 #include "Camera.h"
@@ -227,6 +228,11 @@ namespace UER
 		{
 			return m_commandAllocator;
 		}
+
+		LightManager& GetLightManager()
+		{
+			return m_lightManager;
+		}
 	private:
 		/// <summary>
 		/// D3Dデバイスの作成。
@@ -337,6 +343,8 @@ namespace UER
 		raytracing::Engine m_raytracingEngine;
 
 		RenderTarget m_mainRT;
+		
+		LightManager m_lightManager;
 		PostEffect m_postEffect;
 
 		Primitive m_primitive;

@@ -264,7 +264,7 @@ namespace UER
 		psoDesc.SampleDesc.Count = 1;
 		m_copyPipeState.Init(psoDesc);
 
-
+		m_lightManager.Init();
 		m_postEffect.Init();
 
 		g_camera3D->Init();

@@ -3,6 +3,9 @@
 
 #define DEBUG_FUNC 1
 
+#define TO_INT(en) static_cast<int>(en)
+#define TO_UINT(en) static_cast<unsigned int>(en)
+
 #pragma comment( lib, "xinput.lib")
 #pragma comment(lib, "dxcompiler.lib")
 
@@ -90,8 +93,8 @@
 #include "SpriteRender.h"
 #include "Physics/CollisionAttr.h"
 
-
-
+#include "Light/LightDirection.h"
+#include "Light/LightPoint.h"
 	
 
 #if DEBUG_FUNC

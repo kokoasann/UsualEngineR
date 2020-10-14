@@ -89,6 +89,7 @@ namespace UER
 		rc.WaitUntilFinishDrawingToRenderTarget(g_graphicsEngine->GetCurrentRenderTarget()->GetRenderTargetTexture().Get());
 		rc.WaitUntilToPossibleSetRenderTarget(m_luminanceRT);
 		rc.SetRenderTarget(m_luminanceRT.GetRTVCpuDescriptorHandle(), m_luminanceRT.GetDSVCpuDescriptorHandle());
+		m_luminanceRT.Clear(rc);
 		D3D12_VIEWPORT viewport;
 		viewport.Height = m_luminanceRT.GetHeight();
 		viewport.Width = m_luminanceRT.GetWidth();

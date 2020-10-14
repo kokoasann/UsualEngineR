@@ -5,7 +5,7 @@
 //
 
 //ボーンマトリクスの配列。
-StructuredBuffer<float4x4> boneMatrix : register(t8);
+StructuredBuffer<float4x4> boneMatrix : register(t5);
 
 // //モデル用の定数バッファ
 // cbuffer ModelCb : register(b0){
@@ -48,8 +48,8 @@ SPSIn VSMain(VSInputNmTxWeights vsIn)
 
 	//psIn.pos = mul(mWorld, psIn.pos);
 	psIn.worldPos = psIn.pos;
-	psIn.pos = mul(mView, psIn.pos);
-	psIn.pos = mul(mProj, psIn.pos);
+	psIn.pos = mul(cam_mView, psIn.pos);
+	psIn.pos = mul(cam_mProj, psIn.pos);
 	psIn.normal = normalize(mul(skin, vsIn.normal));
 	
 	psIn.uv = vsIn.uv;

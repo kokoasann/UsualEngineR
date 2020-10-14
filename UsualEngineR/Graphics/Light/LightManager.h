@@ -78,16 +78,43 @@ namespace UER
 				return nullptr;
 			}
 		}
+
+		ConstantBuffer& GetLightConstBuffer()
+		{
+			return m_lightParamCB;
+		}
+
+		StructuredBuffer& GetDirLightStructuredBuffer()
+		{
+			return m_dirLightSB;
+		}
+
+		StructuredBuffer& GetPointLightStructuredBuffer()
+		{
+			return m_pntLightSB;
+		}
+
 		//ライトのパラメータの構造体
 		struct LightParam
 		{
 			Vector4 screen;						//スクリーンのサイズ
-			Vector3 eyePos = g_vec3Zero;		//メインカメラの位置
+			//Vector3 eyePos = g_vec3Zero;		//メインカメラの位置
 			int DLCount = 0;						//ディレクションライトの数
 			int PLCount = 0;						//ポイントライトの数。
 		};
+
+		/// <summary>
+		/// ライト用の定数バッファの構造体。
+		/// </summary>
+		struct SLightCB
+		{
+			Vector4 screenSize;
+			int directionCount;
+			int pointCount;
+		};
 	private:
-		LightParam m_lightParam;						//ライトの情報
+		//LightParam m_lightParam;						//ライトの情報
+		LightParam m_lightParam;
 		ConstantBuffer m_lightParamCB;				//ライトパラメータの定数バッファ
 		std::vector<LightDirection*> m_cDirLight;	//ディレクションライトのリスト
 		SDirectionLight m_sDirLights[MAX_DIRLIGHT];	//ディレクションライト構造体のリスト

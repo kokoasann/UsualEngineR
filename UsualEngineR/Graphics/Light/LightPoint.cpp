@@ -4,7 +4,7 @@
 
 namespace UER
 {
-	void LightPoint::Update()
+	/*void LightPoint::Update()
 	{
-	}
+	}*/
 }

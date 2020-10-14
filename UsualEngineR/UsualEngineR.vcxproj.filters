@@ -277,6 +277,9 @@
     <ClInclude Include="Graphics\SpriteRender.h">
       <Filter>Graphics\2D</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\CommonConstantBufferStruct.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -522,6 +525,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\SpriteRender.cpp">
       <Filter>Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\CommonConstantBufferStruct.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

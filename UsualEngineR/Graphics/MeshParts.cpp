@@ -3,6 +3,8 @@
 #include "Skeleton.h"
 #include "Material.h"
 
+#include "BufferEnum.h"
+#include "CommonConstantBufferStruct.h"
 
 namespace UER
 {
@@ -43,6 +45,9 @@ namespace UER
 		});
 		//共通定数バッファの作成。
 		m_commonConstantBuffer.Init(sizeof(SConstantBuffer), nullptr);
+		//m_cameraConstantBuffer.Init(sizeof(SCameraCB));
+		//m_lightConstantBuffer.Init(sizeof(SLightCB));
+
 		//ユーザー拡張用の定数バッファを作成。
 		if (expandData) {
 			m_expandConstantBuffer.Init(expandDataSize, nullptr);
@@ -62,6 +67,7 @@ namespace UER
 				numDescriptorHeap++;
 			}
 		}
+		auto& ligMana = g_graphicsEngine->GetLightManager();
 		//ディスクリプタヒープをドカッと確保。
 		m_descriptorHeap.resize(numDescriptorHeap);
 		//ディスクリプタヒープを構築していく。
@@ -70,19 +76,26 @@ namespace UER
 			for (int matNo = 0; matNo < mesh->m_materials.size(); matNo++) {
 				auto& descriptorHeap = m_descriptorHeap[descriptorHeapNo];
 				//ディスクリプタヒープにディスクリプタを登録していく。
-				descriptorHeap.RegistShaderResource(0, mesh->m_materials[matNo]->GetAlbedoMap());		//アルベドマップ。
-				descriptorHeap.RegistShaderResource(1, mesh->m_materials[matNo]->GetNormalMap());		//法線マップ。
-				descriptorHeap.RegistShaderResource(2, mesh->m_materials[matNo]->GetSpecularMap());	//スペキュラマップ。
+				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_albedo), mesh->m_materials[matNo]->GetAlbedoMap());		//アルベドマップ。
+				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_normal), mesh->m_materials[matNo]->GetNormalMap());		//法線マップ。
+				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_specular), mesh->m_materials[matNo]->GetSpecularMap());	//スペキュラマップ。
 				if (mesh->skinFlags[matNo])
 				{	
-					descriptorHeap.RegistShaderResource(8, m_boneMatricesStructureBuffer);
+					descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_bone), m_boneMatricesStructureBuffer);
 				}
+				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_dirLight), ligMana.GetDirLightStructuredBuffer());
+				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_pointLight), ligMana.GetPointLightStructuredBuffer());
+
 				if (m_expandShaderResourceView){
 					descriptorHeap.RegistShaderResource(EXPAND_SRV_REG__START_NO, *m_expandShaderResourceView);
 				}
-				descriptorHeap.RegistConstantBuffer(0, m_commonConstantBuffer);
+
+				descriptorHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_modelData), m_commonConstantBuffer);
+				descriptorHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), g_lockCamera3D.Get()->GetConstBuffer());
+				descriptorHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_lightData), ligMana.GetLightConstBuffer());
+
 				if (m_expandConstantBuffer.IsValid()) {
-					descriptorHeap.RegistConstantBuffer(1, m_expandConstantBuffer);
+					//descriptorHeap.RegistConstantBuffer(1, m_expandConstantBuffer);
 				}
 				//ディスクリプタヒープへの登録を確定させる。
 				descriptorHeap.Commit();
@@ -204,7 +217,6 @@ namespace UER
 				mesh->m_materials[matNo]->BeginRender(rc, mesh->skinFlags[matNo]);
 				//ディスクリプタヒープを登録。
 				rc.SetDescriptorHeap(m_descriptorHeap.at(descriptorHeapNo));
-				rc.SetGraphicsRootDescriptorTable(0, m_descriptorHeap.at(descriptorHeapNo));
 				//インデックスバッファを設定。
 				auto& ib = mesh->m_indexBufferArray[matNo];
 				rc.SetIndexBuffer(*ib);
@@ -215,55 +227,6 @@ namespace UER
 			}
 		}
 	#endif
-	}
-
-	void UER::MeshParts::Draw(RenderContext& rc, const Matrix& mWorld, Camera& cam)
-	{
-		//メッシュごとにドロー
-		//プリミティブのトポロジーはトライアングルリストのみ。
-		rc.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		//定数バッファを更新する。
-		SConstantBuffer cb;
-		cb.mWorld = mWorld;
-		cb.mView = cam.GetViewMatrix();// mView;
-		cb.mProj = cam.GetProjectionMatrix();
-
-		m_commonConstantBuffer.CopyToVRAM(&cb);
-
-		if (m_expandData) {
-			m_expandConstantBuffer.CopyToVRAM(m_expandData);
-		}
-		if (m_boneMatricesStructureBuffer.IsInited()) {
-			//ボーン行列を更新する。
-			m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
-		}
-		int descriptorHeapNo = 0;
-		for (auto& mesh : m_meshs) {
-			//頂点バッファを設定。
-			rc.SetVertexBuffer(mesh->m_vertexBuffer);
-			//マテリアルごとにドロー。
-			for (int matNo = 0; matNo < mesh->m_materials.size(); matNo++) {
-				//このマテリアルが貼られているメッシュの描画開始。
-				mesh->m_materials[matNo]->BeginRender(rc, mesh->skinFlags[matNo]);
-				//ディスクリプタヒープを登録。
-				ID3D12DescriptorHeap* dheaps[] = {
-					m_descriptorHeap[descriptorHeapNo].Get(),
-					cam.GetDiscriptorHeap().Get()
-				};
-				
-				rc.SetDescriptorHeaps(2,dheaps);
-				rc.SetGraphicsRootDescriptorTable(0, m_descriptorHeap.at(descriptorHeapNo));
-				rc.SetGraphicsRootDescriptorTable(1, cam.GetDiscriptorHeap());
-				//インデックスバッファを設定。
-				auto& ib = mesh->m_indexBufferArray[matNo];
-				rc.SetIndexBuffer(*ib);
-
-				//ドロー。
-				rc.DrawIndexed(ib->GetCount());
-				descriptorHeapNo++;
-			}
-		}
 	}
 
 }

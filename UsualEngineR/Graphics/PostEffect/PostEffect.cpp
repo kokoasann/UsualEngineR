@@ -58,8 +58,8 @@ namespace UER
 	void PostEffect::Render()
 	{
 		auto& rc = g_graphicsEngine->GetRenderContext();
-		//m_bloom.Render(rc);
-		//m_bloom.CombineRender(rc, g_graphicsEngine->GetCurrentRenderTarget());
+		m_bloom.Render(rc);
+		m_bloom.CombineRender(rc, g_graphicsEngine->GetCurrentRenderTarget());
 	}
 	Texture* PostEffect::GetCurrentBackBufferTexture()
 	{

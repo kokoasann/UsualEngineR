@@ -23,26 +23,26 @@ namespace UER
 		}
 
 		//光の指す方をセットする
-		void SetDir(Vector3 dir)
+		void SetDir(const Vector3& dir)
 		{
 			m_light.dir = dir;
 		}
 
 		//輝きの導く方をゲットする
-		Vector3 GetDir()
+		Vector3 GetDir() const
 		{
 			return m_light.dir;
 		}
 
 
 		//光の色をセットする
-		void SetCol(Vector4 col)
+		void SetCol(const Vector4& col)
 		{
 			m_light.color = col;
 		}
 
 		//光の色をゲットする
-		Vector4 GetCol()
+		Vector4 GetCol() const
 		{
 			return m_light.color;
 		}

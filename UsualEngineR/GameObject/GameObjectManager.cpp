@@ -52,6 +52,8 @@ namespace UER
 		//Stopwatch sw;
 		//sw.Start();
 		UpdateUpdate();
+
+		g_graphicsEngine->GetLightManager().Update();
 		/*auto t = sw.Stop();
 		char str[255] = { 0 };
 		sprintf(str, "%.3f\n", t);

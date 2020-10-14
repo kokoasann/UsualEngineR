@@ -1,5 +1,5 @@
 #pragma once
-
+#include "LightBase.h"
 
 namespace UER
 {
@@ -11,7 +11,7 @@ namespace UER
 
 
 		//更新
-		void Update() override;
+		//void Update() override;
 
 		//本体をゲット
 		SPointLight& GetBody()

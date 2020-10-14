@@ -32,22 +32,22 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 	//ランバート拡散反射
 	float3 lig = 0;
 	
-    float3 eyePos = {0,0,0};
-	//float3 eyPos = cam_Pos;
+    //float3 eyePos = {0,0,0};
+	float3 eyePos = cam_Pos;
 	float3 toEye = normalize(eyePos - psIn.worldPos);
 	//メタリックは固定。
 	float metaric;
 	//float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
 	metaric = 0;
-	#if 0
+	#if 1
 	for( int ligNo = 0; ligNo < lig_DLcount; ligNo++ ){
 		//Disney
-		float NdotL = saturate( dot( normal, -lig_DirLights[ligNo].dir ));
+		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir ));
 		
 		float3 diffuse = NormalizedDisneyDiffuse
 		(
 			normal,
-			-lig_DirLights[ligNo].dir,
+			lig_DirLights[ligNo].dir,
 			toEye,
 			1.0f-metaric
 		) * lig_DirLights[ligNo].color *( 1.0f-metaric) * NdotL;
@@ -55,7 +55,7 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 		//スペキュラ反射
 		float3 spec = BRDF
 		(
-			-lig_DirLights[ligNo].dir,
+			lig_DirLights[ligNo].dir,
 			toEye,
 			normal
 		) * lig_DirLights[ligNo].color * metaric;
@@ -70,6 +70,6 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 	//アルベドカラー
 	float4 albedoColor = g_texture.Sample(g_sampler, psIn.uv);
 	float4 finalColor = 1.0f;
-	finalColor.xyz = albedoColor.xyz;// * lig;
+	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;
 }

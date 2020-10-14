@@ -28,8 +28,8 @@ SPSIn VSMain(SVSIn vsIn)
 	SPSIn psIn;
 	psIn.pos = mul(mWorld, vsIn.pos);
 	psIn.worldPos = psIn.pos;
-	psIn.pos = mul(mView, psIn.pos);
-	psIn.pos = mul(mProj, psIn.pos);
+	psIn.pos = mul(cam_mView, psIn.pos);
+	psIn.pos = mul(cam_mProj, psIn.pos);
 	psIn.normal = normalize(mul(mWorld, vsIn.normal));
 	
 	psIn.uv = vsIn.uv;

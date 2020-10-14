@@ -282,9 +282,13 @@ namespace UER
 		/// <param name="worldPos">ワールド座標</param>
 		void CalcScreenPositionFromWorldPosition(Vector2& screenPos, const Vector3& worldPos) const;
 	
-		DescriptorHeap& GetDiscriptorHeap()
+		/*DescriptorHeap& GetDiscriptorHeap()
 		{
 			return m_camHeap;
+		}*/
+		ConstantBuffer& GetConstBuffer()
+		{
+			return m_camBuffer;
 		}
 	protected:
 		float		m_targetToPositionLen = 1.0f;			//注視点と視点まで距離。

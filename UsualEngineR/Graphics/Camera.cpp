@@ -12,7 +12,7 @@ namespace UER
 	
 	void Camera::Init()
 	{
-		//m_camBuffer.Init(sizeof(CamConstantBuffer));
+		m_camBuffer.Init(sizeof(CamConstantBuffer));
 		////m_camHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), m_camBuffer);
 		//m_camHeap.RegistConstantBuffer(0, m_camBuffer);
 		//m_camHeap.Commit();
@@ -62,7 +62,7 @@ namespace UER
 
 		auto d = m_target - m_position;
 		d.Normalize();
-		CamConstantBuffer constBuffer(m_position, d, m_projectionMatrix, m_viewMatrix);
+		CamConstantBuffer constBuffer(m_position, d, m_viewMatrix, m_projectionMatrix);
 		m_camBuffer.CopyToVRAM(constBuffer);
 	}
 	void Camera::CalcScreenPositionFromWorldPosition(Vector2& screenPos, const Vector3& worldPos) const

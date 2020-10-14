@@ -184,6 +184,7 @@
     <ClInclude Include="Graphics\AnimationPlayController.h" />
     <ClInclude Include="Graphics\BufferEnum.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\CommonConstantBufferStruct.h" />
     <ClInclude Include="Graphics\ConstantBuffer.h" />
     <ClInclude Include="Graphics\DescriptorHeap.h" />
     <ClInclude Include="Graphics\DescriptorHeap_inline.h" />
@@ -195,19 +196,19 @@
     <ClInclude Include="Graphics\IShaderResource.h" />
     <ClInclude Include="Graphics\IUnorderAccessResource.h" />
     <ClInclude Include="Graphics\Light\LightBase.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Graphics\Light\LightDirection.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Graphics\Light\LightManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Graphics\Light\LightPoint.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Graphics\Light\LightStruct.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\MeshParts.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="Graphics\AnimationClip.cpp" />
     <ClCompile Include="Graphics\AnimationPlayController.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\CommonConstantBufferStruct.cpp" />
     <ClCompile Include="Graphics\ConstantBuffer.cpp" />
     <ClCompile Include="Graphics\DescriptorHeap.cpp" />
     <ClCompile Include="Graphics\Font.cpp" />
@@ -296,19 +298,19 @@
     <ClCompile Include="Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Light\LightBase.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Graphics\Light\LightDirection.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Graphics\Light\LightManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Graphics\Light\LightPoint.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Graphics\Light\LightStruct.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\MeshParts.cpp" />

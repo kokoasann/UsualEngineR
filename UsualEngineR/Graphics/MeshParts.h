@@ -61,7 +61,6 @@ namespace UER
 		/// <param name="mProj">プロジェクション行列</param>
 		/// <param name="light">ライト</param>
 		void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj);
-		void Draw(RenderContext& rc, const Matrix& mWorld, Camera& cam);
 		/// <summary>
 		/// スケルトンを関連付ける。
 		/// </summary>
@@ -118,22 +117,10 @@ namespace UER
 			Matrix mView;		//ビュー行列。
 			Matrix mProj;		//プロジェクション行列。
 		};
-		struct SCameraCB
-		{
-			Vector4  pos;
-			Vector4 dir;
-			Matrix mView;		//ビュー行列。
-			Matrix mProj;		//プロジェクション行列。
-		};
-		struct SLightCB
-		{
-			Vector4 screenSize;
-			int directionCount;
-			int pointCount;
-		};
+		
 		ConstantBuffer m_commonConstantBuffer;					//メッシュ共通の定数バッファ。
-		ConstantBuffer m_cameraConstantBuffer;
-		ConstantBuffer m_lightConstantBuffer;
+		//ConstantBuffer m_cameraConstantBuffer;
+		//ConstantBuffer m_lightConstantBuffer;
 		ConstantBuffer m_expandConstantBuffer;					//ユーザー拡張用の定数バッファ
 		IShaderResource* m_expandShaderResourceView = nullptr;	//ユーザー拡張シェーダーリソースビュー。
 		StructuredBuffer m_boneMatricesStructureBuffer;			//ボーン行列の構造化バッファ。
