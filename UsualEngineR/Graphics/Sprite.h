@@ -29,7 +29,7 @@ namespace UER
 		Texture* m_textures[MAX_TEXTURE] = { nullptr };			//使用するテクスチャ。DDSファイルのパスが指定されている場合は、このパラメータは無視されます。
 		const char* m_vsEntryPointFunc = "VSMain";				//頂点シェーダーのエントリーポイント。
 		const char* m_psEntryPoinFunc = "PSMain";				//ピクセルシェーダーのエントリーポイント。
-		const char* m_fxFilePath = nullptr;						//.fxファイルのファイルパス。
+		const char* m_fxFilePath = "Assets/shader/sprite.h";	//.fxファイルのファイルパス。
 		UINT m_width = 0;										//スプライトの幅。
 		UINT m_height = 0;										//スプライトの高さ。
 		void* m_expandConstantBuffer = nullptr;					//ユーザー拡張の定数バッファ
