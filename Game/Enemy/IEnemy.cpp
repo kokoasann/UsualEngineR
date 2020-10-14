@@ -1,13 +1,17 @@
 #include "stdafx.h"
 #include "IEnemy.h"
-#include "IEnemyState.h"
-#include "EnemyIdleState.h"
-#include "EnemyBattleState.h"
+#include "State/IEnemyState.h"
+#include "State/EnemyIdleState.h"
+#include "State/EnemyBattleState.h"
+#include "State/EnemySlashState.h"
+#include "State/EnemyDeadState.h"
 
 void IEnemy::Awake() {
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyIdleState();
 	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
+	m_stateList[static_cast<int>(EnState::enAttackSlash)] = new EnemySlashState();
+	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyDeadState();
 }
 
 bool IEnemy::Start() {
@@ -27,6 +31,11 @@ void IEnemy::OnDestroy() {
 void IEnemy::Update() {
 	Execute();
 	m_nextState = m_currentState->Update(this);
+
+	if (m_HP <= 0) {
+		m_nextState = m_stateList[static_cast<int>(EnState::enDeadState)];
+	}
+
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);
 		m_currentState = m_nextState;

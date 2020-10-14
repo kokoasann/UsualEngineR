@@ -14,12 +14,14 @@ public:
 		enFlying,
 		enDiving,
 		enAttack,
+		enDead,
 		enNumState
 	};
 
 	enum class EnAnimation {
 		enRun,
 		enAttack,
+		enDead,
 		enNumAnim
 	};
 
@@ -74,6 +76,11 @@ public:
 	/// </summary>
 	void PostRender() override;
 
+	/// <summary>
+	/// プレイヤーのステートクラスを取得する
+	/// </summary>
+	/// <param name="state">取得したいステートの種類</param>
+	/// <returns></returns>
 	IPlayerState* GetState(const EnState& state) const{
 		return m_stateList[static_cast<int>(state)];
 	};
@@ -175,5 +182,5 @@ private:
 	float m_charaConHeight = 3.f;
 
 	//
-	float m_HP = 500.f;
+	float m_HP = 5000.f;
 };

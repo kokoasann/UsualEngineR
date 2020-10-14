@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EnemyIdleState.h"
-#include "IEnemy.h"
+#include "../IEnemy.h"
 #include <cmath>
 
 EnemyIdleState::EnemyIdleState() {

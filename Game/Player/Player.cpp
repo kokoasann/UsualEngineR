@@ -5,6 +5,7 @@
 #include "State/PlayerGroundState.h"
 #include "State/PlayerDiveState.h"
 #include "State/PlayerAttackState.h"
+#include "State/PlayerDeadState.h"
 
 Player::Player()
 {
@@ -12,7 +13,6 @@ Player::Player()
 
 Player::~Player()
 {
-
 }
 
 
@@ -44,7 +44,9 @@ void Player::Awake()
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
 
-	static const int numAnim = 2;
+
+	//Init Animation
+	static const int numAnim = 3;
 	m_animlist.resize(numAnim);
 	m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
 	m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/anim/unityChan/run.tka");
@@ -55,6 +57,11 @@ void Player::Awake()
 	m_animlist[static_cast<int>(EnAnimation::enAttack)]->Load("Assets/anim/unityChan/jump.tka");
 	m_animlist[static_cast<int>(EnAnimation::enAttack)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enAttack)]->SetLoopFlag(false);
+
+	m_animlist[static_cast<int>(EnAnimation::enDead)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enDead)]->Load("Assets/anim/unityChan/KneelDown.tka");
+	m_animlist[static_cast<int>(EnAnimation::enDead)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enDead)]->SetLoopFlag(false);
 
 	m_model->InitAnimation(m_animlist, m_animlist.size());
 	m_model->Play(0);
@@ -68,6 +75,7 @@ bool Player::Start()
 	m_stateList[static_cast<int>(EnState::enFlying)] = new PlayerFlyingState();
 	m_stateList[static_cast<int>(EnState::enDiving)] = new PlayerDiveState();
 	m_stateList[static_cast<int>(EnState::enAttack)] = new PlayerAttackState();
+	m_stateList[static_cast<int>(EnState::enDead)] = new PlayerDeadState();
 
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
@@ -88,11 +96,12 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
-	if (m_HP <= 0) {
+	m_nextState = m_currentState->Update(this);
 
+	if (m_HP <= 0) {
+		m_nextState = m_stateList[static_cast<int>(EnState::enDead)];
 	}
 
-	m_nextState = m_currentState->Update(this);
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);
 		m_currentState = m_nextState;

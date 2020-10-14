@@ -15,9 +15,6 @@
     <ClInclude Include="Enemy\IEnemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\IEnemyState.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\EnemyTest.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -29,12 +26,6 @@
     </ClInclude>
     <ClInclude Include="Enemy\Boss\BossA.h">
       <Filter>Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\EnemyBattleState.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\EnemyIdleState.h">
-      <Filter>Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="Player\State\PlayerDiveState.h">
       <Filter>Player\State</Filter>
@@ -60,6 +51,24 @@
     <ClInclude Include="Enemy\EnemyManager.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Player\State\PlayerDeadState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyDeadState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyIdleState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemySlashState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\IEnemyState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyBattleState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -77,9 +86,6 @@
     <ClCompile Include="Enemy\IEnemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\IEnemyState.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\EnemyTest.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -91,12 +97,6 @@
     </ClCompile>
     <ClCompile Include="Enemy\Boss\BossA.cpp">
       <Filter>Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\EnemyBattleState.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\EnemyIdleState.cpp">
-      <Filter>Enemy\State</Filter>
     </ClCompile>
     <ClCompile Include="Player\State\PlayerDiveState.cpp">
       <Filter>Player\State</Filter>
@@ -122,6 +122,24 @@
     <ClCompile Include="Enemy\EnemyManager.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Player\State\PlayerDeadState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyIdleState.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemySlashState.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\IEnemyState.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyBattleState.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyDeadState.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -132,9 +150,6 @@
     </Filter>
     <Filter Include="Assets\modelData\test">
       <UniqueIdentifier>{37d68044-d545-45d2-9be8-25d4417d7106}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="test">
-      <UniqueIdentifier>{01d172b2-43fa-499d-8403-68570eb66410}</UniqueIdentifier>
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{de703569-5717-4754-963a-655926b051ca}</UniqueIdentifier>
@@ -160,8 +175,8 @@
     <Filter Include="Player\State">
       <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemy\Attack">
-      <UniqueIdentifier>{3a8398f7-1944-41de-bb41-4193c5cab665}</UniqueIdentifier>
+    <Filter Include="test">
+      <UniqueIdentifier>{01d172b2-43fa-499d-8403-68570eb66410}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
