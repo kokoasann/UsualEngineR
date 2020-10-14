@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameHUD.h"
-
+#include "Player/Player.h"
 
 GameHUD::GameHUD()
 {
@@ -27,18 +27,24 @@ void GameHUD::OnDestroy()
 
 void GameHUD::Awake()
 {
-	DeleteGO(m_spriteRender);
+	DeleteGO(m_spPlayerHP);
 }
 
 bool GameHUD::Start()
 {
-	m_spriteRender = NewGO<SpriteRender>(0);
+
+	m_spPlayerHP = NewGO<SpriteRender>(0);
 
 	SpriteInitData sd;
 	sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
-	sd.m_width = 50;
-	sd.m_height = 50;
-	m_spriteRender->Init(sd);
+	sd.m_height = m_flSpHpHeight;
+	sd.m_width = m_flSpHpWidth;
+	m_spPlayerHP->Init(sd);
+	m_spPlayerHP->SetPos(m_hpPos);
+
+	m_spPlayerHP->SetSca(m_playerHpScale);
+	m_spPlayerHP->SetPivot(Vector2::Zero);
+
 	return true;
 }
 
@@ -50,7 +56,8 @@ void GameHUD::PreUpdate()
 
 void GameHUD::Update()
 {
-
+	m_playerHpScale.x = m_pPlayer->GetCurrentHP() / m_pPlayer->GetMaxHP();
+	m_spPlayerHP->SetSca(m_playerHpScale);
 }
 
 void GameHUD::PostUpdate()

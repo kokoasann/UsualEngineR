@@ -117,8 +117,12 @@ public:
 		m_model->Play(static_cast<int>(anim));
 	}
 
-	const float GetHP() {
+	const float GetCurrentHP() {
 		return m_HP;
+	}
+
+	const float GetMaxHP() {
+		return m_HP_MAX;
 	}
 
 	/// <summary>
@@ -182,5 +186,6 @@ private:
 	float m_charaConHeight = 3.f;
 
 	//
-	float m_HP = 5000.f;
+	const float m_HP_MAX = 500.f;
+	float m_HP = 500.f;
 };
