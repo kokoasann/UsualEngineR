@@ -157,7 +157,7 @@ namespace UER
 		int m_nameGO = 0;					//名前(hash値)
 		int m_prioGO = 0;						//プライオリティ
 
-		bool m_isTrashTakeGO = true;	//ゴミ拾う？
+		bool m_isTrashTakeGO = false;	//ゴミ拾う？
 		bool m_isCreatedInGOM = false; //ゲームオブジェクトマネージャーで作成された。
 
 		UINT m_threadingFunctionFlag = tf_None;

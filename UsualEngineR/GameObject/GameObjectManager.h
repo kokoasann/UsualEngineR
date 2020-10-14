@@ -71,7 +71,7 @@ namespace UER
 		/// <param name="isCheckIned">チェックインしてる？</param>
 		/// <returns></returns>
 		template<class T>
-		T* NewGameObject(int prio, const char* name,bool isCheckIned)
+		T* NewGameObject(int prio, const char* name,bool isTakeTrush,bool isCheckIned)
 		{
 			if (prio >= m_maxSize)
 			{
@@ -91,6 +91,8 @@ namespace UER
 			o->SetPrio(prio);
 			o->SetName(hash);
 			o->CreatInGameObjectManager();
+			if (isTakeTrush)
+				o->TrashTaking();
 			//m_gameObjectList[prio].push_back((GameObject*)go);
 
 			m_newGOPush_Mutex.lock();
@@ -192,9 +194,9 @@ namespace UER
 	/// <param name="isTakeTrush">使いまわしする</param>
 	/// <returns></returns>
 	template<class T>
-	static T* NewGO(int prio, const char* name="",bool isTakeTrush=false)
+	static T* NewGO(int prio, const char* name="")
 	{
-		return GameObjectManager::Get()->NewGameObject<T>(prio, name, isTakeTrush);
+		return GameObjectManager::Get()->NewGameObject<T>(prio, name, false,false);
 	}
 	
 	/// <summary>
