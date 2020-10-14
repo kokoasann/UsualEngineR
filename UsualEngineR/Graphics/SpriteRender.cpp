@@ -4,6 +4,9 @@
 
 namespace UER
 {
+	void SpriteRender::Release()
+	{
+	}
 	void SpriteRender::OnDestroy()
 	{
 	}
@@ -20,4 +23,5 @@ namespace UER
 		auto& rc = g_graphicsEngine->GetRenderContext();
 		mSprite.Draw(rc);
 	}
+	
 }

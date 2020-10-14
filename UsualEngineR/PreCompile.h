@@ -87,6 +87,7 @@
 #include "GameObject/GameObjectManager.h"
 
 #include "ModelRender.h"
+#include "SpriteRender.h"
 #include "Physics/CollisionAttr.h"
 
 

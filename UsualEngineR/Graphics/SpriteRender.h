@@ -8,7 +8,7 @@ namespace UER
 	public:
 		SpriteRender() {};
 		~SpriteRender() {};
-
+		virtual void Release() override;
 		void OnDestroy();
 
 		void Init(const SpriteInitData& sid);
@@ -76,6 +76,5 @@ namespace UER
 		Quaternion mRotation = g_quatIdentity;		//ローテーション
 		Vector3 mScale = g_vec3One;						//スケール
 		Vector2 mPivot = {0.5f,0.5f};							//ピボット
-
 	};
 }
