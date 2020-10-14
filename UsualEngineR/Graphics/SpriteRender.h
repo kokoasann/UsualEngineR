@@ -40,7 +40,13 @@ namespace UER
 		{
 			mScale = sca;
 		}
-
+		/*
+			pivotにセットする
+		*/
+		void SetPivot(Vector2 pi)
+		{
+			mPivot = pi;
+		}
 		/*
 			mPositionをゲットする
 		*/
