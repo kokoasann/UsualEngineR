@@ -69,6 +69,7 @@
     <ClInclude Include="Enemy\State\EnemyBattleState.h">
       <Filter>Enemy\State</Filter>
     </ClInclude>
+    <ClInclude Include="GameHUD.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Enemy\State\EnemyDeadState.cpp">
       <Filter>Enemy\State</Filter>
     </ClCompile>
+    <ClCompile Include="GameHUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

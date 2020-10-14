@@ -5,10 +5,14 @@
 #include "Camera/GameCamera.h"
 #include "Enemy/EnemyManager.h"
 #include "Enemy/IEnemy.h"
+#include "GameHUD.h"
 
 void Game::Release()
 {
 	DeleteGO(m_player);
+	DeleteGO(m_camera);
+	DeleteGO(m_stage);
+	DeleteGO(m_gameHUD);
 }
 
 void Game::OnDestroy()
@@ -29,6 +33,7 @@ bool Game::Start()
 	m_player = NewGO<Player>(0, "Player");
 	m_camera = NewGO<GameCamera>(0);
 	m_stage = NewGO<GameStage>(0);
+	m_gameHUD = NewGO<GameHUD>(0);
 
 	m_camera->SetCharaPos(m_player->GetPosition());
 
