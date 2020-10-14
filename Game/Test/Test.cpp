@@ -98,7 +98,6 @@ void Test::Awake()
 			m_isEndLoad = true;
 			m_loadTime = sw.Stop();
 		});
-
 	m_threads[1].Execute([&]()
 		{
 			Stopwatch sw;

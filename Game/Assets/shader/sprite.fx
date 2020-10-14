@@ -6,7 +6,7 @@ cbuffer cb :register (b0)
 	float4 mulcol;		//èÊéZêF
 }
 struct VSInput {
-	float4 pos : SV_POSITION;
+	float4 pos : POSITION;
 	float2 uv  : TEXCOORD0;
 };
 
@@ -27,5 +27,6 @@ PSInput VSMain(VSInput In)
 }
 float4 PSMain(PSInput In) : SV_Target0
 {
-	return colorTexture.Sample(Sampler, In.uv) * mulcol;
+	float4 res = colorTexture.Sample(Sampler, In.uv) * mulcol;
+	return res;
 }
