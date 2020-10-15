@@ -25,7 +25,9 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	m_vecVelocityGoal.z = lyf * m_VELOCITY_MAX;
 
 	if (g_pad[0]->IsPress(enButtonX)) {
+		//TODO : スタミナがないと走れないようにする
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
+		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
@@ -70,6 +72,11 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		auto nextState = p->GetState(Player::EnState::enDiving);
 		return nextState;
 	}
+
+	//boost recharge
+	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
+	//endurance recharge
+	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
 	return this;
 }

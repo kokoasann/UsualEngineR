@@ -27,8 +27,13 @@ public:
 		enNumState
 	};
 
-	IEnemyState* GetState(IEnemy::EnState state) {
+	IEnemyState* GetState(IEnemy::EnState state) const{
+		if (m_stateList.size() == 0) return nullptr;
 		return m_stateList[static_cast<int>(state)];
+	}
+
+	const IEnemyState* GetCurrentState() const{
+		return m_currentState;
 	}
 
 	void SetPosition(Vector3& pos) 
@@ -40,12 +45,16 @@ public:
 		return m_position;
 	}
 
-	const int GetCurrentHP() {
-		return m_HP;
+	const float GetCurrentHP() {
+		return m_hp;
+	}
+	
+	const float GetMaxHP() {
+		return m_HP_MAX;
 	}
 
 	void ApplyDamage(const float damage) {
-		m_HP -= damage;
+		m_hp = max(0.f, m_hp - damage);
 	}
 
 protected:
@@ -55,7 +64,8 @@ protected:
 	std::vector<IEnemyState*> m_stateList;
 	Vector3 m_position;
 
-	float m_HP = 100.f;
+	const float m_HP_MAX = 100.f;
+	float m_hp = m_HP_MAX;
 
 private:
 	IEnemyState* m_currentState = nullptr;

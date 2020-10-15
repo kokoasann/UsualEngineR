@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameHUD.h"
 #include "Player/Player.h"
+#include "Enemy/IEnemy.h"
 
 GameHUD::GameHUD()
 {
@@ -28,22 +29,54 @@ void GameHUD::OnDestroy()
 void GameHUD::Awake()
 {
 	DeleteGO(m_spPlayerHP);
+	DeleteGO(m_spPlayerEndurance);
+	DeleteGO(m_spPlayerBoost);
 }
 
 bool GameHUD::Start()
 {
 
-	m_spPlayerHP = NewGO<SpriteRender>(0);
 
 	SpriteInitData sd;
-	sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
+	//Player HP
+	m_spPlayerHP = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
 	sd.m_height = m_flSpHpHeight;
 	sd.m_width = m_flSpHpWidth;
 	m_spPlayerHP->Init(sd);
 	m_spPlayerHP->SetPos(m_hpPos);
-
 	m_spPlayerHP->SetSca(m_playerHpScale);
-	m_spPlayerHP->SetPivot(Vector2::Zero);
+	m_spPlayerHP->SetPivot(m_SPRITE_PIVOT);
+
+	//Player Endurance
+	m_spPlayerEndurance = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+	sd.m_height = m_flSpEnduranceHeight;
+	sd.m_width = m_flSpEnduranceWidth;
+	m_spPlayerEndurance->Init(sd);
+	m_spPlayerEndurance->SetPos(m_endurancePos);
+	m_spPlayerEndurance->SetSca(m_playerEnduranceScale);
+	m_spPlayerEndurance->SetPivot(m_SPRITE_PIVOT);
+
+	//Player Boost
+	m_spPlayerBoost = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+	sd.m_height = m_flSpBoostHeight;
+	sd.m_width = m_flSpBoostWidth;
+	m_spPlayerBoost->Init(sd);
+	m_spPlayerBoost->SetPos(m_boostPos);
+	m_spPlayerBoost->SetSca(m_playerBoostScale);
+	m_spPlayerBoost->SetPivot(m_boostSpPivot);
+
+	//Enemy HP
+	m_spEnemyHP = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+	sd.m_height = m_flSpEnemyHPHeight;
+	sd.m_width = m_flSpEnemyHPWidth;
+	m_spEnemyHP->Init(sd);
+	m_spEnemyHP->SetPos(m_enemyHPPos);
+	m_spEnemyHP->SetSca(m_enemyHpScale);
+	m_spEnemyHP->SetPivot(m_SPRITE_PIVOT);
 
 	return true;
 }
@@ -56,8 +89,28 @@ void GameHUD::PreUpdate()
 
 void GameHUD::Update()
 {
+	//Player HP
 	m_playerHpScale.x = m_pPlayer->GetCurrentHP() / m_pPlayer->GetMaxHP();
 	m_spPlayerHP->SetSca(m_playerHpScale);
+
+	//Player Endurance
+	m_playerEnduranceScale.x = m_pPlayer->GetCurrentEndurance() / m_pPlayer->GetMaxEndurance();
+	m_spPlayerEndurance->SetSca(m_playerEnduranceScale);
+
+	//Player Boost
+	m_playerBoostScale.y = m_pPlayer->GetCurrentBoost() / m_pPlayer->GetMaxBoost();
+	m_spPlayerBoost->SetSca(m_playerBoostScale);
+
+	//Enemy HP
+	auto target = m_pPlayer->GetTargetEnemy();
+	if (target == nullptr) {
+		m_enemyHpScale.x = 0.f;
+		printf("Enemy NULL\n");
+	}
+	else {
+		m_enemyHpScale.x = target->GetCurrentHP() / target->GetMaxHP();
+	}
+	m_spEnemyHP->SetSca(m_enemyHpScale);
 }
 
 void GameHUD::PostUpdate()

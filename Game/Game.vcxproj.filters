@@ -180,6 +180,9 @@
     <Filter Include="test">
       <UniqueIdentifier>{01d172b2-43fa-499d-8403-68570eb66410}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\image">
+      <UniqueIdentifier>{b4ab8465-3a30-4c6f-bd6b-f3ad57761a9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -187,6 +190,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
       <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\Image\hp.png">
+      <Filter>Assets\image</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ void PlayerAttackState::Enter(Player* p) {
 	auto& vel = p->GetLocalVelocity();
 	p->SetVelocity(Vector3::Zero);
 
-	m_combo = 0;
+	m_combo = 1;
 
 	//‚±‚Ì•Ó‚Å‰½‚ÌUŒ‚‚ª‚Å‚«‚é‚©”»’f‚·‚é
 	//m_currentAttack = p->GetNormalAttackSkill()

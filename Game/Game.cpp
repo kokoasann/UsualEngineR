@@ -57,7 +57,9 @@ void Game::Update()
 {
 	m_camera->SetCharaPos(m_player->GetPosition());
 	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
-	m_camera->SetTarget(enemy->GetPosition());
+	if (enemy != nullptr) {
+		m_camera->SetTarget(enemy->GetPosition());
+	}
 }
 
 void Game::PostUpdate()

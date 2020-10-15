@@ -66,36 +66,64 @@ private:
 
 	//Ref
 	Player* m_pPlayer = nullptr;
+	//IEnemy* m_enemy = nullptr;
 
-	const Vector3 ANCHOR_BOTTOM_LEFT = { -(FRAME_BUFFER_W / 2.f), -(FRAME_BUFFER_H / 2.f), 0 };
+	//const
+	const Vector3 ANCHOR_BOTTOM_LEFT = { -(FRAME_BUFFER_W / 2.f), -(FRAME_BUFFER_H / 2.f), 0.f };
+	const Vector3 ANCHOR_TOP_CENTER = { 0.f, FRAME_BUFFER_H / 2, 0.f };
+	const Vector2 m_SPRITE_PIVOT = { 1.f,0.f };
 
 	//Player HP
 	SpriteRender* m_spPlayerHP = nullptr;
 
-	const float m_flSpHpHeight = 20;
+	const float m_flSpHpHeight = 40;
 	const float m_flSpHpWidth = 250;
 	Vector3 m_playerHpScale = Vector3::One;
 
 	Vector3 m_hpPos = { 
-		ANCHOR_BOTTOM_LEFT.x + m_flSpHpWidth / 2.f - 90.f,
-		ANCHOR_BOTTOM_LEFT.y + m_flSpHpHeight / 2.f +60.f, 
+		ANCHOR_BOTTOM_LEFT.x + 100.f,
+		ANCHOR_BOTTOM_LEFT.y + 100, 
 		0.f 
+	};
+
+	//Player Endurance
+	SpriteRender* m_spPlayerEndurance = nullptr;
+
+	const float m_flSpEnduranceHeight = 40.f;
+	const float m_flSpEnduranceWidth = 250.f;
+	Vector3 m_playerEnduranceScale = Vector3::One;
+
+	Vector3 m_endurancePos = {
+		ANCHOR_BOTTOM_LEFT.x + 100.f,
+		ANCHOR_BOTTOM_LEFT.y + 30.f,
+		0.f
 	};
 
 
 	//Player Boost
 	SpriteRender* m_spPlayerBoost = nullptr;
 
-	const float m_flSpBoostHeight = 150;
-	const float m_flSpBoostWidth = 50;
+	const float m_flSpBoostHeight = 150.f;
+	const float m_flSpBoostWidth = 70.f;
+	const Vector2 m_boostSpPivot = { 1.f,0.f };
+	Vector3 m_playerBoostScale = Vector3::One;
 
 	Vector3 m_boostPos = {
-		ANCHOR_BOTTOM_LEFT.x - m_flSpBoostWidth / 2.f + 20.f,
-		ANCHOR_BOTTOM_LEFT.y + m_flSpBoostHeight / 2.f + 20.f,
+		ANCHOR_BOTTOM_LEFT.x + 10.f,
+		ANCHOR_BOTTOM_LEFT.y + 10.f,
 		0.f
 	};
 
 	//Enemy HP
 	SpriteRender* m_spEnemyHP = nullptr;
+	const float m_flSpEnemyHPHeight = 20.f;
+	const float m_flSpEnemyHPWidth = 800.f;
+	Vector3 m_enemyHpScale = Vector3::One;
+
+	Vector3 m_enemyHPPos = {
+		ANCHOR_TOP_CENTER.x - m_flSpEnemyHPWidth / 2.f,
+		ANCHOR_TOP_CENTER.y  - m_flSpEnemyHPHeight  - 20.f,
+		0.f
+	};
 
 };
