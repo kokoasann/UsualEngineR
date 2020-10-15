@@ -15,6 +15,7 @@ public:
 	void Exit(Player*) override;
 
 private:
+	const float m_BOOST_AUTO_CHARGE_AMOUNT = 5.f;
 	const float m_VELOCITY_MAX = 20.f;
 	const float m_GRAVITY = -30.f;
 	float m_QUICKNESS = 50.f;

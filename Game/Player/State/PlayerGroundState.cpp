@@ -71,6 +71,9 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		return nextState;
 	}
 
+	//boost recharge
+	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
+
 	return this;
 }
 

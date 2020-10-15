@@ -185,6 +185,10 @@ public:
 		m_boost = max(0.f, m_boost - amount);
 	}
 
+	void ChargeBoost(const float amount) {
+		m_boost = min(m_BOOST_MAX, m_boost + amount);
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -218,7 +222,7 @@ private:
 	float m_charaConRadius = 1.f;
 	float m_charaConHeight = 3.f;
 
-	//
+	//Ability
 	const float m_HP_MAX = 500.f;
 	const float m_ENDURANCE_MAX = 300.f;
 	const float m_BOOST_MAX = 300.f;
