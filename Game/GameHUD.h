@@ -67,7 +67,9 @@ private:
 	//Ref
 	Player* m_pPlayer = nullptr;
 
+	//const
 	const Vector3 ANCHOR_BOTTOM_LEFT = { -(FRAME_BUFFER_W / 2.f), -(FRAME_BUFFER_H / 2.f), 0 };
+	const Vector2 m_SPRITE_PIVOT = { 1.f,1.f };
 
 	//Player HP
 	SpriteRender* m_spPlayerHP = nullptr;

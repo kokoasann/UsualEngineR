@@ -43,7 +43,7 @@ bool GameHUD::Start()
 	m_spPlayerHP->SetPos(m_hpPos);
 
 	m_spPlayerHP->SetSca(m_playerHpScale);
-	m_spPlayerHP->SetPivot(Vector2::Zero);
+	m_spPlayerHP->SetPivot(m_SPRITE_PIVOT);
 
 	return true;
 }
