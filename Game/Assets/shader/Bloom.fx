@@ -23,14 +23,22 @@ PSInput VSMain(VSInput In)
 
 float4 PSMain_SamplingLuminance(PSInput In) :SV_Target0
 {
+	#if 0
+	float4 col = Texture.Sample(Sampler,In.uv);
+	//return col;
+	float t = dot(col.xyz, float3(0.2125f, 0.7154f, 0.0721f));
+	col.xyz *= t - 1.f;
+	col.w = 1.0f;
 	
+	#else
 	float4 col = Texture.Sample(Sampler,In.uv);
 	//return col;
 	float t = dot(col.xyz, float3(0.2125f, 0.7154f, 0.0721f));
 	clip(t - 1.f);
 	col.xyz *= t - 1.f;
 	col.w = 1.0f;
-	
+
+	#endif
 	return col;
 }
 
