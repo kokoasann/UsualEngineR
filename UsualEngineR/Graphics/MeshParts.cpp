@@ -26,7 +26,8 @@ namespace UER
 	}
 	void MeshParts::InitFromTkmFile(
 		const TkmFile& tkmFile, 
-		const wchar_t* fxFilePath,
+		const wchar_t* vsfxFilePath,
+		const wchar_t* psfxFilePath,
 		const char* vsEntryPointFunc,
 		const char* psEntryPointFunc,
 		void* expandData,
@@ -38,7 +39,7 @@ namespace UER
 		int meshNo = 0;
 		tkmFile.QueryMeshParts([&](const TkmFile::SMesh& mesh) {
 			//tkmファイルのメッシュ情報からメッシュを作成する。
-			CreateMeshFromTkmMesh(mesh, meshNo, fxFilePath, vsEntryPointFunc, psEntryPointFunc);
+			CreateMeshFromTkmMesh(mesh, meshNo, vsfxFilePath,psfxFilePath, vsEntryPointFunc, psEntryPointFunc);
 	
 	
 			meshNo++;
@@ -106,7 +107,8 @@ namespace UER
 	void MeshParts::CreateMeshFromTkmMesh(
 		const TkmFile::SMesh& tkmMesh, 
 		int meshNo,
-		const wchar_t* fxFilePath,
+		const wchar_t* vsfxFilePath,
+		const wchar_t* psfxFilePath,
 		const char* vsEntryPointFunc,
 		const char* psEntryPointFunc)
 	{
@@ -161,7 +163,7 @@ namespace UER
 		mesh->m_materials.reserve(tkmMesh.materials.size());
 		for (auto& tkmMat : tkmMesh.materials) {
 			auto mat = new Material;
-			mat->InitFromTkmMaterila(tkmMat, fxFilePath, vsEntryPointFunc, psEntryPointFunc);
+			mat->InitFromTkmMaterila(tkmMat, vsfxFilePath, psfxFilePath, vsEntryPointFunc, psEntryPointFunc);
 			mesh->m_materials.push_back(mat);
 		}
 	
@@ -195,8 +197,8 @@ namespace UER
 		//定数バッファを更新する。
 		SConstantBuffer cb;
 		cb.mWorld = mWorld;
-		cb.mView = mView;
-		cb.mProj = mProj;
+		//cb.mView = mView;
+		//cb.mProj = mProj;
 	
 		m_commonConstantBuffer.CopyToVRAM(&cb);
 	

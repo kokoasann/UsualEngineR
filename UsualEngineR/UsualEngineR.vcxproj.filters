@@ -10,49 +10,13 @@
     <ClInclude Include="Graphics\RenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\RootSignature.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\RWStructuredBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\StructuredBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\VertexBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Camera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\ConstantBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\DescriptorHeap.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\DescriptorHeap_inline.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\GraphicsEngine.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\IndexBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\IShaderResource.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\IUnorderAccessResource.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Material.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\PipelineState.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\RenderContext.h">
@@ -253,9 +217,6 @@
     <ClInclude Include="Graphics\Raytracing\Raytracing.h">
       <Filter>Graphics\Raytracing</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\GPUBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\SampleSampler.h">
       <Filter>Graphics\Sample</Filter>
     </ClInclude>
@@ -280,46 +241,67 @@
     <ClInclude Include="Graphics\CommonConstantBufferStruct.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\PreRender\PreRender.h">
+      <Filter>Graphics\PreRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\PreRender\GBuffer.h">
+      <Filter>Graphics\PreRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RenderingSituation.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IndexBuffer.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RWStructuredBuffer.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\StructuredBuffer.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\VertexBuffer.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GPUBuffer.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\ConstantBuffer.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\DescriptorHeap.h">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\DescriptorHeap_inline.h">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\PipelineState.h">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RootSignature.h">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IUnorderAccessResource.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IShaderResource.h">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Material.h">
+      <Filter>Graphics\3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
     <ClCompile Include="Graphics\RenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\RootSignature.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\RWStructuredBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Shader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\StructuredBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\VertexBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Camera.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\ConstantBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\DescriptorHeap.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\GraphicsEngine.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\IndexBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Material.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\PipelineState.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Skeleton.cpp">
@@ -502,9 +484,6 @@
     <ClCompile Include="Graphics\Raytracing\BLASBuffer.cpp">
       <Filter>Graphics\Raytracing</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\GPUBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\SampleSampler.cpp">
       <Filter>Graphics\Sample</Filter>
     </ClCompile>
@@ -528,6 +507,42 @@
     </ClCompile>
     <ClCompile Include="Graphics\CommonConstantBufferStruct.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PreRender\PreRender.cpp">
+      <Filter>Graphics\PreRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PreRender\GBuffer.cpp">
+      <Filter>Graphics\PreRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IndexBuffer.cpp">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RWStructuredBuffer.cpp">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\StructuredBuffer.cpp">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\VertexBuffer.cpp">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GPUBuffer.cpp">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\ConstantBuffer.cpp">
+      <Filter>Graphics\DXBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\DescriptorHeap.cpp">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PipelineState.cpp">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RootSignature.cpp">
+      <Filter>Graphics\RenderingPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Material.cpp">
+      <Filter>Graphics\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -599,6 +614,15 @@
     </Filter>
     <Filter Include="Graphics\Light">
       <UniqueIdentifier>{04235917-2e66-4557-a4b0-52f8520adb22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\PreRender">
+      <UniqueIdentifier>{58935a61-81b4-4720-86a6-bd7c6a2e7dcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\DXBuffer">
+      <UniqueIdentifier>{61419893-b158-45b7-87c4-a67a0d26c7a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\RenderingPipeline">
+      <UniqueIdentifier>{23d9e3ba-d98d-4f60-8090-ad73c03d884c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

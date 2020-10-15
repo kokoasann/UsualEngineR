@@ -21,11 +21,13 @@ namespace UER
 		//内部のシェーダーをロードする処理が求めているのが
 		//wchar_t型の文字列なので、ここで変換しておく。
 		wchar_t wfxFilePath[256];
-		if (initData.m_fxFilePath == nullptr) {
+		wchar_t wpsfxFilePath[256];
+		if (initData.m_vsfxFilePath == nullptr || initData.m_psfxFilePath == nullptr) {
 			MessageBox(nullptr, L"fxファイルパスが指定されていません", L"エラー", MB_OK);
 			std::abort();
 		}
-		mbstowcs(wfxFilePath, initData.m_fxFilePath, 256);
+		mbstowcs(wfxFilePath, initData.m_vsfxFilePath, 256);
+		mbstowcs(wpsfxFilePath, initData.m_psfxFilePath, 256);
 	
 		m_tkmFile = TkmFile::GetManager().Load(initData.m_tkmFilePath);
 		//m_tkmFile.Load(initData.m_tkmFilePath);
@@ -40,7 +42,8 @@ namespace UER
 		
 		m_meshParts.InitFromTkmFile(
 			*m_tkmFile, 
-			wfxFilePath, 
+			wfxFilePath,
+			wpsfxFilePath,
 			initData.m_vsEntryPointFunc,
 			initData.m_psEntryPointFunc,
 			initData.m_expandConstantBuffer,

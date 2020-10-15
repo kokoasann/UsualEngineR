@@ -58,14 +58,17 @@ namespace UER
 		char str[255] = { 0 };
 		sprintf(str, "%.3f\n", t);
 		OutputDebugString(str);*/
-
+		auto& rc = g_graphicsEngine->GetRenderContext();
+		auto& gbuff = g_graphicsEngine->GetPreRender().GetGBuffer();
+		//gbuff.BegineRender(rc);
 		UpdateRender();
+		//gbuff.EndRender(rc);
+		
+		
 		UpdatePreRender();
 		
-		
 
-		//auto& pe = usualEngine()->GetGraphicsEngine()->GetPostEffect();
-		//pe.Render();
+		RenderingSituation::Set(ERenderSituation::PostRender);
 
 		UpdatePostRender();
 

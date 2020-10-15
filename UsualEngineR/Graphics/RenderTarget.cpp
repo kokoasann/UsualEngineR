@@ -13,7 +13,7 @@ namespace UER
 		int arraySize,
 		DXGI_FORMAT colorFormat,
 		DXGI_FORMAT depthStencilFormat,
-		float clearColor[4]
+		const float clearColor[4]
 	)
 	{
 		auto pd3dDevice = g_graphicsEngine->GetD3DDevice();
@@ -23,19 +23,22 @@ namespace UER
 		//レンダリングターゲットとなるテクスチャを作成する。
 		if (!CreateRenderTargetTexture(*g_graphicsEngine, d3dDevice, w, h, mipLevel, arraySize, colorFormat, clearColor)) {
 		//	TK_ASSERT(false, "レンダリングターゲットとなるテクスチャの作成に失敗しました。");
-			MessageBox(nullptr, L"レンダリングターゲットとなるテクスチャの作成に失敗しました", L"エラー", MB_OK);
+			MessageBox(nullptr, L"レンダリングターゲットとなるテクスチャの作成に失敗しました\ncreate renderTarget faild", L"エラー", MB_OK);
+			std::abort();
 			return false;
 		}
 		//深度ステンシルバッファとなるテクスチャを作成する。
 		if (depthStencilFormat != DXGI_FORMAT_UNKNOWN) {
 			if (!CreateDepthStencilTexture(*g_graphicsEngine, d3dDevice, w, h, depthStencilFormat)) {
-				MessageBox(nullptr, L"レンダリングターゲットとなるテクスチャの作成に失敗しました", L"エラー", MB_OK);
+				MessageBox(nullptr, L"レンダリングターゲットとなるテクスチャの作成に失敗しました\ncreate renderTarget faild", L"エラー", MB_OK);
+				std::abort();
 				return false;
 			}
 		}
 		if (!CreateDescriptorHeap(*g_graphicsEngine, d3dDevice)) {
 			//ディスクリプタヒープの作成に失敗した。
-			MessageBox(nullptr, L"レンダリングターゲットとなるテクスチャの作成に失敗しました", L"エラー", MB_OK);
+			MessageBox(nullptr, L"レンダリングターゲットとなるテクスチャの作成に失敗しました\ncreate renderTarget faild", L"エラー", MB_OK);
+			std::abort();
 			return false;
 		}
 		//ディスクリプタを作成する。
@@ -45,7 +48,7 @@ namespace UER
 		}
 		return true;
 	}
-	bool RenderTarget::Create(ID3D12Resource* rtTex, ID3D12Resource* dsTex, ID3D12DescriptorHeap* rtHeap, ID3D12DescriptorHeap* dsHeap, UINT rtvDescriptorSize, UINT dsvDescriptorSize, int width, int height, float clearColor[4])
+	bool RenderTarget::Create(ID3D12Resource* rtTex, ID3D12Resource* dsTex, ID3D12DescriptorHeap* rtHeap, ID3D12DescriptorHeap* dsHeap, UINT rtvDescriptorSize, UINT dsvDescriptorSize, int width, int height, const float clearColor[4])
 	{
 		m_renderTargetTextureDx12 = rtTex;
 		m_depthStencilTexture = dsTex;
@@ -64,7 +67,8 @@ namespace UER
 	void RenderTarget::Clear(RenderContext& rc)
 	{
 		rc.ClearRenderTargetView(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), m_rtvClearColor);
-		rc.ClearDepthStencilView(m_dsvHeap->GetCPUDescriptorHandleForHeapStart(), m_dsvClearValue);
+		if(m_dsvHeap)
+			rc.ClearDepthStencilView(m_dsvHeap->GetCPUDescriptorHandleForHeapStart(), m_dsvClearValue);
 	}
 	bool RenderTarget::CreateDescriptorHeap(GraphicsEngine& ge, ID3D12Device*& d3dDevice)
 	{
@@ -104,7 +108,7 @@ namespace UER
 		int mipLevel,
 		int arraySize,
 		DXGI_FORMAT format,
-		float clearColor[4]
+		const float clearColor[4]
 	)
 	{
 		CD3DX12_RESOURCE_DESC desc(

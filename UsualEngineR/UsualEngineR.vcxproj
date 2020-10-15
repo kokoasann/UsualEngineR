@@ -217,6 +217,8 @@
     <ClInclude Include="Graphics\PipelineState.h" />
     <ClInclude Include="Graphics\PostEffect\Bloom.h" />
     <ClInclude Include="Graphics\PostEffect\PostEffect.h" />
+    <ClInclude Include="Graphics\PreRender\GBuffer.h" />
+    <ClInclude Include="Graphics\PreRender\PreRender.h" />
     <ClInclude Include="Graphics\Primitive.h" />
     <ClInclude Include="Graphics\RaytracingEngine.h" />
     <ClInclude Include="Graphics\RaytracingHelper.h" />
@@ -232,6 +234,7 @@
     <ClInclude Include="Graphics\Raytracing\TLASBuffer.h" />
     <ClInclude Include="Graphics\RenderContext.h" />
     <ClInclude Include="Graphics\RenderContext_inline.h" />
+    <ClInclude Include="Graphics\RenderingSituation.h" />
     <ClInclude Include="Graphics\RenderTarget.h" />
     <ClInclude Include="Graphics\RootSignature.h" />
     <ClInclude Include="Graphics\RWStructuredBuffer.h" />
@@ -319,6 +322,8 @@
     <ClCompile Include="Graphics\PipelineState.cpp" />
     <ClCompile Include="Graphics\PostEffect\Bloom.cpp" />
     <ClCompile Include="Graphics\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="Graphics\PreRender\GBuffer.cpp" />
+    <ClCompile Include="Graphics\PreRender\PreRender.cpp" />
     <ClCompile Include="Graphics\Primitive.cpp" />
     <ClCompile Include="Graphics\RaytracingEngine.cpp" />
     <ClCompile Include="Graphics\RaytracingHelper.cpp" />

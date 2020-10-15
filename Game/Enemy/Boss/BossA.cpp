@@ -7,7 +7,7 @@ void BossA::Init() {
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
 

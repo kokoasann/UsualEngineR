@@ -266,6 +266,7 @@ namespace UER
 
 		m_lightManager.Init();
 		m_postEffect.Init();
+		m_preRender.Init();
 
 		g_camera3D->Init();
 		return true;
@@ -513,6 +514,8 @@ namespace UER
 	}
 	void GraphicsEngine::BeginRender()
 	{
+		RenderingSituation::Set(ERenderSituation::GBuffer);
+
 		m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
 	
 		//カメラを更新する。

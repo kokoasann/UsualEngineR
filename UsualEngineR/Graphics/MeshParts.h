@@ -45,7 +45,8 @@ namespace UER
 		/// <param name="psEntryPointFunc">ピクセルシェーダーのエントリーポイントの関数名</param>
 		void InitFromTkmFile(
 			const TkmFile& tkmFile,
-			const wchar_t* fxFilePath,
+			const wchar_t* vsfxFilePath,
+			const wchar_t* psfxFilePath,
 			const char* vsEntryPointFunc,
 			const char* psEntryPointFunc,
 			void* expandData,
@@ -95,7 +96,8 @@ namespace UER
 		void CreateMeshFromTkmMesh(
 			const TkmFile::SMesh& mesh, 
 			int meshNo,
-			const wchar_t* fxFilePath,
+			const wchar_t* vsfxFilePath,
+			const wchar_t* psfxFilePath,
 			const char* vsEntryPointFunc,
 			const char* psEntryPointFunc );
 	
@@ -114,8 +116,8 @@ namespace UER
 		/// </remarks>
 		struct SConstantBuffer {
 			Matrix mWorld;		//ワールド行列。
-			Matrix mView;		//ビュー行列。
-			Matrix mProj;		//プロジェクション行列。
+			//Matrix mView;		//ビュー行列。
+			//Matrix mProj;		//プロジェクション行列。
 		};
 		
 		ConstantBuffer m_commonConstantBuffer;					//メッシュ共通の定数バッファ。

@@ -50,10 +50,22 @@ namespace UER
 			WaitUntilToPossibleSetRenderTarget(*renderTargets[i]);
 		}
 	}
+	inline void UER::RenderContext::WaitUntilToPossibleSetRenderTargets(int numRt, RenderTarget renderTargets[])
+	{
+		for (int i = 0; i < numRt; i++) {
+			WaitUntilToPossibleSetRenderTarget(renderTargets[i]);
+		}
+	}
 	inline void RenderContext::WaitUntilFinishDrawingToRenderTargets(int numRt, RenderTarget* renderTargets[])
 	{
 		for (int i = 0; i < numRt; i++) {
 			WaitUntilFinishDrawingToRenderTarget(*renderTargets[i]);
+		}
+	}
+	inline void UER::RenderContext::WaitUntilFinishDrawingToRenderTargets(int numRt, RenderTarget renderTargets[])
+	{
+		for (int i = 0; i < numRt; i++) {
+			WaitUntilFinishDrawingToRenderTarget(renderTargets[i]);
 		}
 	}
 	inline void RenderContext::SetRenderTargets(UINT numRT, RenderTarget* renderTargets[])
@@ -67,6 +79,16 @@ namespace UER
 		D3D12_CPU_DESCRIPTOR_HANDLE dsDS = renderTargets[0]->GetDSVCpuDescriptorHandle();
 		m_commandList->OMSetRenderTargets(numRT, rtDSHandleTbl, FALSE, &dsDS);
 	
+	}
+	inline void UER::RenderContext::SetRenderTargets(UINT numRT, RenderTarget rts[])
+	{
+		D3D12_CPU_DESCRIPTOR_HANDLE rtDSHandleTbl[32];
+		int rtNo = 0;
+		for (UINT rtNo = 0; rtNo < numRT; rtNo++) {
+			rtDSHandleTbl[rtNo] = rts[rtNo].GetRTVCpuDescriptorHandle();
+		}
+		D3D12_CPU_DESCRIPTOR_HANDLE dsDS = rts[0].GetDSVCpuDescriptorHandle();
+		m_commandList->OMSetRenderTargets(numRT, rtDSHandleTbl, FALSE, &dsDS);
 	}
 	inline void RenderContext::ClearRenderTargetViews(int numRt, RenderTarget* renderTargets[])
 	{

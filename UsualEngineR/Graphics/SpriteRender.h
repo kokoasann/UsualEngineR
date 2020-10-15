@@ -20,7 +20,7 @@ namespace UER
 		/*
 			mPositionにセットする
 		*/
-		void SetPos(Vector3 pos)
+		void SetPos(const Vector3& pos)
 		{
 			mPosition = pos;
 		}
@@ -28,7 +28,7 @@ namespace UER
 		/*
 			mRotationにセットする
 		*/
-		void SetRot(Quaternion rot)
+		void SetRot(const Quaternion& rot)
 		{
 			mRotation = rot;
 		}
@@ -36,21 +36,21 @@ namespace UER
 		/*
 			mScaleにセットする
 		*/
-		void SetSca(Vector3 sca)
+		void SetSca(const Vector3& sca)
 		{
 			mScale = sca;
 		}
 		/*
 			pivotにセットする
 		*/
-		void SetPivot(Vector2 pi)
+		void SetPivot(const Vector2& pi)
 		{
 			mPivot = pi;
 		}
 		/*
 			mPositionをゲットする
 		*/
-		Vector3 GetPos()
+		const Vector3& GetPos() const
 		{
 			return mPosition;
 		}
@@ -58,7 +58,7 @@ namespace UER
 		/*
 			mRotationをゲットする
 		*/
-		Quaternion GetRot()
+		const Quaternion& GetRot() const
 		{
 			return mRotation;
 		}
@@ -66,7 +66,7 @@ namespace UER
 		/*
 			mScaleをゲットする
 		*/
-		Vector3 GetSca()
+		const Vector3& GetSca() const
 		{
 			return mScale;
 		}
@@ -78,6 +78,13 @@ namespace UER
 		{
 			m_isMainCameraView = true;
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		void Mode_BillBord()
+		{
+			m_isBillBord = true;
+		}
 	private:
 		Sprite mSprite;											//スプライト
 		Vector3 mPosition = g_vec3Zero;					//ポジション
@@ -85,7 +92,10 @@ namespace UER
 		Vector3 mScale = g_vec3One;						//スケール
 		Vector2 mPivot = {0.5f,0.5f};							//ピボット
 
+		bool m_isInited = false;
+		bool m_isUpdated = false;
+
 		bool m_isMainCameraView = false;
-		//bool m_is
+		bool m_isBillBord = false;
 	};
 }

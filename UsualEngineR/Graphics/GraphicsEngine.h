@@ -16,6 +16,7 @@
 
 #include "Light/LightManager.h"
 #include "PostEffect/PostEffect.h"
+#include "PreRender/PreRender.h"
 
 #include "Camera.h"
 
@@ -233,6 +234,11 @@ namespace UER
 		{
 			return m_lightManager;
 		}
+
+		PreRender& GetPreRender()
+		{
+			return m_preRender;
+		}
 	private:
 		/// <summary>
 		/// D3Dデバイスの作成。
@@ -346,6 +352,7 @@ namespace UER
 		
 		LightManager m_lightManager;
 		PostEffect m_postEffect;
+		PreRender m_preRender;
 
 		Primitive m_primitive;
 		RootSignature m_copyRootSign;

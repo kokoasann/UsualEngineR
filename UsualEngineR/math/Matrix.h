@@ -91,6 +91,17 @@ namespace UER
 			mat = _m.mat;
 			return *this;
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="pos"></param>
+		void SetTranspose(const Vector3& pos)
+		{
+			m[3][0] = pos.x;
+			m[3][1] = pos.y;
+			m[3][2] = pos.z;
+		}
 		/// <summary>
 		/// ベクトルと3x3行列を乗算。
 		/// </summary>

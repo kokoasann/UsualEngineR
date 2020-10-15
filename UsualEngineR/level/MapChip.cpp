@@ -11,7 +11,7 @@ namespace UER
 		char filePath[256];
 		sprintf_s(filePath, "Assets/modelData/%s.tkm", name.c_str());
 		ModelInitData mid;
-		mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 		mid.m_vsEntryPointFunc = "VSMain";
 		mid.m_psEntryPointFunc = "PSMain";
 		mid.m_tkmFilePath = filePath;

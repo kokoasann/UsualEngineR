@@ -40,7 +40,7 @@ bool GameStage::Start()
 			sw.Start();
 			ModelInitData mid;
 			mid.m_upAxis = EUpAxis::enUpAxisZ;
-			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
@@ -61,7 +61,7 @@ bool GameStage::Start()
 	m_threadForCreatingMeshCol.Execute([&]() {
 		ModelInitData mid;
 		mid.m_upAxis = EUpAxis::enUpAxisZ;
-		mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 		mid.m_vsEntryPointFunc = "VSMain";
 		mid.m_psEntryPointFunc = "PSMain";
 

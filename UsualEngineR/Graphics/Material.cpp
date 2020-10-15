@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Material.h"
 
+#include "PreRender/GBuffer.h"
 
 namespace UER
 {
@@ -27,6 +28,7 @@ namespace UER
 	void Material::InitFromTkmMaterila(
 		const TkmFile::SMaterial& tkmMat,
 		const wchar_t* fxFilePath,
+		const wchar_t* psfxFilePath,
 		const char* vsEntryPointFunc,
 		const char* psEntryPointFunc)
 	{
@@ -75,7 +77,7 @@ namespace UER
 		);*/
 	
 		//シェーダーを初期化。
-		InitShaders(fxFilePath, vsEntryPointFunc, psEntryPointFunc);
+		InitShaders(fxFilePath, psfxFilePath, vsEntryPointFunc, psEntryPointFunc);
 	
 		//パイプラインステートを初期化。
 		InitPipelineState();
@@ -109,19 +111,19 @@ namespace UER
 		psoDesc.DepthStencilState.StencilEnable = FALSE;
 		psoDesc.SampleMask = UINT_MAX;
 		psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-		psoDesc.NumRenderTargets = 3;
-		psoDesc.RTVFormats[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;		//アルベドカラー出力用。
-	#ifdef SAMPE_16_02
-		psoDesc.RTVFormats[1] = DXGI_FORMAT_R16G16B16A16_FLOAT;	//法線出力用。	
-		psoDesc.RTVFormats[2] = DXGI_FORMAT_R32_FLOAT;						//Z値。
-	#else
-		psoDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM;			//法線出力用。	
-		psoDesc.RTVFormats[2] = DXGI_FORMAT_R32G32B32A32_FLOAT;	//Z値。
-	#endif
+		psoDesc.NumRenderTargets = TO_INT(EGBufferKind::NumKind);
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Diffuse)] = DXGI_FORMAT_R32G32B32A32_FLOAT;		//アルベドカラー出力用。
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Normal)] = DXGI_FORMAT_R32G32B32A32_FLOAT;			//法線出力用。	
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Depth)] = DXGI_FORMAT_R32_FLOAT;	//Z値。
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Specular)] = DXGI_FORMAT_R32_FLOAT;			//法線出力用。	
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Tangent)] = DXGI_FORMAT_R32G32B32A32_FLOAT;	//Z値。
 		psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 		psoDesc.SampleDesc.Count = 1;
 	
 		m_skinModelPipelineState.Init(psoDesc);
+
+		
+
 	
 		//続いてスキンなしモデル用を作成。
 		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsNonSkinModel.GetCompiledBlob());
@@ -144,13 +146,14 @@ namespace UER
 	}
 	void Material::InitShaders(
 		const wchar_t* fxFilePath,
+		const wchar_t* psfxFilePath,
 		const char* vsEntryPointFunc,
 		const char* psEntryPointFunc
 	)
 	{
 		m_vsNonSkinModel.LoadVS(fxFilePath, vsEntryPointFunc);
 		m_vsSkinModel.LoadVS(fxFilePath, vsEntryPointFunc);
-		m_psModel.LoadPS(fxFilePath, psEntryPointFunc);
+		m_psModel.LoadPS(psfxFilePath, psEntryPointFunc);
 	}
 	void Material::BeginRender(RenderContext& rc, int hasSkin)
 	{

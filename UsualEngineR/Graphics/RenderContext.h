@@ -179,6 +179,8 @@ namespace UER
 		/// <param name="numRT"></param>
 		/// <param name="renderTarget"></param>
 		void SetRenderTargets(UINT numRT, RenderTarget* renderTargets[]);
+
+		void SetRenderTargets(UINT numRT, RenderTarget rts[]);
 		/// <summary>
 		/// レンダリングターゲットビューのクリア。
 		/// </summary>
@@ -217,6 +219,7 @@ namespace UER
 		/// </remarks>
 		/// <param name="renderTarget">レンダリングターゲット</param>
 		void WaitUntilFinishDrawingToRenderTargets(int numRt, RenderTarget* renderTargets[]);
+		void WaitUntilFinishDrawingToRenderTargets(int numRt, RenderTarget renderTargets[]);
 		void WaitUntilFinishDrawingToRenderTarget(RenderTarget& renderTarget);
 		void WaitUntilFinishDrawingToRenderTarget( ID3D12Resource* renderTarget )
 		{
@@ -235,6 +238,7 @@ namespace UER
 		/// 本関数を使って使用可能になるまで待機する必要があります。
 		/// </remarks>
 		void WaitUntilToPossibleSetRenderTargets(int numRt, RenderTarget* renderTargets[]);
+		void WaitUntilToPossibleSetRenderTargets(int numRt, RenderTarget renderTargets[]);
 		void WaitUntilToPossibleSetRenderTarget(RenderTarget& renderTarget);
 		void WaitUntilToPossibleSetRenderTarget( ID3D12Resource* renderTarget)
 		{

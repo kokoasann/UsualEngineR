@@ -31,7 +31,7 @@ namespace UER
 			int arraySize,
 			DXGI_FORMAT colorFormat,
 			DXGI_FORMAT depthStencilFormat,
-			float clearColor[4] = nullptr
+			const float clearColor[4] = nullptr
 		);
 
 		bool Create(
@@ -43,7 +43,7 @@ namespace UER
 			UINT sdvDescriptorSize,
 			int width,
 			int height,
-			float clearColor[4]
+			const float clearColor[4]
 		);
 
 		void Clear(RenderContext& rc);
@@ -135,7 +135,7 @@ namespace UER
 			int mipLevel,
 			int arraySize,
 			DXGI_FORMAT format,
-			float clearColor[4]
+			const float clearColor[4]
 		);
 		/// <summary>
 		/// 深度ステンシルバッファとなるテクスチャを作成。

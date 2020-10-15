@@ -1,5 +1,9 @@
-#include "ModelPS.fxh"
+#pragma once
 
+//#include "ModelPS.fxh"
+#include "ModelData.fxh"
+#include "CameraData.fxh"
+#include "PSInputStruct.fxh"
 //
 //  アニメーションするモデル用のシェーダ
 //
@@ -51,7 +55,7 @@ SPSIn VSMain(VSInputNmTxWeights vsIn)
 	psIn.pos = mul(cam_mView, psIn.pos);
 	psIn.pos = mul(cam_mProj, psIn.pos);
 	psIn.normal = normalize(mul(skin, vsIn.normal));
-	
+	psIn.tangent = normalize(mul(skin, vsIn.tangent));
 	psIn.uv = vsIn.uv;
 
 	return psIn;

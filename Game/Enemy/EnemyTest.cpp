@@ -5,7 +5,7 @@
 void EnemyTest::Init() {
 
 	ModelInitData mid;
-	mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
 	mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";

@@ -28,7 +28,7 @@ void Test::Awake()
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
 
@@ -81,7 +81,7 @@ void Test::Awake()
 			sw.Start();
 			ModelInitData mid;
 			mid.m_upAxis = EUpAxis::enUpAxisZ;
-			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
@@ -104,7 +104,7 @@ void Test::Awake()
 			sw.Start();
 			ModelInitData mid;
 			mid.m_upAxis = EUpAxis::enUpAxisZ;
-			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 

@@ -34,7 +34,7 @@ void ThreadTest::Awake()
 			//Sleep(5000);
 
 			ModelInitData mid;
-			mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
+			mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
@@ -59,7 +59,7 @@ void ThreadTest::Awake()
 			//c.Get() += 4;
 
 			ModelInitData mid;
-			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
@@ -80,7 +80,7 @@ void ThreadTest::Awake()
 			//c.Get() += 2;
 
 			ModelInitData mid;
-			mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 			mid.m_vsEntryPointFunc = "VSMain";
 			mid.m_psEntryPointFunc = "PSMain";
 			mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";

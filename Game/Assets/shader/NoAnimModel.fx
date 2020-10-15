@@ -1,5 +1,9 @@
-#include "ModelPS.fxh"
+#pragma once
 
+//#include "ModelPS.fxh"
+#include "ModelData.fxh"
+#include "CameraData.fxh"
+#include "PSInputStruct.fxh"
 //
 //  アニメーションしないモデル用のシェーダ
 //
@@ -18,6 +22,7 @@ struct SVSIn{
 	float4 pos 		: POSITION;		//モデルの頂点座標。
 	float3 normal	: NORMAL;		//法線。
 	float2 uv 		: TEXCOORD0;	//UV座標。
+	float3 tangent	: TANGENT;		//接ベクトル
 };
 
 
@@ -31,7 +36,7 @@ SPSIn VSMain(SVSIn vsIn)
 	psIn.pos = mul(cam_mView, psIn.pos);
 	psIn.pos = mul(cam_mProj, psIn.pos);
 	psIn.normal = normalize(mul(mWorld, vsIn.normal));
-	
+	psIn.tangent = normalize(mul(mWorld, vsIn.tangent));
 	psIn.uv = vsIn.uv;
 
 	return psIn;

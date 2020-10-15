@@ -38,6 +38,7 @@
 #include "math/Matrix.h"
 
 #include "BufferEnum.h"
+#include "RenderingSituation.h"
 
 #include "Thread/Lock.h"
 #include "Thread/ThreadObject.h"
