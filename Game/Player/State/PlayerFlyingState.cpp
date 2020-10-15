@@ -35,8 +35,13 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	}
 
 	//BOOST
+
 	if (g_pad[0]->IsPress(enButtonX)) {
-		m_velocityGoal *= m_BOOST;
+		m_velocityGoal *= m_VELOCITY_BOOST;
+		p->UseBoost(m_BOOST_EFFICIENCY * m_ACCELERATE_PARAM * gameTime()->GetDeltaTime());
+	}
+	else {
+		p->UseBoost(m_BOOST_EFFICIENCY * gameTime()->GetDeltaTime());
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
