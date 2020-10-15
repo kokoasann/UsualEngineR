@@ -23,6 +23,8 @@ void PlayerFlyingState::Enter(Player* p) {
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
+	//TODO : ブーストが足りないときは落下するようにする
+
 	//Move
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
