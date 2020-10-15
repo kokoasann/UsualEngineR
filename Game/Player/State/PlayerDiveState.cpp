@@ -15,6 +15,15 @@ PlayerDiveState::~PlayerDiveState()
 void PlayerDiveState::Enter(Player* p) {
 	printf("Enter Dive\n");
 
+	//スタミナがなくてダイブできないにゃん！
+	if (p->GetCurrentEndurance() < m_DIVE_STAMINA_COST) {
+		m_isCanDive = false;
+		return;
+	}
+	else {
+		m_isCanDive = true;
+	}
+
 	p->UseStamina(m_DIVE_STAMINA_COST);
 
 	m_velocity = p->GetLocalVelocity();
@@ -30,6 +39,11 @@ void PlayerDiveState::Enter(Player* p) {
 }
 
 IPlayerState* PlayerDiveState::Update(Player* p) {
+
+	if (!m_isCanDive) {
+		auto nextState = p->GetState(Player::EnState::enGround);
+		return nextState;
+	}
 
 	auto delta = gameTime()->GetDeltaTime();
 

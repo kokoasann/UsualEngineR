@@ -19,4 +19,5 @@ private:
 	const float m_RUN_SPEED_PARAM = 2.0f;
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_velocityGoal = Vector3::Zero;
+	bool m_isCanDive = true;
 };
