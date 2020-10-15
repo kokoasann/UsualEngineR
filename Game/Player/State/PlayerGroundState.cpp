@@ -26,6 +26,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 	if (g_pad[0]->IsPress(enButtonX)) {
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
+		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
@@ -73,6 +74,8 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 	//boost recharge
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
+	//endurance recharge
+	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
 	return this;
 }

@@ -168,7 +168,6 @@ public:
 		return m_speed;
 	}
 
-	// TODO : implement this func
 	IEnemy* GetTargetEnemy() const {
 		return m_target;
 	}
@@ -187,6 +186,14 @@ public:
 
 	void ChargeBoost(const float amount) {
 		m_boost = min(m_BOOST_MAX, m_boost + amount);
+	}
+
+	void  UseStamina(const float amount) {
+		m_endurance = max(0.f, m_endurance - amount);
+	}
+
+	void ChargeEndurance(const float amount) {
+		m_endurance = min(m_ENDURANCE_MAX, m_endurance + amount);
 	}
 
 	//TODO : protect these member

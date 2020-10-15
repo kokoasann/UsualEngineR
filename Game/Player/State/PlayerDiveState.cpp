@@ -15,6 +15,8 @@ PlayerDiveState::~PlayerDiveState()
 void PlayerDiveState::Enter(Player* p) {
 	printf("Enter Dive\n");
 
+	p->UseStamina(m_DIVE_STAMINA_COST);
+
 	m_velocity = p->GetLocalVelocity();
 
 	auto lxf = g_pad[0]->GetLStickXF();
