@@ -54,7 +54,7 @@ public:
 	}
 
 	void ApplyDamage(const float damage) {
-		m_hp -= damage;
+		m_hp = max(0.f, m_hp - damage);
 	}
 
 protected:

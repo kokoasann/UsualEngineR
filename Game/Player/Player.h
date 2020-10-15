@@ -139,7 +139,7 @@ public:
 	/// </summary>
 	/// <param name="damageAmount"> 攻撃力</param>
 	void ApplyDamage(const float damageAmount) {
-		m_hp -= damageAmount;
+		m_hp = max(0.f, m_hp - damageAmount);
 	}
 
 	/*
@@ -182,7 +182,7 @@ public:
 	}
 
 	void UseBoost(const float amount) {
-		m_boost -= amount;
+		m_boost = max(0.f, m_boost - amount);
 	}
 
 	//TODO : protect these member
