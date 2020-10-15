@@ -32,7 +32,7 @@ bool Game::Start()
 {
 	m_player = NewGO<Player>(0, "Player");
 	m_camera = NewGO<GameCamera>(0);
-	m_stage = NewGO<GameStage>(0);
+	//m_stage = NewGO<GameStage>(0);
 	m_gameHUD = NewGO<GameHUD>(0);
 
 	m_gameHUD->SetPlayer(m_player);

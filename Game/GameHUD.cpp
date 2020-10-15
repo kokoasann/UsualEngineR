@@ -28,6 +28,8 @@ void GameHUD::OnDestroy()
 void GameHUD::Awake()
 {
 	DeleteGO(m_spPlayerHP);
+	DeleteGO(m_spPlayerEndurance);
+	DeleteGO(m_spPlayerBoost);
 }
 
 bool GameHUD::Start()
@@ -56,8 +58,24 @@ bool GameHUD::Start()
 	m_spPlayerEndurance->SetPivot(m_SPRITE_PIVOT);
 
 	//Player Boost
+	m_spPlayerBoost = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
+	sd.m_height = m_flSpBoostHeight;
+	sd.m_width = m_flSpBoostWidth;
+	m_spPlayerBoost->Init(sd);
+	m_spPlayerBoost->SetPos(m_boostPos);
+	m_spPlayerBoost->SetSca(m_playerBoostScale);
+	m_spPlayerBoost->SetPivot(m_boostSpPivot);
 
 	//Enemy HP
+	m_spEnemyHP = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
+	sd.m_height = m_flSpEnemyHPHeight;
+	sd.m_width = m_flSpEnemyHPWidth;
+	m_spEnemyHP->Init(sd);
+	m_spEnemyHP->SetPos(m_enemyHPPos);
+	m_spEnemyHP->SetSca(m_enemyHpScale);
+	m_spEnemyHP->SetPivot(m_SPRITE_PIVOT);
 
 	return true;
 }

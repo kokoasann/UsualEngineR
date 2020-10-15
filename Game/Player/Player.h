@@ -1,11 +1,12 @@
 #pragma once
 #include "State/IPlayerSstate.h"
 #include "../../UsualEngineR/Character/CharacterController.h"
+class IEnemy;
 
 /// <summary>
 /// 
 /// </summary>
-class Player :public GameObject
+class Player final : public GameObject
 {
 public:
 
@@ -159,6 +160,12 @@ public:
 		return m_speed;
 	}
 
+	// TODO : implement this func
+	const IEnemy& GetTargetEnemy() const {
+		//return m_target;
+	}
+
+	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
 	//Vector3 m_velocityGoal = Vector3::Zero;
