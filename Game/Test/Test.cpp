@@ -183,6 +183,13 @@ void Test::Awake()
 	m_chara->SetPosition({ 10,100,0 });
 	m_characon.Init(1, 2, m_chara->GetPosition(), true);
 
+	m_3dSprite = NewGO<SpriteRender>(0);
+	SpriteInitData sd;
+	sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
+	sd.m_height = 50;
+	sd.m_width = 50;
+	m_3dSprite->Init(sd);
+	m_3dSprite->MainCameraView();
 }
 
 void Test::Update()

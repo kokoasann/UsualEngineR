@@ -46,4 +46,6 @@ private:
 	int m_count = 0;
 	bool m_isEndLoad = false;
 	float m_loadTime = 0.0f;
+
+	SpriteRender* m_3dSprite;
 };

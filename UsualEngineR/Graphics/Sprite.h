@@ -66,7 +66,7 @@ namespace UER
 		/// 描画。
 		/// </summary>
 		/// <param name="renderContext">レンダリングコンテキスト/param>
-		void Draw(RenderContext& renderContext);
+		void Draw(RenderContext& renderContext, const Matrix& view, const Matrix& projection);
 	private:
 		/// <summary>
 		/// テクスチャを初期化。

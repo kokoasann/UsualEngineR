@@ -217,12 +217,12 @@ namespace UER
 			m_world = m_world * mRot;
 			m_world = m_world * mTrans;
 		}
-		void Sprite::Draw(RenderContext& renderContext)
+		void Sprite::Draw(RenderContext& renderContext,const Matrix& view, const Matrix& projection)
 		{
-			Matrix viewMatrix = g_camera2D->GetViewMatrix();
-			Matrix projMatrix = g_camera2D->GetProjectionMatrix();
+			//Matrix viewMatrix = g_camera2D->GetViewMatrix();
+			//Matrix projMatrix = g_camera2D->GetProjectionMatrix();
 	
-			m_constantBufferCPU.mvp = m_world * viewMatrix * projMatrix;
+			m_constantBufferCPU.mvp = m_world * view * projection;
 			m_constantBufferCPU.mulColor.x = 1.0f;
 			m_constantBufferCPU.mulColor.y = 1.0f;
 			m_constantBufferCPU.mulColor.z = 1.0f;

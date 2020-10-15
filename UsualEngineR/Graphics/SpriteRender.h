@@ -70,11 +70,22 @@ namespace UER
 		{
 			return mScale;
 		}
+
+		/// <summary>
+		/// メインカメラの行列を使用する
+		/// </summary>
+		void MainCameraView()
+		{
+			m_isMainCameraView = true;
+		}
 	private:
 		Sprite mSprite;											//スプライト
 		Vector3 mPosition = g_vec3Zero;					//ポジション
 		Quaternion mRotation = g_quatIdentity;		//ローテーション
 		Vector3 mScale = g_vec3One;						//スケール
 		Vector2 mPivot = {0.5f,0.5f};							//ピボット
+
+		bool m_isMainCameraView = false;
+		//bool m_is
 	};
 }
