@@ -84,6 +84,19 @@ private:
 		0.f 
 	};
 
+	//Player Endurance
+	SpriteRender* m_spPlayerEndurance = nullptr;
+
+	const float m_flSpEnduranceHeight = 20;
+	const float m_flSpEnduranceWidth = 250;
+	Vector3 m_playerEnduranceScale = Vector3::One;
+
+	Vector3 m_endurancePos = {
+		ANCHOR_BOTTOM_LEFT.x + m_flSpEnduranceWidth / 2.f - 90.f,
+		ANCHOR_BOTTOM_LEFT.y + m_flSpEnduranceHeight / 2.f + 20.f,
+		0.f
+	};
+
 
 	//Player Boost
 	SpriteRender* m_spPlayerBoost = nullptr;
