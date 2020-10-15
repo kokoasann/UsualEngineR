@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "EnemyDeadState.h"
+#include "../EnemyManager.h"
 
 EnemyDeadState::EnemyDeadState() {
 }
@@ -10,7 +11,8 @@ EnemyDeadState::~EnemyDeadState() {
 void EnemyDeadState::Enter(IEnemy* e) {
 	printf("Enemy - Enter Dead State\n");
 	GameObject* enemy = reinterpret_cast<GameObject*>(e);
-	DeleteGO(enemy);
+	EnemyManager::GetEnemyManager().DestroyEnemy(e);
+	//DeleteGO(enemy);
 	//playAnimation-Dead
 }
 

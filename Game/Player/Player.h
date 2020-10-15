@@ -119,11 +119,19 @@ public:
 	}
 
 	const float GetCurrentHP() {
-		return m_HP;
+		return m_hp;
 	}
 
 	const float GetMaxHP() {
 		return m_HP_MAX;
+	}
+
+	const float GetCurrentEndurance() {
+		return m_endurance;
+	}
+
+	const float GetMaxEndurance() {
+		return m_ENDURANCE_MAX;
 	}
 
 	/// <summary>
@@ -131,7 +139,7 @@ public:
 	/// </summary>
 	/// <param name="damageAmount"> 攻撃力</param>
 	void ApplyDamage(const float damageAmount) {
-		m_HP -= damageAmount;
+		m_hp -= damageAmount;
 	}
 
 	/*
@@ -161,8 +169,20 @@ public:
 	}
 
 	// TODO : implement this func
-	const IEnemy& GetTargetEnemy() const {
-		//return m_target;
+	IEnemy* GetTargetEnemy() const {
+		return m_target;
+	}
+
+	const float GetCurrentBoost() {
+		return m_boost;
+	}
+
+	const float GetMaxBoost() {
+		return m_BOOST_MAX;
+	}
+
+	void UseBoost(const float amount) {
+		m_boost -= amount;
 	}
 
 	//TODO : protect these member
@@ -171,6 +191,12 @@ public:
 	//Vector3 m_velocityGoal = Vector3::Zero;
 
 private:
+	//func
+	void SearchTarget();
+
+	//Ref
+	IEnemy* m_target = nullptr;
+
 	//State
 	IPlayerState* m_nextState = nullptr;
 	IPlayerState* m_currentState = nullptr;
@@ -194,5 +220,11 @@ private:
 
 	//
 	const float m_HP_MAX = 500.f;
-	float m_HP = 500.f;
+	const float m_ENDURANCE_MAX = 300.f;
+	const float m_BOOST_MAX = 300.f;
+
+	float m_hp = m_HP_MAX;
+	float m_endurance = m_ENDURANCE_MAX;
+	float m_boost = m_BOOST_MAX;
+
 };

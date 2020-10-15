@@ -6,6 +6,8 @@
 #include "State/PlayerDiveState.h"
 #include "State/PlayerAttackState.h"
 #include "State/PlayerDeadState.h"
+#include "../Enemy/EnemyManager.h"
+#include "../Enemy/IEnemy.h"
 
 Player::Player()
 {
@@ -96,9 +98,11 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+	SearchTarget();
+
 	m_nextState = m_currentState->Update(this);
 
-	if (m_HP <= 0) {
+	if (m_hp <= 0) {
 		m_nextState = m_stateList[static_cast<int>(EnState::enDead)];
 	}
 
@@ -126,3 +130,14 @@ void Player::PostRender()
 
 }
 
+void Player::SearchTarget() {
+	auto enemy = EnemyManager::GetEnemyManager().GetNearestBossEnemy();
+	
+	if (enemy != nullptr and (enemy->GetState(IEnemy::EnState::enIdleState) != enemy->GetCurrentState() or
+		enemy->GetState(IEnemy::EnState::enDeadState) != enemy->GetCurrentState())) {
+		m_target = enemy;
+	}
+	else {
+		m_target = nullptr;
+	}
+}

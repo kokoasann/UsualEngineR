@@ -1,5 +1,5 @@
 #pragma once
-class IEnemy;
+#include "../Enemy/IEnemy.h"
 class Player;
 
 class EnemyManager
@@ -18,8 +18,21 @@ public:
 		return m_enemies;
 	}
 
-	const IEnemy* GetNearestEnemy() const {
+	void DestroyEnemy(IEnemy* enemy) {
+		m_enemies.erase(std::remove(m_enemies.begin(), m_enemies.end(), enemy), m_enemies.end());
+		auto enemyObject = reinterpret_cast<GameObject*>(enemy);
+		DeleteGO(enemyObject);
+	}
+
+	IEnemy* GetNearestBossEnemy() const {
 		//TODO : implement this func
+		if (m_enemies.size() == 0) return nullptr;
+		return m_enemies[0];
+	}
+
+	IEnemy* GetNearestEnemy() const {
+		//TODO : implement this func
+		if (m_enemies.size() == 0) return nullptr;
 		return m_enemies[0];
 	}
 
