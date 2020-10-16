@@ -227,7 +227,7 @@ namespace UER
 		{
 			for (auto go : goList)
 			{
-				go->Render();
+				go->WrapRender();
 			}
 		}
 	}
@@ -238,7 +238,7 @@ namespace UER
 		{
 			for (auto go : goList)
 			{
-				go->PostRender();
+				go->WrapPostRender();
 			}
 		}
 	}
