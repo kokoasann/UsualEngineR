@@ -137,6 +137,12 @@ namespace UER
 		{
 			Set(bv.x(), bv.y(), bv.z());
 		}
+
+		
+		/*Vector3(const Vector4& v)
+		{
+			Set(v);
+		}*/
 		/// <summary>
 		/// 線形補完
 		/// </summary>
@@ -543,6 +549,15 @@ namespace UER
 			DirectX::XMStoreFloat4(&vec, xmv);
 		}
 		/// <summary>
+		/// ナガセ
+		/// </summary>
+		/// <returns></returns>
+		float Length() const
+		{
+			DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4(&vec);
+			return DirectX::XMVector4Length(xmv).m128_f32[0];
+		}
+		/// <summary>
 		/// ベクトルを設定。
 		/// </summary>
 		/// <param name="_v"></param>
@@ -703,6 +718,11 @@ namespace UER
 			y = bt.y();
 			z = bt.z();
 			w = bt.w();
+		}
+
+		Quaternion(const Matrix& m)
+		{
+			SetRotation(m);
 		}
 		/// <summary>
 		/// X軸周りの回転クォータニオンを作成。

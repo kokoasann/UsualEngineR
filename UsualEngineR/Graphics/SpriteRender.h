@@ -5,6 +5,13 @@ namespace UER
 {
 	class SpriteRender :public GameObject
 	{
+	private:
+		enum class ECameraMode : char
+		{
+			Usual,
+			View,
+			Rotate,
+		};
 	public:
 		SpriteRender() {};
 		~SpriteRender() {};
@@ -76,7 +83,15 @@ namespace UER
 		/// </summary>
 		void MainCameraView()
 		{
-			m_isMainCameraView = true;
+			//m_isMainCameraView = true;
+			m_camMode = ECameraMode::View;
+		}
+		/// <summary>
+		/// 3dカメラの回転だけに適応。
+		/// </summary>
+		void MainCameraRotate()
+		{
+			m_camMode = ECameraMode::Rotate;
 		}
 		/// <summary>
 		/// 
@@ -96,6 +111,7 @@ namespace UER
 		bool m_isUpdated = false;
 
 		bool m_isMainCameraView = false;
+		ECameraMode m_camMode = ECameraMode::Usual;
 		bool m_isBillBord = false;
 	};
 }

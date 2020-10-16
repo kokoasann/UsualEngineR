@@ -75,7 +75,7 @@ void Test::Awake()
 	m_animlist[0]->SetLoopFlag(true);
 
 	
-	m_threads[0].Execute([&]()
+	/*m_threads[0].Execute([&]()
 		{
 			Stopwatch sw;
 			sw.Start();
@@ -123,7 +123,7 @@ void Test::Awake()
 				});
 			m_isEndLoad = true;
 			m_loadTime = sw.Stop();
-		});
+		});*/
 	/*m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
 		{
 			std::string name(objData.name.begin(), objData.name.end());
@@ -189,7 +189,9 @@ void Test::Awake()
 	sd.m_height = 50;
 	sd.m_width = 50;
 	m_3dSprite->Init(sd);
-	m_3dSprite->MainCameraView();
+	m_3dSprite->MainCameraRotate();
+	m_3dSprite->Mode_BillBord();
+	
 }
 
 void Test::Update()

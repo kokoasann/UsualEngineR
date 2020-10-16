@@ -95,6 +95,45 @@ namespace UER
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <returns></returns>
+		Vector3 GetScale() const
+		{
+			Vector3 res;
+			res.x = v[0].Length();
+			res.y = v[1].Length();
+			res.z = v[2].Length();
+			return res;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		Vector3 GetTransrate() const
+		{
+			Vector3 res;
+			res.Set(v[3]);
+			return res;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		Quaternion GetRotate() const
+		{
+			auto mat = *this;
+			mat.v[0].Normalize();
+			mat.v[1].Normalize();
+			mat.v[2].Normalize();
+			mat.v[3] = { 0,0,0,1 };
+
+			return mat;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="pos"></param>
 		void SetTranspose(const Vector3& pos)
 		{
