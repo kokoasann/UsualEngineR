@@ -18,6 +18,7 @@ void BossA::Init() {
 
 	//Init State
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enBattleState)]);
+	m_isDrawHpBarAboveMyself = false;
 }
 
 void BossA::Terminate() {

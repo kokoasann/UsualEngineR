@@ -13,19 +13,21 @@ void IEnemy::Awake() {
 	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
 	m_stateList[static_cast<int>(EnState::enAttackSlash)] = new EnemySlashState();
 	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyDeadState();
-
-	m_healthBar = NewGO<HealthBar>(0);
 }
 
 bool IEnemy::Start() {
 	Init();
+	if (m_isDrawHpBarAboveMyself) {
+		m_healthBar = NewGO<HealthBar>(0);
+	}
 	return true;
 }
 
 void IEnemy::Release() {
 	Terminate();
 	std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
-	DeleteGO(m_healthBar);
+	if (m_healthBar != nullptr)
+		DeleteGO(m_healthBar);
 }
 
 void IEnemy::OnDestroy() {
@@ -37,8 +39,10 @@ void IEnemy::Update() {
 	m_nextState = m_currentState->Update(this);
 
 	//update hp bar
-	m_healthBar->SetParentPos(m_position);
-	m_healthBar->SetHealthScale(GetCurrentHP() / GetMaxHP());
+	if (m_healthBar != nullptr) {
+		m_healthBar->SetParentPos(m_position);
+		m_healthBar->SetHealthScale(GetCurrentHP() / GetMaxHP());
+	}
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
@@ -68,5 +72,6 @@ void IEnemy::SetState(IEnemyState* s) {
 
 void IEnemy::ApplyDamage(const float damage) {
 	m_ability.hp = max(0.f, m_ability.hp - damage);
-	m_healthBar->ShowHealthBar();
+	if(m_healthBar != nullptr)
+		m_healthBar->ShowHealthBar();
 }

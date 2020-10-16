@@ -74,12 +74,10 @@ public:
 	}
 
 protected:
-
 	void SetState(IEnemyState* s);
-
+	bool m_isDrawHpBarAboveMyself = true;
 	std::vector<IEnemyState*> m_stateList;
 	Vector3 m_position;
-
 	StAbility m_ability;
 
 private:
