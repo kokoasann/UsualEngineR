@@ -63,6 +63,14 @@ public:
 		m_parentPos = pos;
 	}
 
+	/// <summary>
+	/// 体力バーのスケール
+	/// </summary>
+	/// <param name="scale">CurrentHP / Max HP</param>
+	void SetHealthScale(const float scale) {
+		m_hpScale.x = scale;
+	}
+
 private:
 	Vector3 m_parentPos = Vector3::Zero;
 	SpriteRender* m_spHp = nullptr;
