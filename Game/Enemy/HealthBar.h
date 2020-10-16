@@ -71,7 +71,19 @@ public:
 		m_hpScale.x = scale;
 	}
 
+	/// <summary>
+	/// 指定した秒数ヘルスバーを表示
+	/// </summary>
+	void ShowHealthBar() {
+		m_shouldBeDrawn = true;
+		m_drawTimer = 0.f;
+		printf("should be drawn\n");
+	}
+
 private:
+	bool m_shouldBeDrawn = false;
+	float m_drawTimer = 0.f;
+	const float m_drawSec = 1.f;
 	Vector3 m_parentPos = Vector3::Zero;
 	SpriteRender* m_spHp = nullptr;
 	const float m_flSpHpHeight = 4.f;

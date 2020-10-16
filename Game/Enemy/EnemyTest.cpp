@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "EnemyTest.h"
 #include "State/IEnemyState.h"
-#include "HealthBar.h"
 
 void EnemyTest::Init() {
 
@@ -15,7 +14,7 @@ void EnemyTest::Init() {
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
-	m_model->SetScale(g_vec3One);
+	m_model->SetScale(m_scale);
 	m_animlist.resize(1);
 	m_animlist[0] = std::make_unique<CAnimationClip>();
 	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");
@@ -27,19 +26,14 @@ void EnemyTest::Init() {
 
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 
-	//HP Sprite
-	m_healthBar = NewGO<HealthBar>(0);
 }
 
 
 void EnemyTest::Terminate() {
 	DeleteGO(m_model);
-	DeleteGO(m_healthBar);
 }
 
 void EnemyTest::Execute() {
-	m_healthBar->SetParentPos(m_position);
-	m_healthBar->SetHealthScale(GetCurrentHP() / GetMaxHP());
 	m_model->SetPosition(m_position);
 }
 

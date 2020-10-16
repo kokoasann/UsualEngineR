@@ -51,10 +51,10 @@ public:
 	}
 
 private:
-	const int m_numNormalEnemy = 10;
+	const int m_numNormalEnemy = 1;
 	const float m_normalEnemyHealth = 100.f;
-	const float m_minSpawnRange = -300.f;
-	const float m_maxSpawnRange = 300.f;
+	const float m_minSpawnRange = -100.f;
+	const float m_maxSpawnRange = 100.f;
 	const float m_defaultHeight = 10.f;
 	std::vector<IEnemy*> m_enemies;
 	Player* m_player = nullptr;
