@@ -42,6 +42,8 @@ bool HealthBar::Start()
 	m_spHp->SetPivot(m_SPRITE_PIVOT);
 	m_spHp->MainCameraView();
 	m_spHp->Mode_BillBord();
+	m_spHp->SetActive(false);
+
 	return true;
 }
 
