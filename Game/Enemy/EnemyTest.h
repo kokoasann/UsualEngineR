@@ -1,6 +1,7 @@
 #pragma once
 #include "IEnemy.h"
 class EnemyIdleState;
+class HealthBar;
 
 class EnemyTest : public IEnemy
 {
@@ -13,5 +14,8 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
+
+	//Sprite
+	HealthBar* m_healthBar = nullptr;
 };
 

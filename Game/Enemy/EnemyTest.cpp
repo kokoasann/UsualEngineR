@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "EnemyTest.h"
 #include "State/IEnemyState.h"
+#include "HealthBar.h"
 
 void EnemyTest::Init() {
 
@@ -25,6 +26,13 @@ void EnemyTest::Init() {
 	m_model->Play(0);
 
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
+
+	//HP Sprite
+	m_healthBar = NewGO<HealthBar>(0);
+
+	//Init pos
+	m_position = { 0,10,0 };
+
 }
 
 
@@ -33,6 +41,7 @@ void EnemyTest::Terminate() {
 }
 
 void EnemyTest::Execute() {
+	m_healthBar->SetParentPos(m_position);
 	m_model->SetPosition(m_position);
 }
 

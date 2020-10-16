@@ -2,10 +2,22 @@
 #include "EnemyManager.h"
 #include "Enemy/EnemyTest.h"
 #include "Enemy/Boss/BossA.h"
+#include "EnemyTest.h"
 
 void EnemyManager::SpawnEnemies() {
-	auto ene = NewGO<BossA>(0);
-	m_enemies.push_back(ene);
+	auto bene = NewGO<BossA>(0);
+	m_enemies.push_back(bene);
+
+	auto nene = NewGO<EnemyTest>(0);
+	m_enemies.push_back(nene);
+}
+
+void EnemyManager::Release() {
+	for (int i = 0; i < m_enemies.size(); i++) {
+		DeleteGO(m_enemies[i]);
+	}
+	m_enemies.clear();
+	m_enemies.shrink_to_fit();
 }
 
 void EnemyManager::ApplyAoeDamage(const Vector3& attackOriginPos, float range, float damageAmount) {

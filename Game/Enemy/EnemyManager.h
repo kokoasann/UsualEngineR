@@ -24,6 +24,8 @@ public:
 		DeleteGO(enemyObject);
 	}
 
+	void Release();
+
 	IEnemy* GetNearestBossEnemy() const {
 		//TODO : implement this func
 		if (m_enemies.size() == 0) return nullptr;
