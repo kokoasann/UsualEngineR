@@ -80,6 +80,7 @@ bool GameStage::Start()
 				m_count++;
 				return true;
 			});
+		printf("Level meash has been created");
 		});
 
 	return true;

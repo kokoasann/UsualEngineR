@@ -15,7 +15,6 @@ void BossA::Init() {
 	m_model->Init(mid);
 	//m_model->SetScale(g_vec3One * 0.05);
 	m_model->SetScale(g_vec3One * 10);
-	m_position.y = 20.f;
 
 	//Init State
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enBattleState)]);

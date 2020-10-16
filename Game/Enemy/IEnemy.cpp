@@ -32,7 +32,7 @@ void IEnemy::Update() {
 	Execute();
 	m_nextState = m_currentState->Update(this);
 
-	if (m_hp <= 0) {
+	if (m_ability.hp <= 0) {
 		m_nextState = m_stateList[static_cast<int>(EnState::enDeadState)];
 	}
 

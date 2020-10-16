@@ -70,6 +70,9 @@
       <Filter>Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="GameHUD.h" />
+    <ClInclude Include="Enemy\HealthBar.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -142,6 +145,9 @@
       <Filter>Enemy\State</Filter>
     </ClCompile>
     <ClCompile Include="GameHUD.cpp" />
+    <ClCompile Include="Enemy\HealthBar.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -171,9 +177,6 @@
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Attack">
-      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player\State">
       <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
     </Filter>
@@ -182,6 +185,9 @@
     </Filter>
     <Filter Include="Assets\image">
       <UniqueIdentifier>{b4ab8465-3a30-4c6f-bd6b-f3ad57761a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack">
+      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

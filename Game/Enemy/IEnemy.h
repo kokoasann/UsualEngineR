@@ -27,6 +27,15 @@ public:
 		enNumState
 	};
 
+	struct StAbility {
+		float hp;
+		float max_hp;
+
+		void InitHP(const float init_hp) {
+			hp = max_hp = init_hp;
+		}
+	};
+
 	IEnemyState* GetState(IEnemy::EnState state) const{
 		if (m_stateList.size() == 0) return nullptr;
 		return m_stateList[static_cast<int>(state)];
@@ -46,15 +55,23 @@ public:
 	}
 
 	const float GetCurrentHP() {
-		return m_hp;
+		return m_ability.hp;
 	}
 	
 	const float GetMaxHP() {
-		return m_HP_MAX;
+		return m_ability.max_hp;
 	}
 
 	void ApplyDamage(const float damage) {
-		m_hp = max(0.f, m_hp - damage);
+		m_ability.hp = max(0.f, m_ability.hp - damage);
+	}
+
+	void SetAbility(const StAbility& ability) {
+		m_ability = ability;
+	}
+
+	const StAbility& GetAbility() const {
+		return m_ability;
 	}
 
 protected:
@@ -64,12 +81,13 @@ protected:
 	std::vector<IEnemyState*> m_stateList;
 	Vector3 m_position;
 
-	const float m_HP_MAX = 100.f;
-	float m_hp = m_HP_MAX;
+	//const float m_HP_MAX = 100.f;
+	//float m_hp = m_HP_MAX;
+
+	StAbility m_ability;
 
 private:
 	IEnemyState* m_currentState = nullptr;
 	IEnemyState* m_nextState = nullptr;
-
 };
 

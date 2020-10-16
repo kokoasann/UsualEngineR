@@ -235,6 +235,7 @@ private:
 	const float m_BOOST_MAX = 300.f;
 
 	float m_hp = m_HP_MAX;
+	//TODO : change the name endurance to stamina
 	float m_endurance = m_ENDURANCE_MAX;
 	float m_boost = m_BOOST_MAX;
 
