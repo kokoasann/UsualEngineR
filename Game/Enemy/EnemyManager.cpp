@@ -3,13 +3,39 @@
 #include "Enemy/EnemyTest.h"
 #include "Enemy/Boss/BossA.h"
 #include "EnemyTest.h"
+#include <random>
 
 void EnemyManager::SpawnEnemies() {
+	//Boss
 	auto bene = NewGO<BossA>(0);
+
+	IEnemy::StAbility ab;
+	ab.InitHP(200.f);
+	bene->SetAbility(ab);
+	Vector3 pos;
+	pos.y = 100;
+	bene->SetPosition(pos);
+
 	m_enemies.push_back(bene);
 
-	auto nene = NewGO<EnemyTest>(0);
-	m_enemies.push_back(nene);
+	//Zako!
+	std::random_device rd;
+	std::mt19937 mt(rd()); 
+	std::uniform_int_distribution<> rand100(m_minSpawnRange, m_maxSpawnRange);
+
+	for (int i = 0; i < m_numNormalEnemy; i++) {
+		auto nene = NewGO<EnemyTest>(0);
+		ab.InitHP(m_normalEnemyHealth);
+		nene->SetAbility(ab);
+
+		//random spawn
+		Vector3 pos;
+		pos.x = rand100(mt);
+		pos.z = rand100(mt);
+		pos.y = m_defaultHeight;
+		nene->SetPosition(pos);
+		m_enemies.push_back(nene);
+	}
 }
 
 void EnemyManager::Release() {

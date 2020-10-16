@@ -29,19 +29,17 @@ void EnemyTest::Init() {
 
 	//HP Sprite
 	m_healthBar = NewGO<HealthBar>(0);
-
-	//Init pos
-	m_position = { 0,10,0 };
-
 }
 
 
 void EnemyTest::Terminate() {
 	DeleteGO(m_model);
+	DeleteGO(m_healthBar);
 }
 
 void EnemyTest::Execute() {
 	m_healthBar->SetParentPos(m_position);
+	m_healthBar->SetHealthScale(GetCurrentHP() / GetMaxHP());
 	m_model->SetPosition(m_position);
 }
 
