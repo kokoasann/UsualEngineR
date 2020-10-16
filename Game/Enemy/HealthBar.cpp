@@ -42,6 +42,8 @@ bool HealthBar::Start()
 	m_spHp->SetPivot(m_SPRITE_PIVOT);
 	m_spHp->MainCameraView();
 	m_spHp->Mode_BillBord();
+	m_spHp->SetActive(false);
+
 	return true;
 }
 
@@ -53,6 +55,9 @@ void HealthBar::PreUpdate()
 
 void HealthBar::Update()
 {
+
+	if (!m_shouldBeDrawn) return;
+
 	auto eyePos = g_camera3D->GetPosition();
 	auto vecEyeToParent = m_parentPos - eyePos;
 	vecEyeToParent.y = 0.f;
@@ -62,6 +67,17 @@ void HealthBar::Update()
 	auto hpPos = m_parentPos + m_hpPosOffset + right * m_flSpHpWidth / 2.f;
 	m_spHp->SetPos(hpPos);
 	m_spHp->SetSca(m_hpScale);
+
+	m_drawTimer += gameTime()->GetDeltaTime();
+
+	printf("timer : %f\n", m_drawTimer);
+
+	if (m_drawTimer >= m_drawSec) {
+		m_shouldBeDrawn = false;
+		m_spHp->SetActive(false);
+		printf("bye\n");
+	}
+
 }
 
 void HealthBar::PostUpdate()

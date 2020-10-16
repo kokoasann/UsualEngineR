@@ -1,5 +1,6 @@
 #pragma once
 class IEnemyState;
+class HealthBar;
 
 class IEnemy : public GameObject
 {
@@ -62,9 +63,7 @@ public:
 		return m_ability.max_hp;
 	}
 
-	void ApplyDamage(const float damage) {
-		m_ability.hp = max(0.f, m_ability.hp - damage);
-	}
+	void ApplyDamage(const float damage);
 
 	void SetAbility(const StAbility& ability) {
 		m_ability = ability;
@@ -75,18 +74,16 @@ public:
 	}
 
 protected:
-
 	void SetState(IEnemyState* s);
-
+	bool m_isDrawHpBarAboveMyself = true;
 	std::vector<IEnemyState*> m_stateList;
 	Vector3 m_position;
-
-	//const float m_HP_MAX = 100.f;
-	//float m_hp = m_HP_MAX;
-
 	StAbility m_ability;
 
 private:
+	HealthBar* m_healthBar = nullptr;
+
+	//State
 	IEnemyState* m_currentState = nullptr;
 	IEnemyState* m_nextState = nullptr;
 };

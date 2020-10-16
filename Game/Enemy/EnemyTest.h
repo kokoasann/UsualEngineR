@@ -14,8 +14,6 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-
-	//Sprite
-	HealthBar* m_healthBar = nullptr;
+	Vector3 m_scale = { 5.f,5.f,5.f };
 };
 
