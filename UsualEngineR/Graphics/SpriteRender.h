@@ -89,9 +89,9 @@ namespace UER
 		/// <summary>
 		/// 3dカメラの回転だけに適応。
 		/// </summary>
-		void MainCameraRotate()
+		void CameraScaleLock()
 		{
-			m_camMode = ECameraMode::Rotate;
+			mSprite.ViewScaleLock();
 		}
 		/// <summary>
 		/// 

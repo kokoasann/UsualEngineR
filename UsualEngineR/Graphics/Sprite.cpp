@@ -223,6 +223,17 @@ namespace UER
 			//Matrix projMatrix = g_camera2D->GetProjectionMatrix();
 	
 			m_constantBufferCPU.mvp = m_world * view * projection;
+
+			if (m_isViewScaleLock)
+			{
+				m_constantBufferCPU.mvp.v[0] = m_constantBufferCPU.mvp.v[0] * m_constantBufferCPU.mvp.m[3][3];
+				m_constantBufferCPU.mvp.v[1] = m_constantBufferCPU.mvp.v[1] * m_constantBufferCPU.mvp.m[3][3];
+				m_constantBufferCPU.mvp.v[2] = m_constantBufferCPU.mvp.v[2] * m_constantBufferCPU.mvp.m[3][3];
+			}
+			/*m_constantBufferCPU.mvp.m[0][3] = 0;
+			m_constantBufferCPU.mvp.m[1][3] = 0;
+			m_constantBufferCPU.mvp.m[2][3] = 0;
+			m_constantBufferCPU.mvp.m[3][3] = 1;*/
 			m_constantBufferCPU.mulColor.x = 1.0f;
 			m_constantBufferCPU.mulColor.y = 1.0f;
 			m_constantBufferCPU.mulColor.z = 1.0f;

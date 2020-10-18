@@ -67,6 +67,14 @@ namespace UER
 		/// </summary>
 		/// <param name="renderContext">レンダリングコンテキスト/param>
 		void Draw(RenderContext& renderContext, const Matrix& view, const Matrix& projection);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void ViewScaleLock()
+		{
+			m_isViewScaleLock = true;
+		}
 	private:
 		/// <summary>
 		/// テクスチャを初期化。
@@ -122,6 +130,8 @@ namespace UER
 		PipelineState		m_pipelineState;		//パイプラインステート。
 		Shader				m_vs;					//頂点シェーダー。
 		Shader				m_ps;					//ピクセルシェーダー。
+
+		bool m_isViewScaleLock = false;
 	};
 
 }

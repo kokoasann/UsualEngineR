@@ -24,27 +24,7 @@ namespace UER
 			Quaternion qrot;
 			qrot.SetRotation(rot);
 			qrot *= mRotation;
-			if (m_camMode != ECameraMode::Rotate)
-			{
-				
-				mSprite.Update(mPosition, qrot, mScale, mPivot);
-			}
-			else
-			{
-				auto pro = g_camera3D->GetProjectionMatrix();
-				pro.m[3][3] = 1.f;
-				pro.m[3][2] = 0.f;
-				pro.m[2][3] = 0.f;
-				pro.Inverse();
-				auto s = mScale;
-				pro.Apply(s);
-
-				auto p = mPosition;
-				g_camera3D->GetViewProjectionMatrix().Apply(p);
-				
-				
-				mSprite.Update(mPosition, qrot, mScale, mPivot);
-			}
+			mSprite.Update(mPosition, qrot, mScale, mPivot);
 		}
 		else
 		{
@@ -79,6 +59,29 @@ namespace UER
 			//promat.m[3][3] = 1;
 			//promat.m[3][2] = 0;
 			//promat.m[2][3] = 0;
+			
+			{
+				Matrix v, p;
+				v.MakeLookAt({ 0,0,0 }, { 0,0,1 }, { 0,1,0 });
+				p.MakeProjectionMatrix(Math::DegToRad(60), FRAME_BUFFER_W / FRAME_BUFFER_H, 5, 50);
+				Matrix world;
+				Matrix mTrans, mRot, mSca;
+				Matrix mvp, mwv, mwvp;
+				mvp = v * p;
+
+				mTrans.MakeTranslation({0,50,50});
+				mRot.MakeRotationFromQuaternion(mRotation);
+				mSca.MakeScaling(mScale);
+				world = mSca;
+				world = world * mRot;
+				world = world * mTrans;
+
+				mwv = world * v;
+				mwvp = mwv * p;
+
+				printf("");
+			}
+
 
 			auto pos = vmat.GetTransrate();
 			auto rot = vmat.GetRotate();
