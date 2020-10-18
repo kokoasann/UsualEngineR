@@ -9,6 +9,9 @@ enum class EConstantBuffer : char
 	cb_lightData,
 };
 
+/// <summary>
+/// 0~5ÇÕGBufferÇ…Ç‡égÇ¢Ç‹Ç∑ÅB
+/// </summary>
 enum class ETextureBuffer : char
 {
 	tb_albedo,
@@ -18,3 +21,4 @@ enum class ETextureBuffer : char
 	tb_dirLight		= 6,
 	tb_pointLight	= 7,
 };
+

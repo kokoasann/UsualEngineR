@@ -239,6 +239,11 @@ namespace UER
 		{
 			return m_preRender;
 		}
+
+		const Primitive& GetPrimitive() const
+		{
+			return m_primitive;
+		}
 	private:
 		/// <summary>
 		/// D3Dデバイスの作成。

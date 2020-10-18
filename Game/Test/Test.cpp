@@ -189,9 +189,10 @@ void Test::Awake()
 	sd.m_height = 50;
 	sd.m_width = 50;
 	m_3dSprite->Init(sd);
-	m_3dSprite->MainCameraRotate();
+	m_3dSprite->MainCameraView();
+	m_3dSprite->CameraScaleLock();
 	m_3dSprite->Mode_BillBord();
-	
+	m_3dSprite->SetSca(g_vec3One * 0.005f);
 }
 
 void Test::Update()

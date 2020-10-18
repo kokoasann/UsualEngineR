@@ -25,8 +25,8 @@ namespace UER
 		const char* m_vsEntryPointFunc = "VSMain";	//頂点シェーダーのエントリーポイント。
 		const char* m_psEntryPointFunc = "PSMain";	//ピクセルシェーダーのエントリーポイント。
 		const char* m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";			//.fxファイルのファイルパス。
-		const char* m_psfxFilePath = "Assets/shader/ModelPS.fx";
-		//const char* m_psfxFilePath = "Assets/shader/GBufferModelPS.fx";
+		//const char* m_psfxFilePath = "Assets/shader/ModelPS.fx";
+		const char* m_psfxFilePath = "Assets/shader/GBufferModelPS.fx";
 		const char* m_tksFilePath = nullptr;		//tksファイルパス。
 		void* m_expandConstantBuffer = nullptr;		//ユーザー拡張の定数バッファ。
 		int m_expandConstantBufferSize = 0;			//ユーザー拡張の定数バッファのサイズ。

@@ -59,12 +59,14 @@ namespace UER
 		sprintf(str, "%.3f\n", t);
 		OutputDebugString(str);*/
 		auto& rc = g_graphicsEngine->GetRenderContext();
-		auto& gbuff = g_graphicsEngine->GetPreRender().GetGBuffer();
-		//gbuff.BegineRender(rc);
+		auto& preRender = g_graphicsEngine->GetPreRender();
+		auto& gbuff = preRender.GetGBuffer();
+		gbuff.BegineRender(rc);
 		UpdateRender();
-		//gbuff.EndRender(rc);
+		gbuff.EndRender(rc);
 		
-		
+		preRender.LightingRender(rc);
+
 		UpdatePreRender();
 		
 

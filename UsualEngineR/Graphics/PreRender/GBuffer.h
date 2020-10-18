@@ -26,6 +26,15 @@ namespace UER
 		void BegineRender(RenderContext& rc);
 		void EndRender(RenderContext& rc);
 		void Draw(RenderContext& rc);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		RenderTarget* GetGBuffer()
+		{
+			return m_gBuffer;
+		}
 	private:
 		RenderTarget m_gBuffer[TO_INT(EGBufferKind::NumKind)];
 

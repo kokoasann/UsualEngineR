@@ -2,28 +2,30 @@
 /// コピー
 /// </summary>
 
-struct VSInput {
-	float4 pos : POSITION;
-	float2 uv  : TEXCOORD0;
-};
+#include "ScreenVertexProcess.fxh"
 
-struct PSInput {
-	float4 pos : SV_POSITION;
-	float2 uv  : TEXCOORD0;
-};
-
-// struct PSOutput_2
-// {
-// 	float4 col1:SV_Target0;
-// 	float4 col2:SV_Target1;
+// struct VSInput {
+// 	float4 pos : POSITION;
+// 	float2 uv  : TEXCOORD0;
 // };
 
-// struct PSOutput_3
-// {
-// 	float4 col1:SV_Target0;
-// 	float4 col2:SV_Target1;
-// 	float4 col3:SV_Target2;
+// struct PSInput {
+// 	float4 pos : SV_POSITION;
+// 	float2 uv  : TEXCOORD0;
 // };
+
+struct PSOutput_2
+{
+	float4 col1:SV_Target0;
+	float4 col2:SV_Target1;
+};
+
+struct PSOutput_3
+{
+	float4 col1:SV_Target0;
+	float4 col2:SV_Target1;
+	float4 col3:SV_Target2;
+};
 
 Texture2D<float4> sceneTexture_1 : register(t0);	//origin
 // Texture2D<float4> sceneTexture_2 : register(t1);	//origin
@@ -31,13 +33,13 @@ Texture2D<float4> sceneTexture_1 : register(t0);	//origin
 
 sampler Sampler : register(s0);
 
-PSInput VSMain(VSInput In)
-{
-	PSInput psIn;
-	psIn.pos = In.pos;
-	psIn.uv = In.uv;
-	return psIn;
-}
+// PSInput VSMain(VSInput In)
+// {
+// 	PSInput psIn;
+// 	psIn.pos = In.pos;
+// 	psIn.uv = In.uv;
+// 	return psIn;
+// }
 float4 PSMain(PSInput In) : SV_Target0
 {
 	float4 res = sceneTexture_1.Sample(Sampler, In.uv);
