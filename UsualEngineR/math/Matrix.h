@@ -319,6 +319,14 @@ namespace UER
 			);
 			mat = lm;
 		}
+
+		void Scale(float f)
+		{
+			v[0].Scale(f);
+			v[1].Scale(f);
+			v[2].Scale(f);
+			v[3].Scale(f);
+		}
 	
 		/// <summary>
 		/// 行列の代入演算子
@@ -330,6 +338,11 @@ namespace UER
 		const Matrix& operator*=(const Matrix& _m)
 		{
 			Multiply(*this, _m);
+			return *this;
+		}
+		const Matrix& operator*=(float f)
+		{
+			Scale(f);
 			return *this;
 		}
 		/// <summary>

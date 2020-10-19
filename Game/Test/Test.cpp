@@ -192,7 +192,19 @@ void Test::Awake()
 	m_3dSprite->MainCameraView();
 	m_3dSprite->CameraScaleLock();
 	m_3dSprite->Mode_BillBord();
-	m_3dSprite->SetSca(g_vec3One * 0.005f);
+	m_3dSprite->SetPos({ 50,10,0 });
+	m_3dSprite->SetPivot({ 0,0 });
+	m_3dSprite->SetSca(g_vec3One * 0.001f);
+
+	m_3dSprite = NewGO<SpriteRender>(1);
+	m_3dSprite->Init(sd);
+	m_3dSprite->MainCameraView();
+	//m_3dSprite->CameraScaleLock();
+	m_3dSprite->Mode_BillBord();
+	m_3dSprite->SetPos({ 50,10,0 });
+	m_3dSprite->SetPivot({ 0,0 });
+
+	m_3dSprite->SetSca(g_vec3One * 0.1f);
 }
 
 void Test::Update()
@@ -209,6 +221,9 @@ void Test::Update()
 	auto pos = cam->GetPosition();
 	rot.Apply(pos);
 	cam->SetPosition(pos);
+	static Vector3 p = { 50,10,0 };
+	rot.Apply(p);
+	//m_3dSprite->SetPos(p);
 }
 
 void Test::Render()
