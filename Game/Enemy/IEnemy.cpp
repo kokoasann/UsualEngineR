@@ -73,6 +73,6 @@ void IEnemy::ApplyDamage(const float damage) {
 	if (m_healthBar != nullptr) {
 		m_healthBar->ShowHealthBar();
 		//update hp bar
-		m_healthBar->SetHealthRate(GetCurrentHP() / GetMaxHP());
+		m_healthBar->SetHealthRatio(GetCurrentHP() / GetMaxHP());
 	}
 }

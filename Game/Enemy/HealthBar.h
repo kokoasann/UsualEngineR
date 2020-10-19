@@ -67,8 +67,8 @@ public:
 	/// 現在の体力の割合をセット
 	/// </summary>
 	/// <param name="scale">CurrentHP / Max HP</param>
-	void SetHealthRate(const float rate) {
-		m_currentHpScale.x = m_hpScale.x * rate;
+	void SetHealthRatio(const float ratio) {
+		m_currentHpScale.x = m_hpScale.x * ratio;
 	}
 
 	/// <summary>
