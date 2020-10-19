@@ -165,9 +165,6 @@
     <Filter Include="Enemy">
       <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Camera">
-      <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{711edca2-e974-43b6-a9ce-677bcb9ad77c}</UniqueIdentifier>
     </Filter>
@@ -188,6 +185,9 @@
     </Filter>
     <Filter Include="Player\Attack">
       <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

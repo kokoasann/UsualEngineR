@@ -38,10 +38,11 @@ bool HealthBar::Start()
 	sd.m_height = m_flSpHpHeight;
 	sd.m_width = m_flSpHpWidth;
 	m_spHp->Init(sd);
-	m_spHp->SetSca(m_hpScale);
+	m_spHp->SetSca(m_currentHpScale);
 	m_spHp->SetPivot(m_SPRITE_PIVOT);
 	m_spHp->MainCameraView();
 	m_spHp->Mode_BillBord();
+	m_spHp->CameraScaleLock();
 	m_spHp->SetActive(false);
 
 	return true;
@@ -55,7 +56,6 @@ void HealthBar::PreUpdate()
 
 void HealthBar::Update()
 {
-
 	if (!m_shouldBeDrawn) return;
 
 	auto eyePos = g_camera3D->GetPosition();
@@ -65,12 +65,11 @@ void HealthBar::Update()
 	vecEyeToParent.Cross(Vector3::Up);
 	auto right = vecEyeToParent;
 	auto hpPos = m_parentPos + m_hpPosOffset + right * m_flSpHpWidth / 2.f;
+
 	m_spHp->SetPos(hpPos);
-	m_spHp->SetSca(m_hpScale);
+	m_spHp->SetSca(m_currentHpScale);
 
 	m_drawTimer += gameTime()->GetDeltaTime();
-
-	printf("timer : %f\n", m_drawTimer);
 
 	if (m_drawTimer >= m_drawSec) {
 		m_shouldBeDrawn = false;

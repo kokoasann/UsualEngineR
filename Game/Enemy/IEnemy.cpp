@@ -38,10 +38,8 @@ void IEnemy::Update() {
 	Execute();
 	m_nextState = m_currentState->Update(this);
 
-	//update hp bar
 	if (m_healthBar != nullptr) {
 		m_healthBar->SetParentPos(m_position);
-		m_healthBar->SetHealthScale(GetCurrentHP() / GetMaxHP());
 	}
 
 	//‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚çŽ€–SƒXƒe[ƒg‚Ö‘JˆÚ
@@ -72,6 +70,9 @@ void IEnemy::SetState(IEnemyState* s) {
 
 void IEnemy::ApplyDamage(const float damage) {
 	m_ability.hp = max(0.f, m_ability.hp - damage);
-	if(m_healthBar != nullptr)
+	if (m_healthBar != nullptr) {
 		m_healthBar->ShowHealthBar();
+		//update hp bar
+		m_healthBar->SetHealthRate(GetCurrentHP() / GetMaxHP());
+	}
 }

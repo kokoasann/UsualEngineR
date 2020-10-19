@@ -28,6 +28,16 @@ public:
 		enNumState
 	};
 
+	//TODO : データを構造体にまとめる
+	/*
+	struct EnemyData {
+		float hp;
+		float currentHp;
+		bool isBoss;
+		Vector3 pos;
+	};
+	*/
+
 	struct StAbility {
 		float hp;
 		float max_hp;
@@ -71,6 +81,10 @@ public:
 
 	const StAbility& GetAbility() const {
 		return m_ability;
+	}
+
+	const bool IsBoss() {
+		return !m_isDrawHpBarAboveMyself;
 	}
 
 protected:
