@@ -188,6 +188,7 @@
     <ClInclude Include="Graphics\ConstantBuffer.h" />
     <ClInclude Include="Graphics\DescriptorHeap.h" />
     <ClInclude Include="Graphics\DescriptorHeap_inline.h" />
+    <ClInclude Include="Graphics\Effect\ParticleEffect.h" />
     <ClInclude Include="Graphics\Font.h" />
     <ClInclude Include="Graphics\GaussBlur.h" />
     <ClInclude Include="Graphics\GPUBuffer.h" />
@@ -295,6 +296,7 @@
     <ClCompile Include="Graphics\CommonConstantBufferStruct.cpp" />
     <ClCompile Include="Graphics\ConstantBuffer.cpp" />
     <ClCompile Include="Graphics\DescriptorHeap.cpp" />
+    <ClCompile Include="Graphics\Effect\ParticleEffect.cpp" />
     <ClCompile Include="Graphics\Font.cpp" />
     <ClCompile Include="Graphics\GaussBlur.cpp" />
     <ClCompile Include="Graphics\GPUBuffer.cpp" />

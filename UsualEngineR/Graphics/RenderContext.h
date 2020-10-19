@@ -292,6 +292,20 @@ namespace UER
 		{
 			m_commandList->DrawIndexedInstanced(indexCount, 1, 0, 0, 0);
 		}
+
+		/// <summary>
+		/// インデックスつきプリミティブを描画。
+		/// </summary>
+		/// <param name="indexCount">インデックスの数。</param>
+		void DrawIndexedInstanced(
+			UINT indexCount,
+			UINT InstanceCount,
+			UINT StartIndexLocation,
+			INT BaseVertexLocation,
+			UINT StartInstanceLocation)
+		{
+			m_commandList->DrawIndexedInstanced(indexCount, 1, 0, 0, 0);
+		}
 		/// <summary>
 		/// コンピュートシェーダーをディスパッチ。
 		/// </summary>

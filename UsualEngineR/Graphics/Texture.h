@@ -76,6 +76,15 @@ namespace UER
 		{
 			return m_texture;
 		}
+
+		UINT GetHeight() const
+		{
+			return m_textureDesc.Height;
+		}
+		UINT GetWidth() const
+		{
+			return m_textureDesc.Width;
+		}
 	private:
 		/// <summary>
 		/// DDSファイルからテクスチャをロード。

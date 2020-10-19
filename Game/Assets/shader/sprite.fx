@@ -31,3 +31,4 @@ float4 PSMain(PSInput In) : SV_Target0
 	float4 res = colorTexture.Sample(Sampler, In.uv);// * mulcol;
 	return res;
 }
+

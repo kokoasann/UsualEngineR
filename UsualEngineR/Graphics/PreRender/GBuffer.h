@@ -35,6 +35,11 @@ namespace UER
 		{
 			return m_gBuffer;
 		}
+
+		RenderTarget& GetGBuffer(EGBufferKind k)
+		{
+			return m_gBuffer[TO_INT(k)];
+		}
 	private:
 		RenderTarget m_gBuffer[TO_INT(EGBufferKind::NumKind)];
 

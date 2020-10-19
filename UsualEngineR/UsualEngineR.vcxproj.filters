@@ -289,6 +289,9 @@
     <ClInclude Include="Graphics\Material.h">
       <Filter>Graphics\3D</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Effect\ParticleEffect.h">
+      <Filter>Graphics\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -544,6 +547,9 @@
     <ClCompile Include="Graphics\Material.cpp">
       <Filter>Graphics\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Effect\ParticleEffect.cpp">
+      <Filter>Graphics\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -623,6 +629,9 @@
     </Filter>
     <Filter Include="Graphics\RenderingPipeline">
       <UniqueIdentifier>{23d9e3ba-d98d-4f60-8090-ad73c03d884c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Effect">
+      <UniqueIdentifier>{472f3818-ab56-4b19-93bd-e5843d9da79e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
