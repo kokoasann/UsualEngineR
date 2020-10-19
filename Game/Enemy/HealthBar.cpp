@@ -64,7 +64,7 @@ void HealthBar::Update()
 	vecEyeToParent.Normalize();
 	vecEyeToParent.Cross(Vector3::Up);
 	auto right = vecEyeToParent;
-	auto hpPos = m_parentPos + m_hpPosOffset + right * m_flSpHpWidth / 2.f;
+	auto hpPos = m_parentPos + m_hpPosOffset;// +right * m_flSpHpWidth / 2.f;
 
 	m_spHp->SetPos(hpPos);
 	m_spHp->SetSca(m_currentHpScale);
