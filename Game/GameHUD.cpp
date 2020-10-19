@@ -105,7 +105,6 @@ void GameHUD::Update()
 	auto target = m_pPlayer->GetTargetEnemy();
 	if (target == nullptr) {
 		m_enemyHpScale.x = 0.f;
-		printf("Enemy NULL\n");
 	}
 	else {
 		m_enemyHpScale.x = target->GetCurrentHP() / target->GetMaxHP();

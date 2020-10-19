@@ -120,7 +120,7 @@ void GameCamera::PostUpdate() {
 
 		m_position = m_charaPos + m_dist;
 
-		cam->SetTarget(m_charaPos);
+		cam->SetTarget(m_charaPos + m_furtherTargetHeight);
 	}
 
 	cam->SetPosition(m_position);

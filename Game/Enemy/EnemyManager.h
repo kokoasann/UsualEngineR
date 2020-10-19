@@ -52,7 +52,7 @@ public:
 
 private:
 	const int m_numNormalEnemy = 1;
-	const float m_normalEnemyHealth = 100.f;
+	const float m_normalEnemyHealth = 500.f;
 	const float m_minSpawnRange = -100.f;
 	const float m_maxSpawnRange = 100.f;
 	const float m_defaultHeight = 10.f;
