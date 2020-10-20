@@ -45,8 +45,9 @@ IPlayerState* PlayerAttackState::Update(Player* p) {
 			m_currentAttack->Init(p,m_combo);
 		}
 		else {
-			auto nextState = p->GetState(Player::EnState::enGround);
-			return nextState;
+			return p->GetPreviousState();
+			//auto nextState = p->GetState(Player::EnState::enGround);
+			//return nextState;
 		}
 	}
 

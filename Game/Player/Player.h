@@ -87,6 +87,14 @@ public:
 	};
 
 	/// <summary>
+	/// 現在のステートに遷移する前のステートを返す
+	/// </summary>
+	/// <returns>1つ前のステート</returns>
+	IPlayerState* GetPreviousState() const {
+		return m_previousState;
+	};
+
+	/// <summary>
 	/// 座標を取得
 	/// </summary>
 	/// <returns>座標</returns>
@@ -211,6 +219,7 @@ private:
 	//State
 	IPlayerState* m_nextState = nullptr;
 	IPlayerState* m_currentState = nullptr;
+	IPlayerState* m_previousState = nullptr;
 	std::vector<IPlayerState*> m_stateList;
 
 	//Model

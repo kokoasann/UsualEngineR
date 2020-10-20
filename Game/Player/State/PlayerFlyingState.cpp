@@ -39,6 +39,11 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 		auto nextState = p->GetState(Player::EnState::enGround);
 		return nextState;
 	}
+
+	if (g_pad[0]->IsTrigger(EnButton::enButtonLB1)) {
+		auto nextState = p->GetState(Player::EnState::enAttack);
+		return nextState;
+	}
 	
 	//Move
 	auto lxf = g_pad[0]->GetLStickXF();
