@@ -121,19 +121,23 @@ namespace UER
 			if (m_state.state.Gamepad.bLeftTrigger != 0) {
 				m_trigger[enButtonLB2] = 1 ^ m_press[enButtonLB2];
 				m_press[enButtonLB2] = 1;
+				m_l2Button = (float)m_state.state.Gamepad.bLeftTrigger / (float)sizeof(BYTE);
 			}
 			else {
 				m_trigger[enButtonLB2] = 0;
 				m_press[enButtonLB2] = 0;
+				m_l2Button = 0.f;
 			}
 			//右トリガー
 			if (m_state.state.Gamepad.bRightTrigger != 0) {
 				m_trigger[enButtonRB2] = 1 ^ m_press[enButtonRB2];
 				m_press[enButtonRB2] = 1;
+				m_r2Button = (float)m_state.state.Gamepad.bRightTrigger / (float)sizeof(BYTE);
 			}
 			else {
 				m_trigger[enButtonRB2] = 0;
 				m_press[enButtonRB2] = 0;
+				m_r2Button = 0.f;
 			}
 			if ((m_state.state.Gamepad.sThumbLX < INPUT_DEADZONE &&
 				m_state.state.Gamepad.sThumbLX > -INPUT_DEADZONE) &&
