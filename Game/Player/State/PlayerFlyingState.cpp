@@ -15,20 +15,31 @@ PlayerFlyingState::~PlayerFlyingState()
 void PlayerFlyingState::Enter(Player* p) {
 	printf("Player Enter Flying\n");
 
+	m_canRise = true;
+	//ブーストの上昇初期コストがないので飛べないよ.
+	if (p->GetCurrentBoost() <= m_AUTO_RISE_BOOST_COST) {
+		m_canRise = false;
+		return;
+	}
+
 	m_bPos = p->GetPosition();
 	m_velocity = p->GetLocalVelocity();
-	m_velocityGoal.y = m_AUTO_RISE_QUICKNESS * m_VELOCITY_MAX;
+
+	m_velocityGoal.y = m_AUTO_RISE_PARAM * m_VELOCITY_MAX;
 	m_isFirstRising = true;
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
-	//無いよ～ブーストないよ～?
-	if (p->GetCurrentBoost() <= 0.f) {
+	//State
+	if (g_pad[0]->IsTrigger(EnButton::enButtonA) or  //飛行モード解除.
+		p->GetCurrentBoost() <= 0.f or //ブースト不足.
+		!m_canRise //初期上昇用のブーストが不足.
+		) {
 		auto nextState = p->GetState(Player::EnState::enGround);
 		return nextState;
 	}
-
+	
 	//Move
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
@@ -60,7 +71,7 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 	//上昇してるなら追加でブーストを消費
 	if (m_velocityGoal.y > 0.f) {
-		p->UseBoost(r2f * m_BOOST_EFFICIENCY * m_RISE_BOOST_PARAM * gameTime()->GetDeltaTime());
+		p->UseBoost(m_BOOST_EFFICIENCY * m_RISE_BOOST_PARAM * gameTime()->GetDeltaTime());
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
@@ -93,11 +104,6 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 		p->SetRotation(rot);
 	}
 
-	//State
-	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
-		auto nextState = p->GetState(Player::EnState::enGround);
-		return nextState;
-	}
 	return this;
 }
 
