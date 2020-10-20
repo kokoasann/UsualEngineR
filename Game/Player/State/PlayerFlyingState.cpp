@@ -31,26 +31,30 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	//Move
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
-	auto blR2 = g_pad[0]->IsPress(EnButton::enButtonRB2);
-
-	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
-	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
+	auto r2f = g_pad[0]->GetR2Button();
+	printf("r2 : %f\n", r2f);
 
 	if (p->GetPosition().y > m_bPos.y + m_rise) {
 		m_velocityGoal.y = 0.f;
 	}
 
-	if (blR2) {
-		m_velocityGoal.y = 1.f * m_VELOCITY_MAX;
-	}
+	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
+	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
+	m_velocityGoal.y = r2f * m_VELOCITY_MAX;
 
 	//BOOST
 	if (g_pad[0]->IsPress(enButtonX)) {
 		m_velocityGoal *= m_VELOCITY_BOOST;
 		p->UseBoost(m_BOOST_EFFICIENCY * m_ACCELERATE_PARAM * gameTime()->GetDeltaTime());
+
 	}
 	else {
 		p->UseBoost(m_BOOST_EFFICIENCY * gameTime()->GetDeltaTime());
+	}
+
+	//上昇してるなら追加でブーストを消費
+	if (m_velocityGoal.y > 0.f) {
+		p->UseBoost(r2f * m_BOOST_EFFICIENCY * m_RISE_BOOST_PARAM * gameTime()->GetDeltaTime());
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
