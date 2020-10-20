@@ -136,6 +136,26 @@ namespace UER
 		{
 			return m_rStickY;
 		}
+
+		/// <summary>
+		/// R2ボタンの追い込み具合を出力。
+		/// 0~1の値で!(統治法)
+		/// </summary>
+		/// <returns></returns>
+		float GetR2Button() const
+		{
+			return m_r2Button;
+		}
+
+		/// <summary>
+		/// L2ボタンの追い込み具合を出力。
+		/// 0~1の値で!(統治法)
+		/// </summary>
+		/// <returns></returns>
+		float GetL2Button() const
+		{
+			return m_l2Button;
+		}
 		//フレームの開始時に呼ばれる関数。
 		static void BeginFrame();
 	public:
@@ -154,6 +174,10 @@ namespace UER
 		float m_lStickY = 0.0f;		//!<左スティックのY軸の入力量。
 		float m_rStickX = 0.0f;		//!<右スティックのX軸の入力量。
 		float m_rStickY = 0.0f;		//!<右スティックのY軸の入力量。
+
+		float m_r2Button = 0.f;
+		float m_l2Button = 0.f;
+
 	
 		static EnXInputPadState m_padStates[MAX_PAD];
 	};
