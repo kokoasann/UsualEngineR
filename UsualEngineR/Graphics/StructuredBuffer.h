@@ -31,6 +31,7 @@ namespace UER
 		/// </summary>
 		/// <param name="data"></param>
 		void Update(void* data);
+		void Update(void* data, int num);
 		/// <summary>
 		/// 初期化されているか判定。
 		/// </summary>

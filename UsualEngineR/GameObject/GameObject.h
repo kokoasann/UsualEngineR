@@ -51,6 +51,7 @@ namespace UER
 		virtual void PostUpdate() {};
 
 		virtual void Render() {};
+		virtual void PrePostRender() {};
 		virtual void PostRender() {};
 
 		void WrapOnDestroy(){}
@@ -59,6 +60,7 @@ namespace UER
 		void WrapUpdate();
 		void WrapPostUpdate();
 		void WrapRender();
+		void WrapPrePostRender();
 		void WrapPostRender();
 
 		/*

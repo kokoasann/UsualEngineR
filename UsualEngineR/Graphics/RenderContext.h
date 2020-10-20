@@ -304,7 +304,7 @@ namespace UER
 			INT BaseVertexLocation,
 			UINT StartInstanceLocation)
 		{
-			m_commandList->DrawIndexedInstanced(indexCount, 1, 0, 0, 0);
+			m_commandList->DrawIndexedInstanced(indexCount, InstanceCount, StartIndexLocation, BaseVertexLocation, StartInstanceLocation);
 		}
 		/// <summary>
 		/// コンピュートシェーダーをディスパッチ。

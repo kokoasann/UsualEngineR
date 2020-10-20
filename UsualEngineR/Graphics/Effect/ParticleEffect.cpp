@@ -12,8 +12,13 @@ namespace UER
 			Vector2 tex;
 		};
 	}
+	void PlaneParticleEffect::Release()
+	{
+	}
 	void PlaneParticleEffect::Init(const PlaneParticleEffectInitData& ini)
 	{
+		m_updater = ini.m_updater;
+
 		m_texture.InitFromDDSFile(ini.m_ddsFilePath);
 		if (ini.m_width == 0 || ini.m_height == 0)
 		{
@@ -108,13 +113,9 @@ namespace UER
 	}
 	void PlaneParticleEffect::Update(float deltaTime, const Vector3& pos, const Quaternion& rot, const Vector3& sca)
 	{
-		for (auto& par : m_particleDatas)
-		{
-			//m_updateFunc(par);
-		}
-
+		//寿命切れの奴を消す。
 		std::list<int> deths;
-		for (int i=0;i<m_numInstance;i++)
+		for (int i = 0; i < m_numInstance; i++)
 		{
 			m_particleTimes[i] -= deltaTime;
 			if (m_particleTimes[i] <= 0)
@@ -133,11 +134,54 @@ namespace UER
 			m_numInstance--;
 		}
 
+		//生み出す。
+		m_updater->m_geneFunc(this, deltaTime);
 
+		//更新。
+		for (int i =0;i < m_numInstance;i++)
+		{
+			m_updater->m_updateFunc(m_particleDatas[i]);
+		}
 	}
-	void PlaneParticleEffect::Draw(RenderContext& rc)
+	void PlaneParticleEffect::Draw(
+		RenderContext& rc,
+		const Vector3& pos,
+		const Vector3& sca,
+		const Quaternion& rot,
+		const Vector4& mulColor,
+		const Matrix& view,
+		const Matrix& projection
+	)
 	{
-		m_structuredBuff.Update(&m_particleDatas[0]);
+		Matrix mTra, mSca, mRot, mWor, mvp;
+		mSca.MakeScaling(sca);
+		mRot.MakeRotationFromQuaternion(rot);
+		mTra.MakeTranslation(pos);
+		mWor.Multiply(mSca, mRot);
+		mWor.Multiply(mWor, mTra);
 
+		mvp.Multiply(mWor, view);
+		mvp.Multiply(mvp, projection);
+
+		SConstBuffData data(mvp, mulColor);
+
+		m_structuredBuff.Update(&m_particleDatas[0], m_numInstance);
+		m_constBuffer.CopyToVRAM(data);
+
+		rc.SetIndexBuffer(m_indexBuff);
+		rc.SetVertexBuffer(m_vertBuff);
+
+		rc.SetRootSignature(m_rootSign);
+		rc.SetPipelineState(m_pipState);
+		rc.SetDescriptorHeap(m_descHeap);
+
+		rc.DrawIndexedInstanced(4, m_numInstance, 0, 0, 0);
+	}
+	void PlaneParticleEffect::AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime)
+	{
+		m_particleDatas[m_numInstance].mWorld = mw;
+		m_particleDatas[m_numInstance].mulColor = mulColor;
+		m_particleTimes[m_numInstance] = lifeTime;
+		m_numInstance++;
 	}
 }

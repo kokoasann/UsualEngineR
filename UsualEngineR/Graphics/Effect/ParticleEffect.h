@@ -16,20 +16,23 @@ namespace UER
 	private:
 
 	};
+
+
+
 	struct SParticleData
 	{
 		Matrix mWorld;
 		Vector4 mulColor;
 	};
-
-	typedef std::function<void* (int& instanceNum, SParticleData* particleDatas, float* particleTimers, float deltaTime)> PlaneParticleGenerateFunc;
-	typedef std::function<void* (SParticleData* datas,int num)> PlaneParticleUpdateFunc;
+	class PlaneParticleEffect;
+	typedef std::function<void* (PlaneParticleEffect* pThis, float deltaTime)> PlaneParticleGenerateFunc;
+	typedef std::function<void* (SParticleData& data)> PlaneParticleUpdateFunc;
 
 	struct PlaneParticleUpdater
 	{
 		PlaneParticleGenerateFunc m_geneFunc;
 		PlaneParticleUpdateFunc m_updateFunc;
-		float m_timer = 0;
+		//float m_timer = 0;
 	};
 	
 	struct PlaneParticleEffectInitData
@@ -38,9 +41,9 @@ namespace UER
 		UINT m_width = 0;										//スプライトの幅。
 		UINT m_height = 0;										//スプライトの高さ。
 		bool m_isDepthTest = true;
-		PlaneParticleGenerateFunc m_generateFunc;
-		PlaneParticleUpdateFunc m_updateFunc;
-
+		//PlaneParticleGenerateFunc m_generateFunc;
+		//PlaneParticleUpdateFunc m_updateFunc;
+		PlaneParticleUpdater* m_updater = nullptr;
 	};
 
 	class PlaneParticleEffect final:public ParticleEffect
@@ -51,19 +54,32 @@ namespace UER
 
 		void Update(float deltaTime,const Vector3& pos,const Quaternion& rot,const Vector3& sca);
 
-		void Draw(RenderContext& rc);
+		void Draw(
+			RenderContext& rc,
+			const Vector3& pos,
+			const Vector3& sca,
+			const Quaternion& rot,
+			const Vector4& mulColor,
+			const Matrix& view,
+			const Matrix& projection
+		);
 
-		struct SParticleData
+		void AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime);
+
+		/*struct SParticleData
 		{
 			Matrix mWorld;
 			Vector4 mulColor;
-		};
+		};*/
 	private:
 		struct SConstBuffData
 		{
+			SConstBuffData(const Matrix& mVP, const Vector4& mulcolor) :
+				mvp(mVP), mulColor(mulcolor)
+			{
+			}
 			Matrix mvp;
 			Vector4 mulColor;
-			Vector4 ScreenParam;
 		};
 		
 	private:
@@ -78,6 +94,8 @@ namespace UER
 		DescriptorHeap m_descHeap;
 		PipelineState m_pipState;
 		ConstantBuffer m_constBuffer;
+
+		//SConstBuffData m_constBufferData;
 		
 		StructuredBuffer m_structuredBuff;
 		std::array<SParticleData, MAX_INSTANCES_NUM> m_particleDatas;
@@ -87,8 +105,9 @@ namespace UER
 		Shader m_vs;
 		Shader m_ps;
 
-		PlaneParticleGenerateFunc m_generateFunc;
-		PlaneParticleUpdateFunc m_updateFunc;
+		PlaneParticleUpdater* m_updater = nullptr;
+		//PlaneParticleGenerateFunc m_generateFunc;
+		//PlaneParticleUpdateFunc m_updateFunc;
 	};
 
 	/*class ModelParticleEffect final:public ParticleEffect

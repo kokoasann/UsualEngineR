@@ -54,6 +54,11 @@ namespace UER
 		auto backBufferIndex = g_graphicsEngine->GetBackBufferIndex();
 		memcpy(m_buffersOnCPU[backBufferIndex], data, m_numElement * m_sizeOfElement);
 	}
+	void StructuredBuffer::Update(void* data, int num)
+	{
+		auto backBufferIndex = g_graphicsEngine->GetBackBufferIndex();
+		memcpy(m_buffersOnCPU[backBufferIndex], data, num * m_sizeOfElement);
+	}
 	ID3D12Resource* StructuredBuffer::GetD3DResoruce() 
 	{
 		auto backBufferIndex = g_graphicsEngine->GetBackBufferIndex();

@@ -234,6 +234,17 @@ namespace UER
 		}
 	}
 
+	void GameObjectManager::UpdatePrePostRender()
+	{
+		for (auto& goList : m_gameObjectList)
+		{
+			for (auto go : goList)
+			{
+				go->WrapPrePostRender();
+			}
+		}
+	}
+
 	void GameObjectManager::UpdatePostRender()
 	{
 		for (auto& goList : m_gameObjectList)

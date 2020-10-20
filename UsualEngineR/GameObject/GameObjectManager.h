@@ -134,6 +134,10 @@ namespace UER
 		/// </summary>
 		void UpdateRender();
 		/// <summary>
+		/// PrePostRenderを更新。
+		/// </summary>
+		void UpdatePrePostRender();
+		/// <summary>
 		/// PostRenderを更新
 		/// </summary>
 		void UpdatePostRender();
