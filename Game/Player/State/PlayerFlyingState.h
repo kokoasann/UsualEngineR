@@ -14,6 +14,8 @@ public:
 	IPlayerState* Update(Player*) override;
 	void Exit(Player*) override;
 private:
+	bool m_isFirstRising = true;
+
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_velocityGoal = Vector3::Zero;
 	Vector3 m_bPos = Vector3::Zero;

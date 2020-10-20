@@ -13,11 +13,12 @@ PlayerFlyingState::~PlayerFlyingState()
 }
 
 void PlayerFlyingState::Enter(Player* p) {
-	printf("Enter Flying\n");
+	printf("Player Enter Flying\n");
 
 	m_bPos = p->GetPosition();
 	m_velocity = p->GetLocalVelocity();
 	m_velocityGoal.y = m_AUTO_RISE_QUICKNESS * m_VELOCITY_MAX;
+	m_isFirstRising = true;
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
@@ -34,13 +35,18 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	auto r2f = g_pad[0]->GetR2Button();
 	printf("r2 : %f\n", r2f);
 
-	if (p->GetPosition().y > m_bPos.y + m_rise) {
+	if (p->GetPosition().y > m_bPos.y + m_rise and m_isFirstRising) {
 		m_velocityGoal.y = 0.f;
+		m_isFirstRising = false;
+	}
+
+	if (!m_isFirstRising) {
+		m_velocityGoal.y = r2f * m_VELOCITY_MAX;
 	}
 
 	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
-	m_velocityGoal.y = r2f * m_VELOCITY_MAX;
+
 
 	//BOOST
 	if (g_pad[0]->IsPress(enButtonX)) {
@@ -97,5 +103,5 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 void PlayerFlyingState::Exit(Player* p) {
 	m_velocity = Vector3::Zero;
-	printf("Exit Flying\n");
+	printf("Player Exit Flying\n");
 }
