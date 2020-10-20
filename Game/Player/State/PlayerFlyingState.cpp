@@ -17,17 +17,21 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	m_bPos = p->GetPosition();
 	m_velocity = p->GetLocalVelocity();
-	m_velocityGoal.y = 100 * m_VELOCITY_MAX;
-
+	m_velocityGoal.y = m_AUTO_RISE_QUICKNESS * m_VELOCITY_MAX;
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
-	//TODO : ブーストが足りないときは落下するようにする
+	//無いよ～ブーストないよ～?
+	if (p->GetCurrentBoost() <= 0.f) {
+		auto nextState = p->GetState(Player::EnState::enGround);
+		return nextState;
+	}
 
 	//Move
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
+	auto blR2 = g_pad[0]->IsPress(EnButton::enButtonRB2);
 
 	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
@@ -36,8 +40,11 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 		m_velocityGoal.y = 0.f;
 	}
 
-	//BOOST
+	if (blR2) {
+		m_velocityGoal.y = 1.f * m_VELOCITY_MAX;
+	}
 
+	//BOOST
 	if (g_pad[0]->IsPress(enButtonX)) {
 		m_velocityGoal *= m_VELOCITY_BOOST;
 		p->UseBoost(m_BOOST_EFFICIENCY * m_ACCELERATE_PARAM * gameTime()->GetDeltaTime());

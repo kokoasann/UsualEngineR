@@ -22,7 +22,8 @@ private:
 	const float m_VELOCITY_BOOST = 2.f;
 	const float m_VELOCITY_MAX = 40.f;
 	const float m_QUICKNESS = 40.f;
+	const float m_AUTO_RISE_QUICKNESS = 10.f; 
 
-	const float m_BOOST_EFFICIENCY = 10.f; //”R”ï
+	const float m_BOOST_EFFICIENCY = 50.f; //”R”ï
 	const float m_ACCELERATE_PARAM = 1.5f; //‰Á‘¬‚Ì”R”ï‚Í’Êí‚Ì‰½”{‚É‚·‚é‚©
 };

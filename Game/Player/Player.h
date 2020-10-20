@@ -230,6 +230,18 @@ private:
 	float m_charaConHeight = 3.f;
 
 	//Ability
+	//TODO : use struct like this
+	/*
+	struct StPlayerAbility {
+		const float HP;
+		float currentHp;
+		const float STAMINA;
+		float currentStamina;
+		const float BOOST;
+		float boost;
+	};
+	*/
+
 	const float m_HP_MAX = 500.f;
 	const float m_ENDURANCE_MAX = 300.f;
 	const float m_BOOST_MAX = 300.f;
