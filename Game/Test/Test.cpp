@@ -3,6 +3,8 @@
 #include "ThreadTest.h"
 
 
+#include "Effect/ParticleEffect.h"
+
 void Test::Release()
 {
 	Physics().RemoveRigidBody(m_rb);
@@ -205,6 +207,31 @@ void Test::Awake()
 	m_3dSprite->SetPivot({ 0,0 });
 
 	m_3dSprite->SetSca(g_vec3One * 0.1f);
+
+
+	PlaneParticleEffectInitData pid;
+	pid.m_ddsFilePath = L"Assets/Image/hp.dds";
+	pid.m_height = 10;
+	pid.m_width = 10;
+	PlaneParticleUpdater m_effctUpdater(
+		[&](PlaneParticleEffect* pThis, float deltaTime)->void
+		{
+			static float time = 0;
+			if (time > 1)
+			{
+				Matrix m = g_matIdentity;
+				pThis->AddParticle(m, { 1,1,1,1 }, 10);
+				time = 0;
+			}
+			time += deltaTime;
+		},
+		[&](SParticleData& data)->void
+		{
+			data.mWorld.v[3].y += 5.f;
+		});
+	pid.m_updater = &m_effctUpdater;
+	auto effect = NewGO<PlaneParticleEffectRender>(0);
+	effect->Init(pid);
 }
 
 void Test::Update()

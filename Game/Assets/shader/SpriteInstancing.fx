@@ -40,7 +40,7 @@ PSInput VSMain(VSInput In,uint id:SV_InstanceID)
 float4 PSMain(PSInput In) : SV_Target0
 {
 	float4 res = colorTexture.Sample(Sampler, In.uv);// * mulcol;
-    res *= mulColor * g_instanceData[In.id].mulColor;
+    res *= mulcol * g_instanceData[In.id].mulColor;
 	return res;
 }
 
@@ -53,7 +53,7 @@ float4 PSMain_DepthEnable(PSInput In) : SV_Target0
     float d = In.pos.z * rw;
     float2 screenPos = In.pos.xy * rw;
     float gd = g_GDepth.Sample(Sampler, screenPos);
-    clamp(gd-d);
+    clip(gd-d);
 
 	float4 res = colorTexture.Sample(Sampler, In.uv);// * mulcol;
     res *= mulcol * g_instanceData[In.id].mulColor;
