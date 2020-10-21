@@ -52,7 +52,7 @@ public:
 
 private:
 
-	static const int m_numNormalEnemy = 10;
+	static const int m_numNormalEnemy = 2;
 
 	//SoA 
 	/*
