@@ -142,6 +142,10 @@ public:
 		return m_ENDURANCE_MAX;
 	}
 
+	const bool IsOnGround() {
+		return m_charaCon.IsOnGround();
+	}
+
 	/// <summary>
 	/// プレイヤーにダメージを適用する
 	/// </summary>
