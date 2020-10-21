@@ -37,9 +37,10 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 		vecToPlayer.Normalize();
 		const float speed = 50.f;
 		auto velocity = vecToPlayer * speed;
-		//auto npos = epos + velocity;
+
+		velocity.y = -10.f;
+
 		e->SetVelocity(velocity);
-		//e->SetPosition(npos);
 	}
 
 	//if (g_pad[0]->IsTrigger(enButtonA)) {
