@@ -1,6 +1,7 @@
 #pragma once
 class IEnemyState;
 class HealthBar;
+#include "../../UsualEngineR/Character/CharacterController.h"
 
 class IEnemy : public GameObject
 {
@@ -87,7 +88,15 @@ public:
 		return !m_isDrawHpBarAboveMyself;
 	}
 
+	void SetVelocity(const Vector3& velocity) {
+		m_velocity = velocity;
+	}
+
+
 protected:
+	//ÉLÉÉÉâÉRÉìçÏê¨
+	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
+
 	void SetState(IEnemyState* s);
 	bool m_isDrawHpBarAboveMyself = true;
 	std::vector<IEnemyState*> m_stateList;
@@ -95,10 +104,16 @@ protected:
 	StAbility m_ability;
 
 private:
+
 	HealthBar* m_healthBar = nullptr;
 
 	//State
 	IEnemyState* m_currentState = nullptr;
 	IEnemyState* m_nextState = nullptr;
+
+	//Physics
+	CharacterController m_charaCon;
+	Vector3 m_velocity = Vector3::Zero;
+
 };
 

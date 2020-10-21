@@ -51,11 +51,21 @@ public:
 	}
 
 private:
-	const int m_numNormalEnemy = 1;
+
+	static const int m_numNormalEnemy = 10;
+
+	//SoA 
+	/*
+	struct StEnemyTable {
+		Vector3 pos[m_numNormalEnemy];
+		float health[m_numNormalEnemy];
+	};
+	*/
+
 	const float m_normalEnemyHealth = 500.f;
 	const float m_minSpawnRange = -100.f;
 	const float m_maxSpawnRange = 100.f;
-	const float m_defaultHeight = 10.f;
+	const float m_defaultHeight = 150.f;
 	std::vector<IEnemy*> m_enemies;
 	Player* m_player = nullptr;
 };

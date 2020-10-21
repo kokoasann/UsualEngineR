@@ -35,8 +35,11 @@ void IEnemy::OnDestroy() {
 }
 
 void IEnemy::Update() {
-	Execute();
+
 	m_nextState = m_currentState->Update(this);
+	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
+	m_position = m_charaCon.GetPosition();
+	Execute();
 
 	if (m_healthBar != nullptr) {
 		m_healthBar->SetParentPos(m_position);
@@ -75,4 +78,8 @@ void IEnemy::ApplyDamage(const float damage) {
 		//update hp bar
 		m_healthBar->SetHealthRatio(GetCurrentHP() / GetMaxHP());
 	}
+}
+
+void IEnemy::InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody) {
+	m_charaCon.Init(radius, height, pos, /*isUseRigidBody */ false);
 }

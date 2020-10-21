@@ -21,9 +21,10 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	static float time = 0.f;
 	time += gameTime()->GetDeltaTime();
 	auto add = std::sin(time);
-	auto nextPos = e->GetPosition();
-	nextPos.x += add * 0.05;
-	e->SetPosition(nextPos);
+	Vector3 vel = Vector3::Zero;
+	vel.x = add;
+	vel.y -= 10.f;
+	e->SetVelocity(vel);
 
 	//別の状態クラスをリターンして状態を遷移させる
 	/*
