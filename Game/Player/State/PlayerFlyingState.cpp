@@ -49,7 +49,6 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
 	auto r2f = g_pad[0]->GetR2Button();
-	printf("r2 : %f\n", r2f);
 
 	if (p->GetPosition().y > m_bPos.y + m_rise and m_isFirstRising) {
 		m_velocityGoal.y = 0.f;
