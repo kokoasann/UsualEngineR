@@ -214,10 +214,10 @@ void Test::Awake()
 	pid.m_height = 10;
 	pid.m_width = 10;
 	PlaneParticleUpdater m_effctUpdater(
-		[&](PlaneParticleEffect* pThis, float deltaTime)->void
+		[&](PLANE_PARTICLE_GENERATE_ARGS_CONST)->void
 		{
 			static float time = 0;
-			if (time > 1)
+			if (time > 1.f)
 			{
 				Matrix m = g_matIdentity;
 				pThis->AddParticle(m, { 1,1,1,1 }, 10);
@@ -225,9 +225,11 @@ void Test::Awake()
 			}
 			time += deltaTime;
 		},
-		[&](SParticleData& data)->void
+		[&](PLANE_PARTICLE_UPDATE_ARGS_CONST)->void
 		{
-			data.mWorld.v[3].y += 5.f;
+			data.mWorld.v[3].y += 5.f * deltaTime;
+			float n = GPerlinNoise().GenerateNoise({ 0,data.mWorld.v[3].y });
+			data.mWorld.v[3].x = n*500.f* deltaTime;
 		});
 	pid.m_updater = &m_effctUpdater;
 	auto effect = NewGO<PlaneParticleEffectRender>(0);
