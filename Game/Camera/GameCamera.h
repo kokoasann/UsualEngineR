@@ -1,6 +1,7 @@
 #pragma once
 class Player;
 class IEnemy;
+#include "../SpringCamera.h"
 
 /// <summary>
 /// 
@@ -55,6 +56,7 @@ public:
 
 private:
 
+
 	enum class State{
 		enEnemyCamera,
 		enPlayerCamera,
@@ -62,6 +64,8 @@ private:
 	};
 	
 	State m_state = State::enPlayerCamera;
+
+	bool isChanging = false;
 
 	const float m_swivelSpeed = 60.f;
 	const Vector3 m_furtherTargetHeight = { 0.f,6.f,0.f };
@@ -86,6 +90,9 @@ private:
 
 	Player* mp_player = nullptr;
 	IEnemy* mp_enemy = nullptr;
+
+	Vector3 m_toCameraPos;
+	SpringCamera m_springCamera;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {
