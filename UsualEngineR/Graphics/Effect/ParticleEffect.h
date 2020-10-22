@@ -34,7 +34,7 @@ namespace UER
 	};
 	class PlaneParticleEffect;
 	using PlaneParticleGenerateFunc = std::function<void(PlaneParticleEffect* pThis, float deltaTime)>;
-	using PlaneParticleUpdateFunc = std::function<void(SParticleData& data,float lifeTime,void* extendData, float deltaTime)>;
+	using PlaneParticleUpdateFunc = std::function<void(SParticleData& data, float deltaTime)>;
 
 #define PLANE_PARTICLE_GENERATE_ARGS(pthis,dtime) PlaneParticleEffect* pthis, float dtime
 #define PLANE_PARTICLE_GENERATE_ARGS_CONST PlaneParticleEffect* pThis, float deltaTime
