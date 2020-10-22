@@ -90,9 +90,6 @@ bool Player::Start()
 
 void Player::PreUpdate()
 {
-
-	printf("player vel y : %f\n", m_velocity.y);
-
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);

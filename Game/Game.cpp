@@ -36,7 +36,7 @@ bool Game::Start()
 	m_gameHUD = NewGO<GameHUD>(0);
 
 	m_gameHUD->SetPlayer(m_player);
-	m_camera->SetCharaPos(m_player->GetPosition());
+	m_camera->SetPlayer(m_player);
 
 	auto& eM = EnemyManager::GetEnemyManager();
 	eM.SpawnEnemies();
@@ -55,7 +55,6 @@ void Game::PreUpdate()
 
 void Game::Update()
 {
-	m_camera->SetCharaPos(m_player->GetPosition());
 	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
 	if (enemy != nullptr) {
 		m_camera->SetTarget(enemy->GetPosition());

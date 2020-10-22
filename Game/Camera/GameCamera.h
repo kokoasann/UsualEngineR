@@ -1,4 +1,6 @@
 #pragma once
+class Player;
+
 /// <summary>
 /// 
 /// </summary>
@@ -46,9 +48,8 @@ public:
 		m_targetPos = target;
 	}
 
-	void SetCharaPos(const Vector3& charaPos)
-	{
-		m_charaPos = charaPos;
+	void SetPlayer(Player* player) {
+		mp_player = player;
 	}
 
 private:
@@ -59,7 +60,7 @@ private:
 		enNumState
 	};
 	
-	State m_state = State::enEnemyCamera;
+	State m_state = State::enPlayerCamera;
 
 	const float m_swivelSpeed = 60.f;
 	const Vector3 m_furtherTargetHeight = { 0.f,6.f,0.f };
@@ -69,6 +70,8 @@ private:
 	Vector3 m_targetPos = Vector3::Zero;
 	Vector3 m_charaPos = Vector3::Zero;
 	Quaternion m_rot = Quaternion::Identity;
+
+	Player* mp_player = nullptr;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

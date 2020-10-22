@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameCamera.h"
-
+#include "../Player/Player.h"
 
 GameCamera::GameCamera()
 {
@@ -57,11 +57,16 @@ void GameCamera::PostUpdate() {
 	auto xf = g_pad[0]->GetRStickXF();
 	auto yf = g_pad[0]->GetRStickYF();
 
-	if (g_pad[0]->IsPress(enButtonY)) {
-		m_state = State::enEnemyCamera;
-	}
-	else {
-		m_state = State::enPlayerCamera;
+	m_charaPos = mp_player->GetPosition();
+
+	if (g_pad[0]->IsTrigger(enButtonLB3)) {
+		if (m_state == State::enEnemyCamera) {
+			m_state = State::enPlayerCamera;
+		}
+		else {
+			if(mp_player->GetTargetEnemy() != nullptr)
+				m_state = State::enEnemyCamera;
+		}
 	}
 
 	if (m_state == State::enEnemyCamera) {
