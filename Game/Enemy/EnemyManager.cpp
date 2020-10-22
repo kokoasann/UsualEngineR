@@ -6,10 +6,10 @@
 #include <random>
 
 void EnemyManager::SpawnEnemies() {
+	IEnemy::StAbility ab;
 	//Boss
 	auto bene = NewGO<BossA>(0);
 
-	IEnemy::StAbility ab;
 	ab.InitHP(200.f);
 	bene->SetAbility(ab);
 	Vector3 pos;

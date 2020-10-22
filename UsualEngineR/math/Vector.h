@@ -51,6 +51,68 @@ namespace UER
 			struct { float x, y; };
 			float v[2];
 		};
+
+		/// <summary>
+		/// ベクトルの加算。
+		/// </summary>
+		/// <remarks>
+		/// this += _v;
+		/// </remarks>
+		/// <param name="_v">加算されるベクトル。</param>
+		void Add(const Vector2& _v)
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&_v.vec);
+			DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd(xmv0, xmv1);
+			DirectX::XMStoreFloat2(&vec, xmvr);
+		}
+		/// <summary>
+		/// ベクトルの加算。
+		/// </summary>
+		/// <remarks>
+		/// this = v0 + v1;
+		/// </remarks>
+		void Add(const Vector2& v0, const Vector2& v1)
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&v0.vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v1.vec);
+			DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd(xmv0, xmv1);
+			DirectX::XMStoreFloat2(&vec, xmvr);
+		}
+
+		/// <summary>
+		/// ベクトルの減算。
+		/// </summary>
+		/// <remarks>
+		/// this -= _v;
+		/// </remarks>
+		void Subtract(const Vector2& _v)
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&_v.vec);
+			DirectX::XMVECTOR xmvr = DirectX::XMVectorSubtract(xmv0, xmv1);
+			DirectX::XMStoreFloat2(&vec, xmvr);
+		}
+		/// <summary>
+		/// ベクトルの減算。
+		/// </summary>
+		/// <remarks>
+		/// this = v0 - v1;
+		/// </remarks>
+		void Subtract(const Vector2& v0, const Vector2& v1)
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&v0.vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v1.vec);
+			DirectX::XMVECTOR xmvr = DirectX::XMVectorSubtract(xmv0, xmv1);
+			DirectX::XMStoreFloat2(&vec, xmvr);
+		}
+
+		float Dot(const Vector2& _v) const
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&_v.vec);
+			return DirectX::XMVector2Dot(xmv0, xmv1).m128_f32[0];
+		}
 	
 		/// <summary>
 		/// 線形補完。
@@ -62,6 +124,36 @@ namespace UER
 		{
 			x = v0.x + (v1.x - v0.x) * t;
 			y = v0.y + (v1.y - v0.y) * t;
+		}
+
+		/// <summary>
+		/// 減算代入演算子。
+		/// </summary>
+		/// <remarks>
+		/// ベクトルクラスに下記のような減算代入演算の機能を提供します。
+		/// Vector3 v0 = {20.0f, 30.0f, 40.0f};
+		///	Vector3 v1 = {10.0f, 20.0f, 30.0f};
+		///	v0 -= v1;
+		/// </remarks>
+		const Vector2& operator-=(const Vector2& _v)
+		{
+			Subtract(_v);
+			return *this;
+		}
+
+		/// <summary>
+		/// 加算代入演算子。
+		/// </summary>
+		/// <remarks>
+		///	ベクトルクラスに下記のような加算代入の機能を提供します。
+		///	Vector3 v0 = {20.0f, 30.0f, 40.0f};
+		///	Vector3 v1 = {10.0f, 20.0f, 30.0f};
+		///	v0 += v1;
+		/// </remarks>
+		const Vector2& operator+=(const Vector2& _v)
+		{
+			Add(_v);
+			return *this;
 		}
 	};
 	/// <summary>

@@ -1,7 +1,9 @@
 #include "stdafx.h"
-#include "EnemyIdleState.h"
-#include "../IEnemy.h"
 #include <cmath>
+#include "EnemyIdleState.h"
+#include "../EnemyManager.h"
+#include "../IEnemy.h"
+#include "../../Player/Player.h"
 
 EnemyIdleState::EnemyIdleState() {
 
@@ -21,16 +23,21 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	static float time = 0.f;
 	time += gameTime()->GetDeltaTime();
 	auto add = std::sin(time);
-	auto nextPos = e->GetPosition();
-	nextPos.x += add * 0.05;
-	e->SetPosition(nextPos);
+	Vector3 vel = Vector3::Zero;
+	vel.x = add;
+	vel.y -= 10.f;
+	e->SetVelocity(vel);
 
-	//別の状態クラスをリターンして状態を遷移させる
-	/*
-	if (g_pad[0]->IsTrigger(enButtonA)) {
-		return e->GetState(IEnemy::EnState::enBattleState);
+
+	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto& epos = e->GetPosition();
+	auto& ppos = player->GetPosition();
+	auto vecToPlayer = ppos - epos;
+	const float chaseRange = 60.f;
+
+	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
+		//return e->GetState(IEnemy::EnState::enBattleState);
 	}
-	*/
 
 	//状態が変わらないなら自分を返す
 	return this;

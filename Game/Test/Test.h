@@ -48,4 +48,7 @@ private:
 	float m_loadTime = 0.0f;
 
 	SpriteRender* m_3dSprite;
+
+
+	
 };

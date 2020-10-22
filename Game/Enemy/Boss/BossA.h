@@ -13,4 +13,8 @@ public:
 private:
 	//Model
 	ModelRender* m_model = nullptr;
+
+	//Physics
+	const float m_radius = 1.f;
+	const float m_height = 3.f;
 };

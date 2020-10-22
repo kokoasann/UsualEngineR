@@ -82,7 +82,7 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
 
-	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ false);
+	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 
 	return true;
 }

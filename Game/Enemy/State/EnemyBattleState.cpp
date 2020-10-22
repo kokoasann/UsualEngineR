@@ -17,6 +17,7 @@ void EnemyBattleState::Enter(IEnemy* e) {
 IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+
 	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(IEnemy::EnState::enIdleState);
 	}
@@ -34,10 +35,12 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 	//Chase
 	if (vecToPlayer.Length() > distLimit) {
 		vecToPlayer.Normalize();
-		const float speed = 0.1;
+		const float speed = 50.f;
 		auto velocity = vecToPlayer * speed;
-		auto npos = epos + velocity;
-		e->SetPosition(npos);
+
+		velocity.y = -10.f;
+
+		e->SetVelocity(velocity);
 	}
 
 	//if (g_pad[0]->IsTrigger(enButtonA)) {

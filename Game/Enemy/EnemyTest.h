@@ -15,5 +15,9 @@ private:
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
 	Vector3 m_scale = { 5.f,5.f,5.f };
+	
+	//Physics
+	const float m_radius = 1.f;
+	const float m_height = 3.f;
 };
 

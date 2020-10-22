@@ -162,17 +162,8 @@
     <Filter Include="Player">
       <UniqueIdentifier>{de703569-5717-4754-963a-655926b051ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemy">
-      <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{711edca2-e974-43b6-a9ce-677bcb9ad77c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy\Boss">
-      <UniqueIdentifier>{94106033-928b-4e2f-8d31-496d61b471e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy\State">
-      <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
     </Filter>
     <Filter Include="Player\State">
       <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
@@ -188,6 +179,15 @@
     </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Boss">
+      <UniqueIdentifier>{94106033-928b-4e2f-8d31-496d61b471e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State">
+      <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

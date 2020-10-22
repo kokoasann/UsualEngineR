@@ -254,6 +254,8 @@
     <ClInclude Include="level\MapChip.h" />
     <ClInclude Include="math\Math.h" />
     <ClInclude Include="math\Matrix.h" />
+    <ClInclude Include="math\PerlinNoise.h" />
+    <ClInclude Include="math\Random.h" />
     <ClInclude Include="math\Vector.h" />
     <ClInclude Include="Physics\BoxCollider.h" />
     <ClInclude Include="Physics\CapsuleCollider.h" />
@@ -356,6 +358,8 @@
     <ClCompile Include="level\MapChip.cpp" />
     <ClCompile Include="math\Math.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
+    <ClCompile Include="math\PerlinNoise.cpp" />
+    <ClCompile Include="math\Random.cpp" />
     <ClCompile Include="math\Vector.cpp" />
     <ClCompile Include="Physics\BoxCollider.cpp" />
     <ClCompile Include="Physics\CapsuleCollider.cpp" />

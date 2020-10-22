@@ -292,6 +292,12 @@
     <ClInclude Include="Graphics\Effect\ParticleEffect.h">
       <Filter>Graphics\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="math\Random.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\PerlinNoise.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -549,6 +555,12 @@
     </ClCompile>
     <ClCompile Include="Graphics\Effect\ParticleEffect.cpp">
       <Filter>Graphics\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Random.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\PerlinNoise.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
