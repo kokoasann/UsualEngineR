@@ -43,7 +43,6 @@ bool Game::Start()
 	eM.SetPlayer(m_player);
 
 	auto enemy = eM.GetNearestEnemy();
-	m_camera->SetTarget(enemy->GetPosition());
 
 	return true;
 }
@@ -57,7 +56,7 @@ void Game::Update()
 {
 	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
 	if (enemy != nullptr) {
-		m_camera->SetTarget(enemy->GetPosition());
+		m_camera->SetEnemy(enemy);
 	}
 }
 

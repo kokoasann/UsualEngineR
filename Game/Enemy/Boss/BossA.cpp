@@ -17,7 +17,7 @@ void BossA::Init() {
 	m_model->SetScale(g_vec3One * 10);
 
 	//Init State
-	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enBattleState)]);
+	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 	m_isDrawHpBarAboveMyself = false;
 
 	//Physics

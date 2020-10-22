@@ -1,5 +1,6 @@
 #pragma once
 class Player;
+class IEnemy;
 
 /// <summary>
 /// 
@@ -44,8 +45,8 @@ public:
 
 	void PostUpdate() override;
 
-	void SetTarget(const Vector3& target) {
-		m_targetPos = target;
+	void SetEnemy(IEnemy* enemy) {
+		mp_enemy = enemy;
 	}
 
 	void SetPlayer(Player* player) {
@@ -75,12 +76,16 @@ private:
 
 	void CalcEnemyCamera();
 	void CalcPlayerCamera();
+	void CalcCameraPosition();
 
 	Vector3 m_playerCameraPos = m_position;
-	Vector3 m_enemyCameraPos = m_position;
+	Vector3 m_playerCameraTargetPos = Vector3::Zero;
 
+	Vector3 m_enemyCameraPos = m_position;
+	Vector3 m_enemyCameraTargetPos = Vector3::Zero;
 
 	Player* mp_player = nullptr;
+	IEnemy* mp_enemy = nullptr;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

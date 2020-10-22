@@ -36,7 +36,7 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	const float chaseRange = 60.f;
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
-		return e->GetState(IEnemy::EnState::enBattleState);
+		//return e->GetState(IEnemy::EnState::enBattleState);
 	}
 
 	//ó‘Ô‚ª•Ï‚í‚ç‚È‚¢‚È‚ç©•ª‚ğ•Ô‚·
