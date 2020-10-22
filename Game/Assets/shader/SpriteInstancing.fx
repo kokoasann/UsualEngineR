@@ -2,7 +2,6 @@ cbuffer cb :register (b0)
 {
 	matrix mvp;			//ビュープロジェクション行列
 	float4 mulcol;		//乗算色
-	float4 screenParam;
 }
 struct VSInput {
 	float4 pos : POSITION;

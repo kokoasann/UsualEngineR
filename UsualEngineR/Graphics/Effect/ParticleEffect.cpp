@@ -14,12 +14,17 @@ namespace UER
 	}
 	void PlaneParticleEffect::Release()
 	{
+		for (auto p : m_extendDatas)
+		{
+			free(p);
+		}
 	}
 	void PlaneParticleEffect::Init(const PlaneParticleEffectInitData& ini)
 	{
 		//m_updater = ini.m_updater;
 		m_updateFunc = ini.m_updater->m_updateFunc;
 		m_generateFunc = ini.m_updater->m_geneFunc;
+		m_extendDataSize = ini.m_extendDataSize;
 
 		m_texture.InitFromDDSFile(ini.m_ddsFilePath);
 		if (ini.m_width == 0 || ini.m_height == 0)
@@ -34,7 +39,7 @@ namespace UER
 		}
 
 		m_constBuffer.Init(sizeof(SConstBuffData));
-		m_structuredBuff.Init(sizeof(Matrix), MAX_INSTANCES_NUM, nullptr);
+		m_structuredBuff.Init(sizeof(SParticleData), MAX_INSTANCES_NUM, nullptr);
 
 		m_vs.LoadVS(L"Assets/shader/SpriteInstancing.fx", "VSMain");
 		if(!ini.m_isDepthTest)
@@ -88,6 +93,20 @@ namespace UER
 			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		};
 
+		D3D12_BLEND_DESC blendDesc = {};
+		blendDesc.AlphaToCoverageEnable = FALSE;
+		blendDesc.IndependentBlendEnable = FALSE;
+		const D3D12_RENDER_TARGET_BLEND_DESC defaultRenderTargetBlendDesc =
+		{
+			TRUE,FALSE,
+			D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA, D3D12_BLEND_OP_ADD,
+			D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD,
+			D3D12_LOGIC_OP_NOOP,
+			D3D12_COLOR_WRITE_ENABLE_ALL,
+		};
+		for (UINT i = 0; i < D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+			blendDesc.RenderTarget[i] = defaultRenderTargetBlendDesc;
+
 		//パイプラインステートを作成。
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = { 0 };
 		psoDesc.InputLayout = { inputElementDescs, _countof(inputElementDescs) };
@@ -96,7 +115,7 @@ namespace UER
 		psoDesc.PS = CD3DX12_SHADER_BYTECODE(m_ps.GetCompiledBlob());
 		psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
 		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-		psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+		psoDesc.BlendState = blendDesc;
 		psoDesc.DepthStencilState.DepthEnable = FALSE;
 		psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 		psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
@@ -125,8 +144,14 @@ namespace UER
 		std::list<int> deths;
 		for (int i = 0; i < m_numInstance; i++)
 		{
-			m_particleTimes[i] -= deltaTime;
+			/*m_particleTimes[i] -= deltaTime;
 			if (m_particleTimes[i] <= 0)
+			{
+				deths.push_back(i);
+			}*/
+
+			m_particleDatasEX[i].lifeTime -= deltaTime;
+			if (m_particleDatasEX[i].lifeTime <= 0)
 			{
 				deths.push_back(i);
 			}
@@ -141,32 +166,53 @@ namespace UER
 			}*/
 
 
-			if (i != m_particleDatas.size() - 1)
+			if (i != m_particleDatasEX.size() - 1)
 			{
-				std::swap(m_particleDatas[i], m_particleDatas[m_particleDatas.size() - 1]);
+				/*std::swap(m_particleDatas[i], m_particleDatas[m_particleDatas.size() - 1]);
 				m_particleDatas.pop_back();
 
 				std::swap(m_particleTimes[i], m_particleTimes[m_particleTimes.size() - 1]);
-				m_particleTimes.pop_back();
+				m_particleTimes.pop_back();*/
+
+				std::swap(m_particleDatasEX[i], m_particleDatasEX[m_particleDatasEX.size() - 1]);
+				m_particleDatasEX.pop_back();
+
+				if (m_extendDataSize > 0)
+				{
+					/*free(m_extendDatas[i]);
+					std::swap(m_extendDatas[i], m_extendDatas[m_extendDatas.size() - 1]);
+					m_extendDatas.pop_back();*/
+
+					std::swap(m_extendDatas[i], m_extendDatas[m_numInstance - 1]);
+				}
 			}
 			else
 			{
-				m_particleDatas.pop_back();
-				m_particleTimes.pop_back();
+				/*m_particleDatas.pop_back();
+				m_particleTimes.pop_back();*/
+
+				m_particleDatasEX.pop_back();
+
+				if (m_extendDataSize > 0)
+				{
+					/*free(m_extendDatas[m_extendDatas.size() - 1]);
+					m_extendDatas.pop_back();*/
+				}
 			}
 
 			m_numInstance--;
 		}
 
 		//生み出す。
-		//m_updater->m_geneFunc(this, deltaTime);
 		m_generateFunc(this, deltaTime);
 
 		//更新。
 		for (int i =0;i < m_numInstance;i++)
 		{
-			//m_updater->m_updateFunc(m_particleDatas[i]);
-			m_updateFunc(m_particleDatas[i],deltaTime);
+			if(m_extendDataSize == 0)
+				m_updateFunc(m_particleDatasEX[i],deltaTime,nullptr);
+			else
+				m_updateFunc(m_particleDatasEX[i], deltaTime, m_extendDatas[i]);
 		}
 	}
 	void PlaneParticleEffect::Draw(
@@ -181,13 +227,15 @@ namespace UER
 	{
 		if (m_numInstance == 0)
 			return;
+
+
 		Matrix vrot = view;
 		vrot.SetTranspose({ 0,0,0 });
 		vrot.Inverse();
 		Matrix mTra, mSca, mRot, mWor, mvp;
 		mSca.MakeScaling(sca);
 		mRot.MakeRotationFromQuaternion(rot);
-		mRot.Multiply(vrot, mRot);
+		//mRot.Multiply(vrot, mRot);
 		mTra.MakeTranslation(pos);
 		mWor.Multiply(mSca, mRot);
 		mWor.Multiply(mWor, mTra);
@@ -197,10 +245,21 @@ namespace UER
 
 		SConstBuffData data(mvp, mulColor);
 
-		SParticleData datas[MAX_INSTANCES_NUM];
+		
+		SParticleData* datas = new SParticleData[m_numInstance]();
 		for (int i = 0; i < m_numInstance; i++)
 		{
-			datas[i] = m_particleDatas[i];
+			//datas[i] = m_particleDatas[i];
+			auto& particle = m_particleDatasEX[i].particleData;
+			Matrix tra, sca, rot;
+			tra.MakeTranslation(particle.pos);
+			sca.MakeScaling(particle.sca);
+			rot.MakeRotationFromQuaternion(particle.rot);
+			rot.Multiply(vrot, rot);
+			datas[i].mWorld.Multiply(sca, rot);
+			datas[i].mWorld.Multiply(datas[i].mWorld, tra);
+
+			datas[i].mulColor = particle.mulColor;
 		}
 		m_structuredBuff.Update(datas, m_numInstance);
 		m_constBuffer.CopyToVRAM(data);
@@ -213,19 +272,28 @@ namespace UER
 		rc.SetDescriptorHeap(m_descHeap);
 
 		rc.DrawIndexedInstanced(4, m_numInstance, 0, 0, 0);
+
+		delete[] datas;
 	}
-	void PlaneParticleEffect::AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime)
+	/*void PlaneParticleEffect::AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, void* extendData)
 	{
-		m_particleDatas.resize(m_particleDatas.size() + 1);
-		m_particleDatas[m_particleDatas.size()-1].mWorld = mw;
-		m_particleDatas[m_particleDatas.size()-1].mulColor = mulColor;
+		int len = m_particleDatasEX.size();
+		m_particleDatasEX.resize(len + 1);
+		m_particleDatasEX[len].particleData.pos = pos;
+		m_particleDatasEX[len].particleData.sca = sca;
+		m_particleDatasEX[len].particleData.rot = rot;
+		m_particleDatasEX[len].particleData.mulColor = mulColor;
+		m_particleDatasEX[len].lifeTime = lifeTime;
 
-		m_particleTimes.resize(m_particleTimes.size() + 1);
-		m_particleTimes[m_particleTimes.size()-1] = lifeTime;
+		if (m_extendDataSize > 0)
+		{
+			void* p = malloc(m_extendDataSize);
+			memcpy(p, extendData, m_extendDataSize);
+			m_extendDatas.push_back(p);
+		}
+
 		m_numInstance++;
-
-		
-	}
+	}*/
 
 
 

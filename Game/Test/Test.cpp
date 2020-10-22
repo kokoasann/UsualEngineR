@@ -210,26 +210,42 @@ void Test::Awake()
 
 
 	PlaneParticleEffectInitData pid;
-	pid.m_ddsFilePath = L"Assets/Image/hp.dds";
+	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
 	pid.m_height = 10;
 	pid.m_width = 10;
+	pid.m_extendDataSize = sizeof(float);
+	//pid.m_isDepthTest = false;
 	PlaneParticleUpdater m_effctUpdater(
 		[&](PLANE_PARTICLE_GENERATE_ARGS_CONST)->void
 		{
 			static float time = 0;
-			if (time > 1.f)
+			if (time >= 0.01f)
 			{
-				Matrix m = g_matIdentity;
-				pThis->AddParticle(m, { 1,1,1,1 }, 10);
+				//Matrix m = g_matIdentity;
+				//pThis->AddParticle(m, { 1,1,1,1 }, 10);
+				for (int _i = 0; _i <3; _i++)
+				{
+					float i = GRandom().Rand();
+					pThis->AddParticle(g_vec3Zero, g_vec3One, g_quatIdentity, { 3,2.f,0.3,1 }, 10, &i);
+				}
 				time = 0;
 			}
 			time += deltaTime;
 		},
 		[&](PLANE_PARTICLE_UPDATE_ARGS_CONST)->void
 		{
-			data.mWorld.v[3].y += 5.f * deltaTime;
-			float n = GPerlinNoise().GenerateNoise({ 0,data.mWorld.v[3].y });
-			data.mWorld.v[3].x = n*500.f* deltaTime;
+			auto s = *(float*)extendData;
+			data.particleData.pos.y += 20.f * deltaTime;
+			float n = GPerlinNoise().GenerateNoise({ s*10,data.particleData.pos.y/10.f });
+			float m = GPerlinNoise().GenerateNoise({ data.particleData.pos.y/10.f, s*10});
+			data.particleData.pos.x = n*500.f* deltaTime;
+			data.particleData.pos.z = m * 500.f * deltaTime;
+			data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f)+0.1f,1.f);
+			Vector3 col;
+			col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
+			data.particleData.mulColor.Set(col);
+			data.particleData.mulColor.a = data.lifeTime / 10.f;
+			
 		});
 	pid.m_updater = &m_effctUpdater;
 	auto effect = NewGO<PlaneParticleEffectRender>(0);

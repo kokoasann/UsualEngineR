@@ -32,15 +32,30 @@ namespace UER
 		Matrix mWorld;
 		Vector4 mulColor;
 	};
-	class PlaneParticleEffect;
-	using PlaneParticleGenerateFunc = std::function<void(PlaneParticleEffect* pThis, float deltaTime)>;
-	using PlaneParticleUpdateFunc = std::function<void(SParticleData& data, float deltaTime)>;
-
-#define PLANE_PARTICLE_GENERATE_ARGS(pthis,dtime) PlaneParticleEffect* pthis, float dtime
+	struct SParticleInstanceData
+	{
+		Vector3 pos;
+		Vector3 sca;
+		Quaternion rot;
+		Vector4 mulColor;
+	};
+	struct ParticleDataEX
+	{
+		SParticleInstanceData particleData;
+		float lifeTime;
+	};
 #define PLANE_PARTICLE_GENERATE_ARGS_CONST PlaneParticleEffect* pThis, float deltaTime
+#define PLANE_PARTICLE_GENERATE_ARGS(pThis,deltaTime) PLANE_PARTICLE_GENERATE_ARGS_CONST
 
-#define PLANE_PARTICLE_UPDATE_ARGS(data,deltaTime) SParticleData& data, float deltaTime
-#define PLANE_PARTICLE_UPDATE_ARGS_CONST SParticleData& data, float deltaTime
+#define PLANE_PARTICLE_UPDATE_ARGS_CONST ParticleDataEX& data, float deltaTime, void* extendData
+#define PLANE_PARTICLE_UPDATE_ARGS(data,deltaTime,extendData) PLANE_PARTICLE_UPDATE_ARGS_CONST
+
+	class PlaneParticleEffect;
+	using PlaneParticleGenerateFunc = std::function<void(PLANE_PARTICLE_GENERATE_ARGS_CONST)>;
+	using PlaneParticleUpdateFunc = std::function<void(PLANE_PARTICLE_UPDATE_ARGS_CONST)>;
+
+
+
 
 	struct PlaneParticleUpdater
 	{
@@ -59,6 +74,7 @@ namespace UER
 		UINT m_width = 0;										//スプライトの幅。
 		UINT m_height = 0;										//スプライトの高さ。
 		bool m_isDepthTest = true;
+		int m_extendDataSize = 0;
 		//PlaneParticleGenerateFunc m_generateFunc;
 		//PlaneParticleUpdateFunc m_updateFunc;
 		PlaneParticleUpdater* m_updater = nullptr;
@@ -82,7 +98,36 @@ namespace UER
 			const Matrix& projection
 		);
 
-		void AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime);
+		template<class T>
+		void AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, T* extendData = nullptr)
+		{
+			int len = m_particleDatasEX.size();
+			m_particleDatasEX.resize(len + 1);
+			m_particleDatasEX[len].particleData.pos = pos;
+			m_particleDatasEX[len].particleData.sca = sca;
+			m_particleDatasEX[len].particleData.rot = rot;
+			m_particleDatasEX[len].particleData.mulColor = mulColor;
+			m_particleDatasEX[len].lifeTime = lifeTime;
+
+			if (m_extendDataSize > 0)
+			{
+				if (sizeof(T) != m_extendDataSize || extendData == nullptr)
+					std::abort();
+
+				if (m_numInstance >= m_extendDatas.size())
+				{
+					void* p = malloc(m_extendDataSize);
+					memcpy(p, extendData, m_extendDataSize);
+					m_extendDatas.push_back(p);
+				}
+				else
+				{
+					memcpy(m_extendDatas[m_numInstance], extendData, m_extendDataSize);
+				}
+			}
+
+			m_numInstance++;
+		}
 
 
 		/*struct SParticleData
@@ -101,11 +146,7 @@ namespace UER
 			Vector4 mulColor;
 		};
 		
-		struct ParticleDataEX
-		{
-			SParticleData particleData;
-			float lifeTime;
-		};
+		
 	private:
 		static const UINT MAX_INSTANCES_NUM = 2048U;
 		IndexBuffer m_indexBuff;
@@ -122,8 +163,11 @@ namespace UER
 		//SConstBuffData m_constBufferData;
 		
 		StructuredBuffer m_structuredBuff;
-		std::vector<SParticleData> m_particleDatas;
-		std::vector<float> m_particleTimes;
+		//std::vector<SParticleData> m_particleDatas;
+		//std::vector<float> m_particleTimes;
+		std::vector<ParticleDataEX> m_particleDatasEX;
+		std::vector<void*> m_extendDatas;
+		int m_extendDataSize = 0;
 
 		int m_numInstance=0;
 

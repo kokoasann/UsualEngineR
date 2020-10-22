@@ -200,6 +200,9 @@
     <ImageContentTask Include="Assets\Image\hp.png">
       <Filter>Assets\image</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\Image\illumination.png">
+      <Filter>Assets\image</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
