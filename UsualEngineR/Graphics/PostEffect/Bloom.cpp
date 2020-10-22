@@ -28,9 +28,9 @@ namespace UER
 
 		m_rootSign.Init(
 			D3D12_FILTER_MIN_MAG_MIP_LINEAR,
-			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
-			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
-			D3D12_TEXTURE_ADDRESS_MODE_WRAP
+			D3D12_TEXTURE_ADDRESS_MODE_CLAMP,
+			D3D12_TEXTURE_ADDRESS_MODE_CLAMP,
+			D3D12_TEXTURE_ADDRESS_MODE_CLAMP
 		);
 
 		m_vsBloom.LoadVS(L"Assets/shader/Bloom.fx", "VSMain");
@@ -81,7 +81,7 @@ namespace UER
 		}
 		m_descCombine.Commit();
 
-		m_copy.Init(currentRT->GetRenderTargetTexture(), TextureCopy::BlendMethod::BM_Add);
+		m_copy.Init(m_combineRT.GetRenderTargetTexture(), TextureCopy::BlendMethod::BM_Add);
 	}
 	void Bloom::Render(RenderContext& rc)
 	{

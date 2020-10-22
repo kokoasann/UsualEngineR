@@ -24,7 +24,7 @@ namespace UER
 			m_gBuffer[TO_INT(EGBufferKind::Depth)],
 			DXGI_FORMAT_R32_FLOAT,
 			DXGI_FORMAT_UNKNOWN,
-			{ 0.f,1.f,g_camera3D->GetFar()- g_camera3D->GetNear(),1.f },
+			{ FLT_EPSILON,1.f,g_camera3D->GetFar()- g_camera3D->GetNear(),1.f },
 			L"GB_Depth");
 
 		InitRenderTarget(
