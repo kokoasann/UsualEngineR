@@ -17,7 +17,9 @@ namespace UER
 	}
 	void PlaneParticleEffect::Init(const PlaneParticleEffectInitData& ini)
 	{
-		m_updater = ini.m_updater;
+		//m_updater = ini.m_updater;
+		m_updateFunc = ini.m_updater->m_updateFunc;
+		m_generateFunc = ini.m_updater->m_geneFunc;
 
 		m_texture.InitFromDDSFile(ini.m_ddsFilePath);
 		if (ini.m_width == 0 || ini.m_height == 0)
@@ -25,15 +27,20 @@ namespace UER
 			m_width = m_texture.GetWidth();
 			m_height = m_texture.GetHeight();
 		}
+		else
+		{
+			m_width = ini.m_width;
+			m_height = ini.m_height;
+		}
 
 		m_constBuffer.Init(sizeof(SConstBuffData));
 		m_structuredBuff.Init(sizeof(Matrix), MAX_INSTANCES_NUM, nullptr);
 
-		m_vs.LoadVS(L"Assets/shader/SpriteInstanceing.fx", "VSMain");
+		m_vs.LoadVS(L"Assets/shader/SpriteInstancing.fx", "VSMain");
 		if(!ini.m_isDepthTest)
-			m_ps.LoadPS(L"Assets/shader/SpriteInstanceing.fx", "PSMain");
+			m_ps.LoadPS(L"Assets/shader/SpriteInstancing.fx", "PSMain");
 		else
-			m_ps.LoadPS(L"Assets/shader/SpriteInstanceing.fx", "PSMain_DepthEnable");
+			m_ps.LoadPS(L"Assets/shader/SpriteInstancing.fx", "PSMain_DepthEnable");
 		
 		float halfW = m_width * 0.5f;
 		float halfH = m_height * 0.5f;
@@ -110,8 +117,9 @@ namespace UER
 			auto& depth = g_graphicsEngine->GetPreRender().GetGBuffer().GetGBuffer(EGBufferKind::Depth);
 			m_descHeap.RegistShaderResource(2, depth.GetRenderTargetTexture());
 		}
+		m_descHeap.Commit();
 	}
-	void PlaneParticleEffect::Update(float deltaTime, const Vector3& pos, const Quaternion& rot, const Vector3& sca)
+	void PlaneParticleEffect::Update(float deltaTime)
 	{
 		//寿命切れの奴を消す。
 		std::list<int> deths;
@@ -126,21 +134,39 @@ namespace UER
 		deths.reverse();
 		for (int i : deths)
 		{
-			for (int j = i; j < m_numInstance; i++)
+			/*for (int j = i; j < m_numInstance; j++)
 			{
 				m_particleDatas[j] = m_particleDatas[j + 1];
 				m_particleTimes[j] = m_particleTimes[j + 1];
+			}*/
+
+
+			if (i != m_particleDatas.size() - 1)
+			{
+				std::swap(m_particleDatas[i], m_particleDatas[m_particleDatas.size() - 1]);
+				m_particleDatas.pop_back();
+
+				std::swap(m_particleTimes[i], m_particleTimes[m_particleTimes.size() - 1]);
+				m_particleTimes.pop_back();
 			}
+			else
+			{
+				m_particleDatas.pop_back();
+				m_particleTimes.pop_back();
+			}
+
 			m_numInstance--;
 		}
 
 		//生み出す。
-		m_updater->m_geneFunc(this, deltaTime);
+		//m_updater->m_geneFunc(this, deltaTime);
+		m_generateFunc(this, deltaTime);
 
 		//更新。
 		for (int i =0;i < m_numInstance;i++)
 		{
-			m_updater->m_updateFunc(m_particleDatas[i]);
+			//m_updater->m_updateFunc(m_particleDatas[i]);
+			m_updateFunc(m_particleDatas[i],deltaTime);
 		}
 	}
 	void PlaneParticleEffect::Draw(
@@ -153,9 +179,15 @@ namespace UER
 		const Matrix& projection
 	)
 	{
+		if (m_numInstance == 0)
+			return;
+		Matrix vrot = view;
+		vrot.SetTranspose({ 0,0,0 });
+		vrot.Inverse();
 		Matrix mTra, mSca, mRot, mWor, mvp;
 		mSca.MakeScaling(sca);
 		mRot.MakeRotationFromQuaternion(rot);
+		mRot.Multiply(vrot, mRot);
 		mTra.MakeTranslation(pos);
 		mWor.Multiply(mSca, mRot);
 		mWor.Multiply(mWor, mTra);
@@ -165,7 +197,12 @@ namespace UER
 
 		SConstBuffData data(mvp, mulColor);
 
-		m_structuredBuff.Update(&m_particleDatas[0], m_numInstance);
+		SParticleData datas[MAX_INSTANCES_NUM];
+		for (int i = 0; i < m_numInstance; i++)
+		{
+			datas[i] = m_particleDatas[i];
+		}
+		m_structuredBuff.Update(datas, m_numInstance);
 		m_constBuffer.CopyToVRAM(data);
 
 		rc.SetIndexBuffer(m_indexBuff);
@@ -179,9 +216,37 @@ namespace UER
 	}
 	void PlaneParticleEffect::AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime)
 	{
-		m_particleDatas[m_numInstance].mWorld = mw;
-		m_particleDatas[m_numInstance].mulColor = mulColor;
-		m_particleTimes[m_numInstance] = lifeTime;
+		m_particleDatas.resize(m_particleDatas.size() + 1);
+		m_particleDatas[m_particleDatas.size()-1].mWorld = mw;
+		m_particleDatas[m_particleDatas.size()-1].mulColor = mulColor;
+
+		m_particleTimes.resize(m_particleTimes.size() + 1);
+		m_particleTimes[m_particleTimes.size()-1] = lifeTime;
 		m_numInstance++;
+
+		
+	}
+
+
+
+
+
+	void PlaneParticleEffectRender::Init(const PlaneParticleEffectInitData& pid)
+	{
+		m_effect.Init(pid);
+	}
+
+	void PlaneParticleEffectRender::Update()
+	{
+		float dtime = gameTime()->GetDeltaTime();
+		m_effect.Update(dtime);
+	}
+
+	void PlaneParticleEffectRender::PrePostRender()
+	{
+		auto& rc = g_graphicsEngine->GetRenderContext();
+		const auto& view = g_camera3D->GetViewMatrix();
+		const auto& proj = g_camera3D->GetProjectionMatrix();
+		m_effect.Draw(rc, m_pos, m_sca, m_rot, m_mulColor, view, proj);
 	}
 }

@@ -29,6 +29,8 @@
 #include <atlbase.h>
 #include <mutex>
 
+
+
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 
@@ -36,6 +38,9 @@
 #include "math/Math.h"
 #include "math/Vector.h"
 #include "math/Matrix.h"
+
+#include "math/Random.h"
+#include "math/PerlinNoise.h"
 
 #include "BufferEnum.h"
 #include "RenderingSituation.h"
