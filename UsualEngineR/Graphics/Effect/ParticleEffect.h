@@ -84,6 +84,7 @@ namespace UER
 
 		void AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime);
 
+
 		/*struct SParticleData
 		{
 			Matrix mWorld;
@@ -104,7 +105,6 @@ namespace UER
 		{
 			SParticleData particleData;
 			float lifeTime;
-			void* extendData;
 		};
 	private:
 		static const UINT MAX_INSTANCES_NUM = 2048U;

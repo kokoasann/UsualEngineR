@@ -223,6 +223,8 @@ namespace UER
 		m_particleTimes.resize(m_particleTimes.size() + 1);
 		m_particleTimes[m_particleTimes.size()-1] = lifeTime;
 		m_numInstance++;
+
+		
 	}
 
 
