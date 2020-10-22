@@ -51,7 +51,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	GRandom().Init(0);
 	
-	NewGO<Test>(0);
+	//NewGO<Test>(0);
 	NewGO<Game>(0);
 	auto lig = NewGO<LightDirection>(0);
 	lig->SetDir({ 0.707,0.707,0 });

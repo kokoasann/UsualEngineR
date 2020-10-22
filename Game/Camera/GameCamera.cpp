@@ -32,10 +32,25 @@ void GameCamera::Awake()
 
 bool GameCamera::Start()
 {
-	auto cam = g_lockCamera3D.Get();
-	cam->SetTarget(m_targetPos);
+
+	//auto cam = g_lockCamera3D.Get();
+
+	g_camera3D->SetTarget(m_targetPos);
 	m_playerCameraPos = m_position = m_charaPos + m_position;
-	m_dist = m_position - m_charaPos;
+	//m_dist = m_position - m_charaPos;
+
+	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
+	g_camera3D->SetPosition({ 0.0f, 3.0f, 35.f });
+
+	m_toCameraPos.Set(0.0f, 3.0f, -35.f);
+	m_springCamera.Init(
+		g_camera3D,
+		4000.0f,
+		false,
+		5.0f
+	);
+
+	m_springCamera.Update();
 
 	return true;
 }
@@ -49,26 +64,114 @@ void GameCamera::PreUpdate()
 void GameCamera::Update()
 {
 
+
+
+	Vector3 target = mp_player->GetPosition();
+
+	target.y += 5.0f;
+	Vector3 toCameraPosOld = m_toCameraPos;
+	auto x = g_pad[0]->GetRStickXF();
+	auto y = g_pad[0]->GetRStickYF();
+	Quaternion qRot;
+	qRot.SetRotationDeg(Vector3::AxisY, 7.0f * x);
+
+	//qRot.Multiply(m_toCameraPos);
+	qRot.Apply(m_toCameraPos);
+
+	Vector3 axisX;
+	axisX.Cross(Vector3::AxisY, m_toCameraPos);
+	axisX.Normalize();
+	qRot.SetRotationDeg(axisX, 7.0f * y);
+	//qRot.Multiply(m_toCameraPos);
+	qRot.Apply(m_toCameraPos);
+
+	Vector3 toPosDir = m_toCameraPos;
+	toPosDir.Normalize();
+
+	if (toPosDir.y < -0.5f) {
+		m_toCameraPos = toCameraPosOld;
+	}
+	else if (toPosDir.y > 0.8f) {
+		m_toCameraPos = toCameraPosOld;
+	}
+	Vector3 pos = target + m_toCameraPos;
+	m_springCamera.SetTarget(target);
+	m_springCamera.SetPosition(pos);
+	m_springCamera.Update();
+
+
+
+	//CalcEnemyCamera();
+	//CalcPlayerCamera();
+	//CalcCameraPosition();
+
+	//UpdateState();
+
+	//m_charaPos = mp_player->GetPosition();
+
+	//Vector3 target = mp_player->GetPosition();
+
+	//target.y += 5.0f;
+	//Vector3 toCameraPosOld = m_toCameraPos;
+	//auto x = g_pad[0]->GetRStickXF();
+	//auto y = g_pad[0]->GetRStickYF();
+	//Quaternion qRot;
+	//qRot.SetRotationDeg(Vector3::AxisY, 7.0f * x);
+	//qRot.Apply(m_toCameraPos);
+	////qRot.Mul(m_toCameraPos);
+
+	//Vector3 axisX;
+	//axisX.Cross(Vector3::AxisY, m_toCameraPos);
+	//axisX.Normalize();
+	//qRot.SetRotationDeg(axisX, 7.0f * y);
+	//qRot.Apply(m_toCameraPos);
+	////qRot.Multiply(m_toCameraPos);
+
+	//Vector3 toPosDir = m_toCameraPos;
+	//toPosDir.Normalize();
+
+	//if (toPosDir.y < -0.5f) {
+	//	m_toCameraPos = toCameraPosOld;
+	//}
+	//else if (toPosDir.y > 0.8f) {
+	//	m_toCameraPos = toCameraPosOld;
+	//}
+
+	//Vector3 pos = target + m_toCameraPos;
+
+	//m_springCamera.SetTarget(target);
+	//m_springCamera.SetPosition({ 0,100,1000 });
+	//m_springCamera.Update();
 }
 
 
 void GameCamera::PostUpdate() {
+	//auto cam = g_lockCamera3D.Get();
 
-	auto cam = g_lockCamera3D.Get();
+	//CalcEnemyCamera();
+	//CalcPlayerCamera();
 
-	UpdateState();
+	//CalcCameraPosition();
 
-	m_charaPos = mp_player->GetPosition();
 
-	CalcEnemyCamera();
-	CalcPlayerCamera();
+	////
+	//auto vecCharaToEnemy = mp_enemy->GetPosition() - m_charaPos;
+	//Quaternion rot = Quaternion::Identity;
+	//auto thetaY = atan2(vecCharaToEnemy.x, vecCharaToEnemy.z);
+	////thetaY = thetaY * (180.f / Math::PI);
+	////rot.SetRotationDegY(thetaY);
+	//auto forward = cam->GetForward();
+	//auto thetaF = atan2(forward.x, forward.z);
+	//auto diffTheta = thetaY - thetaF;
+	//rot.SetRotationY(diffTheta);
 
-	CalcCameraPosition();
+	//rot.Apply(m_targetPos);
+	////printf("Diff theta : %f\n", thetaY - thetaF);
+	////
 
-	cam->SetTarget(m_targetPos);
-	cam->SetPosition(m_position);
+	//cam->SetTarget(m_targetPos);
+	//cam->SetPosition(m_position);
 
-	m_old = m_dist;
 }
 
 
@@ -141,6 +244,8 @@ void GameCamera::CalcPlayerCamera() {
 	m_playerCameraPos = m_charaPos + m_dist;
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
 
+	m_old = m_dist;
+
 	//cam->SetTarget(m_charaPos + m_furtherTargetHeight);
 	//cam->SetPosition(m_position);
 }
@@ -149,7 +254,6 @@ void GameCamera::CalcCameraPosition() {
 	if (m_state == State::enEnemyCamera) {
 
 		auto& epos = mp_enemy->GetPosition();
-
 
 		float xdist = 1.f;
 		float ydist = 1.f;
@@ -162,6 +266,13 @@ void GameCamera::CalcCameraPosition() {
 		ydist *= gameTime()->GetDeltaTime() * m_swivelSpeed;
 		auto x = vecCharaToCamera;
 		x.Normalize();
+
+		//
+
+
+		//p->SetRotation(rot);
+		//
+
 		rotY.SetRotationDegY(xdist);
 		auto vecRight = vecCharaToCamera;
 		vecRight.y = 0.f;
@@ -227,7 +338,8 @@ void GameCamera::CalcCameraPosition() {
 }
 
 void GameCamera::UpdateState() {
-	if (g_pad[0]->IsTrigger(enButtonLB3)) {
+	//if (g_pad[0]->IsTrigger(enButtonLB3)) {
+	if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
 		}
