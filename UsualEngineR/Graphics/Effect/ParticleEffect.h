@@ -12,7 +12,15 @@ namespace UER
 
 		virtual void Release() = 0;
 		//virtual void Update() = 0;
-		virtual void Draw(RenderContext& rc) = 0;
+		virtual void Draw(
+			RenderContext& rc,
+			const Vector3& pos,
+			const Vector3& sca,
+			const Quaternion& rot,
+			const Vector4& mulColor,
+			const Matrix& view,
+			const Matrix& projection
+		) = 0;
 	private:
 
 	};
@@ -25,11 +33,15 @@ namespace UER
 		Vector4 mulColor;
 	};
 	class PlaneParticleEffect;
-	typedef std::function<void* (PlaneParticleEffect* pThis, float deltaTime)> PlaneParticleGenerateFunc;
-	typedef std::function<void* (SParticleData& data)> PlaneParticleUpdateFunc;
+	using PlaneParticleGenerateFunc = std::function<void(PlaneParticleEffect* pThis, float deltaTime)>;
+	using PlaneParticleUpdateFunc = std::function<void(SParticleData& data)>;
 
 	struct PlaneParticleUpdater
 	{
+		PlaneParticleUpdater(PlaneParticleGenerateFunc gene, PlaneParticleUpdateFunc update):
+			m_geneFunc(std::move(gene)),m_updateFunc(std::move(update))
+		{	
+		}
 		PlaneParticleGenerateFunc m_geneFunc;
 		PlaneParticleUpdateFunc m_updateFunc;
 		//float m_timer = 0;
@@ -52,7 +64,7 @@ namespace UER
 		void Release();
 		void Init(const PlaneParticleEffectInitData& ini);
 
-		void Update(float deltaTime,const Vector3& pos,const Quaternion& rot,const Vector3& sca);
+		void Update(float deltaTime);
 
 		void Draw(
 			RenderContext& rc,
@@ -105,9 +117,9 @@ namespace UER
 		Shader m_vs;
 		Shader m_ps;
 
-		PlaneParticleUpdater* m_updater = nullptr;
-		//PlaneParticleGenerateFunc m_generateFunc;
-		//PlaneParticleUpdateFunc m_updateFunc;
+		//PlaneParticleUpdater* m_updater = nullptr;
+		PlaneParticleGenerateFunc m_generateFunc;
+		PlaneParticleUpdateFunc m_updateFunc;
 	};
 
 	/*class ModelParticleEffect final:public ParticleEffect
@@ -118,4 +130,67 @@ namespace UER
 	private:
 
 	};*/
+
+	class PlaneParticleEffectRender final:public GameObject
+	{
+	public:
+		void Release() override
+		{
+			m_effect.Release();
+		}
+		void OnDestroy() override
+		{
+			Release();
+		}
+
+		void Init(const PlaneParticleEffectInitData& pid);
+
+		void Update() override;
+
+
+		void PrePostRender() override;
+
+
+
+		void SetPos(const Vector3& pos)
+		{
+			m_pos = pos;
+		}
+		void SetSca(const Vector3& sca)
+		{
+			m_sca = sca;
+		}
+		void SetRot(const Quaternion& rot)
+		{
+			m_rot = rot;
+		}
+		void SetMulColor(const Vector4& col)
+		{
+			m_mulColor = col;
+		}
+
+		const Vector3& GetPos() const
+		{
+			return m_pos;
+		}
+		const Vector3& GetSca() const
+		{
+			return m_sca;
+		}
+		const Quaternion& GetRot() const
+		{
+			return m_rot;
+		}
+		const Vector4& GetMulColor() const
+		{
+			return m_mulColor;
+		}
+	private:
+		PlaneParticleEffect m_effect;
+		
+		Vector3 m_pos = g_vec3Zero;
+		Vector3 m_sca = g_vec3One;
+		Quaternion m_rot = g_quatIdentity;
+		Vector4 m_mulColor = {1,1,1,1};
+	};
 }

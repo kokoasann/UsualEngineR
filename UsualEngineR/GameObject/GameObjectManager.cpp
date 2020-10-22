@@ -67,9 +67,11 @@ namespace UER
 		
 		preRender.LightingRender(rc);
 
-		UpdatePreRender();
-		
 
+		UpdatePreRender();
+
+		UpdatePrePostRender();
+		
 		RenderingSituation::Set(ERenderSituation::PostRender);
 
 		UpdatePostRender();
