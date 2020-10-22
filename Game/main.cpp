@@ -47,6 +47,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//auto& renderContext = g_graphicsEngine->GetRenderContext();
 
 	bool isInit = false;
+
+	
+	GRandom().Init(0);
 	
 	NewGO<Test>(0);
 	NewGO<Game>(0);

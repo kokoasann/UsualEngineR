@@ -34,7 +34,13 @@ namespace UER
 	};
 	class PlaneParticleEffect;
 	using PlaneParticleGenerateFunc = std::function<void(PlaneParticleEffect* pThis, float deltaTime)>;
-	using PlaneParticleUpdateFunc = std::function<void(SParticleData& data)>;
+	using PlaneParticleUpdateFunc = std::function<void(SParticleData& data,float lifeTime,void* extendData, float deltaTime)>;
+
+#define PLANE_PARTICLE_GENERATE_ARGS(pthis,dtime) PlaneParticleEffect* pthis, float dtime
+#define PLANE_PARTICLE_GENERATE_ARGS_CONST PlaneParticleEffect* pThis, float deltaTime
+
+#define PLANE_PARTICLE_UPDATE_ARGS(data,deltaTime) SParticleData& data, float deltaTime
+#define PLANE_PARTICLE_UPDATE_ARGS_CONST SParticleData& data, float deltaTime
 
 	struct PlaneParticleUpdater
 	{
@@ -94,6 +100,12 @@ namespace UER
 			Vector4 mulColor;
 		};
 		
+		struct ParticleDataEX
+		{
+			SParticleData particleData;
+			float lifeTime;
+			void* extendData;
+		};
 	private:
 		static const UINT MAX_INSTANCES_NUM = 2048U;
 		IndexBuffer m_indexBuff;
@@ -110,8 +122,9 @@ namespace UER
 		//SConstBuffData m_constBufferData;
 		
 		StructuredBuffer m_structuredBuff;
-		std::array<SParticleData, MAX_INSTANCES_NUM> m_particleDatas;
-		std::array<float, MAX_INSTANCES_NUM> m_particleTimes;
+		std::vector<SParticleData> m_particleDatas;
+		std::vector<float> m_particleTimes;
+
 		int m_numInstance=0;
 
 		Shader m_vs;
@@ -121,6 +134,10 @@ namespace UER
 		PlaneParticleGenerateFunc m_generateFunc;
 		PlaneParticleUpdateFunc m_updateFunc;
 	};
+
+
+
+
 
 	/*class ModelParticleEffect final:public ParticleEffect
 	{

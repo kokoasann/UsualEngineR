@@ -134,11 +134,27 @@ namespace UER
 		deths.reverse();
 		for (int i : deths)
 		{
-			for (int j = i; j < m_numInstance; j++)
+			/*for (int j = i; j < m_numInstance; j++)
 			{
 				m_particleDatas[j] = m_particleDatas[j + 1];
 				m_particleTimes[j] = m_particleTimes[j + 1];
+			}*/
+
+
+			if (i != m_particleDatas.size() - 1)
+			{
+				std::swap(m_particleDatas[i], m_particleDatas[m_particleDatas.size() - 1]);
+				m_particleDatas.pop_back();
+
+				std::swap(m_particleTimes[i], m_particleTimes[m_particleTimes.size() - 1]);
+				m_particleTimes.pop_back();
 			}
+			else
+			{
+				m_particleDatas.pop_back();
+				m_particleTimes.pop_back();
+			}
+
 			m_numInstance--;
 		}
 
@@ -150,7 +166,7 @@ namespace UER
 		for (int i =0;i < m_numInstance;i++)
 		{
 			//m_updater->m_updateFunc(m_particleDatas[i]);
-			m_updateFunc(m_particleDatas[i]);
+			m_updateFunc(m_particleDatas[i],deltaTime);
 		}
 	}
 	void PlaneParticleEffect::Draw(
@@ -163,9 +179,15 @@ namespace UER
 		const Matrix& projection
 	)
 	{
+		if (m_numInstance == 0)
+			return;
+		Matrix vrot = view;
+		vrot.SetTranspose({ 0,0,0 });
+		vrot.Inverse();
 		Matrix mTra, mSca, mRot, mWor, mvp;
 		mSca.MakeScaling(sca);
 		mRot.MakeRotationFromQuaternion(rot);
+		mRot.Multiply(vrot, mRot);
 		mTra.MakeTranslation(pos);
 		mWor.Multiply(mSca, mRot);
 		mWor.Multiply(mWor, mTra);
@@ -175,7 +197,12 @@ namespace UER
 
 		SConstBuffData data(mvp, mulColor);
 
-		m_structuredBuff.Update(&m_particleDatas[0], m_numInstance);
+		SParticleData datas[MAX_INSTANCES_NUM];
+		for (int i = 0; i < m_numInstance; i++)
+		{
+			datas[i] = m_particleDatas[i];
+		}
+		m_structuredBuff.Update(datas, m_numInstance);
 		m_constBuffer.CopyToVRAM(data);
 
 		rc.SetIndexBuffer(m_indexBuff);
@@ -189,9 +216,12 @@ namespace UER
 	}
 	void PlaneParticleEffect::AddParticle(const Matrix& mw, const Vector4& mulColor, float lifeTime)
 	{
-		m_particleDatas[m_numInstance].mWorld = mw;
-		m_particleDatas[m_numInstance].mulColor = mulColor;
-		m_particleTimes[m_numInstance] = lifeTime;
+		m_particleDatas.resize(m_particleDatas.size() + 1);
+		m_particleDatas[m_particleDatas.size()-1].mWorld = mw;
+		m_particleDatas[m_particleDatas.size()-1].mulColor = mulColor;
+
+		m_particleTimes.resize(m_particleTimes.size() + 1);
+		m_particleTimes[m_particleTimes.size()-1] = lifeTime;
 		m_numInstance++;
 	}
 
