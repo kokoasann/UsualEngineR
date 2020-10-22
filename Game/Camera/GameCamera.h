@@ -71,6 +71,15 @@ private:
 	Vector3 m_charaPos = Vector3::Zero;
 	Quaternion m_rot = Quaternion::Identity;
 
+	void UpdateState();
+
+	void CalcEnemyCamera();
+	void CalcPlayerCamera();
+
+	Vector3 m_playerCameraPos = m_position;
+	Vector3 m_enemyCameraPos = m_position;
+
+
 	Player* mp_player = nullptr;
 };
 
