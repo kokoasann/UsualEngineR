@@ -1,6 +1,8 @@
 #pragma once
 class Player;
 class IEnemy;
+class PositionChecker;
+
 #include "../SpringCamera.h"
 
 /// <summary>
@@ -93,6 +95,8 @@ private:
 
 	Vector3 m_toCameraPos;
 	SpringCamera m_springCamera;
+
+	PositionChecker* m_posChecker = nullptr;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

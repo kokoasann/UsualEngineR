@@ -100,6 +100,13 @@ void Player::Update()
 {
 	SearchTarget();
 
+	//Calc forward
+	auto& world = m_model->GetModel().GetWorldMatrix();
+	m_forward.x = world.mat._31;
+	m_forward.y = world.mat._32;
+	m_forward.z = world.mat._33;
+	m_forward.Normalize();
+
 	m_nextState = m_currentState->Update(this);
 
 	if (m_hp <= 0) {

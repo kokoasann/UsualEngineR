@@ -200,6 +200,7 @@
     <ClInclude Include="Player\State\PlayerDiveState.h" />
     <ClInclude Include="Player\State\PlayerFlyingState.h" />
     <ClInclude Include="Player\State\PlayerGroundState.h" />
+    <ClInclude Include="PositionChecker.h" />
     <ClInclude Include="SpringCamera.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Test\Test.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Player\State\PlayerDiveState.cpp" />
     <ClCompile Include="Player\State\PlayerFlyingState.cpp" />
     <ClCompile Include="Player\State\PlayerGroundState.cpp" />
+    <ClCompile Include="PositionChecker.cpp" />
     <ClCompile Include="SpringCamera.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
