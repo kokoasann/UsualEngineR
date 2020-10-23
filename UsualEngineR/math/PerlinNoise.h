@@ -4,6 +4,7 @@
 
 namespace UER
 {
+	//シングルトンっぽくなってるけど、別に新しいインスタンス作っても問題ないで!
 	class PerlinNoise2D
 	{
 	private:
@@ -45,7 +46,7 @@ namespace UER
 		Vector2 m_dot_y = Vector2(277.1f, 409.5f);	// random2Dで使うパラメータ
 		float m_scaling = 19990.623f;				// random2Dで使うパラメータ(実は俺の生年月日)
 	};
-	static PerlinNoise2D& GPerlinNoise()
+	static PerlinNoise2D& GPerlinNoise2D()
 	{
 		return PerlinNoise2D::Get();
 	}

@@ -25,6 +25,7 @@ namespace UER
 		m_updateFunc = ini.m_updater->m_updateFunc;
 		m_generateFunc = ini.m_updater->m_geneFunc;
 		m_extendDataSize = ini.m_extendDataSize;
+		m_isBillboard = ini.m_isBillboard;
 
 		m_texture.InitFromDDSFile(ini.m_ddsFilePath);
 		if (ini.m_width == 0 || ini.m_height == 0)
@@ -255,7 +256,8 @@ namespace UER
 			tra.MakeTranslation(particle.pos);
 			sca.MakeScaling(particle.sca);
 			rot.MakeRotationFromQuaternion(particle.rot);
-			rot.Multiply(vrot, rot);
+			if(m_isBillboard)
+				rot.Multiply(vrot, rot);
 			datas[i].mWorld.Multiply(sca, rot);
 			datas[i].mWorld.Multiply(datas[i].mWorld, tra);
 

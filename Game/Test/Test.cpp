@@ -214,6 +214,7 @@ void Test::Awake()
 	pid.m_height = 10;
 	pid.m_width = 10;
 	pid.m_extendDataSize = sizeof(float);
+	//pid.m_isBillboard = false;
 	//pid.m_isDepthTest = false;
 	PlaneParticleUpdater m_effctUpdater(
 		[&](PLANE_PARTICLE_GENERATE_ARGS_CONST)->void
@@ -235,12 +236,14 @@ void Test::Awake()
 		[&](PLANE_PARTICLE_UPDATE_ARGS_CONST)->void
 		{
 			auto s = *(float*)extendData;
-			data.particleData.pos.y += 20.f * deltaTime;
-			float n = GPerlinNoise().GenerateNoise({ s*10,data.particleData.pos.y/10.f });
-			float m = GPerlinNoise().GenerateNoise({ data.particleData.pos.y/10.f, s*10});
-			data.particleData.pos.x = n*500.f* deltaTime;
+			data.particleData.pos.y += 10.f * deltaTime;
+
+			float n = GPerlinNoise2D().GenerateNoise({ s*10, data.particleData.pos.y / 10.f });
+			float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s*10 });
+			data.particleData.pos.x = n * 500.f * deltaTime;
 			data.particleData.pos.z = m * 500.f * deltaTime;
 			data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f)+0.1f,1.f);
+
 			Vector3 col;
 			col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
 			data.particleData.mulColor.Set(col);
@@ -260,14 +263,14 @@ void Test::Update()
 	m_pModel->SetPosition(trans.getOrigin());
 	m_pModel->SetRotation(trans.getRotation());
 
-	auto cam = g_lockCamera3D.Get();
+	/*auto cam = g_lockCamera3D.Get();
 	Quaternion rot;
 	rot.SetRotationDegY(0.5f);
 	auto pos = cam->GetPosition();
 	rot.Apply(pos);
 	cam->SetPosition(pos);
 	static Vector3 p = { 50,10,0 };
-	rot.Apply(p);
+	rot.Apply(p);*/
 	//m_3dSprite->SetPos(p);
 }
 

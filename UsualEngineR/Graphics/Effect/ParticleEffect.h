@@ -74,6 +74,7 @@ namespace UER
 		UINT m_width = 0;										//スプライトの幅。
 		UINT m_height = 0;										//スプライトの高さ。
 		bool m_isDepthTest = true;
+		bool m_isBillboard = true;
 		int m_extendDataSize = 0;
 		//PlaneParticleGenerateFunc m_generateFunc;
 		//PlaneParticleUpdateFunc m_updateFunc;
@@ -88,6 +89,16 @@ namespace UER
 
 		void Update(float deltaTime);
 
+		/// <summary>
+		/// 描画。PrePostRenderで読んでやってね!
+		/// </summary>
+		/// <param name="rc"></param>
+		/// <param name="pos"></param>
+		/// <param name="sca"></param>
+		/// <param name="rot"></param>
+		/// <param name="mulColor"></param>
+		/// <param name="view"></param>
+		/// <param name="projection"></param>
 		void Draw(
 			RenderContext& rc,
 			const Vector3& pos,
@@ -101,6 +112,8 @@ namespace UER
 		template<class T>
 		void AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, T* extendData = nullptr)
 		{
+			if (m_numInstance >= MAX_INSTANCES_NUM)
+				return;
 			int len = m_particleDatasEX.size();
 			m_particleDatasEX.resize(len + 1);
 			m_particleDatasEX[len].particleData.pos = pos;
@@ -177,6 +190,8 @@ namespace UER
 		//PlaneParticleUpdater* m_updater = nullptr;
 		PlaneParticleGenerateFunc m_generateFunc;
 		PlaneParticleUpdateFunc m_updateFunc;
+
+		bool m_isBillboard = true;
 	};
 
 

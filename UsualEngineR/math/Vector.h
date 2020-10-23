@@ -803,6 +803,14 @@ namespace UER
 		{
 		}
 
+		Quaternion(const Vector3& v)
+		{
+			x = v.x;
+			y = v.y;
+			z = v.z;
+			w = 0.f;
+		}
+
 		//
 		Quaternion(const btQuaternion& bt)
 		{
@@ -927,6 +935,9 @@ namespace UER
 			);
 			DirectX::XMStoreFloat4(&vec, xmv);
 		}
+
+
+
 		/// <summary>
 		/// Y軸周りの回転を加算。
 		/// </summary>

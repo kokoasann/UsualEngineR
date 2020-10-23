@@ -240,6 +240,19 @@ namespace UER
 				m_lStickX /= t;
 				m_lStickY /= t;
 			}
+
+			if (GetAsyncKeyState('8'))
+			{
+				m_r2Button = 1.f;
+			}
+			else
+				m_r2Button = 0.f;
+			if (GetAsyncKeyState('N'))
+			{
+				m_l2Button = 1.f;
+			}
+			else
+				m_l2Button = 0.f;
 	
 			for (const VirtualPadToKeyboard& vPadToKeyboard : vPadToKeyboardTable) {
 				if (GetAsyncKeyState(vPadToKeyboard.keyCoord1)) {

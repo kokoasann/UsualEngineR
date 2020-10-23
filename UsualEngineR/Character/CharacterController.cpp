@@ -34,7 +34,7 @@ namespace UER
 			//上方向と法線のなす角度を求める。
 			float angle = hitNormalTmp.Dot(g_vec3Up);
 			angle = fabsf(acosf(angle));
-			if (angle < Math::PI * 0.4f		//地面の傾斜が54度より小さいので地面とみなす。
+			if (angle < Math::PI * 0.5f		//地面の傾斜が54度より小さいので地面とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
@@ -76,7 +76,7 @@ namespace UER
 			hitNormalTmp.Set(convexResult.m_hitNormalLocal);
 			//上方向と衝突点の法線のなす角度を求める。
 			float angle = fabsf(acosf(hitNormalTmp.Dot(g_vec3Up)));
-			if (angle >= Math::PI * 0.2f		//地面の傾斜が54度以上なので壁とみなす。
+			if (angle >= Math::PI * 0.4f		//地面の傾斜が54度以上なので壁とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
 				isHit = true;
@@ -139,7 +139,9 @@ namespace UER
 		Vector3 addPos = moveSpeed;
 		addPos *= deltaTime;
 		nextPosition += addPos;
-	
+		
+		Vector3 oldnextPos = m_position;
+
 		Vector3 originalXZDir = addPos;
 		originalXZDir.y = 0.0f;
 		originalXZDir.Normalize();
@@ -223,6 +225,11 @@ namespace UER
 					//どことも当たらないので終わり。
 					break;
 				}
+				/*float len = (oldnextPos - nextPosition).Length();
+				if (len < 0.0001)
+					break;
+				oldnextPos = nextPosition;*/
+
 				loopCount++;
 				if (loopCount == 5) {
 					break;
