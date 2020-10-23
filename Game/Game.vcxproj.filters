@@ -79,6 +79,7 @@
     <ClInclude Include="CCameraCollisionSlover.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="PositionChecker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="CCameraCollisionSlover.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="PositionChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

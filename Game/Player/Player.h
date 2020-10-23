@@ -146,6 +146,10 @@ public:
 		return m_charaCon.IsOnGround();
 	}
 
+	const Vector3& GetForward() const {
+		return m_forward;
+	}
+
 	/// <summary>
 	/// プレイヤーにダメージを適用する
 	/// </summary>
@@ -231,6 +235,7 @@ private:
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
 	Vector3 m_position = { 0,15,-20 };
+	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 0.05f;
 
