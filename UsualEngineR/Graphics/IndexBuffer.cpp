@@ -50,4 +50,16 @@ namespace UER
 		m_indexBuffer->Unmap(0, nullptr);
 	}
 
+	void* IndexBuffer::BeginEgit()
+	{
+		void* pData;
+		m_indexBuffer->Map(0, nullptr, (void**)&pData);
+		return pData;
+	}
+
+	void IndexBuffer::EndEdit()
+	{
+		m_indexBuffer->Unmap(0, nullptr);
+	}
+
 }

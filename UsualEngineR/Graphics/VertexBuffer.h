@@ -29,6 +29,9 @@ namespace UER
 		/// </summary>
 		/// <param name="srcVertices">コピー元の頂点データ。</param>
 		void Copy(void* srcVertices) ;
+
+		void* BeginEgit();
+		void EndEdit();
 		/// <summary>
 		/// 頂点バッファビューを取得。
 		/// </summary>

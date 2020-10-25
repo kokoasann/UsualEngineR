@@ -41,4 +41,16 @@ namespace UER
 		m_vertexBuffer->Unmap(0, nullptr);
 	}
 
+	void* VertexBuffer::BeginEgit()
+	{
+		void* pData;
+		m_vertexBuffer->Map(0, nullptr, (void**)&pData);
+		return pData;
+	}
+
+	void VertexBuffer::EndEdit()
+	{
+		m_vertexBuffer->Unmap(0, nullptr);
+	}
+
 }

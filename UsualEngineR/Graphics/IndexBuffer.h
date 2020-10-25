@@ -27,6 +27,9 @@ namespace UER
 		/// </summary>
 		/// <param name="srcIndecies">コピー元のインデックスデータ。</param>
 		void Copy(void* srcIndecies) ;
+
+		void* BeginEgit();
+		void EndEdit();
 		/// <summary>
 		/// インデックスバッファビューを取得。
 		/// </summary>
