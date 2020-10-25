@@ -110,7 +110,7 @@ namespace UER
 		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vs_inv.GetCompiledBlob());
 		psoDesc.NumRenderTargets = 1;
 		psoDesc.RTVFormats[1] = DXGI_FORMAT_UNKNOWN;
-		m_pipState_inv.Init(psoDesc);
+		//m_pipState_inv.Init(psoDesc);
 
 
 		m_descHeap.RegistConstantBuffer(0, m_constBuffer);
@@ -323,13 +323,13 @@ namespace UER
 			//return;
 		}
 
-		D3D12_VIEWPORT viewport;
+		/*D3D12_VIEWPORT viewport;
 		viewport.TopLeftX = 0;
 		viewport.TopLeftY = 0;
 		viewport.Width = static_cast<FLOAT>(FRAME_BUFFER_W);
 		viewport.Height = static_cast<FLOAT>(FRAME_BUFFER_H);
 		viewport.MinDepth = D3D12_MIN_DEPTH;
-		viewport.MaxDepth = D3D12_MAX_DEPTH;
+		viewport.MaxDepth = D3D12_MAX_DEPTH;*/
 		
 
 		SConstBufferData cbData;
@@ -339,7 +339,7 @@ namespace UER
 
 		rc.SetRenderTargets(1, g_graphicsEngine->GetCurrentRenderTarget());
 
-		rc.SetScissorRect(rect);
+		//rc.SetScissorRect(rect);
 		//rc.SetViewport(viewport);
 
 		rc.SetRootSignature(m_rootSign);

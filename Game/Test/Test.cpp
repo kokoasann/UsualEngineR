@@ -261,7 +261,13 @@ void Test::Awake()
 	VolumetricEffectRender* volEff = NewGO<VolumetricEffectRender>(0);
 	//volEff->Init("Assets/modelData/test/sphere.tkm");
 	volEff->Init("Assets/modelData/test/test.tkm");
-	volEff->SetPos({ 50,50,50 });
+	volEff->SetPos({ 80,50,50 });
+	volEff->SetSca({ 50,50,50 });
+
+	volEff = NewGO<VolumetricEffectRender>(0);
+	volEff->Init("Assets/modelData/test/sphere.tkm");
+	//volEff->Init("Assets/modelData/test/test.tkm");
+	volEff->SetPos({ -80,50,-50 });
 	volEff->SetSca({ 50,50,50 });
 }
 
