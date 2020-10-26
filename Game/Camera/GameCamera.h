@@ -70,6 +70,7 @@ private:
 	bool isChanging = false;
 
 	const float m_swivelSpeed = 60.f;
+	const float m_transitionSpeed = 0.02f;
 	const Vector3 m_furtherTargetHeight = { 0.f,6.f,0.f };
 	Vector3 m_position = { 0,3,15 };
 	Vector3 m_old = { 0,3,15 };
@@ -97,7 +98,8 @@ private:
 	//SpringCamera m_springCamera;
 
 	//PositionChecker* m_posChecker = nullptr;
-	std::vector< PositionChecker*> m_posCheckers;
+
+	//std::vector< PositionChecker*> m_posCheckers;
 
 	float m_cameraChangeRatio = 0.f;
 };

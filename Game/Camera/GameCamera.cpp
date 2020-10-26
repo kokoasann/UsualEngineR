@@ -34,12 +34,12 @@ void GameCamera::Awake()
 
 bool GameCamera::Start()
 {
-	auto posChecker = NewGO<PositionChecker>(0);
-	auto posChecker1 = NewGO<PositionChecker>(0);
-	auto posChecker2 = NewGO<PositionChecker>(0);
-	m_posCheckers.push_back(posChecker);
-	m_posCheckers.push_back(posChecker1);
-	m_posCheckers.push_back(posChecker2);
+	//auto posChecker = NewGO<PositionChecker>(0);
+	//auto posChecker1 = NewGO<PositionChecker>(0);
+	//auto posChecker2 = NewGO<PositionChecker>(0);
+	//m_posCheckers.push_back(posChecker);
+	//m_posCheckers.push_back(posChecker1);
+	//m_posCheckers.push_back(posChecker2);
 
 	//auto cam = g_lockCamera3D.Get();
 
@@ -190,11 +190,11 @@ void GameCamera::PostUpdate() {
 		auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
 		static float cameraDist = vecCtoECP.Length();
 		//forward.Scale(30.f);
-		m_posCheckers.at(0)->SetPos(vecCtoECP + mp_player->GetPosition());
+		//m_posCheckers.at(0)->SetPos(vecCtoECP + mp_player->GetPosition());
 		auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
 		//auto backward = m_playerCameraPos;
 		//backward.Scale(-1.f);
-		m_posCheckers.at(1)->SetPos(vecCtoPCP + mp_player->GetPosition());
+		//m_posCheckers.at(1)->SetPos(vecCtoPCP + mp_player->GetPosition());
 
 		float dist_cecp = vecCtoECP.Length();
 		float dist_cpcp = vecCtoPCP.Length();
@@ -249,17 +249,17 @@ void GameCamera::PostUpdate() {
 		slpos.Scale(scale);
 
 		m_position = slpos + m_charaPos;
-		m_posCheckers.at(2)->SetPos(m_position);
+		//m_posCheckers.at(2)->SetPos(m_position);
 
 		g_camera3D->SetPosition(m_position);
 		auto tar = Math::Lerp(m_cameraChangeRatio, m_enemyCameraTargetPos, m_playerCameraTargetPos);
 		g_camera3D->SetTarget(tar);
 
 		if (m_state == State::enPlayerCamera) {
-			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += 0.01f);
+			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed);
 		}
 		else {
-			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= 0.01f);
+			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed);
 		}
 
 	}
@@ -369,7 +369,7 @@ void GameCamera::CalcPlayerCamera() {
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
 
 
-	if (m_cameraChangeRatio < 1.f) {
+	if (m_cameraChangeRatio == 0.f) {
 		auto pf = mp_player->GetForward();
 		pf.Scale(-1.f * m_toCameraPos.Length());
 		pf.y += cameraHeight;
@@ -475,13 +475,6 @@ void GameCamera::UpdateState() {
 	if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
-			//TODO : プレイヤーカメラからエネミーカメラに切り替えた時にプレイヤーカメラの座標がリセットされるバグを修正する
-			if (m_cameraChangeRatio == 1.f) {
-				auto forward = mp_player->GetForward();
-				forward.Scale(-1);
-				forward *= m_dist.Length();
-				m_toCameraPos = forward;
-			}
 		}
 		else {
 			if (mp_player->GetTargetEnemy() != nullptr)
