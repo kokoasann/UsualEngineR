@@ -40,21 +40,6 @@ namespace UER
 		rc.SetVertexBuffer(m_vertexBuffer);
 		rc.SetPrimitiveTopology(m_topology);
 		rc.DrawIndexed(m_indexBuffer.GetCount());
-		/*ID3D11DeviceContext* dc = usualEngine()->GetGraphicsEngine()->GetD3DDeviceContext();
-		UINT offset = 0;
-		UINT stride = m_vertexBuffer.GetStride();
-		dc->IASetVertexBuffers(0, 1, &m_vertexBuffer.GetBody(), &stride, &offset);
-
-		dc->IASetIndexBuffer
-		(
-			m_indexBuffer.GetBody(), 
-			m_indexBuffer.GetIndexType() == IndexBuffer::e16bit ? DXGI_FORMAT_R16_UINT: DXGI_FORMAT_R32_UINT,
-			0
-		);
-
-		dc->IASetPrimitiveTopology(m_topology);
-
-		dc->DrawIndexed(m_indexBuffer.GetIndexNum(), 0, 0);*/
 	}
 	void Primitive::Draw(RenderContext& rc, int vertexnum) const
 	{

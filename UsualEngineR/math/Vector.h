@@ -107,6 +107,13 @@ namespace UER
 			DirectX::XMStoreFloat2(&vec, xmvr);
 		}
 
+		void Scale(float s)
+		{
+			DirectX::XMVECTOR xmv = DirectX::XMLoadFloat2(&vec);
+			xmv = DirectX::XMVectorScale(xmv, s);
+			DirectX::XMStoreFloat2(&vec, xmv);
+		}
+
 		float Dot(const Vector2& _v) const
 		{
 			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
@@ -154,6 +161,38 @@ namespace UER
 		{
 			Add(_v);
 			return *this;
+		}
+
+
+
+		/// <summary>
+		/// 最大値を設定。
+		/// </summary>
+		/// <remarks>
+		/// 下記のような処理が行われています。
+		/// this->x = max( this->x, v.x );
+		/// this->y = max( this->y, v.y );
+		/// </remarks>
+		void Max(const Vector2& v)
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v.vec);
+			DirectX::XMStoreFloat2(&vec, DirectX::XMVectorMax(xmv0, xmv1));
+		}
+
+		/// <summary>
+		/// 最小値を設定。
+		/// </summary>
+		/// <remarks>
+		/// 下記のような処理が行われています。
+		/// this->x = min( this->x, v.x );
+		/// this->y = min( this->y, v.y );
+		/// </remarks>
+		void Min(const Vector2& v)
+		{
+			DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat2(&vec);
+			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v.vec);
+			DirectX::XMStoreFloat2(&vec, DirectX::XMVectorMin(xmv0, xmv1));
 		}
 	};
 	/// <summary>

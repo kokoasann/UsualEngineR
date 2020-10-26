@@ -34,7 +34,10 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	m_velocity.x = Approach(m_vecVelocityGoal.x, m_velocity.x, delta * m_QUICKNESS);
 	m_velocity.z = Approach(m_vecVelocityGoal.z, m_velocity.z, delta * m_QUICKNESS);
 	auto cam = g_lockCamera3D.Get();
-	auto forward = cam->GetForward();
+
+	//auto forward = cam->GetForward();
+	auto forward = p->GetForward();
+
 	forward.y = 0.f;
 	forward.Normalize();
 	Vector3 up = { 0,1,0 };
@@ -53,6 +56,17 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	p->SetLocalVelocity(m_velocity);
 
 	//Rotation
+	Quaternion q1;
+	auto lsxf = g_pad[0]->GetLStickXF();
+	auto lsyf = g_pad[0]->GetLStickYF();
+	static float ratio = 0.f;
+	auto rightp = right * lsxf;
+	auto frontp = forward * lsyf;
+	auto toVec = rightp + frontp;
+	q1.SetRotation(forward, toVec);
+	Quaternion sl;
+	sl.Slerp(ratio, forward, q1);
+
 	if (vel.x != 0.f or vel.z != 0.f) {
 		Quaternion rot = Quaternion::Identity;
 		auto theta = atan2(vel.x, vel.z);

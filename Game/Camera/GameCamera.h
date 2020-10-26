@@ -94,9 +94,12 @@ private:
 	IEnemy* mp_enemy = nullptr;
 
 	Vector3 m_toCameraPos;
-	SpringCamera m_springCamera;
+	//SpringCamera m_springCamera;
 
-	PositionChecker* m_posChecker = nullptr;
+	//PositionChecker* m_posChecker = nullptr;
+	std::vector< PositionChecker*> m_posCheckers;
+
+	float m_cameraChangeRatio = 0.f;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

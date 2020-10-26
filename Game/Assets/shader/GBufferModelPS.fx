@@ -29,7 +29,8 @@ SPSOut PSMain( SPSIn psIn )
     SPSOut Out;
 	
     Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
-    Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    Out.depth = psIn.pos.z;
     Out.normal = float4(psIn.normal,1.f);
     Out.specular = 0.f;
     Out.tangent = float4(psIn.tangent,1.f);
@@ -41,7 +42,8 @@ SPSOut PSMain_nor( SPSIn psIn )
     SPSOut Out;
 	
     Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
-    Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    Out.depth = psIn.pos.z;
     Out.normal = g_normalMap.Sample(g_sampler, psIn.uv);
     Out.specular = 0.f;
     Out.tangent = float4(psIn.tangent,1.f);
@@ -53,7 +55,8 @@ SPSOut PSMain_spe( SPSIn psIn )
     SPSOut Out;
 	
     Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
-    Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    Out.depth = psIn.pos.z;
     Out.normal = float4(psIn.normal,1.f);
     Out.specular = g_specularMap.Sample(g_sampler, psIn.uv).r;
     Out.tangent = float4(psIn.tangent,1.f);
@@ -65,7 +68,8 @@ SPSOut PSMain_nor_spe( SPSIn psIn )
     SPSOut Out;
 	
     Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
-    Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    Out.depth = psIn.pos.z;
     Out.normal = g_normalMap.Sample(g_sampler, psIn.uv);
     Out.specular = g_specularMap.Sample(g_sampler, psIn.uv).r;
     Out.tangent = float4(psIn.tangent,1.f);

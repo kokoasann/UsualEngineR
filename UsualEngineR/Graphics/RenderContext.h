@@ -247,6 +247,14 @@ namespace UER
 				&CD3DX12_RESOURCE_BARRIER::Transition(renderTarget, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET)
 			);
 		}
+		void WaitUAV(RWStructuredBuffer& uav)
+		{
+			m_commandList->ResourceBarrier(
+				1,
+				&CD3DX12_RESOURCE_BARRIER::UAV(uav.GetD3DResoruce())
+			);
+		}
+
 		/// <summary>
 		/// リソースバリア。
 		/// </summary>

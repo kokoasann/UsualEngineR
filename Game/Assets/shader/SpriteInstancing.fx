@@ -50,12 +50,12 @@ Texture2D<float1> g_GDepth : register(t2);
 float4 PSMain_DepthEnable(PSInput In) : SV_Target0
 {
     float rw = rcp(In.pos.w);
-    float d = In.pos.z * rw;
+    float d = In.pos.z;// * rw;
     float2 screenPos = In.pos.xy;
 	screenPos.x *= rcp(1280.f);
 	screenPos.y *= rcp(720.f);
     float gd = g_GDepth.Sample(Sampler, screenPos);
-    clip(d-gd);
+    clip(gd-d);
 	//return float4(1,1,0,1.f);
 
 	float4 res = colorTexture.Sample(Sampler, In.uv);// * mulcol;

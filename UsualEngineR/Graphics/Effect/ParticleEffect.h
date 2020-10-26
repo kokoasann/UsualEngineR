@@ -45,10 +45,10 @@ namespace UER
 		float lifeTime;
 	};
 #define PLANE_PARTICLE_GENERATE_ARGS_CONST PlaneParticleEffect* pThis, float deltaTime
-#define PLANE_PARTICLE_GENERATE_ARGS(pThis,deltaTime) PLANE_PARTICLE_GENERATE_ARGS_CONST
+#define PLANE_PARTICLE_GENERATE_FUNC(pThis,deltaTime) (PLANE_PARTICLE_GENERATE_ARGS_CONST)->void
 
 #define PLANE_PARTICLE_UPDATE_ARGS_CONST ParticleDataEX& data, float deltaTime, void* extendData
-#define PLANE_PARTICLE_UPDATE_ARGS(data,deltaTime,extendData) PLANE_PARTICLE_UPDATE_ARGS_CONST
+#define PLANE_PARTICLE_UPDATE_FUNC(data,deltaTime,extendData) (PLANE_PARTICLE_UPDATE_ARGS_CONST)->void
 
 	class PlaneParticleEffect;
 	using PlaneParticleGenerateFunc = std::function<void(PLANE_PARTICLE_GENERATE_ARGS_CONST)>;

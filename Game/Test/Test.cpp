@@ -4,6 +4,7 @@
 
 
 #include "Effect/ParticleEffect.h"
+#include "Effect/VolumetricEffect.h"
 
 void Test::Release()
 {
@@ -185,28 +186,28 @@ void Test::Awake()
 	m_chara->SetPosition({ 10,100,0 });
 	m_characon.Init(1, 2, m_chara->GetPosition(), true);
 
-	m_3dSprite = NewGO<SpriteRender>(0);
-	SpriteInitData sd;
-	sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
-	sd.m_height = 50;
-	sd.m_width = 50;
-	m_3dSprite->Init(sd);
-	m_3dSprite->MainCameraView();
-	m_3dSprite->CameraScaleLock();
-	m_3dSprite->Mode_BillBord();
-	m_3dSprite->SetPos({ 50,10,0 });
-	m_3dSprite->SetPivot({ 0,0 });
-	m_3dSprite->SetSca(g_vec3One * 0.001f);
-
-	m_3dSprite = NewGO<SpriteRender>(1);
-	m_3dSprite->Init(sd);
-	m_3dSprite->MainCameraView();
+	//m_3dSprite = NewGO<SpriteRender>(0);
+	//SpriteInitData sd;
+	//sd.m_ddsFilePath[0] = "Assets/Image/sample.dds";
+	//sd.m_height = 50;
+	//sd.m_width = 50;
+	//m_3dSprite->Init(sd);
+	//m_3dSprite->MainCameraView();
 	//m_3dSprite->CameraScaleLock();
-	m_3dSprite->Mode_BillBord();
-	m_3dSprite->SetPos({ 50,10,0 });
-	m_3dSprite->SetPivot({ 0,0 });
+	//m_3dSprite->Mode_BillBord();
+	//m_3dSprite->SetPos({ 50,10,0 });
+	//m_3dSprite->SetPivot({ 0,0 });
+	//m_3dSprite->SetSca(g_vec3One * 0.001f);
 
-	m_3dSprite->SetSca(g_vec3One * 0.1f);
+	//m_3dSprite = NewGO<SpriteRender>(1);
+	//m_3dSprite->Init(sd);
+	//m_3dSprite->MainCameraView();
+	////m_3dSprite->CameraScaleLock();
+	//m_3dSprite->Mode_BillBord();
+	//m_3dSprite->SetPos({ 50,10,0 });
+	//m_3dSprite->SetPivot({ 0,0 });
+
+	//m_3dSprite->SetSca(g_vec3One * 0.1f);
 
 
 	PlaneParticleEffectInitData pid;
@@ -217,7 +218,7 @@ void Test::Awake()
 	//pid.m_isBillboard = false;
 	//pid.m_isDepthTest = false;
 	PlaneParticleUpdater m_effctUpdater(
-		[&](PLANE_PARTICLE_GENERATE_ARGS_CONST)->void
+		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis,deltaTime)
 		{
 			static float time = 0;
 			if (time >= 0.01f)
@@ -233,7 +234,7 @@ void Test::Awake()
 			}
 			time += deltaTime;
 		},
-		[&](PLANE_PARTICLE_UPDATE_ARGS_CONST)->void
+		[&]PLANE_PARTICLE_UPDATE_FUNC(data,deltaTime,extendData)
 		{
 			auto s = *(float*)extendData;
 			data.particleData.pos.y += 10.f * deltaTime;
@@ -253,6 +254,21 @@ void Test::Awake()
 	pid.m_updater = &m_effctUpdater;
 	auto effect = NewGO<PlaneParticleEffectRender>(0);
 	effect->Init(pid);
+	Quaternion effrot;
+	effrot.SetRotationDegZ(30);
+	//effect->SetRot(effrot);
+
+	VolumetricEffectRender* volEff = NewGO<VolumetricEffectRender>(0);
+	//volEff->Init("Assets/modelData/test/sphere.tkm");
+	volEff->Init("Assets/modelData/test/test.tkm");
+	volEff->SetPos({ 80,50,50 });
+	volEff->SetSca({ 50,50,50 });
+
+	volEff = NewGO<VolumetricEffectRender>(0);
+	volEff->Init("Assets/modelData/test/sphere.tkm");
+	//volEff->Init("Assets/modelData/test/test.tkm");
+	volEff->SetPos({ -80,50,-50 });
+	volEff->SetSca({ 50,50,50 });
 }
 
 void Test::Update()
