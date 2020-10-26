@@ -369,7 +369,7 @@ void GameCamera::CalcPlayerCamera() {
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
 
 
-	if (m_cameraChangeRatio < 1.f) {
+	if (m_cameraChangeRatio == 0.f) {
 		auto pf = mp_player->GetForward();
 		pf.Scale(-1.f * m_toCameraPos.Length());
 		pf.y += cameraHeight;
@@ -475,13 +475,6 @@ void GameCamera::UpdateState() {
 	if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
-			//TODO : プレイヤーカメラからエネミーカメラに切り替えた時にプレイヤーカメラの座標がリセットされるバグを修正する
-			if (m_cameraChangeRatio == 1.f) {
-				auto forward = mp_player->GetForward();
-				forward.Scale(-1);
-				forward *= m_dist.Length();
-				m_toCameraPos = forward;
-			}
 		}
 		else {
 			if (mp_player->GetTargetEnemy() != nullptr)
