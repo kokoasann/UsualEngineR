@@ -34,7 +34,12 @@ void GameCamera::Awake()
 
 bool GameCamera::Start()
 {
-	m_posChecker = NewGO<PositionChecker>(0);
+	auto posChecker = NewGO<PositionChecker>(0);
+	auto posChecker1 = NewGO<PositionChecker>(0);
+	auto posChecker2 = NewGO<PositionChecker>(0);
+	m_posCheckers.push_back(posChecker);
+	m_posCheckers.push_back(posChecker1);
+	m_posCheckers.push_back(posChecker2);
 
 	//auto cam = g_lockCamera3D.Get();
 
@@ -45,16 +50,18 @@ bool GameCamera::Start()
 	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
 	g_camera3D->SetPosition({ 0.0f, 3.0f, 35.f });
 
-	m_toCameraPos.Set(0.0f, 3.0f, -35.f);
+	m_toCameraPos.Set(0.0f, 3.0f, -15.f);
+	/*
 	m_springCamera.Init(
 		g_camera3D,
 		200.0f,
 		false,
 		5.0f
 	);
+	*/
 
 	m_dist = m_toCameraPos;
-	m_springCamera.Update();
+	//m_springCamera.Update();
 
 	return true;
 }
@@ -67,17 +74,15 @@ void GameCamera::PreUpdate()
 
 void GameCamera::Update()
 {
-
-	{
-		auto forward = mp_player->GetForward();
-		forward.Scale(100.f);
-		m_posChecker->SetPos(forward + mp_player->GetPosition());
-	}
-	
-	UpdateState();
-
 	Vector3 target = mp_player->GetPosition();
 	m_charaPos = mp_player->GetPosition();
+
+	UpdateState();
+
+	CalcEnemyCamera();
+	CalcPlayerCamera();
+
+	/*
 
 	target.y += 5.0f;
 	Vector3 toCameraPosOld = m_toCameraPos;
@@ -118,10 +123,10 @@ void GameCamera::Update()
 
 		m_springCamera.SetTarget(m_playerCameraTargetPos);
 		m_springCamera.SetPosition(m_playerCameraPos);
-		printf("player camera\n");
+		//printf("player camera\n");
 	}
 	else {
-		printf("enemy camera\n");
+		//printf("enemy camera\n");
 		auto vecToCamearFromChara = m_springCamera.GetPosition() - m_charaPos;
 		auto vecToCameraFromEnemy = m_springCamera.GetPosition() - mp_enemy->GetPosition();
 		vecToCameraFromEnemy.y = 0.f;
@@ -174,10 +179,93 @@ void GameCamera::Update()
 	//m_springCamera.SetTarget(target);
 	//m_springCamera.SetPosition({ 0,100,1000 });
 	//m_springCamera.Update();
+	*/
 }
 
 
 void GameCamera::PostUpdate() {
+
+	{
+		//auto forward = mp_player->GetForward();
+		auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
+		static float cameraDist = vecCtoECP.Length();
+		//forward.Scale(30.f);
+		m_posCheckers.at(0)->SetPos(vecCtoECP + mp_player->GetPosition());
+		auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
+		//auto backward = m_playerCameraPos;
+		//backward.Scale(-1.f);
+		m_posCheckers.at(1)->SetPos(vecCtoPCP + mp_player->GetPosition());
+
+		float dist_cecp = vecCtoECP.Length();
+		float dist_cpcp = vecCtoPCP.Length();
+
+		vecCtoECP.Normalize();
+		vecCtoPCP.Normalize();
+
+	Matrix mat1, mat2;
+	mat1.MakeLookAt(Vector3::Zero, vecCtoECP, Vector3::Up);
+	mat2.MakeLookAt(Vector3::Zero, vecCtoPCP, Vector3::Up);
+	Quaternion frot(mat1);
+	Quaternion brot(mat2);
+	//Quaternion sl;
+
+	//static float ratio = 0.0f;
+		/*
+		if (g_pad[0]->IsPress(enButtonLeft)) {
+			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += 0.02f);
+		}
+		if (g_pad[0]->IsPress(enButtonRight)) {
+			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= 0.02f);
+		}
+		printf("Ratio : %f\n", m_cameraChangeRatio);
+		*/
+
+		//ratio 0 == enemy camera, ratio 1 == player camera
+		printf("Ratio : %f\n", m_cameraChangeRatio);
+
+		Quaternion q1;
+		//auto t = UER::Dot(from, to);
+		//auto t = vecCtoECP.Dot(vecCtoPCP);
+		//q1.SetRotation(Vector3::AxisY, acosf(t));
+		q1.SetRotation(vecCtoECP, vecCtoPCP);
+		Quaternion sl;
+		//sl.Slerp(m_cameraChangeRatio, vecCtoECP, q1);
+		sl.Slerp(m_cameraChangeRatio, Quaternion::Identity, q1);
+		//Matrix mat3;
+		//mat3.MakeLookAt(Vector3::Zero, m_enemyCameraPos, Vector3::Up);
+		//Quaternion ecrot(mat3);
+		//sl.Slerp(ratio, frot, brot);
+		//Vector3 slpos = vecCtoECP;
+		Vector3 slpos = m_enemyCameraPos - mp_player->GetPosition();
+		sl.Apply(slpos);
+		//slpos.Scale(30.f);
+
+
+		//auto scale = 1  ratio * dist_cecp / dist_cpcp;
+
+		auto scaleRatio = dist_cpcp / dist_cecp;
+
+		auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
+		slpos.Scale(scale);
+
+		m_position = slpos + m_charaPos;
+		m_posCheckers.at(2)->SetPos(m_position);
+
+		g_camera3D->SetPosition(m_position);
+		auto tar = Math::Lerp(m_cameraChangeRatio, m_enemyCameraTargetPos, m_playerCameraTargetPos);
+		g_camera3D->SetTarget(tar);
+
+		if (m_state == State::enPlayerCamera) {
+			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += 0.01f);
+		}
+		else {
+			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= 0.01f);
+		}
+
+	}
+
+	return;
+
 	//auto cam = g_lockCamera3D.Get();
 
 	//CalcEnemyCamera();
@@ -226,9 +314,11 @@ void GameCamera::CalcEnemyCamera() {
 	vecRight.Cross({ 0,1,0 });
 	vecRight.Normalize();
 	ecPos += vecRight * charaSlideParam;
+	//m_charaPos += vecRight * charaSlideParam;
 
 	auto tarp = m_targetPos;
 	tarp -= vecRight * targetSlideParam;
+	tarp = m_charaPos + vecRight * charaSlideParam;;
 
 
 	//TODO : 値は同時計算してUpdateでどちらを使うか判断するか補完する
@@ -247,6 +337,8 @@ void GameCamera::CalcPlayerCamera() {
 	//
 	static const float upperLimit = 0.7f;
 	static const float lowerLimit = -0.5f;
+	static float cameraHeight = 5.f;
+
 
 	auto vecCharaToCamera = m_playerCameraPos - m_charaPos;
 
@@ -275,6 +367,15 @@ void GameCamera::CalcPlayerCamera() {
 
 	m_playerCameraPos = m_charaPos + m_dist;
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
+
+
+	if (m_cameraChangeRatio < 1.f) {
+		auto pf = mp_player->GetForward();
+		pf.Scale(-1.f * m_toCameraPos.Length());
+		pf.y += cameraHeight;
+		m_playerCameraPos = m_charaPos + pf;
+		m_dist = m_playerCameraPos - mp_player->GetPosition();
+	}
 
 	m_old = m_dist;
 
@@ -374,10 +475,13 @@ void GameCamera::UpdateState() {
 	if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
-			auto forward = mp_player->GetForward();
-			forward.Scale(-1);
-			forward *= m_dist.Length();
-			m_toCameraPos = forward;
+			//TODO : プレイヤーカメラからエネミーカメラに切り替えた時にプレイヤーカメラの座標がリセットされるバグを修正する
+			if (m_cameraChangeRatio == 1.f) {
+				auto forward = mp_player->GetForward();
+				forward.Scale(-1);
+				forward *= m_dist.Length();
+				m_toCameraPos = forward;
+			}
 		}
 		else {
 			if (mp_player->GetTargetEnemy() != nullptr)
