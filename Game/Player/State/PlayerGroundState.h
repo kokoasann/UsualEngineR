@@ -1,7 +1,7 @@
 #pragma once
 #include"IPlayerSstate.h"
 #include "../Player.h"
-
+class Player;
 /// <summary>
 /// 
 /// </summary>
@@ -15,6 +15,10 @@ public:
 	void Exit(Player*) override;
 
 private:
+
+	void CameraWorldMove(Player*);
+	void LocalWorldMove(Player*);
+
 	//Auto charge
 	const float m_BOOST_AUTO_CHARGE_AMOUNT = 5.f;
 	const float m_ENDURANCE_AUTO_CHARGE_AMOUNT = 5.f;
