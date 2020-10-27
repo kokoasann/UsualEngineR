@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlayerGroundState.h"
+#include "../../Camera/GameCamera.h"
 #include <cmath>
 
 PlayerGroundState::PlayerGroundState()
@@ -17,9 +18,14 @@ void PlayerGroundState::Enter(Player* p){
 }
 
 IPlayerState* PlayerGroundState::Update(Player* p) {
+
 	//Move
-	//CameraWorldMove(p);
-	TargettingEnemyMove(p);
+	if(p->GetGameCamera().IsTargettingEnemy()){
+		TargettingEnemyMove(p);
+	}
+	else {
+		CameraWorldMove(p);
+	}
 	
 	//State
 	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
@@ -102,11 +108,15 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		theta = theta * (180.f / Math::PI);
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
+
+		p->PlayAnimation(Player::EnAnimation::enRun);
+
 	}
 	else {
 		auto crot = g_camera3D->GetCameraRotation();
 		Quaternion rot(crot);
 		p->SetRotation(rot);
+		p->PlayAnimation(Player::EnAnimation::enIdle);
 	}
 
 }

@@ -48,18 +48,40 @@ void Player::Awake()
 
 
 	//Init Animation
-	static const int numAnim = 3;
+	const int numAnim = static_cast<int>(EnAnimation::enNumAnim);
 	m_animlist.resize(numAnim);
+
+	//Idle
+	m_animlist[static_cast<int>(EnAnimation::enIdle)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enIdle)]->Load("Assets/anim/unityChan/idle.tka");
+	m_animlist[static_cast<int>(EnAnimation::enIdle)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enIdle)]->SetLoopFlag(true);
+
+	//Run
 	m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
 	m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/anim/unityChan/run.tka");
 	m_animlist[static_cast<int>(EnAnimation::enRun)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enRun)]->SetLoopFlag(true);
 
+	//Walk
+	m_animlist[static_cast<int>(EnAnimation::enWalk)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enWalk)]->Load("Assets/anim/unityChan/walk.tka");
+	m_animlist[static_cast<int>(EnAnimation::enWalk)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enWalk)]->SetLoopFlag(true);
+
+	//Damage
+	m_animlist[static_cast<int>(EnAnimation::enDamage)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enDamage)]->Load("Assets/anim/unityChan/damage.tka");
+	m_animlist[static_cast<int>(EnAnimation::enDamage)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enDamage)]->SetLoopFlag(false);
+
+	//Attack
 	m_animlist[static_cast<int>(EnAnimation::enAttack)] = std::make_unique<CAnimationClip>();
 	m_animlist[static_cast<int>(EnAnimation::enAttack)]->Load("Assets/anim/unityChan/jump.tka");
 	m_animlist[static_cast<int>(EnAnimation::enAttack)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enAttack)]->SetLoopFlag(false);
 
+	//Dead
 	m_animlist[static_cast<int>(EnAnimation::enDead)] = std::make_unique<CAnimationClip>();
 	m_animlist[static_cast<int>(EnAnimation::enDead)]->Load("Assets/anim/unityChan/KneelDown.tka");
 	m_animlist[static_cast<int>(EnAnimation::enDead)]->BuildKeyFramesAndAnimationEvents();

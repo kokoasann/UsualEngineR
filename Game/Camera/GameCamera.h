@@ -54,6 +54,10 @@ public:
 		mp_player = player;
 	}
 
+	bool IsTargettingEnemy() {
+		return m_state == State::enEnemyCamera;
+	}
+
 private:
 
 

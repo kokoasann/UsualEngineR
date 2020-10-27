@@ -2,6 +2,7 @@
 #include "State/IPlayerSstate.h"
 #include "../../UsualEngineR/Character/CharacterController.h"
 class IEnemy;
+class GameCamera;
 
 /// <summary>
 /// 
@@ -20,7 +21,10 @@ public:
 	};
 
 	enum class EnAnimation {
+		enIdle,
 		enRun,
+		enWalk,
+		enDamage,
 		enAttack,
 		enDead,
 		enNumAnim
@@ -212,6 +216,14 @@ public:
 		m_endurance = min(m_ENDURANCE_MAX, m_endurance + amount);
 	}
 
+	void SetGameCamera(GameCamera* camera) {
+		mp_camera = camera;
+	}
+
+	GameCamera& GetGameCamera() {
+		return *mp_camera;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -223,6 +235,7 @@ private:
 
 	//Ref
 	IEnemy* m_target = nullptr;
+	GameCamera* mp_camera = nullptr;
 
 	//State
 	IPlayerState* m_nextState = nullptr;

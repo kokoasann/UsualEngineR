@@ -37,6 +37,7 @@ bool Game::Start()
 
 	m_gameHUD->SetPlayer(m_player);
 	m_camera->SetPlayer(m_player);
+	m_player->SetGameCamera(m_camera);
 
 	auto& eM = EnemyManager::GetEnemyManager();
 	eM.SpawnEnemies();
