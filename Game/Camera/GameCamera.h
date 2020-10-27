@@ -3,8 +3,6 @@ class Player;
 class IEnemy;
 class PositionChecker;
 
-#include "../SpringCamera.h"
-
 /// <summary>
 /// 
 /// </summary>

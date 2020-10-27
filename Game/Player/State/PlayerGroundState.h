@@ -17,14 +17,15 @@ public:
 private:
 
 	void CameraWorldMove(Player*);
-	void LocalWorldMove(Player*);
+	void TargettingEnemyMove(Player*);
 
 	//Auto charge
 	const float m_BOOST_AUTO_CHARGE_AMOUNT = 5.f;
 	const float m_ENDURANCE_AUTO_CHARGE_AMOUNT = 5.f;
 
 	const float m_RUN_COST = 20.f;
-	const float m_VELOCITY_MAX = 20.f;
+	const float m_VELOCITY_MAX = 15.f;
+	const float m_SIDE_MOVE_VELOCITY_MAX = 9.f;
 	const float m_GRAVITY = -30.f;
 	float m_QUICKNESS = 50.f;
 	const float m_RUN_SPEED_PARAM = 2.0f;

@@ -73,12 +73,6 @@
     <ClInclude Include="Enemy\HealthBar.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="SpringCamera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="CCameraCollisionSlover.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
     <ClInclude Include="PositionChecker.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,12 +148,6 @@
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="Enemy\HealthBar.cpp">
       <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="SpringCamera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraCollisionSlover.cpp">
-      <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="PositionChecker.cpp" />
   </ItemGroup>

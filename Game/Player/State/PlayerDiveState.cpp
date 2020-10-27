@@ -70,7 +70,9 @@ IPlayerState* PlayerDiveState::Update(Player* p) {
 	right.Normalize();
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x + up * m_velocity.y;
-	vel.y += m_GRAVITY;
+
+	if(!p->IsOnGround())
+		vel.y += m_GRAVITY;
 
 	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
 
