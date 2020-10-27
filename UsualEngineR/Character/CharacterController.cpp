@@ -20,6 +20,7 @@ namespace UER
 		btCollisionObject* me = nullptr;					//自分自身。自分自身との衝突を除外するためのメンバ。
 		float dist = FLT_MAX;								//衝突点までの距離。一番近い衝突点を求めるため。FLT_MAXは単精度の浮動小数点が取りうる最大の値。
 
+		
 															//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 		{
@@ -34,7 +35,7 @@ namespace UER
 			//上方向と法線のなす角度を求める。
 			float angle = hitNormalTmp.Dot(g_vec3Up);
 			angle = fabsf(acosf(angle));
-			if (angle < Math::PI * 0.5f		//地面の傾斜が54度より小さいので地面とみなす。
+			if (angle < Math::PI * 0.3f		//地面の傾斜が54度より小さいので地面とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
@@ -51,6 +52,10 @@ namespace UER
 					dist = distTmp;
 				}
 			}
+			else
+			{
+				
+			}
 			return 0.0f;
 		}
 	};
@@ -63,6 +68,11 @@ namespace UER
 		float dist = FLT_MAX;					//衝突点までの距離。一番近い衝突点を求めるため。FLT_MAXは単精度の浮動小数点が取りうる最大の値。
 		Vector3 hitNormal = g_vec3Zero;	//衝突点の法線。
 		btCollisionObject* me = nullptr;		//自分自身。自分自身との衝突を除外するためのメンバ。
+
+		bool isHitFloor = false;
+		Vector3 floorNormal = g_vec3Zero;
+		Vector3 floorHitPos = g_vec3One;
+
 												//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 		{
@@ -76,7 +86,7 @@ namespace UER
 			hitNormalTmp.Set(convexResult.m_hitNormalLocal);
 			//上方向と衝突点の法線のなす角度を求める。
 			float angle = fabsf(acosf(hitNormalTmp.Dot(g_vec3Up)));
-			if (angle >= Math::PI * 0.4f		//地面の傾斜が54度以上なので壁とみなす。
+			if (angle >= Math::PI * 0.3f		//地面の傾斜が54度以上なので壁とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
 				isHit = true;
@@ -93,6 +103,12 @@ namespace UER
 					dist = distTmp;
 					hitNormal = hitNormalTmp;
 				}
+			}
+			else
+			{
+				floorNormal = hitNormalTmp;
+				floorHitPos.Set(convexResult.m_hitPointLocal);
+				isHitFloor = true;
 			}
 			return 0.0f;
 		}
@@ -147,6 +163,12 @@ namespace UER
 		originalXZDir.Normalize();
 		//XZ平面での衝突検出と衝突解決を行う。
 		{
+			bool isHitFloor = false;
+			Vector3 floorPos;
+			Vector3 floorNor;
+
+			float Ypos = 0.f;
+
 			int loopCount = 0;
 			while (true) {
 				//現在の座標から次の移動先へ向かうベクトルを求める。
@@ -162,7 +184,11 @@ namespace UER
 				}
 				//カプセルコライダーの中心座標 + 高さ*0.1の座標をposTmpに求める。
 				Vector3 posTmp = m_position;
-				posTmp.y += m_height * 0.5f + m_radius + m_height * 0.1f;
+				if (!isHitFloor)
+					posTmp.y += m_height * 0.5f + m_radius;// +0.1f;
+				else
+					posTmp.y = Ypos + m_height * 0.5f + m_radius;// +0.1f;
+
 				//posTmp.y += m_height + m_radius + m_height * 0.1f;
 				//レイを作成。
 				btTransform start, end;
@@ -179,6 +205,38 @@ namespace UER
 				callback.startPos = posTmp;
 				//衝突検出。
 				Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+
+				if (callback.isHitFloor && 0)
+				{
+					isHitFloor = true;
+					floorPos = callback.floorHitPos;
+					floorNor = callback.floorNormal;
+
+					Vector3 vT0, vT1;
+					//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
+					vT0.Set(nextPosition.x, 0.0f, nextPosition.z);
+					vT1.Set(floorPos.x, 0.0f, floorPos.z);
+					//めり込みが発生している移動ベクトルを求める。
+					Vector3 vMerikomi;
+					vMerikomi = vT0 - vT1;
+
+					Vector3 vMeriNorm = vMerikomi;
+					vMeriNorm.Normalize();
+
+					Vector3 Z, S;
+					Z.Cross(vMeriNorm, floorNor);
+					S.Cross(floorNor, Z);
+
+					float t = vMerikomi.Dot(S);
+					Vector3 Yup = (S * t - vMerikomi) * vMerikomi.Length() / t;
+					//Yup = Yup - vMerikomi;
+
+					if (Yup.y > 0.f)
+					{
+						nextPosition.y += Yup.y;
+						Ypos = nextPosition.y;
+					}
+				}
 
 				if (callback.isHit) {
 					//当たった。
@@ -200,17 +258,20 @@ namespace UER
 					//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
 					Vector3 vOffset;
 					vOffset = hitNormalXZ;
-					vOffset *= -fT0 + m_radius + 0.2f;
+					vOffset *= -fT0 + m_radius;// +0.2f;
 					nextPosition += vOffset;
 					Vector3 currentDir;
 					currentDir = nextPosition - m_position;
 					currentDir.y = 0.0f;
 					currentDir.Normalize();
+
+
 					if (currentDir.Dot(originalXZDir) < 0.0f) {
 						//角に入った時のキャラクタの振動を防止するために、
 						//移動先が逆向きになったら移動をキャンセルする。
 						nextPosition.x = m_position.x;
 						nextPosition.z = m_position.z;
+
 						break;
 					}
 					/*char st[255] = { 0 };
@@ -231,7 +292,8 @@ namespace UER
 				oldnextPos = nextPosition;*/
 
 				loopCount++;
-				if (loopCount == 5) {
+				if (loopCount == 10) {
+					
 					break;
 				}
 			}
@@ -245,13 +307,17 @@ namespace UER
 			Vector3 addPos;
 			addPos.Subtract(nextPosition, m_position);
 
-			m_position = nextPosition;	//移動の仮確定。
+			//移動の仮確定。
+			m_position.x = nextPosition.x;	
+			m_position.z = nextPosition.z;
+
 										//レイを作成する。
 			btTransform start, end;
 			start.setIdentity();
 			end.setIdentity();
 			//始点はカプセルコライダーの中心。
 			start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
+			//start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius + 0.1f, m_position.z));
 			//終点は地面上にいない場合は1m下を見る。
 			//地面上にいなくてジャンプで上昇中の場合は上昇量の0.01倍下を見る。
 			//地面上にいなくて降下中の場合はそのまま落下先を調べる。
@@ -265,7 +331,8 @@ namespace UER
 				}
 				else {
 					//落下している場合はそのまま下を調べる。
-					endPos.y += addPos.y;
+					if(addPos.y < 0.f)
+						endPos.y += addPos.y;
 				}
 			}
 			else {
@@ -285,7 +352,7 @@ namespace UER
 					moveSpeed.y = 0.0f;
 					m_isJump = false;
 					m_isOnGround = true;
-					nextPosition.y = callback.hitPos.y;
+					nextPosition.y = callback.hitPos.y;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
 				}
 				else {
 					//地面上にいない。
@@ -296,6 +363,7 @@ namespace UER
 		}
 		//移動確定。
 		m_position = nextPosition;
+		//m_position.y += 0.1f;
 		if (m_isUseRigidBody)
 		{
 			btRigidBody* btBody = m_rigidBody.GetBody();
@@ -303,7 +371,7 @@ namespace UER
 			btBody->setActivationState(DISABLE_DEACTIVATION);
 			btTransform& trans = btBody->getWorldTransform();
 			//剛体の位置を更新。
-			trans.setOrigin(btVector3(m_position.x, m_position.y+m_height*0.5f+m_radius, m_position.z));
+			trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 			//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 		}
 		return m_position;
