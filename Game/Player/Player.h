@@ -162,6 +162,10 @@ public:
 		m_hp = max(0.f, m_hp - damageAmount);
 	}
 
+	void Heal(const float amount) {
+		m_hp = min(m_HP_MAX, m_hp + amount);
+	}
+
 	/*
 	void SetVelocityGoal(Vector3& velocityGoal) {
 		m_velocityGoal = velocityGoal;

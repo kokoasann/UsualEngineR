@@ -74,6 +74,13 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="PositionChecker.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Item\IItem.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\RedPotion.h">
+      <Filter>Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -150,6 +157,13 @@
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="PositionChecker.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Item\RedPotion.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\IItem.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -190,6 +204,9 @@
     </Filter>
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{2b5750be-4ae0-4728-98c8-6df557e23033}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

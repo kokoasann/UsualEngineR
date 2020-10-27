@@ -61,20 +61,4 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
-	//Model
-	ModelRender* m_model;
-	CAnimationClip m_animClip[1];
-	std::vector<CAnimationClipPtr> m_animlist;
-
-	ModelRender* m_test;
-
-
-	GameCamera* m_camera = nullptr;
-	Player* m_player = nullptr;
-
-	//Level
-	GameStage* m_stage = nullptr;
-
-	//HUD
-	GameHUD* m_gameHUD = nullptr;
 };

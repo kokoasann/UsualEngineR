@@ -40,9 +40,6 @@ bool GameCamera::Start()
 	g_camera3D->SetPosition(m_position);
 	m_toCameraPos.Set(0.0f, 3.0f, -15.f);
 	m_dist = m_toCameraPos;
-	
-	DebugLogVec3(g_camera3D->GetPosition());
-
 	return true;
 }
 
@@ -191,9 +188,6 @@ void GameCamera::CalcPlayerCamera() {
 	}
 
 	m_old = m_dist;
-
-	DebugLogVec3(g_camera3D->GetPosition());
-
 }
 
 

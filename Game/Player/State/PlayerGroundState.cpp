@@ -113,8 +113,11 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 
 	}
 	else {
-		auto crot = g_camera3D->GetCameraRotation();
-		Quaternion rot(crot);
+		auto cf = g_camera3D->GetForward();
+		Quaternion rot = Quaternion::Identity;
+		auto theta = atan2(cf.x, cf.z);
+		theta = theta * (180.f / Math::PI);
+		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
 		p->PlayAnimation(Player::EnAnimation::enIdle);
 	}

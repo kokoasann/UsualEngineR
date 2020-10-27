@@ -189,6 +189,9 @@
     <ClInclude Include="Enemy\State\IEnemyState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameHUD.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Item\IItem.h" />
+    <ClInclude Include="Item\RedPotion.h" />
     <ClInclude Include="Level\GameStage.h" />
     <ClInclude Include="Player\Attack\IPlayerAttack.h" />
     <ClInclude Include="Player\Attack\PlayerAttackSlash.h" />
@@ -218,6 +221,9 @@
     <ClCompile Include="Enemy\State\IEnemyState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameHUD.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Item\IItem.cpp" />
+    <ClCompile Include="Item\RedPotion.cpp" />
     <ClCompile Include="Level\GameStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player\Attack\IPlayerAttack.cpp" />
