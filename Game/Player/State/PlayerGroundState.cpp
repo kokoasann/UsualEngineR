@@ -74,7 +74,7 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 	}
 	else {
-		m_vecVelocityGoal* m_SIDE_MOVE_VELOCITY_MAX;
+		m_vecVelocityGoal *= m_SIDE_MOVE_VELOCITY_MAX;
 	}
 
 	auto delta = gameTime()->GetDeltaTime();

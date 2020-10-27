@@ -94,13 +94,7 @@ private:
 
 	Player* mp_player = nullptr;
 	IEnemy* mp_enemy = nullptr;
-
 	Vector3 m_toCameraPos;
-	//SpringCamera m_springCamera;
-
-	//PositionChecker* m_posChecker = nullptr;
-
-	//std::vector< PositionChecker*> m_posCheckers;
 
 	float m_cameraChangeRatio = 0.f;
 };

@@ -170,16 +170,25 @@ void GameCamera::CalcPlayerCamera() {
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
 
 
+	//エネミーカメラに完全に切り替わったらプレイヤーカメラの位置を計算
 	if (m_cameraChangeRatio == 0.f) {
-		auto pf = mp_player->GetForward();
-		pf.Scale(-1.f * m_toCameraPos.Length());
-		pf.y += cameraHeight;
-		m_playerCameraPos = m_charaPos + pf;
+		//auto pf = mp_player->GetForward();
+		//pf.Scale(-1.f * m_toCameraPos.Length());
+		//pf.y += cameraHeight;
+		//m_playerCameraPos = m_charaPos + pf;
+
+		auto cameraForward = g_camera3D->GetForward();
+		cameraForward.Normalize();
+		cameraForward.Scale(-1 * m_toCameraPos.Length());
+		cameraForward.y += cameraHeight;
+		m_playerCameraPos = m_charaPos + cameraForward;
+
 		m_dist = m_playerCameraPos - mp_player->GetPosition();
 	}
 
 	m_old = m_dist;
 }
+
 
 void GameCamera::UpdateState() {
 	if (g_pad[0]->IsTrigger(enButtonLB3)) {

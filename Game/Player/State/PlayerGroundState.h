@@ -25,7 +25,7 @@ private:
 
 	const float m_RUN_COST = 20.f;
 	const float m_VELOCITY_MAX = 15.f;
-	const float m_SIDE_MOVE_VELOCITY_MAX = 9.f;
+	const float m_SIDE_MOVE_VELOCITY_MAX = 7.f;
 	const float m_GRAVITY = -30.f;
 	float m_QUICKNESS = 50.f;
 	const float m_RUN_SPEED_PARAM = 2.0f;
