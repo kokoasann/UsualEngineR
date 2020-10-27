@@ -4,7 +4,7 @@
 
 
 #include "Effect/ParticleEffect.h"
-#include "Effect/VolumetricEffect.h"
+
 
 void Test::Release()
 {
@@ -258,17 +258,19 @@ void Test::Awake()
 	effrot.SetRotationDegZ(30);
 	//effect->SetRot(effrot);
 
-	VolumetricEffectRender* volEff = NewGO<VolumetricEffectRender>(0);
+	m_vol_box = NewGO<VolumetricEffectRender>(0);
 	//volEff->Init("Assets/modelData/test/sphere.tkm");
-	volEff->Init("Assets/modelData/test/test.tkm");
-	volEff->SetPos({ 80,50,50 });
-	volEff->SetSca({ 50,50,50 });
+	m_vol_box->Init("Assets/modelData/test/test.tkm");
+	m_vol_box->SetPos({ 80,50,50 });
+	m_vol_box->SetSca({ 50,50,50 });
+	auto& fd = m_vol_box->GetFogData();
+	fd.decayCenterToXZ = 0.02f;
 
-	volEff = NewGO<VolumetricEffectRender>(0);
-	volEff->Init("Assets/modelData/test/sphere.tkm");
+	m_vol_sphere = NewGO<VolumetricEffectRender>(0);
+	m_vol_sphere->Init("Assets/modelData/test/sphere.tkm");
 	//volEff->Init("Assets/modelData/test/test.tkm");
-	volEff->SetPos({ -80,50,-50 });
-	volEff->SetSca({ 50,50,50 });
+	m_vol_sphere->SetPos({ -80,50,-50 });
+	m_vol_sphere->SetSca({ 50,50,50 });
 }
 
 void Test::Update()
@@ -279,6 +281,14 @@ void Test::Update()
 	m_pModel->SetPosition(trans.getOrigin());
 	m_pModel->SetRotation(trans.getRotation());
 
+	{
+		auto& fogData = m_vol_sphere->GetFogData();
+		fogData.offset.y -= 1.f * gameTime()->GetDeltaTime();
+	}
+	{
+		auto& fogData = m_vol_box->GetFogData();
+		fogData.offset.y -= 1.f * gameTime()->GetDeltaTime();
+	}
 	/*auto cam = g_lockCamera3D.Get();
 	Quaternion rot;
 	rot.SetRotationDegY(0.5f);

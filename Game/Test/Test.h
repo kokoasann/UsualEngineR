@@ -3,7 +3,9 @@
 #include "Physics/BoxCollider.h"
 #include "level/Level.h"
 #include "Character/CharacterController.h"
+#include "Effect/VolumetricEffect.h"
 class ThreadTest;
+//class VolumetricEffectRender;
 class Test:public GameObject
 {
 public:
@@ -50,5 +52,6 @@ private:
 	SpriteRender* m_3dSprite;
 
 
-	
+	VolumetricEffectRender* m_vol_box;
+	VolumetricEffectRender* m_vol_sphere;
 };
