@@ -74,11 +74,11 @@ void GameCamera::PostUpdate() {
 		vecCtoECP.Normalize();
 		vecCtoPCP.Normalize();
 
-	Matrix mat1, mat2;
-	mat1.MakeLookAt(Vector3::Zero, vecCtoECP, Vector3::Up);
-	mat2.MakeLookAt(Vector3::Zero, vecCtoPCP, Vector3::Up);
-	Quaternion frot(mat1);
-	Quaternion brot(mat2);
+		Matrix mat1, mat2;
+		mat1.MakeLookAt(Vector3::Zero, vecCtoECP, Vector3::Up);
+		mat2.MakeLookAt(Vector3::Zero, vecCtoPCP, Vector3::Up);
+		Quaternion frot(mat1);
+		Quaternion brot(mat2);
 
 		Quaternion q1;
 		q1.SetRotation(vecCtoECP, vecCtoPCP);
