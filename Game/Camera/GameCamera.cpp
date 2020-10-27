@@ -35,7 +35,7 @@ void GameCamera::Awake()
 bool GameCamera::Start()
 {
 	g_camera3D->SetTarget(m_targetPos);
-	m_playerCameraPos = m_position = m_charaPos + m_position;
+	m_playerCameraPreviousPos = m_playerCameraPos = m_position = m_charaPos + m_position;
 	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
 	g_camera3D->SetPosition(m_position);
 	m_toCameraPos.Set(0.0f, 3.0f, -15.f);
@@ -153,20 +153,21 @@ void GameCamera::CalcPlayerCamera() {
 	auto x = vecCharaToCamera;
 	x.Normalize();
 
-	rotY.SetRotationDegY(xf);
 	auto vecRight = vecCharaToCamera;
 	vecRight.y = 0.f;
 	vecRight.Cross({ 0,1,0 });
 	vecRight.Normalize();
 	rotX.SetRotationDeg(vecRight, yf);
-	rotY.Multiply(rotX);
-	rotY.Apply(m_dist);
+	rotX.Apply(m_dist);
 
 	auto nd = m_dist;
 	nd.Normalize();
-
-	if (nd.y > upperLimit or nd.y < lowerLimit)
+	if (nd.y > upperLimit or nd.y < lowerLimit) {
 		m_dist = m_old;
+	}
+
+	rotY.SetRotationDegY(xf);
+	rotY.Apply(m_dist);
 
 	m_playerCameraPos = m_charaPos + m_dist;
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;

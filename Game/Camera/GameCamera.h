@@ -87,6 +87,7 @@ private:
 	void CalcPlayerCamera();
 
 	Vector3 m_playerCameraPos = m_position;
+	Vector3 m_playerCameraPreviousPos = m_position;
 	Vector3 m_playerCameraTargetPos = Vector3::Zero;
 
 	Vector3 m_enemyCameraPos = m_position;
