@@ -322,7 +322,8 @@ namespace UER
 			//地面上にいなくてジャンプで上昇中の場合は上昇量の0.01倍下を見る。
 			//地面上にいなくて降下中の場合はそのまま落下先を調べる。
 			Vector3 endPos;
-			endPos.Set(start.getOrigin());
+			//endPos.Set(start.getOrigin());
+			endPos.Set(nextPosition);
 			if (m_isOnGround == false) {
 				if (addPos.y > 0.0f) {
 					//ジャンプ中とかで上昇中。
@@ -331,7 +332,7 @@ namespace UER
 				}
 				else {
 					//落下している場合はそのまま下を調べる。
-					if(addPos.y < 0.f)
+					//if(addPos.y < 0.f)
 						endPos.y += addPos.y;
 				}
 			}
