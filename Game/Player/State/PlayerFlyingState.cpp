@@ -24,6 +24,7 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	m_bPos = p->GetPosition();
 	m_velocity = p->GetLocalVelocity();
+	m_velocity.y = 0.f;
 
 	m_velocityGoal.y = m_AUTO_RISE_PARAM * m_VELOCITY_MAX;
 	m_isFirstRising = true;
