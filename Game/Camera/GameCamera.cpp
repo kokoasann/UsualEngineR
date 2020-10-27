@@ -37,9 +37,11 @@ bool GameCamera::Start()
 	g_camera3D->SetTarget(m_targetPos);
 	m_playerCameraPos = m_position = m_charaPos + m_position;
 	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
-	g_camera3D->SetPosition({ 0.0f, 3.0f, 35.f });
+	g_camera3D->SetPosition(m_position);
 	m_toCameraPos.Set(0.0f, 3.0f, -15.f);
 	m_dist = m_toCameraPos;
+	
+	DebugLogVec3(g_camera3D->GetPosition());
 
 	return true;
 }
@@ -178,6 +180,7 @@ void GameCamera::CalcPlayerCamera() {
 		//m_playerCameraPos = m_charaPos + pf;
 
 		auto cameraForward = g_camera3D->GetForward();
+		cameraForward.y = 0.f;
 		cameraForward.Normalize();
 		cameraForward.Scale(-1 * m_toCameraPos.Length());
 		cameraForward.y += cameraHeight;
@@ -187,6 +190,9 @@ void GameCamera::CalcPlayerCamera() {
 	}
 
 	m_old = m_dist;
+
+	DebugLogVec3(g_camera3D->GetPosition());
+
 }
 
 
