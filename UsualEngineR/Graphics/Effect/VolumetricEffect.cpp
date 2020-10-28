@@ -365,6 +365,7 @@ namespace UER
 		cbData.data.ratioParlinWorley = fogData.ratioParlinWorley;
 		cbData.data.concentration = fogData.concentration;
 		cbData.data.centerPos = m_anchorModel.GetCenter();
+		mworld.Apply(cbData.data.centerPos);
 		//cbData.data.centerAxis = m_anchorModel.GetCenterAxis();
 		//mworld.Apply(cbData.data.centerAxis);
 		cbData.data.centerBottom = m_anchorModel.GetCenterBottom();

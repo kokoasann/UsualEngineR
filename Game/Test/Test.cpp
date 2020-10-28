@@ -261,16 +261,24 @@ void Test::Awake()
 	m_vol_box = NewGO<VolumetricEffectRender>(0);
 	//volEff->Init("Assets/modelData/test/sphere.tkm");
 	m_vol_box->Init("Assets/modelData/test/test.tkm");
-	m_vol_box->SetPos({ 80,50,50 });
+	m_vol_box->SetPos({ 80,70,50 });
 	m_vol_box->SetSca({ 50,50,50 });
 	auto& fd = m_vol_box->GetFogData();
+	fd.concentration = 0.05;
 	fd.decayCenterToXZ = 0.02f;
-
+	fd.decayCenterToY = 0.02f;
 	m_vol_sphere = NewGO<VolumetricEffectRender>(0);
 	m_vol_sphere->Init("Assets/modelData/test/sphere.tkm");
 	//volEff->Init("Assets/modelData/test/test.tkm");
 	m_vol_sphere->SetPos({ -80,50,-50 });
 	m_vol_sphere->SetSca({ 50,50,50 });
+
+	auto vol_test = NewGO<VolumetricEffectRender>(0);
+	vol_test->Init("Assets/modelData/test/block.tkm");
+	vol_test->SetPos({ 190,70,50 });
+	vol_test->SetSca({ 50,50,50 });
+	auto& tfb = vol_test->GetFogData();
+	
 }
 
 void Test::Update()
