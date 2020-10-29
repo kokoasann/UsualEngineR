@@ -35,7 +35,7 @@ namespace UER
 			//上方向と法線のなす角度を求める。
 			float angle = hitNormalTmp.Dot(g_vec3Up);
 			angle = fabsf(acosf(angle));
-			if (angle < Math::PI * 0.3f		//地面の傾斜が54度より小さいので地面とみなす。
+			if (angle < Math::PI * 0.45f		//地面の傾斜が54度より小さいので地面とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
@@ -86,7 +86,7 @@ namespace UER
 			hitNormalTmp.Set(convexResult.m_hitNormalLocal);
 			//上方向と衝突点の法線のなす角度を求める。
 			float angle = fabsf(acosf(hitNormalTmp.Dot(g_vec3Up)));
-			if (angle >= Math::PI * 0.3f		//地面の傾斜が54度以上なので壁とみなす。
+			if (angle >= Math::PI * 0.45f		//地面の傾斜が54度以上なので壁とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
 				isHit = true;
@@ -206,7 +206,7 @@ namespace UER
 				//衝突検出。
 				Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
-				if (callback.isHitFloor && 0)
+				if (callback.isHitFloor && 1)
 				{
 					isHitFloor = true;
 					floorPos = callback.floorHitPos;
@@ -260,6 +260,7 @@ namespace UER
 					vOffset = hitNormalXZ;
 					vOffset *= -fT0 + m_radius;// +0.2f;
 					nextPosition += vOffset;
+
 					Vector3 currentDir;
 					currentDir = nextPosition - m_position;
 					currentDir.y = 0.0f;
@@ -292,7 +293,7 @@ namespace UER
 				oldnextPos = nextPosition;*/
 
 				loopCount++;
-				if (loopCount == 10) {
+				if (loopCount == 5) {
 					
 					break;
 				}
@@ -308,8 +309,8 @@ namespace UER
 			addPos.Subtract(nextPosition, m_position);
 
 			//移動の仮確定。
-			m_position.x = nextPosition.x;	
-			m_position.z = nextPosition.z;
+			//m_position.x = nextPosition.x;	
+			//m_position.z = nextPosition.z;
 
 										//レイを作成する。
 			btTransform start, end;
@@ -318,6 +319,8 @@ namespace UER
 			//始点はカプセルコライダーの中心。
 			start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 			//start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius + 0.1f, m_position.z));
+
+
 			//終点は地面上にいない場合は1m下を見る。
 			//地面上にいなくてジャンプで上昇中の場合は上昇量の0.01倍下を見る。
 			//地面上にいなくて降下中の場合はそのまま落下先を調べる。
@@ -332,13 +335,14 @@ namespace UER
 				}
 				else {
 					//落下している場合はそのまま下を調べる。
-					//if(addPos.y < 0.f)
+					if(addPos.y < 0.f)
 						endPos.y += addPos.y;
 				}
 			}
 			else {
 				//地面上にいない場合は1m下を見る。
-				endPos.y -= 1.0f;
+				//endPos.y -= 1.0f;
+				endPos.y += addPos.y;
 			}
 			end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
 			SweepResultGround callback;
@@ -354,6 +358,7 @@ namespace UER
 					m_isJump = false;
 					m_isOnGround = true;
 					nextPosition.y = callback.hitPos.y;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
+					//nextPosition = callback.hitPos;
 				}
 				else {
 					//地面上にいない。
