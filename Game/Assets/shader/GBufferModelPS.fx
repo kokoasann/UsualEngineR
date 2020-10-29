@@ -1,7 +1,7 @@
 #pragma once
 
 //#include "Light.fxh"
-//#include "ModelData.fxh"
+#include "ModelData.fxh"
 //#include "CameraData.fxh"
 //#include "LightData.fxh"
 //#include "PBRFunc.fxh"
@@ -28,7 +28,7 @@ SPSOut PSMain( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     Out.normal = float4(psIn.normal,1.f);
@@ -41,7 +41,7 @@ SPSOut PSMain_nor( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     Out.normal = g_normalMap.Sample(g_sampler, psIn.uv);
@@ -54,7 +54,7 @@ SPSOut PSMain_spe( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     Out.normal = float4(psIn.normal,1.f);
@@ -67,7 +67,7 @@ SPSOut PSMain_nor_spe( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     Out.normal = g_normalMap.Sample(g_sampler, psIn.uv);

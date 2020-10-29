@@ -30,11 +30,25 @@ namespace UER
 				m_vertBuffer_inv.Init(vertSize * vertNum, vertSize);
 				m_vertBuffer_inv.Copy((void*)&mesh.vertexBuffer[0]);
 				auto vdata = reinterpret_cast<TkmFile::SVertex*>(m_vertBuffer_inv.BeginEgit());
+
+				float top = -FLT_MAX;
+				float bottom = FLT_MAX;
+				Vector3 vertSum = g_vec3Zero;
 				for (int i = 0; i < vertNum; i++)
 				{
 					vdata[i].normal *= -1.f;
+					vertSum += vdata[i].pos;
+
+					top = max(vdata[i].pos.y, top);
+					bottom = min(vdata[i].pos.y, bottom);
 				}
 				m_vertBuffer_inv.EndEdit();
+
+				m_center = vertSum / vertNum;
+				m_centerBottom.Set(m_center.x, bottom, m_center.z);
+				m_centerTop.Set(m_center.x, top, m_center.z);
+				m_centerAxis = m_centerTop - m_centerBottom;
+				
 
 				if (!mesh.indexBuffer16Array.empty())
 				{
@@ -151,6 +165,10 @@ namespace UER
 	RenderTarget VolumetricEffect::m_stencilRT;
 	bool VolumetricEffect::m_isInitRT = false;
 
+	void VolumetricEffect::Release()
+	{
+	}
+
 	void VolumetricEffect::Init(const char* tkmFile)
 	{
 		
@@ -265,7 +283,7 @@ namespace UER
 		Vector2 pos;
 		float w;
 	};
-	void VolumetricEffect::Draw(RenderContext& rc, const Matrix& mworld, const Matrix& mvp, const Vector4 color)
+	void VolumetricEffect::Draw(RenderContext& rc, const Matrix& mworld, const Matrix& mvp, const FogData& fogData)
 	{
 		rc.WaitUntilToPossibleSetRenderTarget(m_anchorRT);
 		rc.WaitUntilToPossibleSetRenderTarget(m_anchorRT_inv);
@@ -335,6 +353,26 @@ namespace UER
 		SConstBufferData cbData;
 		cbData.mvp = mvp;
 		cbData.mvp_inv.Inverse(mvp);
+
+		cbData.data.rayCount = fogData.rayCount;
+		cbData.data.rayLen = fogData.rayLen;
+		cbData.data.color = fogData.color;
+		cbData.data.decayCenterToXZ = fogData.decayCenterToXZ;
+		cbData.data.decayCenterToY = fogData.decayCenterToY;
+		cbData.data.offset = fogData.offset;
+		cbData.data.perlinScale = fogData.perlinScale;
+		cbData.data.worleyScale = fogData.worleyScale;
+		cbData.data.ratioParlinWorley = fogData.ratioParlinWorley;
+		cbData.data.concentration = fogData.concentration;
+		cbData.data.centerPos = m_anchorModel.GetCenter();
+		mworld.Apply(cbData.data.centerPos);
+		//cbData.data.centerAxis = m_anchorModel.GetCenterAxis();
+		//mworld.Apply(cbData.data.centerAxis);
+		cbData.data.centerBottom = m_anchorModel.GetCenterBottom();
+		mworld.Apply(cbData.data.centerBottom);
+		cbData.data.centerTop = m_anchorModel.GetCenterTop();
+		mworld.Apply(cbData.data.centerTop);
+
 		m_constBuffer.CopyToVRAM(cbData);
 
 		rc.SetRenderTargets(1, g_graphicsEngine->GetCurrentRenderTarget());
@@ -382,6 +420,6 @@ namespace UER
 		wmat.Multiply(sca, rot);
 		wmat.Multiply(wmat, tra);
 
-		m_volumeEffect.Draw(rc, wmat, mvp, m_color);
+		m_volumeEffect.Draw(rc, wmat, mvp, m_fogData);
 	}
 }

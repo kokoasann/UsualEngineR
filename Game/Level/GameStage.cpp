@@ -53,6 +53,7 @@ bool GameStage::Start()
 					mid.m_tkmFilePath = filePath;
 					mr->Init(mid);
 					m_mapmodel.push_back(mr);
+					mr->SetMulColor({ 0.8,0.7,0.3,1 });
 					return true;
 				});
 			//m_isEndLoad = true;

@@ -7,7 +7,21 @@ struct FogData
     uint rayCount;          //レイのステップ回数。
     float rayLen;           //ステップの距離。
 
+    float decayCenterToXZ;        //中心からの減衰。
+    float decayCenterToY;
+
+    float3 centerPos;
+    int p1;
+
+    float3 centerBottom;
+    int p2;
+
+    float3 centerTop;
+    int p2_1;
+    
+
     float3 color;           //フォグの色。
+    int p3;
 
     float concentration;    //濃度。
     float perlinScale;      //パーリンノイズのスケール
@@ -15,14 +29,18 @@ struct FogData
     float ratioParlinWorley;    //パーリンノイズとウォーリーノイズの合成の割合(0がPerlin、1がWorley)
 
     float3 offset;              //位置のオフセット
+    int p4;
+    
+    
 
-    float decayCenterTo;        //中心からの減衰。
 };
 
 cbuffer SConstBufferData:register(b0)
 {
     float4x4 cb_mvp;
     float4x4 cb_mvp_inv;
+
+    FogData cb_data;
 }
 
 struct VSInput
@@ -72,21 +90,17 @@ float4 PSMain(PSInput In):SV_TARGET0
     float3 backPos = GetWorldPosition(In.uv,backDepth,cb_mvp_inv);
     //float3 gPos = GetWorldPosition(In.uv,gDepth,cb_mvp_inv);
     float3 dir = normalize(backPos - pos);
-    
+
+    float3 b2t = cb_data.centerTop - cb_data.centerBottom;
+    float b2tLen = sqrt(dot(b2t,b2t));
+    float3 b2tNor = b2t * rcp(b2tLen);
 
     float vol = 0.f;
 
-    #define ray_count 80
     //[unroll(ray_count)]
-    for(int i=0;i<ray_count;i++)
+    //for(int i=0;i<ray_count;i++)
+    for(int i=0;i<cb_data.rayCount;i++)
     {
-        //vol += 0.01f;
-        float wn = (1.f-WorleyNoise3D(pos*0.07f));
-        float pn = PerlinNoise3D(pos*0.08f);
-        vol += lerp(wn,pn,0.1f)*0.02f;
-
-        pos += dir*2.f;
-
         float4 vpPos = mul(cb_mvp,float4(pos,1.f));
         float vpdep = vpPos.z * rcp(vpPos.w);
         [branch]
@@ -94,9 +108,33 @@ float4 PSMain(PSInput In):SV_TARGET0
         {
             break;
         }
+
+        float wn = (1.f-WorleyNoise3D(mad(pos, cb_data.worleyScale, cb_data.offset)));
+        float pn = PerlinNoise3D(mad(pos, cb_data.perlinScale, cb_data.offset));
+        
+        float addvol = lerp(wn,pn,cb_data.ratioParlinWorley)*cb_data.concentration;
+
+        
+        {
+            float shortLen;
+            float3 vp = pos - cb_data.centerBottom;
+            //float3 shortest = b2t * dot(vp,b2tNor) / b2tLen - vp;
+            //float3 shortest = mad(dot(vp,b2tNor) * rcp(b2tLen), b2t, -vp);
+            float3 shortest = mad(dot(vp,b2tNor), b2tNor, -vp);
+            shortLen = length(shortest);
+
+            addvol = mad(-addvol * shortLen, cb_data.decayCenterToXZ, addvol);
+
+            float3 cp = pos - cb_data.centerPos;
+            addvol = mad(-addvol * abs(dot(b2tNor,cp)), cb_data.decayCenterToY, addvol);
+        }
+        
+
+        vol += addvol;
+        pos = mad(dir, cb_data.rayLen, pos);
     }
     vol = saturate(vol);
-    float4 res = float4(1,1,1,vol);
+    float4 res = float4(cb_data.color,vol);
     
     return res;
 }

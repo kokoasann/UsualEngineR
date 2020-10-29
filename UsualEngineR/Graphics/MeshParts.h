@@ -61,7 +61,7 @@ namespace UER
 		/// <param name="mView">ビュー行列</param>
 		/// <param name="mProj">プロジェクション行列</param>
 		/// <param name="light">ライト</param>
-		void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj);
+		void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj, const Vector4& mulcolor);
 		/// <summary>
 		/// スケルトンを関連付ける。
 		/// </summary>
@@ -116,6 +116,7 @@ namespace UER
 		/// </remarks>
 		struct SConstantBuffer {
 			Matrix mWorld;		//ワールド行列。
+			Vector4 mulcolor;
 			//Matrix mView;		//ビュー行列。
 			//Matrix mProj;		//プロジェクション行列。
 		};
