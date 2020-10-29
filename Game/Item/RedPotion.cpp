@@ -12,6 +12,7 @@ RedPotion::RedPotion() {
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
+	m_model->SetMulColor(m_color);
 }
 
 RedPotion::~RedPotion() {
