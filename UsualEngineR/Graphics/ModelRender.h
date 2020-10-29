@@ -52,6 +52,10 @@ namespace UER
 		{
 			m_rotation = v;
 		}
+		void SetMulColor(const Vector4& col)
+		{
+			m_mulColor = col;
+		}
 
 		const Vector3& GetPosition() const
 		{
@@ -86,6 +90,7 @@ namespace UER
 		Vector3 m_position = Vector3::Zero;				//位置。
 		Vector3 m_scale = Vector3::One;					//大きさ
 		Quaternion m_rotation = Quaternion::Identity;	//回転。
+		Vector4 m_mulColor = Vector4::White;
 
 		bool m_isInit = false;
 		bool m_isRender = false;	//レンダリングする?

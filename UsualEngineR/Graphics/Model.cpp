@@ -69,13 +69,14 @@ namespace UER
 		mScale.MakeScaling(scale);
 		m_world = mBias * mScale * mRot * mTrans;
 	}
-	void Model::Draw(RenderContext& rc)
+	void Model::Draw(RenderContext& rc, const Vector4& mulcolor)
 	{
 		m_meshParts.Draw(
-			rc, 
-			m_world, 
-			g_camera3D->GetViewMatrix(), 
-			g_camera3D->GetProjectionMatrix()
+			rc,
+			m_world,
+			g_camera3D->GetViewMatrix(),
+			g_camera3D->GetProjectionMatrix(),
+			mulcolor
 		);
 		
 	}

@@ -24,6 +24,7 @@ namespace UER
 
 	void MapChip::Draw()
 	{
-		m_model.Draw(g_graphicsEngine->GetRenderContext());
+		m_model.Draw(g_graphicsEngine->GetRenderContext(),Vector4::White);
+		//m_model.Draw(g_graphicsEngine->GetRenderContext(), {1,0,0,1});
 	}
 }

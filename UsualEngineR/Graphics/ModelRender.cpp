@@ -52,6 +52,6 @@ namespace UER
 			return;
 
 		auto& rc = g_graphicsEngine->GetRenderContext();
-		m_model.Draw(rc);
+		m_model.Draw(rc,m_mulColor);
 	}
 }

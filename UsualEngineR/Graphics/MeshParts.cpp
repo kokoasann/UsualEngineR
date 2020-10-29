@@ -185,7 +185,8 @@ namespace UER
 		RenderContext& rc,
 		const Matrix& mWorld,
 		const Matrix& mView,
-		const Matrix& mProj
+		const Matrix& mProj,
+		const Vector4& mulcolor
 	)
 	{
 	#if 1
@@ -197,6 +198,7 @@ namespace UER
 		//定数バッファを更新する。
 		SConstantBuffer cb;
 		cb.mWorld = mWorld;
+		cb.mulcolor = mulcolor;
 		//cb.mView = mView;
 		//cb.mProj = mProj;
 	
