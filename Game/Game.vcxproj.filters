@@ -81,6 +81,9 @@
     <ClInclude Include="Item\RedPotion.h">
       <Filter>Item</Filter>
     </ClInclude>
+    <ClInclude Include="Item\ItemManager.h">
+      <Filter>Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -162,6 +165,9 @@
       <Filter>Item</Filter>
     </ClCompile>
     <ClCompile Include="Item\IItem.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\ItemManager.cpp">
       <Filter>Item</Filter>
     </ClCompile>
   </ItemGroup>

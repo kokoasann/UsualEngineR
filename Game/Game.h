@@ -1,11 +1,5 @@
 #pragma once
 
-class GameStage;
-class Player;
-class EnemyTest;
-class GameCamera;
-class GameHUD;
-
 /// <summary>
 /// ÉQÅ[ÉÄ
 /// </summary>

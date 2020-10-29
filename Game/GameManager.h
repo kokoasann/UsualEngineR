@@ -4,6 +4,7 @@ class Player;
 class EnemyTest;
 class GameCamera;
 class GameHUD;
+class ItemManager;
 
 class GameManager
 {
@@ -25,4 +26,6 @@ public:
 
 	//HUD
 	GameHUD* m_gameHUD = nullptr;
+
+	ItemManager*  m_itemManager = nullptr;
 };
