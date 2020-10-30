@@ -96,7 +96,7 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x + up * m_velocity.y;
 
-	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
+	vel *= p->GetSpeed();
 	p->SetVelocity(vel);
 	p->SetLocalVelocity(m_velocity);
 

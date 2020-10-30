@@ -97,7 +97,7 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		vel.y += m_GRAVITY;
 	}
 
-	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
+	vel *= p->GetSpeed();// *gameTime()->GetDeltaTime();
 	p->SetVelocity(vel);
 	p->SetLocalVelocity(m_velocity);
 
@@ -156,7 +156,7 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 		vel.y += m_GRAVITY;
 	}
 
-	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
+	vel *= p->GetSpeed();
 	p->SetVelocity(vel);
 	p->SetLocalVelocity(m_velocity);
 
