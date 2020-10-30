@@ -89,10 +89,10 @@ void GameCamera::PostUpdate() {
 		g_camera3D->SetTarget(tar);
 
 		if (m_state == State::enPlayerCamera) {
-			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed);
+			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed * gameTime()->GetDeltaTime());
 		}
 		else {
-			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed);
+			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed * gameTime()->GetDeltaTime());
 		}
 	}
 }
