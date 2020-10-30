@@ -73,12 +73,6 @@ void GameCamera::PostUpdate() {
 		vecCtoECP.Normalize();
 		vecCtoPCP.Normalize();
 
-		Matrix mat1, mat2;
-		mat1.MakeLookAt(Vector3::Zero, vecCtoECP, Vector3::Up);
-		mat2.MakeLookAt(Vector3::Zero, vecCtoPCP, Vector3::Up);
-		Quaternion frot(mat1);
-		Quaternion brot(mat2);
-
 		Quaternion q1;
 		q1.SetRotation(vecCtoECP, vecCtoPCP);
 		Quaternion sl;
@@ -105,9 +99,9 @@ void GameCamera::PostUpdate() {
 
 
 void GameCamera::CalcEnemyCamera() {
-	static float distParam = 15.f;
-	static float cameraHeight = 5.f;
-	static float charaSlideParam = 10.f;
+	static float distParam = 18.f;
+	static float cameraHeight = 8.f;
+	static float charaSlideParam = 5.f;
 	static float targetSlideParam = 30.f;
 
 	Vector3 ecPos;
@@ -126,7 +120,8 @@ void GameCamera::CalcEnemyCamera() {
 
 	auto tarp = m_targetPos;
 	tarp -= vecRight * targetSlideParam;
-	tarp = m_charaPos + vecRight * charaSlideParam;;
+	tarp = m_charaPos + vecRight * charaSlideParam;
+	tarp.y += cameraHeight;
 
 	m_enemyCameraPos = ecPos;
 	m_enemyCameraTargetPos = tarp;
