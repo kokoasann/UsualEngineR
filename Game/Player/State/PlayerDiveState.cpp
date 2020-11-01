@@ -74,7 +74,7 @@ IPlayerState* PlayerDiveState::Update(Player* p) {
 	if(!p->IsOnGround())
 		vel.y += m_GRAVITY;
 
-	vel *= p->GetSpeed() * gameTime()->GetDeltaTime();
+	vel *= p->GetSpeed();
 
 	p->SetVelocity(vel);
 	p->SetLocalVelocity(m_velocity);

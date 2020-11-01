@@ -254,6 +254,7 @@ void Test::Awake()
 	pid.m_updater = &m_effctUpdater;
 	auto effect = NewGO<PlaneParticleEffectRender>(0);
 	effect->Init(pid);
+	effect->SetPos({ 0,0,50 });
 	Quaternion effrot;
 	effrot.SetRotationDegZ(30);
 	//effect->SetRot(effrot);

@@ -144,6 +144,7 @@ namespace UER
 	}
 	const Vector3& CharacterController::Execute(float deltaTime, Vector3& moveSpeed)
 	{
+		
 		if (moveSpeed.y > 0.0f) {
 			//吹っ飛び中にする。
 			m_isJump = true;
@@ -155,6 +156,9 @@ namespace UER
 		Vector3 addPos = moveSpeed;
 		addPos *= deltaTime;
 		nextPosition += addPos;
+
+		const float OFFSETXZ = Vector3(addPos.x, 0, addPos.z).Length()*0.5f;
+		const float OFFSETY = fabsf(addPos.y)*0.5f;
 		
 		Vector3 oldnextPos = m_position;
 
@@ -206,7 +210,7 @@ namespace UER
 				//衝突検出。
 				Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
-				if (callback.isHitFloor && 1)
+				if (callback.isHitFloor && 0)
 				{
 					isHitFloor = true;
 					floorPos = callback.floorHitPos;
@@ -258,8 +262,14 @@ namespace UER
 					//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
 					Vector3 vOffset;
 					vOffset = hitNormalXZ;
-					vOffset *= -fT0 + m_radius;// +0.2f;
+					vOffset *= -fT0 + m_radius + OFFSETXZ;
 					nextPosition += vOffset;
+
+					//Yの値は入ってないよ!
+					/*if (vOffset.y > 0.f || vOffset.y < 0.f)
+					{
+						printf("BIG Y");
+					}*/
 
 					Vector3 currentDir;
 					currentDir = nextPosition - m_position;
@@ -357,7 +367,7 @@ namespace UER
 					moveSpeed.y = 0.0f;
 					m_isJump = false;
 					m_isOnGround = true;
-					nextPosition.y = callback.hitPos.y;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
+					nextPosition.y = callback.hitPos.y + OFFSETY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
 					//nextPosition = callback.hitPos;
 				}
 				else {

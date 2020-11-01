@@ -202,6 +202,9 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{2b5750be-4ae0-4728-98c8-6df557e23033}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
     </Filter>
@@ -210,9 +213,6 @@
     </Filter>
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Item">
-      <UniqueIdentifier>{2b5750be-4ae0-4728-98c8-6df557e23033}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

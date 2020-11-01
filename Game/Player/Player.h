@@ -258,7 +258,7 @@ private:
 
 	//Move
 	CharacterController m_charaCon;
-	float m_speed = 300.f;
+	float m_speed = 30.f;
 
 	//Physics
 	float m_charaConRadius = 1.f;

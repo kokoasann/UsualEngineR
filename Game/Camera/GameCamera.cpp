@@ -63,51 +63,62 @@ void GameCamera::Update()
 void GameCamera::PostUpdate() {
 
 	{
-		auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
-		static float cameraDist = vecCtoECP.Length();
-		auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
+		const float PlayerCameraRatio = 1.f;
+		const float EnemyCameraRatio = 0.f;
 
-		float dist_cecp = vecCtoECP.Length();
-		float dist_cpcp = vecCtoPCP.Length();
+		if (m_cameraChangeRatio == PlayerCameraRatio) {
+			m_position = m_playerCameraPos;
+		}
+		else if (m_cameraChangeRatio == EnemyCameraRatio) {
+			m_position = m_enemyCameraPos;
+		}
+		else {
+			//•âŠ®’†
 
-		vecCtoECP.Normalize();
-		vecCtoPCP.Normalize();
+			auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
+			static float cameraDist = vecCtoECP.Length();
+			auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
 
-		Matrix mat1, mat2;
-		mat1.MakeLookAt(Vector3::Zero, vecCtoECP, Vector3::Up);
-		mat2.MakeLookAt(Vector3::Zero, vecCtoPCP, Vector3::Up);
-		Quaternion frot(mat1);
-		Quaternion brot(mat2);
+			float dist_cecp = vecCtoECP.Length();
+			float dist_cpcp = vecCtoPCP.Length();
 
-		Quaternion q1;
-		q1.SetRotation(vecCtoECP, vecCtoPCP);
-		Quaternion sl;
-		sl.Slerp(m_cameraChangeRatio, Quaternion::Identity, q1);
-		Vector3 slpos = m_enemyCameraPos - mp_player->GetPosition();
-		sl.Apply(slpos);
-		auto scaleRatio = dist_cpcp / dist_cecp;
-		auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
-		slpos.Scale(scale);
-		m_position = slpos + m_charaPos;
+			vecCtoECP.Normalize();
+			vecCtoPCP.Normalize();
+
+			Quaternion q1;
+			q1.SetRotation(vecCtoECP, vecCtoPCP);
+			Quaternion sl;
+			sl.Slerp(m_cameraChangeRatio, Quaternion::Identity, q1);
+			Vector3 slpos = m_enemyCameraPos - mp_player->GetPosition();
+			sl.Apply(slpos);
+			auto scaleRatio = dist_cpcp / dist_cecp;
+			auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
+			slpos.Scale(scale);
+
+			DebugLogVec3(slpos);
+
+			m_position = slpos + m_charaPos;
+		}
+
 
 		g_camera3D->SetPosition(m_position);
 		auto tar = Math::Lerp(m_cameraChangeRatio, m_enemyCameraTargetPos, m_playerCameraTargetPos);
 		g_camera3D->SetTarget(tar);
 
 		if (m_state == State::enPlayerCamera) {
-			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed);
+			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed * gameTime()->GetDeltaTime());
 		}
 		else {
-			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed);
+			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed * gameTime()->GetDeltaTime());
 		}
 	}
 }
 
 
 void GameCamera::CalcEnemyCamera() {
-	static float distParam = 15.f;
-	static float cameraHeight = 5.f;
-	static float charaSlideParam = 10.f;
+	static float distParam = 18.f;
+	static float cameraHeight = 8.f;
+	static float charaSlideParam = 5.f;
 	static float targetSlideParam = 30.f;
 
 	Vector3 ecPos;
@@ -126,7 +137,8 @@ void GameCamera::CalcEnemyCamera() {
 
 	auto tarp = m_targetPos;
 	tarp -= vecRight * targetSlideParam;
-	tarp = m_charaPos + vecRight * charaSlideParam;;
+	tarp = m_charaPos + vecRight * charaSlideParam;
+	tarp.y += cameraHeight;
 
 	m_enemyCameraPos = ecPos;
 	m_enemyCameraTargetPos = tarp;
@@ -185,11 +197,11 @@ void GameCamera::CalcPlayerCamera() {
 		m_playerCameraPos = m_charaPos + cameraForward;
 
 		m_dist = m_playerCameraPos - mp_player->GetPosition();
+
 	}
 
 	m_old = m_dist;
 }
-
 
 void GameCamera::UpdateState() {
 	if (g_pad[0]->IsTrigger(enButtonLB3)) {
