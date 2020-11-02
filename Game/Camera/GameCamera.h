@@ -1,4 +1,7 @@
 #pragma once
+#include "CCameraCollisionSlover.h"
+#include "SpringCamera.h"
+
 class Player;
 class IEnemy;
 class PositionChecker;
@@ -98,6 +101,11 @@ private:
 	Vector3 m_toCameraPos;
 
 	float m_cameraChangeRatio = 0.f;
+
+	//Physics
+	//SpringCamera m_spc;
+	CCameraCollisionSlover m_cameraCollisionSolver;
+	const float m_sphereCollisionRadius = 0.5f;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

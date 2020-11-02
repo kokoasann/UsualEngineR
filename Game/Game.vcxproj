@@ -176,7 +176,9 @@
     </ImageContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\CCameraCollisionSlover.h" />
     <ClInclude Include="Camera\GameCamera.h" />
+    <ClInclude Include="Camera\SpringCamera.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
@@ -210,7 +212,9 @@
     <ClInclude Include="Test\ThreadTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\CCameraCollisionSlover.cpp" />
     <ClCompile Include="Camera\GameCamera.cpp" />
+    <ClCompile Include="Camera\SpringCamera.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
