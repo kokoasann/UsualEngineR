@@ -204,7 +204,7 @@ void GameCamera::CalcPlayerCamera() {
 }
 
 void GameCamera::UpdateState() {
-	if (g_pad[0]->IsTrigger(enButtonLB3)) {
+	if (g_pad[0]->IsTrigger(enButtonRB3)) {
 	//if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
