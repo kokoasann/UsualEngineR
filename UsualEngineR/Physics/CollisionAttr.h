@@ -9,6 +9,7 @@ namespace UER
 	 * @brief	ƒRƒŠƒWƒ‡ƒ“‘®«‚Ì‘å•ª—ŞB
 	 */
 	enum EnCollisionAttr {
+		enCollisionAttr_None = 0,
 		enCollisionAttr_Ground = 1,
 		enCollisionAttr_Character = 2,
 		enCollisionAttr_User = 4,

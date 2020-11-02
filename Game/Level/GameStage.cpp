@@ -101,6 +101,7 @@ void GameStage::Update()
 		for (auto& rb : m_rigidBodys)
 		{
 			Physics().AddRigidBody(*rb);
+			rb->GetBody()->setUserIndex(enCollisionAttr_None);
 		}
 		m_isRegistRigidBody = true;
 	}
