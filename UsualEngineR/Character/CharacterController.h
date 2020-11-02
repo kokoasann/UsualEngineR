@@ -34,7 +34,7 @@ namespace UER
 			*@param[in, out]	moveSpeed		移動速度。内部で重力加速が計算され、その結果がmoveSpeedに反映されます。
 			*@return 移動後のキャラクターの座標。
 			*/
-		const Vector3& Execute(float deltaTime, Vector3& moveSpeed);
+		const Vector3& Execute(float deltaTime, const Vector3& moveSpeed);
 		/*!
 			* @brief	座標を取得。
 			*/

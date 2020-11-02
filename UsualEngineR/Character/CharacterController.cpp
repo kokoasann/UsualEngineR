@@ -41,7 +41,8 @@ namespace UER
 			//上方向と法線のなす角度を求める。
 			float angle = hitNormalTmp.Dot(g_vec3Up);
 			angle = fabsf(acosf(angle));
-			if (angle <= Math::PI * RAD_GROUND 	//地面の傾斜が54度より小さいので地面とみなす。
+			//if (angle <= Math::PI * RAD_GROUND && 0 	//地面の傾斜が54度より小さいので地面とみなす。
+			if (angle <= Math::PI * RAD_GROUND	//地面の傾斜が54度より小さいので地面とみなす。
 				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
@@ -60,6 +61,7 @@ namespace UER
 			}
 			else
 			{
+				return 0.f;
 				isHitWall = true;
 				Vector3 hitPosTmp = *(Vector3*)&convexResult.m_hitPointLocal;
 				//衝突点の距離を求める。。
@@ -68,7 +70,7 @@ namespace UER
 				float distTmp = vDist.Length();
 				if (wallDist > distTmp)
 				{
-					wallHitPos = hitPos;
+					wallHitPos = hitPosTmp;
 					wallNormal = *(Vector3*)&convexResult.m_hitNormalLocal;
 					wallDist = distTmp;
 				}
@@ -105,6 +107,7 @@ namespace UER
 			float cta = hitNormalTmp.Dot(g_vec3Up);
 			float angle = fabsf(acosf(cta));
 
+			//if (angle >= Math::PI * RAD_WALL && 1 		//地面の傾斜が54度以上なので壁とみなす。
 			if (angle >= Math::PI * RAD_WALL 		//地面の傾斜が54度以上なので壁とみなす。
 				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
@@ -161,9 +164,9 @@ namespace UER
 		}
 		m_isUseRigidBody = isUseRigidBody;
 	}
-	const Vector3& CharacterController::Execute(float deltaTime, Vector3& moveSpeed)
+	const Vector3& CharacterController::Execute(float deltaTime, const Vector3& moveSpeed)
 	{
-		
+
 		if (moveSpeed.y > 0.0f) {
 			//吹っ飛び中にする。
 			m_isJump = true;
@@ -322,7 +325,7 @@ namespace UER
 				oldnextPos = nextPosition;*/
 
 				loopCount++;
-				if (loopCount == 5) {
+				if (loopCount >= 10) {
 					
 					break;
 				}
@@ -387,7 +390,7 @@ namespace UER
 				Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 				if (callback.isHit) {
 					//当たった。
-					moveSpeed.y = 0.0f;
+					//moveSpeed.y = 0.0f;
 					m_isJump = false;
 					m_isOnGround = true;
 					nextPosition.y = callback.hitPos.y + OFFSETY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
@@ -415,6 +418,7 @@ namespace UER
 					vOffset *= -fT0 + m_radius + OFFSETXZ;
 					nextPosition += hitNormalXZ * (m_radius + OFFSETXZ);
 					nextPosition.y = callback.wallHitPos.y;
+					
 				}
 				else
 				{
@@ -423,11 +427,6 @@ namespace UER
 
 				}
 			}
-		}
-
-		if (isnan(moveSpeed.x) || isnan(moveSpeed.y) || isnan(moveSpeed.z))
-		{
-			printf("move is nan");
 		}
 		//移動確定。
 		m_position = nextPosition;
