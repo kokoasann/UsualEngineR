@@ -22,6 +22,7 @@ private:
 	Vector3 m_bPos = Vector3::Zero;
 
 	const float m_rise = 30.0f;
+	const float m_MIN_ALTITUDE = 50.f;
 	const float m_VELOCITY_BOOST = 2.f;
 	const float m_VELOCITY_MAX = 40.f;
 	//const float m_QUICKNESS = 40.f;

@@ -13,7 +13,9 @@ PlayerFlyingState::~PlayerFlyingState()
 }
 
 void PlayerFlyingState::Enter(Player* p) {
+#ifdef _PRINT_PLAYER_STATE
 	printf("Player Enter Flying\n");
+#endif
 
 	m_canRise = true;
 	//ブーストの上昇初期コストがないので飛べないよ.
@@ -28,6 +30,9 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	m_velocityGoal.y = m_AUTO_RISE_PARAM * m_VELOCITY_MAX;
 	m_isFirstRising = true;
+
+	p->PlayAnimation(Player::EnAnimation::enIdle);
+
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
@@ -114,5 +119,7 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 void PlayerFlyingState::Exit(Player* p) {
 	m_velocity = Vector3::Zero;
+#ifdef _PRINT_PLAYER_STATE
 	printf("Player Exit Flying\n");
+#endif
 }

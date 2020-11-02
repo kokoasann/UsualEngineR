@@ -13,8 +13,10 @@ PlayerGroundState::~PlayerGroundState()
 
 void PlayerGroundState::Enter(Player* p){
 	m_velocity = p->GetLocalVelocity();
-	p->PlayAnimation(Player::EnAnimation::enRun);
+	p->PlayAnimation(Player::EnAnimation::enWalk);
+#ifdef _PRINT_PLAYER_STATE
 	printf("Enter Ground\n");
+#endif
 }
 
 IPlayerState* PlayerGroundState::Update(Player* p) {
@@ -43,6 +45,11 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		return nextState;
 	}
 
+	if (g_pad[0]->IsTrigger(EnButton::enButtonLB2)) {
+		auto nextState = p->GetState(Player::EnState::enGuard);
+		return nextState;
+	}
+
 	//boost recharge
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 	//endurance recharge
@@ -52,7 +59,9 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 }
 
 void PlayerGroundState::Exit(Player* p) {
+#ifdef _PRINT_PLAYER_STATE
 	printf("Exit Ground\n");
+#endif
 }
 
 
@@ -118,7 +127,7 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		theta = theta * (180.f / Math::PI);
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
-		p->PlayAnimation(Player::EnAnimation::enIdle);
+		p->PlayAnimation(Player::EnAnimation::enWalk);
 	}
 
 }
@@ -134,8 +143,6 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
 		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 	}
-
-	DebugLogVec3(m_vecVelocityGoal);
 
 	auto delta = gameTime()->GetDeltaTime();
 	m_velocity.x = Approach(m_vecVelocityGoal.x, m_velocity.x, delta * m_QUICKNESS);

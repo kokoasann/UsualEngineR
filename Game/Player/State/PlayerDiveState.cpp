@@ -13,7 +13,9 @@ PlayerDiveState::~PlayerDiveState()
 }
 
 void PlayerDiveState::Enter(Player* p) {
-	printf("Enter Dive\n");
+#ifdef _PRINT_PLAYER_STATE
+	printf("Player : Enter Dive\n");
+#endif
 
 	//スタミナがなくてダイブできないにゃん！
 	if (p->GetCurrentEndurance() < m_DIVE_STAMINA_COST) {
@@ -98,5 +100,7 @@ IPlayerState* PlayerDiveState::Update(Player* p) {
 }
 
 void PlayerDiveState::Exit(Player* p) {
-	printf("Exit Dive\n");
+#ifdef _PRINT_PLAYER_STATE
+	printf("Player : Exit Dive\n");
+#endif
 }
