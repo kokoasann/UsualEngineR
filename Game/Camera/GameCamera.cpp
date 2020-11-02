@@ -40,6 +40,9 @@ bool GameCamera::Start()
 	g_camera3D->SetPosition(m_position);
 	m_toCameraPos.Set(0.0f, 3.0f, -15.f);
 	m_dist = m_toCameraPos;
+
+	m_cameraCollisionSolver.Init(m_sphereCollisionRadius);
+
 	return true;
 }
 
@@ -95,15 +98,22 @@ void GameCamera::PostUpdate() {
 			auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
 			slpos.Scale(scale);
 
-			DebugLogVec3(slpos);
-
 			m_position = slpos + m_charaPos;
 		}
-
 
 		g_camera3D->SetPosition(m_position);
 		auto tar = Math::Lerp(m_cameraChangeRatio, m_enemyCameraTargetPos, m_playerCameraTargetPos);
 		g_camera3D->SetTarget(tar);
+
+
+		//ƒJƒƒ‰“–‚½‚è”»’è.
+		Vector3 result;
+		auto flag = m_cameraCollisionSolver.Execute(
+			result,
+			g_camera3D->GetPosition(),
+			g_camera3D->GetTarget()
+		);
+		g_camera3D->SetPosition(result);
 
 		if (m_state == State::enPlayerCamera) {
 			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed * gameTime()->GetDeltaTime());
@@ -204,7 +214,7 @@ void GameCamera::CalcPlayerCamera() {
 }
 
 void GameCamera::UpdateState() {
-	if (g_pad[0]->IsTrigger(enButtonLB3)) {
+	if (g_pad[0]->IsTrigger(enButtonRB3)) {
 	//if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;

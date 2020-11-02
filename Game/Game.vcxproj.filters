@@ -84,6 +84,15 @@
     <ClInclude Include="Item\ItemManager.h">
       <Filter>Item</Filter>
     </ClInclude>
+    <ClInclude Include="Player\State\PlayerGuardState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CCameraCollisionSlover.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\SpringCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -170,6 +179,15 @@
     <ClCompile Include="Item\ItemManager.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="Player\State\PlayerGuardState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CCameraCollisionSlover.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\SpringCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -181,23 +199,14 @@
     <Filter Include="Assets\modelData\test">
       <UniqueIdentifier>{37d68044-d545-45d2-9be8-25d4417d7106}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player">
-      <UniqueIdentifier>{de703569-5717-4754-963a-655926b051ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{711edca2-e974-43b6-a9ce-677bcb9ad77c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player\State">
-      <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
     </Filter>
     <Filter Include="test">
       <UniqueIdentifier>{01d172b2-43fa-499d-8403-68570eb66410}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\image">
       <UniqueIdentifier>{b4ab8465-3a30-4c6f-bd6b-f3ad57761a9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player\Attack">
-      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
     </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
@@ -213,6 +222,15 @@
     </Filter>
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f00be64a-cbbd-4feb-a7ef-6f8e244880da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{de703569-5717-4754-963a-655926b051ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\State">
+      <UniqueIdentifier>{f83d4f41-597f-4727-ab7d-4fc28448c04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack">
+      <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

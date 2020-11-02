@@ -4,6 +4,8 @@
 class IEnemy;
 class GameCamera;
 
+#define _PRINT_PLAYER_STATE //ステート遷移をコンソールに表示
+
 /// <summary>
 /// 
 /// </summary>
@@ -16,6 +18,7 @@ public:
 		enFlying,
 		enDiving,
 		enAttack,
+		enGuard,
 		enDead,
 		enNumState
 	};
@@ -159,7 +162,16 @@ public:
 	/// </summary>
 	/// <param name="damageAmount"> 攻撃力</param>
 	void ApplyDamage(const float damageAmount) {
-		m_hp = max(0.f, m_hp - damageAmount);
+		auto finalDamage = damageAmount - (damageAmount * m_armorParam / 100.f);
+		m_hp = max(0.f, m_hp - finalDamage);
+	}
+
+	/// <summary>
+	/// プレイヤーのアーマーが何%ダメージを軽減できるか設定
+	/// </summary>
+	/// <param name="param">param%ダメージ軽減アーマーを着用</param>
+	void SetArmorParam(const float param) {
+		m_armorParam = param;
 	}
 
 	void Heal(const float amount) {
@@ -285,5 +297,5 @@ private:
 	//TODO : change the name endurance to stamina
 	float m_endurance = m_ENDURANCE_MAX;
 	float m_boost = m_BOOST_MAX;
-
+	float m_armorParam = 0.f; //アーマーでダメージを何パーセント抑えるか. (初期状態 : 0%軽減).
 };

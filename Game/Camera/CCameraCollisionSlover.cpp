@@ -14,9 +14,9 @@ public:
 		Vector3 normal;
 		normal.Set(convexResult.m_hitNormalLocal);
 
-		if (convexResult.m_hitCollisionObject->getUserIndex() == 1) {
+		/*if (convexResult.m_hitCollisionObject->getUserIndex() == 1) {
 			return 1.0f;
-		}
+		}*/
 		return btCollisionWorld::ClosestConvexResultCallback::addSingleResult(convexResult, normalInWorldSpace);
 	}
 };

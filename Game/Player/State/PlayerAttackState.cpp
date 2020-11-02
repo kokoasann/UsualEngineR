@@ -12,7 +12,11 @@ PlayerAttackState::~PlayerAttackState() {
 }
 
 void PlayerAttackState::Enter(Player* p) {
-	printf("Attack Enter\n");
+
+#ifdef _PRINT_PLAYER_STATE
+	printf("Player Attack Enter\n");
+#endif
+
 	auto& vel = p->GetLocalVelocity();
 	p->SetVelocity(Vector3::Zero);
 
@@ -27,7 +31,9 @@ void PlayerAttackState::Enter(Player* p) {
 }
 
 void PlayerAttackState::Exit(Player* p) {
+#ifdef _PRINT_PLAYER_STATE
 	printf("Attack Exit\n");
+#endif
 }
 
 IPlayerState* PlayerAttackState::Update(Player* p) {

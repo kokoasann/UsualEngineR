@@ -5,6 +5,7 @@
 #include "State/PlayerGroundState.h"
 #include "State/PlayerDiveState.h"
 #include "State/PlayerAttackState.h"
+#include "State/PlayerGuardState.h"
 #include "State/PlayerDeadState.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/IEnemy.h"
@@ -100,6 +101,7 @@ bool Player::Start()
 	m_stateList[static_cast<int>(EnState::enDiving)] = new PlayerDiveState();
 	m_stateList[static_cast<int>(EnState::enAttack)] = new PlayerAttackState();
 	m_stateList[static_cast<int>(EnState::enDead)] = new PlayerDeadState();
+	m_stateList[static_cast<int>(EnState::enGuard)] = new PlayerGuardState();
 
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
