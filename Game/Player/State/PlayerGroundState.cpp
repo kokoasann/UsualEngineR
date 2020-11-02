@@ -67,8 +67,7 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 	m_vecVelocityGoal.x = lxf;
 	m_vecVelocityGoal.z = lyf;
 
-	if (g_pad[0]->IsPress(enButtonX)) {
-		//TODO : スタミナがないと走れないようにする
+	if (g_pad[0]->IsPress(enButtonX) and p->GetCurrentEndurance()  > m_RUN_BEGIN_COST) {
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM * m_VELOCITY_MAX;
 		isRunning = true;
 		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
@@ -131,10 +130,12 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	m_vecVelocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_vecVelocityGoal.z = lyf * m_VELOCITY_MAX;
 
-	if (g_pad[0]->IsPress(enButtonX)) {
+	if (g_pad[0]->IsPress(enButtonX) and p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
 		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 	}
+
+	DebugLogVec3(m_vecVelocityGoal);
 
 	auto delta = gameTime()->GetDeltaTime();
 	m_velocity.x = Approach(m_vecVelocityGoal.x, m_velocity.x, delta * m_QUICKNESS);

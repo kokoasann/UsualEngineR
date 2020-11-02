@@ -29,6 +29,7 @@ private:
 	const float m_GRAVITY = -30.f;
 	float m_QUICKNESS = 50.f;
 	const float m_RUN_SPEED_PARAM = 2.0f;
+	const float m_RUN_BEGIN_COST = 10.f;
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_vecVelocityGoal = Vector3::Zero;
 };
