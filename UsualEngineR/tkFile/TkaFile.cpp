@@ -11,7 +11,7 @@ namespace UER
 	{
 		FILE* fp = fopen( filePath, "rb");
 		if (fp == nullptr) {
-			MessageBoxW(nullptr, L"tkaファイルのオープンに失敗しました", L"エラー", MB_OK);
+			MessageBoxW(nullptr, L"tkaファイルのオープンに失敗しました tka file open error", L"エラー", MB_OK);
 			return;
 		}
 		//アニメーションクリップのヘッダーをロード。

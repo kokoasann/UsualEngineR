@@ -36,6 +36,7 @@ class Vert:
         self.uv = math.Vector((0,0))
         self.weight = [0,0,0,0]
         self.indices = [-1,-1,-1,-1]
+        self.boneNames = []
 
 class Mesh:
     def __init__(self):
@@ -49,8 +50,40 @@ class Mesh:
         
         self.vertList = []
         self.indeces = []
+        
+        self.vertGroups = {}
+        
+    def print(self):
+        print("num mate: ",self.numMaterial)
+        print("num vert: ",self.numVert)
+        print("num poly: ",self.numPolygon)
+        print("ind size: ",self.indexSize)
+        print("mates")
+        for mate in self.materialList:
+            print("albedo: ",mate.albedo)
+            print("normal: ",mate.normal)
+            print("specular: ",mate.specular)
+            
+        for vert in self.vertList:
+            print("ind: ",vert.index)
+            print("real ind: ",vert.real_index)
+            print("ind tr: ",vert.index_tr)
+            print("pos: ",vert.pos)
+            print("nor: ",vert.nor)
+            print("uv: ",vert.uv)
+            print("weight: ",vert.weight)
+            print("w ind: ",vert.indices)
+            
+        print("indeces: ",self.indeces)
 
-
+def transToYUp(matrix):
+    #ZUpをYUpに変えるための回転行列
+    rotMat = math.Matrix([ [1, 0,0,0],\
+                                [0, 0,1,0],\
+                                [0,-1,0,0],\
+                                [0, 0,0,1]])
+    matrix = rotMat @ matrix
+    return matrix
         
         
 def build_mesh(o):
@@ -61,7 +94,7 @@ def build_mesh(o):
     meshParts.materialList[0].normal = "/"+os.path.basename(o.MaterialProps.texture_nor)
     meshParts.materialList[0].specular = "/"+os.path.basename(o.MaterialProps.texture_spe)
         
-    objmat = o.matrix_world.copy()
+    objmat = transToYUp(o.matrix_world.copy())
     rotmat = objmat.copy()
     rotmat = rotmat.Translation((0,0,0))
     
@@ -80,10 +113,18 @@ def build_mesh(o):
         vert.nor = rotmat @ vt.normal
         
         for i,w in enumerate(vt.groups):
+            if i == 4:
+                print("out of w ind",o)
+                break
             vert.indices[i] = w.group
             vert.weight[i] = w.weight
+            #vert.boneNames.append(w.name)
+            
         vertList.append(vert)
         
+    for group in o.vertex_groups:
+        meshParts.vertGroups[group.index] = group.name
+    #print(meshParts.vertGroups)
         
     #print("mesh split to a polygon for index")
     vlist = []
@@ -170,9 +211,24 @@ def build_data(obj,f):
     if obj.type == "ARMATURE":
         for o in obj.children:
             meshList.append(build_mesh(o))
+            
+        boneIDs = {}
+        bpy.ops.object.mode_set(mode='EDIT')
+        edit_bones = list(bpy.context.object.data.edit_bones)
+        for i,bone in enumerate(edit_bones):
+            boneIDs[bone.name] = i
+        #print(boneIDs)
+        for msh in meshList:
+            for vert in msh.vertList:
+                for j,k in enumerate(vert.indices):
+                    if k == -1:
+                        break
+                    #print(k)
+                    vert.indices[j] = boneIDs[msh.vertGroups[k]]
     else:
         meshList.append(build_mesh(obj))
 
+    
     # num's meshes
     numMesh = len(meshList)
     #print("num mesh: %d"%numMesh)
@@ -185,6 +241,7 @@ def build_data(obj,f):
     f.write(struct.pack("<H",numMesh))
     
     for msh in meshList:
+        #msh.print()
         indexSize = 2
         if len(msh.indeces) > 65535:
             indexSize = 4

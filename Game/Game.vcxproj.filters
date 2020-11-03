@@ -232,6 +232,9 @@
     <Filter Include="Player\Attack">
       <UniqueIdentifier>{98b2e804-f37c-4fc3-b365-5715e00ad001}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\m">
+      <UniqueIdentifier>{96b95b29-5c9d-4b12-ba3b-365391aa3409}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -245,6 +248,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\Image\illumination.png">
       <Filter>Assets\image</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\m\mTex.png">
+      <Filter>Assets\modelData\m</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

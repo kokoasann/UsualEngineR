@@ -71,11 +71,6 @@ void Test::Awake()
 	m_rb.Create(info);
 	Physics().AddRigidBody(m_rb);
 
-	m_animlist.resize(1);
-	m_animlist[0] = std::make_unique<CAnimationClip>();
-	m_animlist[0]->Load("Assets/anim/unityChan/walk.tka");
-	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[0]->SetLoopFlag(true);
 
 	
 	/*m_threads[0].Execute([&]()
@@ -280,6 +275,25 @@ void Test::Awake()
 	vol_test->SetSca({ 50,50,50 });
 	auto& tfb = vol_test->GetFogData();
 	
+
+	auto mm = NewGO<ModelRender>(0);
+	mid.m_tkmFilePath = "Assets/modelData/m/m_test_anim.tkm";
+	mid.m_tksFilePath = "Assets/modelData/m/m_test_anim.tks";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+	//mid.m_upAxis = enUpAxisZ;
+	mm->Init(mid);
+	mm->SetPosition({ 100,10,100 });
+	mm->SetScale({ 5,5,5 });
+
+	m_animlist.resize(1);
+	m_animlist[static_cast<int>(0)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(0)]->Load("Assets/modelData/m/m_test_anim_Action.tka");
+	m_animlist[static_cast<int>(0)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(0)]->SetLoopFlag(true);
+
+	mm->InitAnimation(m_animlist, 1);
+	mm->Play(0);
+
 }
 
 void Test::Update()
