@@ -301,6 +301,9 @@
     <ClInclude Include="Graphics\Effect\VolumetricEffect.h">
       <Filter>Graphics\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Debug\DebugConsole.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -567,6 +570,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\Effect\VolumetricEffect.cpp">
       <Filter>Graphics\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\DebugConsole.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

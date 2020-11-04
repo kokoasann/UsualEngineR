@@ -15,7 +15,10 @@ namespace UER
 		btSequentialImpulseConstraintSolver* constraintSolver = nullptr;		//!<コンストレイントソルバー。拘束条件の解決処理。
 		btDiscreteDynamicsWorld* dynamicWorld = nullptr;			//!<ワールド。
 
+#if DEBUG_FUNC
 		PhysicsDebugDraw m_debugDraw;
+#endif
+		
 
 		std::mutex m_physicsWorld_mutex;
 	public:

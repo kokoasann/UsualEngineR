@@ -109,6 +109,7 @@
 #include "Debug/DebugSwitch.h"
 
 #endif
+#include "Debug/DebugConsole.h"
 
 namespace UER
 {

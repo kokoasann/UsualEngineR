@@ -61,7 +61,7 @@ namespace UER
 			}
 			else
 			{
-				return 0.f;
+				//return 0.f;
 				isHitWall = true;
 				Vector3 hitPosTmp = *(Vector3*)&convexResult.m_hitPointLocal;
 				//衝突点の距離を求める。。
@@ -91,6 +91,7 @@ namespace UER
 		bool isHitFloor = false;
 		Vector3 floorNormal = g_vec3Zero;
 		Vector3 floorHitPos = g_vec3One;
+		float floorDist = FLT_MAX;
 
 												//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
@@ -128,9 +129,23 @@ namespace UER
 			}
 			else
 			{
-				floorNormal = hitNormalTmp;
-				floorHitPos.Set(convexResult.m_hitPointLocal);
 				isHitFloor = true;
+
+				Vector3 hitPosTmp = *(Vector3*)&convexResult.m_hitPointLocal;
+				//衝突点の距離を求める。。
+				Vector3 vDist;
+				vDist.Subtract(hitPosTmp, startPos);
+				float distTmp = vDist.Length();
+				if (floorDist > distTmp)
+				{
+					floorHitPos = hitPosTmp;
+					floorNormal = hitNormalTmp;
+					floorDist = distTmp;
+				}
+
+				//floorNormal = hitNormalTmp;
+				//floorHitPos.Set(convexResult.m_hitPointLocal);
+				
 			}
 			return 0.0f;
 		}
@@ -184,6 +199,8 @@ namespace UER
 		
 		Vector3 oldnextPos = m_position;
 
+		float Ypos = 0.f;
+
 		Vector3 originalXZDir = addPos;
 		originalXZDir.y = 0.0f;
 		originalXZDir.Normalize();
@@ -193,7 +210,7 @@ namespace UER
 			Vector3 floorPos;
 			Vector3 floorNor;
 
-			float Ypos = 0.f;
+			
 
 			int loopCount = 0;
 			while (true) {
@@ -232,7 +249,7 @@ namespace UER
 				//衝突検出。
 				Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
-				if (callback.isHitFloor && 0)
+				if (callback.isHitFloor)
 				{
 					isHitFloor = true;
 					floorPos = callback.floorHitPos;
@@ -259,8 +276,11 @@ namespace UER
 
 					if (Yup.y > 0.f)
 					{
-						nextPosition.y += Yup.y;
-						Ypos = nextPosition.y;
+						//nextPosition.y += Yup.y;
+						//Ypos = nextPosition.y;
+						Ypos += Yup.y;
+						DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR IN  WALL");
+						DebugPrintVector3(EDebugConsoleKind::master, floorNor);
 					}
 				}
 
@@ -298,7 +318,7 @@ namespace UER
 					currentDir.y = 0.0f;
 					currentDir.Normalize();
 
-
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
 					if (currentDir.Dot(originalXZDir) < 0.0f) {
 						//角に入った時のキャラクタの振動を防止するために、
 						//移動先が逆向きになったら移動をキャンセルする。
@@ -349,7 +369,7 @@ namespace UER
 			start.setIdentity();
 			end.setIdentity();
 			//始点はカプセルコライダーの中心。
-			start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
+			start.setOrigin(btVector3(m_position.x, (m_position.y + m_height * 0.5f + m_radius)+ Ypos, m_position.z));
 			//start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius + 0.1f, m_position.z));
 
 
@@ -395,8 +415,11 @@ namespace UER
 					m_isOnGround = true;
 					nextPosition.y = callback.hitPos.y + OFFSETY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
 					//nextPosition = callback.hitPos;
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
+
+					//printf("HIT FLOOR\n");
 				}
-				else if (callback.isHitWall && isFall)	
+				if (callback.isHitWall && isFall)	
 				{
 					Vector3 vT0, vT1;
 					//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
@@ -420,7 +443,7 @@ namespace UER
 					nextPosition.y = callback.wallHitPos.y;
 					
 				}
-				else
+				if(!(callback.isHit || callback.isHitWall))
 				{
 					//地面上にいない。
 					m_isOnGround = false;
