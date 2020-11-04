@@ -69,5 +69,5 @@ namespace UER
 		m_log.Render();
 	}
 
-	
+	int DebugConsoleUser = 0;
 }

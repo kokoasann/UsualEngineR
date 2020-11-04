@@ -298,7 +298,7 @@ void Test::Awake()
 
 void Test::Update()
 {
-	m_chara->SetPosition(m_characon.Execute(gameTime()->GetDeltaTime(), (Vector3&)(g_vec3AxisY * -10.f)));
+	//m_chara->SetPosition(m_characon.Execute(gameTime()->GetDeltaTime(), (Vector3&)(g_vec3AxisY * -10.f)));
 
 	auto& trans = m_rb.GetBody()->getWorldTransform();
 	m_pModel->SetPosition(trans.getOrigin());
