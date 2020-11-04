@@ -177,9 +177,15 @@ void Player::SearchTarget() {
 void Player::UpdateAttackType() {
 	if (g_pad[0]->IsTrigger(enButtonLeft)) {
 		m_normalAttackType = EnAttackType::enSlash;
+#ifdef _PRINT_PLAYER_ATTACK
+		DebugPrint_WATA("Normal Attack Type has been changed to Slash\n");
+#endif //_PRINT_PLAYER_ATTACK
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonRight)) {
 		m_normalAttackType = EnAttackType::enA;
+#ifdef _PRINT_PLAYER_ATTACK
+		DebugPrint_WATA("Normal Attack Type has been changed to A\n");
+#endif //_PRINT_PLAYER_ATTACK
 	}
 }
