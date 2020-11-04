@@ -9,7 +9,9 @@ EnemyDeadState::~EnemyDeadState() {
 }
 
 void EnemyDeadState::Enter(IEnemy* e) {
-	printf("Enemy - Enter Dead State\n");
+#ifdef _PRINT_ENEMY_STATE
+	DebugPrint_WATA("Enemy - Enter Dead State\n");
+#endif
 	GameObject* enemy = reinterpret_cast<GameObject*>(e);
 	EnemyManager::GetEnemyManager().DestroyEnemy(e);
 	//DeleteGO(enemy);
@@ -21,5 +23,7 @@ IEnemyState* EnemyDeadState::Update(IEnemy* e) {
 }
 
 void EnemyDeadState::Exit(IEnemy* e) {
-	printf("Enemy - Exit Dead State\n");
+#ifdef _PRINT_ENEMY_STATE
+	DebugPrint_WATA("Enemy - Exit Dead State\n");
+#endif
 }

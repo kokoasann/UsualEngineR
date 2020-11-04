@@ -4,8 +4,6 @@
 class IEnemy;
 class GameCamera;
 
-#define _PRINT_PLAYER_STATE //ステート遷移をコンソールに表示
-
 /// <summary>
 /// 
 /// </summary>
@@ -31,6 +29,13 @@ public:
 		enAttack,
 		enDead,
 		enNumAnim
+	};
+
+	enum class EnAttackType {
+		enSlash,
+		enA,
+		enB,
+		enNumAttackType
 	};
 
 	Player();
@@ -240,6 +245,10 @@ public:
 		return *mp_camera;
 	}
 
+	const EnAttackType& GetNormalAttackType() const{
+		return m_normalAttackType;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -249,9 +258,17 @@ private:
 	//func
 	void SearchTarget();
 
+	/// <summary>
+	/// 攻撃の種類を選択
+	/// </summary>
+	void UpdateAttackType();
+
 	//Ref
 	IEnemy* m_target = nullptr;
 	GameCamera* mp_camera = nullptr;
+
+	//Current Attack Type
+	EnAttackType m_normalAttackType = EnAttackType::enSlash;
 
 	//State
 	IPlayerState* m_nextState = nullptr;

@@ -1,31 +1,31 @@
 #include "stdafx.h"
-#include "PlayerAttackSlash.h"
+#include "PlayerAttackA.h"
 #include "../Player.h"
 #include "../../Enemy/EnemyManager.h"
 
-PlayerAttackSlash::PlayerAttackSlash() {
+PlayerAttackA::PlayerAttackA() {
 
 }
 
-PlayerAttackSlash::~PlayerAttackSlash() {
+PlayerAttackA::~PlayerAttackA() {
 
 }
 
-void PlayerAttackSlash::Init(Player* player, int combo) {
+void PlayerAttackA::Init(Player* player, int combo) {
 #ifdef _PRINT_PLAYER_ATTACK
-	std::string s = "attack Slash combo :" + std::to_string(combo);
+	std::string s = "attack A combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
-#endif
+#endif //_PRINT_PLAYER_ATTACK
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
 	auto& enemyManager = EnemyManager::GetEnemyManager();
-	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range,  m_damageAmount * combo);
+	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 }
 
-void PlayerAttackSlash::Execute(Player* player) {
+void PlayerAttackA::Execute(Player* player) {
 	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
 	m_timer += gameTime()->GetDeltaTime();
 
@@ -36,3 +36,4 @@ void PlayerAttackSlash::Execute(Player* player) {
 		m_isDone = true;
 	}
 }
+

@@ -74,7 +74,6 @@ void HealthBar::Update()
 	if (m_drawTimer >= m_drawSec) {
 		m_shouldBeDrawn = false;
 		m_spHp->SetActive(false);
-		printf("bye\n");
 	}
 
 }

@@ -14,7 +14,7 @@ PlayerFlyingState::~PlayerFlyingState()
 
 void PlayerFlyingState::Enter(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player Enter Flying\n");
+	DebugPrint_WATA("Player Enter Flying\n");
 #endif
 
 	m_canRise = true;
@@ -120,6 +120,6 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 void PlayerFlyingState::Exit(Player* p) {
 	m_velocity = Vector3::Zero;
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player Exit Flying\n");
+	DebugPrint_WATA("Player Exit Flying\n");
 #endif
 }
