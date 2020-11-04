@@ -3,6 +3,7 @@
 #include "../Player.h"
 #include "../Attack/IPlayerAttack.h"
 #include "../Attack/PlayerAttackSlash.h"
+#include "../Attack/PlayerAttackA.h"
 
 PlayerAttackState::PlayerAttackState() {
 }
@@ -24,7 +25,18 @@ void PlayerAttackState::Enter(Player* p) {
 
 	//‚±‚Ì•Ó‚Å‰½‚ÌUŒ‚‚ª‚Å‚«‚é‚©”»’f‚·‚é
 	//m_currentAttack = p->GetNormalAttackSkill()
-	m_currentAttack = new PlayerAttackSlash();
+	switch (p->GetNormalAttackType()) {
+
+	case Player::EnAttackType::enSlash:
+		m_currentAttack = new PlayerAttackSlash();
+		break;
+
+	case Player::EnAttackType::enA:
+		m_currentAttack = new PlayerAttackA();
+		break;
+
+	}
+	
 
 	m_currentAttack->Init(p,m_combo);
 	m_currentAttack->GetInterval();

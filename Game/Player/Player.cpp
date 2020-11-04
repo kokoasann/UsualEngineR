@@ -123,6 +123,7 @@ void Player::PreUpdate()
 void Player::Update()
 {
 	SearchTarget();
+	UpdateAttackType();
 
 	//Calc forward
 	auto& world = m_model->GetModel().GetWorldMatrix();
@@ -170,5 +171,15 @@ void Player::SearchTarget() {
 	}
 	else {
 		m_target = nullptr;
+	}
+}
+
+void Player::UpdateAttackType() {
+	if (g_pad[0]->IsTrigger(enButtonLeft)) {
+		m_normalAttackType = EnAttackType::enSlash;
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonRight)) {
+		m_normalAttackType = EnAttackType::enA;
 	}
 }

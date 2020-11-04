@@ -99,6 +99,9 @@
     <ClInclude Include="Player\Attack\Projectile.h">
       <Filter>Player\Attack\Secondary</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Attack\PlayerAttackA.h">
+      <Filter>Player\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="Player\Attack\Projectile.cpp">
       <Filter>Player\Attack\Secondary</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\PlayerAttackA.cpp">
+      <Filter>Player\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
