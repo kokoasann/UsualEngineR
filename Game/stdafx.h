@@ -38,6 +38,10 @@ static void DebugPrintLine(EDebugConsoloUser user,const char* str)
 	DebugPrintLineConsole(TO_INT(user), str);
 }
 
+/// <summary>
+/// 共通のデバッグプリント
+/// </summary>
+/// <param name="str"></param>
 static void DebugPrint_COMMON(const char* str)
 {
 	DebugPrintLine(EDebugConsoloUser::COMMON, str);
@@ -53,4 +57,13 @@ static void DebugPrint_WATA(const char* str)
 	DebugPrintLine(EDebugConsoloUser::WATA, str);
 }
 
+static void DebugPrint_YOSI(const char* str)
+{
+	DebugPrintLine(EDebugConsoloUser::YOSI, str);
+}
+
+static void DebugPrint_INAM(const char* str)
+{
+	DebugPrintLine(EDebugConsoloUser::INAM, str);
+}
 
