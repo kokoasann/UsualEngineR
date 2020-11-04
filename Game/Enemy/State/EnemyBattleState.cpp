@@ -12,7 +12,7 @@ EnemyBattleState::~EnemyBattleState() {
 
 void EnemyBattleState::Enter(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
-	printf("Enter battle\n");
+	DebugPrint_WATA("Enter battle\n");
 #endif // _PRINT_ENEMY_STATE
 }
 
@@ -53,6 +53,6 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 
 void EnemyBattleState::Exit(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
-	printf("Exit battle\n");
+	DebugPrint_WATA("Exit battle\n");
 #endif
 }

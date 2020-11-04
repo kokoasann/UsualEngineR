@@ -14,7 +14,7 @@ PlayerDiveState::~PlayerDiveState()
 
 void PlayerDiveState::Enter(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player : Enter Dive\n");
+	DebugPrint_WATA("Player : Enter Dive\n");
 #endif
 
 	//スタミナがなくてダイブできないにゃん！
@@ -101,6 +101,6 @@ IPlayerState* PlayerDiveState::Update(Player* p) {
 
 void PlayerDiveState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player : Exit Dive\n");
+	DebugPrint_WATA("Player : Exit Dive\n");
 #endif
 }

@@ -11,7 +11,7 @@ PlayerDeadState::~PlayerDeadState() {
 
 void PlayerDeadState::Enter(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player - Enter Dead State\n");
+	DebugPrint_WATA("Player - Enter Dead State\n");
 #endif
 	auto& vel = p->GetLocalVelocity();
 	p->SetVelocity(Vector3::Zero);
@@ -20,7 +20,7 @@ void PlayerDeadState::Enter(Player* p) {
 
 void PlayerDeadState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player - Exit Dead State\n");
+	DebugPrint_WATA("Player - Exit Dead State\n");
 #endif
 }
 

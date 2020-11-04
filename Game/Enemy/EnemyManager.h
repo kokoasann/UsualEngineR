@@ -44,7 +44,7 @@ public:
 
 	Player* GetPlayer() const{
 		if (m_player == nullptr) {
-			printf("Please set a player instance");
+			DebugPrint_WATA("Please set a player instance");
 			assert(false);
 		}
 		return m_player;

@@ -15,7 +15,7 @@ void PlayerGroundState::Enter(Player* p){
 	m_velocity = p->GetLocalVelocity();
 	p->PlayAnimation(Player::EnAnimation::enWalk);
 #ifdef _PRINT_PLAYER_STATE
-	printf("Enter Ground\n");
+	DebugPrint_WATA("Enter Ground\n");
 #endif
 }
 
@@ -65,7 +65,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 void PlayerGroundState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Exit Ground\n");
+	DebugPrint_WATA("Exit Ground\n");
 #endif
 }
 

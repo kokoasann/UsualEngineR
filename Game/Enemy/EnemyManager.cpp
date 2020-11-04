@@ -51,8 +51,12 @@ void EnemyManager::ApplyAoeDamage(const Vector3& attackOriginPos, float range, f
 		const auto& pos = m_enemies[i]->GetPosition();
 		auto vecEnemyToPlayer = attackOriginPos - pos;
 		if (vecEnemyToPlayer.Length() < range) {
-			printf("Apply AoE Damage! Amount : %f\n", damageAmount);
 			m_enemies[i]->ApplyDamage(damageAmount);
+#ifdef _PRINT_ENEMY_DAMAGE
+			std::string s = "Apply AoE Damage!Amount :";
+			s += damageAmount;
+			DebugPrint_WATA(s.c_str());
+#endif // _PRINT_ENEMY_DAMAGE
 		}
 	}
 }

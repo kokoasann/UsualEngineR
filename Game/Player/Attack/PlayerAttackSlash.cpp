@@ -12,7 +12,10 @@ PlayerAttackSlash::~PlayerAttackSlash() {
 }
 
 void PlayerAttackSlash::Init(Player* player, int combo) {
-	printf("Slash combo : %d\n", combo);
+#ifdef _PRINT_PLAYER_ATTACK
+	std::string s = "attack Slash combo :" + std::to_string(combo);
+	DebugPrint_WATA(s.c_str());
+#endif
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;

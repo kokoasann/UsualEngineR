@@ -15,7 +15,7 @@ PlayerAttackState::~PlayerAttackState() {
 void PlayerAttackState::Enter(Player* p) {
 
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player Attack Enter\n");
+	DebugPrint_WATA("Player Attack Enter\n");
 #endif
 
 	auto& vel = p->GetLocalVelocity();
@@ -44,7 +44,7 @@ void PlayerAttackState::Enter(Player* p) {
 
 void PlayerAttackState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Attack Exit\n");
+	DebugPrint_WATA("Attack Exit\n");
 #endif
 }
 

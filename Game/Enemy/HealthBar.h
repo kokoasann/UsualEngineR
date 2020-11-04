@@ -78,7 +78,6 @@ public:
 		m_spHp->SetActive(true);
 		m_shouldBeDrawn = true;
 		m_drawTimer = 0.f;
-		printf("should be drawn\n");
 	}
 
 private:

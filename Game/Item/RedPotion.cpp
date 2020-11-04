@@ -21,7 +21,7 @@ RedPotion::~RedPotion() {
 
 void RedPotion::Apply(Player* player) {
 	player->Heal(m_healAmount);
-	printf("Heal\n");
+	DebugPrint_WATA("Heal\n");
 }
 
 void RedPotion::Update() {

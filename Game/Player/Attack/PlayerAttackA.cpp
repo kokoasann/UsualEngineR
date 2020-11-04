@@ -12,7 +12,10 @@ PlayerAttackA::~PlayerAttackA() {
 }
 
 void PlayerAttackA::Init(Player* player, int combo) {
-	printf("attack A combo : %d\n", combo);
+#ifdef _PRINT_PLAYER_ATTACK
+	std::string s = "attack A combo :" + std::to_string(combo);
+	DebugPrint_WATA(s.c_str());
+#endif //_PRINT_PLAYER_ATTACK
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;

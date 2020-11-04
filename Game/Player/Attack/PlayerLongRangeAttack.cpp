@@ -13,7 +13,7 @@ PlayerLongRangeAttack::~PlayerLongRangeAttack() {
 void PlayerLongRangeAttack::Execute(Player* p) {
 	m_intervalTimer += gameTime()->GetDeltaTime();
 	if (m_intervalTimer >= m_interval) {
-		printf("distant attacking\n");
+		DebugPrint_WATA("distant attacking\n");
 		auto projectile = NewGO<Projectile>(0);
 		projectile->Init(p->GetPosition(),p->GetForward());
 		m_intervalTimer = 0.f;

@@ -12,7 +12,7 @@ PlayerGuardState::~PlayerGuardState() {
 void PlayerGuardState::Enter(Player* p) {
 
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player : Enter Guard\n");
+	DebugPrint_WATA("Player : Enter Guard\n");
 #endif
 
 	p->SetVelocity(Vector3::Zero);
@@ -30,7 +30,7 @@ IPlayerState* PlayerGuardState::Update(Player* p) {
 
 void PlayerGuardState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	printf("Player : Exit Guard\n");
+	DebugPrint_WATA("Player : Exit Guard\n");
 #endif
 	//TODO : ƒvƒŒƒCƒ„[‚ÌŒ³‚Ì–hŒä—Í‚É–ß‚·
 	p->SetArmorParam(0.f);
