@@ -277,17 +277,18 @@ void Test::Awake()
 	
 
 	auto mm = NewGO<ModelRender>(0);
-	mid.m_tkmFilePath = "Assets/modelData/m/m_test_anim.tkm";
-	mid.m_tksFilePath = "Assets/modelData/m/m_test_anim.tks";
+	mid.m_tkmFilePath = "Assets/modelData/m/m_test2.tkm";
+	mid.m_tksFilePath = "Assets/modelData/m/m_test2.tks";
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	//mid.m_upAxis = enUpAxisZ;
 	mm->Init(mid);
 	mm->SetPosition({ 100,10,100 });
 	mm->SetScale({ 5,5,5 });
+	mm->SetMulColor({ 0.5, 0.5, 0.4, 1.f });
 
 	m_animlist.resize(1);
 	m_animlist[static_cast<int>(0)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(0)]->Load("Assets/modelData/m/m_test_anim_Action.tka");
+	m_animlist[static_cast<int>(0)]->Load("Assets/modelData/m/m_test2_idle.tka");
 	m_animlist[static_cast<int>(0)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(0)]->SetLoopFlag(true);
 
