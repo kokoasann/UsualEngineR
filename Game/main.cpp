@@ -32,6 +32,10 @@ struct Light {
 #define USE_MODEL 2
 
 
+
+
+
+
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -48,6 +52,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	bool isInit = false;
 
+	SetDebugConsoleUser(EDebugConsoloUser::COMMON | EDebugConsoloUser::NOMOTO | EDebugConsoloUser::WATA);
+
+	DebugPrint_WATA("test");
 	
 	GRandom().Init(0);
 	
