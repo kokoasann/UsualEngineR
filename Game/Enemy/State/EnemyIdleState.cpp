@@ -14,7 +14,9 @@ EnemyIdleState::~EnemyIdleState() {
 }
 
 void EnemyIdleState::Enter(IEnemy* e) {
+#ifdef _PRINT_ENEMY_STATE
 	printf("Enter enemy Idle\n");
+#endif
 }
 
 IEnemyState* EnemyIdleState::Update(IEnemy* e) {
@@ -44,5 +46,7 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 }
 
 void EnemyIdleState::Exit(IEnemy* e) {
+#ifdef _PRINT_ENEMY_STATE
 	printf("Exit enemy Idle\n");
+#endif
 }

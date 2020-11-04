@@ -11,7 +11,9 @@ EnemySlashState::~EnemySlashState() {
 }
 
 void EnemySlashState::Enter(IEnemy* e) {
+#ifdef _PRINT_ENEMY_STATE
 	printf("Enemy - Enter slash\n");
+#endif
 	m_timer = 0.f;
 	//e->playAttackAnimation();
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
@@ -27,5 +29,7 @@ IEnemyState* EnemySlashState::Update(IEnemy* e) {
 }
 
 void EnemySlashState::Exit(IEnemy* e) {
+#ifdef _PRINT_ENEMY_STATE
 	printf("Enemy - Exit slash\n");
+#endif
 }

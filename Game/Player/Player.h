@@ -4,8 +4,6 @@
 class IEnemy;
 class GameCamera;
 
-#define _PRINT_PLAYER_STATE //ステート遷移をコンソールに表示
-
 /// <summary>
 /// 
 /// </summary>
