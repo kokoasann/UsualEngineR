@@ -59,21 +59,5 @@ namespace UER
 	}
 
 
-	extern int DebugConsoleUser;
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="USER"></param>
-	/// <param name="str"></param>
-	static void DebugPrintLineConsole(int USER,const char* str)
-	{
-#if DEBUG_FUNC
-		if (DebugConsoleUser & USER)
-		{
-			printf(str);
-			printf("\n");
-		}
-
-#endif
-	}
+	
 }

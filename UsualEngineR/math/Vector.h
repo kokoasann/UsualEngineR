@@ -194,6 +194,8 @@ namespace UER
 			DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat2(&v.vec);
 			DirectX::XMStoreFloat2(&vec, DirectX::XMVectorMin(xmv0, xmv1));
 		}
+
+		
 	};
 	/// <summary>
 	/// 3次元ベクトル。
@@ -1131,4 +1133,5 @@ namespace UER
 	const Quaternion g_quatIdentity = { 0.0f,  0.0f, 0.0f, 1.0f };
 
 
+	
 }

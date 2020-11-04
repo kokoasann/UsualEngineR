@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "Debug.h"
-
+#include "DebugSwitch.h"
 
 namespace UER
 {
@@ -69,5 +69,5 @@ namespace UER
 		m_log.Render();
 	}
 
-	int DebugConsoleUser = 0;
+	
 }
