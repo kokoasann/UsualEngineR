@@ -50,6 +50,11 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		return nextState;
 	}
 
+	//Secondary Attack
+	if (g_pad[0]->IsPress(EnButton::enButtonLB1)) {
+		m_longRangeAttack.Execute(p);
+	}
+
 	//boost recharge
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 	//endurance recharge

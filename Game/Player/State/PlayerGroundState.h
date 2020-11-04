@@ -1,6 +1,8 @@
 #pragma once
 #include"IPlayerSstate.h"
 #include "../Player.h"
+#include "../Attack/PlayerLongRangeAttack.h"
+
 class Player;
 /// <summary>
 /// 
@@ -32,4 +34,7 @@ private:
 	const float m_RUN_BEGIN_COST = 10.f;
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_vecVelocityGoal = Vector3::Zero;
+
+	//Sub Attack
+	PlayerLongRangeAttack m_longRangeAttack;
 };
