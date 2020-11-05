@@ -2,6 +2,7 @@
 class IEnemyState;
 class HealthBar;
 #include "../../UsualEngineR/Character/CharacterController.h"
+#include "../Player/Player.h"
 
 class IEnemy : public GameObject
 {
@@ -11,6 +12,7 @@ public:
 	virtual void Init() {};
 	virtual void Execute() {};
 	virtual void Terminate() {};
+	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;

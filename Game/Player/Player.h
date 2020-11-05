@@ -35,7 +35,8 @@ public:
 		enSlash,
 		enA,
 		enB,
-		enNumAttackType
+		enNumAttackType,
+		enNone,
 	};
 
 	Player();
@@ -249,11 +250,20 @@ public:
 		return m_normalAttackType;
 	}
 
+	const EnAttackType& GetSecondAttackType() const {
+		return m_secondAttackType;
+	}
+
+
+	void UnlockSkill(const EnAttackType& type) {
+		m_skillFlags[TO_INT(type)] = true;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
 	//Vector3 m_velocityGoal = Vector3::Zero;
-
+	
 private:
 	//func
 	void SearchTarget();
@@ -269,6 +279,8 @@ private:
 
 	//Current Attack Type
 	EnAttackType m_normalAttackType = EnAttackType::enSlash;
+	EnAttackType m_secondAttackType = EnAttackType::enSlash;
+	bool m_skillFlags[TO_INT(EnAttackType::enNumAttackType)] = { true };
 
 	//State
 	IPlayerState* m_nextState = nullptr;

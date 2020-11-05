@@ -94,7 +94,7 @@ void Player::Awake()
 
 bool Player::Start()
 {
-
+	//State
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enGround)] = new PlayerGroundState();
 	m_stateList[static_cast<int>(EnState::enFlying)] = new PlayerFlyingState();
@@ -106,6 +106,10 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
 
+	//Skill
+	m_skillFlags[TO_INT(EnAttackType::enSlash)] = true;
+
+	//Physics
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 
 	return true;
@@ -175,17 +179,87 @@ void Player::SearchTarget() {
 }
 
 void Player::UpdateAttackType() {
+
+	//0 == A, 1 == Y
+	const float numAttackButton = 1;
+	const int ATTACK_NORMAL = 0;
+	const int ATTACK_SECOND = 1;
+	static int selectedType = ATTACK_NORMAL;
+
+	std::string s = std::to_string(selectedType);
+	//DebugPrint_WATA(s.c_str());
+
+	if (g_pad[0]->IsTrigger(enButtonUp)) {
+		selectedType = max(0, selectedType - 1);
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonDown)) {
+		selectedType = min(numAttackButton, selectedType + 1);
+	}
+
+	auto& currentAttackType = m_normalAttackType;
+	if (selectedType == ATTACK_SECOND) {
+		currentAttackType = m_secondAttackType;
+	}
+
 	if (g_pad[0]->IsTrigger(enButtonLeft)) {
-		m_normalAttackType = EnAttackType::enSlash;
+		if (TO_INT(currentAttackType) == 0) return;
+		auto nextNormalAttackID = TO_INT(currentAttackType) - 1;
+
+		//選択しようとしたスキルが解放されていないなら,
+		//現在のIDより値が小さいIDの中から最も大きなIDを選択する.
+		while (!m_skillFlags[nextNormalAttackID]){
+			nextNormalAttackID--;
+		}
+
+		if (selectedType == ATTACK_NORMAL) {
+			m_normalAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+		}
+		if (selectedType == ATTACK_SECOND) {
+			m_secondAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+		}
 #ifdef _PRINT_PLAYER_ATTACK
-		DebugPrint_WATA("Normal Attack Type has been changed to Slash\n");
+		std::string s = "Player skill is changed to ID : " + std::to_string(nextNormalAttackID);
+		if (selectedType == ATTACK_NORMAL) {
+			s += " : NORMAL";
+		}
+		else {
+			s += " : SECOND ";
+		}
+
+		DebugPrint_WATA(s.c_str());
 #endif //_PRINT_PLAYER_ATTACK
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonRight)) {
-		m_normalAttackType = EnAttackType::enA;
+		if (TO_INT(currentAttackType) > TO_INT(EnAttackType::enNumAttackType) - 1) return;
+		auto nextNormalAttackID = TO_INT(currentAttackType) + 1;
+
+		//選択しようとしたスキルが解放されていないなら,
+		//現在のIDより値が大さいかつスキル数以下のIDの中から最も小さなIDを選択する.
+		while (nextNormalAttackID < TO_INT(EnAttackType::enNumAttackType) -1 and !m_skillFlags[nextNormalAttackID]) {
+			nextNormalAttackID++;
+		}
+
+		//結局解放されてなかった.
+		if (!m_skillFlags[nextNormalAttackID]) return;
+
+		//currentAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+		if (selectedType == ATTACK_NORMAL) {
+			m_normalAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+		}
+		if (selectedType == ATTACK_SECOND) {
+			m_secondAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+		}
 #ifdef _PRINT_PLAYER_ATTACK
-		DebugPrint_WATA("Normal Attack Type has been changed to A\n");
+		std::string s = "Player skill is changed to ID : " + std::to_string(nextNormalAttackID);
+		if (selectedType == ATTACK_NORMAL) {
+			s += " : NORMAL";
+		}
+		else {
+			s += " : SECOND ";
+		}
+		DebugPrint_WATA(s.c_str());
 #endif //_PRINT_PLAYER_ATTACK
 	}
 }

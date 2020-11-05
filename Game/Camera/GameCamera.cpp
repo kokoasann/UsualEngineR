@@ -133,6 +133,10 @@ void GameCamera::CalcEnemyCamera() {
 
 	Vector3 ecPos;
 
+	if (mp_enemy != nullptr) {
+		m_targetPos = mp_enemy->GetPosition();
+	}
+
 	auto vecTargetToChara = m_charaPos - m_targetPos;
 	auto length = vecTargetToChara.Length();
 	vecTargetToChara.Normalize();
