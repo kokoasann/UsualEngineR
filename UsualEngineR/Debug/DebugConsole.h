@@ -82,4 +82,18 @@ namespace UER
 		}
 #endif
 	}
+
+	template<class E,class T>
+	static void DebugPrintValue(E user, const char* label, T value)
+	{
+#if DEBUG_FUNC
+
+		std::string str = label;
+		str += ": ";
+		str += std::to_string(value);
+		
+		DebugPrintLineConsole(TO_INT(user), str.c_str());
+
+#endif
+	}
 }
