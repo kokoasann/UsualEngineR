@@ -27,19 +27,36 @@ void PlayerAttackState::Enter(Player* p) {
 	//m_currentAttack = p->GetNormalAttackSkill()
 
 	//TODO : Avoid using new everytime.
-	switch (p->GetNormalAttackType()) {
 
-	case Player::EnAttackType::enSlash:
-		m_currentAttack = new PlayerAttackSlash();
-		break;
+	if (g_pad[0]->IsTrigger(enButtonB)) {
+		switch (p->GetNormalAttackType()) {
+		case Player::EnAttackType::enSlash:
+			m_currentAttack = new PlayerAttackSlash();
+			break;
 
-	case Player::EnAttackType::enA:
-		m_currentAttack = new PlayerAttackA();
-		break;
+		case Player::EnAttackType::enA:
+			m_currentAttack = new PlayerAttackA();
+			break;
 
-	default:
-		m_currentAttack = new PlayerAttackSlash();
+		default:
+			m_currentAttack = new PlayerAttackSlash();
+		}
+	}
 
+	if (g_pad[0]->IsTrigger(enButtonY)) {
+		DebugPrint_WATA("Y attack");
+		switch (p->GetSecondAttackType()) {
+		case Player::EnAttackType::enSlash:
+			m_currentAttack = new PlayerAttackSlash();
+			break;
+
+		case Player::EnAttackType::enA:
+			m_currentAttack = new PlayerAttackA();
+			break;
+
+		default:
+			m_currentAttack = new PlayerAttackSlash();
+		}
 	}
 	
 

@@ -30,7 +30,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	}
 	
 	//State
-	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonB) or g_pad[0]->IsTrigger(EnButton::enButtonY)) {
 		auto nextState = p->GetState(Player::EnState::enAttack);
 		return nextState;
 	}
