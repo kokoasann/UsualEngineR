@@ -6,7 +6,7 @@ using namespace UER;
 
 //ゲーム側デバッグ表示定義
 //#define _PRINT_PLAYER_STATE //ステート遷移をコンソールに表示
-//#define _PRINT_PLAYER_ATTACK
+#define _PRINT_PLAYER_ATTACK
 //#define _PRINT_ENEMY_STATE
 //#define _PRINT_ENEMY_DAMAGE
 
@@ -19,16 +19,17 @@ enum class EDebugConsoloUser :int
 	INAM = TO_INT(EDebugConsoleKind::num) + 4,
 };
 
-static UINT operator|(EDebugConsoloUser x, EDebugConsoloUser y)
+static INT operator|(EDebugConsoloUser x, EDebugConsoloUser y)
 {
 	return TO_INT(x) | TO_INT(y);
 }
-static UINT operator|(UINT x, EDebugConsoloUser y)
+static INT operator|(INT x, EDebugConsoloUser y)
 {
 	return x | TO_INT(y);
 }
 
-static void SetDebugConsoleUser(UINT user)
+template<class E>
+static void SetDebugConsoleUser(E user)
 {
 	DebugConsoleUser |= TO_INT(user);
 }
