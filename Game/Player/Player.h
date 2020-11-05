@@ -249,11 +249,15 @@ public:
 		return m_normalAttackType;
 	}
 
+	void UnlockSkill(const EnAttackType& type) {
+		m_skillFlags[TO_INT(type)] = true;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
 	//Vector3 m_velocityGoal = Vector3::Zero;
-
+	
 private:
 	//func
 	void SearchTarget();
@@ -269,6 +273,7 @@ private:
 
 	//Current Attack Type
 	EnAttackType m_normalAttackType = EnAttackType::enSlash;
+	bool m_skillFlags[TO_INT(EnAttackType::enNumAttackType)] = { false };
 
 	//State
 	IPlayerState* m_nextState = nullptr;

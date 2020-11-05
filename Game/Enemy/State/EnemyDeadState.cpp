@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "EnemyDeadState.h"
 #include "../EnemyManager.h"
+#include "../Drop/DropItemA.h"
 
 EnemyDeadState::EnemyDeadState() {
 }
@@ -14,6 +15,12 @@ void EnemyDeadState::Enter(IEnemy* e) {
 #endif
 	GameObject* enemy = reinterpret_cast<GameObject*>(e);
 	EnemyManager::GetEnemyManager().DestroyEnemy(e);
+
+	//Drop Item
+	auto dropItemID = e->GetDropID();
+	auto item = NewGO<DropItemA>(0);
+	item->SetPosition(e->GetPosition());
+
 	//DeleteGO(enemy);
 	//playAnimation-Dead
 }

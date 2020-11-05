@@ -102,6 +102,9 @@
     <ClInclude Include="Player\Attack\PlayerAttackA.h">
       <Filter>Player\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Drop\DropItemA.h">
+      <Filter>Enemy\Drop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -206,6 +209,9 @@
     <ClCompile Include="Player\Attack\PlayerAttackA.cpp">
       <Filter>Player\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Drop\DropItemA.cpp">
+      <Filter>Enemy\Drop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -255,6 +261,9 @@
     </Filter>
     <Filter Include="Player\Attack\Secondary">
       <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Drop">
+      <UniqueIdentifier>{df783634-26fd-468c-81ad-fc3b8d31f08a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

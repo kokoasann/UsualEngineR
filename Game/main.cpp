@@ -52,7 +52,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	bool isInit = false;
 
-	SetDebugConsoleUser(EDebugConsoloUser::COMMON | EDebugConsoloUser::NOMOTO | EDebugConsoloUser::WATA);
+	SetDebugConsoleUser(/*EDebugConsoloUser::COMMON | EDebugConsoloUser::NOMOTO | */ TO_INT(EDebugConsoloUser::WATA));
 
 	
 	GRandom().Init(0);
