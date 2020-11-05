@@ -304,6 +304,9 @@
     <ClInclude Include="Debug\DebugConsole.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\PostEffect\LightStreeks.h">
+      <Filter>Graphics\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -573,6 +576,9 @@
     </ClCompile>
     <ClCompile Include="Debug\DebugConsole.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PostEffect\LightStreeks.cpp">
+      <Filter>Graphics\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

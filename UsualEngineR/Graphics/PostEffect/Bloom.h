@@ -3,6 +3,8 @@
 #include "RenderTarget.h"
 #include "GaussBlur.h"
 #include "TextureCopy.h"
+
+#include "LightStreeks.h"
 namespace UER
 {
 	class PostEffect;
@@ -43,5 +45,7 @@ namespace UER
 		DescriptorHeap m_descCombine;
 
 		TextureCopy m_copy;
+
+		LightStreeks m_lightStreeks;
 	};
 }

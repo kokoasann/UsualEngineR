@@ -9,13 +9,20 @@ namespace UER
 	class TextureCopy
 	{
 	public:
-		enum class BlendMethod :INT8
+		enum class BlendMethod :UINT8
 		{
 			BM_Add,
 			BM_Min,
 			BM_Mul,
 			BM_Div,
 			BM_Trans,
+		};
+
+		enum class TextureNum :UINT8
+		{
+			Single,
+			Double,
+			Triple,
 		};
 
 		TextureCopy(){}
@@ -25,7 +32,7 @@ namespace UER
 		}
 		void Release();
 
-		void Init(Texture& srcTex, BlendMethod bm);
+		void Init(Texture* srcTex[3], BlendMethod bm, TextureNum texNum=TextureNum::Single);
 
 		void Render(RenderContext& rc, RenderTarget& rt, const Primitive& prim);
 	private:

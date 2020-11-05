@@ -219,6 +219,7 @@
     <ClInclude Include="Graphics\ModelRender.h" />
     <ClInclude Include="Graphics\PipelineState.h" />
     <ClInclude Include="Graphics\PostEffect\Bloom.h" />
+    <ClInclude Include="Graphics\PostEffect\LightStreeks.h" />
     <ClInclude Include="Graphics\PostEffect\PostEffect.h" />
     <ClInclude Include="Graphics\PreRender\GBuffer.h" />
     <ClInclude Include="Graphics\PreRender\PreRender.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="Graphics\ModelRender.cpp" />
     <ClCompile Include="Graphics\PipelineState.cpp" />
     <ClCompile Include="Graphics\PostEffect\Bloom.cpp" />
+    <ClCompile Include="Graphics\PostEffect\LightStreeks.cpp" />
     <ClCompile Include="Graphics\PostEffect\PostEffect.cpp" />
     <ClCompile Include="Graphics\PreRender\GBuffer.cpp" />
     <ClCompile Include="Graphics\PreRender\PreRender.cpp" />

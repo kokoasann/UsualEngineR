@@ -8,7 +8,7 @@ namespace UER
 	void TextureCopy::Release()
 	{
 	}
-	void TextureCopy::Init(Texture& srcTex, BlendMethod bm)
+	void TextureCopy::Init(Texture* srcTex[3], BlendMethod bm, TextureNum texNum)
 	{
 		m_rootSign.Init(
 			D3D12_FILTER_MIN_MAG_MIP_LINEAR,
@@ -16,13 +16,27 @@ namespace UER
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP
 		);
-		m_descHeap.RegistShaderResource(0, srcTex);
-		m_descHeap.Commit();
+		m_descHeap.RegistShaderResource(0, *srcTex[0]);
+		
 	
 		m_vs.LoadVS(L"Assets/shader/Copy.fx", "VSMain");
-		m_ps.LoadPS(L"Assets/shader/Copy.fx", "PSMain");
-		//m_vs.LoadVS(L"Assets/shader/Bloom.fx", "VSMain");
-		//m_ps.LoadPS(L"Assets/shader/Bloom.fx", "PSMain_SamplingLuminance");
+		switch (texNum)
+		{
+		case TextureNum::Single:
+			m_ps.LoadPS(L"Assets/shader/Copy.fx", "PSMain");
+			break;
+		case TextureNum::Double:
+			m_ps.LoadPS(L"Assets/shader/Copy.fx", "PSMain_Double");
+			m_descHeap.RegistShaderResource(1, *srcTex[1]);
+			break;
+		case TextureNum::Triple:
+			m_ps.LoadPS(L"Assets/shader/Copy.fx", "PSMain_Triple");
+			m_descHeap.RegistShaderResource(1, *srcTex[1]);
+			m_descHeap.RegistShaderResource(2, *srcTex[2]);
+			break;
+		}
+
+		m_descHeap.Commit();
 		{
 			D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
 			{
@@ -78,7 +92,7 @@ namespace UER
 	}
 	void TextureCopy::Render(RenderContext& rc,RenderTarget& rt, const Primitive& prim)
 	{
-		rc.WaitUntilToPossibleSetRenderTarget(rt);
+		//rc.WaitUntilToPossibleSetRenderTarget(rt);
 		rc.SetRenderTarget(rt.GetRTVCpuDescriptorHandle(), rt.GetDSVCpuDescriptorHandle());
 		D3D12_VIEWPORT vp{ 0,0,rt.GetWidth(),rt.GetHeight(),0,1 };
 		rc.SetViewport(vp);

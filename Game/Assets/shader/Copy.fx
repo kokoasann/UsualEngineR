@@ -28,8 +28,8 @@ struct PSOutput_3
 };
 
 Texture2D<float4> sceneTexture_1 : register(t0);	//origin
-// Texture2D<float4> sceneTexture_2 : register(t1);	//origin
-// Texture2D<float4> sceneTexture_3 : register(t2);	//origin
+Texture2D<float4> sceneTexture_2 : register(t1);	//origin
+Texture2D<float4> sceneTexture_3 : register(t2);	//origin
 
 sampler Sampler : register(s0);
 
@@ -46,22 +46,22 @@ float4 PSMain(PSInput In) : SV_Target0
 	return res;
 }
 
-// PSOutput_2 PSMain_Double(PSInput In)
-// {
-// 	PSOutput_2 output;
-// 	output.col1 = sceneTexture_1.Sample(Sampler, In.uv);
-// 	output.col2 = sceneTexture_2.Sample(Sampler, In.uv);
-// 	return output;
-// }
+float4 PSMain_Double(PSInput In): SV_Target0
+{
+	float4 output;
+	output = sceneTexture_1.Sample(Sampler, In.uv);
+	output += sceneTexture_2.Sample(Sampler, In.uv);
+	return output;
+}
 
-// PSOutput_3 PSMain_Triple(PSInput In)
-// {
-// 	PSOutput_3 output;
-// 	output.col1 = sceneTexture_1.Sample(Sampler, In.uv);
-// 	output.col2 = sceneTexture_2.Sample(Sampler, In.uv);
-// 	output.col3 = sceneTexture_3.Sample(Sampler, In.uv);
-// 	return output;
-// }
+float4 PSMain_Triple(PSInput In): SV_Target0
+{
+	float4 output;
+	output = sceneTexture_1.Sample(Sampler, In.uv);
+	output += sceneTexture_2.Sample(Sampler, In.uv);
+	output += sceneTexture_3.Sample(Sampler, In.uv);
+	return output;
+}
 
 
 //

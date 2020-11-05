@@ -81,7 +81,24 @@ namespace UER
 		}
 		m_descCombine.Commit();
 
-		m_copy.Init(m_combineRT.GetRenderTargetTexture(), TextureCopy::BlendMethod::BM_Add);
+
+
+		Texture* lightStreeksTex = nullptr;
+		m_lightStreeks.Init(FRAME_BUFFER_W >> 2, FRAME_BUFFER_H>>2, &m_luminanceRT.GetRenderTargetTexture(), lightStreeksTex);
+		Vector2 streek = { 1,1 };
+		streek.Normalize();
+		m_lightStreeks.SetStreeksDirX(streek);
+		streek.x *= -1.f;
+		m_lightStreeks.SetStreeksDirY(streek);
+		m_lightStreeks.UpdateWeight(Math::PI);
+
+		Texture* texList[] = {
+			&m_combineRT.GetRenderTargetTexture(),
+			lightStreeksTex
+		};
+		m_copy.Init(texList, TextureCopy::BlendMethod::BM_Add,TextureCopy::TextureNum::Double);
+
+		
 	}
 	void Bloom::Render(RenderContext& rc)
 	{
@@ -122,10 +139,31 @@ namespace UER
 		rc.SetDescriptorHeap(m_descCombine);
 		rc.SetPipelineState(m_pipeCombine);
 		prim.Draw(rc);
+
+#if 1
+		{
+			static Vector3 v1( 0.707f, 0.707f, 0.f);
+			static Vector3 v2(-0.707f, 0.707f, 0.f);
+
+			Quaternion rot;
+			rot.SetRotationDegZ(3);
+
+			rot.Apply(v1);
+			rot.Apply(v2);
+
+			m_lightStreeks.SetStreeksDirX({ v1.x,v1.y });
+			m_lightStreeks.SetStreeksDirY({ v2.x,v2.y });
+		}
+#endif
+		m_lightStreeks.Draw(rc, prim);
 		
 	}
 	void Bloom::CombineRender(RenderContext& rc, RenderTarget* rt)
 	{	
+		D3D12_VIEWPORT vp{ 0,0,FRAME_BUFFER_W,FRAME_BUFFER_H,0,1 };
+		rc.SetViewport(vp);
+
+		rc.WaitUntilToPossibleSetRenderTarget(*rt);
 		rc.WaitUntilFinishDrawingToRenderTarget(m_combineRT);
 		m_copy.Render(rc, *rt, m_postEffect->GetPrimitive());
 	}

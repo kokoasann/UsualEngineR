@@ -163,7 +163,12 @@ namespace UER
 			return *this;
 		}
 
-
+		void Normalize()
+		{
+			DirectX::XMVECTOR xmv = DirectX::XMLoadFloat2(&vec);
+			xmv = DirectX::XMVector2Normalize(xmv);
+			DirectX::XMStoreFloat2(&vec, xmv);
+		}
 
 		/// <summary>
 		/// 最大値を設定。
