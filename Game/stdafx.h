@@ -19,16 +19,17 @@ enum class EDebugConsoloUser :int
 	INAM = TO_INT(EDebugConsoleKind::num) + 4,
 };
 
-static UINT operator|(EDebugConsoloUser x, EDebugConsoloUser y)
+static INT operator|(EDebugConsoloUser x, EDebugConsoloUser y)
 {
 	return TO_INT(x) | TO_INT(y);
 }
-static UINT operator|(UINT x, EDebugConsoloUser y)
+static INT operator|(INT x, EDebugConsoloUser y)
 {
 	return x | TO_INT(y);
 }
 
-static void SetDebugConsoleUser(UINT user)
+template<class E>
+static void SetDebugConsoleUser(E user)
 {
 	DebugConsoleUser |= TO_INT(user);
 }

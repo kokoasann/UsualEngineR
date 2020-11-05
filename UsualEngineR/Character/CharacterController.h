@@ -35,6 +35,9 @@ namespace UER
 			*@return 移動後のキャラクターの座標。
 			*/
 		const Vector3& Execute(float deltaTime, const Vector3& moveSpeed);
+
+		void ExecuteWall(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
+		void ExecuteFloor(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
 		/*!
 			* @brief	座標を取得。
 			*/
@@ -91,5 +94,8 @@ namespace UER
 		float				m_height = 0.0f;
 		RigidBody			m_rigidBody;					//剛体。
 		bool				m_isUseRigidBody = true;		//リジッドボデューを使う？
+
+		float				m_offsetXZ = 0.1f;
+		float				m_offsetY = 0.1f;
 	};
 }
