@@ -25,6 +25,8 @@ void PlayerAttackState::Enter(Player* p) {
 
 	//‚±‚Ì•Ó‚Å‰½‚ÌUŒ‚‚ª‚Å‚«‚é‚©”»’f‚·‚é
 	//m_currentAttack = p->GetNormalAttackSkill()
+
+	//TODO : Avoid using new everytime.
 	switch (p->GetNormalAttackType()) {
 
 	case Player::EnAttackType::enSlash:
@@ -34,6 +36,9 @@ void PlayerAttackState::Enter(Player* p) {
 	case Player::EnAttackType::enA:
 		m_currentAttack = new PlayerAttackA();
 		break;
+
+	default:
+		m_currentAttack = new PlayerAttackSlash();
 
 	}
 	

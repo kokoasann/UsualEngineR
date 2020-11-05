@@ -180,6 +180,7 @@
     <ClInclude Include="Camera\GameCamera.h" />
     <ClInclude Include="Camera\SpringCamera.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
+    <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
     <ClInclude Include="Enemy\HealthBar.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Camera\GameCamera.cpp" />
     <ClCompile Include="Camera\SpringCamera.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
+    <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
     <ClCompile Include="Enemy\HealthBar.cpp" />

@@ -94,7 +94,7 @@ void Player::Awake()
 
 bool Player::Start()
 {
-
+	//State
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enGround)] = new PlayerGroundState();
 	m_stateList[static_cast<int>(EnState::enFlying)] = new PlayerFlyingState();
@@ -106,6 +106,10 @@ bool Player::Start()
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
 
+	//Skill
+	m_skillFlags[TO_INT(EnAttackType::enSlash)] = true;
+
+	//Physics
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 
 	return true;
@@ -175,6 +179,47 @@ void Player::SearchTarget() {
 }
 
 void Player::UpdateAttackType() {
+
+	if (g_pad[0]->IsTrigger(enButtonLeft)) {
+		if (TO_INT(m_normalAttackType) == 0) return;
+		auto nextNormalAttackID = TO_INT(m_normalAttackType) - 1;
+
+		//選択しようとしたスキルが解放されていないなら,
+		//現在のIDより値が小さいIDの中から最も大きなIDを選択する.
+		while (!m_skillFlags[nextNormalAttackID]){
+			nextNormalAttackID--;
+		}
+
+		m_normalAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+#ifdef _PRINT_PLAYER_ATTACK
+		std::string s = "Player normal skill is changed to ID : " + std::to_string(nextNormalAttackID);
+		DebugPrint_WATA(s.c_str());
+#endif //_PRINT_PLAYER_ATTACK
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonRight)) {
+		if (TO_INT(m_normalAttackType) > TO_INT(EnAttackType::enNumAttackType) - 1) return;
+		auto nextNormalAttackID = TO_INT(m_normalAttackType) + 1;
+
+		//選択しようとしたスキルが解放されていないなら,
+		//現在のIDより値が大さいかつスキル数以下のIDの中から最も小さなIDを選択する.
+		while (nextNormalAttackID < TO_INT(EnAttackType::enNumAttackType) -1 and !m_skillFlags[nextNormalAttackID]) {
+			nextNormalAttackID++;
+		}
+
+		//結局解放されてなかった.
+		if (!m_skillFlags[nextNormalAttackID]) return;
+
+		m_normalAttackType = static_cast<EnAttackType>(nextNormalAttackID);
+#ifdef _PRINT_PLAYER_ATTACK
+		std::string s = "Player normal skill is changed to ID : " + std::to_string(nextNormalAttackID);
+		DebugPrint_WATA(s.c_str());
+#endif //_PRINT_PLAYER_ATTACK
+	}
+
+	return;
+
+
 	if (g_pad[0]->IsTrigger(enButtonLeft)) {
 		m_normalAttackType = EnAttackType::enSlash;
 #ifdef _PRINT_PLAYER_ATTACK
