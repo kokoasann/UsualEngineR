@@ -35,7 +35,8 @@ public:
 		enSlash,
 		enA,
 		enB,
-		enNumAttackType
+		enNumAttackType,
+		enNone,
 	};
 
 	Player();

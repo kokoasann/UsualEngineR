@@ -18,9 +18,10 @@ void EnemyDeadState::Enter(IEnemy* e) {
 
 	//Drop Item
 	auto dropItemID = e->GetDropID();
-	auto item = NewGO<DropItemA>(0);
-	item->SetPosition(e->GetPosition());
-
+	if (dropItemID != Player::EnAttackType::enNone) {
+		auto item = NewGO<DropItemA>(0);
+		item->SetPosition(e->GetPosition());
+	}
 	//DeleteGO(enemy);
 	//playAnimation-Dead
 }

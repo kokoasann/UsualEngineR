@@ -12,7 +12,7 @@ public:
 	virtual void Init() {};
 	virtual void Execute() {};
 	virtual void Terminate() {};
-	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enSlash; }
+	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;
