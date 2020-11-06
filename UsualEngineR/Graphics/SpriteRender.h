@@ -100,12 +100,18 @@ namespace UER
 		{
 			m_isBillBord = true;
 		}
+
+		void SetMulColor(const Vector4& v)
+		{
+			m_mulColor = v;
+		}
 	private:
 		Sprite mSprite;											//スプライト
 		Vector3 mPosition = g_vec3Zero;					//ポジション
 		Quaternion mRotation = g_quatIdentity;		//ローテーション
 		Vector3 mScale = g_vec3One;						//スケール
 		Vector2 mPivot = {0.5f,0.5f};							//ピボット
+		Vector4 m_mulColor = { 1,1,1,1 };
 
 		bool m_isInited = false;
 		bool m_isUpdated = false;

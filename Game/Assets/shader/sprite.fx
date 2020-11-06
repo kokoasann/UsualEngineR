@@ -2,8 +2,8 @@
 
 cbuffer cb :register (b0)
 {
-	matrix mvp;			//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-	float4 mulcol;		//æZF
+	matrix mvp;			//ï¿½rï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
+	float4 mulcol;		//ï¿½ï¿½Zï¿½F
 	float4 screenParam;
 }
 struct VSInput {
@@ -16,7 +16,7 @@ struct PSInput {
 	float2 uv  : TEXCOORD0;
 };
 
-Texture2D<float4> colorTexture : register(t0);	//ƒJƒ‰[ƒeƒNƒXƒ`ƒƒB
+Texture2D<float4> colorTexture : register(t0);	//ï¿½Jï¿½ï¿½ï¿½[ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½B
 sampler Sampler : register(s0);
 
 PSInput VSMain(VSInput In)
@@ -28,7 +28,7 @@ PSInput VSMain(VSInput In)
 }
 float4 PSMain(PSInput In) : SV_Target0
 {
-	float4 res = colorTexture.Sample(Sampler, In.uv);// * mulcol;
+	float4 res = colorTexture.Sample(Sampler, In.uv) * mulcol;// * mulcol;
 	return res;
 }
 

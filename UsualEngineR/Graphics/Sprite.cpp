@@ -217,7 +217,7 @@ namespace UER
 			m_world = m_world * mRot;
 			m_world = m_world * mTrans;
 		}
-		void Sprite::Draw(RenderContext& renderContext,const Matrix& view, const Matrix& projection)
+		void Sprite::Draw(RenderContext& renderContext,const Matrix& view, const Matrix& projection, const Vector4& mulcol)
 		{
 			//Matrix viewMatrix = g_camera2D->GetViewMatrix();
 			//Matrix projMatrix = g_camera2D->GetProjectionMatrix();

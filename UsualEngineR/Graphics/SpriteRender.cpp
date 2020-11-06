@@ -40,17 +40,17 @@ namespace UER
 
 		auto& rc = g_graphicsEngine->GetRenderContext();
 		if(!m_isMainCameraView)
-			mSprite.Draw(rc,g_camera2D->GetViewMatrix(),g_camera2D->GetProjectionMatrix());
+			mSprite.Draw(rc,g_camera2D->GetViewMatrix(),g_camera2D->GetProjectionMatrix(),m_mulColor);
 		else
-			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
+			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix(), m_mulColor);
 
 		switch (m_camMode)
 		{
 		case ECameraMode::Usual:
-			mSprite.Draw(rc, g_camera2D->GetViewMatrix(), g_camera2D->GetProjectionMatrix());
+			mSprite.Draw(rc, g_camera2D->GetViewMatrix(), g_camera2D->GetProjectionMatrix(), m_mulColor);
 			break;
 		case ECameraMode::View:
-			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
+			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix(), m_mulColor);
 			break;
 		case ECameraMode::Rotate:
 		{
@@ -91,7 +91,7 @@ namespace UER
 			smat.MakeScaling(sca);
 			rmat.MakeRotationFromQuaternion(rot);
 			//smat.Inverse();
-			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), promat);
+			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), promat,m_mulColor);
 		}
 			break;
 		}
