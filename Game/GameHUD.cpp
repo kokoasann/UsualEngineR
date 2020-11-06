@@ -79,23 +79,14 @@ bool GameHUD::Start()
 	m_spEnemyHP->SetPivot(m_SPRITE_PIVOT);
 
 	//Player Weapon
-	weaponsp = NewGO<SpriteRender>(0);
+	m_presetSp = NewGO<SpriteRender>(0);
 	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
-	sd.m_height = sph;
-	sd.m_width = spw;
-	weaponsp->Init(sd);
-	weaponsp->SetPos(wpos);
-	weaponsp->SetSca(m_playerHpScale);
-	weaponsp->SetPivot(m_SPRITE_PIVOT);
-
-	weaponsp2 = NewGO<SpriteRender>(0);
-	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
-	sd.m_height = sph;
-	sd.m_width = spw;
-	weaponsp2->Init(sd);
-	weaponsp2->SetPos(w2pos);
-	weaponsp2->SetSca(m_playerHpScale);
-	weaponsp2->SetPivot(m_SPRITE_PIVOT);
+	sd.m_height = m_presetSpHeight;
+	sd.m_width = m_presetSpWidth;
+	m_presetSp->Init(sd);
+	m_presetSp->SetPos(m_presetSpPos);
+	m_presetSp->SetSca(m_playerHpScale);
+	m_presetSp->SetPivot(m_SPRITE_PIVOT);
 
 	return true;
 }
@@ -130,22 +121,23 @@ void GameHUD::Update()
 	}
 	m_spEnemyHP->SetSca(m_enemyHpScale);
 
-
 	//Player Weapon
-	auto nt = m_pPlayer->GetNormalAttackType();
-	if (nt == Player::EnAttackType::enSlash) {
-		weaponsp->SetMulColor({ 0,0,0,1 });
-	}
-	else {
-		weaponsp->SetMulColor({ 1,1,1,1 });
+	auto preset = m_pPlayer->GetCurrentAttackPreset();
+
+	if (preset == Player::EnAttackPreset::enDefault) {
+		m_presetSp->SetMulColor({ 0,0,0,1 });
 	}
 
-	auto st = m_pPlayer->GetSecondAttackType();
-	if (st == Player::EnAttackType::enSlash) {
-		weaponsp2->SetMulColor({ 0,0,0,1 });
+	if (preset == Player::EnAttackPreset::enA) {
+		m_presetSp->SetMulColor({ 1,0,0,1 });
 	}
-	else {
-		weaponsp2->SetMulColor({ 1,1,1,1 });
+
+	if (preset == Player::EnAttackPreset::enB) {
+		m_presetSp->SetMulColor({ 0,1,0,1 });
+	}
+
+	if (preset == Player::EnAttackPreset::enC) {
+		m_presetSp->SetMulColor({ 0,0,1,1 });
 	}
 
 }

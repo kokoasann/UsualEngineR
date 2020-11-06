@@ -180,6 +180,28 @@ void Player::SearchTarget() {
 
 void Player::UpdateAttackType() {
 
+	if (g_pad[0]->IsTrigger(enButtonLeft)) {
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enA)]) {
+			m_currentAttackPreset = EnAttackPreset::enA;
+		}
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonUp)) {
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enB)])
+			m_currentAttackPreset = EnAttackPreset::enB;
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonRight)) {
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enC)])
+			m_currentAttackPreset = EnAttackPreset::enC;
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonDown)) {
+		m_currentAttackPreset = EnAttackPreset::enDefault;
+	}
+
+	return;
+
 	//0 == A, 1 == Y
 	const float numAttackButton = 1;
 	const int ATTACK_NORMAL = 0;

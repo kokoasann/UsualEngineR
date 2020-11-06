@@ -39,6 +39,14 @@ public:
 		enNone,
 	};
 
+	enum class EnAttackPreset {
+		enDefault,
+		enA,
+		enB,
+		enC,
+		enNumPreset
+	};
+
 	Player();
 	virtual ~Player();
 
@@ -254,9 +262,17 @@ public:
 		return m_secondAttackType;
 	}
 
+	const EnAttackPreset& GetCurrentAttackPreset() const{
+		return m_currentAttackPreset;
+	}
+
 
 	void UnlockSkill(const EnAttackType& type) {
 		m_skillFlags[TO_INT(type)] = true;
+	}
+
+	void UnlockPreset(const EnAttackPreset& preset) {
+		m_canUsePreset[TO_INT(preset)] = true;
 	}
 
 	//TODO : protect these member
@@ -278,6 +294,9 @@ private:
 	GameCamera* mp_camera = nullptr;
 
 	//Current Attack Type
+	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true ,true,true,true };
+
 	EnAttackType m_normalAttackType = EnAttackType::enSlash;
 	EnAttackType m_secondAttackType = EnAttackType::enSlash;
 	bool m_skillFlags[TO_INT(EnAttackType::enNumAttackType)] = { true , true };

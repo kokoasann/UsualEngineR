@@ -128,24 +128,14 @@ private:
 
 	//Player Weapon
 
-	SpriteRender* weaponsp = nullptr;
-	const float sph = 50.f;
-	const float spw = 50.f;
+	SpriteRender* m_presetSp = nullptr;
+	const float m_presetSpHeight = 50.f;
+	const float m_presetSpWidth = 50.f;
 	//Vector3 m_enemyHpScale = Vector3::One;
 
-	Vector3 wpos = {
+	Vector3 m_presetSpPos = {
 		ANCHOR_BOTTOM_LEFT.x + 1100.f,
 		ANCHOR_BOTTOM_LEFT.y + 50.f,
 		0.f
 	};
-
-	//w2
-	SpriteRender* weaponsp2 = nullptr;
-
-	Vector3 w2pos = {
-		ANCHOR_BOTTOM_LEFT.x + 1200.f,
-		ANCHOR_BOTTOM_LEFT.y + 50.f,
-		0.f
-	};
-
 };

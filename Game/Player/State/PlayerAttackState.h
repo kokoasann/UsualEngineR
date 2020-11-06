@@ -13,6 +13,24 @@ public:
 	void Exit(Player*) override;
 private:
 	IPlayerAttack* m_currentAttack = nullptr;
+
+	enum class EnPreset {
+		enPresetDefault,
+		enPresetA,
+		enPresetB,
+		enPresetC,
+		enNumPreset
+	};
+
+	enum class EnAttackType {
+		enNormalAttack,
+		enSecondAttack,
+		//enSubAttack,
+		enNumAttackType
+	};
+
+	std::map<EnPreset, std::vector<IPlayerAttack*>> m_skills;
+
 	int m_combo = 1;
 	const int m_MAX_COMBO = 3;
 	float m_elpased = 0.f;
