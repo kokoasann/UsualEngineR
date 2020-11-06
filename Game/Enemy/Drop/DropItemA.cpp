@@ -66,7 +66,8 @@ void DropItemA::PostUpdate()
 	auto dist = (p->GetPosition() - m_position).Length();
 
 	if (dist < m_GRASP_RANGE) {
-		p->UnlockSkill(m_typeId);
+		//p->UnlockSkill(m_typeId);
+		p->UnlockPreset(Player::EnAttackPreset::enA);
 		auto gameObj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(gameObj);
 	}
