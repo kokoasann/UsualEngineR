@@ -31,6 +31,8 @@ private:
 
 	std::map<EnPreset, std::vector<IPlayerAttack*>> m_skills;
 
+	std::vector< IPlayerAttack*> m_attackClasses;
+
 	int m_combo = 1;
 	const int m_MAX_COMBO = 3;
 	float m_elpased = 0.f;
