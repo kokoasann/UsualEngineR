@@ -10,6 +10,9 @@ PlayerAttackState::PlayerAttackState() {
 	auto slash = new PlayerAttackSlash;
 	auto attackA = new PlayerAttackA;
 
+	m_attackClasses.push_back(slash);
+	m_attackClasses.push_back(attackA);
+
 	//Preset0
 	std::vector<IPlayerAttack*> presetDefault;
 	presetDefault.resize(TO_INT(EnAttackType::enNumAttackType));
@@ -41,7 +44,9 @@ PlayerAttackState::PlayerAttackState() {
 }
 
 PlayerAttackState::~PlayerAttackState() {
-
+	for (int i = 0; i < m_attackClasses.size(); i++) {
+		delete m_attackClasses[i];
+	}
 }
 
 void PlayerAttackState::Enter(Player* p) {
