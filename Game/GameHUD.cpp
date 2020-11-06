@@ -134,10 +134,18 @@ void GameHUD::Update()
 	//Player Weapon
 	auto nt = m_pPlayer->GetNormalAttackType();
 	if (nt == Player::EnAttackType::enSlash) {
-		//weaponsp.
+		weaponsp->SetMulColor({ 0,0,0,1 });
 	}
 	else {
+		weaponsp->SetMulColor({ 1,1,1,1 });
+	}
 
+	auto st = m_pPlayer->GetSecondAttackType();
+	if (st == Player::EnAttackType::enSlash) {
+		weaponsp2->SetMulColor({ 0,0,0,1 });
+	}
+	else {
+		weaponsp2->SetMulColor({ 1,1,1,1 });
 	}
 
 }

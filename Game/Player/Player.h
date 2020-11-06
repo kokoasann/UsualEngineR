@@ -280,7 +280,7 @@ private:
 	//Current Attack Type
 	EnAttackType m_normalAttackType = EnAttackType::enSlash;
 	EnAttackType m_secondAttackType = EnAttackType::enSlash;
-	bool m_skillFlags[TO_INT(EnAttackType::enNumAttackType)] = { true };
+	bool m_skillFlags[TO_INT(EnAttackType::enNumAttackType)] = { true , true };
 
 	//State
 	IPlayerState* m_nextState = nullptr;
