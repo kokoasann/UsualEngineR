@@ -237,10 +237,7 @@ namespace UER
 			m_constantBufferCPU.mvp.m[1][3] = 0;
 			m_constantBufferCPU.mvp.m[2][3] = 0;
 			m_constantBufferCPU.mvp.m[3][3] = 1;*/
-			m_constantBufferCPU.mulColor.x = 1.0f;
-			m_constantBufferCPU.mulColor.y = 1.0f;
-			m_constantBufferCPU.mulColor.z = 1.0f;
-			m_constantBufferCPU.mulColor.w = 1.0f;
+			m_constantBufferCPU.mulColor = mulcol;
 
 			m_constantBufferCPU.screenParam.x = g_camera3D->GetNear();
 			m_constantBufferCPU.screenParam.y = g_camera3D->GetFar();
