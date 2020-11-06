@@ -78,6 +78,25 @@ bool GameHUD::Start()
 	m_spEnemyHP->SetSca(m_enemyHpScale);
 	m_spEnemyHP->SetPivot(m_SPRITE_PIVOT);
 
+	//Player Weapon
+	weaponsp = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+	sd.m_height = sph;
+	sd.m_width = spw;
+	weaponsp->Init(sd);
+	weaponsp->SetPos(wpos);
+	weaponsp->SetSca(m_playerHpScale);
+	weaponsp->SetPivot(m_SPRITE_PIVOT);
+
+	weaponsp2 = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+	sd.m_height = sph;
+	sd.m_width = spw;
+	weaponsp2->Init(sd);
+	weaponsp2->SetPos(w2pos);
+	weaponsp2->SetSca(m_playerHpScale);
+	weaponsp2->SetPivot(m_SPRITE_PIVOT);
+
 	return true;
 }
 
@@ -110,6 +129,17 @@ void GameHUD::Update()
 		m_enemyHpScale.x = target->GetCurrentHP() / target->GetMaxHP();
 	}
 	m_spEnemyHP->SetSca(m_enemyHpScale);
+
+
+	//Player Weapon
+	auto nt = m_pPlayer->GetNormalAttackType();
+	if (nt == Player::EnAttackType::enSlash) {
+		//weaponsp.
+	}
+	else {
+
+	}
+
 }
 
 void GameHUD::PostUpdate()
