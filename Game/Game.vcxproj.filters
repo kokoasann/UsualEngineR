@@ -282,6 +282,9 @@
     <ImageContentTask Include="Assets\modelData\m\mTex.png">
       <Filter>Assets\modelData\m</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\m\mNor.png">
+      <Filter>Assets\modelData\m</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />

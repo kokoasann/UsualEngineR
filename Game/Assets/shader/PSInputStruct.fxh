@@ -5,4 +5,5 @@ struct SPSIn{
 	float2 uv 			: TEXCOORD0;	//uv座標。
 	float3 worldPos		: TEXCOORD1;	//ワールド空間でのピクセルの座標。
     float3 tangent	    : TANGENT;		//接ベクトル
+	float3 binormal		: BINORMAL;
 };

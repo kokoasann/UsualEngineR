@@ -116,30 +116,31 @@ float FBMNoise3D (in float3 st) {
 }
 
 //非整数ブラウン運動(3D)
-float FBM3D_x5(float3 pos,in float3 shift)
+float FBM3D_x5(float3 pos)
 {
     float res = 0;
     float amplitude = 0.5f;
     [unroll(FBM_COUNT_5)]
     for(int i=0;i < FBM_COUNT_5;i++)
     {
-        res += amplitude * FBMNoise3D(pos);
-        pos = pos * 2. + shift;
+        //res += amplitude * FBMNoise3D(pos);
+        res = mad(amplitude, FBMNoise3D(pos), res);
+        pos = pos * 2.;
         amplitude *= 0.5;
     }
     return res;
 }
 
 //非整数ブラウン運動(3D)
-float FBM3D_x3(float3 pos,in float3 shift)
+float FBM3D_x3(float3 pos)
 {
     float res = 0;
     float amplitude = 0.5f;
     [unroll(FBM_COUNT_3)]
     for(int i=0;i < FBM_COUNT_3;i++)
     {
-        res += amplitude * FBMNoise3D(pos);
-        pos = pos * 2. + shift;
+        res = mad(amplitude, FBMNoise3D(pos), res);
+        pos = pos * 2.;
         amplitude *= 0.5;
     }
     return res;
@@ -149,5 +150,7 @@ float FBM3D_x3(float3 pos,in float3 shift)
 float FBM3D_FBMx2(float3 pos,float3 move,float3 offsetScale)
 {
     float res = 0;
+    float f = FBM3D_x3(pos+move)*offsetScale;
+    res = FBM3D_x3(pos+f);
     return res;
 }

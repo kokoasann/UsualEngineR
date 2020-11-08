@@ -1,6 +1,7 @@
 #include "Math.fxh"
 #include "PerlinNoise.fxh"
 #include "WorleyNoise.fxh"
+#include "FBM.fxh"
 
 struct FogData
 {
@@ -110,7 +111,8 @@ float4 PSMain(PSInput In):SV_TARGET0
         }
 
         float wn = (1.f-WorleyNoise3D(mad(pos, cb_data.worleyScale, cb_data.offset)));
-        float pn = PerlinNoise3D(mad(pos, cb_data.perlinScale, cb_data.offset));
+        //float pn = PerlinNoise3D(mad(pos, cb_data.perlinScale, cb_data.offset));
+        float pn = FBM3D_FBMx2(pos*cb_data.perlinScale,cb_data.offset,0.8f);
         
         float addvol = lerp(wn,pn,cb_data.ratioParlinWorley)*cb_data.concentration;
 

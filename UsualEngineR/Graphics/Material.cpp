@@ -19,10 +19,10 @@ namespace UER
 			m_albedoMap.InitFromMemory(tkmMat.albedoMap.get(), tkmMat.albedoMapSize,tkmMat.albedoMapFileName);
 		}
 		if (tkmMat.normalMap != nullptr) {
-			m_normalMap.InitFromMemory(tkmMat.normalMap.get(), tkmMat.normalMapSize,tkmMat.albedoMapFileName);
+			m_normalMap.InitFromMemory(tkmMat.normalMap.get(), tkmMat.normalMapSize,tkmMat.normalMapFileName);
 		}
 		if (tkmMat.specularMap != nullptr) {
-			m_specularMap.InitFromMemory(tkmMat.specularMap.get(), tkmMat.specularMapSize,tkmMat.albedoMapFileName);
+			m_specularMap.InitFromMemory(tkmMat.specularMap.get(), tkmMat.specularMapSize,tkmMat.specularMapFileName);
 		}
 	}
 	void Material::InitFromTkmMaterila(

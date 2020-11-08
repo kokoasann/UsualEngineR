@@ -259,27 +259,40 @@ void Test::Awake()
 	m_vol_box->Init("Assets/modelData/test/test.tkm");
 	m_vol_box->SetPos({ 80,70,50 });
 	m_vol_box->SetSca({ 50,50,50 });
-	auto& fd = m_vol_box->GetFogData();
-	fd.concentration = 0.05;
-	fd.decayCenterToXZ = 0.02f;
-	fd.decayCenterToY = 0.02f;
+	{
+		auto& fd = m_vol_box->GetFogData();
+		fd.concentration = 0.05;
+		fd.decayCenterToXZ = 0.02f;
+		fd.decayCenterToY = 0.02f;
+		fd.ratioParlinWorley = 1.f;
+	}
 	m_vol_sphere = NewGO<VolumetricEffectRender>(0);
 	m_vol_sphere->Init("Assets/modelData/test/sphere.tkm");
 	//volEff->Init("Assets/modelData/test/test.tkm");
 	m_vol_sphere->SetPos({ -80,50,-50 });
 	m_vol_sphere->SetSca({ 50,50,50 });
+	{
+		auto& fd = m_vol_sphere->GetFogData();
+		fd.ratioParlinWorley = 1.f;
+	}
 
 	auto vol_test = NewGO<VolumetricEffectRender>(0);
 	vol_test->Init("Assets/modelData/test/block.tkm");
 	vol_test->SetPos({ 190,70,50 });
 	vol_test->SetSca({ 50,50,50 });
-	auto& tfb = vol_test->GetFogData();
+	{
+		auto& tfb = vol_test->GetFogData();
+		tfb.ratioParlinWorley = 0.8;
+		
+	}
 	
 
 	auto mm = NewGO<ModelRender>(0);
 	mid.m_tkmFilePath = "Assets/modelData/m/m_test2.tkm";
 	mid.m_tksFilePath = "Assets/modelData/m/m_test2.tks";
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+	//mid.m_psEntryPointFunc = "PSMain_nor";
+
 	//mid.m_upAxis = enUpAxisZ;
 	mm->Init(mid);
 	mm->SetPosition({ 100,10,100 });
@@ -307,11 +320,11 @@ void Test::Update()
 
 	{
 		auto& fogData = m_vol_sphere->GetFogData();
-		fogData.offset.y -= 1.f * gameTime()->GetDeltaTime();
+		fogData.offset.y -= 5.f * gameTime()->GetDeltaTime();
 	}
 	{
 		auto& fogData = m_vol_box->GetFogData();
-		fogData.offset.y -= 1.f * gameTime()->GetDeltaTime();
+		fogData.offset.y -= 5.f * gameTime()->GetDeltaTime();
 	}
 	/*auto cam = g_lockCamera3D.Get();
 	Quaternion rot;

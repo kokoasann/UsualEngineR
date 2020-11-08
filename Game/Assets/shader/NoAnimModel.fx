@@ -23,6 +23,7 @@ struct SVSIn{
 	float3 normal	: NORMAL;		//法線。
 	float2 uv 		: TEXCOORD0;	//UV座標。
 	float3 tangent	: TANGENT;		//接ベクトル
+	float3 binormal : BINORMAL;
 };
 
 
@@ -37,6 +38,7 @@ SPSIn VSMain(SVSIn vsIn)
 	psIn.pos = mul(cam_mProj, psIn.pos);
 	psIn.normal = normalize(mul(mWorld, vsIn.normal));
 	psIn.tangent = normalize(mul(mWorld, vsIn.tangent));
+	psIn.binormal = normalize(mul(mWorld, vsIn.binormal));
 	psIn.uv = vsIn.uv;
 
 	return psIn;

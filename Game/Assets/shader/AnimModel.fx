@@ -25,6 +25,7 @@ struct VSInputNmTxWeights
 	float3 normal : NORMAL;			    //法線。
 	float2 uv : TEXCOORD0;		        //UV
 	float3 tangent : TANGENT;			//tangent
+	float3 binormal : BINORMAL;
 	uint4  indices : BLENDINDICES0;		//ボーンの番号。
 	float4 weights : BLENDWEIGHT0;		//ボーンのウェイト
 };
@@ -56,6 +57,7 @@ SPSIn VSMain(VSInputNmTxWeights vsIn)
 	psIn.pos = mul(cam_mProj, psIn.pos);
 	psIn.normal = normalize(mul(skin, vsIn.normal));
 	psIn.tangent = normalize(mul(skin, vsIn.tangent));
+	psIn.binormal = normalize(mul(skin, vsIn.binormal));
 	psIn.uv = vsIn.uv;
 
 	return psIn;

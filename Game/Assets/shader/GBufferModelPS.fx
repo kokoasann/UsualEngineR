@@ -23,6 +23,8 @@ Texture2D<float4> g_specularMap : register(t2);
 //サンプラステート。
 sampler g_sampler : register(s0);
 
+//float3 CalcNormalMap(float2 uv,)
+
 //テクスチャなしプリミティブ描画用のピクセルシェーダー。
 SPSOut PSMain( SPSIn psIn )
 {
@@ -44,7 +46,11 @@ SPSOut PSMain_nor( SPSIn psIn )
     Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
-    Out.normal = g_normalMap.Sample(g_sampler, psIn.uv);
+    float3 n = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
+    n = mad(n,2.f,-1.f);
+    //Out.normal = float4(psIn.tangent * n.x + psIn.binormal * n.y + psIn.normal * n.z,1.f);
+    Out.normal = float4(mad(psIn.tangent, n.x, mad(psIn.binormal, n.y, psIn.normal * n.z)),1.f);
+    //Out.albedo = g_normalMap.Sample(g_sampler, psIn.uv);
     Out.specular = 0.f;
     Out.tangent = float4(psIn.tangent,1.f);
     return Out;
@@ -70,7 +76,10 @@ SPSOut PSMain_nor_spe( SPSIn psIn )
     Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
-    Out.normal = g_normalMap.Sample(g_sampler, psIn.uv);
+    float3 n = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
+    n = mad(n,2.f,-1.f);
+    //Out.normal = float4(psIn.tangent * n.x + psIn.binormal * n.y + psIn.normal * n.z,1.f);
+    Out.normal = float4(mad(psIn.tangent, n.x, mad(psIn.binormal, n.y, psIn.normal * n.z)),1.f);
     Out.specular = g_specularMap.Sample(g_sampler, psIn.uv).r;
     Out.tangent = float4(psIn.tangent,1.f);
     return Out;
