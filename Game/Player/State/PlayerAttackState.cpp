@@ -59,13 +59,7 @@ void PlayerAttackState::Enter(Player* p) {
 	p->SetVelocity(Vector3::Zero);
 	m_combo = 1;
 
-	//‚±‚Ì•Ó‚Å‰½‚ÌUŒ‚‚ª‚Å‚«‚é‚©”»’f‚·‚é
-	//m_currentAttack = p->GetNormalAttackSkill()
-
-	//TODO : Avoid using new everytime.
-	//
 	auto& preset = p->GetCurrentAttackPreset();
-
 
 	//Default Preset
 	if (preset == Player::EnAttackPreset::enDefault) {
@@ -124,40 +118,6 @@ void PlayerAttackState::Enter(Player* p) {
 		}
 	}
 
-	//
-	/*
-	if (g_pad[0]->IsTrigger(enButtonB)) {
-		switch (p->GetNormalAttackType()) {
-		case Player::EnAttackType::enSlash:
-			m_currentAttack = new PlayerAttackSlash();
-			break;
-
-		case Player::EnAttackType::enA:
-			m_currentAttack = new PlayerAttackA();
-			break;
-
-		default:
-			m_currentAttack = new PlayerAttackSlash();
-		}
-	}
-
-	if (g_pad[0]->IsTrigger(enButtonY)) {
-		DebugPrint_WATA("Y attack");
-		switch (p->GetSecondAttackType()) {
-		case Player::EnAttackType::enSlash:
-			m_currentAttack = new PlayerAttackSlash();
-			break;
-
-		case Player::EnAttackType::enA:
-			m_currentAttack = new PlayerAttackA();
-			break;
-
-		default:
-			m_currentAttack = new PlayerAttackSlash();
-		}
-	}
-	*/
-
 	m_currentAttack->Init(p,m_combo);
 	m_currentAttack->GetInterval();
 }
@@ -184,8 +144,6 @@ IPlayerState* PlayerAttackState::Update(Player* p) {
 		}
 		else {
 			return p->GetPreviousState();
-			//auto nextState = p->GetState(Player::EnState::enGround);
-			//return nextState;
 		}
 	}
 

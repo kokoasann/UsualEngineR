@@ -254,21 +254,8 @@ public:
 		return *mp_camera;
 	}
 
-	const EnAttackType& GetNormalAttackType() const{
-		return m_normalAttackType;
-	}
-
-	const EnAttackType& GetSecondAttackType() const {
-		return m_secondAttackType;
-	}
-
 	const EnAttackPreset& GetCurrentAttackPreset() const{
 		return m_currentAttackPreset;
-	}
-
-
-	void UnlockSkill(const EnAttackType& type) {
-		m_skillFlags[TO_INT(type)] = true;
 	}
 
 	void UnlockPreset(const EnAttackPreset& preset) {
@@ -295,11 +282,7 @@ private:
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
-	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true ,true,true,true };
-
-	EnAttackType m_normalAttackType = EnAttackType::enSlash;
-	EnAttackType m_secondAttackType = EnAttackType::enSlash;
-	bool m_skillFlags[TO_INT(EnAttackType::enNumAttackType)] = { true , true };
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true };
 
 	//State
 	IPlayerState* m_nextState = nullptr;
