@@ -94,16 +94,40 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="Player\Attack\PlayerLongRangeAttack.h">
-      <Filter>Player\Attack\Secondary</Filter>
+      <Filter>Player\Attack\PodAttack</Filter>
     </ClInclude>
     <ClInclude Include="Player\Attack\Projectile.h">
-      <Filter>Player\Attack\Secondary</Filter>
+      <Filter>Player\Attack\PodAttack</Filter>
     </ClInclude>
     <ClInclude Include="Player\Attack\PlayerAttackA.h">
       <Filter>Player\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\Drop\DropItemA.h">
       <Filter>Enemy\Drop</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackPunch.h">
+      <Filter>Player\Attack\DefaultPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackKick.h">
+      <Filter>Player\Attack\DefaultPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.h">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot.h">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.h">
+      <Filter>Player\Attack\ExplosivePreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.h">
+      <Filter>Player\Attack\ExplosivePreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\MeleePreset\PlayerAttackTackle.h">
+      <Filter>Player\Attack\MeleePreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\MeleePreset\PlayerAttackRevolvingTackle.h">
+      <Filter>Player\Attack\MeleePreset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,16 +225,40 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="Player\Attack\PlayerLongRangeAttack.cpp">
-      <Filter>Player\Attack\Secondary</Filter>
+      <Filter>Player\Attack\PodAttack</Filter>
     </ClCompile>
     <ClCompile Include="Player\Attack\Projectile.cpp">
-      <Filter>Player\Attack\Secondary</Filter>
+      <Filter>Player\Attack\PodAttack</Filter>
     </ClCompile>
     <ClCompile Include="Player\Attack\PlayerAttackA.cpp">
       <Filter>Player\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\Drop\DropItemA.cpp">
       <Filter>Enemy\Drop</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackPunch.cpp">
+      <Filter>Player\Attack\DefaultPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackKick.cpp">
+      <Filter>Player\Attack\DefaultPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.cpp">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot.cpp">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.cpp">
+      <Filter>Player\Attack\ExplosivePreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.cpp">
+      <Filter>Player\Attack\ExplosivePreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\MeleePreset\PlayerAttackTackle.cpp">
+      <Filter>Player\Attack\MeleePreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\MeleePreset\PlayerAttackRevolvingTackle.cpp">
+      <Filter>Player\Attack\MeleePreset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,11 +307,23 @@
     <Filter Include="Assets\modelData\m">
       <UniqueIdentifier>{96b95b29-5c9d-4b12-ba3b-365391aa3409}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Attack\Secondary">
-      <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Enemy\Drop">
       <UniqueIdentifier>{df783634-26fd-468c-81ad-fc3b8d31f08a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\DefaultPreset">
+      <UniqueIdentifier>{58d2b128-1f22-4a3d-aba0-378fba8aefe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\MeleePreset">
+      <UniqueIdentifier>{140f3708-2cfd-4ee4-a128-9563a54ac6f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\DistantPreset">
+      <UniqueIdentifier>{d09c194d-4c1d-4dce-a625-7e27d52ccf7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\ExplosivePreset">
+      <UniqueIdentifier>{a23c6be4-4eeb-4eb2-bc23-a645ea219744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\PodAttack">
+      <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,9 +16,9 @@ private:
 
 	enum class EnPreset {
 		enPresetDefault,
-		enPresetA,
-		enPresetB,
-		enPresetC,
+		enPresetDistant,
+		enPresetMelee,
+		enPresetExplosion,
 		enNumPreset
 	};
 
