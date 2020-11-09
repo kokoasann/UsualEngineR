@@ -38,7 +38,7 @@ void PlayerFlyingState::Enter(Player* p) {
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 	//Secondary Attack
-	if (g_pad[0]->IsPress(EnButton::enButtonLB1)) {
+	if (g_pad[0]->IsPress(EnButton::enButtonRB1)) {
 		m_longRangeAttack.Execute(p);
 	}
 
