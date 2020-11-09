@@ -40,7 +40,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 		return nextState;
 	}
 
-	if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)){
+	if (g_pad[0]->IsTrigger(EnButton::enButtonLB1)){
 		auto nextState = p->GetState(Player::EnState::enDiving);
 		return nextState;
 	}
@@ -51,7 +51,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	}
 
 	//Secondary Attack
-	if (g_pad[0]->IsPress(EnButton::enButtonLB1)) {
+	if (g_pad[0]->IsPress(EnButton::enButtonRB1)) {
 		m_longRangeAttack.Execute(p);
 	}
 

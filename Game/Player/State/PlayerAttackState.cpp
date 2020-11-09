@@ -4,42 +4,78 @@
 #include "../Attack/IPlayerAttack.h"
 #include "../Attack/PlayerAttackSlash.h"
 #include "../Attack/PlayerAttackA.h"
+#include "../Attack/DefaultPreset/PlayerAttackPunch.h"
+#include "../Attack/DefaultPreset/PlayerAttackKick.h"
+#include "../Attack/DistantPreset/PlayerAttackHipShot.h"
+#include "../Attack/DistantPreset/PlayerAttackThrowPod.h"
+#include "../Attack/MeleePreset/PlayerAttackRevolvingTackle.h"
+#include "../Attack/MeleePreset/PlayerAttackTackle.h"
+#include "../Attack/ExplosivePreset/PlayerAttackExplosion.h"
+#include "../Attack/ExplosivePreset/PlayerAttackThrowBomb.h"
 
 PlayerAttackState::PlayerAttackState() {
 
 	auto slash = new PlayerAttackSlash;
-	auto attackA = new PlayerAttackA;
-
 	m_attackClasses.push_back(slash);
+
+	auto attackA = new PlayerAttackA;
 	m_attackClasses.push_back(attackA);
 
-	//Preset0
+	//Default
+	auto punch = new PlayerAttackPunch;
+	m_attackClasses.push_back(punch);
+
+	auto kick = new PlayerAttackKick;
+	m_attackClasses.push_back(kick);
+
+	//Distant
+	auto hipShot = new PlayerAttackHipShot;
+	m_attackClasses.push_back(hipShot);
+
+	auto throwPod = new PlayerAttackThrowPod;
+	m_attackClasses.push_back(throwPod);
+
+	//Melee
+	auto tackle = new PlayerAttackTackle;
+	m_attackClasses.push_back(tackle);
+
+	auto revolvingTackle = new PlayerAttackRevolvingTackle;
+	m_attackClasses.push_back(revolvingTackle);
+
+	//Explosion
+	auto throwBomb = new PlayerAttackThrowBomb;
+	m_attackClasses.push_back(throwBomb);
+
+	auto explosion = new PlayerAttackExplosion;
+	m_attackClasses.push_back(explosion);
+
+	//Preset Default
 	std::vector<IPlayerAttack*> presetDefault;
 	presetDefault.resize(TO_INT(EnAttackType::enNumAttackType));
-	presetDefault.at(TO_INT(EnAttackType::enNormalAttack)) = slash;
-	presetDefault.at(TO_INT(EnAttackType::enSecondAttack)) = attackA;
+	presetDefault.at(TO_INT(EnAttackType::enNormalAttack)) = punch;
+	presetDefault.at(TO_INT(EnAttackType::enSecondAttack)) = kick;
 	m_skills.insert(std::make_pair(EnPreset::enPresetDefault, presetDefault));
 
-	//Preset1
-	std::vector<IPlayerAttack*> presetA;
-	presetA.resize(TO_INT(EnAttackType::enNumAttackType));
-	presetA.at(TO_INT(EnAttackType::enNormalAttack)) = attackA;
-	presetA.at(TO_INT(EnAttackType::enSecondAttack)) = slash;
-	m_skills.insert(std::make_pair(EnPreset::enPresetA, presetA));
+	//Preset Distant
+	std::vector<IPlayerAttack*> presetDistant;
+	presetDistant.resize(TO_INT(EnAttackType::enNumAttackType));
+	presetDistant.at(TO_INT(EnAttackType::enNormalAttack)) = hipShot;
+	presetDistant.at(TO_INT(EnAttackType::enSecondAttack)) = throwPod;
+	m_skills.insert(std::make_pair(EnPreset::enPresetDistant, presetDistant));
 
-	//Preset2
-	std::vector<IPlayerAttack*> presetB;
-	presetB.resize(TO_INT(EnAttackType::enNumAttackType));
-	presetB.at(TO_INT(EnAttackType::enNormalAttack)) = attackA;
-	presetB.at(TO_INT(EnAttackType::enSecondAttack)) = slash;
-	m_skills.insert(std::make_pair(EnPreset::enPresetB, presetB));
+	//Preset Melee
+	std::vector<IPlayerAttack*> presetMelee;
+	presetMelee.resize(TO_INT(EnAttackType::enNumAttackType));
+	presetMelee.at(TO_INT(EnAttackType::enNormalAttack)) = tackle;
+	presetMelee.at(TO_INT(EnAttackType::enSecondAttack)) = revolvingTackle;
+	m_skills.insert(std::make_pair(EnPreset::enPresetMelee, presetMelee));
 
-	//Preset3
-	std::vector<IPlayerAttack*> presetC;
-	presetC.resize(TO_INT(EnAttackType::enNumAttackType));
-	presetC.at(TO_INT(EnAttackType::enNormalAttack)) = attackA;
-	presetC.at(TO_INT(EnAttackType::enSecondAttack)) = slash;
-	m_skills.insert(std::make_pair(EnPreset::enPresetC, presetC));
+	//Preset Explosion
+	std::vector<IPlayerAttack*> presetExplosion;
+	presetExplosion.resize(TO_INT(EnAttackType::enNumAttackType));
+	presetExplosion.at(TO_INT(EnAttackType::enNormalAttack)) = throwBomb;
+	presetExplosion.at(TO_INT(EnAttackType::enSecondAttack)) = explosion;
+	m_skills.insert(std::make_pair(EnPreset::enPresetExplosion, presetExplosion));
 
 }
 
@@ -59,13 +95,7 @@ void PlayerAttackState::Enter(Player* p) {
 	p->SetVelocity(Vector3::Zero);
 	m_combo = 1;
 
-	//‚±‚Ì•Ó‚Å‰½‚ÌUŒ‚‚ª‚Å‚«‚é‚©”»’f‚·‚é
-	//m_currentAttack = p->GetNormalAttackSkill()
-
-	//TODO : Avoid using new everytime.
-	//
 	auto& preset = p->GetCurrentAttackPreset();
-
 
 	//Default Preset
 	if (preset == Player::EnAttackPreset::enDefault) {
@@ -84,7 +114,7 @@ void PlayerAttackState::Enter(Player* p) {
 	//Preset A
 	if (preset == Player::EnAttackPreset::enA) {
 
-		auto& ASkills = m_skills.at(EnPreset::enPresetA);
+		auto& ASkills = m_skills.at(EnPreset::enPresetDistant);
 
 		if (g_pad[0]->IsTrigger(enButtonB)) {
 			m_currentAttack = ASkills.at(TO_INT(EnAttackType::enNormalAttack));
@@ -99,7 +129,7 @@ void PlayerAttackState::Enter(Player* p) {
 	//Preset B
 	if (preset == Player::EnAttackPreset::enB) {
 
-		auto& BSkills = m_skills.at(EnPreset::enPresetB);
+		auto& BSkills = m_skills.at(EnPreset::enPresetMelee);
 
 		if (g_pad[0]->IsTrigger(enButtonB)) {
 			m_currentAttack = BSkills.at(TO_INT(EnAttackType::enNormalAttack));
@@ -113,7 +143,7 @@ void PlayerAttackState::Enter(Player* p) {
 	//Preset C
 	if (preset == Player::EnAttackPreset::enC) {
 
-		auto& CSkills = m_skills.at(EnPreset::enPresetC);
+		auto& CSkills = m_skills.at(EnPreset::enPresetExplosion);
 
 		if (g_pad[0]->IsTrigger(enButtonB)) {
 			m_currentAttack = CSkills.at(TO_INT(EnAttackType::enNormalAttack));
@@ -123,40 +153,6 @@ void PlayerAttackState::Enter(Player* p) {
 			m_currentAttack = CSkills.at(TO_INT(EnAttackType::enSecondAttack));
 		}
 	}
-
-	//
-	/*
-	if (g_pad[0]->IsTrigger(enButtonB)) {
-		switch (p->GetNormalAttackType()) {
-		case Player::EnAttackType::enSlash:
-			m_currentAttack = new PlayerAttackSlash();
-			break;
-
-		case Player::EnAttackType::enA:
-			m_currentAttack = new PlayerAttackA();
-			break;
-
-		default:
-			m_currentAttack = new PlayerAttackSlash();
-		}
-	}
-
-	if (g_pad[0]->IsTrigger(enButtonY)) {
-		DebugPrint_WATA("Y attack");
-		switch (p->GetSecondAttackType()) {
-		case Player::EnAttackType::enSlash:
-			m_currentAttack = new PlayerAttackSlash();
-			break;
-
-		case Player::EnAttackType::enA:
-			m_currentAttack = new PlayerAttackA();
-			break;
-
-		default:
-			m_currentAttack = new PlayerAttackSlash();
-		}
-	}
-	*/
 
 	m_currentAttack->Init(p,m_combo);
 	m_currentAttack->GetInterval();
@@ -184,8 +180,6 @@ IPlayerState* PlayerAttackState::Update(Player* p) {
 		}
 		else {
 			return p->GetPreviousState();
-			//auto nextState = p->GetState(Player::EnState::enGround);
-			//return nextState;
 		}
 	}
 

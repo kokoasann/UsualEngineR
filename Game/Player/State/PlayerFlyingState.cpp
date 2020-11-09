@@ -38,11 +38,16 @@ void PlayerFlyingState::Enter(Player* p) {
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 	//Secondary Attack
-	if (g_pad[0]->IsPress(EnButton::enButtonLB1)) {
+	if (g_pad[0]->IsPress(EnButton::enButtonRB1)) {
 		m_longRangeAttack.Execute(p);
 	}
 
 	//State
+	if (g_pad[0]->IsTrigger(EnButton::enButtonB) or g_pad[0]->IsTrigger(EnButton::enButtonY)) {
+		auto nextState = p->GetState(Player::EnState::enAttack);
+		return nextState;
+	}
+
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA) or  //飛行モード解除.
 		p->GetCurrentBoost() <= 0.f or //ブースト不足.
 		!m_canRise //初期上昇用のブーストが不足.
