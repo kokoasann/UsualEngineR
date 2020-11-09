@@ -301,7 +301,7 @@ void Test::Awake()
 
 	m_animlist.resize(1);
 	m_animlist[static_cast<int>(0)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(0)]->Load("Assets/modelData/m/m_test2_idle.tka");
+	m_animlist[static_cast<int>(0)]->Load("Assets/modelData/m/anim/m_walk.tka");
 	m_animlist[static_cast<int>(0)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(0)]->SetLoopFlag(true);
 
