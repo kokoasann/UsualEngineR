@@ -68,5 +68,7 @@ private:
 	const float m_defaultHeight = 150.f;
 	std::vector<IEnemy*> m_enemies;
 	Player* m_player = nullptr;
+
+	const float BOSS_A_HP = 6000.f;
 };
 

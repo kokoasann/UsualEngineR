@@ -10,7 +10,7 @@ void EnemyManager::SpawnEnemies() {
 	//Boss
 	auto bene = NewGO<BossA>(0);
 
-	ab.InitHP(200.f);
+	ab.InitHP(BOSS_A_HP);
 	bene->SetAbility(ab);
 	Vector3 pos;
 	pos.y = 100;
