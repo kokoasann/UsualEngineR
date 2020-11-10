@@ -282,6 +282,7 @@ def deleteAfterDot(name):
             return name[0:index]
         index += 1
     
+    print(name)
     return name
 
 
@@ -312,7 +313,7 @@ class TkExporter_OT_Level(bpy.types.Operator):
     isDeleteDot : BoolProperty(
         name="Delete name after the dot.",
         description="If it's true, it delete name after the dot.",
-        default=False,
+        default=True,
     )
 
     #ボタンを押すとexecuteの前に呼ばれる関数。
@@ -353,8 +354,8 @@ class TkExporter_OT_Level(bpy.types.Operator):
             for obj in objs:
                 name = obj.name
                 #ドット以下削除
-                if self.isDeleteDot:
-                    name = deleteAfterDot(name)
+                #if self.isDeleteDot:
+                name = deleteAfterDot(name)
                 #エンコード(バイト文字列に変換)
                 name = name.encode("shift_jis")
 

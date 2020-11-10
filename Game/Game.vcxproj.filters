@@ -325,6 +325,9 @@
     <Filter Include="Player\Attack\PodAttack">
       <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\map_obj">
+      <UniqueIdentifier>{9fbc3cce-e2f7-4f2e-9652-c9d296af5280}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -344,6 +347,12 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\m\mNor.png">
       <Filter>Assets\modelData\m</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png">
+      <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png">
+      <Filter>Assets\modelData\map_obj</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
