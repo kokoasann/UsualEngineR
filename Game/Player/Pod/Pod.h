@@ -1,4 +1,6 @@
 #pragma once
+#include "../Attack/PlayerLongRangeAttack.h"
+
 class Player;
 
 /// <summary>
@@ -82,6 +84,8 @@ public:
 
 private:
 
+	void ShotLaserBeam();
+
 	//model
 	ModelRender* m_model = nullptr;
 
@@ -107,5 +111,7 @@ private:
 	};
 
 	PodState m_state = PodState::enIdle;
+
+	PlayerLongRangeAttack m_longRangeAttack;
 
 };
