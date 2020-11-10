@@ -18,7 +18,6 @@ void EnemyManager::SpawnEnemies() {
 
 	m_enemies.push_back(bene);
 
-	return;
 
 	//Zako!
 	std::random_device rd;

@@ -116,11 +116,16 @@ void Pod::PostRender()
 
 
 void Pod::ShotLaserBeam() {
+	DebugPrint_WATA("Pod : laser beam\n");
+
 	//laser
 	const float laserRange = 30.f;
 	const float laserDamageAmount = 200.f;
-	auto vecLaserDir = mp_player->GetForward();
 	const auto& podPos = mp_player->GetPod()->GetPosition();
+
+	auto vecLaserDir = mp_player->GetForward();
+	if (mp_player->GetTargetEnemy() != nullptr)
+		vecLaserDir = mp_player->GetTargetEnemy()->GetPosition() - mp_player->GetPosition();
 
 	Vector3 N;
 	N.Cross(vecLaserDir, Vector3::Up);
@@ -138,8 +143,6 @@ void Pod::ShotLaserBeam() {
 		}
 
 		auto d = N.Dot(vecPodToEnemy);
-
-		DebugPrint_WATA("Pod : laser beam\n");
 
 		if (std::abs(d) < laserRange) {
 			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(laserDamageAmount);
