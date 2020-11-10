@@ -17,16 +17,21 @@ public:
 	virtual const float GetInterval() override {
 		return m_interval;
 	}
+
 	virtual const bool IsContinueAttack() override {
-		return m_isContinuAttack;
+		return false;
 	}
+
 private:
+	//attack
 	bool m_isDone = false;
-	bool m_isContinuAttack = false;
 	const float m_interval = 0.5f;
-	float m_timer = 0.f;
+
+	//shot
+	const float m_shotInterval = 0.2f;
+	float m_shotIntervalTimer = m_shotInterval;
 
 	float m_range = 50.f;
-	float m_damageAmount = 15.f;
+	const float m_damageAmount = 15.f;
 };
 
