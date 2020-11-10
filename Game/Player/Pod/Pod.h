@@ -87,6 +87,7 @@ private:
 	void ShotLaserBeam();
 	void ThrownBehave();
 	void Rampage();
+	void Kamikaze();
 
 	//model
 	ModelRender* m_model = nullptr;
@@ -98,17 +99,21 @@ private:
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
 
+
+	float m_timer = 0.f;
+
 	//Thrown
 	Vector3 m_velocity = Vector3::Zero;
 	float m_thrownTime = 1.f;
-	float m_thrownTimer = 0.f;
 	const float m_thrownAttackDamageAmount = 20.f;
 	const float m_thrownAttackRange = 30.f;
 
 	//Rampage
 	const float m_rampageTime = 5.f;
-	float m_rampageTimer = 0.f;
 	const float m_rampagingDamageAmount = 100.f;
+
+	//Kamikaze
+	const float m_kamikazeDamageAmount = 300.f;
 
 	//State
 	enum class PodState {

@@ -76,8 +76,15 @@ void Pod::Update()
 
 		if (preset == Player::EnAttackPreset::enMeleePreset) {
 			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)) {
-				m_rampageTimer = 0.f;
+				m_timer = 0.f;
 				m_state = PodState::enRampage;
+			}
+		}
+
+		if (preset == Player::EnAttackPreset::enExposivePreset) {
+			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)) {
+				m_timer = 0.f;
+				m_state = PodState::enKamikaze;
 			}
 		}
 
@@ -89,6 +96,10 @@ void Pod::Update()
 
 	if (m_state == PodState::enRampage) {
 		Rampage();
+	}
+
+	if (m_state == PodState::enKamikaze) {
+		Kamikaze();
 	}
 
 	m_model->SetPosition(m_pos);
@@ -151,7 +162,7 @@ void Pod::ShotLaserBeam() {
 void Pod::ThrownBehave() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_pos = m_pos + m_velocity * delta;
-	m_thrownTimer += delta;
+	m_timer += delta;
 
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
@@ -161,14 +172,14 @@ void Pod::ThrownBehave() {
 		}
 	}
 
-	if (m_thrownTimer > m_thrownTime) {
+	if (m_timer > m_thrownTime) {
 		m_state = PodState::enIdle;
 	}
 }
 
 void Pod::Rampage() {
 	const auto delta = gameTime()->GetDeltaTime();
-	m_rampageTimer += delta;
+	m_timer += delta;
 
 	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
 		m_state = PodState::enIdle;
@@ -185,7 +196,33 @@ void Pod::Rampage() {
 		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_rampagingDamageAmount);
 	}
 
-	if (m_rampageTimer > m_rampageTime) {
+	if (m_timer > m_rampageTime) {
+		m_state = PodState::enIdle;
+	}
+}
+
+void Pod::Kamikaze() {
+	const auto delta = gameTime()->GetDeltaTime();
+	m_timer += delta;
+
+	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
+		m_state = PodState::enIdle;
+		return;
+	}
+
+	auto& epos = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	const float speed = 100.f;
+	auto vecToEnemy = epos - m_pos;
+	vecToEnemy.Normalize();
+	m_pos += vecToEnemy * speed * delta;
+
+	if ((m_pos - epos).Length() < m_thrownAttackRange) {
+		//Explode
+		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_kamikazeDamageAmount);
+		m_state = PodState::enIdle;
+	}
+
+	if (m_timer > m_rampageTime) {
 		m_state = PodState::enIdle;
 	}
 }
