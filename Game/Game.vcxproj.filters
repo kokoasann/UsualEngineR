@@ -42,9 +42,6 @@
     <ClInclude Include="Player\State\PlayerAttackState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="Player\Attack\PlayerAttackSlash.h">
-      <Filter>Player\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="Player\Attack\IPlayerAttack.h">
       <Filter>Player\Attack</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
     <ClInclude Include="Player\Attack\Projectile.h">
       <Filter>Player\Attack\PodAttack</Filter>
     </ClInclude>
-    <ClInclude Include="Player\Attack\PlayerAttackA.h">
-      <Filter>Player\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\Drop\DropItemA.h">
       <Filter>Enemy\Drop</Filter>
     </ClInclude>
@@ -131,6 +125,15 @@
     </ClInclude>
     <ClInclude Include="Player\Pod\Pod.h">
       <Filter>Player\Pod</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\Bomb.h">
+      <Filter>Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\PlayerAttackA.h">
+      <Filter>Player\Attack\TestPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\PlayerAttackSlash.h">
+      <Filter>Player\Attack\TestPreset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +180,6 @@
       <Filter>Player\State</Filter>
     </ClCompile>
     <ClCompile Include="Player\Attack\IPlayerAttack.cpp">
-      <Filter>Player\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\Attack\PlayerAttackSlash.cpp">
       <Filter>Player\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\EnemyManager.cpp">
@@ -233,9 +233,6 @@
     <ClCompile Include="Player\Attack\Projectile.cpp">
       <Filter>Player\Attack\PodAttack</Filter>
     </ClCompile>
-    <ClCompile Include="Player\Attack\PlayerAttackA.cpp">
-      <Filter>Player\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\Drop\DropItemA.cpp">
       <Filter>Enemy\Drop</Filter>
     </ClCompile>
@@ -265,6 +262,15 @@
     </ClCompile>
     <ClCompile Include="Player\Pod\Pod.cpp">
       <Filter>Player\Pod</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\Bomb.cpp">
+      <Filter>Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\PlayerAttackA.cpp">
+      <Filter>Player\Attack\TestPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\PlayerAttackSlash.cpp">
+      <Filter>Player\Attack\TestPreset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +339,9 @@
     </Filter>
     <Filter Include="Player\Pod">
       <UniqueIdentifier>{9287834e-716b-481d-8387-06eb1a4105be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\TestPreset">
+      <UniqueIdentifier>{f7d22fd8-5f50-4d18-a853-936d74e62ad1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -21,20 +21,44 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
-	auto& enemyManager = EnemyManager::GetEnemyManager();
-	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
+	m_isBombed = false;
+
+	//auto& enemyManager = EnemyManager::GetEnemyManager();
+	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
+
 }
 
 void PlayerAttackExplosion::Execute(Player* player) {
-	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
-	m_timer += gameTime()->GetDeltaTime();
+	auto delta = gameTime()->GetDeltaTime();
+	m_timer += delta;
 
-	if (g_pad[0]->IsTrigger(enButtonB)) {
-		m_isContinuAttack = true;
+	auto vel = player->GetForward();
+	vel *= m_tacklePower;
+
+	if (m_isBombed)
+		vel *= 0.f;
+
+	player->SetVelocity(vel);
+
+	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
+		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+		if ((player->GetPosition() - epos).Length() < m_range) {
+			m_isBombed = true;
+			break;
+		}
 	}
-	if (m_timer >= m_interval) {
+
+	if (m_isBombed) {
+		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
+			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+			if ((player->GetPosition() - epos).Length() < m_ExplodeDamageRange) {
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage);
+			}
+		}
+	}
+
+	if (m_timer > m_interval)
 		m_isDone = true;
-	}
 }
 
 

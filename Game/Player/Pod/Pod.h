@@ -79,7 +79,6 @@ public:
 		m_velocity = velocity;
 		m_thrownTime = thrownTime;
 		m_state = PodState::enThrown;
-		m_thrownTimer = 0.f;
 	}
 
 private:

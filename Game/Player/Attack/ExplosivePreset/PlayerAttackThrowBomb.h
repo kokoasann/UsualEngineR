@@ -28,6 +28,7 @@ private:
 
 	float m_range = 50.f;
 	float m_damageAmount = 15.f;
+	const float m_speed = 10.f;
 };
 
 

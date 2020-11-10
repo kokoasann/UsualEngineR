@@ -2,6 +2,7 @@
 #include "PlayerAttackThrowBomb.h"
 #include "../../Player.h"
 #include "../../../Enemy/EnemyManager.h"
+#include "../Bomb.h"
 
 PlayerAttackThrowBomb::PlayerAttackThrowBomb() {
 
@@ -21,8 +22,13 @@ void PlayerAttackThrowBomb::Init(Player* player, int combo) {
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
-	auto& enemyManager = EnemyManager::GetEnemyManager();
-	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
+	//auto& enemyManager = EnemyManager::GetEnemyManager();
+	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
+
+	auto bomb = NewGO<Bomb>(0);
+	auto vel = player->GetForward() * m_speed;
+	bomb->Init(player->GetPosition(), vel);
+
 }
 
 void PlayerAttackThrowBomb::Execute(Player* player) {

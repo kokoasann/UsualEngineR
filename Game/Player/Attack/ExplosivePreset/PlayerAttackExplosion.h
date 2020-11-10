@@ -23,11 +23,16 @@ public:
 private:
 	bool m_isDone = false;
 	bool m_isContinuAttack = false;
-	const float m_interval = 0.5f;
+	const float m_interval = 1.f;
 	float m_timer = 0.f;
+
+	bool m_isBombed = false;
 
 	float m_range = 50.f;
 	float m_damageAmount = 15.f;
+	const float m_tacklePower = 500.f;
+	const float m_ExplodeDamageRange = 100.f;
+	const float m_explodeDamage = 200.f;
 };
 
 
