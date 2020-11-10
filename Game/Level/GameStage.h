@@ -60,6 +60,9 @@ private:
 	int m_count = 0;
 	PhysicsStaticObject m_mapPSOList[100];
 
+	int m_mapObjPSOCount = 0;
+	PhysicsStaticObject m_mapObjPSOList[3];
+
 	bool m_isRegistRigidBody = false;			//剛体登録完了??
 	std::vector<RigidBody*> m_rigidBodys;		//剛体達。
 };
