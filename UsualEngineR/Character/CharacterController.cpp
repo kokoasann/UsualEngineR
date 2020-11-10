@@ -43,8 +43,9 @@ namespace UER
 			angle = fabsf(acosf(angle));
 			//if (angle <= Math::PI * RAD_GROUND && 0 	//地面の傾斜が54度より小さいので地面とみなす。
 			if (angle <= Math::PI * RAD_GROUND	//地面の傾斜が54度より小さいので地面とみなす。
-				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
-				) {
+				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
+				) 
+			{
 				//衝突している。
 				isHit = true;
 				Vector3 hitPosTmp = *(Vector3*)&convexResult.m_hitPointLocal;
@@ -52,14 +53,15 @@ namespace UER
 				Vector3 vDist;
 				vDist.Subtract(hitPosTmp, startPos);
 				float distTmp = vDist.Length();
-				if (dist > distTmp) {
+				if (dist > distTmp)
+				{
 					//この衝突点の方が近いので、最近傍の衝突点を更新する。
 					hitPos = hitPosTmp;
 					hitNormal = *(Vector3*)&convexResult.m_hitNormalLocal;
 					dist = distTmp;
 				}
 			}
-			else
+			if(angle >= Math::PI * RAD_GROUND)
 			{
 				//return 0.f;
 				isHitWall = true;
@@ -110,8 +112,10 @@ namespace UER
 
 			//if (angle >= Math::PI * RAD_WALL && 1 		//地面の傾斜が54度以上なので壁とみなす。
 			if (angle >= Math::PI * RAD_WALL 		//地面の傾斜が54度以上なので壁とみなす。
-				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
-				) {
+				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
+				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground
+				)
+			{
 				isHit = true;
 				Vector3 hitPosTmp;
 				hitPosTmp.Set(convexResult.m_hitPointLocal);
@@ -120,14 +124,16 @@ namespace UER
 				vDist.Subtract(hitPosTmp, startPos);
 				vDist.y = 0.0f;
 				float distTmp = vDist.Length();
-				if (distTmp < dist) {
+				if (distTmp < dist)
+				{
 					//この衝突点の方が近いので、最近傍の衝突点を更新する。
 					hitPos = hitPosTmp;
 					dist = distTmp;
 					hitNormal = hitNormalTmp;
 				}
 			}
-			else
+
+			if(angle <= Math::PI * RAD_GROUND)
 			{
 				isHitFloor = true;
 
@@ -135,6 +141,7 @@ namespace UER
 				//衝突点の距離を求める。。
 				Vector3 vDist;
 				vDist.Subtract(hitPosTmp, startPos);
+				vDist.y = 0.0f;
 				float distTmp = vDist.Length();
 				if (floorDist > distTmp)
 				{
@@ -142,10 +149,6 @@ namespace UER
 					floorNormal = hitNormalTmp;
 					floorDist = distTmp;
 				}
-
-				//floorNormal = hitNormalTmp;
-				//floorHitPos.Set(convexResult.m_hitPointLocal);
-				
 			}
 			return 0.0f;
 		}
@@ -528,8 +531,10 @@ namespace UER
 			//衝突検出。
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
-			if (callback.isHitFloor && 1)
+			bool isNearHitWall = callback.dist < callback.floorDist;
+			if (!isNearHitWall && callback.isHitFloor && 1)
 			{
+#if 0
 				isHitFloor = true;
 				floorPos = callback.floorHitPos;
 				floorNor = callback.floorNormal;
@@ -580,9 +585,37 @@ namespace UER
 					DebugPrintVector3(EDebugConsoleKind::master, Z);
 					DebugPrintVector3(EDebugConsoleKind::master, S);
 				}
+#endif
+				Vector3 vT0, vT1;
+				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
+				//vT0.Set(nextPos.x, 0.0f, nextPos.z);
+				//vT1.Set(callback.floorHitPos.x, 0.0f, callback.floorHitPos.z);
+				vT0 = nextPos;
+				vT1 = callback.floorHitPos;
+				//めり込みが発生している移動ベクトルを求める。
+				Vector3 vMerikomi;
+				vMerikomi = vT0 - vT1;
+				//XZ平面での衝突した壁の法線を求める。。
+				Vector3 hitNormalXZ = callback.floorNormal;
+				//hitNormalXZ.y = 0.0f;
+				//hitNormalXZ.Normalize();
+				//めり込みベクトルを壁の法線に射影する。
+				float fT0 = hitNormalXZ.Dot(vMerikomi);
+				//押し戻し返すベクトルを求める。
+				//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
+				Vector3 vOffset;
+				vOffset = hitNormalXZ;
+				vOffset *= -fT0 + m_radius;
+				nextPos += vOffset;
+
+				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WALL FLOOR HIT !!!!");
+				DebugPrintValue(EDebugConsoleKind::master, "fT0", fT0);
+				DebugPrintValue(EDebugConsoleKind::master, "m_radius", m_radius);
+				DebugPrintValue(EDebugConsoleKind::master,"-fT0 + m_radius", -fT0 + m_radius);
+				
 			}
 
-			if (callback.isHit) {
+			if (isNearHitWall && callback.isHit) {
 				//当たった。
 				//壁。
 				Vector3 vT0, vT1;
@@ -616,8 +649,8 @@ namespace UER
 				currentDir.y = 0.0f;
 				currentDir.Normalize();
 
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
-				DebugPrintVector3(EDebugConsoleKind::master, nextPos);
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
+				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 				if (currentDir.Dot(originalXZDir) < 0.0f) {
 					//角に入った時のキャラクタの振動を防止するために、
 					//移動先が逆向きになったら移動をキャンセルする。
@@ -626,15 +659,9 @@ namespace UER
 
 					break;
 				}
-				/*char st[255] = { 0 };
-				sprintf_s(st, "nor: x:%.4f y:%.4f z:%.4f\n", callback.hitNormal.x, callback.hitNormal.y, callback.hitNormal.z);
-				OutputDebugString(st);
-				sprintf_s(st, "hip: x:%.4f y:%.4f z:%.4f\n", callback.hitPos.x, callback.hitPos.y, callback.hitPos.z);
-				OutputDebugString(st);
-				sprintf_s(st, "pos: x:%.4f y:%.4f z:%.4f\n", nextPosition.x, nextPosition.y, nextPosition.z);
-				OutputDebugString(st);*/
 			}
-			else {
+			if(!(callback.isHit || callback.isHitFloor))
+			{
 				//どことも当たらないので終わり。
 				break;
 			}
@@ -718,7 +745,7 @@ namespace UER
 
 				//printf("HIT FLOOR\n");
 			}
-			if (callback.isHitWall && isFall)
+			if (callback.isHitWall && isFall &&0)
 			{
 				Vector3 vT0, vT1;
 				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
