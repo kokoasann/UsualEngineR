@@ -54,8 +54,6 @@ void Pod::PreUpdate()
 
 void Pod::Update()
 {
-	const auto delta = gameTime()->GetDeltaTime();
-
 	if (m_state == PodState::enIdle) {
 		auto p = mp_player->GetPosition() + m_distanceFromPlayer;
 		m_pos = p;
@@ -75,23 +73,22 @@ void Pod::Update()
 				ShotLaserBeam();
 			}
 		}
-	}
 
-	if (m_state == PodState::enThrown) {
-		m_pos = m_pos + m_velocity * delta;
-		m_thrownTimer += delta;
-
-		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
-			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
-			if ((m_pos - epos).Length() < m_thrownAttackRange) {
-				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_thrownAttackDamageAmount);
-				m_state = PodState::enIdle;
+		if (preset == Player::EnAttackPreset::enMeleePreset) {
+			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)) {
+				m_rampageTimer = 0.f;
+				m_state = PodState::enRampage;
 			}
 		}
 
-		if (m_thrownTimer > m_thrownTime) {
-			m_state = PodState::enIdle;
-		}
+	}
+
+	if (m_state == PodState::enThrown) {
+		ThrownBehave();
+	}
+
+	if (m_state == PodState::enRampage) {
+		Rampage();
 	}
 
 	m_model->SetPosition(m_pos);
@@ -149,4 +146,46 @@ void Pod::ShotLaserBeam() {
 		}
 	}
 	//
+}
+
+void Pod::ThrownBehave() {
+	const auto delta = gameTime()->GetDeltaTime();
+	m_pos = m_pos + m_velocity * delta;
+	m_thrownTimer += delta;
+
+	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
+		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+		if ((m_pos - epos).Length() < m_thrownAttackRange) {
+			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_thrownAttackDamageAmount);
+			m_state = PodState::enIdle;
+		}
+	}
+
+	if (m_thrownTimer > m_thrownTime) {
+		m_state = PodState::enIdle;
+	}
+}
+
+void Pod::Rampage() {
+	const auto delta = gameTime()->GetDeltaTime();
+	m_rampageTimer += delta;
+
+	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
+		m_state = PodState::enIdle;
+		return;
+	}
+
+	auto& epos = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	const float speed = 100.f;
+	auto vecToEnemy = epos - m_pos;
+	vecToEnemy.Normalize();
+	m_pos += vecToEnemy * speed * delta;
+
+	if ((m_pos - epos).Length() < m_thrownAttackRange) {
+		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_rampagingDamageAmount);
+	}
+
+	if (m_rampageTimer > m_rampageTime) {
+		m_state = PodState::enIdle;
+	}
 }

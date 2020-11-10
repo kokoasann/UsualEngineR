@@ -85,6 +85,8 @@ public:
 private:
 
 	void ShotLaserBeam();
+	void ThrownBehave();
+	void Rampage();
 
 	//model
 	ModelRender* m_model = nullptr;
@@ -103,10 +105,17 @@ private:
 	const float m_thrownAttackDamageAmount = 20.f;
 	const float m_thrownAttackRange = 30.f;
 
+	//Rampage
+	const float m_rampageTime = 5.f;
+	float m_rampageTimer = 0.f;
+	const float m_rampagingDamageAmount = 100.f;
+
 	//State
 	enum class PodState {
 		enIdle,
 		enThrown,
+		enRampage,
+		enKamikaze,
 		enNumPodState
 	};
 
