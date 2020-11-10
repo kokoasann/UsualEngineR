@@ -9,6 +9,7 @@
 #include "State/PlayerDeadState.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/IEnemy.h"
+#include "Pod/Pod.h"
 
 Player::Player()
 {
@@ -24,6 +25,7 @@ void Player::Release()
 {
 	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
 	DeleteGO(m_model);
+	DeleteGO(m_pod);
 }
 
 void Player::OnDestroy()
@@ -43,7 +45,7 @@ void Player::Awake()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
-	m_model->SetMulColor({ 0.5, 0.5, 0.4, 1.f });
+	//m_model->SetMulColor({ 0.5, 0.5, 0.4, 1.f });
 
 	//
 	/*
@@ -140,6 +142,10 @@ bool Player::Start()
 
 	//Physics
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
+
+	//Pod
+	m_pod = NewGO<Pod>(0);
+	m_pod->SetPlayer(this);
 
 	return true;
 }

@@ -3,6 +3,7 @@
 #include "../../UsualEngineR/Character/CharacterController.h"
 class IEnemy;
 class GameCamera;
+class Pod;
 
 /// <summary>
 /// 
@@ -309,6 +310,9 @@ private:
 	//Physics
 	float m_charaConRadius = 1.f;
 	float m_charaConHeight = 3.f;
+
+	//Pod
+	Pod* m_pod = nullptr;
 
 	//Ability
 	//TODO : use struct like this

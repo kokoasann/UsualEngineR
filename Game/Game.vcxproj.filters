@@ -129,6 +129,9 @@
     <ClInclude Include="Player\Attack\MeleePreset\PlayerAttackRevolvingTackle.h">
       <Filter>Player\Attack\MeleePreset</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Pod\Pod.h">
+      <Filter>Player\Pod</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -260,6 +263,9 @@
     <ClCompile Include="Player\Attack\MeleePreset\PlayerAttackRevolvingTackle.cpp">
       <Filter>Player\Attack\MeleePreset</Filter>
     </ClCompile>
+    <ClCompile Include="Player\Pod\Pod.cpp">
+      <Filter>Player\Pod</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -324,6 +330,9 @@
     </Filter>
     <Filter Include="Player\Attack\PodAttack">
       <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Pod">
+      <UniqueIdentifier>{9287834e-716b-481d-8387-06eb1a4105be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
