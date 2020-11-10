@@ -17,7 +17,6 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 	DebugPrint_WATA(s.c_str());
 #endif
 	m_isDone = false;
-	m_isContinuAttack = false;
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
@@ -29,9 +28,6 @@ void PlayerAttackKick::Execute(Player* player) {
 	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
 	m_timer += gameTime()->GetDeltaTime();
 
-	if (g_pad[0]->IsTrigger(enButtonY)) {
-		m_isContinuAttack = true;
-	}
 	if (m_timer >= m_interval) {
 		m_isDone = true;
 	}

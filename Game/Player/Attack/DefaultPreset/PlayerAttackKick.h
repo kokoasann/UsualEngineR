@@ -18,11 +18,11 @@ public:
 		return m_interval;
 	}
 	virtual const bool IsContinueAttack() override {
-		return m_isContinuAttack;
+		//ƒRƒ“ƒ{‚È‚µB
+		return false;
 	}
 private:
 	bool m_isDone = false;
-	bool m_isContinuAttack = false;
 	const float m_interval = 0.5f;
 	float m_timer = 0.f;
 

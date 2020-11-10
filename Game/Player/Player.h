@@ -27,6 +27,9 @@ public:
 		enWalk,
 		enDamage,
 		enAttack,
+		enPunch1,
+		enPunch2,
+		enPunch3,
 		enDead,
 		enNumAnim
 	};
@@ -297,7 +300,7 @@ private:
 	Vector3 m_position = { 0,15,-20 };
 	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_rotation = Quaternion::Identity;
-	const float m_scale = 0.05f;
+	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
 
 	//Move
 	CharacterController m_charaCon;
