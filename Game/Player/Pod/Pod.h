@@ -60,6 +60,10 @@ public:
 		mp_player = player;
 	}
 
+	const Vector3& GetPosition() const {
+		return m_pos;
+	}
+
 private:
 
 	//model

@@ -42,6 +42,7 @@ bool Projectile::Start()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
+	m_model->SetPosition(m_position);
 
 	return true;
 }

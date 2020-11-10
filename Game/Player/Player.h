@@ -266,6 +266,10 @@ public:
 		m_canUsePreset[TO_INT(preset)] = true;
 	}
 
+	const Pod* GetPod() const {
+		return m_pod;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
