@@ -60,8 +60,24 @@ public:
 		mp_player = player;
 	}
 
+	void SetPosition(const Vector3& pos) {
+		m_pos = pos;
+	}
+
 	const Vector3& GetPosition() const {
 		return m_pos;
+	}
+
+	/// <summary>
+	/// Podを投げる
+	/// </summary>
+	/// <param name="velocity">Velocity</param>
+	/// <param name="thrownTime">何秒間投げるか</param>
+	void Thrown(const Vector3& velocity, const float thrownTime = 1.f) {
+		m_velocity = velocity;
+		m_thrownTime = thrownTime;
+		m_state = PodState::enThrown;
+		m_thrownTimer = 0.f;
 	}
 
 private:
@@ -75,5 +91,21 @@ private:
 	Vector3 m_distanceFromPlayer = { 5.f,5.f,5.f };
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
+
+	//Thrown
+	Vector3 m_velocity = Vector3::Zero;
+	float m_thrownTime = 1.f;
+	float m_thrownTimer = 0.f;
+	const float m_thrownAttackDamageAmount = 20.f;
+	const float m_thrownAttackRange = 30.f;
+
+	//State
+	enum class PodState {
+		enIdle,
+		enThrown,
+		enNumPodState
+	};
+
+	PodState m_state = PodState::enIdle;
 
 };

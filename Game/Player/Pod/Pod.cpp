@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Pod.h"
 #include "../Player.h"
+#include "Enemy/EnemyManager.h"
 
 Pod::Pod()
 {
@@ -53,8 +54,30 @@ void Pod::PreUpdate()
 
 void Pod::Update()
 {
-	auto p = mp_player->GetPosition() + m_distanceFromPlayer;
-	m_pos = p;
+	const auto delta = gameTime()->GetDeltaTime();
+
+	if (m_state == PodState::enIdle) {
+		auto p = mp_player->GetPosition() + m_distanceFromPlayer;
+		m_pos = p;
+	}
+
+	if (m_state == PodState::enThrown) {
+		m_pos = m_pos + m_velocity * delta;
+		m_thrownTimer += delta;
+
+		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
+			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+			if ((m_pos - epos).Length() < m_thrownAttackRange) {
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_thrownAttackDamageAmount);
+				m_state = PodState::enIdle;
+			}
+		}
+
+		if (m_thrownTimer > m_thrownTime) {
+			m_state = PodState::enIdle;
+		}
+	}
+
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);
 }
