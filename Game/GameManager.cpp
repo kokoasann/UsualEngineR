@@ -22,7 +22,7 @@ void GameManager::InitGameWorld() {
 	m_player->SetGameCamera(m_camera);
 
 	auto& eM = EnemyManager::GetEnemyManager();
-	//eM.SpawnEnemies();
+	eM.SpawnEnemies();
 	eM.SetPlayer(m_player);
 
 	auto enemy = eM.GetNearestEnemy();
