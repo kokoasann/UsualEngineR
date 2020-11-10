@@ -1,6 +1,5 @@
 #pragma once
 #include "IPlayerSstate.h"
-#include "../Attack/PlayerLongRangeAttack.h"
 class Player;
 
 /// <summary>
@@ -37,8 +36,4 @@ private:
 	const float m_BOOST_EFFICIENCY = 0.f; //”R”ï,’l‚ª‘å‚«‚¢‚Ù‚Çˆ«‚¢...
 	const float m_RISE_BOOST_PARAM = 3.f; //ã¸‚É‰½”{‚­‚ç‚¢”R”ï‚ğˆ«‚­‚·‚é?
 	const float m_ACCELERATE_PARAM = 1.5f; //‰Á‘¬‚Ì”R”ï‚Í’Êí‚Ì‰½”{‚É‚·‚é‚©
-
-
-	//Sub Attack
-	PlayerLongRangeAttack m_longRangeAttack;
 };

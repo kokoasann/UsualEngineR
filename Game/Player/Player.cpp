@@ -216,19 +216,19 @@ void Player::SearchTarget() {
 void Player::UpdateAttackType() {
 
 	if (g_pad[0]->IsTrigger(enButtonLeft)) {
-		if (m_canUsePreset[TO_INT(EnAttackPreset::enA)]) {
-			m_currentAttackPreset = EnAttackPreset::enA;
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enRemoteAttackPreset)]) {
+			m_currentAttackPreset = EnAttackPreset::enRemoteAttackPreset;
 		}
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonUp)) {
-		if (m_canUsePreset[TO_INT(EnAttackPreset::enB)])
-			m_currentAttackPreset = EnAttackPreset::enB;
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enMeleePreset)])
+			m_currentAttackPreset = EnAttackPreset::enMeleePreset;
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonRight)) {
-		if (m_canUsePreset[TO_INT(EnAttackPreset::enC)])
-			m_currentAttackPreset = EnAttackPreset::enC;
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enExposivePreset)])
+			m_currentAttackPreset = EnAttackPreset::enExposivePreset;
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonDown)) {

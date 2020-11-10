@@ -37,17 +37,17 @@ public:
 
 	enum class EnAttackType {
 		enSlash,
-		enA,
-		enB,
+		enRemoteAttackPreset,
+		enMeleePreset,
 		enNumAttackType,
 		enNone,
 	};
 
 	enum class EnAttackPreset {
 		enDefault,
-		enA,
-		enB,
-		enC,
+		enRemoteAttackPreset,
+		enMeleePreset,
+		enExposivePreset,
 		enNumPreset
 	};
 
@@ -118,6 +118,10 @@ public:
 	IPlayerState* GetPreviousState() const {
 		return m_previousState;
 	};
+
+	const IPlayerState* GetCurrentState() const {
+		return m_currentState;
+	}
 
 	/// <summary>
 	/// 座標を取得
