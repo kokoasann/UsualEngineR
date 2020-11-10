@@ -12,11 +12,13 @@ PlayerLongRangeAttack::~PlayerLongRangeAttack() {
 }
 
 void PlayerLongRangeAttack::Execute(Player* p) {
-	m_intervalTimer += gameTime()->GetDeltaTime();
-	if (m_intervalTimer >= m_interval) {
+	auto delta = gameTime()->GetDeltaTime();
+	m_shotIntervalTimer += delta;
+	if (m_shotIntervalTimer >= m_interval) {
 		DebugPrint_WATA("distant attacking\n");
 		auto projectile = NewGO<Projectile>(0);
-		projectile->Init(p->GetPod()->GetPosition(),p->GetForward());
-		m_intervalTimer = 0.f;
+		auto vel = p->GetForward() + p->GetLocalVelocity() * delta;
+		projectile->Init(p->GetPod()->GetPosition(), vel);
+		m_shotIntervalTimer = 0.f;
 	}
 }

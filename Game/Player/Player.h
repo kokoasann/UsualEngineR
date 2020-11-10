@@ -266,9 +266,11 @@ public:
 		m_canUsePreset[TO_INT(preset)] = true;
 	}
 
-	const Pod* GetPod() const {
+	Pod* GetPod() const {
 		return m_pod;
 	}
+
+	//const ModelRender* GetModel;
 
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
