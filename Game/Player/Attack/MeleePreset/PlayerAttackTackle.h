@@ -21,13 +21,16 @@ public:
 		return m_isContinuAttack;
 	}
 private:
+
 	bool m_isDone = false;
 	bool m_isContinuAttack = false;
-	const float m_interval = 0.5f;
+	const float m_interval = 0.3f;
 	float m_timer = 0.f;
 
-	float m_range = 50.f;
-	float m_damageAmount = 15.f;
+	const float m_tacklePower = 500.f;
+	float m_range = 30.f;
+	float m_damageAmount = 100.f;
+
 };
 
 

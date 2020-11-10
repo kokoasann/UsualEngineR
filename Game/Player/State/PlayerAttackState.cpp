@@ -112,7 +112,7 @@ void PlayerAttackState::Enter(Player* p) {
 	}
 
 	//Preset A
-	if (preset == Player::EnAttackPreset::enA) {
+	if (preset == Player::EnAttackPreset::enRemoteAttackPreset) {
 
 		auto& ASkills = m_skills.at(EnPreset::enPresetDistant);
 
@@ -127,7 +127,7 @@ void PlayerAttackState::Enter(Player* p) {
 
 
 	//Preset B
-	if (preset == Player::EnAttackPreset::enB) {
+	if (preset == Player::EnAttackPreset::enMeleePreset) {
 
 		auto& BSkills = m_skills.at(EnPreset::enPresetMelee);
 
@@ -141,7 +141,7 @@ void PlayerAttackState::Enter(Player* p) {
 	}
 
 	//Preset C
-	if (preset == Player::EnAttackPreset::enC) {
+	if (preset == Player::EnAttackPreset::enExposivePreset) {
 
 		auto& CSkills = m_skills.at(EnPreset::enPresetExplosion);
 

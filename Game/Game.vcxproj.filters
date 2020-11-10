@@ -129,6 +129,9 @@
     <ClInclude Include="Player\Attack\MeleePreset\PlayerAttackRevolvingTackle.h">
       <Filter>Player\Attack\MeleePreset</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Pod\Pod.h">
+      <Filter>Player\Pod</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -260,6 +263,9 @@
     <ClCompile Include="Player\Attack\MeleePreset\PlayerAttackRevolvingTackle.cpp">
       <Filter>Player\Attack\MeleePreset</Filter>
     </ClCompile>
+    <ClCompile Include="Player\Pod\Pod.cpp">
+      <Filter>Player\Pod</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -325,8 +331,8 @@
     <Filter Include="Player\Attack\PodAttack">
       <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\modelData\map_obj">
-      <UniqueIdentifier>{9fbc3cce-e2f7-4f2e-9652-c9d296af5280}</UniqueIdentifier>
+    <Filter Include="Player\Pod">
+      <UniqueIdentifier>{9287834e-716b-481d-8387-06eb1a4105be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -347,12 +353,6 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\m\mNor.png">
       <Filter>Assets\modelData\m</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png">
-      <Filter>Assets\modelData</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png">
-      <Filter>Assets\modelData\map_obj</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

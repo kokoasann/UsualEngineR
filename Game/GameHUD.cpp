@@ -128,15 +128,15 @@ void GameHUD::Update()
 		m_presetSp->SetMulColor({ 0,0,0,1 });
 	}
 
-	if (preset == Player::EnAttackPreset::enA) {
+	if (preset == Player::EnAttackPreset::enRemoteAttackPreset) {
 		m_presetSp->SetMulColor({ 1,0,0,1 });
 	}
 
-	if (preset == Player::EnAttackPreset::enB) {
+	if (preset == Player::EnAttackPreset::enMeleePreset) {
 		m_presetSp->SetMulColor({ 0,1,0,1 });
 	}
 
-	if (preset == Player::EnAttackPreset::enC) {
+	if (preset == Player::EnAttackPreset::enExposivePreset) {
 		m_presetSp->SetMulColor({ 0,0,1,1 });
 	}
 

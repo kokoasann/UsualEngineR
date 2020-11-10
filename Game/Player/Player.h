@@ -3,6 +3,7 @@
 #include "../../UsualEngineR/Character/CharacterController.h"
 class IEnemy;
 class GameCamera;
+class Pod;
 
 /// <summary>
 /// 
@@ -27,23 +28,26 @@ public:
 		enWalk,
 		enDamage,
 		enAttack,
+		enPunch1,
+		enPunch2,
+		enPunch3,
 		enDead,
 		enNumAnim
 	};
 
 	enum class EnAttackType {
 		enSlash,
-		enA,
-		enB,
+		enRemoteAttackPreset,
+		enMeleePreset,
 		enNumAttackType,
 		enNone,
 	};
 
 	enum class EnAttackPreset {
 		enDefault,
-		enA,
-		enB,
-		enC,
+		enRemoteAttackPreset,
+		enMeleePreset,
+		enExposivePreset,
 		enNumPreset
 	};
 
@@ -114,6 +118,10 @@ public:
 	IPlayerState* GetPreviousState() const {
 		return m_previousState;
 	};
+
+	const IPlayerState* GetCurrentState() const {
+		return m_currentState;
+	}
 
 	/// <summary>
 	/// 座標を取得
@@ -262,6 +270,12 @@ public:
 		m_canUsePreset[TO_INT(preset)] = true;
 	}
 
+	Pod* GetPod() const {
+		return m_pod;
+	}
+
+	//const ModelRender* GetModel;
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -297,7 +311,7 @@ private:
 	Vector3 m_position = { 0,15,-20 };
 	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_rotation = Quaternion::Identity;
-	const float m_scale = 0.05f;
+	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
 
 	//Move
 	CharacterController m_charaCon;
@@ -306,6 +320,9 @@ private:
 	//Physics
 	float m_charaConRadius = 1.f;
 	float m_charaConHeight = 3.f;
+
+	//Pod
+	Pod* m_pod = nullptr;
 
 	//Ability
 	//TODO : use struct like this

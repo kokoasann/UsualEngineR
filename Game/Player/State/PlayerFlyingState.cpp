@@ -28,19 +28,16 @@ void PlayerFlyingState::Enter(Player* p) {
 	m_velocity = p->GetLocalVelocity();
 	m_velocity.y = 0.f;
 
-	m_velocityGoal.y = m_AUTO_RISE_PARAM * m_VELOCITY_MAX;
-	m_isFirstRising = true;
+	if (p->IsOnGround()) {
+		m_velocityGoal.y = m_AUTO_RISE_PARAM * m_VELOCITY_MAX;
+		m_isFirstRising = true;
+	}
 
 	p->PlayAnimation(Player::EnAnimation::enIdle);
 
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
-
-	//Secondary Attack
-	if (g_pad[0]->IsPress(EnButton::enButtonRB1)) {
-		m_longRangeAttack.Execute(p);
-	}
 
 	//State
 	if (g_pad[0]->IsTrigger(EnButton::enButtonB) or g_pad[0]->IsTrigger(EnButton::enButtonY)) {

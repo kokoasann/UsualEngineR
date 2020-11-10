@@ -1,14 +1,16 @@
 #pragma once
-#include "../../Player/Player.h"
+#include "../Attack/PlayerLongRangeAttack.h"
+
+class Player;
 
 /// <summary>
 /// 
 /// </summary>
-class DropItemA :public GameObject
+class Pod :public GameObject
 {
 public:
-	DropItemA();
-	virtual ~DropItemA();
+	Pod();
+	virtual ~Pod();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -56,20 +58,69 @@ public:
 	/// </summary>
 	void PostRender() override;
 
+	void SetPlayer(Player* player) {
+		mp_player = player;
+	}
+
 	void SetPosition(const Vector3& pos) {
-		m_position = pos;
+		m_pos = pos;
+	}
+
+	const Vector3& GetPosition() const {
+		return m_pos;
+	}
+
+	/// <summary>
+	/// Podを投げる
+	/// </summary>
+	/// <param name="velocity">Velocity</param>
+	/// <param name="thrownTime">何秒間投げるか</param>
+	void Thrown(const Vector3& velocity, const float thrownTime = 1.f) {
+		m_velocity = velocity;
+		m_thrownTime = thrownTime;
+		m_state = PodState::enThrown;
+		m_thrownTimer = 0.f;
 	}
 
 private:
 
-	//const
-	const float m_GRASP_RANGE = 20.f;
-	const Player::EnAttackType m_typeId = Player::EnAttackType::enRemoteAttackPreset;
+	void ShotLaserBeam();
+	void ThrownBehave();
+	void Rampage();
 
-	//Model
+	//model
 	ModelRender* m_model = nullptr;
-	Vector3 m_position = { 0,15,-20 };
+
+	//transform
+	Player* mp_player = nullptr;
+	Vector3 m_pos = Vector3::Zero;
+	Vector3 m_distanceFromPlayer = { 5.f,5.f,5.f };
 	Quaternion m_rotation = Quaternion::Identity;
-	const float m_scale = 1.f;
+	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
+
+	//Thrown
+	Vector3 m_velocity = Vector3::Zero;
+	float m_thrownTime = 1.f;
+	float m_thrownTimer = 0.f;
+	const float m_thrownAttackDamageAmount = 20.f;
+	const float m_thrownAttackRange = 30.f;
+
+	//Rampage
+	const float m_rampageTime = 5.f;
+	float m_rampageTimer = 0.f;
+	const float m_rampagingDamageAmount = 100.f;
+
+	//State
+	enum class PodState {
+		enIdle,
+		enThrown,
+		enRampage,
+		enKamikaze,
+		enNumPodState
+	};
+
+	PodState m_state = PodState::enIdle;
+
+	PlayerLongRangeAttack m_longRangeAttack;
 
 };

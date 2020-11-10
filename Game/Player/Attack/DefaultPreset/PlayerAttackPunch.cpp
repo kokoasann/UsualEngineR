@@ -19,7 +19,18 @@ void PlayerAttackPunch::Init(Player* player, int combo) {
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
-	player->PlayAnimation(Player::EnAnimation::enAttack);
+
+	switch (combo) {
+	case 1:
+		player->PlayAnimation(Player::EnAnimation::enPunch1);
+		break;
+	case 2:
+		player->PlayAnimation(Player::EnAnimation::enPunch2);
+		break;
+	case 3:
+		player->PlayAnimation(Player::EnAnimation::enPunch3);
+		break;
+	}
 
 	auto& enemyManager = EnemyManager::GetEnemyManager();
 	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);

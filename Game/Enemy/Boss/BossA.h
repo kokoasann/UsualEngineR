@@ -13,7 +13,7 @@ public:
 	void Terminate() override;
 
 	Player::EnAttackType GetDropID() override{
-		return Player::EnAttackType::enA;
+		return Player::EnAttackType::enRemoteAttackPreset;
 	}
 
 private:

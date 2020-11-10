@@ -211,6 +211,7 @@
     <ClInclude Include="Player\Attack\PlayerLongRangeAttack.h" />
     <ClInclude Include="Player\Attack\Projectile.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\Pod\Pod.h" />
     <ClInclude Include="Player\State\IPlayerSstate.h" />
     <ClInclude Include="Player\State\PlayerAttackState.h" />
     <ClInclude Include="Player\State\PlayerDeadState.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="Player\Attack\PlayerLongRangeAttack.cpp" />
     <ClCompile Include="Player\Attack\Projectile.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\Pod\Pod.cpp" />
     <ClCompile Include="Player\State\IPlayerSstate.cpp" />
     <ClCompile Include="Player\State\PlayerAttackState.cpp" />
     <ClCompile Include="Player\State\PlayerDeadState.cpp" />
