@@ -244,14 +244,14 @@ void Pod::BackToIdlePos() {
 	auto vecToIdlePos = (mp_player->GetPosition() + m_distanceFromPlayer) - m_pos;
 	auto IdlePosDir = vecToIdlePos;
 	IdlePosDir.Normalize();
-	const float speed = 150.f;
-	auto vel = IdlePosDir * speed * delta;
+	auto vel = IdlePosDir * m_backSpeed * delta;
 
 	if (vecToIdlePos.Length() < vel.Length()) {
 		m_state = PodState::enIdle;
+		m_pos += vecToIdlePos;
 		return;
 	}
-
-	m_pos += vel;
-
+	else {
+		m_pos += vel;
+	}
 }

@@ -82,6 +82,10 @@ public:
 		m_timer = 0.f;
 	}
 
+	const bool IsIdle() {
+		return m_state == PodState::enIdle;
+	}
+
 private:
 
 	void ShotLaserBeam();
@@ -115,6 +119,9 @@ private:
 
 	//Kamikaze
 	const float m_kamikazeDamageAmount = 300.f;
+
+	//Back
+	const float m_backSpeed = 150.f;
 
 	//State
 	enum class PodState {
