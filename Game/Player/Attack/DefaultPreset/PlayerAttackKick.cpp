@@ -18,7 +18,7 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 #endif
 	m_isDone = false;
 	m_timer = 0.f;
-	player->PlayAnimation(Player::EnAnimation::enAttack);
+	player->PlayAnimation(Player::EnAnimation::enKick);
 
 	auto& enemyManager = EnemyManager::GetEnemyManager();
 	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);

@@ -31,6 +31,7 @@ public:
 		enPunch1,
 		enPunch2,
 		enPunch3,
+		enKick,
 		enDead,
 		enNumAnim
 	};

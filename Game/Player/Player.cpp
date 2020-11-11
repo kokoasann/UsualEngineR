@@ -115,6 +115,12 @@ void Player::Awake()
 	m_animlist[static_cast<int>(EnAnimation::enPunch3)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enPunch3)]->SetLoopFlag(false);
 
+	//Kick
+	m_animlist[static_cast<int>(EnAnimation::enKick)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enKick)]->Load("Assets/modelData/m/anim/m_punch_3.tka");
+	m_animlist[static_cast<int>(EnAnimation::enKick)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enKick)]->SetLoopFlag(false);
+
 	//TODO : load dead anim
 	//Dead
 	m_animlist[static_cast<int>(EnAnimation::enDead)] = std::make_unique<CAnimationClip>();
