@@ -76,11 +76,25 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 	m_vecVelocityGoal.x = lxf;
 	m_vecVelocityGoal.z = lyf;
 
-	if (g_pad[0]->IsPress(enButtonX) and p->GetCurrentEndurance()  > m_RUN_BEGIN_COST) {
-		m_vecVelocityGoal *= m_RUN_SPEED_PARAM * m_VELOCITY_MAX;
-		isRunning = true;
-		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
-		p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+
+
+	if (g_pad[0]->IsTrigger(enButtonX)) {
+		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
+			m_hasEnoughStaminaToRun = true;
+		}
+	}
+
+	//押しっぱなしでスタミナが切れた場合は再度ボタンを押しなおすまで走らない.
+	if (g_pad[0]->IsPress(enButtonX) and m_hasEnoughStaminaToRun) {
+		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
+			m_vecVelocityGoal *= m_RUN_SPEED_PARAM * m_VELOCITY_MAX;
+			isRunning = true;
+			p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
+			p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+		}
+		else {
+			m_hasEnoughStaminaToRun = false;
+		}
 	}
 	else {
 		m_vecVelocityGoal *= m_SIDE_MOVE_VELOCITY_MAX;
@@ -139,10 +153,22 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	m_vecVelocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_vecVelocityGoal.z = lyf * m_VELOCITY_MAX;
 
-	if (g_pad[0]->IsPress(enButtonX) and p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
-		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
-		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
-		p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+
+	if (g_pad[0]->IsTrigger(enButtonX)) {
+		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
+			m_hasEnoughStaminaToRun = true;
+		}
+	}
+	//押しっぱなしでスタミナが切れた場合は再度ボタンを押しなおすまで走らない.
+	if (g_pad[0]->IsPress(enButtonX) and m_hasEnoughStaminaToRun) {
+		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
+			m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
+			p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
+			p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+		}
+		else {
+			m_hasEnoughStaminaToRun = false;
+		}
 	}
 	else {
 		p->PlayAnimation(Player::EnAnimation::enWalk, m_AnimInterpolate);
