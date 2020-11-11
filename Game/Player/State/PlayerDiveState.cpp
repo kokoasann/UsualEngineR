@@ -39,7 +39,7 @@ void PlayerDiveState::Enter(Player* p) {
 	m_velocity = p->GetLocalVelocity();
 
 	m_velocity.Normalize();
-	m_velocity *= 10.f;
+	m_velocity *= m_FIRST_VEL_PARAM;
 
 	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
