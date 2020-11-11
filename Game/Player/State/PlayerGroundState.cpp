@@ -13,7 +13,7 @@ PlayerGroundState::~PlayerGroundState()
 
 void PlayerGroundState::Enter(Player* p){
 	m_velocity = p->GetLocalVelocity();
-	p->PlayAnimation(Player::EnAnimation::enWalk);
+	p->PlayAnimation(Player::EnAnimation::enWalk, m_AnimInterpolate);
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Enter Ground\n");
 #endif
@@ -80,9 +80,11 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM * m_VELOCITY_MAX;
 		isRunning = true;
 		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
+		p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
 	}
 	else {
 		m_vecVelocityGoal *= m_SIDE_MOVE_VELOCITY_MAX;
+		p->PlayAnimation(Player::EnAnimation::enIdle, m_AnimInterpolate);
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
@@ -117,7 +119,6 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
 
-		p->PlayAnimation(Player::EnAnimation::enRun);
 
 	}
 	else {
@@ -127,7 +128,6 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		theta = theta * (180.f / Math::PI);
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
-		p->PlayAnimation(Player::EnAnimation::enWalk);
 	}
 
 }
@@ -142,6 +142,10 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	if (g_pad[0]->IsPress(enButtonX) and p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
 		m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
 		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
+		p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+	}
+	else {
+		p->PlayAnimation(Player::EnAnimation::enWalk, m_AnimInterpolate);
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
@@ -168,8 +172,11 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	p->SetVelocity(vel);
 	p->SetLocalVelocity(m_velocity);
 
-	//Rotation
+	if (vel.x == 0.f and vel.z == 0.f) {
+		p->PlayAnimation(Player::EnAnimation::enIdle, m_AnimInterpolate);
+	}
 
+	//Rotation
 	if (vel.x != 0.f or vel.z != 0.f) {
 		Quaternion rot = Quaternion::Identity;
 		auto theta = atan2(vel.x, vel.z);

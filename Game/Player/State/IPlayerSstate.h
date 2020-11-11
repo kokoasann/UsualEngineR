@@ -14,6 +14,10 @@ public:
 	virtual void Exit(Player*) = 0;
 
 protected:
+
+	//animation
+	const float m_AnimInterpolate = 0.2f;
+
 	float Approach(float goal, float current, float dt) {
 		auto diff = goal - current;
 		if (diff > dt) {

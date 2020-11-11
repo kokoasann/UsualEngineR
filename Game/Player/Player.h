@@ -152,8 +152,8 @@ public:
 		return m_localVelocity;
 	}
 
-	void PlayAnimation(const EnAnimation& anim){
-		m_model->Play(static_cast<int>(anim));
+	void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f){
+		m_model->Play(static_cast<int>(anim), interpolate);
 	}
 
 	const float GetCurrentHP() {
