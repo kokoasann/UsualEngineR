@@ -470,7 +470,10 @@ namespace UER
 #endif
 		ExecuteFloor(m_position, nextPosition, originalXZDir, Ypos);
 
-
+		if (std::isnan(nextPosition.x) || std::isnan(nextPosition.y) || std::isnan(nextPosition.z) || std::isinf(nextPosition.x))
+		{
+			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+		}
 		//移動確定。
 		m_position = nextPosition;
 		//m_position.y += 0.1f;
@@ -508,7 +511,7 @@ namespace UER
 				break;
 			}
 			//カプセルコライダーの中心座標 + 高さ*0.1の座標をposTmpに求める。
-			Vector3 posTmp = m_position;
+			Vector3 posTmp = nowPos;
 			if (!isHitFloor)
 				posTmp.y += m_height * 0.5f + m_radius;// +0.1f;
 			else
@@ -608,6 +611,11 @@ namespace UER
 				vOffset *= -fT0 + m_radius;
 				nextPos += vOffset;
 
+				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+				{
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+				}
+
 				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WALL FLOOR HIT !!!!");
 				DebugPrintValue(EDebugConsoleKind::master, "fT0", fT0);
 				DebugPrintValue(EDebugConsoleKind::master, "m_radius", m_radius);
@@ -648,6 +656,11 @@ namespace UER
 				currentDir = nextPos - nowPos;
 				currentDir.y = 0.0f;
 				currentDir.Normalize();
+
+				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+				{
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+				}
 
 				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
 				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
@@ -743,9 +756,13 @@ namespace UER
 				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
 				DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 
+				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+				{
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+				}
 				//printf("HIT FLOOR\n");
 			}
-			if (callback.isHitWall && isFall &&0)
+			if (callback.isHitWall && isFall && 1)
 			{
 				Vector3 vT0, vT1;
 				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
@@ -769,6 +786,11 @@ namespace UER
 				nextPos.y = callback.wallHitPos.y;
 
 				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
+
+				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+				{
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+				}
 
 				//m_position = nextPosition;
 				//Vector3 newpos(nowPos.x, nextPos.y, nowPos.z);
