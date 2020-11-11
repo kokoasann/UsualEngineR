@@ -107,6 +107,10 @@ void Pod::Update()
 		Kamikaze();
 	}
 
+	if (m_state == PodState::enBack) {
+		BackToIdlePos();
+	}
+
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);
 }
@@ -173,12 +177,12 @@ void Pod::ThrownBehave() {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 		if ((m_pos - epos).Length() < m_thrownAttackRange) {
 			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_thrownAttackDamageAmount);
-			m_state = PodState::enIdle;
+			m_state = PodState::enBack;
 		}
 	}
 
 	if (m_timer > m_thrownTime) {
-		m_state = PodState::enIdle;
+		m_state = PodState::enBack;
 	}
 }
 
@@ -187,7 +191,7 @@ void Pod::Rampage() {
 	m_timer += delta;
 
 	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
-		m_state = PodState::enIdle;
+		m_state = PodState::enBack;
 		return;
 	}
 
@@ -202,7 +206,7 @@ void Pod::Rampage() {
 	}
 
 	if (m_timer > m_rampageTime) {
-		m_state = PodState::enIdle;
+		m_state = PodState::enBack;
 	}
 }
 
@@ -211,7 +215,7 @@ void Pod::Kamikaze() {
 	m_timer += delta;
 
 	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
-		m_state = PodState::enIdle;
+		m_state = PodState::enBack;
 		return;
 	}
 
@@ -224,10 +228,30 @@ void Pod::Kamikaze() {
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
 		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_kamikazeDamageAmount);
-		m_state = PodState::enIdle;
+		m_state = PodState::enBack;
 	}
 
 	if (m_timer > m_rampageTime) {
-		m_state = PodState::enIdle;
+		m_state = PodState::enBack;
 	}
+}
+
+void Pod::BackToIdlePos() {
+
+	const auto delta = gameTime()->GetDeltaTime();
+	m_timer += delta;
+
+	auto vecToIdlePos = (mp_player->GetPosition() + m_distanceFromPlayer) - m_pos;
+	auto IdlePosDir = vecToIdlePos;
+	IdlePosDir.Normalize();
+	const float speed = 150.f;
+	auto vel = IdlePosDir * speed * delta;
+
+	if (vecToIdlePos.Length() < vel.Length()) {
+		m_state = PodState::enIdle;
+		return;
+	}
+
+	m_pos += vel;
+
 }

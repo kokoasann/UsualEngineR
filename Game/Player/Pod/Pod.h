@@ -79,6 +79,7 @@ public:
 		m_velocity = velocity;
 		m_thrownTime = thrownTime;
 		m_state = PodState::enThrown;
+		m_timer = 0.f;
 	}
 
 private:
@@ -87,6 +88,7 @@ private:
 	void ThrownBehave();
 	void Rampage();
 	void Kamikaze();
+	void BackToIdlePos();
 
 	//model
 	ModelRender* m_model = nullptr;
@@ -120,6 +122,7 @@ private:
 		enThrown,
 		enRampage,
 		enKamikaze,
+		enBack,
 		enNumPodState
 	};
 
