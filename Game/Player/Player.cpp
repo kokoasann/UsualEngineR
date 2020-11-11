@@ -40,8 +40,8 @@ void Player::Awake()
 {
 
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/m/m_test2.tkm";
-	mid.m_tksFilePath = "Assets/modelData/m/m_test2.tks";
+	mid.m_tkmFilePath = "Assets/modelData/m/m_ExBone.tkm";
+	mid.m_tksFilePath = "Assets/modelData/m/m_ExBone.tks";
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	m_model = NewGO<ModelRender>(0);
