@@ -246,6 +246,10 @@ namespace UER
 
 		SConstBuffData data(mvp, mulColor);
 
+		Matrix imRot;
+		imRot.Inverse(mRot);
+
+		vrot.Multiply(vrot, imRot);
 		
 		SParticleData* datas = new SParticleData[m_numInstance]();
 		for (int i = 0; i < m_numInstance; i++)
@@ -256,8 +260,10 @@ namespace UER
 			tra.MakeTranslation(particle.pos);
 			sca.MakeScaling(particle.sca);
 			rot.MakeRotationFromQuaternion(particle.rot);
-			if(m_isBillboard)
+			if (m_isBillboard)
+			{
 				rot.Multiply(vrot, rot);
+			}
 			datas[i].mWorld.Multiply(sca, rot);
 			datas[i].mWorld.Multiply(datas[i].mWorld, tra);
 
