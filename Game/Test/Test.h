@@ -4,6 +4,7 @@
 #include "level/Level.h"
 #include "Character/CharacterController.h"
 #include "Effect/VolumetricEffect.h"
+#include "Effect/ParticleEffect.h"
 class ThreadTest;
 //class VolumetricEffectRender;
 class Test:public GameObject
@@ -54,4 +55,10 @@ private:
 
 	VolumetricEffectRender* m_vol_box;
 	VolumetricEffectRender* m_vol_sphere;
+
+	PlaneParticleEffectRender* m_effect;
+	PlaneParticleEffectRender* m_effect_2;
+	PlaneParticleEffectRender* m_effects[4];
+
+	Bone* m_backpackBone[6] = {nullptr};
 };

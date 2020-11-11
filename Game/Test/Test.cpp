@@ -3,7 +3,7 @@
 #include "ThreadTest.h"
 
 
-#include "Effect/ParticleEffect.h"
+
 
 
 void Test::Release()
@@ -210,6 +210,7 @@ void Test::Awake()
 	pid.m_height = 10;
 	pid.m_width = 10;
 	pid.m_extendDataSize = sizeof(float);
+	pid.m_isBillboard = true;
 	//pid.m_isBillboard = false;
 	//pid.m_isDepthTest = false;
 	PlaneParticleUpdater m_effctUpdater(
@@ -232,7 +233,7 @@ void Test::Awake()
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data,deltaTime,extendData)
 		{
 			auto s = *(float*)extendData;
-			data.particleData.pos.y += 10.f * deltaTime;
+			data.particleData.pos.y += 30.f * deltaTime;
 
 			float n = GPerlinNoise2D().GenerateNoise({ s*10, data.particleData.pos.y / 10.f });
 			float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s*10 });
@@ -247,9 +248,21 @@ void Test::Awake()
 			
 		});
 	pid.m_updater = &m_effctUpdater;
-	auto effect = NewGO<PlaneParticleEffectRender>(0);
-	effect->Init(pid);
-	effect->SetPos({ 0,0,50 });
+	m_effect = NewGO<PlaneParticleEffectRender>(0);
+	m_effect->Init(pid);
+	m_effect->SetPos({ 0,0,50 });
+	m_effect->SetSca(g_vec3One * 0.1);
+	m_effect_2 = NewGO<PlaneParticleEffectRender>(0);
+	m_effect_2->Init(pid);
+	m_effect_2->SetPos({ 0,0,50 });
+	m_effect_2->SetSca(g_vec3One * 0.1);
+	for (int i = 0; i < 4; i++)
+	{
+		m_effects[i] = NewGO<PlaneParticleEffectRender>(0);
+		m_effects[i]->Init(pid);
+		m_effects[i]->SetSca(g_vec3One * 0.05);
+	}
+
 	Quaternion effrot;
 	effrot.SetRotationDegZ(30);
 	//effect->SetRot(effrot);
@@ -288,9 +301,9 @@ void Test::Awake()
 	
 
 	auto mm = NewGO<ModelRender>(0);
-	mid.m_tkmFilePath = "Assets/modelData/m/m_ExBone.tkm";
-	mid.m_tksFilePath = "Assets/modelData/m/m_ExBone.tks";
-	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+	mid.m_tkmFilePath = "Assets/modelData/m/Backpack/Backpack.tkm";
+	mid.m_tksFilePath = "Assets/modelData/m/Backpack/Backpack.tks";
+	//mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	//mid.m_psEntryPointFunc = "PSMain_nor";
 
 	//mid.m_upAxis = enUpAxisZ;
@@ -305,9 +318,15 @@ void Test::Awake()
 	m_animlist[static_cast<int>(0)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(0)]->SetLoopFlag(true);
 
-	mm->InitAnimation(m_animlist, 1);
-	mm->Play(0);
+	//mm->InitAnimation(m_animlist, 1);
+	//mm->Play(0);
 
+	m_backpackBone[0] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Pack.001"));
+	m_backpackBone[5] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Pack.002"));
+	m_backpackBone[1] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_L.001"));
+	m_backpackBone[2] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_L.002"));
+	m_backpackBone[3] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_R.001"));
+	m_backpackBone[4] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_R.002"));
 }
 
 void Test::Update()
@@ -325,6 +344,23 @@ void Test::Update()
 	{
 		auto& fogData = m_vol_box->GetFogData();
 		fogData.offset.y -= 5.f * gameTime()->GetDeltaTime();
+	}
+
+	{
+		const auto& mat = m_backpackBone[0]->GetWorldMatrix();
+		m_effect->SetRot(mat.GetRotate());
+		m_effect->SetPos(mat.GetTransrate());
+	}
+	{
+		const auto& mat = m_backpackBone[5]->GetWorldMatrix();
+		m_effect_2->SetRot(mat.GetRotate());
+		m_effect_2->SetPos(mat.GetTransrate());
+	}
+	for (int i = 0;i<4;i++)
+	{
+		const auto& mat = m_backpackBone[i+1]->GetWorldMatrix();
+		m_effects[i]->SetRot(mat.GetRotate());
+		m_effects[i]->SetPos(mat.GetTransrate());
 	}
 	/*auto cam = g_lockCamera3D.Get();
 	Quaternion rot;
