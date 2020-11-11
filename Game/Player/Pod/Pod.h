@@ -79,6 +79,11 @@ public:
 		m_velocity = velocity;
 		m_thrownTime = thrownTime;
 		m_state = PodState::enThrown;
+		m_timer = 0.f;
+	}
+
+	const bool IsIdle() {
+		return m_state == PodState::enIdle;
 	}
 
 private:
@@ -87,6 +92,7 @@ private:
 	void ThrownBehave();
 	void Rampage();
 	void Kamikaze();
+	void BackToIdlePos();
 
 	//model
 	ModelRender* m_model = nullptr;
@@ -114,12 +120,16 @@ private:
 	//Kamikaze
 	const float m_kamikazeDamageAmount = 300.f;
 
+	//Back
+	const float m_backSpeed = 150.f;
+
 	//State
 	enum class PodState {
 		enIdle,
 		enThrown,
 		enRampage,
 		enKamikaze,
+		enBack,
 		enNumPodState
 	};
 

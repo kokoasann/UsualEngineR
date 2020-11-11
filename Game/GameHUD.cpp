@@ -113,7 +113,7 @@ void GameHUD::Update()
 
 	//Enemy HP
 	auto target = m_pPlayer->GetTargetEnemy();
-	if (target == nullptr) {
+	if (target == nullptr or !target->IsBoss()) {
 		m_enemyHpScale.x = 0.f;
 	}
 	else {

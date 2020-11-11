@@ -26,15 +26,20 @@ void PlayerDiveState::Enter(Player* p) {
 		m_isCanDive = true;
 	}
 
-	p->UseStamina(m_DIVE_STAMINA_COST);
-
-	m_velocity = p->GetLocalVelocity();
 
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
 
+	if (lxf == 0.f and lyf == 0.f) {
+		m_isCanDive = false;
+		return;
+	}
+
+	p->UseStamina(m_DIVE_STAMINA_COST);
+	m_velocity = p->GetLocalVelocity();
+
 	m_velocity.Normalize();
-	m_velocity *= 10.f;
+	m_velocity *= m_FIRST_VEL_PARAM;
 
 	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_velocityGoal.z = lyf * m_VELOCITY_MAX;

@@ -13,6 +13,13 @@ PlayerAttackThrowPod::~PlayerAttackThrowPod() {
 }
 
 void PlayerAttackThrowPod::Init(Player* player, int combo) {
+
+	//Idleó‘Ô‚Å‚È‚¢‚È‚ç“Š‚°‚ê‚È‚¢.
+	if (!player->GetPod()->IsIdle()) {
+		m_isDone = true;
+		return;
+	}
+
 #ifdef _PRINT_PLAYER_ATTACK
 	std::string s = "attack throw-pod combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
