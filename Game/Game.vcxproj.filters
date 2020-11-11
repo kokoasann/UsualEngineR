@@ -135,6 +135,7 @@
     <ClInclude Include="Player\Attack\PlayerAttackSlash.h">
       <Filter>Player\Attack\TestPreset</Filter>
     </ClInclude>
+    <ClInclude Include="GameSceneMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -272,6 +273,7 @@
     <ClCompile Include="Player\Attack\PlayerAttackSlash.cpp">
       <Filter>Player\Attack\TestPreset</Filter>
     </ClCompile>
+    <ClCompile Include="GameSceneMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -363,6 +365,8 @@
     <ImageContentTask Include="Assets\modelData\m\mNor.png">
       <Filter>Assets\modelData\m</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png" />
+    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />

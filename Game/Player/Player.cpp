@@ -10,6 +10,8 @@
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/IEnemy.h"
 #include "Pod/Pod.h"
+#include "../GameManager.h"
+#include "../GameSceneMenu.h"
 
 Player::Player()
 {
@@ -159,6 +161,8 @@ bool Player::Start()
 
 void Player::PreUpdate()
 {
+	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
@@ -167,6 +171,8 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+
 	SearchTarget();
 	UpdateAttackType();
 

@@ -2,6 +2,8 @@
 #include "Pod.h"
 #include "../Player.h"
 #include "Enemy/EnemyManager.h"
+#include "../../GameSceneMenu.h"
+#include "../../GameManager.h"
 
 Pod::Pod()
 {
@@ -54,6 +56,9 @@ void Pod::PreUpdate()
 
 void Pod::Update()
 {
+
+	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+
 	if (m_state == PodState::enIdle) {
 		auto p = mp_player->GetPosition() + m_distanceFromPlayer;
 		m_pos = p;

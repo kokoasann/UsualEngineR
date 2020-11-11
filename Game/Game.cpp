@@ -7,6 +7,7 @@
 #include "Enemy/IEnemy.h"
 #include "GameHUD.h"
 #include "GameManager.h"
+#include "GameSceneMenu.h"
 
 void Game::Release()
 {
@@ -43,6 +44,16 @@ void Game::Update()
 	if (enemy != nullptr) {
 		GameManager::GetInstance().m_camera->SetEnemy(enemy);
 	}
+
+	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
+		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
+			GameManager::GetInstance().m_menu->ResumeGame();
+		}
+		else {
+			GameManager::GetInstance().m_menu->PauseGame();
+		}
+	}
+
 }
 
 void Game::PostUpdate()

@@ -8,6 +8,7 @@
 #include "GameHUD.h"
 #include "GameManager.h"
 #include "Item/ItemManager.h"
+#include "GameSceneMenu.h"
 
 void GameManager::InitGameWorld() {
 
@@ -16,6 +17,7 @@ void GameManager::InitGameWorld() {
 	m_stage = NewGO<GameStage>(0);
 	m_gameHUD = NewGO<GameHUD>(0);
 	m_itemManager = NewGO<ItemManager>(0);
+	m_menu = NewGO<GameSceneMenu>(0);
 
 	m_gameHUD->SetPlayer(m_player);
 	m_camera->SetPlayer(m_player);
@@ -34,4 +36,5 @@ void GameManager::Release() {
 	DeleteGO(m_stage);
 	DeleteGO(m_gameHUD);
 	DeleteGO(m_itemManager);
+	DeleteGO(m_menu);
 }

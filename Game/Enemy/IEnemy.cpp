@@ -6,6 +6,8 @@
 #include "State/EnemySlashState.h"
 #include "State/EnemyDeadState.h"
 #include "HealthBar.h"
+#include "../GameManager.h"
+#include "../GameSceneMenu.h"
 
 void IEnemy::Awake() {
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
@@ -35,6 +37,8 @@ void IEnemy::OnDestroy() {
 }
 
 void IEnemy::Update() {
+
+	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_nextState = m_currentState->Update(this);
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);

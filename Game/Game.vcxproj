@@ -193,6 +193,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameSceneMenu.h" />
     <ClInclude Include="Item\IItem.h" />
     <ClInclude Include="Item\ItemManager.h" />
     <ClInclude Include="Item\RedPotion.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameSceneMenu.cpp" />
     <ClCompile Include="Item\IItem.cpp" />
     <ClCompile Include="Item\ItemManager.cpp" />
     <ClCompile Include="Item\RedPotion.cpp" />
