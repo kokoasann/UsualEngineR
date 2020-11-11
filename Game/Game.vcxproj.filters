@@ -371,4 +371,9 @@
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\m\Backpack\Backpack_tex.png">
+      <Filter>Assets\modelData\m</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
