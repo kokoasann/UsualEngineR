@@ -89,7 +89,6 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
 			m_vecVelocityGoal *= m_RUN_SPEED_PARAM * m_VELOCITY_MAX;
 			isRunning = true;
-			p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 			p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
 		}
 		else {
@@ -127,12 +126,13 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 
 	//Rotation
 	if (isRunning and (vel.x != 0.f or vel.z != 0.f)) {
+		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
+
 		Quaternion rot = Quaternion::Identity;
 		auto theta = atan2(vel.x, vel.z);
 		theta = theta * (180.f / Math::PI);
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
-
 
 	}
 	else {
@@ -153,6 +153,7 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	m_vecVelocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_vecVelocityGoal.z = lyf * m_VELOCITY_MAX;
 
+	bool isRunning = false;
 
 	if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
@@ -162,8 +163,8 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	//押しっぱなしでスタミナが切れた場合は再度ボタンを押しなおすまで走らない.
 	if (g_pad[0]->IsPress(enButtonX) and m_hasEnoughStaminaToRun) {
 		if (p->GetCurrentEndurance() > m_RUN_BEGIN_COST) {
+			isRunning = true;
 			m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
-			p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 			p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
 		}
 		else {
@@ -200,6 +201,8 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 
 	if (vel.x == 0.f and vel.z == 0.f) {
 		p->PlayAnimation(Player::EnAnimation::enIdle, m_AnimInterpolate);
+	}else if(isRunning){
+		p->UseStamina(m_RUN_COST * gameTime()->GetDeltaTime());
 	}
 
 	//Rotation

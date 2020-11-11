@@ -24,8 +24,7 @@ private:
 	const float m_BOOST_AUTO_CHARGE_AMOUNT = 5.f;
 	const float m_ENDURANCE_AUTO_CHARGE_AMOUNT = 5.f;
 
-	//const float m_RUN_COST = 20.f;
-	const float m_RUN_COST = 100.f;
+	const float m_RUN_COST = 20.f;
 	const float m_VELOCITY_MAX = 2.f;
 	const float m_SIDE_MOVE_VELOCITY_MAX = 1.5f;
 	const float m_GRAVITY = -30.f;
