@@ -198,6 +198,7 @@
     <ClInclude Include="Item\ItemManager.h" />
     <ClInclude Include="Item\RedPotion.h" />
     <ClInclude Include="Level\GameStage.h" />
+    <ClInclude Include="Player\Attachment\JetPack.h" />
     <ClInclude Include="Player\Attack\Bomb.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackKick.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackPunch.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="Item\RedPotion.cpp" />
     <ClCompile Include="Level\GameStage.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player\Attachment\JetPack.cpp" />
     <ClCompile Include="Player\Attack\Bomb.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackKick.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackPunch.cpp" />
