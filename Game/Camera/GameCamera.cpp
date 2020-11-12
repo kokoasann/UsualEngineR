@@ -149,6 +149,8 @@ void GameCamera::CalcEnemyCamera() {
 	vecRight.Normalize();
 	ecPos += vecRight * charaSlideParam;
 
+
+	//TODO : tarp‚ªnan‚É‚È‚éƒoƒO‚ª‚ ‚é‚Ì‚ÅC³‚·‚é. (m_targetPos‚Í³í‚È‚Ì‚Å‚±‚Ì‰‰Z’†‚É‰ó‚ê‚Ä‚éB
 	auto tarp = m_targetPos;
 	tarp -= vecRight * targetSlideParam;
 	tarp = m_charaPos + vecRight * charaSlideParam;
