@@ -12,6 +12,7 @@
 #include "Pod/Pod.h"
 #include "../GameManager.h"
 #include "../GameSceneMenu.h"
+#include "Attachment/JetPack.h"
 
 Player::Player()
 {
@@ -28,6 +29,7 @@ void Player::Release()
 	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
 	DeleteGO(m_model);
 	DeleteGO(m_pod);
+	DeleteGO(m_jetPack);
 }
 
 void Player::OnDestroy()
@@ -155,6 +157,20 @@ bool Player::Start()
 	m_pod = NewGO<Pod>(0);
 	m_pod->SetPlayer(this);
 
+	//Attachment
+	m_playerBones.resize(TO_INT(EnPlayerBone::enNumBoneType));
+	m_jetPack = NewGO<JetPack>(0);
+	m_jetPack->SetUsingState(false);
+
+	auto bone = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Bone.005"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enBack)) = bone;
+
+	auto soleR = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Sole_R"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enSOLE_R)) = soleR;
+
+	auto soleL = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Sole_L"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enSOLE_L)) = soleL;
+
 	return true;
 }
 
@@ -172,6 +188,18 @@ void Player::PreUpdate()
 void Player::Update()
 {
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+
+	//Attachments
+	//Jetpack
+	if(m_currentAttackPreset == EnAttackPreset::enMeleePreset){
+		m_jetPack->SetUsingState(true);
+		const auto& mat = m_playerBones.at(TO_INT(EnPlayerBone::enBack))->GetWorldMatrix();
+		m_jetPack->SetPosition(mat.GetTransrate());
+		m_jetPack->SetRotation(mat.GetRotate());
+	}
+	else {
+		m_jetPack->SetUsingState(false);
+	}
 
 	SearchTarget();
 	UpdateAttackType();

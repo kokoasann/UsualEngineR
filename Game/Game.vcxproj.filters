@@ -136,6 +136,9 @@
       <Filter>Player\Attack\TestPreset</Filter>
     </ClInclude>
     <ClInclude Include="GameSceneMenu.h" />
+    <ClInclude Include="Player\Attachment\JetPack.h">
+      <Filter>Player\Attachment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -274,6 +277,9 @@
       <Filter>Player\Attack\TestPreset</Filter>
     </ClCompile>
     <ClCompile Include="GameSceneMenu.cpp" />
+    <ClCompile Include="Player\Attachment\JetPack.cpp">
+      <Filter>Player\Attachment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -344,6 +350,9 @@
     </Filter>
     <Filter Include="Player\Attack\TestPreset">
       <UniqueIdentifier>{f7d22fd8-5f50-4d18-a853-936d74e62ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attachment">
+      <UniqueIdentifier>{e9e3af22-358c-476d-9b05-f4d1caabee8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

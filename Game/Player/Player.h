@@ -4,6 +4,7 @@
 class IEnemy;
 class GameCamera;
 class Pod;
+class JetPack;
 
 /// <summary>
 /// 
@@ -50,6 +51,13 @@ public:
 		enMeleePreset,
 		enExposivePreset,
 		enNumPreset
+	};
+
+	enum class EnPlayerBone {
+		enBack,
+		enSOLE_L,
+		enSOLE_R,
+		enNumBoneType
 	};
 
 	Player();
@@ -275,7 +283,13 @@ public:
 		return m_pod;
 	}
 
-	//const ModelRender* GetModel;
+	Model& GetModel() {
+		return m_model->GetModel();
+	}
+
+	const Bone* GetBone(const EnPlayerBone& boneType) const{
+		return m_playerBones.at(TO_INT(boneType));
+	}
 
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
@@ -324,6 +338,10 @@ private:
 
 	//Pod
 	Pod* m_pod = nullptr;
+
+	//Attachments
+	std::vector<Bone*> m_playerBones;
+	JetPack* m_jetPack = nullptr;
 
 	//Ability
 	//TODO : use struct like this
