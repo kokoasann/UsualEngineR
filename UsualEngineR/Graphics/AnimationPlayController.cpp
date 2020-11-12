@@ -60,13 +60,52 @@ namespace UER {
 	void CAnimationPlayController::SamplingBoneMatrixFromAnimationClip()
 	{
 		const auto& keyFramePtrListArray = m_animationClip->GetKeyFramePtrListArray();
+		const auto& topBoneKeyFrameList = m_animationClip->GetTopBoneKeyFrameList();
+
+		//float lastFrameTime = topBoneKeyFrameList[m_currentKeyFrameNoLastFrame]->time;
+		float lastFrameTime = topBoneKeyFrameList[m_lastKeyFrameNo]->time;
+		float frameTime = topBoneKeyFrameList[m_currentKeyFrameNo]->time - lastFrameTime;
+
+		float time = m_time - lastFrameTime;
+
+		float rate;
+		if (frameTime != 0.f)
+			rate = time / frameTime;
+		else
+			rate = 0.f;
+
+
 		for (const auto& keyFrameList : keyFramePtrListArray) {
 			if (keyFrameList.size() == 0) {
 				continue;
 			}
 			//現在再生中のキーフレームを取ってくる。
 			KeyFrame* keyframe = keyFrameList.at(m_currentKeyFrameNo);
-			m_boneMatrix[keyframe->boneIndex] = keyframe->transform;
+
+			//auto lastKeyframe = keyFrameList.at(m_currentKeyFrameNoLastFrame);
+			auto lastKeyframe = keyFrameList.at(m_lastKeyFrameNo);
+
+			Matrix transform;
+			const Matrix& lastTra = lastKeyframe->transform;
+			const Matrix& currTra = keyframe->transform;
+			
+			Vector3 lpos(lastTra.GetTransrate()), pos(currTra.GetTransrate());
+			Vector3 lsca(lastTra.GetScale()), sca(currTra.GetScale());
+			Quaternion lrot(lastTra.GetRotate()), rot(currTra.GetRotate());
+
+			pos.Lerp(rate, lpos, pos);
+			sca.Lerp(rate, lsca, sca);
+			rot.Slerp(rate, lrot, rot);
+
+			Matrix msca, mrot;
+			msca.MakeScaling(sca);
+			mrot.MakeRotationFromQuaternion(rot);
+
+			transform.Multiply(msca, mrot);
+			transform.SetTranspose(pos);
+			
+			//m_boneMatrix[keyframe->boneIndex] = keyframe->transform;
+			m_boneMatrix[keyframe->boneIndex] = transform;
 		}
 	}
 	void CAnimationPlayController::CalcBoneMatrixInRootBoneSpace()
@@ -151,6 +190,10 @@ namespace UER {
 			}
 			//次へ。
 			m_currentKeyFrameNo++;
+		}
+		if (m_currentKeyFrameNo != m_currentKeyFrameNoLastFrame)
+		{
+			m_lastKeyFrameNo = m_currentKeyFrameNoLastFrame;
 		}
 	}
 	void CAnimationPlayController::Update(float deltaTime, CAnimation* animation)

@@ -140,6 +140,7 @@ namespace UER{
 	private:
 		CAnimationClip*			m_animationClip = nullptr;			//アニメーションクリップ。
 		int						m_currentKeyFrameNoLastFrame = 0;	//一フレーム前のキーフレーム番号。
+		int						m_lastKeyFrameNo = 0;				//前のキーフレーム
 		int						m_currentKeyFrameNo = 0;			//現在再生中のキーフレーム番号。
 		float					m_time = 0.0f;
 		std::vector<Matrix>	m_boneMatrix;						//!<このコントローラで再生中のアニメーションのボーン行列。

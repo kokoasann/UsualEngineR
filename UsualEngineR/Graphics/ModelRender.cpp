@@ -39,7 +39,7 @@ namespace UER
 		m_isRender = true;
 
 		float dtime = gameTime()->GetDeltaTime();
-		m_animation.Progress(dtime);
+		m_animation.Progress(dtime*m_animPlaySpeed);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 		
 		m_model.GetSkelton()->Update(m_model.GetWorldMatrix());

@@ -83,6 +83,15 @@ namespace UER
 		{
 			return m_model;
 		}
+
+		void SetAnimPlaySpeed(float speed)
+		{
+			m_animPlaySpeed = speed;
+		}
+		float GetAnimPlaySpeed() const
+		{
+			return m_animPlaySpeed;
+		}
 	private:
 		Model m_model;				//モデル
 		CAnimation m_animation;		//アニメーション
@@ -94,5 +103,7 @@ namespace UER
 
 		bool m_isInit = false;
 		bool m_isRender = false;	//レンダリングする?
+
+		float m_animPlaySpeed = 1.f;
 	};
 }
