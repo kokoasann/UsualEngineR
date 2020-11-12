@@ -57,7 +57,9 @@ class TkExporter_PT_Panel(bpy.types.Panel):
     def draw(self, context):
         self.layout.operator("tkexporter.skeleton")
         self.layout.operator("tkexporter.animation")
+        self.layout.operator("tkexporter.animation_all")
         self.layout.operator("tkexporter.level")
+        
 
 
 #スケルトン出力オペレーション
@@ -273,6 +275,146 @@ class TkExporter_OT_Animation(bpy.types.Operator):
                 
         self.report({'INFO'}, "Finished making animation file.")
         return {'FINISHED'}
+    
+    
+    
+#アニメーション出力オペレーション(ALL)
+class TkExporter_OT_AnimationAll(bpy.types.Operator):
+    
+    bl_idname = "tkexporter.animation_all"
+    bl_label = "createAnimationAll"
+    
+    filename_ext = ".tka"
+
+    #ダイアログから受け取ったファイル名を入れておく変数(?)。
+    filepath : StringProperty(
+        name="Tka_FilePath",
+        description="Filepath used for exporting the file",
+        default = "untitled.tka",
+        maxlen=1024,
+        subtype='FILE_PATH',
+    )
+    
+    #ボタンを押すとexecuteの前に呼ばれる関数。
+    def invoke(self, context, event):
+        armature = context.object
+        
+        #Armatureオブジェクト選択時以外は何もしないため、リターン。
+        if armature.type != "ARMATURE":
+            self.report({'INFO'}, "Please select Armature object.")
+            return{'FINISHED'}
+
+        #アニメーションが無いため、リターン
+        if (armature.animation_data is None) or (armature.animation_data.action is None):
+            self.report({'INFO'}, "The armature don't has animations")
+            return{'FINISHED'}
+        
+        #デフォルトの文字列を設定する。
+        blend_filepath = context.blend_data.filepath
+        if not blend_filepath:
+            blend_filepath = "untitled"
+        else:
+            blend_filepath = os.path.splitext(blend_filepath)[0]
+
+        self.filepath = blend_filepath + "_%s" + self.filename_ext
+
+        #ファイルダイアログを開く。
+        #ダイアログが閉じたとき、execute()を呼んでくれるらしい。
+        context.window_manager.fileselect_add(self)
+        
+        return {'RUNNING_MODAL'}
+    
+    
+    #アニメーション出力をやる関数
+    def execute(self, context):
+        scene = context.scene
+        armar = context.object
+        
+        #エディットモードとポーズモードでボーンの並びが違うので
+        #エディットモード基準のインデックスを使うために名前のリストを作る
+        bpy.ops.object.mode_set(mode='EDIT')
+        bone_name_list = [b.name for b in context.object.data.edit_bones]
+        
+        for action_data in bpy.data.actions:
+            armar.animation_data.action = action_data
+            filepath = self.filepath % action_data.name
+            with open(filepath, "wb") as target:
+                
+                end_frame = scene.frame_end
+                #find end frame
+                for event in armar.animation_data.action.pose_markers:
+                    if event.name == "end":
+                        end_frame = event.frame
+                        break
+
+                bpy.ops.object.mode_set(mode='POSE')
+                pose_bones = context.object.pose.bones
+
+                #キーフレームの数を出力
+                target.write(struct.pack("<I", (end_frame - scene.frame_start) * len(pose_bones)))
+
+                time = 0#経過時間を入れとく変数
+                spf = 1 / scene.render.fps#フレームあたりの秒数
+                
+                
+                 #アニメーションイベント数を出力
+                eventcount = len(armar.animation_data.action.pose_markers)
+                target.write(struct.pack("<I", eventcount))
+                #アニメーションイヴェントの出力
+                for event in armar.animation_data.action.pose_markers:
+                    if event.name == "end":
+                        end_frame = event.frame + 1
+                        
+                    fr = spf * event.frame
+                    #ｲｳﾞｪﾝﾄﾉｵｺﾙｼﾞｶﾝ(ﾋﾞｮｳ)
+                    target.write( struct.pack("<f", fr) )
+                    #イヴェント名の出力
+                    target.write( struct.pack("<i", len(event.name)) )
+                    target.write(event.name.encode()+b"\0")
+                    
+                end_frame += 1
+
+                for frame in range(scene.frame_start , end_frame):
+                    scene.frame_set(frame)    
+
+                    for bone in pose_bones:
+                        #ボーンのインデックスを出力
+                        target.write( struct.pack("<I", bone_name_list.index(bone.name)) )
+                        
+                        #秒数を出力
+                        target.write( struct.pack("<f", time) )
+
+                        #ボーンの行列を出力
+                        matrix = copy.deepcopy(bone.matrix)
+
+                        #アーマチュアオブジェクトのワールド行列をかけてボーンの行列をワールド基準にする。
+                        matrix = context.object.matrix_world @ matrix
+
+                        #Yアップに変換
+                        matrix = transToYUp(matrix)
+
+                        if not bone.parent is None:
+                            #親の逆行列をかけて自分の座標系にする。親もワールド基準に直すのを忘れない。
+                            invMat = copy.deepcopy(transToYUp(context.object.matrix_world @ bone.parent.matrix))
+                            invMat.invert()
+                            #列優先なのでこの順番
+                            matrix = invMat @ matrix
+                            del invMat
+
+                        matrix.transpose()#転置する。blenderは列優先。tkEngineは行優先です。
+
+                        for vec3 in matrix:
+                            for i , m in enumerate(vec3):
+                                if i != 3:
+                                    target.write( struct.pack("<f", m) )
+                    
+                    #1フレームあたりの秒数をプラス
+                    time += spf
+                    
+        self.report({'INFO'}, "Finished making animation file.")
+        return {'FINISHED'}
+    
+    
 
 #ドット以下を無視する関数
 def deleteAfterDot(name):
@@ -390,6 +532,7 @@ classes = {
     TkExporter_PT_Panel,
     TkExporter_OT_Skeleton,
     TkExporter_OT_Animation,
+    TkExporter_OT_AnimationAll,
     TkExporter_OT_Level
 }
 
