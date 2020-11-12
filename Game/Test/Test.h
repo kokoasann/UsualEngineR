@@ -61,4 +61,6 @@ private:
 	PlaneParticleEffectRender* m_effects[4];
 
 	Bone* m_backpackBone[6] = {nullptr};
+
+	ModelRender* m_playModel;
 };

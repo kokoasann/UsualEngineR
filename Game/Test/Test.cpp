@@ -308,7 +308,7 @@ void Test::Awake()
 
 	//mid.m_upAxis = enUpAxisZ;
 	mm->Init(mid);
-	mm->SetPosition({ 100,10,100 });
+	mm->SetPosition({ 100,50,100 });
 	mm->SetScale({ 5,5,5 });
 	mm->SetMulColor({ 0.5, 0.5, 0.4, 1.f });
 
@@ -321,7 +321,16 @@ void Test::Awake()
 	//mm->InitAnimation(m_animlist, 1);
 	//mm->Play(0);
 
-	m_backpackBone[0] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Pack.001"));
+	m_playModel = NewGO<ModelRender>(0);
+	mid.m_tkmFilePath = "Assets/modelData/m/m_exBone.tkm";
+	mid.m_tksFilePath = "Assets/modelData/m/m_exBone.tks";
+
+	m_playModel->Init(mid);
+	m_playModel->SetPosition({ -100,50,-100 });
+	m_playModel->SetScale({ 5,5,5 });
+	m_playModel->SetMulColor({ 0.5, 0.5, 0.4, 1.f });
+
+	m_backpackBone[0] = m_playModel->GetModel().GetSkelton()->GetBone(m_playModel->GetModel().GetSkelton()->FindBoneID(L"Sole_R"));
 	m_backpackBone[5] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Pack.002"));
 	m_backpackBone[1] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_L.001"));
 	m_backpackBone[2] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_L.002"));

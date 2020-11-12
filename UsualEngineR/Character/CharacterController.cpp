@@ -746,7 +746,8 @@ namespace UER
 		//衝突検出。
 		if (fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON) {
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
-			if (callback.isHit) {
+			bool isNearFloor = callback.dist < callback.wallDist;
+			if (isNearFloor && callback.isHit) {
 				//当たった。
 				//moveSpeed.y = 0.0f;
 				m_isJump = false;
@@ -762,7 +763,7 @@ namespace UER
 				}
 				//printf("HIT FLOOR\n");
 			}
-			if (callback.isHitWall && isFall && 1)
+			if (!isNearFloor && callback.isHitWall && isFall && 1)
 			{
 				Vector3 vT0, vT1;
 				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
