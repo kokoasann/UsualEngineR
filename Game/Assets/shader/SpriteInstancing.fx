@@ -30,7 +30,6 @@ PSInput VSMain(VSInput In,uint id:SV_InstanceID)
 	PSInput psIn;
 	psIn.pos = mul(g_instanceData[id].mWorld,In.pos);
 	psIn.pos = mul(mvp,psIn.pos);
-	//psIn.pos = mul(mvp,In.pos);
 	psIn.uv = In.uv;
     psIn.id = id;
     return psIn;

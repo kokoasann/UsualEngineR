@@ -79,7 +79,7 @@ namespace UER
 			return m_isRender;
 		}
 
-		const Model& GetModel() const
+		Model& GetModel()
 		{
 			return m_model;
 		}
