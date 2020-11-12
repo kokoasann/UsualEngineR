@@ -82,7 +82,18 @@ bool JetPack::Start()
 		data.particleData.mulColor.a = data.lifeTime / 10.f;
 
 	});
+
+
 	pid.m_updater = &m_effctUpdater;
+
+	m_effect = NewGO<PlaneParticleEffectRender>(0);
+	m_effect->Init(pid);
+	m_effect->SetPos({ 0,0,50 });
+	m_effect->SetSca(g_vec3One * 0.02);
+	m_effect_2 = NewGO<PlaneParticleEffectRender>(0);
+	m_effect_2->Init(pid);
+	m_effect_2->SetPos({ 0,0,50 });
+	m_effect_2->SetSca(g_vec3One * 0.02);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -115,6 +126,8 @@ void JetPack::Update()
 		{
 			m_effects[i]->SetActive(false);
 		}
+		m_effect->SetActive(false);
+		m_effect_2->SetActive(false);
 		return;
 	}
 
@@ -132,6 +145,8 @@ void JetPack::PostUpdate()
 		{
 			m_effects[i]->SetActive(false);
 		}
+		m_effect_2->SetActive(false);
+		m_effect->SetActive(false);
 	}
 	else {
 		for (int i = 0; i < 4; i++)
@@ -140,6 +155,21 @@ void JetPack::PostUpdate()
 			const auto& mat = m_backpackBone[i + 1]->GetWorldMatrix();
 			m_effects[i]->SetRot(mat.GetRotate());
 			m_effects[i]->SetPos(mat.GetTransrate());
+		}
+
+		m_effect->SetActive(true);
+		m_effect_2->SetActive(true);
+
+
+		{
+			const auto& mat = m_backpackBone[0]->GetWorldMatrix();
+			m_effect->SetRot(mat.GetRotate());
+			m_effect->SetPos(mat.GetTransrate());
+		}
+		{
+			const auto& mat = m_backpackBone[5]->GetWorldMatrix();
+			m_effect_2->SetRot(mat.GetRotate());
+			m_effect_2->SetPos(mat.GetTransrate());
 		}
 	}
 }

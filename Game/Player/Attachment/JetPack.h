@@ -79,6 +79,8 @@ private:
 	bool m_isUsed = true;
 
 	//effect
+	PlaneParticleEffectRender* m_effect;
+	PlaneParticleEffectRender* m_effect_2;
 	PlaneParticleEffectRender* m_effects[4];
 	Bone* m_backpackBone[6] = { nullptr };
 

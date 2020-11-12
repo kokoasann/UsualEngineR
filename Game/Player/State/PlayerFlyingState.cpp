@@ -35,6 +35,8 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	p->PlayAnimation(Player::EnAnimation::enIdle);
 
+	return;
+
 	//Effects
 	PlaneParticleEffectInitData pid;
 	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
@@ -167,15 +169,17 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	}
 
 	//Effect
+	/*
 	const auto& boneSoleLMat = p->GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
 	m_effect->SetRot(boneSoleLMat.GetRotate());
 	m_effect->SetPos(boneSoleLMat.GetTransrate());
+	*/
 
 	return this;
 }
 
 void PlayerFlyingState::Exit(Player* p) {
-	DeleteGO(m_effect);
+	//DeleteGO(m_effect);
 	m_velocity = Vector3::Zero;
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player Exit Flying\n");
