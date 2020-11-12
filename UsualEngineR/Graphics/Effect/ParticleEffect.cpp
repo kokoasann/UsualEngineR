@@ -145,12 +145,6 @@ namespace UER
 		std::list<int> deths;
 		for (int i = 0; i < m_numInstance; i++)
 		{
-			/*m_particleTimes[i] -= deltaTime;
-			if (m_particleTimes[i] <= 0)
-			{
-				deths.push_back(i);
-			}*/
-
 			m_particleDatasEX[i].lifeTime -= deltaTime;
 			if (m_particleDatasEX[i].lifeTime <= 0)
 			{
@@ -160,45 +154,24 @@ namespace UER
 		deths.reverse();
 		for (int i : deths)
 		{
-			/*for (int j = i; j < m_numInstance; j++)
-			{
-				m_particleDatas[j] = m_particleDatas[j + 1];
-				m_particleTimes[j] = m_particleTimes[j + 1];
-			}*/
 
 
 			if (i != m_particleDatasEX.size() - 1)
 			{
-				/*std::swap(m_particleDatas[i], m_particleDatas[m_particleDatas.size() - 1]);
-				m_particleDatas.pop_back();
-
-				std::swap(m_particleTimes[i], m_particleTimes[m_particleTimes.size() - 1]);
-				m_particleTimes.pop_back();*/
 
 				std::swap(m_particleDatasEX[i], m_particleDatasEX[m_particleDatasEX.size() - 1]);
 				m_particleDatasEX.pop_back();
 
 				if (m_extendDataSize > 0)
 				{
-					/*free(m_extendDatas[i]);
-					std::swap(m_extendDatas[i], m_extendDatas[m_extendDatas.size() - 1]);
-					m_extendDatas.pop_back();*/
 
 					std::swap(m_extendDatas[i], m_extendDatas[m_numInstance - 1]);
 				}
 			}
 			else
 			{
-				/*m_particleDatas.pop_back();
-				m_particleTimes.pop_back();*/
 
 				m_particleDatasEX.pop_back();
-
-				if (m_extendDataSize > 0)
-				{
-					/*free(m_extendDatas[m_extendDatas.size() - 1]);
-					m_extendDatas.pop_back();*/
-				}
 			}
 
 			m_numInstance--;
