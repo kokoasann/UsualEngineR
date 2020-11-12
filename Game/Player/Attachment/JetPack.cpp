@@ -51,8 +51,16 @@ void JetPack::PreUpdate()
 
 void JetPack::Update()
 {
+	if (!m_isUsed) {
+		m_model->SetActive(false);
+		return;
+	}
+
+	m_model->SetActive(true);
+
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
+	m_model->SetScale(m_scale);
 }
 
 void JetPack::PostUpdate()

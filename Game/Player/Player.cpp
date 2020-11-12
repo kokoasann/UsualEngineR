@@ -160,7 +160,7 @@ bool Player::Start()
 	//Attachment
 	m_playerBones.resize(TO_INT(EnPlayerBone::enNumBoneType));
 	m_jetPack = NewGO<JetPack>(0);
-	m_jetPack->SetActive(false);
+	m_jetPack->SetUsingState(false);
 
 	auto bone = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Bone.005"));
 	m_playerBones.at(TO_INT(EnPlayerBone::enBack)) = bone;
@@ -186,13 +186,13 @@ void Player::Update()
 	//Attachments
 	//Jetpack
 	if(m_currentAttackPreset == EnAttackPreset::enMeleePreset){
-		m_jetPack->SetActive(true);
+		m_jetPack->SetUsingState(true);
 		const auto& mat = m_playerBones.at(TO_INT(EnPlayerBone::enBack))->GetWorldMatrix();
 		m_jetPack->SetPosition(mat.GetTransrate());
 		m_jetPack->SetRotation(mat.GetRotate());
 	}
 	else {
-		m_jetPack->SetActive(false);
+		m_jetPack->SetUsingState(false);
 	}
 
 	SearchTarget();
