@@ -1,4 +1,5 @@
 #pragma once
+#include "Effect/ParticleEffect.h"
 
 /// <summary>
 /// 
@@ -76,5 +77,9 @@ private:
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
 
 	bool m_isUsed = true;
+
+	//effect
+	PlaneParticleEffectRender* m_effects[4];
+	Bone* m_backpackBone[6] = { nullptr };
 
 };

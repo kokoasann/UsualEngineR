@@ -165,6 +165,12 @@ bool Player::Start()
 	auto bone = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Bone.005"));
 	m_playerBones.at(TO_INT(EnPlayerBone::enBack)) = bone;
 
+	auto soleR = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Sole_R"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enSOLE_R)) = soleR;
+
+	auto soleL = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Sole_L"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enSOLE_L)) = soleL;
+
 	return true;
 }
 

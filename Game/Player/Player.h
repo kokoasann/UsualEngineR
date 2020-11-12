@@ -55,6 +55,8 @@ public:
 
 	enum class EnPlayerBone {
 		enBack,
+		enSOLE_L,
+		enSOLE_R,
 		enNumBoneType
 	};
 
@@ -283,6 +285,10 @@ public:
 
 	Model& GetModel() {
 		return m_model->GetModel();
+	}
+
+	const Bone* GetBone(const EnPlayerBone& boneType) const{
+		return m_playerBones.at(TO_INT(boneType));
 	}
 
 	//TODO : protect these member
