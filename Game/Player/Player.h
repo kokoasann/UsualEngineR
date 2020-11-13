@@ -384,6 +384,6 @@ private:
 	const int LEFT = 1;
 	void InitThrusterEffect();
 	bool m_isUsingThrusters = false;
-	PlaneParticleEffectRender* m_thrusterEffect[2] = { nullptr };
+	PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
 
 };

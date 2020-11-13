@@ -30,6 +30,8 @@ void Player::Release()
 	DeleteGO(m_model);
 	DeleteGO(m_pod);
 	DeleteGO(m_jetPack);
+	DeleteGO(m_thrusterEffects[RIGHT]);
+	DeleteGO(m_thrusterEffects[LEFT]);
 }
 
 void Player::OnDestroy()
@@ -250,24 +252,24 @@ void Player::PostUpdate()
 {
 	//Effect
 	if (!m_isUsingThrusters) {
-		m_thrusterEffect[LEFT]->SetActive(false);
-		m_thrusterEffect[RIGHT]->SetActive(false);
+		m_thrusterEffects[LEFT]->SetActive(false);
+		m_thrusterEffects[RIGHT]->SetActive(false);
 		m_jetPack->StopThrusters();
 		return;
 	}
 
 	m_jetPack->FireThrusters();
 
-	m_thrusterEffect[LEFT]->SetActive(true);
-	m_thrusterEffect[RIGHT]->SetActive(true);
+	m_thrusterEffects[LEFT]->SetActive(true);
+	m_thrusterEffects[RIGHT]->SetActive(true);
 
 	const auto& boneSoleLMat = GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
-	m_thrusterEffect[LEFT]->SetRot(boneSoleLMat.GetRotate());
-	m_thrusterEffect[LEFT]->SetPos(boneSoleLMat.GetTransrate());
+	m_thrusterEffects[LEFT]->SetRot(boneSoleLMat.GetRotate());
+	m_thrusterEffects[LEFT]->SetPos(boneSoleLMat.GetTransrate());
 
 	const auto& boneSoleRMat = GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix();
-	m_thrusterEffect[RIGHT]->SetRot(boneSoleRMat.GetRotate());
-	m_thrusterEffect[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
+	m_thrusterEffects[RIGHT]->SetRot(boneSoleRMat.GetRotate());
+	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 
 }
 
@@ -365,13 +367,13 @@ void Player::InitThrusterEffect() {
 
 	//TODO : avoid new go
 
-	m_thrusterEffect[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
-	m_thrusterEffect[RIGHT]->Init(pid);
-	m_thrusterEffect[RIGHT]->SetPos({ 0,0,50 });
-	m_thrusterEffect[RIGHT]->SetSca(g_vec3One * 0.01);
+	m_thrusterEffects[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
+	m_thrusterEffects[RIGHT]->Init(pid);
+	m_thrusterEffects[RIGHT]->SetPos({ 0,0,50 });
+	m_thrusterEffects[RIGHT]->SetSca(g_vec3One * 0.01);
 
-	m_thrusterEffect[LEFT] = NewGO<PlaneParticleEffectRender>(0);
-	m_thrusterEffect[LEFT]->Init(pid);
-	m_thrusterEffect[LEFT]->SetPos({ 0,0,50 });
-	m_thrusterEffect[LEFT]->SetSca(g_vec3One * 0.01);
+	m_thrusterEffects[LEFT] = NewGO<PlaneParticleEffectRender>(0);
+	m_thrusterEffects[LEFT]->Init(pid);
+	m_thrusterEffects[LEFT]->SetPos({ 0,0,50 });
+	m_thrusterEffects[LEFT]->SetSca(g_vec3One * 0.01);
 }
