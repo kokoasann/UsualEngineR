@@ -40,5 +40,6 @@ private:
 
 	//Effect
 	PlaneParticleEffectRender* m_effect;
+	PlaneParticleEffectRender* m_effect1;
 
 };

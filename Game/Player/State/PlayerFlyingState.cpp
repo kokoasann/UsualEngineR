@@ -35,7 +35,6 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	p->PlayAnimation(Player::EnAnimation::enIdle);
 
-	return;
 
 	//Effects
 	PlaneParticleEffectInitData pid;
@@ -81,11 +80,16 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	});
 	pid.m_updater = &m_effctUpdater;
-	//TODO : deleteGo
+
 	m_effect = NewGO<PlaneParticleEffectRender>(0);
 	m_effect->Init(pid);
 	m_effect->SetPos({ 0,0,50 });
-	m_effect->SetSca(g_vec3One * 0.1);
+	m_effect->SetSca(g_vec3One * 0.02);
+
+	m_effect1 = NewGO<PlaneParticleEffectRender>(0);
+	m_effect1->Init(pid);
+	m_effect1->SetPos({ 0,0,50 });
+	m_effect1->SetSca(g_vec3One * 0.02);
 
 }
 
@@ -169,17 +173,21 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	}
 
 	//Effect
-	/*
 	const auto& boneSoleLMat = p->GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
 	m_effect->SetRot(boneSoleLMat.GetRotate());
 	m_effect->SetPos(boneSoleLMat.GetTransrate());
-	*/
+
+
+	const auto& boneSoleRMat = p->GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix();
+	m_effect1->SetRot(boneSoleRMat.GetRotate());
+	m_effect1->SetPos(boneSoleRMat.GetTransrate());
 
 	return this;
 }
 
 void PlayerFlyingState::Exit(Player* p) {
-	//DeleteGO(m_effect);
+	DeleteGO(m_effect);
+	DeleteGO(m_effect1);
 	m_velocity = Vector3::Zero;
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player Exit Flying\n");
