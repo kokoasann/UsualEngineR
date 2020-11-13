@@ -1,6 +1,8 @@
 #pragma once
 #include "State/IPlayerSstate.h"
 #include "../../UsualEngineR/Character/CharacterController.h"
+#include "Effect/ParticleEffect.h"
+
 class IEnemy;
 class GameCamera;
 class Pod;
@@ -27,6 +29,9 @@ public:
 		enIdle,
 		enRun,
 		enWalk,
+		enHovering,
+		enFlyMove,
+		enFlyMoveFaster,
 		enDamage,
 		enAttack,
 		enPunch1,
@@ -291,6 +296,14 @@ public:
 		return m_playerBones.at(TO_INT(boneType));
 	}
 
+	void FireThrusters() {
+		m_isUsingThrusters = true;
+	}
+
+	void StopThrusters() {
+		m_isUsingThrusters = false;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -365,4 +378,12 @@ private:
 	float m_endurance = m_ENDURANCE_MAX;
 	float m_boost = m_BOOST_MAX;
 	float m_armorParam = 0.f; //アーマーでダメージを何パーセント抑えるか. (初期状態 : 0%軽減).
+
+	//Effecct
+	const int RIGHT = 0;
+	const int LEFT = 1;
+	void InitThrusterEffect();
+	bool m_isUsingThrusters = false;
+	PlaneParticleEffectRender* m_thrusterEffect[2] = { nullptr };
+
 };
