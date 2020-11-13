@@ -54,14 +54,16 @@ bool JetPack::Start()
 		static float time = 0;
 		auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
 
-		if (time >= 0.01f and pThrust)
+		if (pThrust)
 		{
 			//Matrix m = g_matIdentity;
 			//pThis->AddParticle(m, { 1,1,1,1 }, 10);
-			for (int _i = 0; _i < 10; _i++)
+			for (int _i = 0; _i < 100; _i++)
 			{
 				float i = GRandom().Rand();
-				pThis->AddParticle(g_vec3Zero, g_vec3One * 20, g_quatIdentity, { 3,2.f,0.3,1 }, 2, &i);
+				auto posDif = Vector3::Zero;
+				posDif.y += 0.1f * i;
+				pThis->AddParticle(posDif, g_vec3One * 20, g_quatIdentity, { 3,2.f,0.3,1 }, 0.5, &i, true);
 			}
 			time = 0;
 		}

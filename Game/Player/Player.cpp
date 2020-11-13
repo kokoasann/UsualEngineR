@@ -341,7 +341,9 @@ void Player::InitThrusterEffect() {
 			for (int _i = 0; _i < 10; _i++)
 			{
 				float i = GRandom().Rand();
-				pThis->AddParticle(g_vec3Zero, g_vec3One * 20.f, g_quatIdentity, { 3,2.f,0.3,0.5 }, 5, &i);
+				auto posDif = Vector3::Zero;
+				posDif.y += 0.1f * i;
+				pThis->AddParticle(posDif, g_vec3One * 20.f, g_quatIdentity, { 3,2.f,0.3,0.5 }, 5, &i, true);
 			}
 			time = 0;
 		}
