@@ -139,8 +139,18 @@ namespace UER
 		}
 		m_descHeap.Commit();
 	}
-	void PlaneParticleEffect::Update(float deltaTime)
+	void PlaneParticleEffect::Update(float deltaTime, const Vector3& pos, const Vector3& sca, const Quaternion& rot)
 	{
+		Matrix mRot;
+		m_mWorld.MakeScaling(sca);
+		mRot.MakeRotationFromQuaternion(rot);
+		m_mWorld.Multiply(m_mWorld, mRot);
+		m_mWorld.SetTranspose(pos);
+
+		m_mRot_inv.Inverse(mRot);
+
+
+
 		//éıñΩêÿÇÍÇÃìzÇè¡Ç∑ÅB
 		std::list<int> deths;
 		for (int i = 0; i < m_numInstance; i++)
@@ -206,23 +216,26 @@ namespace UER
 		Matrix vrot = view;
 		vrot.SetTranspose({ 0,0,0 });
 		vrot.Inverse();
-		Matrix mTra, mSca, mRot, mWor, mvp;
-		mSca.MakeScaling(sca);
-		mRot.MakeRotationFromQuaternion(rot);
+		Matrix /*mTra, mSca, mRot, mWor,*/ mvp, mwvp;
+		//mSca.MakeScaling(sca);
+		//mRot.MakeRotationFromQuaternion(rot);
 		//mRot.Multiply(vrot, mRot);
-		mTra.MakeTranslation(pos);
-		mWor.Multiply(mSca, mRot);
-		mWor.Multiply(mWor, mTra);
+		//mTra.MakeTranslation(pos);
+		//mWor.Multiply(mSca, mRot);
+		//mWor.Multiply(mWor, mTra);
 
-		mvp.Multiply(mWor, view);
-		mvp.Multiply(mvp, projection);
+		//mvp.Multiply(m_mWorld, view);
+		//mvp.Multiply(mvp, projection);
+		
+		mvp.Multiply(view, projection);
+		mwvp.Multiply(m_mWorld, mvp);
 
 		SConstBuffData data(mvp, mulColor);
 
-		Matrix imRot;
-		imRot.Inverse(mRot);
+		//Matrix imRot;
+		//imRot.Inverse(mRot);
 
-		vrot.Multiply(vrot, imRot);
+		vrot.Multiply(vrot, m_mRot_inv);
 		
 		SParticleData* datas = new SParticleData[m_numInstance]();
 		for (int i = 0; i < m_numInstance; i++)
@@ -230,7 +243,7 @@ namespace UER
 			//datas[i] = m_particleDatas[i];
 			auto& particle = m_particleDatasEX[i].particleData;
 			Matrix tra, sca, rot;
-			tra.MakeTranslation(particle.pos);
+			//tra.MakeTranslation(particle.pos);
 			sca.MakeScaling(particle.sca);
 			rot.MakeRotationFromQuaternion(particle.rot);
 			if (m_isBillboard)
@@ -238,7 +251,18 @@ namespace UER
 				rot.Multiply(vrot, rot);
 			}
 			datas[i].mWorld.Multiply(sca, rot);
-			datas[i].mWorld.Multiply(datas[i].mWorld, tra);
+			//datas[i].mWorld.Multiply(datas[i].mWorld, tra);
+			datas[i].mWorld.SetTranspose(particle.pos);
+			if (m_particleDatasEX[i].isWorld)
+			{
+				Matrix mw;
+				mw.Multiply(m_particleDatasEX[i].mWorld, mvp);
+				datas[i].mWorld.Multiply(datas[i].mWorld, mw);
+			}
+			else
+			{
+				datas[i].mWorld.Multiply(datas[i].mWorld, mwvp);
+			}
 
 			datas[i].mulColor = particle.mulColor;
 		}
@@ -256,25 +280,6 @@ namespace UER
 
 		delete[] datas;
 	}
-	/*void PlaneParticleEffect::AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, void* extendData)
-	{
-		int len = m_particleDatasEX.size();
-		m_particleDatasEX.resize(len + 1);
-		m_particleDatasEX[len].particleData.pos = pos;
-		m_particleDatasEX[len].particleData.sca = sca;
-		m_particleDatasEX[len].particleData.rot = rot;
-		m_particleDatasEX[len].particleData.mulColor = mulColor;
-		m_particleDatasEX[len].lifeTime = lifeTime;
-
-		if (m_extendDataSize > 0)
-		{
-			void* p = malloc(m_extendDataSize);
-			memcpy(p, extendData, m_extendDataSize);
-			m_extendDatas.push_back(p);
-		}
-
-		m_numInstance++;
-	}*/
 
 
 
@@ -287,8 +292,13 @@ namespace UER
 
 	void PlaneParticleEffectRender::Update()
 	{
+		
+	}
+
+	void PlaneParticleEffectRender::PostUpdate()
+	{
 		float dtime = gameTime()->GetDeltaTime();
-		m_effect.Update(dtime);
+		m_effect.Update(dtime, m_pos, m_sca, m_rot);
 	}
 
 	void PlaneParticleEffectRender::PrePostRender()
