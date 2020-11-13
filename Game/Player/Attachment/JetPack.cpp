@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "JetPack.h"
-
+#include "../../Enemy/EnemyManager.h"
 
 JetPack::JetPack()
 {
@@ -52,14 +52,16 @@ bool JetPack::Start()
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
 	{
 		static float time = 0;
-		if (time >= 0.01f)
+		auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
+
+		if (time >= 0.01f and pThrust)
 		{
 			//Matrix m = g_matIdentity;
 			//pThis->AddParticle(m, { 1,1,1,1 }, 10);
-			for (int _i = 0; _i < 3; _i++)
+			for (int _i = 0; _i < 10; _i++)
 			{
 				float i = GRandom().Rand();
-				pThis->AddParticle(g_vec3Zero, g_vec3One, g_quatIdentity, { 3,2.f,0.3,1 }, 10, &i);
+				pThis->AddParticle(g_vec3Zero, g_vec3One * 20, g_quatIdentity, { 3,2.f,0.3,1 }, 2, &i);
 			}
 			time = 0;
 		}
@@ -68,13 +70,13 @@ bool JetPack::Start()
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
 	{
 		auto s = *(float*)extendData;
-		data.particleData.pos.y += 30.f * deltaTime;
+		data.particleData.pos.y += 500.f * deltaTime;
 
 		float n = GPerlinNoise2D().GenerateNoise({ s * 10, data.particleData.pos.y / 10.f });
 		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s * 10 });
 		data.particleData.pos.x = n * 500.f * deltaTime;
 		data.particleData.pos.z = m * 500.f * deltaTime;
-		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f);
+		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 5;
 
 		Vector3 col;
 		col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
@@ -140,7 +142,7 @@ void JetPack::Update()
 
 void JetPack::PostUpdate()
 {
-	if (!m_isUsed or !m_isUsingThrusters) {
+	if (!m_isUsed) {
 		for (int i = 0; i < 4; i++)
 		{
 			m_effects[i]->SetActive(false);

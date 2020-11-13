@@ -304,6 +304,10 @@ public:
 		m_isUsingThrusters = false;
 	}
 
+	const bool IsUsingThrusters() {
+		return m_isUsingThrusters;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
