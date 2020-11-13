@@ -191,7 +191,7 @@ namespace UER {
 			//次へ。
 			m_currentKeyFrameNo++;
 		}
-		if (m_currentKeyFrameNo != m_currentKeyFrameNoLastFrame)
+		if (m_currentKeyFrameNo != m_currentKeyFrameNoLastFrame || !m_isPlaying)
 		{
 			m_lastKeyFrameNo = m_currentKeyFrameNoLastFrame;
 		}

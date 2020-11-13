@@ -43,6 +43,8 @@ namespace UER
 	{
 		SParticleInstanceData particleData;
 		float lifeTime;
+		Matrix mWorld = g_matIdentity;
+		bool isWorld;
 	};
 #define PLANE_PARTICLE_GENERATE_ARGS_CONST PlaneParticleEffect* pThis, float deltaTime
 #define PLANE_PARTICLE_GENERATE_FUNC(pThis,deltaTime) (PLANE_PARTICLE_GENERATE_ARGS_CONST)->void
@@ -87,7 +89,7 @@ namespace UER
 		void Release();
 		void Init(const PlaneParticleEffectInitData& ini);
 
-		void Update(float deltaTime);
+		void Update(float deltaTime, const Vector3& pos, const Vector3& sca, const Quaternion& rot);
 
 		/// <summary>
 		/// ï`âÊÅBPrePostRenderÇ≈ì«ÇÒÇ≈Ç‚Ç¡ÇƒÇÀ!
@@ -110,17 +112,35 @@ namespace UER
 		);
 
 		template<class T>
-		void AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, T* extendData = nullptr)
+		void AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, T* extendData = nullptr, bool isWorld = false)
 		{
 			if (m_numInstance >= MAX_INSTANCES_NUM)
 				return;
 			int len = m_particleDatasEX.size();
 			m_particleDatasEX.resize(len + 1);
-			m_particleDatasEX[len].particleData.pos = pos;
-			m_particleDatasEX[len].particleData.sca = sca;
-			m_particleDatasEX[len].particleData.rot = rot;
+			
 			m_particleDatasEX[len].particleData.mulColor = mulColor;
 			m_particleDatasEX[len].lifeTime = lifeTime;
+
+			if (!isWorld)
+			{
+				m_particleDatasEX[len].particleData.pos = pos;
+				m_particleDatasEX[len].particleData.sca = sca;
+				m_particleDatasEX[len].particleData.rot = rot;
+			}
+			else
+			{
+				Matrix mrot, mworld;
+				mworld.MakeScaling(sca);
+				mrot.MakeRotationFromQuaternion(rot);
+				mworld.Multiply(mworld, mrot);
+
+				mworld.SetTranspose(pos);
+
+				//mworld.Multiply(m_mWorld, mworld);
+				m_particleDatasEX[len].mWorld = m_mWorld;
+				m_particleDatasEX[len].isWorld = true;
+			}
 
 			if (m_extendDataSize > 0)
 			{
@@ -192,6 +212,9 @@ namespace UER
 		PlaneParticleUpdateFunc m_updateFunc;
 
 		bool m_isBillboard = true;
+
+		Matrix m_mWorld = g_matIdentity;
+		Matrix m_mRot_inv = g_matIdentity;
 	};
 
 
@@ -222,6 +245,8 @@ namespace UER
 		void Init(const PlaneParticleEffectInitData& pid);
 
 		void Update() override;
+
+		void PostUpdate() override;
 
 
 		void PrePostRender() override;
