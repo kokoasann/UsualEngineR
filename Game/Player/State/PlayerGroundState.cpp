@@ -12,6 +12,9 @@ PlayerGroundState::~PlayerGroundState()
 }
 
 void PlayerGroundState::Enter(Player* p){
+
+	p->StopThrusters();
+
 	m_velocity = p->GetLocalVelocity();
 	p->PlayAnimation(Player::EnAnimation::enWalk, m_AnimInterpolate);
 #ifdef _PRINT_PLAYER_STATE

@@ -68,6 +68,14 @@ public:
 		m_isUsed = flag;
 	}
 
+	void FireThrusters() {
+		m_isUsingThrusters = true;
+	}
+
+	void StopThrusters() {
+		m_isUsingThrusters = false;
+	}
+
 private:
 
 	//Model
@@ -79,6 +87,7 @@ private:
 	bool m_isUsed = true;
 
 	//effect
+	bool m_isUsingThrusters = false;
 	PlaneParticleEffectRender* m_effect;
 	PlaneParticleEffectRender* m_effect_2;
 	PlaneParticleEffectRender* m_effects[4];

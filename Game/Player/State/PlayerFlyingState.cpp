@@ -19,7 +19,7 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	m_canRise = true;
 	//ブーストの上昇初期コストがないので飛べないよ.
-	if (p->GetCurrentBoost() <= m_AUTO_RISE_BOOST_COST) {
+	if (p->GetCurrentBoost() <= m_FIRST_RISE_BOOST_COST) {
 		m_canRise = false;
 		return;
 	}
@@ -33,63 +33,8 @@ void PlayerFlyingState::Enter(Player* p) {
 		m_isFirstRising = true;
 	}
 
-	p->PlayAnimation(Player::EnAnimation::enIdle);
-
-
-	//Effects
-	PlaneParticleEffectInitData pid;
-	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
-	pid.m_height = 10;
-	pid.m_width = 10;
-	pid.m_extendDataSize = sizeof(float);
-	pid.m_isBillboard = true;
-	//pid.m_isBillboard = false;
-	//pid.m_isDepthTest = false;
-	PlaneParticleUpdater m_effctUpdater(
-		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
-	{
-		static float time = 0;
-		if (time >= 0.01f)
-		{
-			//Matrix m = g_matIdentity;
-			//pThis->AddParticle(m, { 1,1,1,1 }, 10);
-			for (int _i = 0; _i < 3; _i++)
-			{
-				float i = GRandom().Rand();
-				pThis->AddParticle(g_vec3Zero, g_vec3One, g_quatIdentity, { 3,2.f,0.3,1 }, 10, &i);
-			}
-			time = 0;
-		}
-		time += deltaTime;
-	},
-		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
-	{
-		auto s = *(float*)extendData;
-		data.particleData.pos.y += 30.f * deltaTime;
-
-		float n = GPerlinNoise2D().GenerateNoise({ s * 10, data.particleData.pos.y / 10.f });
-		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s * 10 });
-		data.particleData.pos.x = n * 500.f * deltaTime;
-		data.particleData.pos.z = m * 500.f * deltaTime;
-		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f);
-
-		Vector3 col;
-		col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
-		data.particleData.mulColor.Set(col);
-		data.particleData.mulColor.a = data.lifeTime / 10.f;
-
-	});
-	pid.m_updater = &m_effctUpdater;
-
-	m_effect = NewGO<PlaneParticleEffectRender>(0);
-	m_effect->Init(pid);
-	m_effect->SetPos({ 0,0,50 });
-	m_effect->SetSca(g_vec3One * 0.02);
-
-	m_effect1 = NewGO<PlaneParticleEffectRender>(0);
-	m_effect1->Init(pid);
-	m_effect1->SetPos({ 0,0,50 });
-	m_effect1->SetSca(g_vec3One * 0.02);
+	p->PlayAnimation(Player::EnAnimation::enHovering);
+	p->FireThrusters();
 
 }
 
@@ -126,12 +71,13 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
 
+	bool isMovingFaster = false;
 
 	//BOOST
 	if (g_pad[0]->IsPress(enButtonX)) {
 		m_velocityGoal *= m_VELOCITY_BOOST;
 		p->UseBoost(m_BOOST_EFFICIENCY * m_ACCELERATE_PARAM * gameTime()->GetDeltaTime());
-
+		isMovingFaster = true;
 	}
 	else {
 		p->UseBoost(m_BOOST_EFFICIENCY * gameTime()->GetDeltaTime());
@@ -170,24 +116,22 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 		theta = theta * (180.f / Math::PI);
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
+
+		if (isMovingFaster) {
+			p->PlayAnimation(Player::EnAnimation::enFlyMoveFaster);
+		}
+		else {
+			p->PlayAnimation(Player::EnAnimation::enFlyMove);
+		}
 	}
-
-	//Effect
-	const auto& boneSoleLMat = p->GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
-	m_effect->SetRot(boneSoleLMat.GetRotate());
-	m_effect->SetPos(boneSoleLMat.GetTransrate());
-
-
-	const auto& boneSoleRMat = p->GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix();
-	m_effect1->SetRot(boneSoleRMat.GetRotate());
-	m_effect1->SetPos(boneSoleRMat.GetTransrate());
+	else {
+		p->PlayAnimation(Player::EnAnimation::enHovering);
+	}
 
 	return this;
 }
 
 void PlayerFlyingState::Exit(Player* p) {
-	DeleteGO(m_effect);
-	DeleteGO(m_effect1);
 	m_velocity = Vector3::Zero;
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player Exit Flying\n");

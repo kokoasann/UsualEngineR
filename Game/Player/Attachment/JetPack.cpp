@@ -140,7 +140,7 @@ void JetPack::Update()
 
 void JetPack::PostUpdate()
 {
-	if (!m_isUsed) {
+	if (!m_isUsed or !m_isUsingThrusters) {
 		for (int i = 0; i < 4; i++)
 		{
 			m_effects[i]->SetActive(false);

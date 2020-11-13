@@ -88,6 +88,24 @@ void Player::Awake()
 	m_animlist[static_cast<int>(EnAnimation::enWalk)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enWalk)]->SetLoopFlag(true);
 
+	//Hovering
+	m_animlist[static_cast<int>(EnAnimation::enHovering)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enHovering)]->Load("Assets/modelData/m/anim/m_fly.tka");
+	m_animlist[static_cast<int>(EnAnimation::enHovering)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enHovering)]->SetLoopFlag(true);
+
+	//FlyMove
+	m_animlist[static_cast<int>(EnAnimation::enFlyMove)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enFlyMove)]->Load("Assets/modelData/m/anim/m_fly_move.tka");
+	m_animlist[static_cast<int>(EnAnimation::enFlyMove)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enFlyMove)]->SetLoopFlag(true);
+
+	//FlyMoveFaster
+	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->Load("Assets/modelData/m/anim/m_fly_move_dash.tka");
+	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->SetLoopFlag(true);
+
 	//TODO : load got damage anim
 	//Damage
 	m_animlist[static_cast<int>(EnAnimation::enDamage)] = std::make_unique<CAnimationClip>();
@@ -121,7 +139,7 @@ void Player::Awake()
 
 	//Kick
 	m_animlist[static_cast<int>(EnAnimation::enKick)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enKick)]->Load("Assets/modelData/m/anim/m_punch_3.tka");
+	m_animlist[static_cast<int>(EnAnimation::enKick)]->Load("Assets/modelData/m/anim/m_rolling_kick.tka");
 	m_animlist[static_cast<int>(EnAnimation::enKick)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enKick)]->SetLoopFlag(false);
 
@@ -138,6 +156,9 @@ void Player::Awake()
 
 bool Player::Start()
 {
+
+	InitThrusterEffect();
+
 	//State
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enGround)] = new PlayerGroundState();
@@ -227,6 +248,26 @@ void Player::Update()
 
 void Player::PostUpdate()
 {
+	//Effect
+	if (!m_isUsingThrusters) {
+		m_thrusterEffect[LEFT]->SetActive(false);
+		m_thrusterEffect[RIGHT]->SetActive(false);
+		m_jetPack->StopThrusters();
+		return;
+	}
+
+	m_jetPack->FireThrusters();
+
+	m_thrusterEffect[LEFT]->SetActive(true);
+	m_thrusterEffect[RIGHT]->SetActive(true);
+
+	const auto& boneSoleLMat = GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
+	m_thrusterEffect[LEFT]->SetRot(boneSoleLMat.GetRotate());
+	m_thrusterEffect[LEFT]->SetPos(boneSoleLMat.GetTransrate());
+
+	const auto& boneSoleRMat = GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix();
+	m_thrusterEffect[RIGHT]->SetRot(boneSoleRMat.GetRotate());
+	m_thrusterEffect[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 
 }
 
@@ -274,4 +315,63 @@ void Player::UpdateAttackType() {
 	if (g_pad[0]->IsTrigger(enButtonDown)) {
 		m_currentAttackPreset = EnAttackPreset::enDefault;
 	}
+}
+
+void Player::InitThrusterEffect() {
+	//Effects
+	PlaneParticleEffectInitData pid;
+	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
+	pid.m_height = 10;
+	pid.m_width = 10;
+	pid.m_extendDataSize = sizeof(float);
+	pid.m_isBillboard = true;
+	//pid.m_isBillboard = false;
+	//pid.m_isDepthTest = false;
+	PlaneParticleUpdater m_effctUpdater(
+		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
+	{
+		static float time = 0;
+		if (time >= 0.01f)
+		{
+			//Matrix m = g_matIdentity;
+			//pThis->AddParticle(m, { 1,1,1,1 }, 10);
+			for (int _i = 0; _i < 10; _i++)
+			{
+				float i = GRandom().Rand();
+				pThis->AddParticle(g_vec3Zero, g_vec3One * 20.f, g_quatIdentity, { 3,2.f,0.3,0.5 }, 5, &i);
+			}
+			time = 0;
+		}
+		time += deltaTime;
+	},
+		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
+	{
+		auto s = *(float*)extendData;
+		data.particleData.pos.y += 600.f * deltaTime;
+
+		float n = GPerlinNoise2D().GenerateNoise({ s * 10, data.particleData.pos.y / 10.f });
+		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s * 10 });
+		data.particleData.pos.x = n * 500.f * deltaTime;
+		data.particleData.pos.z = m * 500.f * deltaTime;
+		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 2.f;
+
+		Vector3 col;
+		col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
+		data.particleData.mulColor.Set(col);
+		data.particleData.mulColor.a = data.lifeTime / 10.f;
+
+	});
+	pid.m_updater = &m_effctUpdater;
+
+	//TODO : avoid new go
+
+	m_thrusterEffect[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
+	m_thrusterEffect[RIGHT]->Init(pid);
+	m_thrusterEffect[RIGHT]->SetPos({ 0,0,50 });
+	m_thrusterEffect[RIGHT]->SetSca(g_vec3One * 0.01);
+
+	m_thrusterEffect[LEFT] = NewGO<PlaneParticleEffectRender>(0);
+	m_thrusterEffect[LEFT]->Init(pid);
+	m_thrusterEffect[LEFT]->SetPos({ 0,0,50 });
+	m_thrusterEffect[LEFT]->SetSca(g_vec3One * 0.01);
 }
