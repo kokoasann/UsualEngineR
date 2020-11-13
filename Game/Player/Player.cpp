@@ -30,6 +30,8 @@ void Player::Release()
 	DeleteGO(m_model);
 	DeleteGO(m_pod);
 	DeleteGO(m_jetPack);
+	DeleteGO(m_thrusterEffects[RIGHT]);
+	DeleteGO(m_thrusterEffects[LEFT]);
 }
 
 void Player::OnDestroy()
@@ -250,24 +252,24 @@ void Player::PostUpdate()
 {
 	//Effect
 	if (!m_isUsingThrusters) {
-		m_thrusterEffect[LEFT]->SetActive(false);
-		m_thrusterEffect[RIGHT]->SetActive(false);
+		//m_thrusterEffects[LEFT]->SetActive(false);
+		//m_thrusterEffects[RIGHT]->SetActive(false);
 		m_jetPack->StopThrusters();
 		return;
 	}
 
 	m_jetPack->FireThrusters();
 
-	m_thrusterEffect[LEFT]->SetActive(true);
-	m_thrusterEffect[RIGHT]->SetActive(true);
+	//m_thrusterEffects[LEFT]->SetActive(true);
+	//m_thrusterEffects[RIGHT]->SetActive(true);
 
 	const auto& boneSoleLMat = GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
-	m_thrusterEffect[LEFT]->SetRot(boneSoleLMat.GetRotate());
-	m_thrusterEffect[LEFT]->SetPos(boneSoleLMat.GetTransrate());
+	m_thrusterEffects[LEFT]->SetRot(boneSoleLMat.GetRotate());
+	m_thrusterEffects[LEFT]->SetPos(boneSoleLMat.GetTransrate());
 
 	const auto& boneSoleRMat = GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix();
-	m_thrusterEffect[RIGHT]->SetRot(boneSoleRMat.GetRotate());
-	m_thrusterEffect[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
+	m_thrusterEffects[RIGHT]->SetRot(boneSoleRMat.GetRotate());
+	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 
 }
 
@@ -331,14 +333,17 @@ void Player::InitThrusterEffect() {
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
 	{
 		static float time = 0;
-		if (time >= 0.01f)
+		auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
+		if (time >= 0.01f and pThrust)
 		{
 			//Matrix m = g_matIdentity;
 			//pThis->AddParticle(m, { 1,1,1,1 }, 10);
 			for (int _i = 0; _i < 10; _i++)
 			{
 				float i = GRandom().Rand();
-				pThis->AddParticle(g_vec3Zero, g_vec3One * 20.f, g_quatIdentity, { 3,2.f,0.3,0.5 }, 5, &i);
+				auto posDif = Vector3::Zero;
+				posDif.y += 1000.f * _i * deltaTime;
+				pThis->AddParticle(posDif, g_vec3One * 20.f, g_quatIdentity, { 3,2.f,0.3,0.5 }, 5, &i, true);
 			}
 			time = 0;
 		}
@@ -347,13 +352,13 @@ void Player::InitThrusterEffect() {
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
 	{
 		auto s = *(float*)extendData;
-		data.particleData.pos.y += 600.f * deltaTime;
+		data.particleData.pos.y += 300.f * deltaTime;
 
 		float n = GPerlinNoise2D().GenerateNoise({ s * 10, data.particleData.pos.y / 10.f });
 		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s * 10 });
 		data.particleData.pos.x = n * 500.f * deltaTime;
 		data.particleData.pos.z = m * 500.f * deltaTime;
-		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 2.f;
+		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 5.f;
 
 		Vector3 col;
 		col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
@@ -363,15 +368,13 @@ void Player::InitThrusterEffect() {
 	});
 	pid.m_updater = &m_effctUpdater;
 
-	//TODO : avoid new go
+	m_thrusterEffects[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
+	m_thrusterEffects[RIGHT]->Init(pid);
+	m_thrusterEffects[RIGHT]->SetPos({ 0,0,50 });
+	m_thrusterEffects[RIGHT]->SetSca(g_vec3One * 0.01);
 
-	m_thrusterEffect[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
-	m_thrusterEffect[RIGHT]->Init(pid);
-	m_thrusterEffect[RIGHT]->SetPos({ 0,0,50 });
-	m_thrusterEffect[RIGHT]->SetSca(g_vec3One * 0.01);
-
-	m_thrusterEffect[LEFT] = NewGO<PlaneParticleEffectRender>(0);
-	m_thrusterEffect[LEFT]->Init(pid);
-	m_thrusterEffect[LEFT]->SetPos({ 0,0,50 });
-	m_thrusterEffect[LEFT]->SetSca(g_vec3One * 0.01);
+	m_thrusterEffects[LEFT] = NewGO<PlaneParticleEffectRender>(0);
+	m_thrusterEffects[LEFT]->Init(pid);
+	m_thrusterEffects[LEFT]->SetPos({ 0,0,50 });
+	m_thrusterEffects[LEFT]->SetSca(g_vec3One * 0.01);
 }

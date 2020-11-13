@@ -304,6 +304,10 @@ public:
 		m_isUsingThrusters = false;
 	}
 
+	const bool IsUsingThrusters() {
+		return m_isUsingThrusters;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -384,6 +388,6 @@ private:
 	const int LEFT = 1;
 	void InitThrusterEffect();
 	bool m_isUsingThrusters = false;
-	PlaneParticleEffectRender* m_thrusterEffect[2] = { nullptr };
+	PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
 
 };
