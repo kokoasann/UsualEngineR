@@ -141,8 +141,12 @@ namespace UER
 				m_particleDatasEX[len].particleData.sca = sca;
 				m_particleDatasEX[len].particleData.rot = rot;
 
+				Vector3 wpos = pos;
+				m_mWorld.Apply(wpos);
+
 				//mworld.Multiply(m_mWorld, mworld);
 				m_particleDatasEX[len].mWorld = m_mWorld;
+				m_particleDatasEX[len].mWorld.SetTranspose(wpos);
 				m_particleDatasEX[len].isWorld = true;
 			}
 
