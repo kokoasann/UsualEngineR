@@ -62,7 +62,7 @@ bool JetPack::Start()
 			{
 				float i = GRandom().Rand();
 				auto posDif = Vector3::Zero;
-				posDif.y += 0.1f * i;
+				posDif.y += 1000.f * i;
 				pThis->AddParticle(posDif, g_vec3One * 20, g_quatIdentity, { 3,2.f,0.3,1 }, 0.5, &i, true);
 			}
 			time = 0;
@@ -78,7 +78,7 @@ bool JetPack::Start()
 		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s * 10 });
 		data.particleData.pos.x = n * 500.f * deltaTime;
 		data.particleData.pos.z = m * 500.f * deltaTime;
-		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 5;
+		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 20;
 
 		Vector3 col;
 		col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
