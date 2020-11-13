@@ -130,12 +130,16 @@ namespace UER
 			}
 			else
 			{
-				Matrix mrot, mworld;
+				/*Matrix mrot, mworld;
 				mworld.MakeScaling(sca);
 				mrot.MakeRotationFromQuaternion(rot);
 				mworld.Multiply(mworld, mrot);
 
-				mworld.SetTranspose(pos);
+				mworld.SetTranspose(pos);*/
+
+				m_particleDatasEX[len].particleData.pos = pos;
+				m_particleDatasEX[len].particleData.sca = sca;
+				m_particleDatasEX[len].particleData.rot = rot;
 
 				//mworld.Multiply(m_mWorld, mworld);
 				m_particleDatasEX[len].mWorld = m_mWorld;
