@@ -213,7 +213,7 @@ namespace UER
 			return;
 
 
-		Matrix vrot = view;
+		Matrix vrot = view, vwirot;
 		vrot.SetTranspose({ 0,0,0 });
 		vrot.Inverse();
 		Matrix /*mTra, mSca, mRot, mWor,*/ mvp, mwvp;
@@ -235,7 +235,8 @@ namespace UER
 		//Matrix imRot;
 		//imRot.Inverse(mRot);
 
-		vrot.Multiply(vrot, m_mRot_inv);
+		if(m_isBillboard)
+			vwirot.Multiply(vrot, m_mRot_inv);
 		
 		SParticleData* datas = new SParticleData[m_numInstance]();
 		for (int i = 0; i < m_numInstance; i++)
@@ -246,9 +247,19 @@ namespace UER
 			//tra.MakeTranslation(particle.pos);
 			sca.MakeScaling(particle.sca);
 			rot.MakeRotationFromQuaternion(particle.rot);
-			if (m_isBillboard)
+
+			if (m_particleDatasEX[i].isWorld && m_isBillboard)
 			{
-				rot.Multiply(vrot, rot);
+				Quaternion roti = m_particleDatasEX[i].mWorld.GetRotate();
+				roti.Inverse(roti);
+				Matrix vpirot;
+				vpirot.MakeRotationFromQuaternion(roti);
+				vpirot.Multiply(vrot, vpirot);
+				rot.Multiply(vpirot, rot);
+			}
+			else if (m_isBillboard)
+			{
+				rot.Multiply(vwirot, rot);
 			}
 			datas[i].mWorld.Multiply(sca, rot);
 			//datas[i].mWorld.Multiply(datas[i].mWorld, tra);

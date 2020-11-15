@@ -141,12 +141,12 @@ namespace UER
 				m_particleDatasEX[len].particleData.sca = sca;
 				m_particleDatasEX[len].particleData.rot = rot;
 
-				Vector3 wpos = pos;
-				m_mWorld.Apply(wpos);
+				//Vector3 wpos = pos;
+				//m_mWorld.Apply(wpos);
 
 				//mworld.Multiply(m_mWorld, mworld);
 				m_particleDatasEX[len].mWorld = m_mWorld;
-				m_particleDatasEX[len].mWorld.SetTranspose(wpos);
+				//m_particleDatasEX[len].mWorld.SetTranspose(wpos);
 				m_particleDatasEX[len].isWorld = true;
 			}
 
@@ -170,7 +170,14 @@ namespace UER
 			m_numInstance++;
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		const Matrix& GetWorldMatrix() const
+		{
+			return m_mWorld;
+		}
 		/*struct SParticleData
 		{
 			Matrix mWorld;

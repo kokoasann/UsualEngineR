@@ -320,12 +320,25 @@ void Player::UpdateAttackType() {
 }
 
 void Player::InitThrusterEffect() {
+	const static float EFFECT_SCALE = 0.01f;
+	const static float EFFECT_SCALE_INV = 100.f;
+
+	const static float PERTICLE_SCALE = 500.f;
+	const static float PERTICLE_LIFE_TIME = 1.f;
+	const static float PERTICLE_Y_UP = 300.f;
+
+	//パーティクルの拡張構造体。
+	struct ParticleData
+	{
+		float rnd;		//パーリンノイズで使うためのseed値的なもの
+		Vector3 pos;	//パーティクルの初期位置(ローカル)
+	};
 	//Effects
 	PlaneParticleEffectInitData pid;
 	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
 	pid.m_height = 10;
 	pid.m_width = 10;
-	pid.m_extendDataSize = sizeof(float);
+	pid.m_extendDataSize = sizeof(ParticleData);
 	pid.m_isBillboard = true;
 	//pid.m_isBillboard = false;
 	//pid.m_isDepthTest = false;
@@ -333,37 +346,56 @@ void Player::InitThrusterEffect() {
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
 	{
 		static float time = 0;
+		static Vector3 oldPos[2] = { g_vec3Zero };	// エフェクトの前のポジション
+		static int footNum = 0;
+
 		auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
 		if (time >= 0.01f and pThrust)
 		{
-			//Matrix m = g_matIdentity;
-			//pThis->AddParticle(m, { 1,1,1,1 }, 10);
-			for (int _i = 0; _i < 10; _i++)
+			ParticleData pd;
+
+			//エフェクトのQuaternionをゲット
+			Quaternion rot = pThis->GetWorldMatrix().GetRotate();
+			rot.Inverse(rot);	//エフェクトの逆Quaternion これを使うとワールド座標になる
+
+			//新しいエフェクトの位置から古いエフェクトの位置のベクトル
+			Vector3 posv = oldPos[footNum] - pThis->GetWorldMatrix().GetTransrate();
+
+			for (int _i = 0; _i < 50; _i++)
 			{
-				float i = GRandom().Rand();
-				auto posDif = Vector3::Zero;
-				posDif.y += 1000.f * _i * deltaTime;
-				pThis->AddParticle(posDif, g_vec3One * 20.f, g_quatIdentity, { 3,2.f,0.3,0.5 }, 5, &i, true);
+				pd.rnd = GRandom().Rand();
+
+				pd.pos = posv* ((float)_i / 49.f * EFFECT_SCALE_INV);
+				rot.Apply(pd.pos);
+
+				//次のフレームのための高さ補間。
+				pd.pos.y += (float)_i / 49.f * PERTICLE_Y_UP * deltaTime;
+				
+				pThis->AddParticle(pd.pos, g_vec3One * PERTICLE_SCALE, g_quatIdentity, { 3,2.f,0.3,0.5 }, PERTICLE_LIFE_TIME, &pd, true);
 			}
 			time = 0;
 		}
+
+		oldPos[footNum] = pThis->GetWorldMatrix().GetTransrate();
+		footNum ^= 1;
 		time += deltaTime;
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
 	{
-		auto s = *(float*)extendData;
-		data.particleData.pos.y += 300.f * deltaTime;
+		auto& s = *(ParticleData*)extendData;
+		data.particleData.pos.y += PERTICLE_Y_UP * deltaTime;
 
-		float n = GPerlinNoise2D().GenerateNoise({ s * 10, data.particleData.pos.y / 10.f });
-		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s * 10 });
-		data.particleData.pos.x = n * 500.f * deltaTime;
-		data.particleData.pos.z = m * 500.f * deltaTime;
-		data.particleData.sca = g_vec3One * min((data.lifeTime / 10.f) + 0.1f, 1.f) * 5.f;
+		float n = GPerlinNoise2D().GenerateNoise({ s.rnd * 10, data.particleData.pos.y / 10.f });
+		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s.rnd * 10 });
+		data.particleData.pos.x = s.pos.x + n * 500.f * deltaTime;
+		data.particleData.pos.z = s.pos.z + m * 500.f * deltaTime;
+
+		data.particleData.sca = g_vec3One * min((data.lifeTime / PERTICLE_LIFE_TIME) + 0.1f, 1.f) * 5.f;
 
 		Vector3 col;
-		col.Lerp(data.lifeTime / 10.f, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
+		col.Lerp(data.lifeTime / PERTICLE_LIFE_TIME, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
 		data.particleData.mulColor.Set(col);
-		data.particleData.mulColor.a = data.lifeTime / 10.f;
+		data.particleData.mulColor.a = data.lifeTime / PERTICLE_LIFE_TIME;
 
 	});
 	pid.m_updater = &m_effctUpdater;
@@ -371,10 +403,10 @@ void Player::InitThrusterEffect() {
 	m_thrusterEffects[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
 	m_thrusterEffects[RIGHT]->Init(pid);
 	m_thrusterEffects[RIGHT]->SetPos({ 0,0,50 });
-	m_thrusterEffects[RIGHT]->SetSca(g_vec3One * 0.01);
+	m_thrusterEffects[RIGHT]->SetSca(g_vec3One * EFFECT_SCALE);
 
 	m_thrusterEffects[LEFT] = NewGO<PlaneParticleEffectRender>(0);
 	m_thrusterEffects[LEFT]->Init(pid);
 	m_thrusterEffects[LEFT]->SetPos({ 0,0,50 });
-	m_thrusterEffects[LEFT]->SetSca(g_vec3One * 0.01);
+	m_thrusterEffects[LEFT]->SetSca(g_vec3One * EFFECT_SCALE);
 }
