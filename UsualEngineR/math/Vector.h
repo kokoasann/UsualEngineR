@@ -972,7 +972,7 @@ namespace UER
 		/// <param name="t">補完率</param>
 		/// <param name="q1">開始クォータニオン。</param>
 		/// <param name="q2">終了クォータニオン。</param>
-		void Slerp(float t, Quaternion q1, Quaternion q2)
+		void Slerp(float t, const Quaternion& q1, const Quaternion& q2)
 		{
 			DirectX::XMVECTOR xmv = DirectX::XMQuaternionSlerp(
 				DirectX::XMLoadFloat4(&q1.vec),
@@ -980,8 +980,17 @@ namespace UER
 				t
 			);
 			DirectX::XMStoreFloat4(&vec, xmv);
+
+			
 		}
 
+		void Inverse(const Quaternion& q)
+		{
+			auto mv = DirectX::XMQuaternionInverse(
+				DirectX::XMLoadFloat4(&q.vec)
+			);
+			DirectX::XMStoreFloat4(&vec, mv);
+		}
 
 
 		/// <summary>

@@ -43,7 +43,7 @@ namespace UER
 	*/
 	void Quaternion::SetRotation(Vector3 from, Vector3 to)
 	{
-	from.Normalize();
+		from.Normalize();
 		to.Normalize();
 		auto t = UER::Dot(from, to);
 		Vector3 rotAxis;
