@@ -354,6 +354,12 @@
     <Filter Include="Player\Attachment">
       <UniqueIdentifier>{e9e3af22-358c-476d-9b05-f4d1caabee8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\boss">
+      <UniqueIdentifier>{a553aee0-ae73-4600-8bbd-ce3d4355861f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\boss\sp">
+      <UniqueIdentifier>{4a185f19-bc23-4a55-8016-d1f4a60cdc64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -376,6 +382,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png" />
     <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
+    <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png">
+      <Filter>Assets\modelData\boss\sp</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />

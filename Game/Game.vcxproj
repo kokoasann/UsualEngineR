@@ -315,6 +315,7 @@
     <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
   </ItemGroup>
   <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png" />
     <Image Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
