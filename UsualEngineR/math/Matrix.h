@@ -81,6 +81,17 @@ namespace UER
 		{
 			mat = m;
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <param name="sca"></param>
+		/// <param name="rot"></param>
+		Matrix(const Vector3& pos, const Vector3& sca, const Quaternion& rot)
+		{
+			MakeTransform(pos, sca, rot);
+		}
 		/// <summary>
 		/// 代入演算子。
 		/// </summary>
@@ -304,6 +315,36 @@ namespace UER
 				DirectX::XMMatrixLookAtLH(position, target, up)
 			);
 		}
+
+		/// <summary>
+		/// 位置、拡縮、回転から行列を作成。非常にエコロジー
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <param name="sca"></param>
+		/// <param name="rot"></param>
+		void MakeTransform(const Vector3& pos, const Vector3& sca, const Quaternion& rot)
+		{
+			MakeRotationFromQuaternion(rot);
+			v[0].Scale(sca.x);
+			v[1].Scale(sca.y);
+			v[2].Scale(sca.z);
+			SetTranspose(pos);
+		}
+
+		void MakeTransform_Pos_Rot(const Vector3& pos, const Quaternion& rot)
+		{
+			MakeRotationFromQuaternion(rot);
+			SetTranspose(pos);
+		}
+
+		void MakeTransform_Sca_Rot(const Vector3& sca, const Quaternion& rot)
+		{
+			MakeRotationFromQuaternion(rot);
+			v[0].Scale(sca.x);
+			v[1].Scale(sca.y);
+			v[2].Scale(sca.z);
+		}
+
 		/// <summary>
 		/// 行列と行列の乗算
 		/// </summary>
@@ -327,7 +368,7 @@ namespace UER
 			v[2].Scale(f);
 			v[3].Scale(f);
 		}
-	
+
 		/// <summary>
 		/// 行列の代入演算子
 		/// </summary>
@@ -396,7 +437,4 @@ namespace UER
 			0.0f, 0.0f, 1.0f, 0.0f ,
 			0.0f, 0.0f, 0.0f, 1.0f
 	};
-
-
-	
 }
