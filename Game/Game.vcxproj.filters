@@ -139,6 +139,9 @@
     <ClInclude Include="Player\Attachment\JetPack.h">
       <Filter>Player\Attachment</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Attachment\JetEffect.h">
+      <Filter>Player\Attachment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -278,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="GameSceneMenu.cpp" />
     <ClCompile Include="Player\Attachment\JetPack.cpp">
+      <Filter>Player\Attachment</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attachment\JetEffect.cpp">
       <Filter>Player\Attachment</Filter>
     </ClCompile>
   </ItemGroup>
