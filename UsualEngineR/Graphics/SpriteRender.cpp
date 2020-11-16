@@ -52,6 +52,7 @@ namespace UER
 		case ECameraMode::View:
 			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix(), m_mulColor);
 			break;
+#if 0
 		case ECameraMode::Rotate:
 		{
 			auto vmat = g_camera3D->GetViewMatrix();
@@ -94,6 +95,7 @@ namespace UER
 			mSprite.Draw(rc, g_camera3D->GetViewMatrix(), promat,m_mulColor);
 		}
 			break;
+#endif
 		}
 	}
 	

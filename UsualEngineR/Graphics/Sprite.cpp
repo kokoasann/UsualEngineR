@@ -209,13 +209,17 @@ namespace UER
 			//yRot *= rot;
 			Matrix yMat;
 			yMat.MakeRotationY(Math::PI);
-			Matrix mTrans, mRot, mScale;
-			mTrans.MakeTranslation(pos);
-			mRot.MakeRotationFromQuaternion(rot);
-			mScale.MakeScaling(scale);
-			m_world = mPivotTrans * yMat * mScale;
-			m_world = m_world * mRot;
-			m_world = m_world * mTrans;
+			//Matrix mTrans, mRot, mScale;
+			////mTrans.MakeTranslation(pos);
+			//mRot.MakeRotationFromQuaternion(rot);
+			////mScale.MakeScaling(scale);
+			//m_world = mPivotTrans * yMat * mScale;
+			//m_world = m_world * mRot;
+			//m_world = m_world * mTrans;
+
+			mPivotTrans.Multiply(mPivotTrans, yMat);
+			m_world.MakeTransform(pos, scale, rot);
+			m_world.Multiply(mPivotTrans, m_world);
 		}
 		void Sprite::Draw(RenderContext& renderContext,const Matrix& view, const Matrix& projection, const Vector4& mulcol)
 		{

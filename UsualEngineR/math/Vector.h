@@ -1009,7 +1009,7 @@ namespace UER
 		/// <param name="rot"></param>
 		void Multiply(const Quaternion& rot)
 		{
-			float pw, px, py, pz;
+			/*float pw, px, py, pz;
 			float qw, qx, qy, qz;
 	
 			qw = w; qx = x; qy = y; qz = z;
@@ -1018,8 +1018,13 @@ namespace UER
 			w = pw * qw - px * qx - py * qy - pz * qz;
 			x = pw * qx + px * qw + py * qz - pz * qy;
 			y = pw * qy - px * qz + py * qw + pz * qx;
-			z = pw * qz + px * qy - py * qx + pz * qw;
+			z = pw * qz + px * qy - py * qx + pz * qw;*/
 	
+			auto mv = DirectX::XMQuaternionMultiply(
+				DirectX::XMLoadFloat4(&vec),
+				DirectX::XMLoadFloat4(&rot.vec)
+			);
+			DirectX::XMStoreFloat4(&vec, mv);
 		}
 		/// <summary>
 		/// クォータニオン同士の乗算。
@@ -1028,7 +1033,7 @@ namespace UER
 		/// <param name="rot1"></param>
 		void Multiply(const Quaternion& rot0, const Quaternion& rot1)
 		{
-			float pw, px, py, pz;
+			/*float pw, px, py, pz;
 			float qw, qx, qy, qz;
 	
 			qw = rot0.w; qx = rot0.x; qy = rot0.y; qz = rot0.z;
@@ -1037,7 +1042,13 @@ namespace UER
 			w = pw * qw - px * qx - py * qy - pz * qz;
 			x = pw * qx + px * qw + py * qz - pz * qy;
 			y = pw * qy - px * qz + py * qw + pz * qx;
-			z = pw * qz + px * qy - py * qx + pz * qw;
+			z = pw * qz + px * qy - py * qx + pz * qw;*/
+
+			auto mv = DirectX::XMQuaternionMultiply(
+				DirectX::XMLoadFloat4(&rot0.vec),
+				DirectX::XMLoadFloat4(&rot1.vec)
+			);
+			DirectX::XMStoreFloat4(&vec, mv);
 		}
 		/// <summary>
 		/// クォータニオンの代入乗算演算子

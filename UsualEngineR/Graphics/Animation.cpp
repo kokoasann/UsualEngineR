@@ -150,6 +150,7 @@ namespace UER {
 		//グローバルポーズをスケルトンに反映させていく。
 		for (int boneNo = 0; boneNo < numBone; boneNo++) {
 			
+#if 0
 			//拡大行列を作成。
 			Matrix scaleMatrix;
 			scaleMatrix.MakeScaling(vGlobalScale[boneNo]);
@@ -164,6 +165,9 @@ namespace UER {
 			Matrix boneMatrix;
 			boneMatrix = scaleMatrix * rotMatrix;
 			boneMatrix = boneMatrix * transMat;
+#endif
+
+			Matrix boneMatrix(vGlobalPose[boneNo], vGlobalScale[boneNo], qGlobalPose[boneNo]);
 			
 			m_skeleton->SetBoneLocalMatrix(
 				boneNo,

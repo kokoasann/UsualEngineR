@@ -45,6 +45,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
 
 
+	AllocConsole();
+	freopen("CON", "r", stdin);
+	freopen("CON", "w", stdout);
+	freopen("CON", "w", stderr);
+
+
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！
 	//////////////////////////////////////
@@ -53,12 +59,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	bool isInit = false;
 
 	SetDebugConsoleUser(EDebugConsoloUser::COMMON | /*EDebugConsoloUser::NOMOTO |*/  EDebugConsoloUser::WATA);
-
 	
 	GRandom().Init(0);
+
 	
-	NewGO<Test>(0);
+	auto test = NewGO<Test>(0);
+	//test->Test_CreateTransform();
+
 	NewGO<Game>(0);
+
+
 
 	auto lig = NewGO<LightDirection>(0);
 	lig->SetDir({ 0.707,0.707,0 });

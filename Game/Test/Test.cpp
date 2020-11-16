@@ -71,111 +71,6 @@ void Test::Awake()
 	m_rb.Create(info);
 	Physics().AddRigidBody(m_rb);
 
-
-	
-	/*m_threads[0].Execute([&]()
-		{
-			Stopwatch sw;
-			sw.Start();
-			ModelInitData mid;
-			mid.m_upAxis = EUpAxis::enUpAxisZ;
-			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-			mid.m_vsEntryPointFunc = "VSMain";
-			mid.m_psEntryPointFunc = "PSMain";
-			m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
-				{
-					std::string name(objData.name.begin(), objData.name.end());
-					char filePath[256];
-					sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
-					ModelRender* mr = NewGO<ModelRender>(0);
-					mid.m_tkmFilePath = filePath;
-					mr->Init(mid);
-					m_mapmodel.push_back(mr);
-					return true;
-				});
-			m_isEndLoad = true;
-			m_loadTime = sw.Stop();
-		});
-	m_threads[1].Execute([&]()
-		{
-			Stopwatch sw;
-			sw.Start();
-			ModelInitData mid;
-			mid.m_upAxis = EUpAxis::enUpAxisZ;
-			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-			mid.m_vsEntryPointFunc = "VSMain";
-			mid.m_psEntryPointFunc = "PSMain";
-
-			m_level.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
-				{
-					std::string name(objData.name.begin(), objData.name.end());
-					char filePath[256];
-					sprintf_s(filePath, "Assets/modelData/map_physics/%s.tkm", name.c_str());
-					mid.m_tkmFilePath = filePath;
-
-					Model model;
-					model.Init(mid);
-					m_mapPSOList[m_count].CreateMeshObject(model, objData.position, objData.rotation, objData.scale);
-					m_count++;
-					return true;
-				});
-			m_isEndLoad = true;
-			m_loadTime = sw.Stop();
-		});*/
-	/*m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
-		{
-			std::string name(objData.name.begin(), objData.name.end());
-			m_tkms.push_back(std::move(name));
-			return true;
-		});
-	for (int i = 0; i < 10; i++)
-	{
-		m_threads[i].Execute([&,i]()
-			{
-				ModelInitData mid;
-				mid.m_upAxis = EUpAxis::enUpAxisZ;
-				mid.m_fxFilePath = "Assets/shader/NoAnimModel.fx";
-				mid.m_vsEntryPointFunc = "VSMain";
-				mid.m_psEntryPointFunc = "PSMain";
-
-				for (int j = 0; j < 10; j++)
-				{
-					char filePath[256];
-					sprintf_s(filePath, "Assets/modelData/map/%s.tkm", m_tkms[i*10+j].c_str());
-					mid.m_tkmFilePath = filePath;
-					ModelRender* mr = NewGO<ModelRender>(0);
-
-					mr->Init(mid);
-					std::lock_guard<std::mutex>lock (m_loadMutex);
-					m_mapmodel.push_back(mr);
-				}
-			});
-	}*/
-
-	/*m_threads[0].Execute([&]()
-		{
-			ModelInitData mid;
-			mid.m_tkmFilePath = "Assets/modelData/unityChan.tkm";
-			mid.m_tksFilePath = "Assets/modelData/unityChan.tks";
-			mid.m_upAxis = EUpAxis::enUpAxisY;
-			mid.m_fxFilePath = "Assets/shader/AnimModel.fx";
-			mid.m_vsEntryPointFunc = "VSMain";
-			mid.m_psEntryPointFunc = "PSMain";
-			for (int i = 0; i < 50; i++)
-			{
-				auto m = NewGO<ModelRender>(0);
-				m->Init(mid);
-				m->SetPosition(m_pos);
-				m->SetScale(g_vec3One * 0.05);
-				m->InitAnimation(m_animlist, m_animlist.size());
-
-				auto list = m_lockModels.Get();
-				list->push_back(m);
-
-				m_pos += Vector3{2, 0, 2};
-			}
-		});*/
-
 	m_chara = NewGO<ModelRender>(0);
 	m_chara->Init(mid);
 	m_chara->SetPosition({ 10,100,0 });
@@ -384,4 +279,111 @@ void Test::Update()
 
 void Test::Render()
 {
+}
+
+
+void Test::Test_CreateTransform()
+{
+	DebugPrint_NOMOTO("create world transform time measure");
+
+	DebugPrint_NOMOTO("too create world transform element");
+	{
+		Matrix w;
+		Stopwatch sw;
+		sw.Start();
+		for (int i = 0; i < 100000; i++)
+		{
+			Matrix tra, sca, rot;
+			tra.MakeTranslation({ 0,0,0 });
+			sca.MakeScaling({ 1,1,1 });
+			rot.MakeRotationX(180);
+			w.Multiply(sca, rot);
+			w.Multiply(w, tra);
+		}
+		DebugPrintValue(EDebugConsoloUser::NOMOTO, "old", sw.Stop());
+		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
+
+
+		sw.Start();
+		for (int i = 0; i < 100000; i++)
+		{
+			Vector3 vpos = g_vec3Zero, vsca = g_vec3One;
+			Quaternion qrot = g_quatIdentity;
+			w.MakeTransform(vpos, vsca, qrot);
+		}
+		DebugPrintValue(EDebugConsoloUser::NOMOTO, "new", sw.Stop());
+		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
+	}
+	DebugPrint_NOMOTO("");
+
+
+	DebugPrint_NOMOTO("already created world transform element");
+	/*
+	DirectXMathのMultiplyがかなり最適化されていてめちゃくちゃ速い。
+	なので、下のようにすでにそれぞれの行列が作られている場合はMultiplyを
+	使った方が速い。
+	*/
+	{
+		Matrix tra, sca, rot;
+		tra.MakeTranslation({ 0,0,0 });
+		sca.MakeScaling({ 1,1,1 });
+		rot.MakeRotationX(180);
+		Matrix w;
+		Stopwatch sw;
+		sw.Start();
+		for (int i = 0; i < 100000; i++)
+		{
+			
+			w.Multiply(sca, rot);
+			w.Multiply(w, tra);
+		}
+		DebugPrintValue(EDebugConsoloUser::NOMOTO, "old", sw.Stop());
+		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
+
+		Vector3 vpos = g_vec3Zero, vsca = g_vec3One;
+		Quaternion qrot = g_quatIdentity;
+		sw.Start();
+		for (int i = 0; i < 100000; i++)
+		{
+			
+			w.MakeTransform(vpos, vsca, qrot);
+		}
+		DebugPrintValue(EDebugConsoloUser::NOMOTO, "new", sw.Stop());
+		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
+	}
+
+
+	//DebugPrint_NOMOTO("already created world transform element");
+	{
+		Matrix w;
+		Stopwatch sw;
+		sw.Start();
+		for (int i = 0; i < 100000; i++)
+		{
+			Matrix tra, sca, rot;
+			tra.MakeTranslation({ 0,0,0 });
+			sca.MakeScaling({ 1,1,1 });
+			rot.MakeRotationX(180);
+			w.Multiply(sca, rot);
+			w.Multiply(w, tra);
+		}
+		DebugPrintValue(EDebugConsoloUser::NOMOTO, "old", sw.Stop());
+		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
+
+		Vector3 vpos = g_vec3Zero, vsca = g_vec3One;
+		Quaternion qrot = g_quatIdentity;
+		sw.Start();
+		for (int i = 0; i < 100000; i++)
+		{
+			Matrix rot;
+			rot.MakeRotationFromQuaternion(g_quatIdentity);
+			w = rot;
+			w.v[0].Scale(vsca.x);
+			w.v[1].Scale(vsca.y);
+			w.v[2].Scale(vsca.z);
+			w.SetTranspose(vpos);
+		}
+		DebugPrintValue(EDebugConsoloUser::NOMOTO, "new", sw.Stop());
+		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
+	}
 }

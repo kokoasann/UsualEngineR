@@ -56,18 +56,21 @@ namespace UER
 
 	}
 	
-	void Model::UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale)
+	void Model::UpdateWorldMatrix(const Vector3& pos, const Quaternion& rot, const Vector3& scale)
 	{
 		Matrix mBias;
 		if (m_upAxis == enUpAxisZ) {
 			//Z-up
 			mBias.MakeRotationX(Math::PI * -0.5f);
 		}
-		Matrix mTrans, mRot, mScale;
+		/*Matrix mTrans, mRot, mScale;
 		mTrans.MakeTranslation(pos);
 		mRot.MakeRotationFromQuaternion(rot);
 		mScale.MakeScaling(scale);
-		m_world = mBias * mScale * mRot * mTrans;
+		m_world = mBias * mScale * mRot * mTrans;*/
+
+		Matrix mW(pos, scale, rot);
+		m_world = mBias * mW;
 	}
 	void Model::Draw(RenderContext& rc, const Vector4& mulcolor)
 	{

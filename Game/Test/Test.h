@@ -16,6 +16,17 @@ public:
 	void Awake() override;
 	void Update() override;
 	void Render() override;
+
+	/// <summary>
+	/// translate,scale,rotateの行列を作ってワールド行列を作るやり方と
+	/// 最適化?したワールド行列を作るやり方の
+	/// 速度の検証
+	/// 結論：
+	/// translate,scale,rotateの行列の生成に時間がかかるのでこれらすべてを作る必要な場合は
+	/// 最適化したものを使う方が速い。
+	/// それぞれの行列を作らない場合は今まで通りの生成方法のほうが速い。
+	/// </summary>
+	void Test_CreateTransform();
 private:
 	ThreadTest* m_threadTest = nullptr;
 	ThreadObject m_threadObj;

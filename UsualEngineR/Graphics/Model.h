@@ -53,7 +53,7 @@ namespace UER
 		/// <param name="pos">座標</param>
 		/// <param name="rot">回転</param>
 		/// <param name="scale">拡大率</param>
-		void UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale);
+		void UpdateWorldMatrix(const Vector3& pos, const Quaternion& rot, const Vector3& scale);
 	
 		/// <summary>
 		/// スケルトンを関連付ける。

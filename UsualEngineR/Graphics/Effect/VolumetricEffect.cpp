@@ -413,12 +413,13 @@ namespace UER
 		auto& rc = g_graphicsEngine->GetRenderContext();
 		auto& mvp = g_camera3D->GetViewProjectionMatrix();
 
-		Matrix tra, sca, rot, wmat;
-		tra.MakeTranslation(m_pos);
+		Matrix /*tra, sca, rot, */wmat(m_pos,m_sca,m_rot);
+		/*tra.MakeTranslation(m_pos);
 		sca.MakeScaling(m_sca);
 		rot.MakeRotationFromQuaternion(m_rot);
 		wmat.Multiply(sca, rot);
-		wmat.Multiply(wmat, tra);
+		wmat.Multiply(wmat, tra);*/
+		
 
 		m_volumeEffect.Draw(rc, wmat, mvp, m_fogData);
 	}

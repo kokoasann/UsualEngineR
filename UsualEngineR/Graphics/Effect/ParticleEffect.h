@@ -235,6 +235,7 @@ namespace UER
 
 		Matrix m_mWorld = g_matIdentity;
 		Matrix m_mRot_inv = g_matIdentity;
+		//Quaternion m_qRot_inv = g_quaIdentity;
 
 		bool m_generateFlag = true;
 

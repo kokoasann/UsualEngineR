@@ -142,10 +142,18 @@ namespace UER
 	void PlaneParticleEffect::Update(float deltaTime, const Vector3& pos, const Vector3& sca, const Quaternion& rot)
 	{
 		Matrix mRot;
-		m_mWorld.MakeScaling(sca);
 		mRot.MakeRotationFromQuaternion(rot);
+
+		/*m_mWorld.MakeScaling(sca);
 		m_mWorld.Multiply(m_mWorld, mRot);
+		m_mWorld.SetTranspose(pos);*/
+
+		m_mWorld = mRot;
+		m_mWorld.v[0].Scale(sca.x);
+		m_mWorld.v[1].Scale(sca.y);
+		m_mWorld.v[2].Scale(sca.z);
 		m_mWorld.SetTranspose(pos);
+		//m_mWorld.MakeTransform(pos, sca, rot);
 
 		m_mRot_inv.Inverse(mRot);
 
@@ -244,9 +252,9 @@ namespace UER
 		{
 			//datas[i] = m_particleDatas[i];
 			auto& particle = m_particleDatasEX[i].particleData;
-			Matrix tra, sca, rot;
+			Matrix /*tra, sca,*/ rot;
 			//tra.MakeTranslation(particle.pos);
-			sca.MakeScaling(particle.sca);
+			//sca.MakeScaling(particle.sca);
 			rot.MakeRotationFromQuaternion(particle.rot);
 
 			if (m_particleDatasEX[i].isWorld && m_isBillboard)
@@ -262,7 +270,11 @@ namespace UER
 			{
 				rot.Multiply(vwirot, rot);
 			}
-			datas[i].mWorld.Multiply(sca, rot);
+			//datas[i].mWorld.Multiply(sca, rot);
+			datas[i].mWorld = rot;
+			datas[i].mWorld.v[0].Scale(particle.sca.x);
+			datas[i].mWorld.v[1].Scale(particle.sca.y);
+			datas[i].mWorld.v[2].Scale(particle.sca.z);
 			//datas[i].mWorld.Multiply(datas[i].mWorld, tra);
 			datas[i].mWorld.SetTranspose(particle.pos);
 			if (m_particleDatasEX[i].isWorld)

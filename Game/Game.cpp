@@ -20,10 +20,7 @@ void Game::OnDestroy()
 
 void Game::Awake()
 {
-	AllocConsole();
-	freopen("CON", "r", stdin);
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
+	
 	
 }
 
