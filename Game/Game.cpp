@@ -40,11 +40,6 @@ void Game::PreUpdate()
 
 void Game::Update()
 {
-	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
-	if (enemy != nullptr) {
-		GameManager::GetInstance().m_camera->SetEnemy(enemy);
-	}
-
 	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
 		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
 			GameManager::GetInstance().m_menu->ResumeGame();

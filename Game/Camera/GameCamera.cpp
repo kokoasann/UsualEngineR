@@ -3,6 +3,7 @@
 #include "../Player/Player.h"
 #include "../Enemy/IEnemy.h"
 #include "../PositionChecker.h"
+#include "Enemy/EnemyManager.h"
 
 GameCamera::GameCamera()
 {
@@ -57,6 +58,18 @@ void GameCamera::Update()
 {
 	Vector3 target = mp_player->GetPosition();
 	m_charaPos = mp_player->GetPosition();
+
+	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
+	if (enemies.size() == 0) {
+		mp_enemy = nullptr;
+	}
+	else {
+		static int targetEnemyNo = 0;
+		if (g_pad[0]->IsTrigger(enButtonLB3)) {
+			targetEnemyNo = (targetEnemyNo + 1) % enemies.size();
+		}
+		mp_enemy = enemies.at(targetEnemyNo);
+	}
 
 	UpdateState();
 	CalcEnemyCamera();
