@@ -184,6 +184,10 @@ namespace UER
 	}
 	const Vector3& CharacterController::Execute(float deltaTime, const Vector3& moveSpeed)
 	{
+		if (std::isnan(moveSpeed.x) || std::isnan(moveSpeed.y) || std::isnan(moveSpeed.z) || std::isinf(moveSpeed.x))
+		{
+			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+		}
 
 		if (moveSpeed.y > 0.0f) {
 			//吹っ飛び中にする。

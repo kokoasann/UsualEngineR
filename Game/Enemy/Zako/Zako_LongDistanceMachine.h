@@ -1,47 +1,31 @@
 #pragma once
 
+#include "Enemy/IEnemy.h"
 /// <summary>
 /// 
 /// </summary>
-class Zako_LongDistanceMachine :public GameObject
+class Zako_LongDistanceMachine final:public IEnemy
 {
 public:
 	Zako_LongDistanceMachine();
 	virtual ~Zako_LongDistanceMachine();
 
-	/// <summary>
-	/// 本開放。確保したものを開放するための関数。
-	/// </summary>
-	virtual void Release() override;
-
-	/// <summary>
-	/// このオブジェクトの所持するゲームオブジェクト等を消すための関数。
-	/// 面倒くさければRelease関数と同じでもよい。
-	/// </summary>
-	virtual void OnDestroy() override;
-
-	/// <summary>
-	/// NewGO時に即座に呼ばれる関数。
-	/// コンストラクタの代わりに使おう。
-	/// </summary>
-	void Awake() override;
-
-	/// <summary>
-	/// スタート関数。
-	/// </summary>
-	/// <returns>trueを返さない限り、ずっとStartを呼び続ける</returns>
-	bool Start() override;
-
-	/// <summary>
-	/// 更新。の前に呼ばれる更新。
-	/// </summary>
-	void PreUpdate() override;
-	/// <summary>
-	/// 更新。
-	/// </summary>
-	void Update() override;
-
+	void Init() override;
+	void Execute() override;
+	void Terminate() override;
+	Player::EnAttackType GetDropID() override 
+	{ 
+		return Player::EnAttackType::enNone;
+	}
 
 private:
+	//Model
+	ModelRender* m_model = nullptr;
+	CAnimationClip m_animClip[1];
+	std::vector<CAnimationClipPtr> m_animlist;
+	Vector3 m_scale = { 5.f,5.f,5.f };
 
+	//Physics
+	const float m_radius = 1.f;
+	const float m_height = 3.f;
 };

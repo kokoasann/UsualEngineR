@@ -151,6 +151,9 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -303,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp">
       <Filter>Enemy\Zako</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp">
+      <Filter>Enemy\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
