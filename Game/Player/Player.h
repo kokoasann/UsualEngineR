@@ -19,6 +19,7 @@ public:
 	enum class EnState {
 		enGround,
 		enFlying,
+		enFall,
 		enDiving,
 		enAttack,
 		enGuard,
@@ -30,6 +31,7 @@ public:
 		enIdle,
 		enRun,
 		enWalk,
+		enFall,
 		enHovering,
 		enFlyMove,
 		enFlyMoveFaster,

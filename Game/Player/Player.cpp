@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "State/PlayerFlyingState.h"
 #include "State/PlayerGroundState.h"
+#include "State/PlayerFallState.h"
 #include "State/PlayerDiveState.h"
 #include "State/PlayerAttackState.h"
 #include "State/PlayerGuardState.h"
@@ -168,6 +169,7 @@ bool Player::Start()
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enGround)] = new PlayerGroundState();
 	m_stateList[static_cast<int>(EnState::enFlying)] = new PlayerFlyingState();
+	m_stateList[static_cast<int>(EnState::enFall)] = new PlayerFallState();
 	m_stateList[static_cast<int>(EnState::enDiving)] = new PlayerDiveState();
 	m_stateList[static_cast<int>(EnState::enAttack)] = new PlayerAttackState();
 	m_stateList[static_cast<int>(EnState::enDead)] = new PlayerDeadState();

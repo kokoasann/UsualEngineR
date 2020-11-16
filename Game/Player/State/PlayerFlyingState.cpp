@@ -50,7 +50,7 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 		p->GetCurrentBoost() <= 0.f or //ブースト不足.
 		!m_canRise //初期上昇用のブーストが不足.
 		) {
-		auto nextState = p->GetState(Player::EnState::enGround);
+		auto nextState = p->GetState(Player::EnState::enFall);
 		return nextState;
 	}
 	

@@ -220,6 +220,7 @@
     <ClInclude Include="Player\State\PlayerAttackState.h" />
     <ClInclude Include="Player\State\PlayerDeadState.h" />
     <ClInclude Include="Player\State\PlayerDiveState.h" />
+    <ClInclude Include="Player\State\PlayerFallState.h" />
     <ClInclude Include="Player\State\PlayerFlyingState.h" />
     <ClInclude Include="Player\State\PlayerGroundState.h" />
     <ClInclude Include="Player\State\PlayerGuardState.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="Player\State\PlayerAttackState.cpp" />
     <ClCompile Include="Player\State\PlayerDeadState.cpp" />
     <ClCompile Include="Player\State\PlayerDiveState.cpp" />
+    <ClCompile Include="Player\State\PlayerFallState.cpp" />
     <ClCompile Include="Player\State\PlayerFlyingState.cpp" />
     <ClCompile Include="Player\State\PlayerGroundState.cpp" />
     <ClCompile Include="Player\State\PlayerGuardState.cpp" />
