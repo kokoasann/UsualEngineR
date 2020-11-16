@@ -66,12 +66,12 @@ bool GameStage::Start()
 		Stopwatch sw;
 		sw.Start();
 		ModelInitData mid;
-		mid.m_upAxis = EUpAxis::enUpAxisZ;
+		mid.m_upAxis = EUpAxis::enUpAxisY;
 		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 		mid.m_vsEntryPointFunc = "VSMain";
 		mid.m_psEntryPointFunc = "PSMain";
 		//m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
-		m_level.Init("Assets/level/map_commit_obj_level.tkl", [&](LevelObjectData& objData)->bool
+		m_level.Init("Assets/level/map_commit_obj_level2.tkl", [&](LevelObjectData& objData)->bool
 			{
 				std::string name(objData.name.begin(), objData.name.end());
 				char filePath[256];

@@ -190,6 +190,8 @@
     <ClInclude Include="Enemy\State\EnemyIdleState.h" />
     <ClInclude Include="Enemy\State\EnemySlashState.h" />
     <ClInclude Include="Enemy\State\IEnemyState.h" />
+    <ClInclude Include="Enemy\Zako\Zako_LongDistanceMachine.h" />
+    <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameManager.h" />
@@ -244,6 +246,8 @@
     <ClCompile Include="Enemy\State\EnemyIdleState.cpp" />
     <ClCompile Include="Enemy\State\EnemySlashState.cpp" />
     <ClCompile Include="Enemy\State\IEnemyState.cpp" />
+    <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp" />
+    <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameManager.cpp" />

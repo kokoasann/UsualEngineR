@@ -145,6 +145,12 @@
     <ClInclude Include="Player\State\PlayerFallState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Zako\Zako_LongDistanceMachine.h">
+      <Filter>Enemy\Zako</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h">
+      <Filter>Enemy\Zako</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -292,6 +298,12 @@
     <ClCompile Include="Player\State\PlayerFallState.cpp">
       <Filter>Player\State</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp">
+      <Filter>Enemy\Zako</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp">
+      <Filter>Enemy\Zako</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -371,6 +383,9 @@
     </Filter>
     <Filter Include="Assets\modelData\boss\sp">
       <UniqueIdentifier>{4a185f19-bc23-4a55-8016-d1f4a60cdc64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Zako">
+      <UniqueIdentifier>{e82d1698-faaf-44bd-89af-b9dfcb6dff02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
