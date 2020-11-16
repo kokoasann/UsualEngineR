@@ -3,6 +3,7 @@
 #include "../Player.h"
 #include "../Pod/Pod.h"
 #include "Projectile.h"
+#include "../../Enemy/IEnemy.h"
 
 PlayerLongRangeAttack::PlayerLongRangeAttack() {
 }
@@ -17,7 +18,16 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 	if (m_shotIntervalTimer >= m_interval) {
 		DebugPrint_WATA("distant attacking\n");
 		auto projectile = NewGO<Projectile>(0);
-		auto vel = p->GetForward() + p->GetLocalVelocity() * delta;
+		auto targetE = p->GetTargetEnemy();
+		Vector3 vel = Vector3::Zero;
+		if (targetE == nullptr) {
+			vel = p->GetForward();
+		}
+		else {
+			auto vecPodToEnemy = targetE->GetPosition() - p->GetPod()->GetPosition();
+			vecPodToEnemy.Normalize();
+			vel = vecPodToEnemy;
+		}
 		projectile->Init(p->GetPod()->GetPosition(), vel);
 		m_shotIntervalTimer = 0.f;
 	}
