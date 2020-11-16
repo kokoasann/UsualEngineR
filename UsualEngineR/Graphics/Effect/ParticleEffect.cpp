@@ -188,7 +188,8 @@ namespace UER
 		}
 
 		//生み出す。
-		m_generateFunc(this, deltaTime);
+		if(m_generateFlag)
+			m_generateFunc(this, deltaTime);
 
 		//更新。
 		for (int i =0;i < m_numInstance;i++)

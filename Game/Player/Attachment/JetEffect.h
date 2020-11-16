@@ -74,6 +74,10 @@ public:
 		m_rot = rot;
 	}
 
+	void SetGenerateFlag(const bool generateFlag) {
+		m_particleEffect->SetGenerateFlag(generateFlag);
+	}
+
 private:
 	PlaneParticleEffectRender* m_particleEffect = nullptr;
 	Vector3 m_pos = Vector3::Zero;

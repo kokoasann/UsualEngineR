@@ -7,6 +7,7 @@ class IEnemy;
 class GameCamera;
 class Pod;
 class JetPack;
+class JetEffect;
 
 /// <summary>
 /// 
@@ -386,8 +387,8 @@ private:
 	//Effecct
 	const int RIGHT = 0;
 	const int LEFT = 1;
-	void InitThrusterEffect();
+	//void InitThrusterEffect();
 	bool m_isUsingThrusters = false;
-	PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
-
+	//PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
+	std::vector<JetEffect*> m_jetEffects;
 };

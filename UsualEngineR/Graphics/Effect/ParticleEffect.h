@@ -183,6 +183,11 @@ namespace UER
 			Matrix mWorld;
 			Vector4 mulColor;
 		};*/
+
+		void SetGenerateFlag(const bool flag) {
+			m_generateFlag = flag;
+		}
+
 	private:
 		struct SConstBuffData
 		{
@@ -230,6 +235,9 @@ namespace UER
 
 		Matrix m_mWorld = g_matIdentity;
 		Matrix m_mRot_inv = g_matIdentity;
+
+		bool m_generateFlag = true;
+
 	};
 
 
@@ -301,6 +309,11 @@ namespace UER
 		{
 			return m_mulColor;
 		}
+
+		void SetGenerateFlag(const bool flag) {
+			m_effect.SetGenerateFlag(flag);
+		}
+
 	private:
 		PlaneParticleEffect m_effect;
 		

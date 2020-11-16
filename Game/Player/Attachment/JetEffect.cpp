@@ -96,7 +96,7 @@ void JetEffect::Init(const JetEffectInitParam& initParam) {
 		static int footNum = 0;
 
 		//auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
-		if (time >= 0.01f and pThis->ShouldBeDrawn())
+		if (time >= 0.01f)
 		{
 			ParticleData pd;
 

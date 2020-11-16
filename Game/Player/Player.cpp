@@ -13,6 +13,7 @@
 #include "../GameManager.h"
 #include "../GameSceneMenu.h"
 #include "Attachment/JetPack.h"
+#include "Attachment/JetEffect.h"
 
 Player::Player()
 {
@@ -30,8 +31,12 @@ void Player::Release()
 	DeleteGO(m_model);
 	DeleteGO(m_pod);
 	DeleteGO(m_jetPack);
-	DeleteGO(m_thrusterEffects[RIGHT]);
-	DeleteGO(m_thrusterEffects[LEFT]);
+
+	for (int i = 0; i < m_jetEffects.size(); i++) {
+		DeleteGO(m_jetEffects[i]);
+	}
+	//DeleteGO(m_thrusterEffects[RIGHT]);
+	//DeleteGO(m_thrusterEffects[LEFT]);
 }
 
 void Player::OnDestroy()
@@ -159,8 +164,6 @@ void Player::Awake()
 bool Player::Start()
 {
 
-	InitThrusterEffect();
-
 	//State
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enGround)] = new PlayerGroundState();
@@ -193,6 +196,20 @@ bool Player::Start()
 
 	auto soleL = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Sole_L"));
 	m_playerBones.at(TO_INT(EnPlayerBone::enSOLE_L)) = soleL;
+	
+	//Effect
+	auto jetEffect = NewGO<JetEffect>(0);
+	auto jetEffect1 = NewGO<JetEffect>(0);
+	JetEffect::JetEffectInitParam jeip;
+	jeip.effectScale = 0.01f;
+	jeip.effectScale_inv = 100.f;
+	jeip.particleScale = 500.f;
+	jeip.particleLifeTime = 1.f;
+	jeip.particleYUp = 300.f;
+	jetEffect->Init(jeip);
+	jetEffect1->Init(jeip);
+	m_jetEffects.push_back(jetEffect);
+	m_jetEffects.push_back(jetEffect1);
 
 	return true;
 }
@@ -252,17 +269,29 @@ void Player::PostUpdate()
 {
 	//Effect
 	if (!m_isUsingThrusters) {
+
+		m_jetEffects[LEFT]->SetGenerateFlag(false);
+		m_jetEffects[RIGHT]->SetGenerateFlag(false);
 		//m_thrusterEffects[LEFT]->SetActive(false);
 		//m_thrusterEffects[RIGHT]->SetActive(false);
 		m_jetPack->StopThrusters();
-		return;
+		//return;
 	}
-
-	m_jetPack->FireThrusters();
+	else {
+		m_jetEffects[LEFT]->SetGenerateFlag(true);
+		m_jetEffects[RIGHT]->SetGenerateFlag(true);
+		m_jetPack->FireThrusters();
+	}
 
 	//m_thrusterEffects[LEFT]->SetActive(true);
 	//m_thrusterEffects[RIGHT]->SetActive(true);
 
+	m_jetEffects[RIGHT]->SetPosition(GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix().GetTransrate());
+	m_jetEffects[RIGHT]->SetRotation(GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix().GetRotate());
+	m_jetEffects[LEFT]->SetPosition(GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix().GetTransrate());
+	m_jetEffects[LEFT]->SetRotation(GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix().GetRotate());
+
+	/*
 	const auto& boneSoleLMat = GetBone(Player::EnPlayerBone::enSOLE_L)->GetWorldMatrix();
 	m_thrusterEffects[LEFT]->SetRot(boneSoleLMat.GetRotate());
 	m_thrusterEffects[LEFT]->SetPos(boneSoleLMat.GetTransrate());
@@ -270,7 +299,7 @@ void Player::PostUpdate()
 	const auto& boneSoleRMat = GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix();
 	m_thrusterEffects[RIGHT]->SetRot(boneSoleRMat.GetRotate());
 	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
-
+	*/
 }
 
 
@@ -319,94 +348,94 @@ void Player::UpdateAttackType() {
 	}
 }
 
-void Player::InitThrusterEffect() {
-	const static float EFFECT_SCALE = 0.01f;
-	const static float EFFECT_SCALE_INV = 100.f;
+//void Player::InitThrusterEffect() {
+	//const static float EFFECT_SCALE = 0.01f;
+	//const static float EFFECT_SCALE_INV = 100.f;
 
-	const static float PERTICLE_SCALE = 500.f;
-	const static float PERTICLE_LIFE_TIME = 1.f;
-	const static float PERTICLE_Y_UP = 300.f;
+	//const static float PERTICLE_SCALE = 500.f;
+	//const static float PERTICLE_LIFE_TIME = 1.f;
+	//const static float PERTICLE_Y_UP = 300.f;
 
-	//パーティクルの拡張構造体。
-	struct ParticleData
-	{
-		float rnd;		//パーリンノイズで使うためのseed値的なもの
-		Vector3 pos;	//パーティクルの初期位置(ローカル)
-	};
-	//Effects
-	PlaneParticleEffectInitData pid;
-	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
-	pid.m_height = 10;
-	pid.m_width = 10;
-	pid.m_extendDataSize = sizeof(ParticleData);
-	pid.m_isBillboard = true;
-	//pid.m_isBillboard = false;
-	//pid.m_isDepthTest = false;
-	PlaneParticleUpdater m_effctUpdater(
-		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
-	{
-		static float time = 0;
-		static Vector3 oldPos[2] = { g_vec3Zero };	// エフェクトの前のポジション
-		static int footNum = 0;
+	////パーティクルの拡張構造体。
+	//struct ParticleData
+	//{
+	//	float rnd;		//パーリンノイズで使うためのseed値的なもの
+	//	Vector3 pos;	//パーティクルの初期位置(ローカル)
+	//};
+	////Effects
+	//PlaneParticleEffectInitData pid;
+	//pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
+	//pid.m_height = 10;
+	//pid.m_width = 10;
+	//pid.m_extendDataSize = sizeof(ParticleData);
+	//pid.m_isBillboard = true;
+	////pid.m_isBillboard = false;
+	////pid.m_isDepthTest = false;
+	//PlaneParticleUpdater m_effctUpdater(
+	//	[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
+	//{
+	//	static float time = 0;
+	//	static Vector3 oldPos[2] = { g_vec3Zero };	// エフェクトの前のポジション
+	//	static int footNum = 0;
 
-		auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
-		if (time >= 0.01f and pThrust)
-		{
-			ParticleData pd;
+	//	auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
+	//	if (time >= 0.01f and pThrust)
+	//	{
+	//		ParticleData pd;
 
-			//エフェクトのQuaternionをゲット
-			Quaternion rot = pThis->GetWorldMatrix().GetRotate();
-			rot.Inverse(rot);	//エフェクトの逆Quaternion これを使うとワールド座標になる
+	//		//エフェクトのQuaternionをゲット
+	//		Quaternion rot = pThis->GetWorldMatrix().GetRotate();
+	//		rot.Inverse(rot);	//エフェクトの逆Quaternion これを使うとワールド座標になる
 
-			//新しいエフェクトの位置から古いエフェクトの位置のベクトル
-			Vector3 posv = oldPos[footNum] - pThis->GetWorldMatrix().GetTransrate();
+	//		//新しいエフェクトの位置から古いエフェクトの位置のベクトル
+	//		Vector3 posv = oldPos[footNum] - pThis->GetWorldMatrix().GetTransrate();
 
-			for (int _i = 0; _i < 50; _i++)
-			{
-				pd.rnd = GRandom().Rand();
+	//		for (int _i = 0; _i < 50; _i++)
+	//		{
+	//			pd.rnd = GRandom().Rand();
 
-				pd.pos = posv* ((float)_i / 49.f * EFFECT_SCALE_INV);
-				rot.Apply(pd.pos);
+	//			pd.pos = posv* ((float)_i / 49.f * EFFECT_SCALE_INV);
+	//			rot.Apply(pd.pos);
 
-				//次のフレームのための高さ補間。
-				pd.pos.y += (float)_i / 49.f * PERTICLE_Y_UP * deltaTime;
-				
-				pThis->AddParticle(pd.pos, g_vec3One * PERTICLE_SCALE, g_quatIdentity, { 3,2.f,0.3,0.5 }, PERTICLE_LIFE_TIME, &pd, true);
-			}
-			time = 0;
-		}
+	//			//次のフレームのための高さ補間。
+	//			pd.pos.y += (float)_i / 49.f * PERTICLE_Y_UP * deltaTime;
+	//			
+	//			pThis->AddParticle(pd.pos, g_vec3One * PERTICLE_SCALE, g_quatIdentity, { 3,2.f,0.3,0.5 }, PERTICLE_LIFE_TIME, &pd, true);
+	//		}
+	//		time = 0;
+	//	}
 
-		oldPos[footNum] = pThis->GetWorldMatrix().GetTransrate();
-		footNum ^= 1;
-		time += deltaTime;
-	},
-		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
-	{
-		auto& s = *(ParticleData*)extendData;
-		data.particleData.pos.y += PERTICLE_Y_UP * deltaTime;
+	//	oldPos[footNum] = pThis->GetWorldMatrix().GetTransrate();
+	//	footNum ^= 1;
+	//	time += deltaTime;
+	//},
+	//	[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
+	//{
+	//	auto& s = *(ParticleData*)extendData;
+	//	data.particleData.pos.y += PERTICLE_Y_UP * deltaTime;
 
-		float n = GPerlinNoise2D().GenerateNoise({ s.rnd * 10, data.particleData.pos.y / 10.f });
-		float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s.rnd * 10 });
-		data.particleData.pos.x = s.pos.x + n * 500.f * deltaTime;
-		data.particleData.pos.z = s.pos.z + m * 500.f * deltaTime;
+	//	float n = GPerlinNoise2D().GenerateNoise({ s.rnd * 10, data.particleData.pos.y / 10.f });
+	//	float m = GPerlinNoise2D().GenerateNoise({ data.particleData.pos.y / 10.f, s.rnd * 10 });
+	//	data.particleData.pos.x = s.pos.x + n * 500.f * deltaTime;
+	//	data.particleData.pos.z = s.pos.z + m * 500.f * deltaTime;
 
-		data.particleData.sca = g_vec3One * min((data.lifeTime / PERTICLE_LIFE_TIME) + 0.1f, 1.f) * 5.f;
+	//	data.particleData.sca = g_vec3One * min((data.lifeTime / PERTICLE_LIFE_TIME) + 0.1f, 1.f) * 5.f;
 
-		Vector3 col;
-		col.Lerp(data.lifeTime / PERTICLE_LIFE_TIME, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
-		data.particleData.mulColor.Set(col);
-		data.particleData.mulColor.a = data.lifeTime / PERTICLE_LIFE_TIME;
+	//	Vector3 col;
+	//	col.Lerp(data.lifeTime / PERTICLE_LIFE_TIME, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });
+	//	data.particleData.mulColor.Set(col);
+	//	data.particleData.mulColor.a = data.lifeTime / PERTICLE_LIFE_TIME;
 
-	});
-	pid.m_updater = &m_effctUpdater;
+	//});
+	//pid.m_updater = &m_effctUpdater;
 
-	m_thrusterEffects[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
-	m_thrusterEffects[RIGHT]->Init(pid);
-	m_thrusterEffects[RIGHT]->SetPos({ 0,0,50 });
-	m_thrusterEffects[RIGHT]->SetSca(g_vec3One * EFFECT_SCALE);
+	//m_thrusterEffects[RIGHT] = NewGO<PlaneParticleEffectRender>(0);
+	//m_thrusterEffects[RIGHT]->Init(pid);
+	//m_thrusterEffects[RIGHT]->SetPos({ 0,0,50 });
+	//m_thrusterEffects[RIGHT]->SetSca(g_vec3One * EFFECT_SCALE);
 
-	m_thrusterEffects[LEFT] = NewGO<PlaneParticleEffectRender>(0);
-	m_thrusterEffects[LEFT]->Init(pid);
-	m_thrusterEffects[LEFT]->SetPos({ 0,0,50 });
-	m_thrusterEffects[LEFT]->SetSca(g_vec3One * EFFECT_SCALE);
-}
+	//m_thrusterEffects[LEFT] = NewGO<PlaneParticleEffectRender>(0);
+	//m_thrusterEffects[LEFT]->Init(pid);
+	//m_thrusterEffects[LEFT]->SetPos({ 0,0,50 });
+	//m_thrusterEffects[LEFT]->SetSca(g_vec3One * EFFECT_SCALE);
+//}
