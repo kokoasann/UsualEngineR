@@ -92,11 +92,11 @@ void JetEffect::Init(const JetEffectInitParam& initParam) {
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
 	{
 		static float time = 0;
-		static Vector3 oldPos[2] = { g_vec3Zero };	// エフェクトの前のポジション
+		//static Vector3 oldPos[2] = { g_vec3Zero };	// エフェクトの前のポジション
 		static int footNum = 0;
 
 		//auto pThrust = EnemyManager::GetEnemyManager().GetPlayer()->IsUsingThrusters();
-		if (time >= 0.01f)
+		//if (time >= 0.01f)
 		{
 			ParticleData pd;
 
@@ -105,25 +105,24 @@ void JetEffect::Init(const JetEffectInitParam& initParam) {
 			rot.Inverse(rot);	//エフェクトの逆Quaternion これを使うとワールド座標になる
 
 			//新しいエフェクトの位置から古いエフェクトの位置のベクトル
-			Vector3 posv = oldPos[footNum] - pThis->GetWorldMatrix().GetTransrate();
+			Vector3 posv = m_oldPos - pThis->GetWorldMatrix().GetTransrate();
 
-			for (int _i = 0; _i < 50; _i++)
+			for (int _i = 0; _i < 10; _i++)
 			{
 				pd.rnd = GRandom().Rand();
 
-				pd.pos = posv * ((float)_i / 49.f * EFFECT_SCALE_INV);
+				pd.pos = posv * ((float)_i / 9.f * EFFECT_SCALE_INV);
 				rot.Apply(pd.pos);
 
 				//次のフレームのための高さ補間。
-				pd.pos.y += (float)_i / 49.f * PARTICLE_Y_UP * deltaTime;
+				pd.pos.y += (float)_i / 9.f * PARTICLE_Y_UP * deltaTime;
 
 				pThis->AddParticle(pd.pos, g_vec3One * PARTICLE_SCALE, g_quatIdentity, { 3,2.f,0.3,0.5 }, PARTICLE_LIFE_TIME, &pd, true);
 			}
 			time = 0;
 		}
 
-		oldPos[footNum] = pThis->GetWorldMatrix().GetTransrate();
-		footNum ^= 1;
+		m_oldPos = pThis->GetWorldMatrix().GetTransrate();
 		time += deltaTime;
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)

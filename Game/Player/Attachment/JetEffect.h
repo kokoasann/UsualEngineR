@@ -82,4 +82,5 @@ private:
 	PlaneParticleEffectRender* m_particleEffect = nullptr;
 	Vector3 m_pos = Vector3::Zero;
 	Quaternion m_rot = Quaternion::Identity;
+	Vector3 m_oldPos = Vector3::Zero;
 };

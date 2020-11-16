@@ -1,5 +1,6 @@
 #pragma once
 #include "Effect/ParticleEffect.h"
+class JetEffect;
 
 /// <summary>
 /// 
@@ -88,9 +89,9 @@ private:
 
 	//effect
 	bool m_isUsingThrusters = false;
-	PlaneParticleEffectRender* m_effect;
-	PlaneParticleEffectRender* m_effect_2;
-	PlaneParticleEffectRender* m_effects[4];
+	//PlaneParticleEffectRender* m_effect;
+	//PlaneParticleEffectRender* m_effect_2;
+	//PlaneParticleEffectRender* m_effects[4];
 	Bone* m_backpackBone[6] = { nullptr };
-
+	std::vector<JetEffect*> m_jetEffects;
 };

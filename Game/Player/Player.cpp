@@ -185,6 +185,7 @@ bool Player::Start()
 
 	//Attachment
 	m_playerBones.resize(TO_INT(EnPlayerBone::enNumBoneType));
+
 	m_jetPack = NewGO<JetPack>(0);
 	m_jetPack->SetUsingState(false);
 
@@ -231,7 +232,7 @@ void Player::Update()
 
 	//Attachments
 	//Jetpack
-	if(m_currentAttackPreset == EnAttackPreset::enMeleePreset){
+	if (m_currentAttackPreset == EnAttackPreset::enMeleePreset) {
 		m_jetPack->SetUsingState(true);
 		const auto& mat = m_playerBones.at(TO_INT(EnPlayerBone::enBack))->GetWorldMatrix();
 		m_jetPack->SetPosition(mat.GetTransrate());
@@ -240,6 +241,7 @@ void Player::Update()
 	else {
 		m_jetPack->SetUsingState(false);
 	}
+
 
 	SearchTarget();
 	UpdateAttackType();

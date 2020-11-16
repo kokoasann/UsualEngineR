@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "JetPack.h"
 #include "../../Enemy/EnemyManager.h"
+#include "JetEffect.h"
 
 JetPack::JetPack()
 {
@@ -40,6 +41,7 @@ bool JetPack::Start()
 	//mid.m_upAxis = enUpAxisZ;
 	m_model->Init(mid);
 
+	/*
 	PlaneParticleEffectInitData pid;
 	pid.m_ddsFilePath = L"Assets/Image/illumination.dds";
 	pid.m_height = 10;
@@ -90,20 +92,24 @@ bool JetPack::Start()
 
 	pid.m_updater = &m_effctUpdater;
 
-	m_effect = NewGO<PlaneParticleEffectRender>(0);
-	m_effect->Init(pid);
-	m_effect->SetPos({ 0,0,50 });
-	m_effect->SetSca(g_vec3One * 0.02);
-	m_effect_2 = NewGO<PlaneParticleEffectRender>(0);
-	m_effect_2->Init(pid);
-	m_effect_2->SetPos({ 0,0,50 });
-	m_effect_2->SetSca(g_vec3One * 0.02);
+	auto effect = NewGO<PlaneParticleEffectRender>(0);
+	effect->Init(pid);
+	effect->SetPos({ 0,0,50 });
+	effect->SetSca(g_vec3One * 0.02);
+	*/
 
-	for (int i = 0; i < 4; i++)
-	{
-		m_effects[i] = NewGO<PlaneParticleEffectRender>(0);
-		m_effects[i]->Init(pid);
-		m_effects[i]->SetSca(g_vec3One * 0.02);
+	JetEffect::JetEffectInitParam jeip;
+	jeip.effectScale = 0.01f;
+	jeip.effectScale_inv = 100.f;
+	jeip.particleScale = 500.f;
+	jeip.particleLifeTime = 0.5f;
+	jeip.particleYUp = 400.f;
+
+	const int numEffect = 6;
+	for (int i = 0; i < numEffect; i++) {
+		auto ef = NewGO<JetEffect>(0);
+		ef->Init(jeip);
+		m_jetEffects.push_back(ef);
 	}
 
 	m_backpackBone[0] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Pack.001"));
@@ -124,58 +130,42 @@ void JetPack::PreUpdate()
 
 void JetPack::Update()
 {
-	if (!m_isUsed) {
-		m_model->SetActive(false);
-		for (int i = 0; i < 4; i++)
-		{
-			m_effects[i]->SetActive(false);
-		}
-		m_effect->SetActive(false);
-		m_effect_2->SetActive(false);
-		return;
-	}
-
-	m_model->SetActive(true);
 
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 	m_model->SetScale(m_scale);
+
+	if (!m_isUsed) {
+		m_model->SetActive(false);
+		for (int i = 0; i < m_jetEffects.size(); i++) {
+			m_jetEffects[i]->SetGenerateFlag(false);
+		}
+	}
+	else {
+		m_model->SetActive(true);
+	}
+
 }
 
 void JetPack::PostUpdate()
 {
-	if (!m_isUsed) {
-		for (int i = 0; i < 4; i++)
-		{
-			m_effects[i]->SetActive(false);
+
+	if (!m_isUsed) return;
+
+	if (!m_isUsingThrusters) {
+		for (int i = 0; i < m_jetEffects.size(); i++) {
+			m_jetEffects[i]->SetGenerateFlag(false);
 		}
-		m_effect_2->SetActive(false);
-		m_effect->SetActive(false);
+		return;
 	}
-	else {
-		for (int i = 0; i < 4; i++)
-		{
-			m_effects[i]->SetActive(true);
-			const auto& mat = m_backpackBone[i + 1]->GetWorldMatrix();
-			m_effects[i]->SetRot(mat.GetRotate());
-			m_effects[i]->SetPos(mat.GetTransrate());
-		}
 
-		m_effect->SetActive(true);
-		m_effect_2->SetActive(true);
-
-
-		{
-			const auto& mat = m_backpackBone[0]->GetWorldMatrix();
-			m_effect->SetRot(mat.GetRotate());
-			m_effect->SetPos(mat.GetTransrate());
-		}
-		{
-			const auto& mat = m_backpackBone[5]->GetWorldMatrix();
-			m_effect_2->SetRot(mat.GetRotate());
-			m_effect_2->SetPos(mat.GetTransrate());
-		}
+	for (int i = 0; i < m_jetEffects.size(); i++) {
+		m_jetEffects[i]->SetGenerateFlag(true);
+		const auto& mat = m_backpackBone[i]->GetWorldMatrix();
+		m_jetEffects[i]->SetPosition(mat.GetTransrate());
+		m_jetEffects[i]->SetRotation(mat.GetRotate());
 	}
+
 }
 
 
