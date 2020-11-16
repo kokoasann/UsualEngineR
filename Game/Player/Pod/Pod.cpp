@@ -60,7 +60,10 @@ void Pod::Update()
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	if (m_state == PodState::enIdle) {
-		auto p = mp_player->GetPosition() + m_distanceFromPlayer;
+		//auto p = mp_player->GetPosition() + m_distanceFromPlayer;
+		auto addPos = m_distanceFromPlayer;
+		mp_player->GetRotation().Apply(addPos);
+		auto p = mp_player->GetPosition() + addPos;
 		m_pos = p;
 
 		if (mp_player->GetCurrentState() == mp_player->GetState(Player::EnState::enDead)) return;
@@ -241,7 +244,9 @@ void Pod::BackToIdlePos() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
+	//auto vecToIdlePos = (mp_player->GetPosition() + mp_player->GetForward() + m_distanceFromPlayer;
 	auto vecToIdlePos = (mp_player->GetPosition() + m_distanceFromPlayer) - m_pos;
+
 	auto IdlePosDir = vecToIdlePos;
 	IdlePosDir.Normalize();
 	auto vel = IdlePosDir * m_backSpeed * delta;

@@ -100,7 +100,7 @@ private:
 	//transform
 	Player* mp_player = nullptr;
 	Vector3 m_pos = Vector3::Zero;
-	Vector3 m_distanceFromPlayer = { 5.f,5.f,5.f };
+	Vector3 m_distanceFromPlayer = { 5.f,10.f,-5.f };
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
 
