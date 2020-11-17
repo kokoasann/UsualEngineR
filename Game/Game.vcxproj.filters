@@ -154,6 +154,21 @@
     <ClInclude Include="Effect\JetEffect.h">
       <Filter>Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeIdleState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyDashPunchState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeBattleState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -310,6 +325,21 @@
     <ClCompile Include="Effect\JetEffect.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyDashPunchState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeBattleState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeIdleState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -395,6 +425,9 @@
     </Filter>
     <Filter Include="Effect">
       <UniqueIdentifier>{ada73000-1b40-43d5-83dc-d83e3786741f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\MeleeBoss">
+      <UniqueIdentifier>{64287e3c-9061-40c6-a037-933fe3b1af7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

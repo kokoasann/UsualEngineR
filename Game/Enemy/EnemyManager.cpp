@@ -24,6 +24,7 @@ void EnemyManager::SpawnEnemies() {
 	std::mt19937 mt(rd()); 
 	std::uniform_int_distribution<> rand100(m_minSpawnRange, m_maxSpawnRange);
 
+
 	for (int i = 0; i < m_numNormalEnemy; i++) {
 		auto nene = NewGO<EnemyTest>(0);
 		ab.InitHP(m_normalEnemyHealth);

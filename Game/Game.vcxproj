@@ -192,6 +192,11 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
     <ClInclude Include="Enemy\State\EnemySlashState.h" />
     <ClInclude Include="Enemy\State\IEnemyState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyDashPunchState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeBattleState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeIdleState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h" />
     <ClInclude Include="Enemy\Zako\Zako_LongDistanceMachine.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Game.h" />
@@ -249,6 +254,11 @@
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
     <ClCompile Include="Enemy\State\EnemySlashState.cpp" />
     <ClCompile Include="Enemy\State\IEnemyState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyDashPunchState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeBattleState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeIdleState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Game.cpp" />
