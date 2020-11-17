@@ -26,6 +26,7 @@ void IEnemy::InitState() {
 }
 
 bool IEnemy::Start() {
+	InitState();
 	Init();
 	if (m_isDrawHpBarAboveMyself) {
 		m_healthBar = NewGO<HealthBar>(0);
@@ -61,11 +62,6 @@ void IEnemy::Update() {
 		m_rotation = rot;
 	}
 
-	//体力がなくなったら死亡ステートへ遷移
-	if (m_ability.hp <= 0) {
-		SetState(m_stateList[static_cast<int>(EnState::enDeadState)]);
-	}
-
 	Execute();
 
 	if (m_healthBar != nullptr) {
@@ -76,6 +72,11 @@ void IEnemy::Update() {
 		m_currentState->Exit(this);
 		m_currentState = m_nextState;
 		m_currentState->Enter(this);
+	}
+
+	//体力がなくなったら死亡ステートへ遷移
+	if (m_ability.hp <= 0) {
+		SetState(m_stateList[static_cast<int>(EnState::enDeadState)]);
 	}
 }
 

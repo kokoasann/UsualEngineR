@@ -57,7 +57,7 @@ void BossA::Init() {
 	m_model->InitAnimation(m_animlist, m_animlist.size());
 	PlayAnimation(EnAnimation::enIdle);
 
-	InitState();
+	//InitState();
 	SetState(m_stateList[static_cast<int>(EnState::enDeadState)]);
 
 	m_isDrawHpBarAboveMyself = false;
