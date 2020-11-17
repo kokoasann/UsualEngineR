@@ -81,6 +81,13 @@ public:
 private:
 	PlaneParticleEffectRender* m_particleEffect = nullptr;
 	Vector3 m_pos = Vector3::Zero;
+	float m_effectScale =1.f;
+	float PARTICLE_Y_UP = 300.f;
+	float PARTICLE_LIFE_TIME = 1.f;
+	float EFFECT_SCALE = 10.f;
+	float EFFECT_SCALE_INV = 0.1f;
+	float PARTICLE_SCALE = 1.f;
+
 	Quaternion m_rot = Quaternion::Identity;
 	Vector3 m_oldPos = Vector3::Zero;
 };

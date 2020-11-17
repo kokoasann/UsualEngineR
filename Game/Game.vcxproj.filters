@@ -139,9 +139,6 @@
     <ClInclude Include="Player\Attachment\JetPack.h">
       <Filter>Player\Attachment</Filter>
     </ClInclude>
-    <ClInclude Include="Player\Attachment\JetEffect.h">
-      <Filter>Player\Attachment</Filter>
-    </ClInclude>
     <ClInclude Include="Player\State\PlayerFallState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
@@ -153,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h">
       <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\JetEffect.h">
+      <Filter>Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,9 +295,6 @@
     <ClCompile Include="Player\Attachment\JetPack.cpp">
       <Filter>Player\Attachment</Filter>
     </ClCompile>
-    <ClCompile Include="Player\Attachment\JetEffect.cpp">
-      <Filter>Player\Attachment</Filter>
-    </ClCompile>
     <ClCompile Include="Player\State\PlayerFallState.cpp">
       <Filter>Player\State</Filter>
     </ClCompile>
@@ -309,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp">
       <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\JetEffect.cpp">
+      <Filter>Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +392,9 @@
     </Filter>
     <Filter Include="Enemy\Zako">
       <UniqueIdentifier>{e82d1698-faaf-44bd-89af-b9dfcb6dff02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{ada73000-1b40-43d5-83dc-d83e3786741f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

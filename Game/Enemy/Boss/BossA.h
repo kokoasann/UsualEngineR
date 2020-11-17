@@ -2,6 +2,8 @@
 #include "../IEnemy.h"
 #include "../../Player/Player.h"
 
+class JetEffect;
+
 /// <summary>
 /// 
 /// </summary>
@@ -27,6 +29,21 @@ private:
 	const Vector3 m_scale = { 1.f,1.f,1.f };
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
+
+	//Effect
+	enum class EnJetBone {
+		ElbowR,
+		ElbowL,
+		ThrusterR,
+		ThrusterL,
+		BackR,
+		BackL,
+		Skirt,
+		NumJetBone
+	};
+
+	std::vector<Bone*> m_bones;
+	std::vector<JetEffect*> m_jetEffects;
 
 	//Physics
 	const float m_radius = 1.f;

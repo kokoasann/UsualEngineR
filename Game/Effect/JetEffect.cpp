@@ -66,12 +66,11 @@ void JetEffect::PostRender()
 
 void JetEffect::Init(const JetEffectInitParam& initParam) {
 
-	const static float EFFECT_SCALE = initParam.effectScale;
-	const static float EFFECT_SCALE_INV = initParam.effectScale_inv;
-
-	const static float PARTICLE_SCALE = initParam.particleScale;
-	const static float PARTICLE_LIFE_TIME = initParam.particleLifeTime;
-	const static float PARTICLE_Y_UP = initParam.particleYUp;
+	EFFECT_SCALE = initParam.effectScale;
+	EFFECT_SCALE_INV = initParam.effectScale_inv;
+	PARTICLE_SCALE = initParam.particleScale;
+	PARTICLE_LIFE_TIME = initParam.particleLifeTime;
+	PARTICLE_Y_UP = initParam.particleYUp;
 
 	//パーティクルの拡張構造体。
 	struct ParticleData
@@ -135,7 +134,7 @@ void JetEffect::Init(const JetEffectInitParam& initParam) {
 		data.particleData.pos.x = s.pos.x + n * 500.f * deltaTime;
 		data.particleData.pos.z = s.pos.z + m * 500.f * deltaTime;
 
-		data.particleData.sca = g_vec3One * min((data.lifeTime / PARTICLE_LIFE_TIME) + 0.1f, 1.f) * 5.f;
+		data.particleData.sca = g_vec3One * min((data.lifeTime / PARTICLE_LIFE_TIME) + 0.1f, 1.f) * PARTICLE_SCALE;
 
 		Vector3 col;
 		col.Lerp(data.lifeTime / PARTICLE_LIFE_TIME, { 3,0.1f,0.0 }, { 3,1.5f,0.3 });

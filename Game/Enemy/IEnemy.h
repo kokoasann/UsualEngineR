@@ -112,7 +112,8 @@ protected:
 	void SetState(IEnemyState* s);
 	bool m_isDrawHpBarAboveMyself = true;
 	std::vector<IEnemyState*> m_stateList;
-	Vector3 m_position;
+	Vector3 m_position = Vector3::Zero;
+	Quaternion m_rotation = Quaternion::Identity;
 	StAbility m_ability;
 
 private:

@@ -47,7 +47,6 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 
 		e->SetVelocity(velocity);
 	}
-
 	//if (g_pad[0]->IsTrigger(enButtonA)) {
 		//return e->GetState(IEnemy::EnState::enIdleState);
 	//}

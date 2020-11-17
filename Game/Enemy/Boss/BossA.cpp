@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BossA.h"
+#include "../../Effect/JetEffect.h"
 
 void BossA::Init() {
 
@@ -55,14 +56,115 @@ void BossA::Init() {
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 	m_isDrawHpBarAboveMyself = false;
 
+	//Effect
+	JetEffect::JetEffectInitParam smaller;
+	smaller.effectScale = 0.01f;
+	smaller.effectScale_inv = 1.f /  smaller.effectScale;
+	smaller.particleScale = 5.f;
+	smaller.particleLifeTime = 1.f;
+	smaller.particleYUp = 300.f;
+
+	JetEffect::JetEffectInitParam thrusterParam;
+	thrusterParam.effectScale = 0.1f;
+	thrusterParam.effectScale_inv = 1.f / thrusterParam.effectScale;;
+	thrusterParam.particleScale = 5.f;
+	thrusterParam.particleLifeTime = 1.f;
+	thrusterParam.particleYUp = 300;
+
+	JetEffect::JetEffectInitParam skirtParam;
+	skirtParam.effectScale = 0.1f;
+	skirtParam.effectScale_inv =1.f / skirtParam.effectScale;
+	skirtParam.particleScale = 5;
+	skirtParam.particleLifeTime = 1.f;
+	skirtParam.particleYUp = 1000.f;
+
+	for (int i = 0; i < TO_INT(EnJetBone::NumJetBone); i++) {
+		auto jetEffect = NewGO<JetEffect>(0);
+		m_jetEffects.push_back(jetEffect);
+	}
+
+	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::ElbowL)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::ThrusterR)]->Init(thrusterParam);
+	m_jetEffects[TO_INT(EnJetBone::ThrusterL)]->Init(thrusterParam);
+	m_jetEffects[TO_INT(EnJetBone::BackR)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::BackL)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::Skirt)]->Init(skirtParam);
+
+	m_bones.resize(TO_INT(EnJetBone::NumJetBone));
+
+	//ElbowR
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Bone.002_R.026"));
+		m_bones.at(TO_INT(EnJetBone::ElbowR)) = bone;
+	}
+	//ElbowL
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Bone.002_L.026"));
+		m_bones.at(TO_INT(EnJetBone::ElbowL)) = bone;
+	}
+	//ThrusterR
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Bombe_R"));
+		m_bones.at(TO_INT(EnJetBone::ThrusterR)) = bone;
+	}
+	//ThrusterL
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Bombe_L"));
+		m_bones.at(TO_INT(EnJetBone::ThrusterL)) = bone;
+	}
+	//BackR
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"BackJet_R"));
+		m_bones.at(TO_INT(EnJetBone::BackR)) = bone;
+	}
+
+	//BackL
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"BackJet_L"));
+		m_bones.at(TO_INT(EnJetBone::BackL)) = bone;
+	}
+
+	//Skirt
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"SkirtJet"));
+		m_bones.at(TO_INT(EnJetBone::Skirt)) = bone;
+	}
+
+
 	//Physics
 	InitCharacon(m_radius,m_height, m_position, true);
 }
 
 void BossA::Terminate() {
 	DeleteGO(m_model);
+	for (int i = 0; i < m_jetEffects.size(); i++) {
+		DeleteGO(m_jetEffects[i]);
+	}
 }
 
 void BossA::Execute() {
 	m_model->SetPosition(m_position);
+	m_model->SetRotation(m_rotation);
+
+	//Effect
+	//Elbow
+	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->SetPosition(m_bones.at(TO_INT(EnJetBone::ElbowR))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->SetRotation(m_bones.at(TO_INT(EnJetBone::ElbowR))->GetWorldMatrix().GetRotate());
+	m_jetEffects[TO_INT(EnJetBone::ElbowL)]->SetPosition(m_bones.at(TO_INT(EnJetBone::ElbowL))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::ElbowL)]->SetRotation(m_bones.at(TO_INT(EnJetBone::ElbowL))->GetWorldMatrix().GetRotate());
+	//Thruster
+	m_jetEffects[TO_INT(EnJetBone::ThrusterR)]->SetPosition(m_bones.at(TO_INT(EnJetBone::ThrusterR))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::ThrusterR)]->SetRotation(m_bones.at(TO_INT(EnJetBone::ThrusterR))->GetWorldMatrix().GetRotate());
+	m_jetEffects[TO_INT(EnJetBone::ThrusterL)]->SetPosition(m_bones.at(TO_INT(EnJetBone::ThrusterL))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::ThrusterL)]->SetRotation(m_bones.at(TO_INT(EnJetBone::ThrusterL))->GetWorldMatrix().GetRotate());
+	//Back
+	m_jetEffects[TO_INT(EnJetBone::BackR)]->SetPosition(m_bones.at(TO_INT(EnJetBone::BackR))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::BackR)]->SetRotation(m_bones.at(TO_INT(EnJetBone::BackR))->GetWorldMatrix().GetRotate());
+	m_jetEffects[TO_INT(EnJetBone::BackL)]->SetPosition(m_bones.at(TO_INT(EnJetBone::BackL))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::BackL)]->SetRotation(m_bones.at(TO_INT(EnJetBone::BackL))->GetWorldMatrix().GetRotate());
+	//Skirt
+	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetPosition(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetRotation(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetRotate());
+
 }
