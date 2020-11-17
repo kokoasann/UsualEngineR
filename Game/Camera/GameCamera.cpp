@@ -66,7 +66,12 @@ void GameCamera::Update()
 	else {
 		static int targetEnemyNo = 0;
 		if (g_pad[0]->IsTrigger(enButtonLB3)) {
-			targetEnemyNo = (targetEnemyNo + 1) % enemies.size();
+			if (targetEnemyNo < enemies.size() - 1){
+				targetEnemyNo++;
+			}
+			else {
+				targetEnemyNo = 0;
+			}
 		}
 		mp_enemy = enemies.at(targetEnemyNo);
 	}
