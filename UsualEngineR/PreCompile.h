@@ -49,6 +49,7 @@
 #include "Thread/ThreadObject.h"
 
 #include "UsualEngine.h"
+
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "IShaderResource.h"
@@ -69,6 +70,7 @@
 
 
 
+
 #include "system/system.h"
 
 #include "Resource/IResource.h"
@@ -80,6 +82,8 @@
 #include "Sprite.h"
 #include "Model.h"
 #include "Primitive.h"
+
+#include "IK/IK.h"
 
 #include "HID/GamePad.h"
 #include "Font.h"

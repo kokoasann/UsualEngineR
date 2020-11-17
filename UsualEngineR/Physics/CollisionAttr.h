@@ -12,6 +12,8 @@ namespace UER
 		enCollisionAttr_None = 0,
 		enCollisionAttr_Ground = 1,
 		enCollisionAttr_Character = 2,
-		enCollisionAttr_User = 4,
+		enCollisionAttr_NonHitIK = 4,
+		enCOllisionAttr_IK = 8,
+		enCollisionAttr_User = 16
 	};
 }
