@@ -7,12 +7,31 @@ class HealthBar;
 class IEnemy : public GameObject
 {
 public:
+
+	enum class EnState {
+		enIdleState,
+		enBattleState,
+		enAttackSlash,
+		enDeadState,
+		enNumState
+	};
+
+	enum class EnAnimation {
+		enIdle,
+		enWalk,
+		enRun,
+		enAttackA,
+		enAttackB,
+		enNumAnim
+	};
+
 	virtual~IEnemy() {};
 
 	virtual void Init() {};
 	virtual void Execute() {};
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
+	virtual void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) {}
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;
@@ -22,14 +41,6 @@ public:
 
 	//パス検索とか重めの共通処理
 	void PathFind(Vector3 start, Vector3 end) { Sleep(1000); };
-
-	enum class EnState {
-		enIdleState,
-		enBattleState,
-		enAttackSlash,
-		enDeadState,
-		enNumState
-	};
 
 	//TODO : データを構造体にまとめる
 	/*
@@ -93,7 +104,6 @@ public:
 	void SetVelocity(const Vector3& velocity) {
 		m_velocity = velocity;
 	}
-
 
 protected:
 	//キャラコン作成

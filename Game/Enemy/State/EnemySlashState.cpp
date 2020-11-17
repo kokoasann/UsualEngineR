@@ -11,6 +11,9 @@ EnemySlashState::~EnemySlashState() {
 }
 
 void EnemySlashState::Enter(IEnemy* e) {
+
+	e->PlayAnimation(IEnemy::EnAnimation::enAttackA);
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enemy - Enter slash\n");
 #endif

@@ -11,6 +11,9 @@ EnemyBattleState::~EnemyBattleState() {
 }
 
 void EnemyBattleState::Enter(IEnemy* e) {
+
+	e->PlayAnimation(IEnemy::EnAnimation::enRun);
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter battle\n");
 #endif // _PRINT_ENEMY_STATE

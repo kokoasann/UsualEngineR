@@ -16,9 +16,17 @@ public:
 		return Player::EnAttackType::enRemoteAttackPreset;
 	}
 
+	void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) override{
+		m_model->Play(static_cast<int>(anim), interpolate);
+	}
+
 private:
+
 	//Model
 	ModelRender* m_model = nullptr;
+	const Vector3 m_scale = { 1.f,1.f,1.f };
+	CAnimationClip m_animClip[1];
+	std::vector<CAnimationClipPtr> m_animlist;
 
 	//Physics
 	const float m_radius = 1.f;

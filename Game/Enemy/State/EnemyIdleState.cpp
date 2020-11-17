@@ -14,6 +14,9 @@ EnemyIdleState::~EnemyIdleState() {
 }
 
 void EnemyIdleState::Enter(IEnemy* e) {
+
+	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy Idle\n");
 #endif
