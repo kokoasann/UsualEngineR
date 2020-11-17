@@ -3,6 +3,7 @@
 #include "../../EnemyManager.h"
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
+#include "../../Boss/BossA.h"
 
 EnemyMeleeIdleState::EnemyMeleeIdleState() {
 
@@ -17,7 +18,7 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
 #ifdef _PRINT_ENEMY_STATE
-	DebugPrint_WATA("Enter enemy teleportation\n");
+	DebugPrint_WATA("Enter enemy melee idle\n");
 #endif
 }
 
@@ -40,7 +41,8 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 	const float chaseRange = 60.f;
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
-		return e->GetState(IEnemy::EnState::enBattleState);
+		//return e->GetState(IEnemy::EnState::enBattleState);
+		return e->GetStateList().at(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
 	//ó‘Ô‚ª•Ï‚í‚ç‚È‚¢‚È‚ç©•ª‚ğ•Ô‚·
@@ -49,6 +51,6 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 
 void EnemyMeleeIdleState::Exit(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
-	DebugPrint_WATA("Exit enemy teleportation\n");
+	DebugPrint_WATA("Exit enemy melee idle\n");
 #endif
 }

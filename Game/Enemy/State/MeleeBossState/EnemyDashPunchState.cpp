@@ -23,27 +23,7 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyDashPunchState::Update(IEnemy* e) {
 
-	//“K“–‚É“®‚©‚µ‚Ä‚İ‚½‚¾‚¯
-	static float time = 0.f;
-	time += gameTime()->GetDeltaTime();
-	auto add = std::sin(time);
-	Vector3 vel = Vector3::Zero;
-	vel.x = add;
-	vel.y -= 10.f;
-	//e->SetVelocity(vel);
 
-
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
-	auto& epos = e->GetPosition();
-	auto& ppos = player->GetPosition();
-	auto vecToPlayer = ppos - epos;
-	const float chaseRange = 60.f;
-
-	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
-		return e->GetState(IEnemy::EnState::enBattleState);
-	}
-
-	//ó‘Ô‚ª•Ï‚í‚ç‚È‚¢‚È‚ç©•ª‚ğ•Ô‚·
 	return this;
 }
 

@@ -1,15 +1,23 @@
 #include "stdafx.h"
 #include "IEnemy.h"
+#include "HealthBar.h"
+#include "../GameManager.h"
+#include "../GameSceneMenu.h"
 #include "State/IEnemyState.h"
 #include "State/EnemyIdleState.h"
 #include "State/EnemyBattleState.h"
 #include "State/EnemySlashState.h"
 #include "State/EnemyDeadState.h"
-#include "HealthBar.h"
-#include "../GameManager.h"
-#include "../GameSceneMenu.h"
 
 void IEnemy::Awake() {
+	//m_stateList.resize(static_cast<int>(EnState::enNumState));
+	//m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyIdleState();
+	//m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
+	//m_stateList[static_cast<int>(EnState::enAttackSlash)] = new EnemySlashState();
+	//m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyDeadState();
+}
+
+void IEnemy::InitState() {
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyIdleState();
 	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
@@ -53,15 +61,15 @@ void IEnemy::Update() {
 		m_rotation = rot;
 	}
 
+	//体力がなくなったら死亡ステートへ遷移
+	if (m_ability.hp <= 0) {
+		SetState(m_stateList[static_cast<int>(EnState::enDeadState)]);
+	}
+
 	Execute();
 
 	if (m_healthBar != nullptr) {
 		m_healthBar->SetParentPos(m_position);
-	}
-
-	//体力がなくなったら死亡ステートへ遷移
-	if (m_ability.hp <= 0) {
-		m_nextState = m_stateList[static_cast<int>(EnState::enDeadState)];
 	}
 
 	if (m_nextState != m_currentState) {

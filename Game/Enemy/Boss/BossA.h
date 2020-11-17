@@ -11,6 +11,7 @@ class BossA :public IEnemy
 {
 public:
 	void Init() override;
+	void InitState() override;
 	void Execute() override;
 	void Terminate() override;
 

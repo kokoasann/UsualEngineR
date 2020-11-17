@@ -28,6 +28,7 @@ public:
 	virtual~IEnemy() {};
 
 	virtual void Init() {};
+	virtual void InitState();
 	virtual void Execute() {};
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
@@ -103,6 +104,10 @@ public:
 
 	void SetVelocity(const Vector3& velocity) {
 		m_velocity = velocity;
+	}
+
+	const std::vector<IEnemyState*>& GetStateList() const{
+		return m_stateList;
 	}
 
 protected:

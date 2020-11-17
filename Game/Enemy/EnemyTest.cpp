@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "EnemyTest.h"
-#include "State/IEnemyState.h"
 
 void EnemyTest::Init() {
 	//Model
@@ -25,6 +24,7 @@ void EnemyTest::Init() {
 	//m_model->Play(0);
 
 	//State
+	InitState();
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 
 	//Physics
