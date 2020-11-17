@@ -343,7 +343,7 @@ private:
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-	Vector3 m_position = { 0,15,-20 };
+	Vector3 m_position = { 0,15,-100 };
 	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
