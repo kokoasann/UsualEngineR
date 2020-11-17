@@ -14,7 +14,7 @@
 #include "../GameManager.h"
 #include "../GameSceneMenu.h"
 #include "Attachment/JetPack.h"
-#include "Attachment/JetEffect.h"
+#include "../Effect/JetEffect.h"
 
 Player::Player()
 {
@@ -206,7 +206,7 @@ bool Player::Start()
 	JetEffect::JetEffectInitParam jeip;
 	jeip.effectScale = 0.01f;
 	jeip.effectScale_inv = 100.f;
-	jeip.particleScale = 500.f;
+	jeip.particleScale = 5.f;
 	jeip.particleLifeTime = 1.f;
 	jeip.particleYUp = 300.f;
 	jetEffect->Init(jeip);

@@ -7,12 +7,31 @@ class HealthBar;
 class IEnemy : public GameObject
 {
 public:
+
+	enum class EnState {
+		enIdleState,
+		enBattleState,
+		enAttackSlash,
+		enDeadState,
+		enNumState
+	};
+
+	enum class EnAnimation {
+		enIdle,
+		enWalk,
+		enRun,
+		enAttackA,
+		enAttackB,
+		enNumAnim
+	};
+
 	virtual~IEnemy() {};
 
 	virtual void Init() {};
 	virtual void Execute() {};
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
+	virtual void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) {}
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;
@@ -22,14 +41,6 @@ public:
 
 	//パス検索とか重めの共通処理
 	void PathFind(Vector3 start, Vector3 end) { Sleep(1000); };
-
-	enum class EnState {
-		enIdleState,
-		enBattleState,
-		enAttackSlash,
-		enDeadState,
-		enNumState
-	};
 
 	//TODO : データを構造体にまとめる
 	/*
@@ -94,7 +105,6 @@ public:
 		m_velocity = velocity;
 	}
 
-
 protected:
 	//キャラコン作成
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
@@ -102,7 +112,8 @@ protected:
 	void SetState(IEnemyState* s);
 	bool m_isDrawHpBarAboveMyself = true;
 	std::vector<IEnemyState*> m_stateList;
-	Vector3 m_position;
+	Vector3 m_position = Vector3::Zero;
+	Quaternion m_rotation = Quaternion::Identity;
 	StAbility m_ability;
 
 private:

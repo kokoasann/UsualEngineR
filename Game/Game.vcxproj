@@ -179,6 +179,7 @@
     <ClInclude Include="Camera\CCameraCollisionSlover.h" />
     <ClInclude Include="Camera\GameCamera.h" />
     <ClInclude Include="Camera\SpringCamera.h" />
+    <ClInclude Include="Effect\JetEffect.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
@@ -201,7 +202,6 @@
     <ClInclude Include="Item\ItemManager.h" />
     <ClInclude Include="Item\RedPotion.h" />
     <ClInclude Include="Level\GameStage.h" />
-    <ClInclude Include="Player\Attachment\JetEffect.h" />
     <ClInclude Include="Player\Attachment\JetPack.h" />
     <ClInclude Include="Player\Attack\Bomb.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackKick.h" />
@@ -236,6 +236,7 @@
     <ClCompile Include="Camera\CCameraCollisionSlover.cpp" />
     <ClCompile Include="Camera\GameCamera.cpp" />
     <ClCompile Include="Camera\SpringCamera.cpp" />
+    <ClCompile Include="Effect\JetEffect.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
@@ -259,7 +260,6 @@
     <ClCompile Include="Item\RedPotion.cpp" />
     <ClCompile Include="Level\GameStage.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player\Attachment\JetEffect.cpp" />
     <ClCompile Include="Player\Attachment\JetPack.cpp" />
     <ClCompile Include="Player\Attack\Bomb.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackKick.cpp" />

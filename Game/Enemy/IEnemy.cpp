@@ -43,6 +43,16 @@ void IEnemy::Update() {
 	m_nextState = m_currentState->Update(this);
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
 	m_position = m_charaCon.GetPosition();
+
+	//Rotation
+	if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
+		Quaternion rot = Quaternion::Identity;
+		auto theta = atan2(m_velocity.x, m_velocity.z);
+		theta = theta * (180.f / Math::PI);
+		rot.SetRotationDegY(theta);
+		m_rotation = rot;
+	}
+
 	Execute();
 
 	if (m_healthBar != nullptr) {

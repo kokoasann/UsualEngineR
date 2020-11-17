@@ -14,6 +14,9 @@ EnemyIdleState::~EnemyIdleState() {
 }
 
 void EnemyIdleState::Enter(IEnemy* e) {
+
+	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy Idle\n");
 #endif
@@ -28,7 +31,7 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	Vector3 vel = Vector3::Zero;
 	vel.x = add;
 	vel.y -= 10.f;
-	e->SetVelocity(vel);
+	//e->SetVelocity(vel);
 
 
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();

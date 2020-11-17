@@ -11,6 +11,9 @@ EnemyBattleState::~EnemyBattleState() {
 }
 
 void EnemyBattleState::Enter(IEnemy* e) {
+
+	e->PlayAnimation(IEnemy::EnAnimation::enRun);
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter battle\n");
 #endif // _PRINT_ENEMY_STATE
@@ -44,7 +47,6 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 
 		e->SetVelocity(velocity);
 	}
-
 	//if (g_pad[0]->IsTrigger(enButtonA)) {
 		//return e->GetState(IEnemy::EnState::enIdleState);
 	//}

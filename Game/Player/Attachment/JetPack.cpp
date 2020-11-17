@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "JetPack.h"
 #include "../../Enemy/EnemyManager.h"
-#include "JetEffect.h"
+#include "../../Effect/JetEffect.h"
 
 JetPack::JetPack()
 {
@@ -101,7 +101,7 @@ bool JetPack::Start()
 	JetEffect::JetEffectInitParam jeip;
 	jeip.effectScale = 0.01f;
 	jeip.effectScale_inv = 100.f;
-	jeip.particleScale = 500.f;
+	jeip.particleScale = 5.f;
 	jeip.particleLifeTime = 0.5f;
 	jeip.particleYUp = 400.f;
 
