@@ -2,6 +2,8 @@
 
 
 #include "PreCompile.h"
+#include "GameCollisionAttribute.h"
+
 using namespace UER;
 
 //ゲーム側デバッグ表示定義

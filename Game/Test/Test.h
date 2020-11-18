@@ -24,7 +24,6 @@ public:
 	/// 結論：
 	/// translate,scale,rotateの行列の生成に時間がかかるのでこれらすべてを作る必要な場合は
 	/// 最適化したものを使う方が速い。
-	/// それぞれの行列を作らない場合は今まで通りの生成方法のほうが速い。
 	/// </summary>
 	void Test_CreateTransform();
 private:

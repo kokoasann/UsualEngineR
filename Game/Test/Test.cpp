@@ -287,6 +287,11 @@ void Test::Test_CreateTransform()
 	DebugPrint_NOMOTO("create world transform time measure");
 
 	DebugPrint_NOMOTO("too create world transform element");
+	/*
+	Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+	old: 0.003011
+	new: 0.000259
+	*/
 	{
 		Matrix w;
 		Stopwatch sw;
@@ -322,6 +327,9 @@ void Test::Test_CreateTransform()
 	DirectXMathのMultiplyがかなり最適化されていてめちゃくちゃ速い。
 	なので、下のようにすでにそれぞれの行列が作られている場合はMultiplyを
 	使った方が速い。
+	Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+	old: 0.000113
+	new: 0.000257
 	*/
 	{
 		Matrix tra, sca, rot;
@@ -351,9 +359,16 @@ void Test::Test_CreateTransform()
 		DebugPrintValue(EDebugConsoloUser::NOMOTO, "new", sw.Stop());
 		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
 	}
+	DebugPrint_NOMOTO("");
 
+	DebugPrint_NOMOTO("case 2 make");
+	/*
+	下の実行結果から、Matrixのコピーでも時間がかかっている。
 
-	//DebugPrint_NOMOTO("already created world transform element");
+	Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+	old: 0.002874
+	new: 0.000436
+	*/
 	{
 		Matrix w;
 		Stopwatch sw;
@@ -366,24 +381,23 @@ void Test::Test_CreateTransform()
 			rot.MakeRotationX(180);
 			w.Multiply(sca, rot);
 			w.Multiply(w, tra);
+			w.Multiply(sca, rot);
+			w.Multiply(w, tra);
 		}
 		DebugPrintValue(EDebugConsoloUser::NOMOTO, "old", sw.Stop());
 		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
 
-		Vector3 vpos = g_vec3Zero, vsca = g_vec3One;
-		Quaternion qrot = g_quatIdentity;
+		
 		sw.Start();
 		for (int i = 0; i < 100000; i++)
 		{
-			Matrix rot;
-			rot.MakeRotationFromQuaternion(g_quatIdentity);
-			w = rot;
-			w.v[0].Scale(vsca.x);
-			w.v[1].Scale(vsca.y);
-			w.v[2].Scale(vsca.z);
-			w.SetTranspose(vpos);
+			Vector3 vpos = g_vec3Zero, vsca = g_vec3One;
+			Quaternion qrot = g_quatIdentity;
+			w.MakeTransform(vpos, vsca, qrot);
+			w.MakeTransform(vpos, vsca, qrot);
 		}
 		DebugPrintValue(EDebugConsoloUser::NOMOTO, "new", sw.Stop());
 		DebugPrintMatrix(EDebugConsoloUser::NOMOTO, w);
 	}
+	DebugPrint_NOMOTO("");
 }
