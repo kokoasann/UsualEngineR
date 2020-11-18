@@ -307,6 +307,9 @@
     <ClInclude Include="Graphics\PostEffect\LightStreeks.h">
       <Filter>Graphics\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\IK\IK.h">
+      <Filter>Graphics\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -579,6 +582,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\PostEffect\LightStreeks.cpp">
       <Filter>Graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IK\IK.cpp">
+      <Filter>Graphics\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

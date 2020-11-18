@@ -11,6 +11,14 @@ namespace UER
 	static int c=0;
 	static std::mutex debugMute;
 
+	void Model::Release()
+	{
+		/*for (auto ik : m_ikList)
+		{
+			delete ik;
+		}*/
+	}
+
 	void Model::Init(const ModelInitData& initData)
 	{
 		//std::lock_guard<std::mutex> lg(debugMute);
@@ -83,6 +91,13 @@ namespace UER
 		);
 		
 	}
+
+	/*IK* Model::CreateIK(Bone* startBone, Bone* endBone, float radius)
+	{
+		IK* ik = new IK(&m_skeleton, startBone, endBone, radius);
+		m_ikList.push_back(ik);
+		return ik;
+	}*/
 
 
 }

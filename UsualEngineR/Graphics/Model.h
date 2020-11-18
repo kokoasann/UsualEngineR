@@ -4,6 +4,8 @@
 #include "MeshParts.h"
 #include "Skeleton.h"
 
+#include "IK/IK.h"
+
 
 namespace UER
 {
@@ -41,6 +43,10 @@ namespace UER
 	class Model {
 	
 	public:
+		/// <summary>
+		/// 
+		/// </summary>
+		void Release();
 	
 		/// <summary>
 		/// tkmファイルから初期化。
@@ -117,6 +123,17 @@ namespace UER
 		{
 			m_raytracingInstanceList.push_back(instance);
 		}
+
+		/// <summary>
+		/// IKを作成する
+		/// 
+		/// </summary>
+		/// <param name="startBone"></param>
+		/// <param name="endBone"></param>
+		/// <param name="radius"></param>
+		/// <returns></returns>
+		//IK* CreateIK(Bone* startBone, Bone* endBone, float radius);
+
 	private:
 	
 		Matrix m_world;			//ワールド行列。
@@ -127,6 +144,7 @@ namespace UER
 		EUpAxis m_upAxis = enUpAxisZ;
 		std::vector<raytracing::Instance*> m_raytracingInstanceList;
 		
+		//std::vector<IK*> m_ikList;
 	};
 
 

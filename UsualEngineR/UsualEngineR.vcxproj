@@ -195,6 +195,7 @@
     <ClInclude Include="Graphics\GaussBlur.h" />
     <ClInclude Include="Graphics\GPUBuffer.h" />
     <ClInclude Include="Graphics\GraphicsEngine.h" />
+    <ClInclude Include="Graphics\IK\IK.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\IShaderResource.h" />
     <ClInclude Include="Graphics\IUnorderAccessResource.h" />
@@ -308,6 +309,7 @@
     <ClCompile Include="Graphics\GaussBlur.cpp" />
     <ClCompile Include="Graphics\GPUBuffer.cpp" />
     <ClCompile Include="Graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="Graphics\IK\IK.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Light\LightBase.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
