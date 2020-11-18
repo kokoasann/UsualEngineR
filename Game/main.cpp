@@ -58,13 +58,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	bool isInit = false;
 
-	SetDebugConsoleUser(EDebugConsoloUser::COMMON | EDebugConsoloUser::NOMOTO |  EDebugConsoloUser::WATA);
+	SetDebugConsoleUser(EDebugConsoloUser::COMMON | /*EDebugConsoloUser::NOMOTO |*/  EDebugConsoloUser::WATA);
 	
 	GRandom().Init(0);
 
 	
 	auto test = NewGO<Test>(0);
-	test->Test_CreateTransform();
+	//test->Test_CreateTransform();
 
 	NewGO<Game>(0);
 

@@ -11,5 +11,5 @@ public:
 	void Exit(IEnemy* e) override;
 private:
 	float m_timer = 0.f;
-	
+	float m_timeSpan = 2.f;
 };

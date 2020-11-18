@@ -4,7 +4,7 @@
 /// <summary>
 /// 
 /// </summary>
-class Enemy_Bullet :public GameObject
+class Enemy_Bullet final:public GameObject
 {
 public:
 	Enemy_Bullet();
@@ -74,6 +74,11 @@ public:
 	{
 		return m_speed;
 	}
+
+	void SetDamage(const float f)
+	{
+		m_damage = f;
+	}
 private:
 	ModelRender* m_model;
 	float m_scale;
@@ -85,6 +90,7 @@ private:
 	float m_timeLimit = 0.f;
 
 	float m_attackRange = 0.f;
+	float m_damage = 100.f;
 
 	SphereCollider m_sphere;
 };

@@ -113,8 +113,10 @@ void Enemy_Bullet::Update()
 {
 	float dtime = gameTime()->GetDeltaTime();
 
+	m_timer += dtime;
+
 	Vector3 oldpos = m_model->GetPosition();
-	Vector3 newpos = oldpos + m_dir * (m_speed * m_timer);
+	Vector3 newpos = oldpos + m_dir * (m_speed * dtime);
 
 	btTransform start, end;
 	start.setOrigin({ oldpos.x, oldpos.y, oldpos.z });
@@ -131,7 +133,7 @@ void Enemy_Bullet::Update()
 
 		if (m_attackRange > b2pLen)
 		{
-
+			gm.m_player->ApplyDamage(m_damage);
 		}
 
 		auto pthis = this;
@@ -144,6 +146,12 @@ void Enemy_Bullet::Update()
 	}
 
 	m_model->SetPosition(newpos);
+
+	if (m_timer >= m_timeLimit)
+	{
+		auto pthis = this;
+		DeleteGO(pthis);
+	}
 }
 
 void Enemy_Bullet::PostUpdate()

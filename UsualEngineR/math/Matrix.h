@@ -345,6 +345,15 @@ namespace UER
 			v[2].Scale(sca.z);
 		}
 
+		void MakeTransform_Pos_Sca(const Vector3& pos, const Vector3& sca)
+		{
+			*this = Matrix::Identity;
+			v[0].x = sca.x;
+			v[1].y = sca.y;
+			v[2].z = sca.z;
+			SetTranspose(pos);
+		}
+
 		void CalcMatrixDecompose(Vector3& trans, Quaternion& rot, Vector3& scale) const
 		{
 			Matrix mat = *this;
