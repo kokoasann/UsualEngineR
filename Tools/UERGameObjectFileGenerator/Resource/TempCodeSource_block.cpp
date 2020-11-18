@@ -21,7 +21,7 @@ void XXX::Release()
 
 void XXX::OnDestroy()
 {
-	Release();
+
 }
 
 
