@@ -35,13 +35,6 @@ public:
 		enNumState
 	};
 
-private:
-
-	//Model
-	const Vector3 m_scale = { 1.f,1.f,1.f };
-	CAnimationClip m_animClip[1];
-	std::vector<CAnimationClipPtr> m_animlist;
-
 	//Effect
 	enum class EnJetBone {
 		ElbowR,
@@ -54,8 +47,12 @@ private:
 		NumJetBone
 	};
 
-	std::vector<Bone*> m_bones;
-	std::vector<JetEffect*> m_jetEffects;
+private:
+
+	//Model
+	const Vector3 m_scale = { 1.f,1.f,1.f };
+	CAnimationClip m_animClip[1];
+	std::vector<CAnimationClipPtr> m_animlist;
 
 	//Physics
 	const float m_radius = 1.f;

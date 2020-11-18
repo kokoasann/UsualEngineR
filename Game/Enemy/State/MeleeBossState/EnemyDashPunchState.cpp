@@ -22,6 +22,8 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
 	player->ApplyDamage(m_damageAmount);
 
+
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy dash punch state\n");
 #endif

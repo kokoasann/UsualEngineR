@@ -139,6 +139,10 @@ protected:
 	Quaternion m_rotation = Quaternion::Identity;
 	StAbility m_ability;
 
+	//Effects
+	std::vector<Bone*> m_bones;
+	std::vector<JetEffect*> m_jetEffects;
+
 private:
 
 	HealthBar* m_healthBar = nullptr;
