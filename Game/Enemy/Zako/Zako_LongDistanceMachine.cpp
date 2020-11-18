@@ -24,6 +24,7 @@ void Zako_LongDistanceMachine::Init()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
+	m_model->SetMulColor({ 0.5, 0, 0.5, 1 });
 	/*m_animlist.resize(1);
 	m_animlist[0] = std::make_unique<CAnimationClip>();
 	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");

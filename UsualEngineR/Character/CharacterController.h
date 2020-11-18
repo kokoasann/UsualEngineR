@@ -81,6 +81,14 @@ namespace UER
 		{
 			return &m_rigidBody;
 		}
+
+		void AddCollisionAttribute(int ca)
+		{
+			if (!m_isUseRigidBody)
+				return;
+			m_rigidBody.GetBody()->setUserIndex(m_rigidBody.GetBody()->getUserIndex() | ca);
+		}
+
 		/*!
 		* @brief	剛体を物理エンジンから削除。。
 		*/

@@ -363,13 +363,14 @@ namespace UER
 			UpdateRigidBody(m_target);
 	}
 
-#if 0
+
 	/// <summary>
 	/// 
 	/// </summary>
 	/// <param name="worldMat"></param>
 	void IK::UpdateTarget_Foot(const Matrix& worldMat)
 	{
+#if 0
 		auto effmat = GetBoneWorldMatrix(m_effectorBone, worldMat);
 		auto effpos = effmat.GetTransrate();
 		auto currentBone = m_effectorBone->GetParent();						//作業中のボーン
@@ -564,8 +565,9 @@ namespace UER
 
 		if (m_isUseRigidBody)
 			UpdateRigidBody(m_target);
-	}
 #endif
+	}
+
 
 	void IK::UpdateTarget_NoneHit(const Matrix& worldMat)
 	{

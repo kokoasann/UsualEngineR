@@ -178,6 +178,10 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeOverheatState.h">
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Equipment\Enemy_Bullet.h">
+      <Filter>Enemy\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCollisionAttribute.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -358,6 +362,10 @@
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeOverheatState.cpp">
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Equipment\Enemy_Bullet.cpp">
+      <Filter>Enemy\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCollisionAttribute.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -446,6 +454,9 @@
     </Filter>
     <Filter Include="Enemy\State\MeleeBoss">
       <UniqueIdentifier>{64287e3c-9061-40c6-a037-933fe3b1af7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Equipment">
+      <UniqueIdentifier>{44d0761e-cf98-4fd6-ab6f-3f79983deebd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

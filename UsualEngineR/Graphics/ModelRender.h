@@ -4,6 +4,7 @@
 
 namespace UER
 {
+	class IK;
 	//
 	class ModelRender:public GameObject
 	{
@@ -92,6 +93,12 @@ namespace UER
 		{
 			return m_animPlaySpeed;
 		}
+
+		IK* CreateIK(Bone* startBone, Bone* endBone, float radius)
+		{
+			m_model.CreateIK(startBone, endBone, radius);
+		}
+
 	private:
 		Model m_model;				//モデル
 		CAnimation m_animation;		//アニメーション

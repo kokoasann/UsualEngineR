@@ -184,6 +184,7 @@
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
+    <ClInclude Include="Enemy\Equipment\Enemy_Bullet.h" />
     <ClInclude Include="Enemy\HealthBar.h" />
     <ClInclude Include="Enemy\IEnemy.h" />
     <ClInclude Include="Enemy\State\EnemyBattleState.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Enemy\Zako\Zako_LongDistanceMachine.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameCollisionAttribute.h" />
     <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSceneMenu.h" />
@@ -249,6 +251,7 @@
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
+    <ClCompile Include="Enemy\Equipment\Enemy_Bullet.cpp" />
     <ClCompile Include="Enemy\HealthBar.cpp" />
     <ClCompile Include="Enemy\IEnemy.cpp" />
     <ClCompile Include="Enemy\State\EnemyBattleState.cpp" />
@@ -268,6 +271,7 @@
     <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameCollisionAttribute.cpp" />
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSceneMenu.cpp" />
