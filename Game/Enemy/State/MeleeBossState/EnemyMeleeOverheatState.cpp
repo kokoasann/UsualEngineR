@@ -3,6 +3,7 @@
 #include "../../EnemyManager.h"
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
+#include "../../Boss/BossA.h"
 
 EnemyMeleeOverheatState::EnemyMeleeOverheatState() {
 
@@ -23,10 +24,16 @@ void EnemyMeleeOverheatState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyMeleeOverheatState::Update(IEnemy* e) {
 
+	const float GRAVITY = -50.f;
+
 	m_timer += gameTime()->GetDeltaTime();
 
-	if (m_timer > m_time) {
-		return e->GetStateList().at(TO_INT(IEnemy::EnState::enBattleState));
+	auto vel = Vector3::Zero;
+	vel.y = GRAVITY;
+	e->SetVelocity(vel);
+
+	if (m_timer > m_time and e->IsOnGround()) {
+		return e->GetStateList().at(TO_INT(BossA::EnState::enBattleState));
 	}
 
 	return this;

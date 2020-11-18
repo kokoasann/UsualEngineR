@@ -4,6 +4,7 @@
 #include "../State/MeleeBossState/EnemyMeleePunchState.h"
 #include "../State/MeleeBossState//EnemyDashPunchState.h"
 #include "../State/MeleeBossState/EnemyMeleeBattleState.h"
+#include "../State/MeleeBossState/EnemyMeleeFlyState.h"
 #include "../State/MeleeBossState/EnemyMeleeIdleState.h"
 #include "../State/MeleeBossState/EnemyMeleeDeadState.h"
 #include "../State/MeleeBossState/EnemyMeleeOverheatState.h"
@@ -148,7 +149,7 @@ void BossA::InitState() {
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyMeleeIdleState();
 	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyMeleeBattleState();
-	m_stateList[static_cast<int>(EnState::enFlyState)] = new EnemyMeleeBattleState();
+	m_stateList[static_cast<int>(EnState::enFlyState)] = new EnemyMeleeFlyState();
 	m_stateList[static_cast<int>(EnState::enTeleportation)] = new EnemyTeleportationState();
 	m_stateList[static_cast<int>(EnState::enPunch)] = new EnemyMeleePunchState();
 	m_stateList[static_cast<int>(EnState::enDashPunch)] = new EnemyDashPunchState();

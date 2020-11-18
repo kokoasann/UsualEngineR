@@ -17,7 +17,10 @@ void EnemyMeleeFlyState::Enter(IEnemy* e) {
 
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
-	m_flyTimer = 0.f;
+	bool flag = e->IsOnGround();
+	if (flag) {
+		m_flyTimer = 0.f;
+	}
 
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy fly\n");
@@ -32,6 +35,15 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 		return e->GetState(TO_INT(BossA::EnState::enIdleState));
 	}
 
+	auto delta = gameTime()->GetDeltaTime();
+	m_flyTimer += delta;
+
+	printf("time : %f\n", m_flyTimer);
+
+	if (m_flyTimer > m_flyLimitTime) {
+		return e->GetState(TO_INT(BossA::EnState::enOverheat));
+	}
+
 
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
@@ -43,31 +55,32 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 	const float distLimit = 20.f;
 	const float attackRange = 30.f;
 
-	//Chase
-	if (vecToPlayer.Length() > distLimit) {
-		vecToPlayer.Normalize();
-		const float speed = 200.f;
-		auto velocity = vecToPlayer * speed;
-		e->SetVelocity(velocity);
+	//Teleportation
+	const float teleportationDist = 80.f;
+	if (vecToPlayer.Length() > teleportationDist) {
+		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
 	}
 
+	//Chase
+	if (vecToPlayer.Length() > distLimit) {
+		auto v = vecToPlayer;
+		v.Normalize();
+		const float speed = 200.f;
+		auto velocity = v * speed;
+		e->SetVelocity(velocity);
+	}
 
 	if (vecToPlayer.Length() < attackRange) {
 		auto rnd = GRandom().Rand();
 		if (rnd >= 0.5f) {
-			return e->GetState(IEnemy::EnState::enAttackA);
+			return e->GetState(TO_INT(BossA::EnState::enPunch));
 		}
 		else {
-			return e->GetState(IEnemy::EnState::enAttackB);
+			return e->GetState(TO_INT(BossA::EnState::enDashPunch));
 		}
 	}
 
-	auto delta = gameTime()->GetDeltaTime();
-	m_flyTimer + delta;
-
-	if(m_flyTimer > m_flyLimitTime)
-		return e->GetStateList().at(TO_INT(IEnemy::EnState::enBattleState));
-
+	return this;
 }
 
 void EnemyMeleeFlyState::Exit(IEnemy* e) {

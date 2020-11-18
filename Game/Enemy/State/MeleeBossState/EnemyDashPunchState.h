@@ -13,6 +13,6 @@ private:
 	float m_timer = 0.f;
 	const float m_damageAmount = 10.f;
 	const float m_range = 30.f;
-	const float m_intervalSec = 1.f;
+	const float m_intervalSec = 0.3f;
 };
 
