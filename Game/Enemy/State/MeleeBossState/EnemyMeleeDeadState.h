@@ -1,14 +1,14 @@
 #pragma once
 #include "../IEnemyState.h"
 
-class EnemyMeleeBattleState : public IEnemyState
+class EnemyMeleeDeadState : public IEnemyState
 {
 public:
-	EnemyMeleeBattleState();
-	virtual ~EnemyMeleeBattleState() override;
+	EnemyMeleeDeadState();
+	virtual ~EnemyMeleeDeadState() override;
 	virtual void Enter(IEnemy* e) override;
 	virtual IEnemyState* Update(IEnemy* e) override;
 	virtual void Exit(IEnemy* e) override;
 private:
-	float m_flyTimer = 0.f;
+
 };

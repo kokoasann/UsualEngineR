@@ -34,7 +34,7 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 	const float attackRange = 30.f;
 
 	if (vecToPlayer.Length() < attackRange) {
-		return e->GetState(IEnemy::EnState::enAttackSlash);
+		return e->GetState(IEnemy::EnState::enAttackA);
 	}
 
 	//Chase

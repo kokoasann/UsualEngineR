@@ -24,7 +24,6 @@ void EnemyTest::Init() {
 	//m_model->Play(0);
 
 	//State
-	//InitState();
 	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 
 	//Physics

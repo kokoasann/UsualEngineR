@@ -10,6 +10,9 @@ public:
 	virtual IEnemyState* Update(IEnemy* e) override;
 	virtual void Exit(IEnemy* e) override;
 private:
-
+	float m_timer = 0.f;
+	const float m_damageAmount = 10.f;
+	const float m_range = 30.f;
+	const float m_intervalSec = 1.f;
 };
 

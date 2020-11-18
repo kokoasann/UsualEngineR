@@ -2,9 +2,10 @@
 #include "BossA.h"
 #include "../../Effect/JetEffect.h"
 #include "../State/MeleeBossState/EnemyMeleePunchState.h"
-#include "../State/MeleeBossState/EnemyDashPunchState.h"
+#include "../State/MeleeBossState//EnemyDashPunchState.h"
 #include "../State/MeleeBossState/EnemyMeleeBattleState.h"
 #include "../State/MeleeBossState/EnemyMeleeIdleState.h"
+#include "../State/MeleeBossState/EnemyMeleeDeadState.h"
 #include "../State/MeleeBossState/EnemyTeleportationState.h"
 
 void BossA::Init() {
@@ -57,8 +58,7 @@ void BossA::Init() {
 	m_model->InitAnimation(m_animlist, m_animlist.size());
 	PlayAnimation(EnAnimation::enIdle);
 
-	//InitState();
-	SetState(m_stateList[static_cast<int>(EnState::enDeadState)]);
+	SetState(m_stateList[static_cast<int>(EnState::enIdleState)]);
 
 	m_isDrawHpBarAboveMyself = false;
 
@@ -147,9 +147,10 @@ void BossA::InitState() {
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyMeleeIdleState();
 	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyMeleeBattleState();
-	m_stateList[static_cast<int>(EnState::enAttackSlash)] = new EnemyMeleePunchState();
-	m_stateList[static_cast<int>(EnState::enAttackSlash)] = new EnemyMeleePunchState();
-	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyMeleeIdleState();
+	m_stateList[static_cast<int>(EnState::enFlyState)] = new EnemyMeleeBattleState();
+	m_stateList[static_cast<int>(EnState::enPunch)] = new EnemyMeleePunchState();
+	m_stateList[static_cast<int>(EnState::enDashPunch)] = new EnemyDashPunchState();
+	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyMeleeDeadState();
 }
 
 void BossA::Terminate() {

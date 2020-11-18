@@ -23,6 +23,16 @@ public:
 		m_model->Play(static_cast<int>(anim), interpolate);
 	}
 
+	enum class EnState {
+		enIdleState,
+		enBattleState,
+		enFlyState,
+		enPunch,
+		enDashPunch,
+		enDeadState,
+		enNumState
+	};
+
 private:
 
 	//Model

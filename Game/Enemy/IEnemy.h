@@ -11,7 +11,8 @@ public:
 	enum class EnState {
 		enIdleState,
 		enBattleState,
-		enAttackSlash,
+		enAttackA,
+		enAttackB,
 		enDeadState,
 		enNumState
 	};
@@ -62,10 +63,16 @@ public:
 		}
 	};
 
-	IEnemyState* GetState(IEnemy::EnState state) const{
+	IEnemyState* GetState(const EnState& state) const{
 		if (m_stateList.size() == 0) return nullptr;
 		return m_stateList[static_cast<int>(state)];
 	}
+
+	IEnemyState* GetState(const int state) const {
+		if (m_stateList.size() == 0) return nullptr;
+		return m_stateList[state];
+	}
+
 
 	const IEnemyState* GetCurrentState() const{
 		return m_currentState;
@@ -74,6 +81,7 @@ public:
 	void SetPosition(Vector3& pos) 
 	{
 		m_position = pos;
+		m_charaCon.SetPosition(pos);
 	}
 
 	const Vector3& GetPosition() const {

@@ -14,7 +14,11 @@ EnemyDashPunchState::~EnemyDashPunchState() {
 
 void EnemyDashPunchState::Enter(IEnemy* e) {
 
-	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
+	e->PlayAnimation(IEnemy::EnAnimation::enAttackB);
+	m_timer = 0.f;
+	//e->playAttackAnimation();
+	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	player->ApplyDamage(m_damageAmount);
 
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy dash punch state\n");
@@ -23,7 +27,15 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyDashPunchState::Update(IEnemy* e) {
 
+	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto& epos = e->GetPosition();
+	auto& ppos = player->GetPosition();
+	auto vecToPlayer = ppos - epos;
 
+	m_timer += gameTime()->GetDeltaTime();
+	if (m_timer >= m_intervalSec) {
+		return e->GetState(IEnemy::EnState::enBattleState);
+	}
 	return this;
 }
 

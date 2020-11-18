@@ -194,6 +194,8 @@
     <ClInclude Include="Enemy\State\IEnemyState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyDashPunchState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeBattleState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeDeadState.h" />
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeFlyState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeIdleState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h" />
@@ -256,6 +258,8 @@
     <ClCompile Include="Enemy\State\IEnemyState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyDashPunchState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeBattleState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeDeadState.cpp" />
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeFlyState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeIdleState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp" />
