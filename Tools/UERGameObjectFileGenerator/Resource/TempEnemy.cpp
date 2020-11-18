@@ -34,7 +34,7 @@ void XXX::Init()
 
 void XXX::Execute()
 {
-
+	m_model.SetPosition(m_position);
 }
 
 void XXX::Terminate()
