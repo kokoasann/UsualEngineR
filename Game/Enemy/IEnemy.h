@@ -118,6 +118,14 @@ public:
 		return m_stateList;
 	}
 
+	const bool IsOnGround() {
+		return m_charaCon.IsOnGround();
+	}
+
+	const ModelRender* GetMode() const{
+		return m_model;
+	}
+
 protected:
 	//ÉLÉÉÉâÉRÉìçÏê¨
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
@@ -125,6 +133,8 @@ protected:
 	void SetState(IEnemyState* s);
 	bool m_isDrawHpBarAboveMyself = true;
 	std::vector<IEnemyState*> m_stateList;
+
+	ModelRender* m_model = nullptr;
 	Vector3 m_position = Vector3::Zero;
 	Quaternion m_rotation = Quaternion::Identity;
 	StAbility m_ability;

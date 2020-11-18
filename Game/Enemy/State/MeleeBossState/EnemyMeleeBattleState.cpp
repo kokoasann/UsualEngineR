@@ -31,6 +31,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	}
 
 	if (player->GetCurrentState() == player->GetState(Player::EnState::enFlying)){
+		if(e->IsOnGround())
 		return e->GetState(TO_INT(BossA::EnState::enFlyState));
 	}
 
@@ -59,13 +60,16 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 		return this;
 	}
 
+	const float GRAVITY = -20.f;
+
 	//Chase
 	if (vecToPlayer.Length() > distLimit) {
 		vecToPlayer.Normalize();
 		const float speed = 50.f;
 		auto velocity = vecToPlayer * speed;
 
-		velocity.y = -10.f;
+		if(!e->IsOnGround())
+			velocity.y = GRAVITY;
 
 		e->SetVelocity(velocity);
 	}

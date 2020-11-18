@@ -11,7 +11,6 @@ public:
 	void Terminate() override;
 private:
 	//Model
-	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
 	Vector3 m_scale = { 5.f,5.f,5.f };
