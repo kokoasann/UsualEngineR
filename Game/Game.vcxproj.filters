@@ -175,6 +175,9 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeFlyState.h">
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeOverheatState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -350,6 +353,9 @@
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeFlyState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeOverheatState.cpp">
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClCompile>
   </ItemGroup>

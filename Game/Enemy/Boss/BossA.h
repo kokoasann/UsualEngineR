@@ -27,8 +27,10 @@ public:
 		enIdleState,
 		enBattleState,
 		enFlyState,
+		enTeleportation,
 		enPunch,
 		enDashPunch,
+		enOverheat,
 		enDeadState,
 		enNumState
 	};

@@ -35,7 +35,6 @@ IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 	e->SetPosition(enextpos);
 
 	return e->GetStateList().at(TO_INT(IEnemy::EnState::enBattleState));
-
 }
 
 void EnemyTeleportationState::Exit(IEnemy* e) {

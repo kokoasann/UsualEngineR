@@ -32,7 +32,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 	if (player->GetCurrentState() == player->GetState(Player::EnState::enFlying)){
 		if(e->IsOnGround())
-		return e->GetState(TO_INT(BossA::EnState::enFlyState));
+			return e->GetState(TO_INT(BossA::EnState::enFlyState));
 	}
 
 	auto& epos = e->GetPosition();
@@ -44,23 +44,10 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 	//Teleportation
 	if (vecToPlayer.Length() > teleportationDist) {
-
-		auto player = EnemyManager::GetEnemyManager().GetPlayer();
-		auto& epos = e->GetPosition();
-		auto& ppos = player->GetPosition();
-		auto vecToPlayer = ppos - epos;
-		auto len = vecToPlayer.Length();
-		vecToPlayer.Normalize();
-		vecToPlayer *= len * 0.8f;
-
-		auto enextpos = epos + vecToPlayer;
-
-		DebugPrint_WATA("teleportation\n");
-		e->SetPosition(enextpos);
-		return this;
+		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
 	}
 
-	const float GRAVITY = -20.f;
+	const float GRAVITY = -30.f;
 
 	//Chase
 	if (vecToPlayer.Length() > distLimit) {
@@ -78,10 +65,10 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	if (vecToPlayer.Length() < attackRange) {
 		auto rnd = GRandom().Rand();
 		if (rnd >= 0.5f) {
-			return e->GetState(IEnemy::EnState::enAttackA);
+			return e->GetState(TO_INT(BossA::EnState::enPunch));
 		}
 		else {
-			return e->GetState(IEnemy::EnState::enAttackB);
+			return e->GetState(TO_INT(BossA::EnState::enDashPunch));
 		}
 	}
 

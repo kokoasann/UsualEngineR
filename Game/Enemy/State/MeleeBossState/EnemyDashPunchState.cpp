@@ -3,6 +3,8 @@
 #include "../../EnemyManager.h"
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
+#include "../../Boss/BossA.h"
+
 
 EnemyDashPunchState::EnemyDashPunchState() {
 
@@ -34,7 +36,7 @@ IEnemyState* EnemyDashPunchState::Update(IEnemy* e) {
 
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer >= m_intervalSec) {
-		return e->GetState(IEnemy::EnState::enBattleState);
+		return e->GetState(TO_INT(BossA::EnState::enBattleState));
 	}
 	return this;
 }
