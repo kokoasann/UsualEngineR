@@ -60,6 +60,10 @@ namespace UER
 		/// <param name="rot">回転</param>
 		/// <param name="scale">拡大率</param>
 		void UpdateWorldMatrix(const Vector3& pos, const Quaternion& rot, const Vector3& scale);
+
+		void UpdateSkeleton();
+
+		void UpdateIK();
 	
 		/// <summary>
 		/// スケルトンを関連付ける。
@@ -132,7 +136,24 @@ namespace UER
 		/// <param name="endBone"></param>
 		/// <param name="radius"></param>
 		/// <returns></returns>
-		//IK* CreateIK(Bone* startBone, Bone* endBone, float radius);
+		IK* CreateIK(Bone* startBone, Bone* endBone, float radius);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startBone"></param>
+		/// <param name="len"></param>
+		/// <param name="radius"></param>
+		/// <returns></returns>
+		IK* CreateIK(Bone* startBone, int len, float radius)
+		{
+			Bone* endBone = m_skeleton.GetBone(startBone->GetParentBoneNo());
+			for (int i = 0; i < len-1; len++)
+			{
+				endBone = m_skeleton.GetBone(endBone->GetParentBoneNo());
+			}
+			return CreateIK(startBone, endBone, radius);
+		}
 
 	private:
 	
@@ -144,7 +165,7 @@ namespace UER
 		EUpAxis m_upAxis = enUpAxisZ;
 		std::vector<raytracing::Instance*> m_raytracingInstanceList;
 		
-		//std::vector<IK*> m_ikList;
+		std::vector<IK*> m_ikList;
 	};
 
 

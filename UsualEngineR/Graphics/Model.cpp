@@ -80,6 +80,17 @@ namespace UER
 		Matrix mW(pos, scale, rot);
 		m_world = mBias * mW;
 	}
+	void Model::UpdateSkeleton()
+	{
+		m_skeleton.Update(m_world);
+	}
+	void Model::UpdateIK()
+	{
+		for (auto ik : m_ikList)
+		{
+			ik->Update(m_world);
+		}
+	}
 	void Model::Draw(RenderContext& rc, const Vector4& mulcolor)
 	{
 		m_meshParts.Draw(
@@ -92,12 +103,12 @@ namespace UER
 		
 	}
 
-	/*IK* Model::CreateIK(Bone* startBone, Bone* endBone, float radius)
+	IK* Model::CreateIK(Bone* startBone, Bone* endBone, float radius)
 	{
 		IK* ik = new IK(&m_skeleton, startBone, endBone, radius);
 		m_ikList.push_back(ik);
 		return ik;
-	}*/
+	}
 
 
 }
