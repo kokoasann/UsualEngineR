@@ -82,11 +82,16 @@ namespace UER
 			return &m_rigidBody;
 		}
 
-		void AddCollisionAttribute(int ca)
+		/// <summary>
+		/// コライダーの属性の追加。
+		/// </summary>
+		/// <param name="ca"></param>
+		template<class T>
+		void AddCollisionAttribute(T ca)
 		{
 			if (!m_isUseRigidBody)
 				return;
-			m_rigidBody.GetBody()->setUserIndex(m_rigidBody.GetBody()->getUserIndex() | ca);
+			m_rigidBody.GetBody()->setUserIndex(m_rigidBody.GetBody()->getUserIndex() | static_cast<int>(ca));
 		}
 
 		/*!
