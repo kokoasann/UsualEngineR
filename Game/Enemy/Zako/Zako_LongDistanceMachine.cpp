@@ -20,6 +20,7 @@ void Zako_LongDistanceMachine::Init()
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/enemy/LongRangeMachine/LongRangeMachine.tkm";
 	mid.m_tksFilePath = "Assets/modelData/enemy/LongRangeMachine/LongRangeMachine.tks";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
 	mid.m_upAxis = enUpAxisY;

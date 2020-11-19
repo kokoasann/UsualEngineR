@@ -5,6 +5,8 @@
 #include "EnemyTest.h"
 #include <random>
 
+#include "Zako/Zako_LongDistanceMachine.h"
+
 void EnemyManager::SpawnEnemies() {
 	IEnemy::StAbility ab;
 	//Boss
@@ -17,6 +19,12 @@ void EnemyManager::SpawnEnemies() {
 	bene->SetPosition(pos);
 
 	m_enemies.push_back(bene);
+
+	auto e = NewGO<Zako_LongDistanceMachine>(0);
+	//e->Init();
+	e->SetAbility(ab);
+	e->SetPosition({ -50,10,-50 });
+	m_enemies.push_back(e);
 
 	return;
 	//Zako!
