@@ -180,6 +180,7 @@ bool Player::Start()
 
 	//Physics
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
+	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Player);
 
 	//Pod
 	m_pod = NewGO<Pod>(0);
