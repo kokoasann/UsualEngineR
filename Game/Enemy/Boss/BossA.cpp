@@ -171,6 +171,7 @@ void BossA::InitState() {
 }
 
 void BossA::Terminate() {
+	std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
 	DeleteGO(m_model);
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
@@ -200,5 +201,10 @@ void BossA::Execute() {
 	//Skirt
 	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetPosition(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetRotation(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetRotate());
+
+	//体力がなくなったら死亡ステートへ遷移
+	if (m_ability.hp <= 0) {
+		SetState(m_stateList[static_cast<int>(BossA::EnState::enDeadState)]);
+	}
 
 }

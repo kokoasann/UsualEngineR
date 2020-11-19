@@ -3,6 +3,7 @@
 #include "../../EnemyManager.h"
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
+#include "../../Boss/BossA.h"
 
 EnemyTeleportationState::EnemyTeleportationState() {
 
@@ -34,7 +35,7 @@ IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 	auto enextpos = epos + vecToPlayer;
 	e->SetPosition(enextpos);
 
-	return e->GetStateList().at(TO_INT(IEnemy::EnState::enBattleState));
+	return e->GetStateList().at(TO_INT(BossA::EnState::enBattleState));
 }
 
 void EnemyTeleportationState::Exit(IEnemy* e) {

@@ -35,11 +35,11 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 	const float GRAVITY = -50.f;
 	auto vel = Vector3::Zero;
 	vel.y = GRAVITY;
-	if(!e->IsOnGround())
-		e->SetVelocity(vel);
+	//if(!e->IsOnGround())
+//		e->SetVelocity(vel);
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
-		return e->GetStateList().at(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetStateList().at(TO_INT(BossA::EnState::enBattleState));
 	}
 
 	return this;
