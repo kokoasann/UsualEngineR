@@ -17,11 +17,13 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 	if (m_timer >= m_timeSpan)
 	{
 		Enemy_Bullet* eb = NewGO<Enemy_Bullet>(0);
-		eb->Init(e->GetPosition(), 1, { 0,1,0 }, 10, 10, 1);
+		auto p = e->GetPosition();
+		p.y += 10.;
+		eb->Init(p, 1, { 0,1,0 }, 10, 10, 1);
 		m_timer = 0.f;
 	}
 
-	return nullptr;
+	return this;
 }
 
 void EnemyLongDistanceAttackState::Exit(IEnemy* e)

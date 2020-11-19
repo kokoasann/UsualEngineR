@@ -58,7 +58,7 @@ Enemy_Bullet::~Enemy_Bullet()
 
 void Enemy_Bullet::Release()
 {
-
+	DeleteGO(m_model);
 }
 
 void Enemy_Bullet::OnDestroy()
@@ -89,7 +89,8 @@ void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, flo
 	m_model->SetScale(Vector3::One * m_scale);
 	m_model->SetPosition(pos);
 	m_model->SetRotation(rot);
-	
+
+	m_sphere.Create(scale * 0.5);
 }
 
 
@@ -119,39 +120,43 @@ void Enemy_Bullet::Update()
 	Vector3 newpos = oldpos + m_dir * (m_speed * dtime);
 
 	btTransform start, end;
+	start.setIdentity();
+	end.setIdentity();
 	start.setOrigin({ oldpos.x, oldpos.y, oldpos.z });
 	end.setOrigin({ newpos.x, newpos.y, newpos.z });
 	SweepResult sr(oldpos);
 	Physics().ConvexSweepTest(m_sphere.GetBody(), start, end, sr);
 	
-	if (sr.collAttr & enCollisionAttr_Character)
+	if (sr.isHit)
 	{
-		auto& gm =  GameManager::GetInstance();
-
-		Vector3 b2p = gm.m_player->GetPosition() - sr.hitPos;
-		float b2pLen = b2p.Length();
-
-		if (m_attackRange > b2pLen)
+		if (sr.collAttr & GameCollisionAttribute::Player)
 		{
+			auto& gm = GameManager::GetInstance();
+
 			gm.m_player->ApplyDamage(m_damage);
 		}
+		else if (sr.collAttr & GameCollisionAttribute::Enemy)
+		{
 
+		}
+		else
+		{
+			
+		}
 		auto pthis = this;
 		DeleteGO(pthis);
+		return;
 	}
-	else
-	{
-		auto pthis = this;
-		DeleteGO(pthis);
-	}
-
-	m_model->SetPosition(newpos);
-
 	if (m_timer >= m_timeLimit)
 	{
 		auto pthis = this;
 		DeleteGO(pthis);
+		return;
 	}
+
+	m_model->SetPosition(newpos);
+
+	
 }
 
 void Enemy_Bullet::PostUpdate()

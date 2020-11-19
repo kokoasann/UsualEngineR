@@ -19,13 +19,21 @@ public:
 	}
 
 private:
+	enum class EStateEX : char
+	{
+		LongDistanceAttack,
+		Num,
+	};
 	//Model
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
 	std::vector<CAnimationClipPtr> m_animlist;
-	Vector3 m_scale = { 5.f,5.f,5.f };
+	float m_scale = 1.f;
 
 	//Physics
 	const float m_radius = 1.f;
 	const float m_height = 3.f;
+
+	const static char STATE_NUM = 2;
+	std::array<IEnemyState*, STATE_NUM> m_stateListEX;
 };
