@@ -78,7 +78,7 @@ public:
 		return m_currentState;
 	}
 
-	void SetPosition(Vector3& pos) 
+	void SetPosition(const Vector3& pos) 
 	{
 		m_position = pos;
 		m_charaCon.SetPosition(pos);
@@ -124,6 +124,10 @@ public:
 
 	const ModelRender* GetMode() const{
 		return m_model;
+	}
+
+	std::vector<JetEffect*>& GetJetEffects() {
+		return m_jetEffects;
 	}
 
 protected:

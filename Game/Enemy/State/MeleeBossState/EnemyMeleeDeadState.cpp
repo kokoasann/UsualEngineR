@@ -17,12 +17,15 @@ void EnemyMeleeDeadState::Enter(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee dead\n");
 #endif
+
+	auto item = NewGO<DropItemA>(0);
+	item->SetPosition(e->GetPosition());
+
 	GameObject* enemy = reinterpret_cast<GameObject*>(e);
 	EnemyManager::GetEnemyManager().DestroyEnemy(e);
 }
 
 IEnemyState* EnemyMeleeDeadState::Update(IEnemy* e) {
-
 	return this;
 }
 

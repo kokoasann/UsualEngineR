@@ -37,7 +37,6 @@ bool IEnemy::Start() {
 
 void IEnemy::Release() {
 	Terminate();
-	std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
 	if (m_healthBar != nullptr)
 		DeleteGO(m_healthBar);
 }
@@ -75,10 +74,6 @@ void IEnemy::Update() {
 		m_currentState->Enter(this);
 	}
 
-	//体力がなくなったら死亡ステートへ遷移
-	if (m_ability.hp <= 0) {
-		SetState(m_stateList[static_cast<int>(EnState::enDeadState)]);
-	}
 }
 
 void IEnemy::SetState(IEnemyState* s) {
@@ -90,9 +85,11 @@ void IEnemy::SetState(IEnemyState* s) {
 	}
 
 	if (s == m_currentState) return;
-	m_currentState->Exit(this);
-	m_currentState = s;
-	m_currentState->Enter(this);
+
+	m_nextState = s;
+	//m_currentState->Exit(this);
+	//m_currentState = s;
+	//m_currentState->Enter(this);
 }
 
 void IEnemy::ApplyDamage(const float damage) {
@@ -106,4 +103,5 @@ void IEnemy::ApplyDamage(const float damage) {
 
 void IEnemy::InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody) {
 	m_charaCon.Init(radius, height, pos, /*isUseRigidBody */ true);
+	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Enemy);
 }

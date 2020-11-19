@@ -50,6 +50,7 @@ void JetEffect::PostUpdate()
 {
 	m_particleEffect->SetPos(m_pos);
 	m_particleEffect->SetRot(m_rot);
+	m_particleEffect->SetSca(Vector3::One * EFFECT_SCALE);
 }
 
 
