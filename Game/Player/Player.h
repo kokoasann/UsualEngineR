@@ -331,7 +331,7 @@ private:
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
-	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true, true };
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true };
 
 	//State
 	IPlayerState* m_nextState = nullptr;
