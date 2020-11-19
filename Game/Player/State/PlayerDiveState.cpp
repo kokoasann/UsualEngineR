@@ -105,6 +105,7 @@ IPlayerState* PlayerDiveState::Update(Player* p) {
 }
 
 void PlayerDiveState::Exit(Player* p) {
+	p->m_knockBackImpulse = Vector3::Zero;
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player : Exit Dive\n");
 #endif

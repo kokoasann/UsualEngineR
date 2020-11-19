@@ -23,6 +23,7 @@ public:
 		enDiving,
 		enAttack,
 		enGuard,
+		enStun,
 		enDead,
 		enNumState
 	};
@@ -200,9 +201,16 @@ public:
 	/// プレイヤーにダメージを適用する
 	/// </summary>
 	/// <param name="damageAmount"> 攻撃力</param>
-	void ApplyDamage(const float damageAmount) {
+	void ApplyDamage(const float damageAmount, const bool stunFlag = false, const Vector3& vel= Vector3::Zero){
 		auto finalDamage = damageAmount - (damageAmount * m_armorParam / 100.f);
 		m_hp = max(0.f, m_hp - finalDamage);
+		if(stunFlag){
+			m_previousState = m_currentState;
+			m_currentState->Exit(this);
+			m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enStun)];
+			m_currentState->Enter(this);
+			m_knockBackImpulse = vel;
+		}
 	}
 
 	/// <summary>
@@ -314,6 +322,7 @@ public:
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
+	Vector3 m_knockBackImpulse = Vector3::Zero;
 	//Vector3 m_velocityGoal = Vector3::Zero;
 	
 private:
@@ -362,6 +371,7 @@ private:
 	//Attachments
 	std::vector<Bone*> m_playerBones;
 	JetPack* m_jetPack = nullptr;
+
 
 	//Ability
 	//TODO : use struct like this

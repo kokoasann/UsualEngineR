@@ -36,6 +36,7 @@ bool IEnemy::Start() {
 }
 
 void IEnemy::Release() {
+	std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
 	Terminate();
 	if (m_healthBar != nullptr)
 		DeleteGO(m_healthBar);

@@ -8,6 +8,7 @@
 #include "State/PlayerAttackState.h"
 #include "State/PlayerGuardState.h"
 #include "State/PlayerDeadState.h"
+#include "State/PlayerStunState.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/IEnemy.h"
 #include "Pod/Pod.h"
@@ -173,6 +174,7 @@ bool Player::Start()
 	m_stateList[static_cast<int>(EnState::enDiving)] = new PlayerDiveState();
 	m_stateList[static_cast<int>(EnState::enAttack)] = new PlayerAttackState();
 	m_stateList[static_cast<int>(EnState::enDead)] = new PlayerDeadState();
+	m_stateList[static_cast<int>(EnState::enStun)] = new PlayerStunState();
 	m_stateList[static_cast<int>(EnState::enGuard)] = new PlayerGuardState();
 
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
@@ -224,6 +226,9 @@ void Player::PreUpdate()
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
+
+	//DebugPrintVector3(EDebugConsoloUser::WATA, m_velocity);
+
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
