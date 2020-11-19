@@ -143,6 +143,10 @@ protected:
 	std::vector<Bone*> m_bones;
 	std::vector<JetEffect*> m_jetEffects;
 
+	//Physics
+	CharacterController m_charaCon;
+	Vector3 m_velocity = Vector3::Zero;
+
 private:
 
 	HealthBar* m_healthBar = nullptr;
@@ -151,9 +155,6 @@ private:
 	IEnemyState* m_currentState = nullptr;
 	IEnemyState* m_nextState = nullptr;
 
-	//Physics
-	CharacterController m_charaCon;
-	Vector3 m_velocity = Vector3::Zero;
 
 };
 
