@@ -51,19 +51,7 @@
     <ClInclude Include="Player\State\PlayerDeadState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyDeadState.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyIdleState.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemySlashState.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\State\IEnemyState.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyBattleState.h">
       <Filter>Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="GameHUD.h" />
@@ -148,9 +136,6 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
     <ClInclude Include="Effect\JetEffect.h">
       <Filter>Effect</Filter>
     </ClInclude>
@@ -182,6 +167,21 @@
       <Filter>Enemy\Equipment</Filter>
     </ClInclude>
     <ClInclude Include="GameCollisionAttribute.h" />
+    <ClInclude Include="Enemy\State\EnemySlashState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyBattleState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyDeadState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyIdleState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -235,19 +235,7 @@
     <ClCompile Include="Player\State\PlayerDeadState.cpp">
       <Filter>Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyIdleState.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemySlashState.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\State\IEnemyState.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyBattleState.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyDeadState.cpp">
       <Filter>Enemy\State</Filter>
     </ClCompile>
     <ClCompile Include="GameHUD.cpp" />
@@ -332,9 +320,6 @@
     <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp">
       <Filter>Enemy\Zako</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
     <ClCompile Include="Effect\JetEffect.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
@@ -366,6 +351,21 @@
       <Filter>Enemy\Equipment</Filter>
     </ClCompile>
     <ClCompile Include="GameCollisionAttribute.cpp" />
+    <ClCompile Include="Enemy\State\EnemyBattleState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyDeadState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyIdleState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemySlashState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -457,6 +457,9 @@
     </Filter>
     <Filter Include="Enemy\Equipment">
       <UniqueIdentifier>{44d0761e-cf98-4fd6-ab6f-3f79983deebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\DefaultState">
+      <UniqueIdentifier>{abe62167-564b-41d2-8acb-5555fd8c3043}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

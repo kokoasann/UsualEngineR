@@ -92,12 +92,25 @@ void BossA::Init() {
 	}
 
 	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->SetGenerateFlag(false);
+
 	m_jetEffects[TO_INT(EnJetBone::ElbowL)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::ElbowL)]->SetGenerateFlag(false);
+
 	m_jetEffects[TO_INT(EnJetBone::ThrusterR)]->Init(thrusterParam);
+	m_jetEffects[TO_INT(EnJetBone::ThrusterR)]->SetGenerateFlag(false);
+
 	m_jetEffects[TO_INT(EnJetBone::ThrusterL)]->Init(thrusterParam);
+	m_jetEffects[TO_INT(EnJetBone::ThrusterL)]->SetGenerateFlag(false);
+
 	m_jetEffects[TO_INT(EnJetBone::BackR)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::BackR)]->SetGenerateFlag(false);
+
 	m_jetEffects[TO_INT(EnJetBone::BackL)]->Init(smaller);
+	m_jetEffects[TO_INT(EnJetBone::BackL)]->SetGenerateFlag(false);
+
 	m_jetEffects[TO_INT(EnJetBone::Skirt)]->Init(skirtParam);
+	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetGenerateFlag(true);
 
 	m_bones.resize(TO_INT(EnJetBone::NumJetBone));
 
