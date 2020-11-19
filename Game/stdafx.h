@@ -7,9 +7,9 @@
 using namespace UER;
 
 //ゲーム側デバッグ表示定義
-//#define _PRINT_PLAYER_STATE //ステート遷移をコンソールに表示
+#define _PRINT_PLAYER_STATE //ステート遷移をコンソールに表示
 //#define _PRINT_PLAYER_ATTACK
-#define _PRINT_ENEMY_STATE
+//#define _PRINT_ENEMY_STATE
 //#define _PRINT_ENEMY_DAMAGE
 
 enum class EDebugConsoloUser :int

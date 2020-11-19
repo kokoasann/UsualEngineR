@@ -20,8 +20,6 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 	m_timer = 0.f;
 	//e->playAttackAnimation();
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
-	player->ApplyDamage(m_damageAmount);
-
 
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
@@ -38,6 +36,12 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 
 	effects.at(TO_INT(BossA::EnJetBone::ElbowL))->SetGenerateFlag(true);
 	effects.at(TO_INT(BossA::EnJetBone::ElbowR))->SetGenerateFlag(true);
+
+
+	const float knockbackParam = 150.f;
+	v.y = 0.f;
+	player->ApplyDamage(m_damageAmount, true, v * knockbackParam);
+
 
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy dash punch state\n");

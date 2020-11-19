@@ -67,7 +67,7 @@ void DropItemA::PostUpdate()
 
 	if (dist < m_GRASP_RANGE) {
 		//p->UnlockSkill(m_typeId);
-		p->UnlockPreset(Player::EnAttackPreset::enRemoteAttackPreset);
+		p->UnlockPreset(Player::EnAttackPreset::enMeleePreset);
 		auto gameObj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(gameObj);
 	}

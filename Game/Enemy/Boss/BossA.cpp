@@ -171,7 +171,6 @@ void BossA::InitState() {
 }
 
 void BossA::Terminate() {
-	std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
 	DeleteGO(m_model);
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
