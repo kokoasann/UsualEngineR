@@ -5,6 +5,12 @@
 
 #define TO_INT(en) static_cast<int>(en)
 #define TO_UINT(en) static_cast<unsigned int>(en)
+#define TO_INT8(en) static_cast<char>(en)
+#define TO_UINT8(en) static_cast<unsigned char>(en)
+#define TO_INT16(en) static_cast<short>(en)
+#define TO_UINT16(en) static_cast<unsigned short>(en)
+#define TO_INT64(en) static_cast<long>(en)
+#define TO_UINT64(en) static_cast<unsigned long>(en)
 
 #pragma comment( lib, "xinput.lib")
 #pragma comment(lib, "dxcompiler.lib")
