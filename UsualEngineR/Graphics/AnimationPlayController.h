@@ -98,7 +98,7 @@ namespace UER{
 		/// Update関数を呼び出したときの、footstepボーンの移動量を取得。
 		/// </summary>
 		/// <returns></returns>
-		Vector3 GetFootStepDeltaValueOnUpdate() const
+		const Vector3& GetFootStepDeltaValueOnUpdate() const
 		{
 			return m_footstepDeltaValue;
 		}
@@ -116,7 +116,7 @@ namespace UER{
 		/// </summary>
 		/// <param name="bone">計算する骨</param>
 		/// <param name="parentMatrix">親の行列</param>
-		void CalcBoneMatrixInRootBoneSpace(Bone& bone, Matrix parentMatrix);
+		void CalcBoneMatrixInRootBoneSpace(Bone& bone, const Matrix& parentMatrix);
 		/// <summary>
 		/// ボーン行列をアニメーションクリップからサンプリングする。
 		/// </summary>

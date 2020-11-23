@@ -101,7 +101,7 @@ namespace UER {
 			int index = GetAnimationControllerIndex(startIndex, i);
 			float intepolateRate = m_animationPlayController[index].GetInterpolateRate();
 			const auto& localBoneMatrix = m_animationPlayController[index].GetBoneLocalMatrix();
-			auto deltaValueFootStep = m_animationPlayController[index].GetFootStepDeltaValueOnUpdate();
+			const auto& deltaValueFootStep = m_animationPlayController[index].GetFootStepDeltaValueOnUpdate();
 			//footstepの移動量の補完
 			m_footstepDeltaValue.Lerp(intepolateRate, m_footstepDeltaValue, deltaValueFootStep);
 			for (int boneNo = 0; boneNo < numBone; boneNo++) {
@@ -129,7 +129,7 @@ namespace UER {
 					vBoneScale
 				);
 				//拡大成分を除去。
-				m.m[0][0] /= vBoneScale.x;
+				/*m.m[0][0] /= vBoneScale.x;
 				m.m[0][1] /= vBoneScale.x;
 				m.m[0][2] /= vBoneScale.x;
 
@@ -139,7 +139,10 @@ namespace UER {
 
 				m.m[2][0] /= vBoneScale.z;
 				m.m[2][1] /= vBoneScale.z;
-				m.m[2][2] /= vBoneScale.z;
+				m.m[2][2] /= vBoneScale.z;*/
+				(*(Vector3*)m.m[0]).Div(vBoneScale.x);
+				(*(Vector3*)m.m[1]).Div(vBoneScale.y);
+				(*(Vector3*)m.m[2]).Div(vBoneScale.z);
 
 				//回転の補完
 				Quaternion qBone;

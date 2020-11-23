@@ -24,6 +24,7 @@ namespace UER
 		auto ske = m_model.GetSkelton();
 		m_animation.Init(*m_model.GetSkelton(), anim);
 		ske->SetPlayFlag(true);
+		
 	}
 	void ModelRender::Awake()
 	{
@@ -40,10 +41,12 @@ namespace UER
 
 		float dtime = gameTime()->GetDeltaTime();
 		m_animation.Progress(dtime*m_animPlaySpeed);
-		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-		m_model.UpdateSkeleton();
-		m_model.UpdateIK();
 		
+		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		m_model.UpdateIK();
+		m_model.UpdateSkeleton();
+		
+		//m_model.UpdateSkeleton();
 	}
 	void ModelRender::Render()
 	{

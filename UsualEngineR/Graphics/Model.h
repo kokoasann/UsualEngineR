@@ -63,6 +63,7 @@ namespace UER
 
 		void UpdateSkeleton();
 
+		void UpdateIKTarget();
 		void UpdateIK();
 	
 		/// <summary>
@@ -148,7 +149,7 @@ namespace UER
 		IK* CreateIK(Bone* startBone, int len, float radius)
 		{
 			Bone* endBone = m_skeleton.GetBone(startBone->GetParentBoneNo());
-			for (int i = 0; i < len-1; len++)
+			for (int i = 0; i < len-1; i++)
 			{
 				endBone = m_skeleton.GetBone(endBone->GetParentBoneNo());
 			}

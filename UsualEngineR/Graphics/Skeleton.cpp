@@ -39,14 +39,32 @@ namespace UER
 	}
 	void Skeleton::UpdateBoneWorldMatrix(Bone& bone, const Matrix& parentMatrix)
 	{
-		Matrix mBoneWorld;
-		Matrix localMatrix = bone.GetLocalMatrix();
-		mBoneWorld = localMatrix * parentMatrix;
+		const Matrix& localMatrix = bone.GetLocalMatrix();
+		Matrix mBoneWorld = localMatrix * parentMatrix;
 		
 		bone.SetWorldMatrix(mBoneWorld);
 		for (auto childBone : bone.GetChildren()) {
 			UpdateBoneWorldMatrix(*childBone, mBoneWorld);
 		}
+	}
+	void Skeleton::CalcBoneMatrixInRootBoneSpace()
+	{
+		for (auto& bone : m_bones) {
+			if (bone->GetParentBoneNo() != -1) {
+				continue;
+			}
+			//ルート。
+			UpdateBoneWorldMatrix(*bone, g_matIdentity);
+			break;
+		}
+		////ボーン行列を計算。
+		//int boneNo = 0;
+		//for (auto& bonePtr : m_bones) {
+		//	Matrix mBone;
+		//	mBone = bonePtr->GetInvBindPoseMatrix() * bonePtr->GetWorldMatrix();
+		//	m_boneMatrixs[boneNo] = mBone;
+		//	boneNo++;
+		//}
 	}
 	bool Skeleton::Init(const char* tksFilePath)
 	{
@@ -126,12 +144,12 @@ namespace UER
 	void Skeleton::Update(const Matrix& mWorld)
 	{
 		//ワールド行列を構築していく
-		if (m_isPlayAnimation)
+		if (m_isPlayAnimation && 0)
 		{
 			//ボーン行列をルートボーンの空間からワールド空間を構築していく。
 			for (auto& bone : m_bones) {
 				Matrix mBoneWorld;
-				Matrix localMatrix = bone->GetLocalMatrix();
+				const Matrix& localMatrix = bone->GetLocalMatrix();
 				//親の行列とローカル行列を乗算して、ワールド行列を計算する。
 				mBoneWorld = localMatrix * mWorld;
 				bone->SetWorldMatrix(mBoneWorld);

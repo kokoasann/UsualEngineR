@@ -45,6 +45,7 @@ namespace UER
 		{
 			m_skeleton.Init(initData.m_tksFilePath);
 			m_skeleton.BuildBoneMatrices();
+			//m_skeleton.CalcBoneMatrixInRootBoneSpace();
 			BindSkeleton(m_skeleton);
 		}
 		
@@ -84,10 +85,18 @@ namespace UER
 	{
 		m_skeleton.Update(m_world);
 	}
+	void Model::UpdateIKTarget()
+	{
+		for (auto ik : m_ikList)
+		{
+			ik->UpdateTarget(m_world);
+		}
+	}
 	void Model::UpdateIK()
 	{
 		for (auto ik : m_ikList)
 		{
+			ik->UpdateTarget(m_world);
 			ik->Update(m_world);
 		}
 	}

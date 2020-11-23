@@ -44,11 +44,11 @@ namespace UER {
 			animEventArray[i].SetInvokedFlag(false);
 		}
 	}
-	void CAnimationPlayController::CalcBoneMatrixInRootBoneSpace(Bone& bone, Matrix parentMatrix)
+	void CAnimationPlayController::CalcBoneMatrixInRootBoneSpace(Bone& bone, const Matrix& parentMatrix)
 	{
 		//ワールド行列を計算する。
 		auto& mBoneInRootSpace = m_boneMatrix[bone.GetNo()];
-		Matrix localMatrix = m_boneMatrix[bone.GetNo()];
+		const Matrix& localMatrix = m_boneMatrix[bone.GetNo()];
 		//親の行列とローカル行列を乗算して、ワールド行列を計算する。
 		mBoneInRootSpace = localMatrix * parentMatrix;
 
@@ -118,6 +118,7 @@ namespace UER {
 				continue;
 			}
 			CalcBoneMatrixInRootBoneSpace(*bone, g_matIdentity);
+			break;
 		}
 	}
 	void CAnimationPlayController::SamplingDeltaValueFootstepBone()
@@ -214,13 +215,13 @@ namespace UER {
 		SamplingBoneMatrixFromAnimationClip();
 		
 		//親の骨座標系になっているボーン行列をルートのボーンの空間に変換していく。
-		CalcBoneMatrixInRootBoneSpace();
+		//CalcBoneMatrixInRootBoneSpace();
 		
 		//footstepボーンの移動量を取得する。
-		SamplingDeltaValueFootstepBone();
+		//SamplingDeltaValueFootstepBone();
 		
 		//footstepボーンの移動量を全体の骨から減算する。
-		SubtractFootstepbonePosFromAllBone();
+		//SubtractFootstepbonePosFromAllBone();
 
 		//アニメーション再生した印をスケルトンにつける。
 		//m_skeleton->SetMarkPlayAnimation();

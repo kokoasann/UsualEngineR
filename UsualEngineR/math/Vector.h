@@ -870,6 +870,11 @@ namespace UER
 		{
 			SetRotation(m);
 		}
+
+		Quaternion(const Vector3& from, const Vector3& to)
+		{
+			SetRotation(from,to);
+		}
 		/// <summary>
 		/// X軸周りの回転クォータニオンを作成。
 		/// </summary>

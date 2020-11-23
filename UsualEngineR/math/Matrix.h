@@ -110,9 +110,9 @@ namespace UER
 		Vector3 GetScale() const
 		{
 			Vector3 res;
-			res.x = v[0].Length();
-			res.y = v[1].Length();
-			res.z = v[2].Length();
+			res.x = (*(Vector3*)&v[0]).Length();
+			res.y = (*(Vector3*)&v[1]).Length();
+			res.z = (*(Vector3*)&v[2]).Length();
 			return res;
 		}
 
@@ -134,9 +134,9 @@ namespace UER
 		Quaternion GetRotate() const
 		{
 			auto mat = *this;
-			mat.v[0].Normalize();
-			mat.v[1].Normalize();
-			mat.v[2].Normalize();
+			(*(Vector3*)&mat.v[0]).Normalize();
+			(*(Vector3*)&mat.v[1]).Normalize();
+			(*(Vector3*)&mat.v[2]).Normalize();
 			mat.v[3] = { 0,0,0,1 };
 
 			return mat;
@@ -358,15 +358,15 @@ namespace UER
 		{
 			Matrix mat = *this;
 			//行列から拡大率を取得する。
-			scale.x = mat.v[0].Length();
-			scale.y = mat.v[1].Length();
-			scale.z = mat.v[2].Length();
+			scale.x = (*(Vector3*)&mat.v[0]).Length();
+			scale.y = (*(Vector3*)&mat.v[1]).Length();
+			scale.z = (*(Vector3*)&mat.v[2]).Length();
 			//行列から平行移動量を取得する。
 			trans.Set(mat.v[3]);
 			//行列から拡大率と平行移動量を除去して回転量を取得する。
-			mat.v[0].Normalize();
-			mat.v[1].Normalize();
-			mat.v[2].Normalize();
+			(*(Vector3*)&mat.v[0]).Normalize();
+			(*(Vector3*)&mat.v[1]).Normalize();
+			(*(Vector3*)&mat.v[2]).Normalize();
 			mat.v[3].Set(0.0f, 0.0f, 0.0f, 1.0f);
 			rot.SetRotation(mat);
 		}

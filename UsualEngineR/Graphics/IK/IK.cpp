@@ -141,9 +141,11 @@ namespace UER
 		while (true)
 		{
 			parents[cont++] = b;
-			b = skele->GetBone(b->GetParentBoneNo());
-			if (b == nullptr)
+			int pNo = b->GetParentBoneNo();
+			if (pNo == -1)
 				break;
+			b = skele->GetBone(pNo);
+			
 		}
 		auto mat = worldMat;
 		for (int i = cont - 1; i >= 0; i--)
@@ -152,6 +154,18 @@ namespace UER
 			mat.Multiply(locmat, mat);
 		}
 		//mat.Mul(bone->GetLocalMatrix(),mat);
+		return mat;
+	}
+
+	/// <summary>
+	/// ボーンのワールドマトリクスを持ってくる
+	/// </summary>
+	/// <param name="bone">マトリクスの欲しいボーン</param>
+	/// <param name="worldMat">モデルのマトリクス</param>
+	/// <returns></returns>
+	Matrix GetBoneWorldMatrix_InRootBoneSpace(Skeleton* skele, Bone* bone, const Matrix& worldMat)
+	{
+		Matrix mat = bone->GetLocalMatrix() * worldMat;
 		return mat;
 	}
 	/// <summary>
@@ -244,6 +258,7 @@ namespace UER
 			UpdateTarget_Foot(worldMat);
 			break;
 		case enMode_NoneHit:
+			UpdateTarget_NoneHit(worldMat);
 			break;
 		}
 	}
@@ -574,6 +589,7 @@ namespace UER
 		m_oldTarget = m_target;
 		if (m_isSetNextTarget)
 			m_target = m_nextTarget;
+		
 		if (m_isUseRigidBody)
 			UpdateRigidBody(m_target);
 	}
@@ -590,8 +606,22 @@ namespace UER
 	void IK::EXE_CCD(const Matrix& worldMat)
 	{
 		//どこにもヒットしてない、もしくはNextTargetもされてなく、IKモードがFootじゃない場合必ず早期リターン
-		if (!(m_isHit or m_isSetOldTarget) and m_ikMode!=IKMode::enMode_Foot)
-			return;
+		/*if (!(m_isHit or m_isSetOldTarget) and m_ikMode!=IKMode::enMode_Foot)
+			return;*/
+		switch (m_ikMode)
+		{
+		case IKMode::enMode_Foot:
+			break;
+		case IKMode::enMode_Normal:
+			if (!(m_isHit or m_isSetNextTarget))
+				return;
+			break;
+		case IKMode::enMode_NoneHit:
+			if (!m_isSetNextTarget)
+				return;
+			break;
+		}
+
 		for (int i = 0; i < 3; i++)
 		{
 			auto effmat = GetBoneWorldMatrix(m_skeleton, m_effectorBone, worldMat);
@@ -606,8 +636,6 @@ namespace UER
 				Quaternion loro;
 				currentlocal.CalcMatrixDecompose(lopo, loro, losc);
 
-				auto currentpos = currentmat.GetTransrate();	//作業中のボーンの位置。
-
 				Matrix inv;							//カレントボーンの逆行列。
 				inv.Inverse(currentmat);
 
@@ -619,47 +647,16 @@ namespace UER
 				auto toEffector = localeffpos;			//エフェクターからカレントボーンのベクトル
 				auto toTarget = localtarpos;			//ターゲットからカレントボーンのベクトル
 
-				auto elen = toEffector.Length();
-				auto tlen = toTarget.Length();
-
-				toEffector.Normalize();
-				toTarget.Normalize();
-
-				auto rad = min(1.f, toEffector.Dot(toTarget));			//二つのベクトルの角度(ラッドウィンプス)
-				rad = acos(rad);
-				//float deg = Math::RadToDeg(rad);
-
-				
 				{
-					auto axis = Vector3::Zero;					//回転軸.
-					axis.Cross(toEffector, toTarget);
-					axis.Normalize();
-
-					auto addrot = Quaternion::Identity;			//加える回転.
-					addrot.SetRotation(axis, rad);
-					//auto difrot = Quaternion::Identity;			//
-					//difrot.SetRotationDeg(axis, 360.f - Math::RadToDeg(rad));
-					//difrot.SetRotation(axis, Math::PI*2.f - rad);
-
-					//Matrix mRot;									//加える回転行列。
-					//mRot.MakeRotationFromQuaternion(addrot);
-
-
-					auto bfloro = loro;
-					loro.Multiply(addrot);
-					Matrix msca, mrot, mpos, mfin;
-
-					/*msca.MakeScaling(losc);
-					mrot.MakeRotationFromQuaternion(loro);
-					mpos.MakeTranslation(lopo);*/
-
+					Quaternion addrot(toEffector, toTarget);
+					
+					loro.Multiply(addrot, loro);
+					
+					Matrix mfin;
 					mfin.MakeTransform(lopo, losc, loro);
-
-					//mfin.Multiply(msca, mrot);
-					//mfin.Multiply(mfin, mpos);
+					
 					currentBone->SetLocalMatrix(mfin);
 				}
-
 
 				if (m_endBone == currentBone)
 					break;
@@ -669,7 +666,9 @@ namespace UER
 				currentBone = m_skeleton->GetBone(currentBone->GetParentBoneNo());
 			}
 		}
+		
 		m_isSetOldTarget = false;
+		m_isSetNextTarget = false;
 		//UpdateRigidBody(m_target);
 	}
 
