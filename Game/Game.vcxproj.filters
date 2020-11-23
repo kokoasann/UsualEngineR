@@ -185,6 +185,9 @@
     <ClInclude Include="Player\State\PlayerStunState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -371,6 +374,9 @@
     </ClCompile>
     <ClCompile Include="Player\State\PlayerStunState.cpp">
       <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
