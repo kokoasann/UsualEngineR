@@ -1,21 +1,22 @@
 #include "stdafx.h"
 #include "Zako_LongDistanceMachine.h"
 
+#include "Enemy/State/EnemyDeadState.h"
 #include "Enemy/State/EnemyLongDistanceAttackState.h"
+#include "Enemy/State/EnemyLongDistanceTargetingState.h"
 
 Zako_LongDistanceMachine::Zako_LongDistanceMachine()
 {
-	m_stateListEX[TO_INT8(EStateEX::LongDistanceAttack)] = new EnemyLongDistanceAttackState();
+	
 }
 
 Zako_LongDistanceMachine::~Zako_LongDistanceMachine()
 {
-	delete m_stateListEX[TO_INT8(EStateEX::LongDistanceAttack)];
+	//delete m_stateList[TO_UINT(EStateEX::LongDistanceAttack)];
 }
 
 void Zako_LongDistanceMachine::Init()
 {
-	InitState();
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/enemy/LongRangeMachine/LongRangeMachine.tkm";
@@ -31,23 +32,42 @@ void Zako_LongDistanceMachine::Init()
 	//m_model->SetMulColor({ 0.5, 0, 0.5, 1 });
 	m_animlist.resize(1);
 	m_animlist[0] = std::make_unique<CAnimationClip>();
-	m_animlist[0]->Load("Assets/modelData/enemy/LongRangeMachine/anim/lrm_walk.tka");
+	m_animlist[0]->Load("Assets/modelData/enemy/LongRangeMachine/anim/lrm_idol.tka");
 	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[0]->SetLoopFlag(true);
 
 	m_model->InitAnimation(m_animlist, 1);
 	m_model->Play(0);
 
+	auto& model = m_model->GetModel();
+	auto ske = model.GetSkelton();
+	IK* ik = model.CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.003")), 1, 0.5);
+	ik->SetIKMode(IK::enMode_NoneHit);
+	reinterpret_cast<EnemyLongDistanceTargetingState*>(m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)])->Init(ik);
+
 	//State
 	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
-	SetState(m_stateListEX[TO_INT8(EStateEX::LongDistanceAttack)]);
+	SetState(m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)]);
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
+}
+
+void Zako_LongDistanceMachine::InitState()
+{
+	m_stateList.resize(TO_INT(EStateEX::Num));
+	m_stateList[TO_INT(EStateEX::Dead)] = new EnemyDeadState();
+	m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)] = new EnemyLongDistanceTargetingState();
+	m_stateList[TO_INT(EStateEX::LongDistanceAttack)] = new EnemyLongDistanceAttackState();
 }
 
 void Zako_LongDistanceMachine::Execute()
 {
 	m_model->SetPosition(m_position);
+
+	//体力がなくなったら死亡ステートへ遷移
+	if (m_ability.hp <= 0) {
+		SetState(m_stateList[static_cast<int>(EStateEX::Dead)]);
+	}
 }
 
 void Zako_LongDistanceMachine::Terminate()
