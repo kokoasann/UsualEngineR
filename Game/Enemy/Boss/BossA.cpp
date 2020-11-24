@@ -181,7 +181,7 @@ void BossA::Execute() {
 
 	std::string debugText;
 	debugText = "STAMINA : " + std::to_string(m_ability.stamina);
-	DebugPrint_WATA(debugText.c_str());
+	//DebugPrint_WATA(debugText.c_str());
 
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
