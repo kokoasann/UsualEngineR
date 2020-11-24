@@ -69,6 +69,7 @@ private:
 	std::vector<IEnemy*> m_enemies;
 	Player* m_player = nullptr;
 
-	const float BOSS_A_HP = 140.f;
+	const float BOSS_A_HP = 1000.f;
+	const float BOSS_A_STAMINA = 100.f;
 };
 

@@ -11,8 +11,8 @@ void EnemyManager::SpawnEnemies() {
 	IEnemy::StAbility ab;
 	//Boss
 	auto bene = NewGO<BossA>(0);
-
 	ab.InitHP(BOSS_A_HP);
+	ab.InitStamina(BOSS_A_STAMINA);
 	bene->SetAbility(ab);
 	Vector3 pos;
 	pos.y = 100;
@@ -27,6 +27,8 @@ void EnemyManager::SpawnEnemies() {
 	m_enemies.push_back(e);
 
 	return;
+
+
 	//Zako!
 	std::random_device rd;
 	std::mt19937 mt(rd()); 

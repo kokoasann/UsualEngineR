@@ -57,9 +57,15 @@ public:
 	struct StAbility {
 		float hp;
 		float max_hp;
+		float stamina;
+		float max_stamina;
 
 		void InitHP(const float init_hp) {
 			hp = max_hp = init_hp;
+		}
+
+		void InitStamina(const float init_stamina) {
+			stamina = max_stamina = init_stamina;
 		}
 	};
 
@@ -97,6 +103,10 @@ public:
 	}
 
 	void ApplyDamage(const float damage);
+
+	void UseStamina(const float amount);
+
+	void RecoverStamina(const float amount);
 
 	void SetAbility(const StAbility& ability) {
 		m_ability = ability;
