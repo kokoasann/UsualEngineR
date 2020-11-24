@@ -29,6 +29,12 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
+	auto delta = gameTime()->GetDeltaTime();
+
+	e->RecoverStamina(m_stamina_recover_amount * delta);
+
+	const auto stamina = e->GetAbility().stamina;
+
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {

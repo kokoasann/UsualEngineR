@@ -53,6 +53,8 @@ void EnemyMeleeOverheatState::Exit(IEnemy* e) {
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetScale(0.1f);
 	effects.at(TO_INT(BossA::EnJetBone::Skirt))->SetScale(0.1f);
 
+	e->RecoverStamina(e->GetAbility().max_stamina);
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Exit enemy overheat\n");
 #endif

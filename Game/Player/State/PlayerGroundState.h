@@ -16,6 +16,7 @@ public:
 	void Exit(Player*) override;
 
 private:
+	const float m_DefaultAnimSpeed = 1.f;
 
 	void CameraWorldMove(Player*);
 	void TargettingEnemyMove(Player*);

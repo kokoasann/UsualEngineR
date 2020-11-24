@@ -10,4 +10,5 @@ public:
 	virtual IEnemyState* Update(IEnemy* e) override;
 	virtual void Exit(IEnemy* e) override;
 private:
+	const float m_stamina_recover_amount = 5.f;
 };
