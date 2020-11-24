@@ -30,7 +30,8 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 
 void PlayerAttackExplosion::Execute(Player* player) {
 	auto delta = gameTime()->GetDeltaTime();
-	m_timer += delta;
+
+	//m_timer += delta;
 
 	auto vel = player->GetForward();
 	vel *= m_tacklePower;
@@ -57,8 +58,14 @@ void PlayerAttackExplosion::Execute(Player* player) {
 		}
 	}
 
-	if (m_timer > m_interval)
+	if (!player->IsPlayingAnimation()) {
+		m_timer += gameTime()->GetDeltaTime();
+	}
+
+	if (m_timer >= m_interval) {
 		m_isDone = true;
+	}
+
 }
 
 
