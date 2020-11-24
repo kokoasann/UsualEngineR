@@ -85,6 +85,8 @@ void Player::Awake()
 	m_animlist[static_cast<int>(EnAnimation::enIdle)]->BuildKeyFramesAndAnimationEvents();
 	m_animlist[static_cast<int>(EnAnimation::enIdle)]->SetLoopFlag(true);
 
+
+
 	//Run
 	m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
 	m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/modelData/m/anim/m_dash.tka");

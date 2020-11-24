@@ -29,7 +29,7 @@ void PlayerAttackRevolvingTackle::Init(Player* player, int combo) {
 
 void PlayerAttackRevolvingTackle::Execute(Player* player) {
 	auto delta = gameTime()->GetDeltaTime();
-	m_timer += delta;
+	//m_timer += delta;
 
 	auto vel = player->GetForward();
 	vel *= m_tacklePower;
@@ -41,6 +41,10 @@ void PlayerAttackRevolvingTackle::Execute(Player* player) {
 			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
 			m_isDone = true;
 		}
+	}
+
+	if (!player->IsPlayingAnimation()) {
+		m_timer += gameTime()->GetDeltaTime();
 	}
 
 	if (m_timer > m_interval)

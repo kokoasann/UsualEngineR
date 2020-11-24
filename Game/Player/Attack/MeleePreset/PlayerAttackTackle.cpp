@@ -29,7 +29,7 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 void PlayerAttackTackle::Execute(Player* player) {
 	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
 	auto delta = gameTime()->GetDeltaTime();
-	m_timer += delta;
+	//m_timer += delta;
 
 	auto vel = player->GetForward();
 	vel *= m_tacklePower;
@@ -41,6 +41,10 @@ void PlayerAttackTackle::Execute(Player* player) {
 			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
 			m_isDone = true;
 		}
+	}
+
+	if (!player->IsPlayingAnimation()) {
+		m_timer += gameTime()->GetDeltaTime();
 	}
 
 	if(m_timer > m_interval)
