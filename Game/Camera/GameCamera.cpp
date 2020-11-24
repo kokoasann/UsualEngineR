@@ -171,32 +171,10 @@ void GameCamera::CalcEnemyCamera() {
 	auto lengthToNextTargetPos = vecCurrentToNext.Length();
 	vecCurrentToNext.Normalize();
 	auto currentLength = lengthToNextTargetPos * enemyTargetChangeTime;
-	//printf("current length : %f\n", currentLength);
 	m_enemyCameraCurrentTargetPos += vecCurrentToNext * currentLength;
 	enemyTargetChangeTime += gameTime()->GetDeltaTime();
 	enemyTargetChangeTime = min(gameTime()->GetDeltaTime() + enemyTargetChangeTime, 1.f);
-
-	//std::string camText;
-
-	//auto delta = gameTime()->GetDeltaTime();
-
-	//m_enemyCameraCurrentTargetPos.x = Approach(m_enemyCameraNextTargetPos.x, m_enemyCameraCurrentTargetPos.x, delta * 10);
-	//m_enemyCameraCurrentTargetPos.y = Approach(m_enemyCameraNextTargetPos.y, m_enemyCameraCurrentTargetPos.y, delta * 10);
-	//m_enemyCameraCurrentTargetPos.z = Approach(m_enemyCameraNextTargetPos.z, m_enemyCameraCurrentTargetPos.z, delta * 10);
-
-	//m_posChecker->SetPos(m_enemyCameraCurrentTargetPos);
-
 	m_targetPos = m_enemyCameraCurrentTargetPos;
-
-	/*
-	printf("Current : (%f, %f, %f) / Next : (%f, %f, %f)", 
-		m_enemyCameraCurrentTargetPos.x, m_enemyCameraCurrentTargetPos.y, m_enemyCameraCurrentTargetPos.z,
-		m_enemyCameraNextTargetPos.x, m_enemyCameraNextTargetPos.y, m_enemyCameraNextTargetPos.z
-	);
-	*/
-
-	//DebugPrint_WATA(camText.c_str());
-
 
 	//キャラとターゲットが一直線に重なって見えるようなカメラの位置を計算.
 	auto vecTargetToChara = m_charaPos - m_targetPos;
