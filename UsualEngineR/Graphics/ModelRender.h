@@ -94,6 +94,11 @@ namespace UER
 			return m_animPlaySpeed;
 		}
 
+		bool IsAnimPlaying() const
+		{
+			return m_animation.IsPlaying();
+		}
+
 		IK* CreateIK(Bone* startBone, Bone* endBone, float radius)
 		{
 			m_model.CreateIK(startBone, endBone, radius);
