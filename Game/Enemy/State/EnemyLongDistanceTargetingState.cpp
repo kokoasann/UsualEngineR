@@ -46,17 +46,34 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 	float bSpeed = 500.f;
 
 
-	auto tpos = ppos + (pvel * (fabsf(Dot(e2p,pvel)) * pvelLen * e2pLen * dtime * 5.f / bSpeed));
+	Vector3 tpos;
 	float fn = 1;
-	while (1)
+	if (pvelLen > FLT_EPSILON)
 	{
-		auto t = epos - (ppos + pvel * (pvelLen * fn * dtime));
-		if (bSpeed * fn * dtime)
+		while (1)
 		{
-			tpos = t;
+			auto target = (ppos + pvel * (pvelLen * fn * dtime));
+			auto t = epos - target;
+			auto v = t;
+			v.Normalize();
+			if ((bSpeed * (fn - 3.f) * dtime) >= t.Length())
+			//if (bSpeed * dtime >= (epos + (v * bSpeed * (fn) * dtime) - target).Length())
+			{
+				DebugPrintValue(EDebugConsoloUser::NOMOTO, "e2pLen", e2pLen);
+				DebugPrintValue(EDebugConsoloUser::NOMOTO, "pvelLen", pvelLen);
+				DebugPrintValue(EDebugConsoloUser::NOMOTO, "fn", fn);
+				auto c = Math::RadToDeg(acos(e2p.Dot(pvel)));
+				DebugPrintValue(EDebugConsoloUser::NOMOTO, "deg", c);
 
-			break;
+				tpos = std::move(target);
+				break;
+			}
+			fn += 1.f;
 		}
+	}
+	else
+	{
+		tpos = ppos;
 	}
 
 	
