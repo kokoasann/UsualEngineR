@@ -14,7 +14,16 @@ EnemyMeleePunchState::~EnemyMeleePunchState() {
 }
 
 void EnemyMeleePunchState::Enter(IEnemy* e) {
+
+	if (e->GetAbility().stamina < m_cost) {
+		m_canExecute = false;
+		return;
+	}
+
 	e->PlayAnimation(IEnemy::EnAnimation::enAttackA);
+
+	e->UseStamina(m_cost);
+
 	m_timer = 0.f;
 	//e->playAttackAnimation();
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
@@ -26,6 +35,11 @@ void EnemyMeleePunchState::Enter(IEnemy* e) {
 }
 
 IEnemyState* EnemyMeleePunchState::Update(IEnemy* e) {
+
+	if (!m_canExecute) {
+		return e->GetState(TO_INT(BossA::EnState::enBattleState));
+	}
+
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer >= m_intervalSec) {
 		return e->GetState(TO_INT(BossA::EnState::enBattleState));

@@ -109,7 +109,7 @@ void IEnemy::UseStamina(const float amount) {
 
 void IEnemy::RecoverStamina(const float amount) {
 	if (amount > 0.f)
-		m_ability.stamina = max(m_ability.max_stamina, m_ability.stamina + amount);
+		m_ability.stamina = min(m_ability.max_stamina, m_ability.stamina + amount);
 }
 
 void IEnemy::InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody) {

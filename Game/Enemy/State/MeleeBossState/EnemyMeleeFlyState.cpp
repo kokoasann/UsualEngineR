@@ -34,12 +34,15 @@ void EnemyMeleeFlyState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 
+	auto delta = gameTime()->GetDeltaTime();
+
+	e->RecoverStamina(m_stamina_recover_amount * delta);
+
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(TO_INT(BossA::EnState::enIdleState));
 	}
-	auto delta = gameTime()->GetDeltaTime();
 	m_flyTimer += delta;
 
 	printf("time : %f\n", m_flyTimer);
