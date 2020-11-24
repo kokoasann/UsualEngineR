@@ -22,8 +22,11 @@ void PlayerStunState::Enter(Player* p) {
 	//m_velocity.Normalize();
 	//m_velocity *= m_FIRST_VEL_PARAM;
 
+	p->PlayAnimation(Player::EnAnimation::enKnockBack);
+
 	m_velocityGoal.x =  m_VELOCITY_MAX;
 	m_velocityGoal.z =  m_VELOCITY_MAX;
+
 
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player : Enter Stun\n");

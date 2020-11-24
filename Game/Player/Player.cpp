@@ -116,11 +116,17 @@ void Player::Awake()
 	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->SetLoopFlag(true);
 
 	//TODO : load got damage anim
-	//Damage
-	m_animlist[static_cast<int>(EnAnimation::enDamage)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enDamage)]->Load("Assets/modelData/m/anim/m_idle.tka");
-	m_animlist[static_cast<int>(EnAnimation::enDamage)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enDamage)]->SetLoopFlag(false);
+	//KnockBack
+	m_animlist[static_cast<int>(EnAnimation::enKnockBack)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enKnockBack)]->Load("Assets/modelData/m/anim/m_hit.tka");
+	m_animlist[static_cast<int>(EnAnimation::enKnockBack)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enKnockBack)]->SetLoopFlag(false);
+
+	//Guard
+	m_animlist[static_cast<int>(EnAnimation::enGuard)] = std::make_unique<CAnimationClip>();
+	m_animlist[static_cast<int>(EnAnimation::enGuard)]->Load("Assets/modelData/m/anim/m_guard.tka");
+	m_animlist[static_cast<int>(EnAnimation::enGuard)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[static_cast<int>(EnAnimation::enGuard)]->SetLoopFlag(false);
 
 	//Attack
 	m_animlist[static_cast<int>(EnAnimation::enAttack)] = std::make_unique<CAnimationClip>();
