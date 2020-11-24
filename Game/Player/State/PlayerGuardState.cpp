@@ -16,7 +16,7 @@ void PlayerGuardState::Enter(Player* p) {
 #endif
 
 	p->SetVelocity(Vector3::Zero);
-	p->PlayAnimation(Player::EnAnimation::enIdle);
+	p->PlayAnimation(Player::EnAnimation::enGuard);
 	p->SetArmorParam(m_guardParam);
 }
 

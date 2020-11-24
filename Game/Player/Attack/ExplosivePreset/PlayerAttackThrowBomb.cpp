@@ -33,11 +33,16 @@ void PlayerAttackThrowBomb::Init(Player* player, int combo) {
 
 void PlayerAttackThrowBomb::Execute(Player* player) {
 	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
-	m_timer += gameTime()->GetDeltaTime();
+	//m_timer += gameTime()->GetDeltaTime();
 
 	if (g_pad[0]->IsTrigger(enButtonB)) {
 		m_isContinuAttack = true;
 	}
+
+	if (!player->IsPlayingAnimation()) {
+		m_timer += gameTime()->GetDeltaTime();
+	}
+
 	if (m_timer >= m_interval) {
 		m_isDone = true;
 	}

@@ -10,5 +10,7 @@ public:
 	virtual IEnemyState* Update(IEnemy* e) override;
 	virtual void Exit(IEnemy* e) override;
 private:
-
+	//stamina
+	const float m_cost = 30.f;
+	bool m_canExecute = true;
 };

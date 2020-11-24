@@ -34,6 +34,7 @@ public:
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
 	virtual void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) {}
+	virtual void PlayAnimation(const int animNo, const float interpolate = 0.2f) {}
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;
@@ -57,9 +58,15 @@ public:
 	struct StAbility {
 		float hp;
 		float max_hp;
+		float stamina;
+		float max_stamina;
 
 		void InitHP(const float init_hp) {
 			hp = max_hp = init_hp;
+		}
+
+		void InitStamina(const float init_stamina) {
+			stamina = max_stamina = init_stamina;
 		}
 	};
 
@@ -98,6 +105,10 @@ public:
 
 	void ApplyDamage(const float damage);
 
+	void UseStamina(const float amount);
+
+	void RecoverStamina(const float amount);
+
 	void SetAbility(const StAbility& ability) {
 		m_ability = ability;
 	}
@@ -128,6 +139,14 @@ public:
 
 	std::vector<JetEffect*>& GetJetEffects() {
 		return m_jetEffects;
+	}
+
+	void SetRotation(const Quaternion& rot) {
+		m_rotation = rot;
+	}
+
+	const Quaternion& GetRotation() {
+		return m_rotation;
 	}
 
 protected:

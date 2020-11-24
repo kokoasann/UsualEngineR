@@ -6,13 +6,16 @@
 #include <random>
 
 #include "Zako/Zako_LongDistanceMachine.h"
+#include "Equipment/Enemy_Bullet.h"
+
+#include "level/Level.h"
 
 void EnemyManager::SpawnEnemies() {
 	IEnemy::StAbility ab;
 	//Boss
 	auto bene = NewGO<BossA>(0);
-
 	ab.InitHP(BOSS_A_HP);
+	ab.InitStamina(BOSS_A_STAMINA);
 	bene->SetAbility(ab);
 	Vector3 pos;
 	pos.y = 100;
@@ -26,7 +29,25 @@ void EnemyManager::SpawnEnemies() {
 	e->SetPosition({ -50,10,-50 });
 	m_enemies.push_back(e);
 
+	AllocateGO<Enemy_Bullet>(70, 0);
+	Level level;
+	level.Init("Assets/level/map_enemy_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			if (objData.name == L"LongDistanceMachine")
+			{
+				auto e = NewGO<Zako_LongDistanceMachine>(0);
+				e->SetAbility(ab);
+				e->SetPosition(objData.position * 100.f);
+				e->SetRotation(objData.rotation);
+				m_enemies.push_back(e);
+			}
+			return true;
+		}
+	);
+
 	return;
+
+
 	//Zako!
 	std::random_device rd;
 	std::mt19937 mt(rd()); 

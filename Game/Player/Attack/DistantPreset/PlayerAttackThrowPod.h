@@ -24,7 +24,7 @@ public:
 
 private:
 	bool m_isDone = false;
-	const float m_interval = 0.5f;
+	const float m_interval = 0.1f;
 	float m_timer = 0.f;
 
 	const float m_throwPower = 200.f;

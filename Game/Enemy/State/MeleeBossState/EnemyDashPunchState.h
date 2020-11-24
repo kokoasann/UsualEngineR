@@ -14,5 +14,8 @@ private:
 	const float m_damageAmount = 15.f;
 	const float m_range = 30.f;
 	const float m_intervalSec = 0.5f;
+
+	const float m_cost = 10.f;
+	bool m_canExecute = true;
 };
 

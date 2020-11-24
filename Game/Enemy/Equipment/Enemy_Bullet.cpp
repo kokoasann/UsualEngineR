@@ -46,7 +46,20 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 
 Enemy_Bullet::Enemy_Bullet()
 {
+	ModelInitData mid;
+	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
+	mid.m_vsEntryPointFunc = "VSMain";
+	mid.m_psEntryPointFunc = "PSMain";
 
+	m_model = NewGO<ModelRender>(0);
+	m_model->Init(mid);
+	
+	//m_model->SetPosition(pos);
+	//m_model->SetRotation(rot);
+
+	//m_sphere.Create(scale * 0.5);
 }
 
 Enemy_Bullet::~Enemy_Bullet()
@@ -63,7 +76,9 @@ void Enemy_Bullet::Release()
 
 void Enemy_Bullet::OnDestroy()
 {
-	Release();
+	//Release();
+	m_sphere.Release();
+	m_model->SetActive(false);
 }
 
 void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, float speed, float timeLimit, float attackRenge)
@@ -77,20 +92,14 @@ void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, flo
 	Quaternion rot;
 	rot.SetRotation(Vector3::AxisZ * -1.f, m_dir);
 
-	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
-	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-	mid.m_vsEntryPointFunc = "VSMain";
-	mid.m_psEntryPointFunc = "PSMain";
-
-	m_model = NewGO<ModelRender>(0);
-	m_model->Init(mid);
-	m_model->SetScale(Vector3::One * m_scale);
+	m_model->SetActive(true);
 	m_model->SetPosition(pos);
 	m_model->SetRotation(rot);
+	m_model->SetScale(Vector3::One * m_scale);
 
 	m_sphere.Create(scale * 0.5);
+
+	m_timer = 0.f;
 }
 
 

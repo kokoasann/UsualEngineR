@@ -8,20 +8,26 @@ void EnemyLongDistanceAttackState::Enter(IEnemy* e)
 {
 	m_timer = 0.f;
 	m_shotCount = 0;
+
+	m_velocity = m_target - e->GetPosition();
+	m_velocity.Normalize();
+
+	e->PlayAnimation(TO_INT(Zako_LongDistanceMachine::EAnim::Fire));
 }
 
 IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 {
 	float dtime = gameTime()->GetDeltaTime();
 	m_timer += dtime;
-	
+	m_ik->SetNextTarget(m_target);
 	//ŽžŠÔ‚É‚È‚Á‚½‚ç’e‚ð”­ŽËB
 	if (m_timer >= m_timeSpan)
 	{
-		Enemy_Bullet* eb = NewGO<Enemy_Bullet>(0);
-		auto p = e->GetPosition();
-		p.y += 10.;
-		eb->Init(p, 1, m_velocity, m_speed, 10, 1);
+		Enemy_Bullet* eb = NewGO<Enemy_Bullet>(0,true);
+		auto p = m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();;
+		
+		//p.y += 10.;
+		eb->Init(p, 1, m_velocity, m_speed, 5, 1);
 		m_timer = 0.f;
 		m_shotCount++;
 		if (m_shotCount >= m_maxShot)
@@ -29,7 +35,7 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 			return e->GetState(TO_INT(Zako_LongDistanceMachine::EStateEX::LongDistanceTargeting));
 		}
 	}
-
+	
 	return this;
 }
 

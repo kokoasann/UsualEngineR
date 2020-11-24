@@ -202,6 +202,19 @@ namespace UER
 	{
 		return GameObjectManager::Get()->NewGameObject<T>(prio, name, false,false);
 	}
+
+	/// <summary>
+	/// オブジェクトを生成する
+	/// </summary>
+	/// <param name="prio">プライオリティ</param>
+	/// <param name="name">名前</param>
+	/// <param name="isTakeTrush">使いまわしする</param>
+	/// <returns></returns>
+	template<class T>
+	static T* NewGO(int prio, bool isTakeTrush)
+	{
+		return GameObjectManager::Get()->NewGameObject<T>(prio, "", isTakeTrush, false);
+	}
 	
 	/// <summary>
 	/// オブジェクトを消す
@@ -213,5 +226,21 @@ namespace UER
 	{
 		GameObjectManager::Get()->DeleteGameObject(obj);
 		obj = nullptr;
+	}
+
+
+	/// <summary>
+	/// num分だけGameObjectManagerのTrushBox上に確保する。
+	/// </summary>
+	/// <param name="num"></param>
+	/// <param name="prio"></param>
+	template<class T>
+	static void AllocateGO(int num,int prio)
+	{
+		for (int i = 0; i < num; i++)
+		{
+			auto go = NewGO<T>(prio, true);
+			DeleteGO(go);
+		}
 	}
 }

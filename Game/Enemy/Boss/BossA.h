@@ -23,6 +23,10 @@ public:
 		m_model->Play(static_cast<int>(anim), interpolate);
 	}
 
+	void PlayAnimation(const int animNo, const float interpolate = 0.2f) override{
+		m_model->Play(animNo, interpolate);
+	}
+
 	enum class EnState {
 		enIdleState,
 		enBattleState,

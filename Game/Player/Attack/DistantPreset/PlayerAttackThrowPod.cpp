@@ -39,13 +39,15 @@ void PlayerAttackThrowPod::Init(Player* player, int combo) {
 }
 
 void PlayerAttackThrowPod::Execute(Player* player) {
-	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
 
-	m_timer += gameTime()->GetDeltaTime();
+	if (!player->IsPlayingAnimation()) {
+		m_timer += gameTime()->GetDeltaTime();
+	}
 
 	if (m_timer >= m_interval) {
 		m_isDone = true;
 	}
+
 }
 
 

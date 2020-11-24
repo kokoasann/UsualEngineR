@@ -36,7 +36,9 @@ public:
 		enHovering,
 		enFlyMove,
 		enFlyMoveFaster,
-		enDamage,
+		//enDamage,
+		enGuard,
+		enKnockBack,
 		enAttack,
 		enPunch1,
 		enPunch2,
@@ -173,6 +175,10 @@ public:
 		m_model->Play(static_cast<int>(anim), interpolate);
 	}
 
+	const bool IsPlayingAnimation(){
+		return m_model->IsAnimPlaying();
+	}
+
 	const float GetCurrentHP() {
 		return m_hp;
 	}
@@ -303,6 +309,10 @@ public:
 		return m_model->GetModel();
 	}
 
+	ModelRender& GetModelRender() {
+		return *m_model;
+	}
+
 	const Bone* GetBone(const EnPlayerBone& boneType) const{
 		return m_playerBones.at(TO_INT(boneType));
 	}
@@ -340,7 +350,7 @@ private:
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
-	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true };
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
 
 	//State
 	IPlayerState* m_nextState = nullptr;
@@ -363,7 +373,7 @@ private:
 
 	//Physics
 	float m_charaConRadius = 1.f;
-	float m_charaConHeight = 3.f;
+	float m_charaConHeight = 6.f;
 
 	//Pod
 	Pod* m_pod = nullptr;

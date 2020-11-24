@@ -102,6 +102,16 @@ void IEnemy::ApplyDamage(const float damage) {
 	}
 }
 
+void IEnemy::UseStamina(const float amount) {
+	if(amount > 0.f)
+		m_ability.stamina = max(0.f, m_ability.stamina - amount);
+}
+
+void IEnemy::RecoverStamina(const float amount) {
+	if (amount > 0.f)
+		m_ability.stamina = min(m_ability.max_stamina, m_ability.stamina + amount);
+}
+
 void IEnemy::InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody) {
 	m_charaCon.Init(radius, height, pos, /*isUseRigidBody */ true);
 	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Enemy);
