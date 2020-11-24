@@ -305,6 +305,10 @@ public:
 		return m_model->GetModel();
 	}
 
+	ModelRender& GetModelRender() {
+		return *m_model;
+	}
+
 	const Bone* GetBone(const EnPlayerBone& boneType) const{
 		return m_playerBones.at(TO_INT(boneType));
 	}
@@ -365,7 +369,7 @@ private:
 
 	//Physics
 	float m_charaConRadius = 1.f;
-	float m_charaConHeight = 3.f;
+	float m_charaConHeight = 6.f;
 
 	//Pod
 	Pod* m_pod = nullptr;

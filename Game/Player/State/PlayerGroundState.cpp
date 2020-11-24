@@ -62,6 +62,7 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 }
 
 void PlayerGroundState::Exit(Player* p) {
+	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Exit Ground\n");
 #endif
@@ -93,6 +94,7 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 			m_vecVelocityGoal *= m_RUN_SPEED_PARAM * m_VELOCITY_MAX;
 			isRunning = true;
 			p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+			p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
 		}
 		else {
 			m_hasEnoughStaminaToRun = false;
@@ -150,11 +152,15 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 }
 
 void PlayerGroundState::CameraWorldMove(Player* p) {
+
 	auto lxf = g_pad[0]->GetLStickXF();
 	auto lyf = g_pad[0]->GetLStickYF();
 
 	m_vecVelocityGoal.x = lxf * m_VELOCITY_MAX;
 	m_vecVelocityGoal.z = lyf * m_VELOCITY_MAX;
+
+	Vector3 stick(lxf, lyf, 0.f);
+	float animSpeed = m_DefaultAnimSpeed + stick.Length();
 
 	bool isRunning = false;
 
@@ -169,6 +175,7 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 			isRunning = true;
 			m_vecVelocityGoal *= m_RUN_SPEED_PARAM;
 			p->PlayAnimation(Player::EnAnimation::enRun, m_AnimInterpolate);
+			p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
 		}
 		else {
 			m_hasEnoughStaminaToRun = false;
@@ -176,6 +183,7 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 	}
 	else {
 		p->PlayAnimation(Player::EnAnimation::enWalk, m_AnimInterpolate);
+		p->GetModelRender().SetAnimPlaySpeed(animSpeed);
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
