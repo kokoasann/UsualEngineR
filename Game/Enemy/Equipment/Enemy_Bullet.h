@@ -79,6 +79,7 @@ public:
 	{
 		m_damage = f;
 	}
+
 private:
 	ModelRender* m_model;
 	float m_scale;
@@ -94,3 +95,5 @@ private:
 
 	SphereCollider m_sphere;
 };
+
+

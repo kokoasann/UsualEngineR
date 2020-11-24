@@ -30,20 +30,32 @@ void Zako_LongDistanceMachine::Init()
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
 	//m_model->SetMulColor({ 0.5, 0, 0.5, 1 });
-	m_animlist.resize(1);
-	m_animlist[0] = std::make_unique<CAnimationClip>();
-	m_animlist[0]->Load("Assets/modelData/enemy/LongRangeMachine/anim/lrm_idol.tka");
-	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[0]->SetLoopFlag(true);
+	
+	m_animlist.resize(TO_INT(EAnim::Num));
+	m_animlist[TO_INT(EAnim::Idle)] = std::make_unique<CAnimationClip>();
+	m_animlist[TO_INT(EAnim::Idle)]->Load("Assets/modelData/enemy/LongRangeMachine/anim/lrm_idol.tka");
+	m_animlist[TO_INT(EAnim::Idle)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[TO_INT(EAnim::Idle)]->SetLoopFlag(true);
 
-	m_model->InitAnimation(m_animlist, 1);
-	m_model->Play(0);
+	m_animlist[TO_INT(EAnim::Walk)] = std::make_unique<CAnimationClip>();
+	m_animlist[TO_INT(EAnim::Walk)]->Load("Assets/modelData/enemy/LongRangeMachine/anim/lrm_walk.tka");
+	m_animlist[TO_INT(EAnim::Walk)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[TO_INT(EAnim::Walk)]->SetLoopFlag(true);
+
+	m_animlist[TO_INT(EAnim::Fire)] = std::make_unique<CAnimationClip>();
+	m_animlist[TO_INT(EAnim::Fire)]->Load("Assets/modelData/enemy/LongRangeMachine/anim/lrm_fire.tka");
+	m_animlist[TO_INT(EAnim::Fire)]->BuildKeyFramesAndAnimationEvents();
+	m_animlist[TO_INT(EAnim::Fire)]->SetLoopFlag(false);
+
+	m_model->InitAnimation(m_animlist, TO_INT(EAnim::Num));
+	m_model->Play(TO_INT(EAnim::Idle));
 
 	auto& model = m_model->GetModel();
 	auto ske = model.GetSkelton();
 	IK* ik = model.CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.003")), 1, 0.5);
 	ik->SetIKMode(IK::enMode_NoneHit);
-	reinterpret_cast<EnemyLongDistanceTargetingState*>(m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)])->Init(ik);
+	reinterpret_cast<EnemyLongDistanceTargetingState*>(m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)])->Init(ik,m_rot);
+	reinterpret_cast<EnemyLongDistanceAttackState*>(m_stateList[TO_UINT(EStateEX::LongDistanceAttack)])->SetIK(ik);
 
 	//State
 	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
@@ -63,6 +75,7 @@ void Zako_LongDistanceMachine::InitState()
 void Zako_LongDistanceMachine::Execute()
 {
 	m_model->SetPosition(m_position);
+	m_model->SetRotation(m_rot);
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
