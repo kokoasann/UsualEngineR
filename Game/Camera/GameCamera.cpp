@@ -15,8 +15,6 @@ GameCamera::~GameCamera()
 
 }
 
-
-
 void GameCamera::Release()
 {
 
@@ -26,7 +24,6 @@ void GameCamera::OnDestroy()
 {
 
 }
-
 
 void GameCamera::Awake()
 {
@@ -44,6 +41,15 @@ bool GameCamera::Start()
 	m_dist = m_toCameraPos;
 
 	m_cameraCollisionSolver.Init(m_sphereCollisionRadius);
+
+	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
+	if (enemies.size() == 0) {
+		mp_enemy = nullptr;
+	}
+	else {
+		m_enemyCameraCurrentTargetPos = m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
+	}
+	//m_posChecker = NewGO<PositionChecker>(0);
 
 	return true;
 }
@@ -64,16 +70,19 @@ void GameCamera::Update()
 		mp_enemy = nullptr;
 	}
 	else {
-		static int targetEnemyNo = 0;
+		//static int targetEnemyNo = 0;
 		if (g_pad[0]->IsTrigger(enButtonLB3)) {
-			if (targetEnemyNo < enemies.size() - 1){
-				targetEnemyNo++;
+			if (m_targetEnemyNo < enemies.size() - 1){
+				m_targetEnemyNo++;
 			}
 			else {
-				targetEnemyNo = 0;
+				m_targetEnemyNo = 0;
 			}
+
+			enemyTargetChangeTime = 0.f;
+			m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
+			mp_enemy = enemies.at(m_targetEnemyNo);
 		}
-		mp_enemy = enemies.at(targetEnemyNo);
 	}
 
 	UpdateState();
@@ -154,14 +163,50 @@ void GameCamera::CalcEnemyCamera() {
 
 	if (mp_enemy != nullptr) {
 		m_targetPos = mp_enemy->GetPosition();
+		m_enemyCameraNextTargetPos = mp_enemy->GetPosition();
 	}
 
+	//ターゲットの位置を切替先まで補完する.
+	auto vecCurrentToNext = m_enemyCameraNextTargetPos - m_enemyCameraCurrentTargetPos;
+	auto lengthToNextTargetPos = vecCurrentToNext.Length();
+	vecCurrentToNext.Normalize();
+	auto currentLength = lengthToNextTargetPos * enemyTargetChangeTime;
+	//printf("current length : %f\n", currentLength);
+	m_enemyCameraCurrentTargetPos += vecCurrentToNext * currentLength;
+	enemyTargetChangeTime += gameTime()->GetDeltaTime();
+	enemyTargetChangeTime = min(gameTime()->GetDeltaTime() + enemyTargetChangeTime, 1.f);
+
+	//std::string camText;
+
+	//auto delta = gameTime()->GetDeltaTime();
+
+	//m_enemyCameraCurrentTargetPos.x = Approach(m_enemyCameraNextTargetPos.x, m_enemyCameraCurrentTargetPos.x, delta * 10);
+	//m_enemyCameraCurrentTargetPos.y = Approach(m_enemyCameraNextTargetPos.y, m_enemyCameraCurrentTargetPos.y, delta * 10);
+	//m_enemyCameraCurrentTargetPos.z = Approach(m_enemyCameraNextTargetPos.z, m_enemyCameraCurrentTargetPos.z, delta * 10);
+
+	//m_posChecker->SetPos(m_enemyCameraCurrentTargetPos);
+
+	m_targetPos = m_enemyCameraCurrentTargetPos;
+
+	/*
+	printf("Current : (%f, %f, %f) / Next : (%f, %f, %f)", 
+		m_enemyCameraCurrentTargetPos.x, m_enemyCameraCurrentTargetPos.y, m_enemyCameraCurrentTargetPos.z,
+		m_enemyCameraNextTargetPos.x, m_enemyCameraNextTargetPos.y, m_enemyCameraNextTargetPos.z
+	);
+	*/
+
+	//DebugPrint_WATA(camText.c_str());
+
+
+	//キャラとターゲットが一直線に重なって見えるようなカメラの位置を計算.
 	auto vecTargetToChara = m_charaPos - m_targetPos;
 	auto length = vecTargetToChara.Length();
 	vecTargetToChara.Normalize();
 	ecPos = m_targetPos + vecTargetToChara * (length + distParam);
+	//カメラの位置を上げる.
 	ecPos.y += cameraHeight;
 
+	//カメラを右側にずらす.
 	auto vecRight = vecTargetToChara;
 	vecRight.y = 0.f;
 	vecRight.Cross({ 0,1,0 });
@@ -170,9 +215,11 @@ void GameCamera::CalcEnemyCamera() {
 
 
 	//TODO : tarpがnanになるバグがあるので修正する. (m_targetPosは正常なのでこの演算中に壊れてる。
+	//ターゲットのターゲット位置もカメラの右側にする.
 	auto tarp = m_targetPos;
 	tarp -= vecRight * targetSlideParam;
 	tarp = m_charaPos + vecRight * charaSlideParam;
+	//ターゲットの位置を上げる.
 	tarp.y += cameraHeight;
 
 	m_enemyCameraPos = ecPos;

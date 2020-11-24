@@ -96,6 +96,10 @@ private:
 	Vector3 m_enemyCameraPos = m_position;
 	Vector3 m_enemyCameraTargetPos = Vector3::Zero;
 
+	//test
+	Vector3 m_enemyCameraNextTargetPos = Vector3::Zero;
+	Vector3 m_enemyCameraCurrentTargetPos = Vector3::Zero;
+
 	Player* mp_player = nullptr;
 	IEnemy* mp_enemy = nullptr;
 	Vector3 m_toCameraPos;
@@ -106,6 +110,11 @@ private:
 	//SpringCamera m_spc;
 	CCameraCollisionSlover m_cameraCollisionSolver;
 	const float m_sphereCollisionRadius = 0.5f;
+
+	float enemyTargetChangeTime = 0.f;
+	//PositionChecker* m_posChecker = nullptr;
+	int m_targetEnemyNo = 0;
+
 };
 
 static const void DebugLogVec3(const Vector3& vec) {
