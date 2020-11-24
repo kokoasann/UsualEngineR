@@ -34,6 +34,7 @@ public:
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
 	virtual void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) {}
+	virtual void PlayAnimation(const int animNo, const float interpolate = 0.2f) {}
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;
@@ -138,6 +139,14 @@ public:
 
 	std::vector<JetEffect*>& GetJetEffects() {
 		return m_jetEffects;
+	}
+
+	void SetRotation(const Quaternion& rot) {
+		m_rotation = rot;
+	}
+
+	const Quaternion& GetRotation() {
+		return m_rotation;
 	}
 
 protected:

@@ -178,6 +178,7 @@ void BossA::Terminate() {
 }
 
 void BossA::Execute() {
+
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 
