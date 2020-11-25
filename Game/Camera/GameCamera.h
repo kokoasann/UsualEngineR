@@ -1,6 +1,7 @@
 #pragma once
 #include "CCameraCollisionSlover.h"
 #include "SpringCamera.h"
+#include <tuple>
 
 class Player;
 class IEnemy;
@@ -89,6 +90,12 @@ private:
 	void CalcEnemyCamera();
 	void CalcPlayerCamera();
 
+	/// <summary>
+	/// カメラのターゲットになる敵を計算. (存在しない場合は-1を返す).
+	/// </summary>
+	/// <returns>カメラ中央に見える敵のインデックス, カメラの左側に見える敵のインデックス, カメラの右側に見える敵のインデックス</returns>
+	std::tuple<int, int, int> GetTargetEnemyIndexes();
+
 	Vector3 m_playerCameraPos = m_position;
 	Vector3 m_playerCameraPreviousPos = m_position;
 	Vector3 m_playerCameraTargetPos = Vector3::Zero;
@@ -112,9 +119,10 @@ private:
 	const float m_sphereCollisionRadius = 0.5f;
 
 	float enemyTargetChangeTime = 0.f;
-	//PositionChecker* m_posChecker = nullptr;
+	PositionChecker* m_posChecker = nullptr;
+	PositionChecker* m_posCheckerL = nullptr;
+	PositionChecker* m_posCheckerR = nullptr;
 	int m_targetEnemyNo = 0;
-
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

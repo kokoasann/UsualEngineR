@@ -4,6 +4,9 @@
 #include "../Enemy/IEnemy.h"
 #include "../PositionChecker.h"
 #include "Enemy/EnemyManager.h"
+#include <limits>
+
+//#define POS_CHECK
 
 GameCamera::GameCamera()
 {
@@ -49,7 +52,13 @@ bool GameCamera::Start()
 	else {
 		m_enemyCameraCurrentTargetPos = m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
 	}
-	//m_posChecker = NewGO<PositionChecker>(0);
+
+#ifdef POS_CHECK
+	m_posChecker = NewGO<PositionChecker>(0);
+	m_posCheckerL = NewGO<PositionChecker>(0);
+	m_posCheckerR = NewGO<PositionChecker>(0);
+#endif // POS_CHECK
+
 
 	return true;
 }
@@ -59,28 +68,68 @@ void GameCamera::PreUpdate()
 
 }
 
+
+
 void GameCamera::Update()
 {
 	Vector3 target = mp_player->GetPosition();
 	m_charaPos = mp_player->GetPosition();
-
 	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
+
+#ifdef POS_CHECK
+
+	int centerIndex, leftIndex, rightIndex;
+	std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
+
+		if (centerIndex != -1) {
+			const auto& chekcerPos = enemies.at(centerIndex)->GetPosition();
+			m_posChecker->SetPos(chekcerPos);
+		}
+		if (leftIndex != -1) {
+			const auto& chekcerPosL = enemies.at(leftIndex)->GetPosition();
+			m_posCheckerL->SetPos(chekcerPosL);
+		}
+		if (rightIndex != -1) {
+			const auto& chekcerPosR = enemies.at(rightIndex)->GetPosition();
+			m_posCheckerR->SetPos(chekcerPosR);
+		}
+	//m_posChecker->SetPos(enemies.at(forwardEnemyIndex)->GetPosition());
+#endif // POS_CHECK
+
 	if (enemies.size() == 0) {
 		mp_enemy = nullptr;
 	}
 	else {
-		//static int targetEnemyNo = 0;
-		if (g_pad[0]->IsTrigger(enButtonLB3)) {
-			if (m_targetEnemyNo < enemies.size() - 1){
-				m_targetEnemyNo++;
-			}
-			else {
-				m_targetEnemyNo = 0;
+
+
+		const float changeTargetVal = 0.7f;
+		auto rxf = g_pad[0]->GetRStickXF();
+
+		if (enemyTargetChangeTime >= 0.3f) {
+
+			int centerIndex, leftIndex, rightIndex;
+
+			bool isChangeTarget = false;
+
+			//right
+			if (rxf >= changeTargetVal) {
+				isChangeTarget = true;
+				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
+				m_targetEnemyNo = rightIndex;
 			}
 
-			enemyTargetChangeTime = 0.f;
-			m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
-			mp_enemy = enemies.at(m_targetEnemyNo);
+			//left
+			if (rxf <= -changeTargetVal) {
+				isChangeTarget = true;
+				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
+				m_targetEnemyNo = leftIndex;
+			}
+
+			if (m_targetEnemyNo != -1 and isChangeTarget) {
+				enemyTargetChangeTime = 0.f;
+				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
+				mp_enemy = enemies.at(m_targetEnemyNo);
+			}
 		}
 	}
 
@@ -275,4 +324,68 @@ void GameCamera::UpdateState() {
 
 	if (mp_player->GetTargetEnemy() == nullptr)
 		m_state = State::enPlayerCamera;
+}
+
+std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
+
+	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
+
+	//カメラ正面の敵をターゲットする.
+	const auto& cameraForward = g_camera3D->GetForward();
+	auto cameraPos = g_camera3D->GetPosition();
+	float maxApprox = -2.f;
+	IEnemy* forwardEnemy = nullptr;
+	float minDist = FLT_MAX;
+	int forwardEnemyIndex = 0;
+
+	const float AUTO_TARGET_RANGE = 300.f;
+
+	std::map<float, int, std::greater<float>> sortedEnemiesMap;
+
+	for (int i = 0; i < enemies.size(); i++) {
+		const auto& enemyPos = enemies.at(i)->GetPosition();
+		auto vecCameraToEnemy = enemyPos - cameraPos;
+		if (vecCameraToEnemy.Length() < AUTO_TARGET_RANGE) {
+			vecCameraToEnemy.Normalize();
+			const auto approx = vecCameraToEnemy.Dot(cameraForward);
+			//if (approx >= 0.5f)
+			sortedEnemiesMap.insert(std::make_pair(approx, i));
+		}
+	}
+
+	int index, iLeft, iRight;;
+	index = iLeft = iRight = -1;
+
+	//左右の最も正面に近い敵を調べる.
+	if (sortedEnemiesMap.size() != 0) {
+
+		for (auto const& e : sortedEnemiesMap) {
+			//正面.
+			if (index == -1) {
+				index = e.second;
+				continue;
+			}
+
+			//左右判定.
+			auto vecCameraToEnemy = enemies.at(e.second)->GetPosition() - g_camera3D->GetPosition();
+			vecCameraToEnemy.y = 0.f;
+			vecCameraToEnemy.Normalize();
+			Vector3 crs;
+			crs.Cross(vecCameraToEnemy, cameraForward);
+
+			//右.
+			if (iRight == -1 and crs.y < 0.f) {
+				iRight = e.second;
+				continue;
+			}
+			//左.
+			if (iLeft == -1 and crs.y > 0.f)
+			{
+				iLeft = e.second;
+				continue;
+			}
+		}
+	}
+
+	return std::forward_as_tuple(index, iLeft, iRight);
 }
