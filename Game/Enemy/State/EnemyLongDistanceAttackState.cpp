@@ -28,8 +28,11 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 	float dtime = gameTime()->GetDeltaTime();
 	m_timer += dtime;
 	m_ik->SetNextTarget(m_target);
+
+	if (m_timer > 2.f)
+		return m_ldt;
 	//ŽžŠÔ‚É‚È‚Á‚½‚ç’e‚ð”­ŽËB
-	if (m_timer >= m_timeSpan)
+	if (m_timer >= m_timeSpan && m_shotCount < m_maxShot)
 	{
 		Enemy_Bullet* eb = NewGO<Enemy_Bullet>(0,true);
 		auto p = m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();;
@@ -40,7 +43,7 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 		m_shotCount++;
 		if (m_shotCount >= m_maxShot)
 		{
-			return m_ldt;
+			//return m_ldt;
 		}
 	}
 	

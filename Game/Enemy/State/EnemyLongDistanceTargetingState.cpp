@@ -25,7 +25,7 @@ void EnemyLongDistanceTargetingState::Init(IK* ik, Quaternion& rot, float bullet
 
 void EnemyLongDistanceTargetingState::Enter(IEnemy* e)
 {
-	m_timer = 0.f;
+	m_timer = m_timeLimit;
 	e->PlayAnimation(TO_INT(Zako_LongDistanceMachine::EAnim::Walk));
 	auto model = e->GetMode();
 	((ModelRender*)model)->SetAnimPlaySpeed(3.f);
@@ -33,6 +33,7 @@ void EnemyLongDistanceTargetingState::Enter(IEnemy* e)
 
 IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 {
+	
 	const float dtime = gameTime()->GetDeltaTime();
 
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
@@ -46,6 +47,11 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 	auto e2p = (ppos - epos);
 	float e2pLen = e2p.Length();
 	e2p.Normalize();
+
+	if (m_overLookRange < e2pLen)
+	{
+		return e->GetState(TO_INT(Zako_LongDistanceMachine::EStateEX::Idle));
+	}
 
 	float bSpeed = m_speed * dtime;
 

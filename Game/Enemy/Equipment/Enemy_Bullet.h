@@ -91,7 +91,7 @@ private:
 	float m_timeLimit = 0.f;
 
 	float m_attackRange = 0.f;
-	float m_damage = 100.f;
+	float m_damage = 10.f;
 
 	SphereCollider m_sphere;
 };

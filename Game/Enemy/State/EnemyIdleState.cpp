@@ -38,7 +38,7 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
-	const float chaseRange = 60.f;
+	const float chaseRange = 300.f;
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
 		return e->GetState(IEnemy::EnState::enBattleState);

@@ -2,6 +2,7 @@
 #include "Zako_LongDistanceMachine.h"
 
 #include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyIdleState.h"
 #include "Enemy/State/EnemyLongDistanceAttackState.h"
 #include "Enemy/State/EnemyLongDistanceTargetingState.h"
 
@@ -68,8 +69,8 @@ void Zako_LongDistanceMachine::InitState()
 {
 	m_stateList.resize(TO_INT(EStateEX::Num));
 	m_stateList[TO_INT(EStateEX::Dead)] = new EnemyDeadState();
+	m_stateList[TO_INT(EStateEX::Idle)] = new EnemyIdleState();
 	m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)] = new EnemyLongDistanceTargetingState();
-	//m_stateList[TO_INT(EStateEX::LongDistanceAttack)] = new EnemyLongDistanceAttackState();
 }
 
 void Zako_LongDistanceMachine::Execute()

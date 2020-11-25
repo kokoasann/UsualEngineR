@@ -21,4 +21,6 @@ private:
 	const float m_timeLimit = 2.f;
 	Quaternion* m_rot = nullptr;
 	float m_speed = 0.f;
+
+	float m_overLookRange = 300.f;
 };

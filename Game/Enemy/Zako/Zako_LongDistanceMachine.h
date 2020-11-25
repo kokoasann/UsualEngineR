@@ -29,10 +29,9 @@ public:
 	using StateEnumType = UINT;
 	enum class EStateEX : StateEnumType
 	{
-		Dead,
 		Idle,
-		LongDistanceTargeting,
-		LongDistanceAttack,
+		LongDistanceTargeting = TO_INT(IEnemy::EnState::enBattleState),
+		Dead,
 		Num,
 	};
 
