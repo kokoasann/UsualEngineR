@@ -1,10 +1,15 @@
 #pragma once
 #include "Enemy/State/IEnemyState.h"
 
+class EnemyLongDistanceTargetingState;
+
+/// <summary>
+/// ‚±‚ÌƒNƒ‰ƒX‚ÍEnemyLongDistanceTargetingState‚ª•ÛB
+/// </summary>
 class EnemyLongDistanceAttackState final :public IEnemyState
 {
 public:
-	
+	void Init(IK* ik, float bulletSpeed, EnemyLongDistanceTargetingState* ldt);
 
 	void Enter(IEnemy* e) override;
 	IEnemyState* Update(IEnemy* e) override;
@@ -32,5 +37,7 @@ private:
 	Vector3 m_target = Vector3::Zero;
 
 	Vector3 m_velocity = Vector3::Zero;
-	float m_speed = 500.f;
+	float m_speed = 2000.f;
+
+	EnemyLongDistanceTargetingState* m_ldt;
 };
