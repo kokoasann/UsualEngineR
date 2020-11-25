@@ -54,7 +54,6 @@ bool GameCamera::Start()
 	return true;
 }
 
-
 void GameCamera::PreUpdate()
 {
 
@@ -89,7 +88,6 @@ void GameCamera::Update()
 	CalcEnemyCamera();
 	CalcPlayerCamera();
 }
-
 
 void GameCamera::PostUpdate() {
 
@@ -151,7 +149,6 @@ void GameCamera::PostUpdate() {
 		}
 	}
 }
-
 
 void GameCamera::CalcEnemyCamera() {
 	static float distParam = 18.f;
@@ -241,6 +238,8 @@ void GameCamera::CalcPlayerCamera() {
 	m_playerCameraPos = m_charaPos + m_dist;
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
 
+	//DebugLogVec3(m_playerCameraTargetPos);
+
 
 	//エネミーカメラに完全に切り替わったらプレイヤーカメラの位置を計算
 	if (m_cameraChangeRatio == 0.f) {
@@ -257,7 +256,6 @@ void GameCamera::CalcPlayerCamera() {
 		m_playerCameraPos = m_charaPos + cameraForward;
 
 		m_dist = m_playerCameraPos - mp_player->GetPosition();
-
 	}
 
 	m_old = m_dist;
