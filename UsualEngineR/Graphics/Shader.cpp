@@ -24,7 +24,11 @@ namespace UER
 		
 		ID3D10Blob* Load(const wchar_t* filePath, const char* entryFuncName, const char* shaderModel)
 		{
-			int hash = Util::MakeHash(filePath);
+			std::string funcName = entryFuncName;
+			std::wstring fip(funcName.begin(),funcName.end());
+			fip += filePath;
+
+			int hash = Util::MakeHash(fip.c_str());
 			ID3DBlob* res;
 			m_loadMutex.lock();
 			auto it = m_shaderDict.find(hash);
@@ -96,33 +100,33 @@ namespace UER
 	}
 	void Shader::Load(const wchar_t* filePath, const char* entryFuncName, const char* shaderModel)
 	{
-		ID3DBlob* errorBlob;
-	#ifdef _DEBUG
-		// Enable better shader debugging with the graphics debugging tools.
-		UINT compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
-	#else
-		UINT compileFlags = 0;
-	#endif
-		auto hr = D3DCompileFromFile(filePath, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, entryFuncName, shaderModel, compileFlags, 0, &m_blob, &errorBlob);
-		
-		if (FAILED(hr)) {
-			if (hr == STIERR_OBJECTNOTFOUND) {
-				std::wstring errorMessage;
-				errorMessage = L"指定されたfxファイルが開けませんでした";
-				errorMessage += filePath;
-				MessageBoxW(nullptr, errorMessage.c_str(), L"エラー", MB_OK);
-				std::abort();
-			}
-			if (errorBlob) {
-				static char errorMessage[10 * 1024];
-				sprintf_s(errorMessage, "filePath : %s, %s", "hoge", (char*)errorBlob->GetBufferPointer());
-				MessageBoxA(NULL, errorMessage, "シェーダーコンパイルエラー", MB_OK);
-				std::abort();
-				return;
-			}
-		}
+	//	ID3DBlob* errorBlob;
+	//#ifdef _DEBUG
+	//	// Enable better shader debugging with the graphics debugging tools.
+	//	UINT compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+	//#else
+	//	UINT compileFlags = 0;
+	//#endif
+	//	auto hr = D3DCompileFromFile(filePath, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, entryFuncName, shaderModel, compileFlags, 0, &m_blob, &errorBlob);
+	//	
+	//	if (FAILED(hr)) {
+	//		if (hr == STIERR_OBJECTNOTFOUND) {
+	//			std::wstring errorMessage;
+	//			errorMessage = L"指定されたfxファイルが開けませんでした";
+	//			errorMessage += filePath;
+	//			MessageBoxW(nullptr, errorMessage.c_str(), L"エラー", MB_OK);
+	//			std::abort();
+	//		}
+	//		if (errorBlob) {
+	//			static char errorMessage[10 * 1024];
+	//			sprintf_s(errorMessage, "filePath : %s, %s", "hoge", (char*)errorBlob->GetBufferPointer());
+	//			MessageBoxA(NULL, errorMessage, "シェーダーコンパイルエラー", MB_OK);
+	//			std::abort();
+	//			return;
+	//		}
+	//	}
 
-		//m_blob = s_shaderManager.Load(filePath, entryFuncName, shaderModel);
+		m_blob = s_shaderManager.Load(filePath, entryFuncName, shaderModel);
 	}
 	void Shader::LoadPS(const wchar_t* filePath, const char* entryFuncName)
 	{
