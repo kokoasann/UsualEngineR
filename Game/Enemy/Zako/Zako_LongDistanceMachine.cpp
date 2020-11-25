@@ -54,8 +54,8 @@ void Zako_LongDistanceMachine::Init()
 	auto ske = model.GetSkelton();
 	IK* ik = model.CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.003")), 1, 0.5);
 	ik->SetIKMode(IK::enMode_NoneHit);
-	reinterpret_cast<EnemyLongDistanceTargetingState*>(m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)])->Init(ik,m_rot);
-	reinterpret_cast<EnemyLongDistanceAttackState*>(m_stateList[TO_UINT(EStateEX::LongDistanceAttack)])->SetIK(ik);
+	reinterpret_cast<EnemyLongDistanceTargetingState*>(m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)])->Init(ik,m_rot,m_bulletSpeed);
+	//reinterpret_cast<EnemyLongDistanceAttackState*>(m_stateList[TO_UINT(EStateEX::LongDistanceAttack)])->SetIK(ik);
 
 	//State
 	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
@@ -69,7 +69,7 @@ void Zako_LongDistanceMachine::InitState()
 	m_stateList.resize(TO_INT(EStateEX::Num));
 	m_stateList[TO_INT(EStateEX::Dead)] = new EnemyDeadState();
 	m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)] = new EnemyLongDistanceTargetingState();
-	m_stateList[TO_INT(EStateEX::LongDistanceAttack)] = new EnemyLongDistanceAttackState();
+	//m_stateList[TO_INT(EStateEX::LongDistanceAttack)] = new EnemyLongDistanceAttackState();
 }
 
 void Zako_LongDistanceMachine::Execute()

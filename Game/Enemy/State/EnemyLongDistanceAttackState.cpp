@@ -1,8 +1,16 @@
 #include "stdafx.h"
 #include "Enemy/Zako/Zako_LongDistanceMachine.h"
 #include "EnemyLongDistanceAttackState.h"
+#include "EnemyLongDistanceTargetingState.h"
 #include "Enemy/IEnemy.h"
 #include "Enemy/Equipment/Enemy_Bullet.h"
+
+void EnemyLongDistanceAttackState::Init(IK* ik, float bulletSpeed, EnemyLongDistanceTargetingState* ldt)
+{
+	m_ik = ik;
+	m_speed = bulletSpeed;
+	m_ldt = ldt;
+}
 
 void EnemyLongDistanceAttackState::Enter(IEnemy* e)
 {
@@ -32,7 +40,7 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 		m_shotCount++;
 		if (m_shotCount >= m_maxShot)
 		{
-			return e->GetState(TO_INT(Zako_LongDistanceMachine::EStateEX::LongDistanceTargeting));
+			return m_ldt;
 		}
 	}
 	

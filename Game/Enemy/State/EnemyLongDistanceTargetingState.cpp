@@ -13,10 +13,14 @@ EnemyLongDistanceTargetingState::EnemyLongDistanceTargetingState()
 EnemyLongDistanceTargetingState::~EnemyLongDistanceTargetingState()
 {
 }
-void EnemyLongDistanceTargetingState::Init(IK* ik, Quaternion& rot)
+void EnemyLongDistanceTargetingState::Init(IK* ik, Quaternion& rot, float bulletSpeed)
 {
 	m_ik = ik;
 	m_rot = &rot;
+
+	//m_lda.SetIK(ik);
+	m_speed = bulletSpeed;
+	m_lda.Init(ik, bulletSpeed,this);
 }
 
 void EnemyLongDistanceTargetingState::Enter(IEnemy* e)
@@ -43,27 +47,38 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 	float e2pLen = e2p.Length();
 	e2p.Normalize();
 
-	float bSpeed = 500.f;
+	float bSpeed = m_speed * dtime;
 
 
 	Vector3 tpos;
-	float fn = 1;
+	float fn = 3;
 	if (pvelLen > FLT_EPSILON)
 	{
+		pvelLen *= dtime;
+		float cta = Dot(e2p, pvel);
+		if (cta < 0)
+		{
+			fn = floorf(e2pLen / bSpeed);
+		}
+		else
+		{
+
+			//fn = floorf()
+		}
 		while (1)
 		{
-			auto target = (ppos + pvel * (pvelLen * fn * dtime));
+			auto target = (ppos + pvel * (pvelLen * fn));
 			auto t = epos - target;
-			auto v = t;
-			v.Normalize();
-			if ((bSpeed * (fn - 3.f) * dtime) >= t.Length())
+			//auto v = t;
+			//v.Normalize();
+			if ((bSpeed * (fn - 3.f)) >= t.Length())
 			//if (bSpeed * dtime >= (epos + (v * bSpeed * (fn) * dtime) - target).Length())
 			{
-				DebugPrintValue(EDebugConsoloUser::NOMOTO, "e2pLen", e2pLen);
+				/*DebugPrintValue(EDebugConsoloUser::NOMOTO, "e2pLen", e2pLen);
 				DebugPrintValue(EDebugConsoloUser::NOMOTO, "pvelLen", pvelLen);
 				DebugPrintValue(EDebugConsoloUser::NOMOTO, "fn", fn);
 				auto c = Math::RadToDeg(acos(e2p.Dot(pvel)));
-				DebugPrintValue(EDebugConsoloUser::NOMOTO, "deg", c);
+				DebugPrintValue(EDebugConsoloUser::NOMOTO, "deg", c);*/
 
 				tpos = std::move(target);
 				break;
@@ -90,8 +105,8 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 	//rot.SetRotation(epos, ppos);
 	m_ik->SetNextTarget(tpos);
 
-	auto e2t = tpos - epos;
-	float t = atan2f(e2t.x, e2t.z);
+	//auto e2t = tpos - epos;
+	float t = atan2f(tpos.x - epos.x, tpos.z - epos.z);
 	Quaternion rot;
 	m_rot->SetRotationY(t);
 
@@ -100,9 +115,9 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 	{
 		//auto v = tpos - epos;
 		//v.Normalize();
-		auto st = reinterpret_cast<EnemyLongDistanceAttackState*>(e->GetState(TO_INT(Zako_LongDistanceMachine::EStateEX::LongDistanceAttack)));
-		st->SetTarget(std::move(tpos));
-		return st;
+		
+		m_lda.SetTarget(std::move(tpos));
+		return &m_lda;
 	}
 	
 	return this;

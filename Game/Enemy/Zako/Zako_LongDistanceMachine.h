@@ -57,6 +57,8 @@ private:
 
 	Quaternion m_rot = Quaternion::Identity;
 
+	float m_bulletSpeed = 2000.f;
+
 	//const static StateEnumType STATE_NUM = TO_UINT(EStateEX::Num);
 	//std::array<IEnemyState*, STATE_NUM> m_stateListEX;
 };

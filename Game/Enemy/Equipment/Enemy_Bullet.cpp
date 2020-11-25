@@ -100,6 +100,7 @@ void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, flo
 	m_sphere.Create(scale * 0.5);
 
 	m_timer = 0.f;
+
 }
 
 
@@ -173,5 +174,52 @@ void Enemy_Bullet::PostUpdate()
 
 }
 
+void EnemyBulletManager::Release()
+{
+}
 
+void EnemyBulletManager::OnDestroy()
+{
+	Release();
+}
 
+void EnemyBulletManager::PostUpdate()
+{
+	int activeNum = 0;
+	for (auto b : m_bulletList)
+	{
+		if (!b->IsDead())
+		{
+			activeNum++;
+		}
+	}
+	if ((m_bulletList.size() - activeNum) <= m_nextAllocateActiveNum && m_thread.IsEnd())
+	{
+		Allocate(m_allocElementNum);
+	}
+
+	/*if (m_isAllocate && m_thread.IsEnd())
+	{
+		for (int i = m_oldNum; i < m_bulletList.size(); i++)
+		{
+			DeleteGO(m_bulletList[i]);
+		}
+		m_isAllocate = false;
+	}*/
+}
+
+void EnemyBulletManager::Allocate(int num)
+{
+	m_mutex.lock();
+	m_isAllocate = true;
+	m_oldNum = m_bulletList.size();
+	m_thread.Release();
+
+	m_thread.Execute([&,num]()
+		{
+			AllocateGO(num, 0, m_bulletList);
+		});
+
+	m_mutex.unlock();
+	
+}
