@@ -97,3 +97,26 @@ private:
 };
 
 
+class EnemyBulletManager final : public GameObject
+{
+public:
+	void Release() override;
+	void OnDestroy() override;
+
+	void PostUpdate() override;
+
+	void Allocate(int num);
+private:
+	std::mutex m_mutex;
+
+	std::vector<Enemy_Bullet*> m_bulletList;
+	int m_bulletNum = 0;
+	int m_nextAllocateActiveNum = 6;
+	int m_allocElementNum = 30;
+	ThreadObject m_thread;
+
+	bool m_isAllocate = false;
+	int m_oldNum = 0;
+
+	//bool m_isInit = false;
+};

@@ -29,7 +29,9 @@ void EnemyManager::SpawnEnemies() {
 	e->SetPosition({ -50,10,-50 });
 	m_enemies.push_back(e);
 
-	AllocateGO<Enemy_Bullet>(70, 0);
+	EnemyBulletManager* ebm = NewGO<EnemyBulletManager>(0);
+	ebm->Allocate(70);
+	//AllocateGO<Enemy_Bullet>(70, 0);
 	Level level;
 	level.Init("Assets/level/map_enemy_level.tkl", [&](LevelObjectData& objData)->bool
 		{

@@ -243,4 +243,16 @@ namespace UER
 			DeleteGO(go);
 		}
 	}
+
+	template<class T>
+	static void AllocateGO(int num, int prio, std::vector<T*>& goList)
+	{
+		goList.reserve(goList.size() + num);
+		for (int i = 0; i < num; i++)
+		{
+			auto go = NewGO<T>(prio, true);
+			goList.push_back(go);
+			DeleteGO(go);
+		}
+	}
 }
