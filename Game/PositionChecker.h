@@ -42,5 +42,5 @@ public:
 private:
 	ModelRender* m_model = nullptr;
 	Vector3 m_position = { 0,0,0 };
-	Vector3 m_scale = { 2.f,2.f,2.f };
+	Vector3 m_scale = { 2.f,200.f,2.f };
 };
