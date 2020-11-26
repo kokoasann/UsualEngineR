@@ -14,17 +14,10 @@ void EnemyTest::Init() {
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
-	m_animlist.resize(1);
-	m_animlist[0] = std::make_unique<CAnimationClip>();
-	m_animlist[0]->Load("Assets/anim/unityChan/run.tka");
-	m_animlist[0]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[0]->SetLoopFlag(true);
 
-	//m_model->InitAnimation(m_animlist, 1);
-	//m_model->Play(0);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/sp/anim/sp_idle.tka", true);
 
 	//State
-	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
 	SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState)));
 
 	//Physics
