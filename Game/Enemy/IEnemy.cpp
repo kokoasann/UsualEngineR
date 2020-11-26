@@ -10,29 +10,14 @@
 #include "State/EnemyDeadState.h"
 
 void IEnemy::Awake() {
-	//m_stateList.resize(static_cast<int>(EnState::enNumState));
-	//m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyIdleState();
-	//m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
-	//m_stateList[static_cast<int>(EnState::enAttackSlash)] = new EnemySlashState();
-	//m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyDeadState();
 }
 
 void IEnemy::InitState() {
-	/*
-	m_stateList.resize(static_cast<int>(EnState::enNumState));
-	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyIdleState();
-	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyBattleState();
-	m_stateList[static_cast<int>(EnState::enAttackA)] = new EnemySlashState();
-	m_stateList[static_cast<int>(EnState::enAttackB)] = new EnemySlashState();
-	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyDeadState();
-	*/
-
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyIdleState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enBattleState), new EnemyBattleState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackA), new EnemySlashState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackB), new EnemySlashState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemySlashState()));
-
 }
 
 bool IEnemy::Start() {
@@ -46,13 +31,12 @@ bool IEnemy::Start() {
 
 void IEnemy::Release() {
 
-	//std::for_each(m_stateList.begin(), m_stateList.end(), [&](IEnemyState* state) { delete state; state = nullptr; });
-
 	for (auto& state : m_stateMap) {
 		delete state.second;
 	}
 
 	Terminate();
+
 	if (m_healthBar != nullptr)
 		DeleteGO(m_healthBar);
 }
@@ -103,9 +87,6 @@ void IEnemy::SetState(IEnemyState* s) {
 	if (s == m_currentState) return;
 
 	m_nextState = s;
-	//m_currentState->Exit(this);
-	//m_currentState = s;
-	//m_currentState->Enter(this);
 }
 
 void IEnemy::ApplyDamage(const float damage) {

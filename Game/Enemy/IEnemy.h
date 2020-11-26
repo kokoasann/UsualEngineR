@@ -162,8 +162,6 @@ protected:
 	void SetState(IEnemyState* s);
 	bool m_isDrawHpBarAboveMyself = true;
 
-	//std::vector<IEnemyState*> m_stateList;
-
 	std::map<int, IEnemyState*> m_stateMap;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
 
