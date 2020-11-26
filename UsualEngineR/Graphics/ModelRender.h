@@ -25,7 +25,7 @@ namespace UER
 		/// <param name="initdata"></param>
 		void Init(const ModelInitData& initdata);
 
-		void InitAnimation(const std::vector<CAnimationClipPtr>& anim, int animNum);
+		void InitAnimation(const std::map<int,CAnimationClipPtr>& anim, int animNum);
 
 		/// <summary>
 		/// 
@@ -36,7 +36,7 @@ namespace UER
 
 		void Render() override;
 
-		void Play(const unsigned int animNum,float interpolateTime=0.0f)
+		void Play(const int animNum,float interpolateTime=0.0f)
 		{
 			m_animation.Play(animNum, interpolateTime);
 		}

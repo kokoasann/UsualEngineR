@@ -46,7 +46,7 @@ namespace UER{
 		/// </summary>
 		/// <param name="skeleton">アニメーションさせるスケルトン</param>
 		/// <param name="animClips">アニメーションクリップ。</param>
-		void Init(Skeleton& skeleton, const std::vector<std::unique_ptr<CAnimationClip>>& animClips);
+		void Init(Skeleton& skeleton, const std::map<int, std::unique_ptr<CAnimationClip>>& animClips);
 		/// <summary>
 		/// アニメーションの再生。
 		/// </summary>
@@ -54,10 +54,15 @@ namespace UER{
 		/// <param name="interpolateTime">補完時間(単位：秒)</param>
 		void Play(int clipNo, float interpolateTime = 0.0f)
 		{
-			if (clipNo < m_animationClips.size()) {
-				PlayCommon(m_animationClips[clipNo], interpolateTime);
+#if DEBUG_FUNC
+			auto it = m_animationClips.find(clipNo);
+			if (it == m_animationClips.end())
+			{
+				MessageBox(nullptr, L"No Anim Num", L"anim play error", MB_OK);
+				std::abort();
 			}
-			
+#endif
+			PlayCommon(m_animationClips[clipNo], interpolateTime);
 		}
 		/// <summary>
 		/// アニメーションクリップのループフラグを設定します。
@@ -69,13 +74,13 @@ namespace UER{
 			auto it = std::find_if(
 				m_animationClips.begin(),
 				m_animationClips.end(),
-				[clipName](auto& clip) {return clip->GetName() == clipName; }
+				[clipName](std::pair<int,CAnimationClip*>& clip) {return clip.second->GetName() == clipName; }
 			);
 			if (it == m_animationClips.end()) {
 				//見つからなかった。
 				return;
 			}
-			(*it)->SetLoopFlag(flag);
+			(*it).second->SetLoopFlag(flag);
 		}
 		/// <summary>
 		/// アニメーションの再生中？
@@ -187,7 +192,7 @@ namespace UER{
 		
 	private:
 		static const int ANIMATION_PLAY_CONTROLLER_NUM = 32;	//!<アニメーションコントローラの数。
-		std::vector<CAnimationClip*>	m_animationClips;	//!<アニメーションクリップの配列。
+		std::map<int,CAnimationClip*>	m_animationClips;	//!<アニメーションクリップの配列。
 		Skeleton* m_skeleton = nullptr;	//!<アニメーションを適用するスケルトン。
 		CAnimationPlayController	m_animationPlayController[ANIMATION_PLAY_CONTROLLER_NUM];	//!<アニメーションコントローラ。リングバッファ。
 		int m_numAnimationPlayController = 0;		//!<現在使用中のアニメーション再生コントローラの数。

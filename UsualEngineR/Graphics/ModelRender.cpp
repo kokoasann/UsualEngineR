@@ -19,7 +19,7 @@ namespace UER
 
 		m_isInit = true;
 	}
-	void ModelRender::InitAnimation(const std::vector<CAnimationClipPtr> &anim, int animNum)
+	void ModelRender::InitAnimation(const std::map<int,CAnimationClipPtr> &anim, int animNum)
 	{
 		auto ske = m_model.GetSkelton();
 		m_animation.Init(*m_model.GetSkelton(), anim);

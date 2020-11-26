@@ -12,12 +12,13 @@ namespace UER {
 		const float DELTA_SEC_PER_FRAME_ON_DCC_TOOL = 1.0f / 30.0f;
 	}
 
-	void CAnimation::Init(Skeleton& skeleton, const std::vector<std::unique_ptr<CAnimationClip>>& animClips)
+	void CAnimation::Init(Skeleton& skeleton, const std::map<int,std::unique_ptr<CAnimationClip>>& animClips)
 	{
 		UER_ASSERT(animClips.empty() == false, "animClipListが空です ");
 		m_skeleton = &skeleton;
 		for (auto& animClip : animClips) {
-			m_animationClips.push_back(animClip.get());
+			auto pair = std::make_pair(animClip.first, animClip.second.get());
+			m_animationClips.insert(pair);
 		}
 		//footstepボーンの番号を調べる。
 		int footstepBoneNo = -1;
