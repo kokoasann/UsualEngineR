@@ -58,7 +58,7 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 IEnemyState* EnemyDashPunchState::Update(IEnemy* e) {
 
 	if (!m_canExecute) {
-		return e->GetState(TO_INT(BossA::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
@@ -68,7 +68,7 @@ IEnemyState* EnemyDashPunchState::Update(IEnemy* e) {
 
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer >= m_intervalSec) {
-		return e->GetState(TO_INT(BossA::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	return this;
 }

@@ -32,7 +32,7 @@ void EnemyTeleportationState::Enter(IEnemy* e) {
 IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 
 	if (!m_canExecute) {
-		return e->GetState(TO_INT(BossA::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
@@ -46,7 +46,7 @@ IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 	auto enextpos = epos + vecToPlayer;
 	e->SetPosition(enextpos);
 
-	return e->GetStateList().at(TO_INT(BossA::EnState::enBattleState));
+	return e->GetStateMap().at(TO_INT(IEnemy::EnState::enBattleState));
 }
 
 void EnemyTeleportationState::Exit(IEnemy* e) {

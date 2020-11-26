@@ -39,7 +39,7 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 //		e->SetVelocity(vel);
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
-		return e->GetStateList().at(TO_INT(BossA::EnState::enBattleState));
+		return e->GetStateMap().at(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
 	return this;

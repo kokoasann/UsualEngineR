@@ -38,7 +38,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {
-		return e->GetState(TO_INT(BossA::EnState::enIdleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 
 	if (player->GetCurrentState() == player->GetState(Player::EnState::enFlying)){

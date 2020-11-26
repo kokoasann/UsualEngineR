@@ -24,43 +24,55 @@ void BossA::Init() {
 	m_model->SetScale(m_scale);
 
 	//anim
-	const int numAnim = static_cast<int>(EnAnimation::enNumAnim);
-	m_animlist.resize(numAnim);
+	//const int numAnim = static_cast<int>(EnAnimation::enNumAnim);
+	//m_animlist.resize(numAnim);
 
 	//Idle
-	m_animlist[static_cast<int>(EnAnimation::enIdle)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enIdle)]->Load("Assets/modelData/boss/sp/anim/sp_idle.tka");
-	m_animlist[static_cast<int>(EnAnimation::enIdle)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enIdle)]->SetLoopFlag(true);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/sp/anim/sp_idle.tka", true);
+
+	//m_animlist[static_cast<int>(EnAnimation::enIdle)] = std::make_unique<CAnimationClip>();
+	//m_animlist[static_cast<int>(EnAnimation::enIdle)]->Load("Assets/modelData/boss/sp/anim/sp_idle.tka");
+	//m_animlist[static_cast<int>(EnAnimation::enIdle)]->BuildKeyFramesAndAnimationEvents();
+	//m_animlist[static_cast<int>(EnAnimation::enIdle)]->SetLoopFlag(true);
 
 	//Walk
-	m_animlist[static_cast<int>(EnAnimation::enWalk)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enWalk)]->Load("Assets/modelData/boss/sp/anim/sp_idle.tka");
-	m_animlist[static_cast<int>(EnAnimation::enWalk)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enWalk)]->SetLoopFlag(true);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enWalk), "Assets/modelData/boss/sp/anim/sp_idle.tka", true);
+
+	//m_animlist[static_cast<int>(EnAnimation::enWalk)] = std::make_unique<CAnimationClip>();
+	//m_animlist[static_cast<int>(EnAnimation::enWalk)]->Load("Assets/modelData/boss/sp/anim/sp_idle.tka");
+	//m_animlist[static_cast<int>(EnAnimation::enWalk)]->BuildKeyFramesAndAnimationEvents();
+	//m_animlist[static_cast<int>(EnAnimation::enWalk)]->SetLoopFlag(true);
 
 	//Run
-	m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/modelData/boss/sp/anim/sp_dush.tka");
-	m_animlist[static_cast<int>(EnAnimation::enRun)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enRun)]->SetLoopFlag(true);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enRun), "Assets/modelData/boss/sp/anim/sp_idle.tka", true);
+
+	//m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
+	//m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/modelData/boss/sp/anim/sp_dush.tka");
+	//m_animlist[static_cast<int>(EnAnimation::enRun)]->BuildKeyFramesAndAnimationEvents();
+	//m_animlist[static_cast<int>(EnAnimation::enRun)]->SetLoopFlag(true);
 
 	//AttackA
-	m_animlist[static_cast<int>(EnAnimation::enAttackA)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enAttackA)]->Load("Assets/modelData/boss/sp/anim/sp_punch.tka");
-	m_animlist[static_cast<int>(EnAnimation::enAttackA)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enAttackA)]->SetLoopFlag(false);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackA), "Assets/modelData/boss/sp/anim/sp_idle.tka", false);
+
+	//m_animlist[static_cast<int>(EnAnimation::enAttackA)] = std::make_unique<CAnimationClip>();
+	//m_animlist[static_cast<int>(EnAnimation::enAttackA)]->Load("Assets/modelData/boss/sp/anim/sp_punch.tka");
+	//m_animlist[static_cast<int>(EnAnimation::enAttackA)]->BuildKeyFramesAndAnimationEvents();
+	//m_animlist[static_cast<int>(EnAnimation::enAttackA)]->SetLoopFlag(false);
 
 	//AttackB
-	m_animlist[static_cast<int>(EnAnimation::enAttackB)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enAttackB)]->Load("Assets/modelData/boss/sp/anim/sp_punch_strong.tka");
-	m_animlist[static_cast<int>(EnAnimation::enAttackB)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enAttackB)]->SetLoopFlag(false);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackB), "Assets/modelData/boss/sp/anim/sp_idle.tka", false);
 
-	m_model->InitAnimation(m_animlist, m_animlist.size());
+	//m_animlist[static_cast<int>(EnAnimation::enAttackB)] = std::make_unique<CAnimationClip>();
+	//m_animlist[static_cast<int>(EnAnimation::enAttackB)]->Load("Assets/modelData/boss/sp/anim/sp_punch_strong.tka");
+	//m_animlist[static_cast<int>(EnAnimation::enAttackB)]->BuildKeyFramesAndAnimationEvents();
+	//m_animlist[static_cast<int>(EnAnimation::enAttackB)]->SetLoopFlag(false);
+
+	//m_model->InitAnimation(m_animlist, m_animlist.size());
+	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 	PlayAnimation(EnAnimation::enIdle);
 
-	SetState(m_stateList[static_cast<int>(EnState::enIdleState)]);
+	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
+	SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState)));
 
 	m_isDrawHpBarAboveMyself = false;
 
@@ -159,6 +171,7 @@ void BossA::Init() {
 
 void BossA::InitState() {
 	//Init State
+	/*
 	m_stateList.resize(static_cast<int>(EnState::enNumState));
 	m_stateList[static_cast<int>(EnState::enIdleState)] = new EnemyMeleeIdleState();
 	m_stateList[static_cast<int>(EnState::enBattleState)] = new EnemyMeleeBattleState();
@@ -168,6 +181,17 @@ void BossA::InitState() {
 	m_stateList[static_cast<int>(EnState::enDashPunch)] = new EnemyDashPunchState();
 	m_stateList[static_cast<int>(EnState::enOverheat)] = new EnemyMeleeOverheatState();
 	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyMeleeDeadState();
+	*/
+
+	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new EnemyMeleeIdleState()));
+	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enBattleState), new EnemyMeleeBattleState()));
+	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyMeleeDeadState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enFlyState), new EnemyMeleeFlyState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enTeleportation), new EnemyTeleportationState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enPunch), new EnemyMeleePunchState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDashPunch), new EnemyDashPunchState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enOverheat), new EnemyMeleeOverheatState()));
+
 }
 
 void BossA::Terminate() {
@@ -208,7 +232,8 @@ void BossA::Execute() {
 
 	//ëÃóÕÇ™Ç»Ç≠Ç»Ç¡ÇΩÇÁéÄñSÉXÉeÅ[ÉgÇ÷ëJà⁄
 	if (m_ability.hp <= 0) {
-		SetState(m_stateList[static_cast<int>(BossA::EnState::enDeadState)]);
+		//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enDeadState)]);
+		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState)));
 	}
 
 }

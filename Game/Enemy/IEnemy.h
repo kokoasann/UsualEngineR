@@ -70,16 +70,10 @@ public:
 		}
 	};
 
-	IEnemyState* GetState(const EnState& state) const{
-		if (m_stateList.size() == 0) return nullptr;
-		return m_stateList[static_cast<int>(state)];
+	IEnemyState* GetState(const int stateNo) const{
+		if (m_stateMap.size() == 0) return nullptr;
+		return m_stateMap.at(stateNo);
 	}
-
-	IEnemyState* GetState(const int state) const {
-		if (m_stateList.size() == 0) return nullptr;
-		return m_stateList[state];
-	}
-
 
 	const IEnemyState* GetCurrentState() const{
 		return m_currentState;
@@ -125,8 +119,8 @@ public:
 		m_velocity = velocity;
 	}
 
-	const std::vector<IEnemyState*>& GetStateList() const{
-		return m_stateList;
+	const std::map<int, IEnemyState*>& GetStateMap() const{
+		return m_stateMap;
 	}
 
 	const bool IsOnGround() {
@@ -165,7 +159,7 @@ protected:
 		m_animationMap.insert(std::make_pair(no, std::make_unique<CAnimationClip>()));
 		m_animationMap.at(no)->Load(name);
 		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
-		m_animationMap.at(no)->SetLoopFlag(loopFlag;
+		m_animationMap.at(no)->SetLoopFlag(loopFlag);
 	}
 
 	ModelRender* m_model = nullptr;
