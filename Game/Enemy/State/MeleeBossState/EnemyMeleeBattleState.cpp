@@ -50,7 +50,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	auto vecToPlayer = ppos - epos;
 	const float distLimit = 20.f;
 	const float attackRange = 5.f;
-	const float teleportationDist = 80.f;
+	const float teleportationDist = 200.f;
 
 	//Teleportation
 	if (vecToPlayer.Length() > teleportationDist) {

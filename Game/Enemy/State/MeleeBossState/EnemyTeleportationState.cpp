@@ -43,7 +43,7 @@ IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 	auto vecToPlayer = ppos - epos;
 	auto len = vecToPlayer.Length();
 	vecToPlayer.Normalize();
-	vecToPlayer *= len * 0.8f;
+	vecToPlayer *= len * 0.6f;
 
 	auto enextpos = epos + vecToPlayer;
 	e->SetPosition(enextpos);

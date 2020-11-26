@@ -75,8 +75,7 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 	if (vecToPlayer.Length() > distLimit) {
 		auto v = vecToPlayer;
 		v.Normalize();
-		const float speed = 200.f;
-		auto velocity = v * speed;
+		auto velocity = v * m_chaseSpeed;
 		e->SetVelocity(velocity);
 	}
 

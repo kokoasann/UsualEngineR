@@ -12,6 +12,7 @@ public:
 private:
 	float m_flyTimer = 0.f;
 	const float m_flyLimitTime = 1.f;
+	const float m_chaseSpeed = 100.f;
 
 	const float m_stamina_recover_amount = 5.f;
 };
