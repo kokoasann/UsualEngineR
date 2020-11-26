@@ -352,7 +352,7 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png" />
-    <Image Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
+    <ImageContentTask Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
