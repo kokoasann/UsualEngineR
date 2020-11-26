@@ -344,6 +344,14 @@ private:
 	/// </summary>
 	void UpdateAttackType();
 
+
+	void SetAnimation(const int no, const char* path, const bool loopFlag) {
+		m_animationMap.insert(std::make_pair(no, std::make_unique<CAnimationClip>()));
+		m_animationMap.at(no)->Load(path);
+		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
+		m_animationMap.at(no)->SetLoopFlag(loopFlag);
+	}
+
 	//Ref
 	IEnemy* m_target = nullptr;
 	GameCamera* mp_camera = nullptr;
@@ -361,7 +369,9 @@ private:
 	//Model
 	ModelRender* m_model = nullptr;
 	CAnimationClip m_animClip[1];
-	std::vector<CAnimationClipPtr> m_animlist;
+	//std::vector<CAnimationClipPtr> m_animlist;
+	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
+
 	Vector3 m_position = { 0,15,-100 };
 	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_rotation = Quaternion::Identity;

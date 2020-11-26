@@ -76,98 +76,40 @@ void Player::Awake()
 	*/
 
 	//Init Animation
-	const int numAnim = static_cast<int>(EnAnimation::enNumAnim);
-	m_animlist.resize(numAnim);
+	//const int numAnim = static_cast<int>(EnAnimation::enNumAnim);
+	//m_animlist.resize(numAnim);
 
 	//Idle
-	m_animlist[static_cast<int>(EnAnimation::enIdle)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enIdle)]->Load("Assets/modelData/m/anim/m_idle.tka");
-	m_animlist[static_cast<int>(EnAnimation::enIdle)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enIdle)]->SetLoopFlag(true);
-
-
-
+	SetAnimation(TO_INT(EnAnimation::enIdle), "Assets/modelData/m/anim/m_idle.tka", true);
 	//Run
-	m_animlist[static_cast<int>(EnAnimation::enRun)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enRun)]->Load("Assets/modelData/m/anim/m_dash.tka");
-	m_animlist[static_cast<int>(EnAnimation::enRun)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enRun)]->SetLoopFlag(true);
-
+	SetAnimation(TO_INT(EnAnimation::enRun), "Assets/modelData/m/anim/m_dash.tka", true);
 	//Walk
-	m_animlist[static_cast<int>(EnAnimation::enWalk)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enWalk)]->Load("Assets/modelData/m/anim/m_walk.tka");
-	m_animlist[static_cast<int>(EnAnimation::enWalk)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enWalk)]->SetLoopFlag(true);
-
+	SetAnimation(TO_INT(EnAnimation::enWalk), "Assets/modelData/m/anim/m_walk.tka", true);
 	//Hovering
-	m_animlist[static_cast<int>(EnAnimation::enHovering)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enHovering)]->Load("Assets/modelData/m/anim/m_fly.tka");
-	m_animlist[static_cast<int>(EnAnimation::enHovering)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enHovering)]->SetLoopFlag(true);
-
+	SetAnimation(TO_INT(EnAnimation::enHovering), "Assets/modelData/m/anim/m_fly.tka", true);
 	//FlyMove
-	m_animlist[static_cast<int>(EnAnimation::enFlyMove)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enFlyMove)]->Load("Assets/modelData/m/anim/m_fly_move.tka");
-	m_animlist[static_cast<int>(EnAnimation::enFlyMove)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enFlyMove)]->SetLoopFlag(true);
-
+	SetAnimation(TO_INT(EnAnimation::enFlyMove), "Assets/modelData/m/anim/m_fly_move.tka", true);
 	//FlyMoveFaster
-	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->Load("Assets/modelData/m/anim/m_fly_move_dash.tka");
-	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enFlyMoveFaster)]->SetLoopFlag(true);
-
-	//TODO : load got damage anim
+	SetAnimation(TO_INT(EnAnimation::enFlyMoveFaster), "Assets/modelData/m/anim/m_fly_move_dash.tka", true);
 	//KnockBack
-	m_animlist[static_cast<int>(EnAnimation::enKnockBack)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enKnockBack)]->Load("Assets/modelData/m/anim/m_hit.tka");
-	m_animlist[static_cast<int>(EnAnimation::enKnockBack)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enKnockBack)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enKnockBack), "Assets/modelData/m/anim/m_hit.tka", false);
 	//Guard
-	m_animlist[static_cast<int>(EnAnimation::enGuard)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enGuard)]->Load("Assets/modelData/m/anim/m_guard.tka");
-	m_animlist[static_cast<int>(EnAnimation::enGuard)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enGuard)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enGuard), "Assets/modelData/m/anim/m_guard.tka", true);
 	//Attack
-	m_animlist[static_cast<int>(EnAnimation::enAttack)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enAttack)]->Load("Assets/modelData/m/anim/m_punch_1.tka");
-	m_animlist[static_cast<int>(EnAnimation::enAttack)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enAttack)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enAttack), "Assets/modelData/m/anim/m_punch_1.tka", false);
 	//Punch1
-	m_animlist[static_cast<int>(EnAnimation::enPunch1)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enPunch1)]->Load("Assets/modelData/m/anim/m_punch_1.tka");
-	m_animlist[static_cast<int>(EnAnimation::enPunch1)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enPunch1)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enPunch1), "Assets/modelData/m/anim/m_punch_1.tka", false);
 	//Punch2
-	m_animlist[static_cast<int>(EnAnimation::enPunch2)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enPunch2)]->Load("Assets/modelData/m/anim/m_punch_2.tka");
-	m_animlist[static_cast<int>(EnAnimation::enPunch2)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enPunch2)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enPunch2), "Assets/modelData/m/anim/m_punch_2.tka", false);
 	//Punch3
-	m_animlist[static_cast<int>(EnAnimation::enPunch3)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enPunch3)]->Load("Assets/modelData/m/anim/m_punch_3.tka");
-	m_animlist[static_cast<int>(EnAnimation::enPunch3)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enPunch3)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enPunch3), "Assets/modelData/m/anim/m_punch_3.tka", false);
 	//Kick
-	m_animlist[static_cast<int>(EnAnimation::enKick)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enKick)]->Load("Assets/modelData/m/anim/m_rolling_kick.tka");
-	m_animlist[static_cast<int>(EnAnimation::enKick)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enKick)]->SetLoopFlag(false);
-
+	SetAnimation(TO_INT(EnAnimation::enKick), "Assets/modelData/m/anim/m_rolling_kick.tka", false);
 	//TODO : load dead anim
 	//Dead
-	m_animlist[static_cast<int>(EnAnimation::enDead)] = std::make_unique<CAnimationClip>();
-	m_animlist[static_cast<int>(EnAnimation::enDead)]->Load("Assets/modelData/m/anim/m_idle.tka");
-	m_animlist[static_cast<int>(EnAnimation::enDead)]->BuildKeyFramesAndAnimationEvents();
-	m_animlist[static_cast<int>(EnAnimation::enDead)]->SetLoopFlag(false);
+	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_idle.tka", true);
 
-	m_model->InitAnimation(m_animlist, m_animlist.size());
+	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 	m_model->Play(0);
 }
 
@@ -334,8 +276,8 @@ void Player::PostRender()
 
 void Player::SearchTarget() {
 	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
-	if (enemy != nullptr /*and enemy->IsBoss()*/ and (enemy->GetState(IEnemy::EnState::enIdleState) != enemy->GetCurrentState() or
-		enemy->GetState(IEnemy::EnState::enDeadState) != enemy->GetCurrentState())) {
+	if (enemy != nullptr /*and enemy->IsBoss()*/ and (enemy->GetState(TO_INT(IEnemy::EnState::enIdleState)) != enemy->GetCurrentState() or
+		enemy->GetState(TO_INT(IEnemy::EnState::enDeadState)) != enemy->GetCurrentState())) {
 		m_target = enemy;
 	}
 	else {
