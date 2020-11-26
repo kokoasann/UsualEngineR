@@ -188,6 +188,9 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h">
       <Filter>Enemy\State\DefaultState</Filter>
     </ClInclude>
+    <ClInclude Include="Effect\MuzzleFlash.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp">
       <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\MuzzleFlash.cpp">
+      <Filter>Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
