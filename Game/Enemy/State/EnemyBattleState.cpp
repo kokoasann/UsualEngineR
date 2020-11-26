@@ -24,7 +24,7 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 	auto player = EnemyManager::GetEnemyManager().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {
-		return e->GetState(IEnemy::EnState::enIdleState);
+		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 
 	auto& epos = e->GetPosition();
@@ -34,7 +34,7 @@ IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 	const float attackRange = 30.f;
 
 	if (vecToPlayer.Length() < attackRange) {
-		return e->GetState(IEnemy::EnState::enAttackA);
+		return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
 	}
 
 	//Chase

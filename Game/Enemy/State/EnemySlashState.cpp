@@ -26,7 +26,7 @@ void EnemySlashState::Enter(IEnemy* e) {
 IEnemyState* EnemySlashState::Update(IEnemy* e) {
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer >= m_intervalSec) {
-		return e->GetState(IEnemy::EnState::enBattleState);
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	return this;
 }

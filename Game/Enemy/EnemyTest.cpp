@@ -24,7 +24,8 @@ void EnemyTest::Init() {
 	//m_model->Play(0);
 
 	//State
-	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
+	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
+	SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState)));
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
