@@ -56,7 +56,7 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 		
 		
 		//p.y += 10.;
-		eb->Init(p, 1, m_velocity, m_speed, 5, 1);
+		eb->Init(p, 0.25f, m_velocity, m_speed, 5, 1);
 		m_timer = 0.f;
 		m_shotCount++;
 		if (m_shotCount >= m_maxShot)

@@ -90,6 +90,8 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 				break;
 			}
 			fn += 1.f;
+			if (fn > 20.f)
+				break;
 		}
 	}
 	else

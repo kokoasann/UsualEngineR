@@ -1,5 +1,6 @@
 #pragma once
 
+class Ballistic;
 
 /// <summary>
 /// 
@@ -94,6 +95,8 @@ private:
 	float m_damage = 10.f;
 
 	SphereCollider m_sphere;
+
+	//Ballistic* m_effect;
 };
 
 
