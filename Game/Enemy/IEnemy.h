@@ -155,9 +155,9 @@ protected:
 	std::map<int, IEnemyState*> m_stateMap;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
 
-	void SetAnimation(const int no, const char* name, const bool loopFlag) {
+	void SetAnimation(const int no, const char* path, const bool loopFlag) {
 		m_animationMap.insert(std::make_pair(no, std::make_unique<CAnimationClip>()));
-		m_animationMap.at(no)->Load(name);
+		m_animationMap.at(no)->Load(path);
 		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
 		m_animationMap.at(no)->SetLoopFlag(loopFlag);
 	}

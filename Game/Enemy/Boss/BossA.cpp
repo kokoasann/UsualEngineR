@@ -68,7 +68,9 @@ void BossA::Init() {
 	//m_animlist[static_cast<int>(EnAnimation::enAttackB)]->SetLoopFlag(false);
 
 	//m_model->InitAnimation(m_animlist, m_animlist.size());
+	
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
+
 	PlayAnimation(EnAnimation::enIdle);
 
 	//SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
