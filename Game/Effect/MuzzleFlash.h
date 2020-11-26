@@ -76,7 +76,7 @@ public:
 	{
 		m_effect->SetRot(rot);
 	}
-	void SetSca(const Vector3 sca)
+	void SetSca(const Vector3& sca)
 	{
 		m_effect->SetSca(sca);
 	}

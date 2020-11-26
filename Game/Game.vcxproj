@@ -179,6 +179,7 @@
     <ClInclude Include="Camera\CCameraCollisionSlover.h" />
     <ClInclude Include="Camera\GameCamera.h" />
     <ClInclude Include="Camera\SpringCamera.h" />
+    <ClInclude Include="Effect\Ballistic.h" />
     <ClInclude Include="Effect\JetEffect.h" />
     <ClInclude Include="Effect\MuzzleFlash.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="Camera\CCameraCollisionSlover.cpp" />
     <ClCompile Include="Camera\GameCamera.cpp" />
     <ClCompile Include="Camera\SpringCamera.cpp" />
+    <ClCompile Include="Effect\Ballistic.cpp" />
     <ClCompile Include="Effect\JetEffect.cpp" />
     <ClCompile Include="Effect\MuzzleFlash.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
