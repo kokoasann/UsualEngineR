@@ -695,6 +695,15 @@ namespace UER
 			DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4(&vec);
 			return DirectX::XMVector4Length(xmv).m128_f32[0];
 		}
+
+		void Lerp(float t, const Vector4& v0, const Vector4& v1)
+		{
+			DirectX::XMVECTOR _v = DirectX::XMVectorLerp(
+				DirectX::XMLoadFloat4(&v0.vec),
+				DirectX::XMLoadFloat4(&v1.vec),
+				t);
+			DirectX::XMStoreFloat4(&vec, _v);
+		}
 		/// <summary>
 		/// ベクトルを設定。
 		/// </summary>
