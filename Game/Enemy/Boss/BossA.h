@@ -4,9 +4,6 @@
 
 class JetEffect;
 
-/// <summary>
-/// 
-/// </summary>
 class BossA :public IEnemy
 {
 public:
@@ -26,20 +23,6 @@ public:
 	void PlayAnimation(const int animNo, const float interpolate = 0.2f) override{
 		m_model->Play(animNo, interpolate);
 	}
-
-	/*
-	enum class EnState{
-		enIdleState,
-		enBattleState,
-		enFlyState,
-		enTeleportation,
-		enPunch,
-		enDashPunch,
-		enOverheat,
-		enDeadState,
-		enNumState
-	};
-	*/
 
 	enum class EnState {
 		enFlyState = TO_INT(IEnemy::EnState::enNumState),
@@ -67,8 +50,6 @@ private:
 	//Model
 	const Vector3 m_scale = { 1.f,1.f,1.f };
 	CAnimationClip m_animClip[1];
-	//std::vector<CAnimationClipPtr> m_animlist;
-
 
 	//Physics
 	const float m_radius = 1.f;
