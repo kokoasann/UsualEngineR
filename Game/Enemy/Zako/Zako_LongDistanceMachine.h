@@ -29,7 +29,7 @@ public:
 	using StateEnumType = UINT;
 	enum class EStateEX : StateEnumType
 	{
-		LongDistanceTargeting = TO_INT(IEnemy::EnState::enNumState),
+		LongDistanceTargeting = TO_INT(IEnemy::EnState::enBattleState),
 		Num,
 	};
 
