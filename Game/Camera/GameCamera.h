@@ -75,7 +75,7 @@ private:
 
 	bool isChanging = false;
 
-	const float m_swivelSpeed = 60.f;
+	const float m_swivelSpeed = 150.f;
 	const float m_transitionSpeed = 2.f;
 	const Vector3 m_furtherTargetHeight = { 0.f,12.f,0.f };
 	Vector3 m_position = { 0,3,15 };
