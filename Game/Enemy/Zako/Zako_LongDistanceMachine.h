@@ -29,25 +29,21 @@ public:
 	using StateEnumType = UINT;
 	enum class EStateEX : StateEnumType
 	{
-		Idle,
-		LongDistanceTargeting = TO_INT(IEnemy::EnState::enBattleState),
-		Dead,
+		LongDistanceTargeting = TO_INT(IEnemy::EnState::enNumState),
 		Num,
 	};
 
 	enum class EAnim : StateEnumType
 	{
-		Idle,
-		Walk,
-		Fire,
+		Fire = TO_INT(IEnemy::EnAnimation::enAttackA),
 		Num,
 	};
 private:
 	
 	//Model
 	//ModelRender* m_model = nullptr;
-	CAnimationClip m_animClip[1];
-	std::vector<CAnimationClipPtr> m_animlist;
+	/*CAnimationClip m_animClip[1];
+	std::vector<CAnimationClipPtr> m_animlist;*/
 	float m_scale = 2.f;
 
 	//Physics

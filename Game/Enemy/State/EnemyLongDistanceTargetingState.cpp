@@ -26,7 +26,7 @@ void EnemyLongDistanceTargetingState::Init(IK* ik, Quaternion& rot, float bullet
 void EnemyLongDistanceTargetingState::Enter(IEnemy* e)
 {
 	m_timer = m_timeLimit;
-	e->PlayAnimation(TO_INT(Zako_LongDistanceMachine::EAnim::Walk));
+	e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enWalk));
 	auto model = e->GetMode();
 	((ModelRender*)model)->SetAnimPlaySpeed(3.f);
 }
@@ -50,7 +50,7 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 
 	if (m_overLookRange < e2pLen)
 	{
-		return e->GetState(TO_INT(Zako_LongDistanceMachine::EStateEX::Idle));
+		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 
 	float bSpeed = m_speed * dtime;

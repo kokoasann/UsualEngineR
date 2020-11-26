@@ -74,7 +74,7 @@ namespace UER{
 			auto it = std::find_if(
 				m_animationClips.begin(),
 				m_animationClips.end(),
-				[clipName](std::pair<int,CAnimationClip*>& clip) {return clip.second->GetName() == clipName; }
+				[clipName](const std::pair<int,CAnimationClip*>& clip) {return clip.second->GetName() == clipName; }
 			);
 			if (it == m_animationClips.end()) {
 				//å©Ç¬Ç©ÇÁÇ»Ç©Ç¡ÇΩÅB
