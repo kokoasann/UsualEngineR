@@ -16,6 +16,8 @@ EnemyDashPunchState::~EnemyDashPunchState() {
 
 void EnemyDashPunchState::Enter(IEnemy* e) {
 
+	m_canExecute = true;
+
 	if (e->GetAbility().stamina < m_cost) {
 		m_canExecute = false;
 		return;

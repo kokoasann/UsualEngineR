@@ -75,6 +75,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 	if (vecToPlayer.Length() < attackRange) {
 		auto rnd = GRandom().Rand();
+
 		if (rnd >= 0.5f) {
 			return e->GetState(TO_INT(BossA::EnState::enPunch));
 		}
