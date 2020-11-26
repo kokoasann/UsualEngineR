@@ -2,13 +2,15 @@
 #include "Enemy/State/IEnemyState.h"
 
 class EnemyLongDistanceTargetingState;
-
+class MuzzleFlash;
 /// <summary>
 /// ‚±‚ÌƒNƒ‰ƒX‚ÍEnemyLongDistanceTargetingState‚ª•ÛB
 /// </summary>
 class EnemyLongDistanceAttackState final :public IEnemyState
 {
 public:
+	~EnemyLongDistanceAttackState();
+
 	void Init(IK* ik, float bulletSpeed, EnemyLongDistanceTargetingState* ldt);
 
 	void Enter(IEnemy* e) override;
@@ -40,4 +42,6 @@ private:
 	float m_speed = 2000.f;
 
 	EnemyLongDistanceTargetingState* m_ldt;
+
+	MuzzleFlash* m_muzzleFlash;
 };

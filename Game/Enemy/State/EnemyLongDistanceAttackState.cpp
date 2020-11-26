@@ -4,12 +4,22 @@
 #include "EnemyLongDistanceTargetingState.h"
 #include "Enemy/IEnemy.h"
 #include "Enemy/Equipment/Enemy_Bullet.h"
+#include "Effect/MuzzleFlash.h"
+
+EnemyLongDistanceAttackState::~EnemyLongDistanceAttackState()
+{
+	DeleteGO(m_muzzleFlash);
+}
 
 void EnemyLongDistanceAttackState::Init(IK* ik, float bulletSpeed, EnemyLongDistanceTargetingState* ldt)
 {
 	m_ik = ik;
 	m_speed = bulletSpeed;
 	m_ldt = ldt;
+	m_muzzleFlash = NewGO<MuzzleFlash>(0);
+	MuzzleFlashEffectInitData mfid;
+	m_muzzleFlash->Init(mfid);
+	m_muzzleFlash->SetSca(Vector3::One * 0.1);
 }
 
 void EnemyLongDistanceAttackState::Enter(IEnemy* e)
@@ -35,7 +45,15 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 	if (m_timer >= m_timeSpan && m_shotCount < m_maxShot)
 	{
 		Enemy_Bullet* eb = NewGO<Enemy_Bullet>(0,true);
-		auto p = m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();;
+		auto bone = m_ik->GetEffectorBone();
+		const auto& mat = bone->GetWorldMatrix();
+		auto p = mat.GetTransrate();
+		auto rot = mat.GetRotate();
+
+		m_muzzleFlash->Play();
+		m_muzzleFlash->SetPos(p);
+		m_muzzleFlash->SetRot(rot);
+		
 		
 		//p.y += 10.;
 		eb->Init(p, 1, m_velocity, m_speed, 5, 1);
