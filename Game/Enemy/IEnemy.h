@@ -70,8 +70,20 @@ public:
 		}
 	};
 
-	IEnemyState* GetState(const int stateNo) const{
+	IEnemyState* GetState(const int stateNo) const {
 		if (m_stateMap.size() == 0) return nullptr;
+#ifdef DEBUG
+		if (m_stateMap.find(stateNo) == m_stateMap.end()) {
+			assert(false, "取得しようとしたステートが無いんですけどっ！！");
+		}
+#endif // DEBUG
+
+#ifndef DEBUG
+		if (m_stateMap.find(stateNo) == m_stateMap.end()) {
+			return m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState));
+		}
+#endif // !DEBUG
+
 		return m_stateMap.at(stateNo);
 	}
 
