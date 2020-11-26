@@ -31,6 +31,12 @@ void XXX::Init()
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
 }
+:block InitState
+void XXX::InitState()
+{
+
+}
+:end
 
 void XXX::Execute()
 {

@@ -11,12 +11,28 @@ public:
 	virtual ~XXX();
 
 	void Init() override;
+:block InitState
+	void InitState() override;
+:end
 	void Execute() override;
 	void Terminate() override;
 	Player::EnAttackType GetDropID() override
 	{
 		return Player::EnAttackType::enNone;
 	}
+
+	
+	enum class EnStateEX :int
+	{
+		Expand = TO_INT(IEnemy::EnState::enNumState),
+		Num,
+	};
+
+	enum class EnAnimEX :int
+	{
+		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		Num,
+	};
 
 private:
 	//Model
