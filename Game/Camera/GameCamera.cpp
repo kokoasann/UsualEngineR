@@ -68,8 +68,6 @@ void GameCamera::PreUpdate()
 
 }
 
-
-
 void GameCamera::Update()
 {
 	Vector3 target = mp_player->GetPosition();
@@ -115,14 +113,24 @@ void GameCamera::Update()
 			if (rxf >= changeTargetVal) {
 				isChangeTarget = true;
 				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
-				m_targetEnemyNo = rightIndex;
+				if (rightIndex != -1) {
+					m_targetEnemyNo = rightIndex;
+				}
+				else if(centerIndex != -1){
+					m_targetEnemyNo = centerIndex;
+				}
 			}
 
 			//left
 			if (rxf <= -changeTargetVal) {
 				isChangeTarget = true;
 				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
-				m_targetEnemyNo = leftIndex;
+				if (rightIndex != -1) {
+					m_targetEnemyNo = leftIndex;
+				}
+				else if (centerIndex != -1) {
+					m_targetEnemyNo = centerIndex;
+				}
 			}
 
 			if (m_targetEnemyNo != -1 and isChangeTarget) {
@@ -287,15 +295,8 @@ void GameCamera::CalcPlayerCamera() {
 	m_playerCameraPos = m_charaPos + m_dist;
 	m_playerCameraTargetPos = m_charaPos + m_furtherTargetHeight;
 
-	//DebugLogVec3(m_playerCameraTargetPos);
-
-
 	//エネミーカメラに完全に切り替わったらプレイヤーカメラの位置を計算
 	if (m_cameraChangeRatio == 0.f) {
-		//auto pf = mp_player->GetForward();
-		//pf.Scale(-1.f * m_toCameraPos.Length());
-		//pf.y += cameraHeight;
-		//m_playerCameraPos = m_charaPos + pf;
 
 		auto cameraForward = g_camera3D->GetForward();
 		cameraForward.y = 0.f;
@@ -312,7 +313,6 @@ void GameCamera::CalcPlayerCamera() {
 
 void GameCamera::UpdateState() {
 	if (g_pad[0]->IsTrigger(enButtonRB3)) {
-	//if (g_pad[0]->IsTrigger(enButtonX)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
 		}
