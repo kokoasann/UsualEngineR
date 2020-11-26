@@ -78,7 +78,7 @@ private:
 	const float m_swivelSpeed = 150.f;
 	const float m_transitionSpeed = 2.f;
 	const Vector3 m_furtherTargetHeight = { 0.f,12.f,0.f };
-	Vector3 m_position = { 0,3,15 };
+	Vector3 m_position = { 0,3,-60 };
 	Vector3 m_old = { 0,3,15 };
 	Vector3 m_dist = Vector3::Zero;
 	Vector3 m_targetPos = Vector3::Zero;
@@ -111,7 +111,7 @@ private:
 	IEnemy* mp_enemy = nullptr;
 	Vector3 m_toCameraPos;
 
-	float m_cameraChangeRatio = 0.f;
+	float m_cameraChangeRatio = 1.f;
 
 	//Physics
 	//SpringCamera m_spc;
@@ -123,6 +123,10 @@ private:
 	PositionChecker* m_posCheckerL = nullptr;
 	PositionChecker* m_posCheckerR = nullptr;
 	int m_targetEnemyNo = 0;
+
+	//カメラの急な動きを防ぐ用.
+	float m_oldDist = 100.f;
+	bool m_isInitedInitialDist = false;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

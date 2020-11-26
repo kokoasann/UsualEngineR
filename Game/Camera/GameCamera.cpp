@@ -35,10 +35,13 @@ void GameCamera::Awake()
 
 bool GameCamera::Start()
 {
+
 	g_camera3D->SetTarget(m_targetPos);
 	m_playerCameraPreviousPos = m_playerCameraPos = m_position = m_charaPos + m_position;
+
 	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
 	g_camera3D->SetPosition(m_position);
+
 	//m_toCameraPos.Set(0.0f, 3.0f, -15.f);
 	m_toCameraPos.Set(0.0f, 6.0f, -30.f);
 	m_dist = m_toCameraPos;
@@ -98,8 +101,7 @@ void GameCamera::Update()
 		mp_enemy = nullptr;
 	}
 	else {
-
-
+		//ターゲット切替.
 		const float changeTargetVal = 0.7f;
 		auto rxf = g_pad[0]->GetRStickXF();
 
@@ -148,63 +150,70 @@ void GameCamera::Update()
 
 void GameCamera::PostUpdate() {
 
-	{
-		const float PlayerCameraRatio = 1.f;
-		const float EnemyCameraRatio = 0.f;
+	const float PlayerCameraRatio = 1.f;
+	const float EnemyCameraRatio = 0.f;
 
-		if (m_cameraChangeRatio == PlayerCameraRatio) {
-			m_position = m_playerCameraPos;
-		}
-		else if (m_cameraChangeRatio == EnemyCameraRatio) {
-			m_position = m_enemyCameraPos;
-		}
-		else {
-			//補完中
-
-			auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
-			static float cameraDist = vecCtoECP.Length();
-			auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
-
-			float dist_cecp = vecCtoECP.Length();
-			float dist_cpcp = vecCtoPCP.Length();
-
-			vecCtoECP.Normalize();
-			vecCtoPCP.Normalize();
-
-			Quaternion q1;
-			q1.SetRotation(vecCtoECP, vecCtoPCP);
-			Quaternion sl;
-			sl.Slerp(m_cameraChangeRatio, Quaternion::Identity, q1);
-			Vector3 slpos = m_enemyCameraPos - mp_player->GetPosition();
-			sl.Apply(slpos);
-			auto scaleRatio = dist_cpcp / dist_cecp;
-			auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
-			slpos.Scale(scale);
-
-			m_position = slpos + m_charaPos;
-		}
-
-		g_camera3D->SetPosition(m_position);
-		auto tar = Math::Lerp(m_cameraChangeRatio, m_enemyCameraTargetPos, m_playerCameraTargetPos);
-		g_camera3D->SetTarget(tar);
-
-
-		//カメラ当たり判定.
-		Vector3 result;
-		auto flag = m_cameraCollisionSolver.Execute(
-			result,
-			g_camera3D->GetPosition(),
-			g_camera3D->GetTarget()
-		);
-		g_camera3D->SetPosition(result);
-
-		if (m_state == State::enPlayerCamera) {
-			m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed * gameTime()->GetDeltaTime());
-		}
-		else {
-			m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed * gameTime()->GetDeltaTime());
-		}
+	if (m_cameraChangeRatio == PlayerCameraRatio) {
+		m_position = m_playerCameraPos;
 	}
+	else if (m_cameraChangeRatio == EnemyCameraRatio) {
+		m_position = m_enemyCameraPos;
+	}
+	else {
+		//補完中
+		auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
+		static float cameraDist = vecCtoECP.Length();
+		auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
+
+		float dist_cecp = vecCtoECP.Length();
+		float dist_cpcp = vecCtoPCP.Length();
+
+		vecCtoECP.Normalize();
+		vecCtoPCP.Normalize();
+
+		Quaternion q1;
+		q1.SetRotation(vecCtoECP, vecCtoPCP);
+		Quaternion sl;
+		sl.Slerp(m_cameraChangeRatio, Quaternion::Identity, q1);
+		Vector3 slpos = m_enemyCameraPos - mp_player->GetPosition();
+		sl.Apply(slpos);
+		auto scaleRatio = dist_cpcp / dist_cecp;
+		auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
+		slpos.Scale(scale);
+
+		m_position = slpos + m_charaPos;
+	}
+
+	g_camera3D->SetPosition(m_position);
+	auto tar = Math::Lerp(m_cameraChangeRatio, m_enemyCameraTargetPos, m_playerCameraTargetPos);
+	g_camera3D->SetTarget(tar);
+
+	//カメラ当たり判定.
+	Vector3 result;
+	auto flag = m_cameraCollisionSolver.Execute(
+		result,
+		g_camera3D->GetPosition(),
+		g_camera3D->GetTarget()
+	);
+
+	//急に距離が変わっていないか調べる.
+	float dlt = 0.f;
+	float dist = (result - tar).Length();
+	dlt = m_oldDist - dist;
+	//カメラが荒ぶるようなリザルトの場合は無視.
+	if (abs(dlt) <= 10.f and dist >= 0.1f) {
+		m_oldDist = dist;
+		g_camera3D->SetPosition(result);
+	}
+	//printf("delta %f / dist %f\n", dlt,dist);
+
+	if (m_state == State::enPlayerCamera) {
+		m_cameraChangeRatio = min(1.f, m_cameraChangeRatio += m_transitionSpeed * gameTime()->GetDeltaTime());
+	}
+	else {
+		m_cameraChangeRatio = max(0.f, m_cameraChangeRatio -= m_transitionSpeed * gameTime()->GetDeltaTime());
+	}
+	//DebugPrintVector3(TO_INT(EDebugConsoloUser::WATA), m_position);
 }
 
 void GameCamera::CalcEnemyCamera() {
@@ -245,7 +254,6 @@ void GameCamera::CalcEnemyCamera() {
 	vecRight.Normalize();
 	ecPos += vecRight * charaSlideParam;
 
-
 	//TODO : tarpがnanになるバグがあるので修正する. (m_targetPosは正常なのでこの演算中に壊れてる。
 	//ターゲットのターゲット位置もカメラの右側にする.
 	auto tarp = m_targetPos;
@@ -256,6 +264,12 @@ void GameCamera::CalcEnemyCamera() {
 
 	m_enemyCameraPos = ecPos;
 	m_enemyCameraTargetPos = tarp;
+
+	if (!m_isInitedInitialDist and m_state == State::enEnemyCamera) {
+		m_oldDist = (m_enemyCameraTargetPos - m_enemyCameraPos).Length();
+		m_isInitedInitialDist = true;
+	}
+
 }
 
 void GameCamera::CalcPlayerCamera() {
@@ -309,6 +323,12 @@ void GameCamera::CalcPlayerCamera() {
 	}
 
 	m_old = m_dist;
+
+	if (!m_isInitedInitialDist and m_state == State::enPlayerCamera) {
+		m_oldDist = (m_playerCameraPos - m_playerCameraTargetPos).Length();
+		m_isInitedInitialDist = true;
+	}
+
 }
 
 void GameCamera::UpdateState() {
