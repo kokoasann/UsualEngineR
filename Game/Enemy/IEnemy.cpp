@@ -24,6 +24,13 @@ void IEnemy::InitState() {
 	m_stateList[static_cast<int>(EnState::enAttackA)] = new EnemySlashState();
 	m_stateList[static_cast<int>(EnState::enAttackB)] = new EnemySlashState();
 	m_stateList[static_cast<int>(EnState::enDeadState)] = new EnemyDeadState();
+
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyIdleState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enBattleState), new EnemyBattleState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackA), new EnemySlashState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackB), new EnemySlashState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemySlashState()));
+
 }
 
 bool IEnemy::Start() {

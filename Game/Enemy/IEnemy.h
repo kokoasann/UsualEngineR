@@ -155,7 +155,18 @@ protected:
 
 	void SetState(IEnemyState* s);
 	bool m_isDrawHpBarAboveMyself = true;
-	std::vector<IEnemyState*> m_stateList;
+
+	//std::vector<IEnemyState*> m_stateList;
+
+	std::map<int, IEnemyState*> m_stateMap;
+	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
+
+	void SetAnimation(const int no, const char* name, const bool loopFlag) {
+		m_animationMap.insert(std::make_pair(no, std::make_unique<CAnimationClip>()));
+		m_animationMap.at(no)->Load(name);
+		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
+		m_animationMap.at(no)->SetLoopFlag(loopFlag;
+	}
 
 	ModelRender* m_model = nullptr;
 	Vector3 m_position = Vector3::Zero;
