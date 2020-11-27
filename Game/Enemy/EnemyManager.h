@@ -29,7 +29,14 @@ public:
 	IEnemy* GetNearestBossEnemy() const {
 		//TODO : implement this func
 		if (m_enemies.size() == 0) return nullptr;
-		return m_enemies[0];
+
+		for (int i = 0; i < m_enemies.size(); i++) {
+			if (m_enemies.at(i)->IsBoss()) {
+				return m_enemies.at(i);
+			}
+		}
+		return nullptr;
+		//return m_enemies[0];
 	}
 
 	IEnemy* GetNearestEnemy() const {

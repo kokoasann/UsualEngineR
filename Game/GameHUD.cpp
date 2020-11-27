@@ -2,6 +2,7 @@
 #include "GameHUD.h"
 #include "Player/Player.h"
 #include "Enemy/IEnemy.h"
+#include "Enemy/EnemyManager.h"
 
 GameHUD::GameHUD()
 {
@@ -112,7 +113,8 @@ void GameHUD::Update()
 	m_spPlayerBoost->SetSca(m_playerBoostScale);
 
 	//Enemy HP
-	auto target = m_pPlayer->GetTargetEnemy();
+	//auto target = m_pPlayer->GetTargetEnemy();
+	auto target = EnemyManager::GetEnemyManager().GetNearestBossEnemy();
 	if (target == nullptr or !target->IsBoss()) {
 		m_enemyHpScale.x = 0.f;
 	}
