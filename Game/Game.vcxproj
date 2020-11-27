@@ -206,6 +206,7 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h" />
     <ClInclude Include="Enemy\Zako\Zako_LongDistanceMachine.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
+    <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCollisionAttribute.h" />
     <ClInclude Include="GameHUD.h" />
@@ -277,6 +278,7 @@
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
+    <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCollisionAttribute.cpp" />
     <ClCompile Include="GameHUD.cpp" />

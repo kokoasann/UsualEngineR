@@ -194,6 +194,9 @@
     <ClInclude Include="Effect\Ballistic.h">
       <Filter>Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h">
+      <Filter>Enemy\Zako</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -389,6 +392,9 @@
     </ClCompile>
     <ClCompile Include="Effect\Ballistic.cpp">
       <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp">
+      <Filter>Enemy\Zako</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

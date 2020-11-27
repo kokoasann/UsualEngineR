@@ -29,10 +29,12 @@ namespace UER
 		//定数バッファの作成。
 		int bufferNo = 0;
 		for( auto& cb : m_constantBuffer ){
+			auto h = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+			auto r = CD3DX12_RESOURCE_DESC::Buffer(m_allocSize);
 			HRESULT res = device->CreateCommittedResource(
-				&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+				&h,
 				D3D12_HEAP_FLAG_NONE,
-				&CD3DX12_RESOURCE_DESC::Buffer(m_allocSize),
+				&r,
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				nullptr,
 				IID_PPV_ARGS(&cb)
