@@ -21,10 +21,12 @@ namespace UER
 	void IndexBuffer::Init(int size, int stride)
 	{
 		auto d3dDevice = g_graphicsEngine->GetD3DDevice();
+		auto h = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+		auto r = CD3DX12_RESOURCE_DESC::Buffer(size);
 		auto hr = d3dDevice->CreateCommittedResource(
-			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+			&h,
 			D3D12_HEAP_FLAG_NONE,
-			&CD3DX12_RESOURCE_DESC::Buffer(size),
+			&r,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&m_indexBuffer));
