@@ -60,7 +60,7 @@ private:
 	const float m_lifeSpanSec = 10.f;
 	const float m_speed = 100.f;
 	const float m_range = 30.f;
-	const float m_damage = 5.f;
+	const float m_damage = 30.f;
 
 	float m_lifeTimerSec = 0.0f;
 

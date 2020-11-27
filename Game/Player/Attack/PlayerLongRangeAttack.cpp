@@ -4,6 +4,9 @@
 #include "../Pod/Pod.h"
 #include "Projectile.h"
 #include "../../Enemy/IEnemy.h"
+#include "../../GameManager.h"
+#include "../../Camera/GameCamera.h"
+#include "../../Enemy/EnemyManager.h"
 
 PlayerLongRangeAttack::PlayerLongRangeAttack() {
 }
@@ -18,7 +21,8 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 	if (m_shotIntervalTimer >= m_interval) {
 		DebugPrint_WATA("distant attacking\n");
 		auto projectile = NewGO<Projectile>(0);
-		auto targetE = p->GetTargetEnemy();
+		auto targetE = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+
 		Vector3 vel = Vector3::Zero;
 		if (targetE == nullptr) {
 			vel = p->GetForward();

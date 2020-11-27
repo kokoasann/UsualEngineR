@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlayerGroundState.h"
 #include "../../Camera/GameCamera.h"
+#include "../../GameManager.h"
 #include <cmath>
 
 PlayerGroundState::PlayerGroundState()
@@ -25,7 +26,8 @@ void PlayerGroundState::Enter(Player* p){
 IPlayerState* PlayerGroundState::Update(Player* p) {
 
 	//Move
-	if(p->GetGameCamera().IsTargettingEnemy()){
+	const bool isEnemyCamera = GameManager::GetInstance().m_camera->IsTargettingEnemy();
+	if(isEnemyCamera){
 		TargettingEnemyMove(p);
 	}
 	else {

@@ -16,6 +16,7 @@
 #include "../GameSceneMenu.h"
 #include "Attachment/JetPack.h"
 #include "../Effect/JetEffect.h"
+#include "../Camera/GameCamera.h"
 
 Player::Player()
 {
@@ -275,14 +276,17 @@ void Player::PostRender()
 }
 
 void Player::SearchTarget() {
+	//auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
+	//auto enemy = GameManager::GetInstance().m_camera->GetTarget();
 	return;
-	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
+
+	auto enemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (enemy != nullptr /*and enemy->IsBoss()*/ and (enemy->GetState(TO_INT(IEnemy::EnState::enIdleState)) != enemy->GetCurrentState() or
 		enemy->GetState(TO_INT(IEnemy::EnState::enDeadState)) != enemy->GetCurrentState())) {
-		m_target = enemy;
+		//m_target = enemy;
 	}
 	else {
-		m_target = nullptr;
+		//m_target = nullptr;
 	}
 }
 

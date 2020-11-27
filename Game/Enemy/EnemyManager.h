@@ -19,6 +19,10 @@ public:
 	}
 
 	void DestroyEnemy(IEnemy* enemy) {
+
+		if (enemy == m_targetEnemy)
+			m_targetEnemy = nullptr;
+
 		m_enemies.erase(std::remove(m_enemies.begin(), m_enemies.end(), enemy), m_enemies.end());
 		auto enemyObject = reinterpret_cast<GameObject*>(enemy);
 		DeleteGO(enemyObject);
@@ -57,6 +61,14 @@ public:
 		return m_player;
 	}
 
+	const IEnemy* GetTargettingEnemy() {
+		return m_targetEnemy;
+	}
+
+	void SetTargetEnemy(IEnemy* targetEnemy) {
+		m_targetEnemy = targetEnemy;
+	}
+
 private:
 
 	static const int m_numNormalEnemy = 2;
@@ -75,6 +87,7 @@ private:
 	const float m_defaultHeight = 130.f;
 	std::vector<IEnemy*> m_enemies;
 	Player* m_player = nullptr;
+	IEnemy* m_targetEnemy = nullptr;
 
 	const float BOSS_A_HP = 1000.f;
 	const float BOSS_A_STAMINA = 100.f;

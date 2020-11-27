@@ -50,7 +50,7 @@ bool GameCamera::Start()
 
 	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
 	if (enemies.size() == 0) {
-		mp_enemy = nullptr;
+		EnemyManager::GetEnemyManager().SetTargetEnemy(nullptr);
 	}
 	else {
 		m_enemyCameraCurrentTargetPos = m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
@@ -98,7 +98,7 @@ void GameCamera::Update()
 #endif // POS_CHECK
 
 	if (enemies.size() == 0) {
-		mp_enemy = nullptr;
+		EnemyManager::GetEnemyManager().SetTargetEnemy(nullptr);
 	}
 	else {
 		//ターゲット切替.
@@ -127,7 +127,7 @@ void GameCamera::Update()
 			if (rxf <= -changeTargetVal) {
 				isChangeTarget = true;
 				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
-				if (rightIndex != -1) {
+				if (leftIndex != -1) {
 					m_targetEnemyNo = leftIndex;
 				}
 				else if (centerIndex != -1) {
@@ -138,8 +138,8 @@ void GameCamera::Update()
 			if (m_targetEnemyNo != -1 and isChangeTarget) {
 				enemyTargetChangeTime = 0.f;
 				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
-				mp_enemy = enemies.at(m_targetEnemyNo);
-				mp_player->SetTargetEnemy(mp_enemy);
+				//mp_enemy = enemies.at(m_targetEnemyNo);
+				EnemyManager::GetEnemyManager().SetTargetEnemy(enemies.at(m_targetEnemyNo));
 			}
 		}
 	}
@@ -225,9 +225,13 @@ void GameCamera::CalcEnemyCamera() {
 
 	Vector3 ecPos;
 
-	if (mp_enemy != nullptr) {
-		m_targetPos = mp_enemy->GetPosition();
-		m_enemyCameraNextTargetPos = mp_enemy->GetPosition();
+	auto targettingEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+	if (targettingEnemy != nullptr) {
+		m_targetPos = targettingEnemy->GetPosition();
+		m_enemyCameraNextTargetPos = targettingEnemy->GetPosition();
+	}
+	else {
+		m_state = State::enPlayerCamera;
 	}
 
 	//ターゲットの位置を切替先まで補完する.
@@ -277,7 +281,7 @@ void GameCamera::CalcPlayerCamera() {
 	auto xf = g_pad[0]->GetRStickXF();
 	auto yf = g_pad[0]->GetRStickYF();
 
-	static const float upperLimit = 0.7f;
+	static const float upperLimit = 0.95f;
 	static const float lowerLimit = -0.5f;
 	static float cameraHeight = 5.f;
 
@@ -333,17 +337,18 @@ void GameCamera::CalcPlayerCamera() {
 }
 
 void GameCamera::UpdateState() {
+	const auto targettingEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (g_pad[0]->IsTrigger(enButtonRB3)) {
 		if (m_state == State::enEnemyCamera) {
 			m_state = State::enPlayerCamera;
 		}
 		else {
-			if (mp_player->GetTargetEnemy() != nullptr)
+			if (targettingEnemy != nullptr)
 				m_state = State::enEnemyCamera;
 		}
 	}
 
-	if (mp_player->GetTargetEnemy() == nullptr)
+	if (targettingEnemy == nullptr)
 		m_state = State::enPlayerCamera;
 }
 
