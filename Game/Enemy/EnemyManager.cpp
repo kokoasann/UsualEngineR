@@ -13,6 +13,7 @@
 void EnemyManager::SpawnEnemies() {
 	IEnemy::StAbility ab;
 	//Boss
+	/*
 	auto bene = NewGO<BossA>(0);
 	ab.InitHP(BOSS_A_HP);
 	ab.InitStamina(BOSS_A_STAMINA);
@@ -20,8 +21,8 @@ void EnemyManager::SpawnEnemies() {
 	Vector3 pos;
 	pos.y = 100;
 	bene->SetPosition(pos);
-
 	m_enemies.push_back(bene);
+	*/
 
 	auto e = NewGO<Zako_LongDistanceMachine>(0);
 	//e->Init();
@@ -42,6 +43,16 @@ void EnemyManager::SpawnEnemies() {
 				e->SetPosition(objData.position * 100.f);
 				e->SetRotation(objData.rotation);
 				m_enemies.push_back(e);
+			}
+
+			if (objData.name == L"MeleeBoss") {
+				auto bene = NewGO<BossA>(0);
+				ab.InitHP(BOSS_A_HP);
+				ab.InitStamina(BOSS_A_STAMINA);
+				bene->SetAbility(ab);
+				bene->SetPosition(objData.position * 100.f);
+				bene->SetRotation(objData.rotation);
+				m_enemies.push_back(bene);
 			}
 			return true;
 		}
