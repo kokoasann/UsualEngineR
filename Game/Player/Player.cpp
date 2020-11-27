@@ -275,6 +275,7 @@ void Player::PostRender()
 }
 
 void Player::SearchTarget() {
+	return;
 	auto enemy = EnemyManager::GetEnemyManager().GetNearestEnemy();
 	if (enemy != nullptr /*and enemy->IsBoss()*/ and (enemy->GetState(TO_INT(IEnemy::EnState::enIdleState)) != enemy->GetCurrentState() or
 		enemy->GetState(TO_INT(IEnemy::EnState::enDeadState)) != enemy->GetCurrentState())) {

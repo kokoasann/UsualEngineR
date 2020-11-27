@@ -261,6 +261,10 @@ public:
 		return m_target;
 	}
 
+	void SetTargetEnemy(IEnemy* enemy) {
+		m_target = enemy;
+	} 
+
 	const float GetCurrentBoost() {
 		return m_boost;
 	}

@@ -139,6 +139,7 @@ void GameCamera::Update()
 				enemyTargetChangeTime = 0.f;
 				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
 				mp_enemy = enemies.at(m_targetEnemyNo);
+				mp_player->SetTargetEnemy(mp_enemy);
 			}
 		}
 	}
