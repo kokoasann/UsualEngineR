@@ -117,7 +117,7 @@ void JetEffect::Init(const JetEffectInitParam& initParam) {
 				//ŽŸ‚ÌƒtƒŒ[ƒ€‚Ì‚½‚ß‚Ì‚‚³•âŠÔB
 				pd.pos.y += (float)_i / 9.f * PARTICLE_Y_UP * deltaTime;
 
-				pThis->AddParticle(pd.pos, g_vec3One * PARTICLE_SCALE, g_quatIdentity, { 3,2.f,0.3,0.5 }, PARTICLE_LIFE_TIME, &pd, true);
+				pThis->AddParticle(pd.pos, g_vec3One * PARTICLE_SCALE, g_quatIdentity, { 3,2.f,0.3,0.5 }, PARTICLE_LIFE_TIME, pd, true);
 			}
 			time = 0;
 		}

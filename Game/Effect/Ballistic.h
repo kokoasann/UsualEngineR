@@ -1,29 +1,14 @@
 #pragma once
 #include "Effect/ParticleEffect.h"
 
-
-struct MuzzleFlashEffectInitData
-{
-	float particleLifeTime = 0.07f;
-	float particleScale = 1.f;
-	Vector4 particleColor = { 4.f,2.f,0.4f,1.f };
-	Vector4 particleEndColor = { 0.5f,0.25f,0.05f,0.f };
-
-	int circleNum = 4;					//円のパーティクルの数.
-	int circleStrokeNum = 10;			//縦の伸びのパーティクルの数。多ければ多いほど長く伸びる.
-	float circleSize = 0.1f;			//円の大きさ.
-	Vector3 velocity = { 1.f,5.f,0.f };	//xがへの広がり、yが縦へ.
-};
 /// <summary>
 /// 
 /// </summary>
-class MuzzleFlash :public GameObject
+class Ballistic :public GameObject
 {
 public:
-	
-
-	MuzzleFlash();
-	virtual ~MuzzleFlash();
+	Ballistic();
+	virtual ~Ballistic();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -36,8 +21,7 @@ public:
 	/// </summary>
 	virtual void OnDestroy() override;
 
-
-	void Init(const MuzzleFlashEffectInitData& mfid);
+	void Init();
 
 	/// <summary>
 	/// NewGO時に即座に呼ばれる関数。
@@ -68,6 +52,7 @@ public:
 
 	void Stop();
 
+
 	void SetPos(const Vector3& pos)
 	{
 		m_effect->SetPos(pos);
@@ -80,18 +65,19 @@ public:
 	{
 		m_effect->SetSca(sca);
 	}
-private:
-	PlaneParticleEffectRender* m_effect;
 
-	float m_particleLifeTime = 0.07f;
-	float m_particleScale = 1.f;
-	Vector4 m_particleColor = { 2.f,1.f,0.4f,1.f };
-	Vector4 m_particleEndColor = { 0.5f,0.25f,0.05f,0.f };
+
+private:
+	PlaneParticleEffectRender* m_effect = nullptr;
+
+	float m_particleLifeTime = 2.f;
+	float m_particleScale = 0.05f;
+	Vector4 m_particleColor = { 0.8f,0.8f,0.8f,0.7f };
+	Vector4 m_particleEndColor = { 0.8f,0.8f,0.8f,0.f };
 
 	int m_circleNum = 4;
 	int m_circleStrokeNum = 10;
 	float m_circleSize = 0.1f;
-	Vector3 m_velocity = { 1.f,5.f,0.f };
 
 	bool m_isPlay = false;
 };

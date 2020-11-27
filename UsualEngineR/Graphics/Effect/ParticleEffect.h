@@ -112,7 +112,7 @@ namespace UER
 		);
 
 		template<class T>
-		void AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, T* extendData = nullptr, bool isWorld = false)
+		void AddParticle(const Vector3& pos, const Vector3& sca, const Quaternion& rot, const Vector4& mulColor, float lifeTime, const T& extendData = nullptr, bool isWorld = false)
 		{
 			if (m_numInstance >= MAX_INSTANCES_NUM)
 				return;
@@ -152,18 +152,18 @@ namespace UER
 
 			if (m_extendDataSize > 0)
 			{
-				if (sizeof(T) != m_extendDataSize || extendData == nullptr)
+				if (sizeof(T) != m_extendDataSize || &extendData == nullptr)
 					std::abort();
 
 				if (m_numInstance >= m_extendDatas.size())
 				{
 					void* p = malloc(m_extendDataSize);
-					memcpy(p, extendData, m_extendDataSize);
+					memcpy(p, &extendData, m_extendDataSize);
 					m_extendDatas.push_back(p);
 				}
 				else
 				{
-					memcpy(m_extendDatas[m_numInstance], extendData, m_extendDataSize);
+					memcpy(m_extendDatas[m_numInstance], &extendData, m_extendDataSize);
 				}
 			}
 

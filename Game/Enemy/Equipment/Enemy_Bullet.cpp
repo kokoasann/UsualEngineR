@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "Player/Player.h"
 
+#include "Effect/Ballistic.h"
 
 struct SweepResult : public btCollisionWorld::ConvexResultCallback
 {
@@ -55,6 +56,9 @@ Enemy_Bullet::Enemy_Bullet()
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
+
+	/*m_effect = NewGO<Ballistic>(0);
+	m_effect->Init();*/
 	
 	//m_model->SetPosition(pos);
 	//m_model->SetRotation(rot);
@@ -79,6 +83,7 @@ void Enemy_Bullet::OnDestroy()
 	//Release();
 	m_sphere.Release();
 	m_model->SetActive(false);
+	//m_effect->Stop();
 }
 
 void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, float speed, float timeLimit, float attackRenge)
@@ -101,6 +106,10 @@ void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, flo
 
 	m_timer = 0.f;
 
+	rot.SetRotation(Vector3::AxisY, m_dir*-1.f);
+	/*m_effect->SetRot(rot);
+	m_effect->SetPos(pos);
+	m_effect->Play();*/
 }
 
 
@@ -128,6 +137,8 @@ void Enemy_Bullet::Update()
 
 	Vector3 oldpos = m_model->GetPosition();
 	Vector3 newpos = oldpos + m_dir * (m_speed * dtime);
+
+	//m_effect->SetPos(newpos);
 
 	btTransform start, end;
 	start.setIdentity();

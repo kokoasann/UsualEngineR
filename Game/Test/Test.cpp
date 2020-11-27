@@ -119,7 +119,7 @@ void Test::Awake()
 				for (int _i = 0; _i <3; _i++)
 				{
 					float i = GRandom().Rand();
-					pThis->AddParticle(g_vec3Zero, g_vec3One, g_quatIdentity, { 3,2.f,0.3,1 }, 10, &i);
+					pThis->AddParticle(g_vec3Zero, g_vec3One, g_quatIdentity, { 3,2.f,0.3,1 }, 10, i);
 				}
 				time = 0;
 			}

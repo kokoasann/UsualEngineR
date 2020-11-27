@@ -64,7 +64,7 @@ void MuzzleFlash::Init(const MuzzleFlashEffectInitData& mfid)
 					pos += velo;
 					
 					float lifeTime = m_particleLifeTime * (stNum -j) / stNum;
-					pThis->AddParticle(pos, g_vec3One * m_particleScale, g_quatIdentity, m_particleColor, lifeTime, (int*)nullptr, false);
+					pThis->AddParticle(pos, g_vec3One * m_particleScale, g_quatIdentity, m_particleColor, lifeTime, nullptr, false);
 				}
 			}
 			m_isPlay = false;
