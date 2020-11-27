@@ -24,6 +24,9 @@ void EnemyManager::SpawnEnemies() {
 	m_enemies.push_back(bene);
 	*/
 
+	ab.InitHP(BOSS_A_HP);
+	ab.InitStamina(BOSS_A_STAMINA);
+
 	auto e = NewGO<Zako_LongDistanceMachine>(0);
 	//e->Init();
 	e->SetAbility(ab);
