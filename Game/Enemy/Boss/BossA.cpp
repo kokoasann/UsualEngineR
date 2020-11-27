@@ -180,7 +180,7 @@ void BossA::Execute() {
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
-		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState)));
+		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enDeadState)));
 	}
 
 }
