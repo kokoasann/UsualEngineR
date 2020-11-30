@@ -95,8 +95,8 @@ void GameCamera::Update()
 	//m_posChecker->SetPos(enemies.at(forwardEnemyIndex)->GetPosition());
 #endif // POS_CHECK
 
-	CalcTarget();
 	UpdateState();
+	CalcTarget();
 	CalcEnemyCamera();
 	CalcPlayerCamera();
 }
@@ -177,6 +177,9 @@ void GameCamera::CalcTarget() {
 	}
 	else {
 		//ターゲット切替.
+
+		if (m_state != State::enEnemyCamera) return;
+
 		const float changeTargetVal = 0.7f;
 		auto rxf = g_pad[0]->GetRStickXF();
 
@@ -210,10 +213,19 @@ void GameCamera::CalcTarget() {
 				}
 			}
 
+			//center
+			if (g_pad[0]->IsTrigger(enButtonRB3)) {
+				isChangeTarget = true;
+				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
+				if (centerIndex != -1) {
+					m_targetEnemyNo = centerIndex;
+					m_enemyCameraCurrentTargetPos = m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
+				}
+			}
+
 			if (m_targetEnemyNo != -1 and isChangeTarget) {
 				enemyTargetChangeTime = 0.f;
 				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
-				//mp_enemy = enemies.at(m_targetEnemyNo);
 				EnemyManager::GetEnemyManager().SetTargetEnemy(enemies.at(m_targetEnemyNo));
 			}
 		}
@@ -347,13 +359,9 @@ void GameCamera::UpdateState() {
 			m_state = State::enPlayerCamera;
 		}
 		else {
-			if (targettingEnemy != nullptr)
-				m_state = State::enEnemyCamera;
+			m_state = State::enEnemyCamera;
 		}
 	}
-
-	if (targettingEnemy == nullptr)
-		m_state = State::enPlayerCamera;
 }
 
 std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
