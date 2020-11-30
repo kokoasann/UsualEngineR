@@ -17,6 +17,7 @@ void Zako_ShortRangeMonster::Init()
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
+
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
 	mid.m_upAxis = enUpAxisY;
@@ -45,7 +46,7 @@ void Zako_ShortRangeMonster::InitState()
 
 void Zako_ShortRangeMonster::Execute()
 {
-	m_model->SetPosition(m_position);
+	m_model->SetPosition(pos);
 }
 
 void Zako_ShortRangeMonster::Terminate()
