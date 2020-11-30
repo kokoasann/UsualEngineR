@@ -73,9 +73,7 @@ void GameCamera::PreUpdate()
 
 void GameCamera::Update()
 {
-	Vector3 target = mp_player->GetPosition();
 	m_charaPos = mp_player->GetPosition();
-	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
 
 #ifdef POS_CHECK
 
@@ -97,53 +95,7 @@ void GameCamera::Update()
 	//m_posChecker->SetPos(enemies.at(forwardEnemyIndex)->GetPosition());
 #endif // POS_CHECK
 
-	if (enemies.size() == 0) {
-		EnemyManager::GetEnemyManager().SetTargetEnemy(nullptr);
-	}
-	else {
-		//ターゲット切替.
-		const float changeTargetVal = 0.7f;
-		auto rxf = g_pad[0]->GetRStickXF();
-
-		if (enemyTargetChangeTime >= 0.3f) {
-
-			int centerIndex, leftIndex, rightIndex;
-
-			bool isChangeTarget = false;
-
-			//right
-			if (rxf >= changeTargetVal) {
-				isChangeTarget = true;
-				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
-				if (rightIndex != -1) {
-					m_targetEnemyNo = rightIndex;
-				}
-				else if(centerIndex != -1){
-					m_targetEnemyNo = centerIndex;
-				}
-			}
-
-			//left
-			if (rxf <= -changeTargetVal) {
-				isChangeTarget = true;
-				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
-				if (leftIndex != -1) {
-					m_targetEnemyNo = leftIndex;
-				}
-				else if (centerIndex != -1) {
-					m_targetEnemyNo = centerIndex;
-				}
-			}
-
-			if (m_targetEnemyNo != -1 and isChangeTarget) {
-				enemyTargetChangeTime = 0.f;
-				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
-				//mp_enemy = enemies.at(m_targetEnemyNo);
-				EnemyManager::GetEnemyManager().SetTargetEnemy(enemies.at(m_targetEnemyNo));
-			}
-		}
-	}
-
+	CalcTarget();
 	UpdateState();
 	CalcEnemyCamera();
 	CalcPlayerCamera();
@@ -217,6 +169,57 @@ void GameCamera::PostUpdate() {
 	//DebugPrintVector3(TO_INT(EDebugConsoloUser::WATA), m_position);
 }
 
+void GameCamera::CalcTarget() {
+	auto& enemies = EnemyManager::GetEnemyManager().GetEnemies();
+
+	if (enemies.size() == 0) {
+		EnemyManager::GetEnemyManager().SetTargetEnemy(nullptr);
+	}
+	else {
+		//ターゲット切替.
+		const float changeTargetVal = 0.7f;
+		auto rxf = g_pad[0]->GetRStickXF();
+
+		if (enemyTargetChangeTime >= 0.3f) {
+
+			int centerIndex, leftIndex, rightIndex;
+
+			bool isChangeTarget = false;
+
+			//right
+			if (rxf >= changeTargetVal) {
+				isChangeTarget = true;
+				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
+				if (rightIndex != -1) {
+					m_targetEnemyNo = rightIndex;
+				}
+				else if (centerIndex != -1) {
+					m_targetEnemyNo = centerIndex;
+				}
+			}
+
+			//left
+			if (rxf <= -changeTargetVal) {
+				isChangeTarget = true;
+				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
+				if (leftIndex != -1) {
+					m_targetEnemyNo = leftIndex;
+				}
+				else if (centerIndex != -1) {
+					m_targetEnemyNo = centerIndex;
+				}
+			}
+
+			if (m_targetEnemyNo != -1 and isChangeTarget) {
+				enemyTargetChangeTime = 0.f;
+				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
+				//mp_enemy = enemies.at(m_targetEnemyNo);
+				EnemyManager::GetEnemyManager().SetTargetEnemy(enemies.at(m_targetEnemyNo));
+			}
+		}
+	}
+}
+
 void GameCamera::CalcEnemyCamera() {
 	static float distParam = 18.f;
 	static float cameraHeight = 8.f;
@@ -232,6 +235,7 @@ void GameCamera::CalcEnemyCamera() {
 	}
 	else {
 		m_state = State::enPlayerCamera;
+		m_targetEnemyNo = -1;
 	}
 
 	//ターゲットの位置を切替先まで補完する.
