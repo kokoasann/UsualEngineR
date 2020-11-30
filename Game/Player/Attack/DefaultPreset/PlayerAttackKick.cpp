@@ -23,6 +23,9 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 	auto& enemyManager = EnemyManager::GetEnemyManager();
 	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 
+	player->UseStamina(m_StaminaCost);
+	player->UseBoost(m_BoostCost);
+
 	player->FireThrusters();
 }
 
