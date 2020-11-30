@@ -209,7 +209,7 @@ public:
 	/// <param name="damageAmount"> 攻撃力</param>
 	void ApplyDamage(const float damageAmount, const bool stunFlag = false, const Vector3& vel= Vector3::Zero){
 		auto finalDamage = damageAmount - (damageAmount * m_armorParam / 100.f);
-		m_hp = max(0.f, m_hp - finalDamage);
+		//m_hp = max(0.f, m_hp - finalDamage);
 		if(stunFlag){
 			m_previousState = m_currentState;
 			m_currentState->Exit(this);
@@ -257,14 +257,6 @@ public:
 		return m_speed;
 	}
 
-	IEnemy* GetTargetEnemy() const {
-		return m_target;
-	}
-
-	void SetTargetEnemy(IEnemy* enemy) {
-		m_target = enemy;
-	} 
-
 	const float GetCurrentBoost() {
 		return m_boost;
 	}
@@ -289,13 +281,13 @@ public:
 		m_endurance = min(m_ENDURANCE_MAX, m_endurance + amount);
 	}
 
-	void SetGameCamera(GameCamera* camera) {
-		mp_camera = camera;
-	}
+	//void SetGameCamera(GameCamera* camera) {
+		//mp_camera = camera;
+	//}
 
-	GameCamera& GetGameCamera() {
-		return *mp_camera;
-	}
+	//GameCamera& GetGameCamera() {
+		//return *mp_camera;
+	//}
 
 	const EnAttackPreset& GetCurrentAttackPreset() const{
 		return m_currentAttackPreset;
@@ -355,10 +347,6 @@ private:
 		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
 		m_animationMap.at(no)->SetLoopFlag(loopFlag);
 	}
-
-	//Ref
-	IEnemy* m_target = nullptr;
-	GameCamera* mp_camera = nullptr;
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;

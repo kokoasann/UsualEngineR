@@ -4,6 +4,7 @@
 #include "Enemy/EnemyManager.h"
 #include "../../GameSceneMenu.h"
 #include "../../GameManager.h"
+#include "../../Camera/GameCamera.h"
 
 Pod::Pod()
 {
@@ -144,8 +145,14 @@ void Pod::ShotLaserBeam() {
 	const auto& podPos = mp_player->GetPod()->GetPosition();
 
 	auto vecLaserDir = mp_player->GetForward();
-	if (mp_player->GetTargetEnemy() != nullptr)
-		vecLaserDir = mp_player->GetTargetEnemy()->GetPosition() - mp_player->GetPosition();
+	const auto targettingEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+	if (targettingEnemy != nullptr)
+		vecLaserDir = targettingEnemy->GetPosition() - mp_player->GetPosition();
+
+	//auto target = GameManager::GetInstance().m_camera->GetTarget();
+	//if (target != nullptr) {
+//		vecLaserDir = target->GetPosition() - mp_player->GetPosition();
+//	}
 
 	Vector3 N;
 	N.Cross(vecLaserDir, Vector3::Up);

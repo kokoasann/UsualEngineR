@@ -26,7 +26,7 @@ void XXX::Init()
 	m_model->SetScale(Vector3::One * m_scale);
 
 	//State
-	SetState(m_stateList[static_cast<int>(IEnemy::EnState::enIdleState)]);
+	SetState(m_stateMap[static_cast<int>(IEnemy::EnState::enIdleState)]);
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
@@ -40,7 +40,7 @@ void XXX::InitState()
 
 void XXX::Execute()
 {
-	m_model.SetPosition(m_position);
+	m_model->SetPosition(m_position);
 }
 
 void XXX::Terminate()

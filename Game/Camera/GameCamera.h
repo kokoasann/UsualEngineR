@@ -50,10 +50,6 @@ public:
 
 	void PostUpdate() override;
 
-	void SetEnemy(IEnemy* enemy) {
-		mp_enemy = enemy;
-	}
-
 	void SetPlayer(Player* player) {
 		mp_player = player;
 	}
@@ -63,7 +59,6 @@ public:
 	}
 
 private:
-
 
 	enum class State{
 		enEnemyCamera,
@@ -108,7 +103,6 @@ private:
 	Vector3 m_enemyCameraCurrentTargetPos = Vector3::Zero;
 
 	Player* mp_player = nullptr;
-	IEnemy* mp_enemy = nullptr;
 	Vector3 m_toCameraPos;
 
 	float m_cameraChangeRatio = 1.f;
