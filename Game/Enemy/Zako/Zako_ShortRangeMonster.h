@@ -37,7 +37,7 @@ public:
 private:
 	//Model
 	ModelRender* m_model = nullptr;
-	Vector3 pos= { 10,73,-100};
+	Vector3 pos = { 10,73,-100 };//Á‹—\’èB
 
 	float m_scale = 1.f;
 

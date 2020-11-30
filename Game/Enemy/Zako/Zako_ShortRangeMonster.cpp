@@ -46,7 +46,13 @@ void Zako_ShortRangeMonster::InitState()
 
 void Zako_ShortRangeMonster::Execute()
 {
-	m_model->SetPosition(pos);
+	m_model->SetPosition(m_position);
+	//m_model->SetRotation(m_rot);
+
+	//体力がなくなったら死亡ステートへ遷移
+	if (m_ability.hp <= 0) {
+		SetState(m_stateMap[static_cast<int>(IEnemy::EnState::enDeadState)]);
+	}
 }
 
 void Zako_ShortRangeMonster::Terminate()
