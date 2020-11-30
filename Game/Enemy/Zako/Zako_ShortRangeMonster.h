@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
+#include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyIdleState.h"
 /// <summary>
 /// 
 /// </summary>
@@ -35,6 +37,8 @@ public:
 private:
 	//Model
 	ModelRender* m_model = nullptr;
+	Vector3 pos= { 10,73,-100};
+
 	float m_scale = 1.f;
 
 	//Physics

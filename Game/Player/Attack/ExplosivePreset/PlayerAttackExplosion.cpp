@@ -21,6 +21,9 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
+	player->UseStamina(m_StaminaCost);
+	player->UseBoost(m_BoostCost);
+
 	m_isBombed = false;
 
 	//auto& enemyManager = EnemyManager::GetEnemyManager();

@@ -10,5 +10,8 @@ public :
 	virtual const bool IsDone() = 0;
 	virtual const float GetInterval() = 0;
 	virtual const bool IsContinueAttack() = 0;
+
+protected:
+	const float m_DEFAULT_ATTACK_DAMAGE = 10.f;
 };
 

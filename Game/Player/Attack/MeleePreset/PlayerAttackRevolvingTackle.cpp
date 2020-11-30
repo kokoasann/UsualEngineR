@@ -23,6 +23,10 @@ void PlayerAttackRevolvingTackle::Init(Player* player, int combo) {
 
 	player->FireThrusters();
 
+	player->UseStamina(m_StaminaCost);
+	player->UseBoost(m_BoostCost);
+
+
 	//auto& enemyManager = EnemyManager::GetEnemyManager();
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 }
