@@ -30,6 +30,6 @@ private:
 	const float m_throwPower = 200.f;
 
 	float m_range = 50.f;
-	float m_damageAmount = 15.f;
+	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 8.f;
 };
 

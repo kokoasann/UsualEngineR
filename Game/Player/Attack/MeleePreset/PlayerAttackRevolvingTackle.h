@@ -29,8 +29,7 @@ private:
 
 	const float m_tacklePower = 500.f;
 	float m_range = 30.f;
-	float m_damageAmount = 100.f;
-
+	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 7.f;
 };
 
 

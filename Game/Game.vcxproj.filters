@@ -464,9 +464,6 @@
     <Filter Include="Player\Pod">
       <UniqueIdentifier>{9287834e-716b-481d-8387-06eb1a4105be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Attack\TestPreset">
-      <UniqueIdentifier>{f7d22fd8-5f50-4d18-a853-936d74e62ad1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player\Attachment">
       <UniqueIdentifier>{e9e3af22-358c-476d-9b05-f4d1caabee8b}</UniqueIdentifier>
     </Filter>
@@ -490,6 +487,9 @@
     </Filter>
     <Filter Include="Enemy\State\DefaultState">
       <UniqueIdentifier>{abe62167-564b-41d2-8acb-5555fd8c3043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\TestPreset">
+      <UniqueIdentifier>{f7d22fd8-5f50-4d18-a853-936d74e62ad1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

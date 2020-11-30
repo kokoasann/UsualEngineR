@@ -1,4 +1,5 @@
 #pragma once
+#include "../../Player/State/IPlayerSstate.h"
 
 /// <summary>
 /// 
@@ -60,7 +61,8 @@ private:
 	const float m_lifeSpanSec = 10.f;
 	const float m_speed = 100.f;
 	const float m_range = 30.f;
-	const float m_damage = 30.f;
+	const float m_damage = 10 * 1.f / 5.f;
+
 
 	float m_lifeTimerSec = 0.0f;
 
