@@ -107,6 +107,9 @@ private:
 
 	float m_timer = 0.f;
 
+	//laser
+	const float m_LaserDamageAmount = 10.f * 1.f / 2.f;
+
 	//Thrown
 	Vector3 m_velocity = Vector3::Zero;
 	float m_thrownTime = 1.f;
@@ -115,10 +118,10 @@ private:
 
 	//Rampage
 	const float m_rampageTime = 5.f;
-	const float m_rampagingDamageAmount = 100.f;
+	const float m_rampagingDamageAmount = 10.f * 1.f / 3.f;
 
 	//Kamikaze
-	const float m_kamikazeDamageAmount = 300.f;
+	const float m_kamikazeDamageAmount = 10.f;
 
 	//Back
 	const float m_backSpeed = 150.f;

@@ -452,9 +452,6 @@
     <Filter Include="Player\Attack\MeleePreset">
       <UniqueIdentifier>{140f3708-2cfd-4ee4-a128-9563a54ac6f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Attack\DistantPreset">
-      <UniqueIdentifier>{d09c194d-4c1d-4dce-a625-7e27d52ccf7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player\Attack\ExplosivePreset">
       <UniqueIdentifier>{a23c6be4-4eeb-4eb2-bc23-a645ea219744}</UniqueIdentifier>
     </Filter>
@@ -463,9 +460,6 @@
     </Filter>
     <Filter Include="Player\Pod">
       <UniqueIdentifier>{9287834e-716b-481d-8387-06eb1a4105be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player\Attack\TestPreset">
-      <UniqueIdentifier>{f7d22fd8-5f50-4d18-a853-936d74e62ad1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Player\Attachment">
       <UniqueIdentifier>{e9e3af22-358c-476d-9b05-f4d1caabee8b}</UniqueIdentifier>
@@ -490,6 +484,12 @@
     </Filter>
     <Filter Include="Enemy\State\DefaultState">
       <UniqueIdentifier>{abe62167-564b-41d2-8acb-5555fd8c3043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\TestPreset">
+      <UniqueIdentifier>{f7d22fd8-5f50-4d18-a853-936d74e62ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Attack\DistantPreset">
+      <UniqueIdentifier>{d09c194d-4c1d-4dce-a625-7e27d52ccf7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

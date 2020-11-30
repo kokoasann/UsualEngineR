@@ -141,7 +141,6 @@ void Pod::ShotLaserBeam() {
 
 	//laser
 	const float laserRange = 30.f;
-	const float laserDamageAmount = 200.f;
 	const auto& podPos = mp_player->GetPod()->GetPosition();
 
 	auto vecLaserDir = mp_player->GetForward();
@@ -172,7 +171,7 @@ void Pod::ShotLaserBeam() {
 		auto d = N.Dot(vecPodToEnemy);
 
 		if (std::abs(d) < laserRange) {
-			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(laserDamageAmount);
+			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_LaserDamageAmount);
 		}
 	}
 	//

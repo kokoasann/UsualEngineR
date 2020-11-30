@@ -32,6 +32,6 @@ private:
 	float m_shotIntervalTimer = m_shotInterval;
 
 	float m_range = 50.f;
-	const float m_damageAmount = 15.f;
+	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 1.f / 2.f;
 };
 

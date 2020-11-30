@@ -34,6 +34,9 @@ void PlayerAttackThrowPod::Init(Player* player, int combo) {
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enAttack);
 
+	player->UseStamina(m_StaminaCost);
+	player->UseBoost(m_BoostCost);
+
 	//auto& enemyManager = EnemyManager::GetEnemyManager();
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 }

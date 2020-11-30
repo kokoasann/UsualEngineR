@@ -27,6 +27,8 @@ private:
 	float m_timer = 0.f;
 
 	float m_range = 50.f;
-	float m_damageAmount = 15.f;
+	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 5.f;
+	const float m_StaminaCost = 30.f;
+	const float m_BoostCost = 30.f;
 };
 

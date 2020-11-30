@@ -89,7 +89,7 @@ private:
 	Player* m_player = nullptr;
 	IEnemy* m_targetEnemy = nullptr;
 
-	const float BOSS_A_HP = 1000.f;
+	const float BOSS_A_HP = 500.f;
 	const float BOSS_A_STAMINA = 100.f;
 };
 
