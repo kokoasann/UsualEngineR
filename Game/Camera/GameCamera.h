@@ -81,7 +81,7 @@ private:
 	Quaternion m_rot = Quaternion::Identity;
 
 	void UpdateState();
-
+	void CalcTarget();
 	void CalcEnemyCamera();
 	void CalcPlayerCamera();
 
