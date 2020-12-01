@@ -5,6 +5,7 @@
 #include "Enemy/State/EnemyIdleState.h"
 #include "Enemy/State/EnemyShortRangeComingState.h"
 #include "Enemy/State/EnemyShortRangePunchState.h"
+#include "Enemy/State/EnemyShortRangeStrongPunchState.h"
 
 /// <summary>
 /// 
