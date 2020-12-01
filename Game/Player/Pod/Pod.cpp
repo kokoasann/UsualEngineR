@@ -119,6 +119,20 @@ void Pod::PostUpdate()
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	if (m_state == PodState::enIdle) {
+
+		if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
+			//m_rotation = EnemyManager::GetEnemyManager().GetTargettingEnemy()
+			auto cf = g_camera3D->GetForward();
+			Quaternion rot = Quaternion::Identity;
+			auto theta = atan2(cf.x, cf.z);
+			theta = theta * (180.f / Math::PI);
+			rot.SetRotationDegY(theta);
+			m_rotation = rot;
+		}
+		else {
+			m_rotation = mp_player->GetRotation();
+		}
+
 		//auto p = mp_player->GetPosition() + m_distanceFromPlayer;
 		auto addPos = m_distanceFromPlayer;
 		mp_player->GetRotation().Apply(addPos);
@@ -154,7 +168,6 @@ void Pod::PostUpdate()
 				m_state = PodState::enKamikaze;
 			}
 		}
-
 	}
 	else {
 		if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
@@ -188,7 +201,7 @@ void Pod::PostUpdate()
 	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
 
-	m_rotation = mp_player->GetRotation();
+	//m_rotation = mp_player->GetRotation();
 
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);

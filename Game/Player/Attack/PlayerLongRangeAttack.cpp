@@ -57,7 +57,7 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 
 		//projectile->Init(p->GetPod()->GetPosition(), vel);
 		vel.Normalize();
-		const float defSpeed = 200.f;
+		const float defSpeed = 800.f;
 		const float lifeSpan = 5.f;
 		const float range = 10.f;
 		const float scale = 0.2f;
