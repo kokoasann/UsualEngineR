@@ -110,6 +110,11 @@ void Pod::PreUpdate()
 
 void Pod::Update()
 {
+}
+
+void Pod::PostUpdate()
+{
+
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
@@ -176,10 +181,7 @@ void Pod::Update()
 	if (m_state == PodState::enBack) {
 		BackToIdlePos();
 	}
-}
 
-void Pod::PostUpdate()
-{
 	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
 

@@ -63,29 +63,30 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 		const float scale = 0.5f;
 
 		auto& bones = p->GetPod()->GetBones();
+		 auto pvel = p->GetVelocity() * gameTime()->GetDeltaTime();
 
-		auto posR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetTransrate();
+		auto posR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetRotate();
 		projectileR1->Init(posR1, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetPos(posR1);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetRot(rotR1);
 
-		auto posR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetTransrate();
+		auto posR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetRotate();
 		projectileR2->Init(posR2, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetPos(posR2);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetRot(rotR2);
 
-		auto posL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetTransrate();
+		auto posL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetRotate();
 		projectileL1->Init(posL1, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetPos(posL1);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetRot(rotL1);
 
-		auto posL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetTransrate();
+		auto posL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetRotate();
 		projectileL2->Init(posL2, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->Play();
