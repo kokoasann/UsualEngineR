@@ -42,9 +42,8 @@ void PlayerAttackPunch::Execute(Player* player) {
 		m_timer += gameTime()->GetDeltaTime();
 	}
 	else{
-		if (player->ColCheck(Player::EnPlayerBone::enHand_L) and !m_hasAlreadyAttacked) {
-			if (m_combo % 2 == 0) {
-				printf("left hand\n");
+		if (m_combo % 2 == 0) {
+			if (player->ColCheck(Player::EnPlayerBone::enHand_L) and !m_hasAlreadyAttacked) {
 				auto& enemyManager = EnemyManager::GetEnemyManager();
 				auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enHand_L)->GetWorldMatrix().GetTransrate());
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo);
@@ -52,9 +51,8 @@ void PlayerAttackPunch::Execute(Player* player) {
 			}
 		}
 
-		if (player->ColCheck(Player::EnPlayerBone::enHand_R) and !m_hasAlreadyAttacked) {
-			if (m_combo % 2 !=  0) {
-				printf("right hand\n");
+		if (m_combo % 2 != 0) {
+			if (player->ColCheck(Player::EnPlayerBone::enHand_R) and !m_hasAlreadyAttacked) {
 				auto& enemyManager = EnemyManager::GetEnemyManager();
 				auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enHand_R)->GetWorldMatrix().GetTransrate());
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo);
