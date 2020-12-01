@@ -52,6 +52,6 @@ private:
 	CAnimationClip m_animClip[1];
 
 	//Physics
-	const float m_radius = 1.f;
+	const float m_radius = 5.5f;
 	const float m_height = 3.f;
 };
