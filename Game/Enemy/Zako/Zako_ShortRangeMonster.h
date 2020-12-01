@@ -3,6 +3,8 @@
 #include "Enemy/IEnemy.h"
 #include "Enemy/State/EnemyDeadState.h"
 #include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/EnemyShortRangeComingState.h"
+
 /// <summary>
 /// 
 /// </summary>
@@ -24,7 +26,7 @@ public:
 	
 	enum class EnStateEX :int
 	{
-		Expand = TO_INT(IEnemy::EnState::enNumState),
+		enComing = TO_INT(IEnemy::EnState::enBattleState),
 		Num,
 	};
 
@@ -34,10 +36,13 @@ public:
 		Num,
 	};
 
+	enum class EnState {
+		enComing = TO_INT(IEnemy::EnState::enNumState),
+		enNumState
+	};
 private:
 	//Model
 	ModelRender* m_model = nullptr;
-	Vector3 pos = { 10,73,-100 };//è¡ãéó\íËÅB
 
 	float m_scale = 1.f;
 
