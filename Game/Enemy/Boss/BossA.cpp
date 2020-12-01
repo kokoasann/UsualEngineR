@@ -130,9 +130,19 @@ void BossA::Init() {
 		m_bones.at(TO_INT(EnJetBone::Skirt)) = bone;
 	}
 
+	////HandR
+	//{
+	//	auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"SkirtJet"));
+	//	m_bones.at(TO_INT(EnJetBone::HandR)) = bone;
+	//}
+
 
 	//Physics
 	InitCharacon(m_radius,m_height, m_position, true);
+
+	//m_rightHandCollider.Create(m_HandRadius);
+
+
 }
 
 void BossA::InitState() {
@@ -178,9 +188,23 @@ void BossA::Execute() {
 	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetPosition(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetRotation(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetRotate());
 
+
+	////Physics
+	////btVector3 velocity = m_forward;
+	//btVector3 velocity(0, 1, 0);// = m_forward;
+	//btScalar allowedCcdPenetration = 0.f;
+
+	//btTransform t_from = m_handpos;
+	//btTransform t_to = t_from;
+	//t_to.setOrigin(t_to.getOrigin() + velocity);
+	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
+
+	//btCollisionWorld::ConvexResultCallback callback();
+	//Physics().ConvexSweepTest((const btConvexShape*)m_rightHandCollider.GetBody(), btStart, btEnd, callback);
+
+
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
 		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enDeadState)));
 	}
-
 }

@@ -43,10 +43,21 @@ public:
 		//return m_enemies[0];
 	}
 
-	IEnemy* GetNearestEnemy() const {
+	IEnemy* GetNearestEnemy(const Vector3 pos) const {
 		//TODO : implement this func
 		if (m_enemies.size() == 0) return nullptr;
-		return m_enemies[0];
+
+		int nearestIndex;
+		float minLen = FLT_MAX;
+
+		for (int i = 0; i < m_enemies.size(); i++) {
+			float len = (m_enemies.at(i)->GetPosition() - pos).Length();
+			if (len < minLen) {
+				nearestIndex = i;
+				minLen = len;
+			}
+		}
+		return m_enemies.at(nearestIndex);
 	}
 
 	void SetPlayer(Player* player) {

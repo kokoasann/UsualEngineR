@@ -68,6 +68,8 @@ public:
 		enBack,
 		enSOLE_L,
 		enSOLE_R,
+		enHand_R,
+		enHand_L,
 		enNumBoneType
 	};
 
@@ -183,7 +185,8 @@ public:
 		return m_hp;
 	}
 
-	const float GetMaxHP() {
+	static const float GetMaxHP() {
+		//static const float maxHp = 500.f;
 		return m_HP_MAX;
 	}
 
@@ -325,6 +328,8 @@ public:
 		return m_isUsingThrusters;
 	}
 
+	const bool ColCheck(const Player::EnPlayerBone&);
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -398,7 +403,7 @@ private:
 	};
 	*/
 
-	const float m_HP_MAX = 500.f;
+	static const float  m_HP_MAX;
 	const float m_ENDURANCE_MAX = 300.f;
 	const float m_BOOST_MAX = 300.f;
 
@@ -415,4 +420,9 @@ private:
 	bool m_isUsingThrusters = false;
 	//PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
 	std::vector<JetEffect*> m_jetEffects;
+
+
+	//Hands
+	SphereCollider		m_handCollider;
+	const float m_HandRadius = 2.f;
 };

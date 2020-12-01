@@ -1,6 +1,7 @@
 #pragma once
 #include "../IEnemy.h"
 #include "../../Player/Player.h"
+#include "physics/SphereCollider.h"
 
 class JetEffect;
 
@@ -42,6 +43,8 @@ public:
 		BackR,
 		BackL,
 		Skirt,
+		//HandR,
+		//HandL,
 		NumJetBone
 	};
 
@@ -54,4 +57,7 @@ private:
 	//Physics
 	const float m_radius = 5.5f;
 	const float m_height = 3.f;
+	//Hands
+	//SphereCollider		m_rightHandCollider;
+	//const float m_HandRadius = 1.f;
 };

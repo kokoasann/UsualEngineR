@@ -26,7 +26,9 @@ private:
 	const float m_interval = 0.1f;
 	float m_timer = 0.f;
 
+	int m_combo = 0;
 	float m_range = 50.f;
+	bool m_hasAlreadyAttacked = false;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE;
 };
 
