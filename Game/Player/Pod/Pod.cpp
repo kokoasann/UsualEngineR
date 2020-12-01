@@ -6,6 +6,7 @@
 #include "../../GameManager.h"
 #include "../../Camera/GameCamera.h"
 #include "../../Effect/JetEffect.h"
+#include "../Attack/Projectile.h"
 
 Pod::Pod()
 {
@@ -83,7 +84,7 @@ bool Pod::Start()
 	}
 	{
 		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_R.002"));
-		m_podBones.at(TO_INT(EnPodBone::Burrel_R1)) = bone;
+		m_podBones.at(TO_INT(EnPodBone::Burrel_R2)) = bone;
 	}
 	{
 		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Thruster_Back"));
@@ -93,6 +94,10 @@ bool Pod::Start()
 		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Thruster_Under"));
 		m_podBones.at(TO_INT(EnPodBone::Thruster_Under)) = bone;
 	}
+
+	//bullets
+	auto pbm = NewGO<PlayerBulletManager>(0);
+	pbm->Allocate(70);
 
 	return true;
 }

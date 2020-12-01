@@ -1,6 +1,7 @@
 #pragma once
 class Player;
 class Projectile;
+class MuzzleFlash;
 
 class PlayerLongRangeAttack
 {
@@ -15,5 +16,15 @@ private:
 	float m_shotIntervalTimer = m_interval;
 
 	std::vector<Projectile> m_projectiles;
+
+	enum class EnMuzzles {
+		UpperRight,
+		UpperLeft,
+		LowerRight,
+		LowerLeft,
+		NumMuzzles
+	};
+
+	std::vector< MuzzleFlash*> m_muzzleFlashes;
 };
 

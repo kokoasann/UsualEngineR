@@ -86,6 +86,28 @@ public:
 		return m_state == PodState::enIdle;
 	}
 
+	enum class EnPodBone {
+		Burrel_L1,
+		Burrel_L2,
+		Burrel_R1,
+		Burrel_R2,
+		Thruster_Back,
+		Thruster_Under,
+		enNumBoneType
+	};
+
+	Bone* GetBone(Pod::EnPodBone bone) {
+		return m_podBones.at(TO_INT(bone));
+	}
+
+	std::vector<Bone*>& GetBones() {
+		return m_podBones;
+	}
+
+	const Quaternion& GetRotation() {
+		return m_rotation;
+	}
+
 private:
 
 	void ShotLaserBeam();
@@ -140,16 +162,6 @@ private:
 	PlayerLongRangeAttack m_longRangeAttack;
 
 	//Effects
-	enum class EnPodBone {
-		Burrel_L1,
-		Burrel_L2,
-		Burrel_R1,
-		Burrel_R2,
-		Thruster_Back,
-		Thruster_Under,
-		enNumBoneType
-	};
-
 
 	const int BACK = 0;
 	const int UNDER = 1;

@@ -33,6 +33,9 @@ public:
 	/// <returns>trueを返さない限り、ずっとStartを呼び続ける</returns>
 	bool Start() override;
 
+	void Init(const Vector3& pos, float scale, const Vector3& dir, float speed, float timeLimit, float attackRenge);
+
+
 	/// <summary>
 	/// 更新。の前に呼ばれる更新。
 	/// </summary>
@@ -57,11 +60,10 @@ public:
 
 private:
 
-	//const
-	const float m_lifeSpanSec = 10.f;
-	const float m_speed = 100.f;
-	const float m_range = 30.f;
-	const float m_damage = 10 * 1.f / 5.f;
+	float m_lifeSpanSec = 10.f;
+	 float m_speed = 100.f;
+	float m_range = 30.f;
+	const float m_damage = 10 *1.f / 5.f;
 
 
 	float m_lifeTimerSec = 0.0f;
@@ -71,6 +73,40 @@ private:
 	Vector3 m_position = { 0,15,-20 };
 	Vector3 m_velocity = { 0,0,0 };
 	Quaternion m_rotation = Quaternion::Identity;
-	const float m_scale = 1.f;
+	//const float m_scale = 1.f;
 
+
+	//
+	float m_scale;
+	Vector3 m_dir;
+
+	//float m_timer = 0.f;
+	//float m_timeLimit = 0.f;
+
+	SphereCollider m_sphere;
+};
+
+
+/// ///////////////////////
+
+class PlayerBulletManager final : public GameObject
+{
+public:
+	void Release() override;
+	void OnDestroy() override;
+
+	void PostUpdate() override;
+
+	void Allocate(int num);
+private:
+	std::mutex m_mutex;
+
+	std::vector<Projectile*> m_bulletList;
+	int m_bulletNum = 0;
+	int m_nextAllocateActiveNum = 6;
+	int m_allocElementNum = 30;
+	ThreadObject m_thread;
+
+	bool m_isAllocate = false;
+	int m_oldNum = 0;
 };
