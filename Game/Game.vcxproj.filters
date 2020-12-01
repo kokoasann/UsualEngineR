@@ -197,6 +197,12 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangePunchState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -395,6 +401,12 @@
     </ClCompile>
     <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp">
       <Filter>Enemy\Zako</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangePunchState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,8 @@
 #include "../Effect/JetEffect.h"
 #include "../Camera/GameCamera.h"
 
+const float Player::m_HP_MAX = 500.f;
+
 Player::Player()
 {
 }
@@ -26,6 +28,42 @@ Player::~Player()
 {
 }
 
+struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit = false;
+	Vector3 hitPos = Vector3::Zero;
+	const Vector3& startPos;
+	float dist = FLT_MAX;
+	int collAttr = enCollisionAttr_None;
+
+	PlayerResultCallback(const Vector3& v) :
+		startPos(v)
+	{
+	}
+
+	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		int index = convexResult.m_hitCollisionObject->getUserIndex();
+
+		if (!(index & GameCollisionAttribute::Enemy))
+			return 0.f;
+
+		//if (!(index & enCollisionAttr_Character))
+			//return 0.f;
+
+		isHit = true;
+		Vector3 hitp = *(Vector3*)&convexResult.m_hitPointLocal;
+		Vector3 div = startPos - hitp;
+		float dis = div.Length();
+		if (dis < dist)
+		{
+			hitPos = *(Vector3*)&convexResult.m_hitPointLocal;
+			dist = dis;
+			collAttr = index;
+		}
+		return 0.0f;
+	}
+};
 
 
 void Player::Release()
@@ -134,6 +172,7 @@ bool Player::Start()
 	//Physics
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Player);
+	m_handCollider.Create(m_HandRadius);
 
 	//Pod
 	m_pod = NewGO<Pod>(0);
@@ -153,6 +192,12 @@ bool Player::Start()
 
 	auto soleL = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Sole_L"));
 	m_playerBones.at(TO_INT(EnPlayerBone::enSOLE_L)) = soleL;
+
+	auto handR = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Hand_R"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enHand_R)) = handR;
+
+	auto handL = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Hand_L"));
+	m_playerBones.at(TO_INT(EnPlayerBone::enHand_L)) = handL;
 	
 	//Effect
 	auto jetEffect = NewGO<JetEffect>(0);
@@ -261,8 +306,40 @@ void Player::PostUpdate()
 	m_thrusterEffects[RIGHT]->SetRot(boneSoleRMat.GetRotate());
 	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 	*/
+
 }
 
+const bool Player::ColCheck(const Player::EnPlayerBone& bone) {
+	const auto& handPos = GetBone(bone)->GetWorldMatrix().GetTransrate();
+
+	//Physics
+	//btVector3 velocity = m_forward;
+	btVector3 velocity(m_forward.x, m_forward.y, m_forward.z);
+	//btVector3 velocity(0,0,0);
+	btScalar allowedCcdPenetration = 0.f;
+
+	btTransform t_from = btTransform(btQuaternion::getIdentity());
+	t_from.setOrigin(btVector3(handPos.x, handPos.y, handPos.z));
+	btTransform t_to = t_from;
+	t_to.setOrigin(t_to.getOrigin() + velocity);
+	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
+	PlayerResultCallback cb(t_from.getOrigin());
+
+	Physics().ConvexSweepTest((const btConvexShape*)m_handCollider.GetBody(), t_from, t_to, cb, 0.f);
+
+	auto dist = (handPos - m_model->GetPosition()).Length();
+	//DebugPrintVector3(EDebugConsoloUser::WATA, );
+
+	if (cb.isHit)
+	{
+		if (cb.collAttr & GameCollisionAttribute::Enemy)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 
 
 void Player::Render()

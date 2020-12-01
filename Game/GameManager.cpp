@@ -26,8 +26,6 @@ void GameManager::InitGameWorld() {
 	auto& eM = EnemyManager::GetEnemyManager();
 	eM.SpawnEnemies();
 	eM.SetPlayer(m_player);
-
-	auto enemy = eM.GetNearestEnemy();
 }
 
 void GameManager::Release() {
