@@ -233,7 +233,7 @@ void GameCamera::CalcTarget() {
 }
 
 void GameCamera::CalcEnemyCamera() {
-	static float distParam = 18.f;
+	static float distParam = 30.f;
 	static float cameraHeight = 8.f;
 	static float charaSlideParam = 5.f;
 	static float targetSlideParam = 30.f;
