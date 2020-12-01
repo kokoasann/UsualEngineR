@@ -12,7 +12,7 @@ public:
 	void Execute(Player* p);
 
 private:
-	const float m_interval = 0.2f;
+	const float m_interval = 0.1f;
 	float m_shotIntervalTimer = m_interval;
 
 	std::vector<Projectile> m_projectiles;

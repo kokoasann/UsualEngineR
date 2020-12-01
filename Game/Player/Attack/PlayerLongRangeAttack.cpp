@@ -60,7 +60,8 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 		const float speed = 100.f;
 		const float lifeSpan = 5.f;
 		const float range = 10.f;
-		const float scale = 0.5f;
+		const float scale = 0.2f;
+		const float flashScale = 0.02f;
 
 		auto& bones = p->GetPod()->GetBones();
 		 auto pvel = p->GetVelocity() * gameTime()->GetDeltaTime();
@@ -71,6 +72,7 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetPos(posR1);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetRot(rotR1);
+		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetSca(Vector3::One * flashScale);
 
 		auto posR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetRotate();
@@ -78,6 +80,7 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetPos(posR2);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetRot(rotR2);
+		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetSca(Vector3::One * flashScale);
 
 		auto posL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetRotate();
@@ -85,6 +88,7 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetPos(posL1);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetRot(rotL1);
+		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetSca(Vector3::One * flashScale);
 
 		auto posL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetRotate();
@@ -92,6 +96,7 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetPos(posL2);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetRot(rotL2);
+		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetSca(Vector3::One * flashScale);
 
 		m_shotIntervalTimer = 0.f;
 	}
