@@ -282,19 +282,19 @@ void Pod::Rampage() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
-	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
+	if (EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos) == nullptr) {
 		m_state = PodState::enBack;
 		return;
 	}
 
-	auto& epos = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto& epos = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->GetPosition();
 	const float speed = 100.f;
 	auto vecToEnemy = epos - m_pos;
 	vecToEnemy.Normalize();
 	m_pos += vecToEnemy * speed * delta;
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
-		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_rampagingDamageAmount);
+		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount);
 	}
 
 	if (m_timer > m_rampageTime) {
@@ -306,12 +306,12 @@ void Pod::Kamikaze() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
-	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
+	if (EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos) == nullptr) {
 		m_state = PodState::enBack;
 		return;
 	}
 
-	auto& epos = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto& epos = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->GetPosition();
 	const float speed = 100.f;
 	auto vecToEnemy = epos - m_pos;
 	vecToEnemy.Normalize();
@@ -319,7 +319,7 @@ void Pod::Kamikaze() {
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
-		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_kamikazeDamageAmount);
+		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
 		m_state = PodState::enBack;
 	}
 
