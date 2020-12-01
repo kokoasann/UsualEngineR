@@ -57,14 +57,16 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 
 		//projectile->Init(p->GetPod()->GetPosition(), vel);
 		vel.Normalize();
-		const float speed = 100.f;
+		const float defSpeed = 200.f;
 		const float lifeSpan = 5.f;
 		const float range = 10.f;
 		const float scale = 0.2f;
 		const float flashScale = 0.02f;
 
+		float speed = defSpeed + p->GetVelocity().Length();
+
 		auto& bones = p->GetPod()->GetBones();
-		 auto pvel = p->GetVelocity() * gameTime()->GetDeltaTime();
+		auto pvel = p->GetVelocity() * delta;
 
 		auto posR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetTransrate() + pvel;
 		auto rotR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetRotate();
