@@ -4,6 +4,7 @@
 #include "Enemy/State/EnemyDeadState.h"
 #include "Enemy/State/EnemyIdleState.h"
 #include "Enemy/State/EnemyShortRangeComingState.h"
+#include "Enemy/State/EnemyShortRangePunchState.h"
 
 /// <summary>
 /// 
@@ -36,10 +37,10 @@ public:
 		Num,
 	};
 
-	enum class EnState {
+	/*enum class EnState {
 		enComing = TO_INT(IEnemy::EnState::enNumState),
 		enNumState
-	};
+	};*/
 private:
 	//Model
 	ModelRender* m_model = nullptr;
