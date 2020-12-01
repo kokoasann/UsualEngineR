@@ -42,6 +42,10 @@ void Zako_ShortRangeMonster::InitState()
 		auto p = std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new EnemyIdleState());
 		m_stateMap.insert(p);
 	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enComing), new EnemyShortRangeComingState());
+		m_stateMap.insert(p);
+	}
 }
 
 void Zako_ShortRangeMonster::Execute()
@@ -51,7 +55,7 @@ void Zako_ShortRangeMonster::Execute()
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
-		SetState(m_stateMap[static_cast<int>(IEnemy::EnState::enDeadState)]);
+		SetState(m_stateMap[TO_INT(IEnemy::EnState::enDeadState)]);
 	}
 }
 
