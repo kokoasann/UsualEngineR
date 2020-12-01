@@ -2,7 +2,7 @@
 #include "../Attack/PlayerLongRangeAttack.h"
 
 class Player;
-
+class JetEffect;
 /// <summary>
 /// 
 /// </summary>
@@ -102,8 +102,7 @@ private:
 	Vector3 m_pos = Vector3::Zero;
 	Vector3 m_distanceFromPlayer = { 5.f,10.f,-5.f };
 	Quaternion m_rotation = Quaternion::Identity;
-	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
-
+	const Vector3 m_scale = { 1.5f,1.5f,1.5f };
 
 	float m_timer = 0.f;
 
@@ -140,4 +139,21 @@ private:
 
 	PlayerLongRangeAttack m_longRangeAttack;
 
+	//Effects
+	enum class EnPodBone {
+		Burrel_L1,
+		Burrel_L2,
+		Burrel_R1,
+		Burrel_R2,
+		Thruster_Back,
+		Thruster_Under,
+		enNumBoneType
+	};
+
+
+	const int BACK = 0;
+	const int UNDER = 1;
+
+	std::vector<Bone*> m_podBones;
+	std::vector<JetEffect*> m_jetEffects;
 };

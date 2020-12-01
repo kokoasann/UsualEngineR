@@ -515,6 +515,9 @@
     <Filter Include="Player\Attack\DistantPreset">
       <UniqueIdentifier>{d09c194d-4c1d-4dce-a625-7e27d52ccf7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\am">
+      <UniqueIdentifier>{3ab26b31-b775-4eee-a003-ce8f1cb573d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -541,6 +544,9 @@
       <Filter>Assets\modelData\boss\sp</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
+    <ImageContentTask Include="Assets\modelData\AssistantMachine\am_tex.png">
+      <Filter>Assets\modelData\am</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />

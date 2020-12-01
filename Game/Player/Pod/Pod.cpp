@@ -5,6 +5,7 @@
 #include "../../GameSceneMenu.h"
 #include "../../GameManager.h"
 #include "../../Camera/GameCamera.h"
+#include "../../Effect/JetEffect.h"
 
 Pod::Pod()
 {
@@ -21,6 +22,9 @@ Pod::~Pod()
 void Pod::Release()
 {
 	DeleteGO(m_model);
+	for (int i = 0; i < m_jetEffects.size(); i++) {
+		DeleteGO(m_jetEffects[i]);
+	}
 }
 
 void Pod::OnDestroy()
@@ -38,13 +42,57 @@ bool Pod::Start()
 {
 
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-	mid.m_vsEntryPointFunc = "VSMain";
-	mid.m_psEntryPointFunc = "PSMain";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
+	m_model->SetScale(m_scale);
+
+
+	//Effect
+	auto jetEffect = NewGO<JetEffect>(0);
+	auto jetEffect1 = NewGO<JetEffect>(0);
+	JetEffect::JetEffectInitParam jeip;
+	jeip.effectScale = 0.01f;
+	jeip.effectScale_inv = 1.f / jeip.effectScale;
+	jeip.particleScale = 5.f;
+	jeip.particleLifeTime = 1.f;
+	jeip.particleYUp = 300.f;
+	jetEffect->Init(jeip);
+	jetEffect1->Init(jeip);
+	m_jetEffects.push_back(jetEffect);
+	m_jetEffects.push_back(jetEffect1);
+
+
+	//Bone
+	m_podBones.resize(TO_INT(EnPodBone::enNumBoneType));
+
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_L.001"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_L1)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_L.002"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_L2)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_R.001"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_R1)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_R.002"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_R1)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Thruster_Back"));
+		m_podBones.at(TO_INT(EnPodBone::Thruster_Back)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Thruster_Under"));
+		m_podBones.at(TO_INT(EnPodBone::Thruster_Under)) = bone;
+	}
 
 	return true;
 }
@@ -114,14 +162,20 @@ void Pod::Update()
 	if (m_state == PodState::enBack) {
 		BackToIdlePos();
 	}
-
-	m_model->SetPosition(m_pos);
-	m_model->SetRotation(m_rotation);
 }
 
 void Pod::PostUpdate()
 {
+	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
 
+	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
+
+	m_rotation = mp_player->GetRotation();
+
+	m_model->SetPosition(m_pos);
+	m_model->SetRotation(m_rotation);
 }
 
 
