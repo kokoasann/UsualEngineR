@@ -30,5 +30,8 @@ private:
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 5.f;
 	const float m_StaminaCost = 30.f;
 	const float m_BoostCost = 30.f;
+
+	int m_combo = 0;
+	bool m_hasAlreadyAttacked = false;
 };
 
