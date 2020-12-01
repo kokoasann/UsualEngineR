@@ -172,7 +172,7 @@ bool Player::Start()
 	//Physics
 	m_charaCon.Init(m_charaConRadius, m_charaConHeight, m_position, /*isUseRigidBody */ true);
 	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Player);
-	m_handCollider.Create(m_HandRadius);
+	m_sphereCollider.Create(m_HandRadius);
 
 	//Pod
 	m_pod = NewGO<Pod>(0);
@@ -310,7 +310,7 @@ void Player::PostUpdate()
 }
 
 const bool Player::ColCheck(const Player::EnPlayerBone& bone) {
-	const auto& handPos = GetBone(bone)->GetWorldMatrix().GetTransrate();
+	const auto& bonePos = GetBone(bone)->GetWorldMatrix().GetTransrate();
 
 	//Physics
 	//btVector3 velocity = m_forward;
@@ -319,15 +319,15 @@ const bool Player::ColCheck(const Player::EnPlayerBone& bone) {
 	btScalar allowedCcdPenetration = 0.f;
 
 	btTransform t_from = btTransform(btQuaternion::getIdentity());
-	t_from.setOrigin(btVector3(handPos.x, handPos.y, handPos.z));
+	t_from.setOrigin(btVector3(bonePos.x, bonePos.y, bonePos.z));
 	btTransform t_to = t_from;
 	t_to.setOrigin(t_to.getOrigin() + velocity);
 	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
 	PlayerResultCallback cb(t_from.getOrigin());
 
-	Physics().ConvexSweepTest((const btConvexShape*)m_handCollider.GetBody(), t_from, t_to, cb, 0.f);
+	Physics().ConvexSweepTest((const btConvexShape*)m_sphereCollider.GetBody(), t_from, t_to, cb, 0.f);
 
-	auto dist = (handPos - m_model->GetPosition()).Length();
+	auto dist = (bonePos - m_model->GetPosition()).Length();
 	//DebugPrintVector3(EDebugConsoloUser::WATA, );
 
 	if (cb.isHit)

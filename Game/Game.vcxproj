@@ -195,7 +195,9 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h" />
+    <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangePunchState.h" />
+    <ClInclude Include="Enemy\State\EnemyShortRangeStrongPunchState.h" />
     <ClInclude Include="Enemy\State\EnemySlashState.h" />
     <ClInclude Include="Enemy\State\IEnemyState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyDashPunchState.h" />
@@ -269,7 +271,9 @@
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangePunchState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyShortRangeStrongPunchState.cpp" />
     <ClCompile Include="Enemy\State\EnemySlashState.cpp" />
     <ClCompile Include="Enemy\State\IEnemyState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyDashPunchState.cpp" />

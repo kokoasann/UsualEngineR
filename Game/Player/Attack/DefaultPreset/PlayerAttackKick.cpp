@@ -21,10 +21,13 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 	player->PlayAnimation(Player::EnAnimation::enKick);
 
 	auto& enemyManager = EnemyManager::GetEnemyManager();
-	enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
+	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 
 	player->UseStamina(m_StaminaCost);
 	player->UseBoost(m_BoostCost);
+	m_hasAlreadyAttacked = false;
+
+	m_combo = combo;
 
 	player->FireThrusters();
 }
@@ -32,6 +35,14 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 void PlayerAttackKick::Execute(Player* player) {
 	if(!player->IsPlayingAnimation()){
 		m_timer += gameTime()->GetDeltaTime();
+	}
+	else {
+		if (player->ColCheck(Player::EnPlayerBone::enSOLE_R) and !m_hasAlreadyAttacked) {
+			auto& enemyManager = EnemyManager::GetEnemyManager();
+			auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix().GetTransrate());
+			nearestEnemy->ApplyDamage(m_damageAmount * m_combo);
+			m_hasAlreadyAttacked = true;
+		}
 	}
 
 	if (m_timer >= m_interval) {
