@@ -5,6 +5,8 @@
 #include "../../GameSceneMenu.h"
 #include "../../GameManager.h"
 #include "../../Camera/GameCamera.h"
+#include "../../Effect/JetEffect.h"
+#include "../Attack/Projectile.h"
 
 Pod::Pod()
 {
@@ -21,6 +23,9 @@ Pod::~Pod()
 void Pod::Release()
 {
 	DeleteGO(m_model);
+	for (int i = 0; i < m_jetEffects.size(); i++) {
+		DeleteGO(m_jetEffects[i]);
+	}
 }
 
 void Pod::OnDestroy()
@@ -38,13 +43,61 @@ bool Pod::Start()
 {
 
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-	mid.m_vsEntryPointFunc = "VSMain";
-	mid.m_psEntryPointFunc = "PSMain";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
+	m_model->SetScale(m_scale);
+
+
+	//Effect
+	auto jetEffect = NewGO<JetEffect>(0);
+	auto jetEffect1 = NewGO<JetEffect>(0);
+	JetEffect::JetEffectInitParam jeip;
+	jeip.effectScale = 0.01f;
+	jeip.effectScale_inv = 1.f / jeip.effectScale;
+	jeip.particleScale = 5.f;
+	jeip.particleLifeTime = 1.f;
+	jeip.particleYUp = 300.f;
+	jetEffect->Init(jeip);
+	jetEffect1->Init(jeip);
+	m_jetEffects.push_back(jetEffect);
+	m_jetEffects.push_back(jetEffect1);
+
+
+	//Bone
+	m_podBones.resize(TO_INT(EnPodBone::enNumBoneType));
+
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_L.001"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_L1)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_L.002"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_L2)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_R.001"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_R1)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Burrel_R.002"));
+		m_podBones.at(TO_INT(EnPodBone::Burrel_R2)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Thruster_Back"));
+		m_podBones.at(TO_INT(EnPodBone::Thruster_Back)) = bone;
+	}
+	{
+		auto bone = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Thruster_Under"));
+		m_podBones.at(TO_INT(EnPodBone::Thruster_Under)) = bone;
+	}
+
+	//bullets
+	auto pbm = NewGO<PlayerBulletManager>(0);
+	pbm->Allocate(70);
 
 	return true;
 }
@@ -57,10 +110,29 @@ void Pod::PreUpdate()
 
 void Pod::Update()
 {
+}
+
+void Pod::PostUpdate()
+{
+
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	if (m_state == PodState::enIdle) {
+
+		if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
+			//m_rotation = EnemyManager::GetEnemyManager().GetTargettingEnemy()
+			auto cf = g_camera3D->GetForward();
+			Quaternion rot = Quaternion::Identity;
+			auto theta = atan2(cf.x, cf.z);
+			theta = theta * (180.f / Math::PI);
+			rot.SetRotationDegY(theta);
+			m_rotation = rot;
+		}
+		else {
+			m_rotation = mp_player->GetRotation();
+		}
+
 		//auto p = mp_player->GetPosition() + m_distanceFromPlayer;
 		auto addPos = m_distanceFromPlayer;
 		mp_player->GetRotation().Apply(addPos);
@@ -96,7 +168,15 @@ void Pod::Update()
 				m_state = PodState::enKamikaze;
 			}
 		}
-
+	}
+	else {
+		if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
+			Quaternion rot = Quaternion::Identity;
+			auto theta = atan2(m_velocity.x, m_velocity.z);
+			theta = theta * (180.f / Math::PI);
+			rot.SetRotationDegY(theta);
+			m_rotation = rot;
+		}
 	}
 
 	if (m_state == PodState::enThrown) {
@@ -115,13 +195,16 @@ void Pod::Update()
 		BackToIdlePos();
 	}
 
+	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
+
+	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
+
+	//m_rotation = mp_player->GetRotation();
+
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);
-}
-
-void Pod::PostUpdate()
-{
-
 }
 
 
@@ -199,19 +282,19 @@ void Pod::Rampage() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
-	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
+	if (EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos) == nullptr) {
 		m_state = PodState::enBack;
 		return;
 	}
 
-	auto& epos = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto& epos = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->GetPosition();
 	const float speed = 100.f;
 	auto vecToEnemy = epos - m_pos;
 	vecToEnemy.Normalize();
 	m_pos += vecToEnemy * speed * delta;
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
-		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_rampagingDamageAmount);
+		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount);
 	}
 
 	if (m_timer > m_rampageTime) {
@@ -223,12 +306,12 @@ void Pod::Kamikaze() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
-	if (EnemyManager::GetEnemyManager().GetNearestBossEnemy() == nullptr) {
+	if (EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos) == nullptr) {
 		m_state = PodState::enBack;
 		return;
 	}
 
-	auto& epos = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto& epos = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->GetPosition();
 	const float speed = 100.f;
 	auto vecToEnemy = epos - m_pos;
 	vecToEnemy.Normalize();
@@ -236,7 +319,7 @@ void Pod::Kamikaze() {
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
-		EnemyManager::GetEnemyManager().GetNearestBossEnemy()->ApplyDamage(m_kamikazeDamageAmount);
+		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
 		m_state = PodState::enBack;
 	}
 
