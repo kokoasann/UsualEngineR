@@ -10,6 +10,7 @@ public:
 	IPlayerState* Update(Player*) override;
 	void Exit(Player*) override;
 private:
-
+	const float m_RespawnTime = 1.f;
+	float m_respawnTimer = 0.f;
 };
 

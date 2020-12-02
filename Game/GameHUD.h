@@ -58,14 +58,14 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	void SetPlayer(Player* player) {
-		m_pPlayer = player;
-	}
+	//void SetPlayer(Player* player) {
+	//	m_pPlayer = player;
+	//}
 
 private:
 
 	//Ref
-	Player* m_pPlayer = nullptr;
+	//Player* m_pPlayer = nullptr;
 	//IEnemy* m_enemy = nullptr;
 
 	//const

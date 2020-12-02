@@ -5,6 +5,7 @@
 #include "../PositionChecker.h"
 #include "Enemy/EnemyManager.h"
 #include <limits>
+#include "../GameManager.h"
 
 //#define POS_CHECK
 
@@ -36,15 +37,7 @@ void GameCamera::Awake()
 bool GameCamera::Start()
 {
 
-	g_camera3D->SetTarget(m_targetPos);
-	m_playerCameraPreviousPos = m_playerCameraPos = m_position = m_charaPos + m_position;
-
-	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
-	g_camera3D->SetPosition(m_position);
-
-	//m_toCameraPos.Set(0.0f, 3.0f, -15.f);
-	m_toCameraPos.Set(0.0f, 6.0f, -30.f);
-	m_dist = m_toCameraPos;
+	this->Reset();
 
 	m_cameraCollisionSolver.Init(m_sphereCollisionRadius);
 
@@ -73,7 +66,9 @@ void GameCamera::PreUpdate()
 
 void GameCamera::Update()
 {
-	m_charaPos = mp_player->GetPosition();
+	if (GameManager::GetInstance().m_player == nullptr) return;
+
+	m_charaPos = GameManager::GetInstance().m_player->GetPosition();
 
 #ifdef POS_CHECK
 
@@ -103,6 +98,8 @@ void GameCamera::Update()
 
 void GameCamera::PostUpdate() {
 
+	if (GameManager::GetInstance().m_player == nullptr) return;
+
 	const float PlayerCameraRatio = 1.f;
 	const float EnemyCameraRatio = 0.f;
 
@@ -114,9 +111,9 @@ void GameCamera::PostUpdate() {
 	}
 	else {
 		//•âŠ®’†
-		auto vecCtoECP = m_enemyCameraPos - mp_player->GetPosition();
+		auto vecCtoECP = m_enemyCameraPos - GameManager::GetInstance().m_player->GetPosition();
 		static float cameraDist = vecCtoECP.Length();
-		auto vecCtoPCP = m_playerCameraPos - mp_player->GetPosition();
+		auto vecCtoPCP = m_playerCameraPos - GameManager::GetInstance().m_player->GetPosition();
 
 		float dist_cecp = vecCtoECP.Length();
 		float dist_cpcp = vecCtoPCP.Length();
@@ -128,7 +125,7 @@ void GameCamera::PostUpdate() {
 		q1.SetRotation(vecCtoECP, vecCtoPCP);
 		Quaternion sl;
 		sl.Slerp(m_cameraChangeRatio, Quaternion::Identity, q1);
-		Vector3 slpos = m_enemyCameraPos - mp_player->GetPosition();
+		Vector3 slpos = m_enemyCameraPos - GameManager::GetInstance().m_player->GetPosition();
 		sl.Apply(slpos);
 		auto scaleRatio = dist_cpcp / dist_cecp;
 		auto scale = Math::Lerp(m_cameraChangeRatio, 1.f, scaleRatio);
@@ -340,7 +337,7 @@ void GameCamera::CalcPlayerCamera() {
 		cameraForward.y += cameraHeight;
 		m_playerCameraPos = m_charaPos + cameraForward;
 
-		m_dist = m_playerCameraPos - mp_player->GetPosition();
+		m_dist = m_playerCameraPos - GameManager::GetInstance().m_player->GetPosition();
 	}
 
 	m_old = m_dist;

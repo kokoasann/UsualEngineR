@@ -3,6 +3,7 @@
 #include "Player/Player.h"
 #include "Enemy/IEnemy.h"
 #include "Enemy/EnemyManager.h"
+#include "GameManager.h"
 
 GameHUD::GameHUD()
 {
@@ -100,16 +101,20 @@ void GameHUD::PreUpdate()
 
 void GameHUD::Update()
 {
+
+	auto player = GameManager::GetInstance().m_player;
+	if (player == nullptr) return;
+
 	//Player HP
-	m_playerHpScale.x = m_pPlayer->GetCurrentHP() / m_pPlayer->GetMaxHP();
+	m_playerHpScale.x = player->GetCurrentHP() / player->GetMaxHP();
 	m_spPlayerHP->SetSca(m_playerHpScale);
 
 	//Player Endurance
-	m_playerEnduranceScale.x = m_pPlayer->GetCurrentEndurance() / m_pPlayer->GetMaxEndurance();
+	m_playerEnduranceScale.x = player->GetCurrentEndurance() / player->GetMaxEndurance();
 	m_spPlayerEndurance->SetSca(m_playerEnduranceScale);
 
 	//Player Boost
-	m_playerBoostScale.y = m_pPlayer->GetCurrentBoost() / m_pPlayer->GetMaxBoost();
+	m_playerBoostScale.y = player->GetCurrentBoost() / player->GetMaxBoost();
 	m_spPlayerBoost->SetSca(m_playerBoostScale);
 
 	//Enemy HP
@@ -124,7 +129,7 @@ void GameHUD::Update()
 	m_spEnemyHP->SetSca(m_enemyHpScale);
 
 	//Player Weapon
-	auto preset = m_pPlayer->GetCurrentAttackPreset();
+	auto preset = player->GetCurrentAttackPreset();
 
 	if (preset == Player::EnAttackPreset::enDefault) {
 		m_presetSp->SetMulColor({ 0,0,0,1 });
