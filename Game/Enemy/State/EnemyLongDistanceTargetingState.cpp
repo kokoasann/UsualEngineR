@@ -27,7 +27,7 @@ void EnemyLongDistanceTargetingState::Enter(IEnemy* e)
 {
 	m_timer = m_timeLimit;
 	e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enWalk));
-	auto model = e->GetMode();
+	auto model = e->GetModel();
 	((ModelRender*)model)->SetAnimPlaySpeed(3.f);
 }
 

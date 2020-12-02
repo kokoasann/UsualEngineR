@@ -139,7 +139,7 @@ public:
 		return m_charaCon.IsOnGround();
 	}
 
-	const ModelRender* GetMode() const{
+	const ModelRender* GetModel() const{
 		return m_model;
 	}
 
