@@ -160,6 +160,7 @@ public:
 
 	void Respawn() {
 		SetPosition(m_SpawnPos);
+		SetRotation(m_SpawnRot);
 		m_hp = m_HP_MAX;
 		m_endurance = m_ENDURANCE_MAX;
 		m_boost = m_BOOST_MAX;
@@ -380,6 +381,7 @@ private:
 	const Vector3 m_SpawnPos = { 0,15,-100 };
 	Vector3 m_position = m_SpawnPos;
 	Vector3 m_forward = { 0,0,1 };
+	Quaternion m_SpawnRot = Quaternion::Identity;
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
 
