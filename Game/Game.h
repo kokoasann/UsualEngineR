@@ -55,4 +55,5 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
+	bool m_isCreateEnemyManager = false;		//EnemyManager‚ğì¬‚µ‚½‚©‚Ç‚¤‚©B
 };

@@ -46,6 +46,12 @@ void Game::Update()
 		}
 	}
 
+	if (GameManager::GetInstance().m_stage->HasMapLoadingDone() and m_isCreateEnemyManager == false) {
+		auto& eM = EnemyManager::GetEnemyManager();
+		eM.SpawnEnemies();
+		eM.SetPlayer(GameManager::GetInstance().m_player);
+		m_isCreateEnemyManager = true;
+	}
 }
 
 void Game::PostUpdate()
