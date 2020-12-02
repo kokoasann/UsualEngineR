@@ -46,6 +46,14 @@ void Zako_ShortRangeMonster::InitState()
 		auto p = std::make_pair(TO_INT(EnStateEX::enComing), new EnemyShortRangeComingState());
 		m_stateMap.insert(p);
 	}
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enAttackA), new EnemyShortRangePunchState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enAttackB), new EnemyShortRangeStrongPunchState());
+		m_stateMap.insert(p);
+	}
 }
 
 void Zako_ShortRangeMonster::Execute()

@@ -1,5 +1,6 @@
 #pragma once
 #include "IEnemyState.h"
+#include "Player/Player.h"
 
 class EnemyShortRangeStrongPunchState final : public IEnemyState
 {
@@ -10,4 +11,6 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
+	float			m_attackIntervalSecond = 0;
+	const float		m_damage = Player::GetMaxHP() / 15.0f;
 };

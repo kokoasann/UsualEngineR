@@ -11,11 +11,6 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
-	/// <summary>
-	/// UŒ‚ŠÖ”B
-	/// </summary>
-	void Attack(IEnemy* e);
-private:
-	int m_attackIntervalCount = 30;
-	//const float m_damage = Player::GetMaxHP() / 30.0f;
+	float			m_attackIntervalSecond = 0;
+	const float		m_damage = Player::GetMaxHP() / 30.0f;
 };
