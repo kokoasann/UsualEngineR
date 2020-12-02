@@ -61,6 +61,11 @@ public:
 	void Reset() {
 		m_state = State::enPlayerCamera;
 		m_cameraChangeRatio = 1.f;
+		m_playerCameraPreviousPos = m_playerCameraPos = m_position = m_charaPos + m_position;
+		g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
+		g_camera3D->SetPosition(m_position);
+		m_toCameraPos.Set(0.0f, 6.0f, -30.f);
+		m_dist = m_toCameraPos;
 	}
 
 private:
@@ -78,7 +83,8 @@ private:
 	const float m_swivelSpeed = 150.f;
 	const float m_transitionSpeed = 2.f;
 	const Vector3 m_furtherTargetHeight = { 0.f,12.f,0.f };
-	Vector3 m_position = { 0,3,-60 };
+	const Vector3 m_DefaultPosition = { 0,3,-60 };
+	Vector3 m_position = m_DefaultPosition;
 	Vector3 m_old = { 0,3,15 };
 	Vector3 m_dist = Vector3::Zero;
 	Vector3 m_targetPos = Vector3::Zero;

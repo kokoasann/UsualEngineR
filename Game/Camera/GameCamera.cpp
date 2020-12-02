@@ -36,15 +36,17 @@ void GameCamera::Awake()
 bool GameCamera::Start()
 {
 
-	g_camera3D->SetTarget(m_targetPos);
-	m_playerCameraPreviousPos = m_playerCameraPos = m_position = m_charaPos + m_position;
+	//g_camera3D->SetTarget(m_targetPos);
+	//m_playerCameraPreviousPos = m_playerCameraPos = m_position = m_charaPos + m_position;
 
-	g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
-	g_camera3D->SetPosition(m_position);
+	//g_camera3D->SetTarget({ 0.0f, 0.0f, 0.0f });
+	//g_camera3D->SetPosition(m_position);
 
-	//m_toCameraPos.Set(0.0f, 3.0f, -15.f);
-	m_toCameraPos.Set(0.0f, 6.0f, -30.f);
-	m_dist = m_toCameraPos;
+	////m_toCameraPos.Set(0.0f, 3.0f, -15.f);
+	//m_toCameraPos.Set(0.0f, 6.0f, -30.f);
+	//m_dist = m_toCameraPos;
+
+	this->Reset();
 
 	m_cameraCollisionSolver.Init(m_sphereCollisionRadius);
 
