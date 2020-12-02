@@ -155,6 +155,14 @@ public:
 
 	void SetPosition(const Vector3& pos) {
 		m_position = pos;
+		m_charaCon.SetPosition(pos);
+	}
+
+	void Respawn() {
+		SetPosition(m_SpawnPos);
+		m_hp = m_HP_MAX;
+		m_endurance = m_ENDURANCE_MAX;
+		m_boost = m_BOOST_MAX;
 	}
 
 	void SetVelocity(const Vector3& velocity) {
@@ -212,7 +220,7 @@ public:
 	/// <param name="damageAmount"> 攻撃力</param>
 	void ApplyDamage(const float damageAmount, const bool stunFlag = false, const Vector3& vel= Vector3::Zero){
 		auto finalDamage = damageAmount - (damageAmount * m_armorParam / 100.f);
-		//m_hp = max(0.f, m_hp - finalDamage);
+		m_hp = max(0.f, m_hp - finalDamage);
 		if(stunFlag){
 			m_previousState = m_currentState;
 			m_currentState->Exit(this);
@@ -369,7 +377,8 @@ private:
 	//std::vector<CAnimationClipPtr> m_animlist;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
 
-	Vector3 m_position = { 0,15,-100 };
+	const Vector3 m_SpawnPos = { 0,15,-100 };
+	Vector3 m_position = m_SpawnPos;
 	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 0.5f,0.5f,0.5f };

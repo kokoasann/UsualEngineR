@@ -58,6 +58,11 @@ public:
 		return m_state == State::enEnemyCamera;
 	}
 
+	void Reset() {
+		m_state = State::enPlayerCamera;
+		m_cameraChangeRatio = 1.f;
+	}
+
 private:
 
 	enum class State{
