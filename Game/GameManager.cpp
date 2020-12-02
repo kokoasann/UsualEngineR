@@ -19,16 +19,22 @@ void GameManager::InitGameWorld() {
 	m_itemManager = NewGO<ItemManager>(0);
 	m_menu = NewGO<GameSceneMenu>(0);
 
-	m_gameHUD->SetPlayer(m_player);
-	m_camera->SetPlayer(m_player);
+	//m_gameHUD->SetPlayer(m_player);
+	//m_camera->SetPlayer(m_player);
 	//m_player->SetGameCamera(m_camera);
 }
 
 void GameManager::Release() {
 	DeleteGO(m_player);
+	m_player = nullptr;
 	DeleteGO(m_camera);
+	m_camera = nullptr;
 	DeleteGO(m_stage);
+	m_stage = nullptr;
 	DeleteGO(m_gameHUD);
+	m_gameHUD = nullptr;
 	DeleteGO(m_itemManager);
+	m_itemManager = nullptr;
 	DeleteGO(m_menu);
+	m_menu = nullptr;
 }

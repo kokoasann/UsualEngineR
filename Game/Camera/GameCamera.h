@@ -50,10 +50,6 @@ public:
 
 	void PostUpdate() override;
 
-	void SetPlayer(Player* player) {
-		mp_player = player;
-	}
-
 	bool IsTargettingEnemy() {
 		return m_state == State::enEnemyCamera;
 	}
@@ -113,7 +109,6 @@ private:
 	Vector3 m_enemyCameraNextTargetPos = Vector3::Zero;
 	Vector3 m_enemyCameraCurrentTargetPos = Vector3::Zero;
 
-	Player* mp_player = nullptr;
 	Vector3 m_toCameraPos;
 
 	float m_cameraChangeRatio = 1.f;
