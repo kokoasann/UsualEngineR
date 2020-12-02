@@ -518,6 +518,9 @@
     <Filter Include="Assets\modelData\am">
       <UniqueIdentifier>{3ab26b31-b775-4eee-a003-ce8f1cb573d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\zako">
+      <UniqueIdentifier>{b12c4b60-263a-44ba-b80f-41b44ea15ac3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -550,5 +553,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png">
+      <Filter>Assets\modelData\zako</Filter>
+    </Image>
   </ItemGroup>
 </Project>
