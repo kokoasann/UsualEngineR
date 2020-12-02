@@ -17,6 +17,7 @@ enum class ETextureBuffer : char
 	tb_albedo,
 	tb_normal,
 	tb_specular,
+	tb_emmission,
 	tb_bone			= 5,
 	tb_dirLight		= 6,
 	tb_pointLight	= 7,

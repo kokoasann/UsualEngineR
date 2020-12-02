@@ -372,6 +372,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

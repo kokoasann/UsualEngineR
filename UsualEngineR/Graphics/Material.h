@@ -59,6 +59,16 @@ namespace UER
 		{
 			return m_constantBuffer;
 		}
+
+		void InitEmmission(const wchar_t* emsPath);
+		bool IsLoadEmmission()const
+		{
+			return m_isLoadEmmission;
+		}
+		Texture& GetEmmissionMap()
+		{
+			return m_emmissionMap;
+		}
 	private:
 		/// <summary>
 		/// パイプラインステートの初期化。
@@ -102,6 +112,9 @@ namespace UER
 		Shader m_vsNonSkinModel;						//スキンなしモデル用の頂点シェーダー。
 		Shader m_vsSkinModel;							//スキンありモデル用の頂点シェーダー。
 		Shader m_psModel;								//モデル用のピクセルシェーダー。
+
+		Texture m_emmissionMap;							//エミッションマップ
+		bool m_isLoadEmmission = false;
 	};
 	
 	

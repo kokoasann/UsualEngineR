@@ -32,15 +32,15 @@ namespace UER
 		const char* psEntryPointFunc,
 		void* expandData,
 		int expandDataSize,
-		IShaderResource* expandShaderResourceView
+		IShaderResource* expandShaderResourceView,
+		const wchar_t* emmissionMap
 	)
 	{
 		m_meshs.resize(tkmFile.GetNumMesh());
 		int meshNo = 0;
 		tkmFile.QueryMeshParts([&](const TkmFile::SMesh& mesh) {
 			//tkmファイルのメッシュ情報からメッシュを作成する。
-			CreateMeshFromTkmMesh(mesh, meshNo, vsfxFilePath,psfxFilePath, vsEntryPointFunc, psEntryPointFunc);
-	
+			CreateMeshFromTkmMesh(mesh, meshNo, vsfxFilePath,psfxFilePath, vsEntryPointFunc, psEntryPointFunc, emmissionMap);
 	
 			meshNo++;
 		});
@@ -80,6 +80,10 @@ namespace UER
 				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_albedo), mesh->m_materials[matNo]->GetAlbedoMap());		//アルベドマップ。
 				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_normal), mesh->m_materials[matNo]->GetNormalMap());		//法線マップ。
 				descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_specular), mesh->m_materials[matNo]->GetSpecularMap());	//スペキュラマップ。
+				if (mesh->m_materials[matNo]->IsLoadEmmission())
+				{
+					descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_emmission), mesh->m_materials[matNo]->GetEmmissionMap());	//エミッションマップ。
+				}
 				if (mesh->skinFlags[matNo])
 				{	
 					descriptorHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_bone), m_boneMatricesStructureBuffer);
@@ -110,7 +114,8 @@ namespace UER
 		const wchar_t* vsfxFilePath,
 		const wchar_t* psfxFilePath,
 		const char* vsEntryPointFunc,
-		const char* psEntryPointFunc)
+		const char* psEntryPointFunc,
+		const wchar_t* emmissionMap)
 	{
 		//頂点バッファを作成。
 		int numVertex = (int)tkmMesh.vertexBuffer.size();
@@ -164,6 +169,10 @@ namespace UER
 		for (auto& tkmMat : tkmMesh.materials) {
 			auto mat = new Material;
 			mat->InitFromTkmMaterila(tkmMat, vsfxFilePath, psfxFilePath, vsEntryPointFunc, psEntryPointFunc);
+			if (emmissionMap != nullptr)
+			{
+				mat->InitEmmission(emmissionMap);
+			}
 			mesh->m_materials.push_back(mat);
 		}
 	

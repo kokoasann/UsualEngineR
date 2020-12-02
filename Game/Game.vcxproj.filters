@@ -550,13 +550,12 @@
     <ImageContentTask Include="Assets\modelData\AssistantMachine\am_tex.png">
       <Filter>Assets\modelData\am</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
+    <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
+      <Filter>Assets\modelData\boss\sp</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png">
-      <Filter>Assets\modelData\zako</Filter>
-    </Image>
   </ItemGroup>
 </Project>

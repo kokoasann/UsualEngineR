@@ -51,7 +51,8 @@ namespace UER
 			const char* psEntryPointFunc,
 			void* expandData,
 			int expandDataSize,
-			IShaderResource* expandShaderResourceView
+			IShaderResource* expandShaderResourceView,
+			const wchar_t* emmissionMap = nullptr
 		) ;
 		/// <summary>
 		/// 描画。
@@ -99,7 +100,8 @@ namespace UER
 			const wchar_t* vsfxFilePath,
 			const wchar_t* psfxFilePath,
 			const char* vsEntryPointFunc,
-			const char* psEntryPointFunc );
+			const char* psEntryPointFunc,
+			const wchar_t* emmissionMap);
 	
 		/// <summary>
 		/// ディスクリプタヒープを作成。

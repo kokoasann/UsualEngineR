@@ -34,6 +34,7 @@ namespace UER
 		int m_expandConstantBufferSize = 0;			//ユーザー拡張の定数バッファのサイズ。
 		IShaderResource* m_expandShaderResoruceView = nullptr;	//ユーザー拡張のシェーダーリソース。
 		EUpAxis m_upAxis = enUpAxisZ;
+		const wchar_t* m_emmissionMap = nullptr;		//エミッションマップ
 	};
 
 	

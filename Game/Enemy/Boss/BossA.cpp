@@ -17,11 +17,14 @@ void BossA::Init() {
 	mid.m_tkmFilePath = "Assets/modelData/boss/sp/sp.tkm";
 	mid.m_tksFilePath = "Assets/modelData/boss/sp/sp.tks";
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+	mid.m_psfxFilePath = "Assets/shader/GBufferModelPS_ems.fx";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_emmissionMap = L"Assets/modelData/boss/sp/sp_emi.dds";
 
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
+	m_model->SetMulColor({ 20,1,1,1 });
 
 	//Idle
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/sp/anim/sp_idle.tka", true);

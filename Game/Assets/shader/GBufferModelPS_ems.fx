@@ -32,7 +32,9 @@ SPSOut PSMain( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo.xyz += g_emmissionMap.Sample(g_sampler, psIn.uv).xyz * mulColor;
+
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     Out.normal = float4(psIn.normal,1.f);
@@ -45,8 +47,9 @@ SPSOut PSMain_nor( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
-    //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo += g_emmissionMap.Sample(g_sampler, psIn.uv) * mulColor;
+    
     Out.depth = psIn.pos.z;
     float3 n = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
     n = mad(n,2.f,-1.f);
@@ -62,7 +65,8 @@ SPSOut PSMain_spe( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo += g_emmissionMap.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     Out.normal = float4(psIn.normal,1.f);
@@ -75,7 +79,8 @@ SPSOut PSMain_nor_spe( SPSIn psIn )
 {
     SPSOut Out;
 	
-    Out.albedo = g_texture.Sample(g_sampler, psIn.uv) * mulColor;
+    Out.albedo = g_texture.Sample(g_sampler, psIn.uv);
+    Out.albedo += g_emmissionMap.Sample(g_sampler, psIn.uv) * mulColor;
     //Out.depth = psIn.pos.z * rcp(psIn.pos.w);
     Out.depth = psIn.pos.z;
     float3 n = g_normalMap.Sample(g_sampler, psIn.uv).xyz;

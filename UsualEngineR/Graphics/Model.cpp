@@ -57,7 +57,8 @@ namespace UER
 			initData.m_psEntryPointFunc,
 			initData.m_expandConstantBuffer,
 			initData.m_expandConstantBufferSize,
-			initData.m_expandShaderResoruceView
+			initData.m_expandShaderResoruceView,
+			initData.m_emmissionMap
 		);
 
 		UpdateWorldMatrix(g_vec3Zero, g_quatIdentity, g_vec3One);

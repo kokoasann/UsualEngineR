@@ -83,6 +83,11 @@ namespace UER
 		InitPipelineState();
 	
 	}
+	void Material::InitEmmission(const wchar_t* emsPath)
+	{
+		m_emmissionMap.InitFromDDSFile(emsPath);
+		m_isLoadEmmission = true;
+	}
 	void Material::InitPipelineState()
 	{
 		// 頂点レイアウトを定義する。
