@@ -123,6 +123,7 @@ bool GameStage::Start()
 				RigidBodyMutex.unlock();
 				return true;
 			});
+		m_isLoaded = true;
 		DebugPrint_WATA("Level meash has been created");
 		});
 

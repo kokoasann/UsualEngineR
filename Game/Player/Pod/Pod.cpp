@@ -333,8 +333,12 @@ void Pod::BackToIdlePos() {
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
+
+	auto addPos = m_distanceFromPlayer;
+	mp_player->GetRotation().Apply(addPos);
+	auto idlePos = mp_player->GetPosition() + addPos;
 	//auto vecToIdlePos = (mp_player->GetPosition() + mp_player->GetForward() + m_distanceFromPlayer;
-	auto vecToIdlePos = (mp_player->GetPosition() + m_distanceFromPlayer) - m_pos;
+	auto vecToIdlePos = idlePos - m_pos;
 
 	auto IdlePosDir = vecToIdlePos;
 	IdlePosDir.Normalize();
