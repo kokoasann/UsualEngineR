@@ -6,6 +6,7 @@
 #include "Enemy/State/EnemyShortRangeComingState.h"
 #include "Enemy/State/EnemyShortRangePunchState.h"
 #include "Enemy/State/EnemyShortRangeStrongPunchState.h"
+#include "Enemy/State/EnemyShortRangeDanceState.h"
 
 /// <summary>
 /// 
@@ -24,28 +25,35 @@ public:
 	{
 		return Player::EnAttackType::enNone;
 	}
-
 	
+	//デフォルトのアニメーションステート用。
+	void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) override {
+		m_model->Play(static_cast<int>(anim), interpolate);
+	}
+
+	//拡張されたアニメーションステート用。
+	void PlayAnimation(const int animNo, const float interpolate = 0.2f) override {
+		m_model->Play(animNo, interpolate);
+	}
+
 	enum class EnStateEX :int
 	{
 		enComing = TO_INT(IEnemy::EnState::enBattleState),
+		enDance = TO_INT(IEnemy::EnState::enNumState),
 		Num,
 	};
 
 	enum class EnAnimEX :int
 	{
-		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		enDance = TO_INT(IEnemy::EnAnimation::enNumAnim),
 		Num,
 	};
-
-	/*enum class EnState {
-		enComing = TO_INT(IEnemy::EnState::enNumState),
-		enNumState
-	};*/
 private:
-	//Model
-	ModelRender* m_model = nullptr;
-
+	/// <summary>
+	/// アニメーションの初期設定。
+	/// </summary>
+	void InitAnimation();
+private:
 	float m_scale = 1.f;
 
 	//Physics

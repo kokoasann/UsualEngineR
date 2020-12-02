@@ -10,4 +10,5 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
+	float	m_danceIntervalSecond = 0;
 };

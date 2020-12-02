@@ -1,6 +1,5 @@
 #pragma once
 #include "IEnemyState.h"
-#include "Enemy/Zako/Zako_ShortRangeMonster.h"
 
 class EnemyShortRangeComingState final : public IEnemyState
 {
@@ -15,5 +14,10 @@ private:
 	/// 移動。
 	/// </summary>
 	void Move(IEnemy* e);
+	/// <summary>
+	/// アニメーション。
+	/// </summary>
+	/// <returns>アニメーションが終わったかどうかを返す。</returns>
+	bool Animation();
 private:
 };
