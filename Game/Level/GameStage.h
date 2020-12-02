@@ -46,6 +46,9 @@ public:
 	/// </summary>
 	void PostUpdate() override;
 
+	const bool HasMapLoadingDone() {
+		return m_isLoaded;
+	}
 
 private:
 	ThreadObject m_threadForLevel;
@@ -65,4 +68,6 @@ private:
 
 	bool m_isRegistRigidBody = false;			//剛体登録完了??
 	std::vector<RigidBody*> m_rigidBodys;		//剛体達。
+
+	bool m_isLoaded = false;
 };
