@@ -31,7 +31,7 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 	}
 
 	const float moveRange = 10.f;
-	const float attackRange = 10.f;
+	const float attackRange = 5.f;
 	const float idleRange = 100.f;
 
 	if (player->GetCurrentHP() > 0.f) {
@@ -39,17 +39,17 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 		if (vecToPlayer.Length() < attackRange) {
 			auto rand = GRandom().Rand();
 			//約30%の確率で行動変化。
-			if (rand < 0.33f) {
+			if (rand < 0.1f) {
+				//ダンス。
+				return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enDance));
+			}
+			else if (rand < 0.55f) {
 				//パンチ。
 				return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
 			}
-			else if (rand < 0.66f) {
+			else {
 				//大振りのパンチ。
 				return e->GetState(TO_INT(IEnemy::EnState::enAttackB));
-			}
-			else {
-				//ダンス。
-				return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enDance));
 			}
 		}
 		//離れたら移動。
@@ -61,6 +61,19 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 		if (vecToPlayer.Length() > idleRange) {
 			return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 		}
+	}
+
+	//歩いている途中でたまに踊る。
+	const float maxTime = 2.5f;
+	m_danceTimer += gameTime()->GetDeltaTime();
+	if (m_danceTimer > maxTime) {
+		auto rand = GRandom().Rand();
+		//約15%の確率で踊る。
+		if (rand < 0.15f) {
+			//ダンス。
+			return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enDance));	
+		}
+		m_danceTimer = 0.f;
 	}
 
 	return this;

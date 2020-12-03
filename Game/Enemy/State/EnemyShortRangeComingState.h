@@ -20,4 +20,5 @@ private:
 	/// <returns>アニメーションが終わったかどうかを返す。</returns>
 	bool Animation();
 private:
+	float m_danceTimer = 0.f;	//ダンス行動をするかどうかの判定を行うまでの時間計測。
 };
