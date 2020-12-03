@@ -6,6 +6,7 @@ class GameCamera;
 class GameHUD;
 class ItemManager;
 class GameSceneMenu;
+class Game;
 
 class GameManager
 {
@@ -32,4 +33,7 @@ public:
 	GameSceneMenu* m_menu = nullptr;
 
 	ItemManager*  m_itemManager = nullptr;
+
+	//GameScene
+	Game* m_gameScene = nullptr;;
 };

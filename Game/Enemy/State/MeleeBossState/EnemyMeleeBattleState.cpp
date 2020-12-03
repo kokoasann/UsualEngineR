@@ -5,6 +5,8 @@
 #include "../../../Player/Player.h"
 #include "../../Boss/BossA.h"
 #include "../../../Effect/JetEffect.h"
+#include "../../GameManager.h"
+#include "../../../Game.h"
 
 EnemyMeleeBattleState::EnemyMeleeBattleState() {
 
@@ -22,6 +24,10 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetGenerateFlag(false);
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetGenerateFlag(false);
 
+	if (!m_isPerformed) {
+		GameManager::GetInstance().m_gameScene->OnEnterBattle(e);
+		m_isPerformed = true;
+	}
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee battle\n");
 #endif

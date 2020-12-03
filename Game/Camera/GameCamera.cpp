@@ -6,7 +6,7 @@
 #include "Enemy/EnemyManager.h"
 #include <limits>
 #include "../GameManager.h"
-
+#include "../GameSceneMenu.h"
 //#define POS_CHECK
 
 GameCamera::GameCamera()
@@ -90,15 +90,26 @@ void GameCamera::Update()
 	//m_posChecker->SetPos(enemies.at(forwardEnemyIndex)->GetPosition());
 #endif // POS_CHECK
 
-	UpdateState();
-	CalcTarget();
-	CalcEnemyCamera();
-	CalcPlayerCamera();
+	if (m_state == State::enPerformanceCamera) {
+		CalcPerformanceCamera();
+	}
+	else {
+		UpdateState();
+		CalcTarget();
+		CalcEnemyCamera();
+		CalcPlayerCamera();
+	}
+
+	//DEBUG
+	//if (g_pad[0]->IsTrigger(enButtonB)) {
+	//	Perform(m_playerCameraPos, m_enemyCameraPos, m_playerCameraTargetPos, m_enemyCameraTargetPos, m_charaPos, 0.001f);
+	//}
 }
 
 void GameCamera::PostUpdate() {
 
 	if (GameManager::GetInstance().m_player == nullptr) return;
+	if (m_state == State::enPerformanceCamera) return;
 
 	const float PlayerCameraRatio = 1.f;
 	const float EnemyCameraRatio = 0.f;
@@ -349,6 +360,45 @@ void GameCamera::CalcPlayerCamera() {
 
 }
 
+void GameCamera::CalcPerformanceCamera() {
+
+	//•âŠ®’†
+	auto vecCtoBCP = m_pfrmCamBeginPos - m_pfrmCenterPos;
+	static float cameraDist = vecCtoBCP.Length();
+	auto vecCtoECP = m_pfrmCamEndPos - m_pfrmCenterPos;
+
+	float dist_cecp = vecCtoBCP.Length();
+	float dist_cpcp = vecCtoECP.Length();
+
+	vecCtoBCP.Normalize();
+	vecCtoECP.Normalize();
+
+	Quaternion q1;
+	q1.SetRotation(vecCtoBCP, vecCtoECP);
+	Quaternion sl;
+	sl.Slerp(m_pfrmCameraChangeRatio, Quaternion::Identity, q1);
+	Vector3 slpos = m_pfrmCamBeginPos - m_pfrmCenterPos;
+	sl.Apply(slpos);
+	auto scaleRatio = dist_cpcp / dist_cecp;
+	auto scale = Math::Lerp(m_pfrmCameraChangeRatio, 1.f, scaleRatio);
+	slpos.Scale(scale);
+
+	m_position = slpos + m_pfrmCenterPos;
+
+	g_camera3D->SetPosition(m_position);
+	auto tar = Math::Lerp(m_pfrmCameraChangeRatio, m_pfrmTarBeginPos, m_pfrmTarEndPos);
+	g_camera3D->SetTarget(tar);
+
+	m_pfrmCameraChangeRatio = min(1.f, m_pfrmCameraChangeRatio += m_pfrmTime * gameTime()->GetDeltaTime());
+
+	if (m_pfrmCameraChangeRatio == 1.f) {
+		m_state = State::enPlayerCamera;
+		m_cameraChangeRatio = 1.f;
+		GameManager::GetInstance().m_menu->ResumeGame();
+	}
+
+}
+
 void GameCamera::UpdateState() {
 	const auto targettingEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (g_pad[0]->IsTrigger(enButtonRB3)) {
@@ -423,4 +473,18 @@ std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
 	}
 
 	return std::forward_as_tuple(index, iLeft, iRight);
+}
+
+void GameCamera::Perform(
+	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& center, const float sec)
+{
+	GameManager::GetInstance().m_menu->PauseGame();
+	m_state = State::enPerformanceCamera;
+	m_pfrmCameraChangeRatio = 0.f;
+	m_pfrmTime = sec;
+	m_pfrmCamBeginPos = cameraBeginPos;
+	m_pfrmCamEndPos = cameraEndPos;
+	m_pfrmTarBeginPos = targetBeginPos;
+	m_pfrmTarEndPos = targetEndPos;
+	m_pfrmCenterPos = center;
 }

@@ -1,4 +1,5 @@
 #pragma once
+class IEnemy;
 
 /// <summary>
 /// ゲーム
@@ -54,6 +55,9 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
+
+	void OnEnterBattle(IEnemy* enemy);
+
 private:
 	bool m_isCreateEnemyManager = false;		//EnemyManagerを作成したかどうか。
 };
