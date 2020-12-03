@@ -65,16 +65,33 @@ public:
 	}
 
 	/// <summary>
-	/// 演出する.
+	/// 球面線形補完演出カメラ.
 	/// </summary>
+	/// <param name="cameraBeginPos">球面線形補間開始座標</param>
+	/// <param name="cameraEndPos">球面線形補間終了座標</param>
+	/// <param name="targetBeginPos">ターゲット線形補完開始座標</param>
+	/// <param name="targetEndPos">ターゲット線形補完終了座標</param>
+	/// <param name="centerPos">球面線形補完中心座標</param>
+	/// <param name="sec">補完時間(秒)</param>
 	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& centerPos, const float sec);
 
-//private:
+	/// <summary>
+	/// 線形補完演出カメラ
+	/// </summary>
+	/// <param name="cameraBeginPos"></param>
+	/// <param name="cameraEndPos"></param>
+	/// <param name="targetBeginPos"></param>
+	/// <param name="targetEndPos"></param>
+	/// <param name="sec"></param>
+	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos,const float sec);
+
+private:
 
 	enum class State{
 		enEnemyCamera,
 		enPlayerCamera,
-		enPerformanceCamera,
+		enSlerpPerformanceCamera,
+		enLerpPerformanceCamera,
 		enNumState
 	};
 	
@@ -97,7 +114,8 @@ public:
 	void CalcTarget();
 	void CalcEnemyCamera();
 	void CalcPlayerCamera();
-	void CalcPerformanceCamera();
+	void CalcSlerpPerformanceCamera();
+	void CalcLerpPerformanceCamera();
 
 	/// <summary>
 	/// カメラのターゲットになる敵を計算. (存在しない場合は-1を返す).
@@ -113,7 +131,8 @@ public:
 	Vector3 m_enemyCameraTargetPos = Vector3::Zero;
 
 	//パフォーマンス用変数
-	float m_pfrmTime = 0.f;
+	float m_pfrmTimeSec = 0.f;
+	float m_pfrmTimer = 0.f;
 	float m_pfrmCameraChangeRatio = 0.f;
 	Vector3 m_pfrmCenterPos = Vector3::Zero;
 	Vector3 m_pfrmCamBeginPos = Vector3::Zero;

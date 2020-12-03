@@ -90,8 +90,11 @@ void GameCamera::Update()
 	//m_posChecker->SetPos(enemies.at(forwardEnemyIndex)->GetPosition());
 #endif // POS_CHECK
 
-	if (m_state == State::enPerformanceCamera) {
-		CalcPerformanceCamera();
+	if (m_state == State::enSlerpPerformanceCamera) {
+		CalcSlerpPerformanceCamera();
+	}
+	else if (m_state == State::enLerpPerformanceCamera) {
+		CalcLerpPerformanceCamera();
 	}
 	else {
 		UpdateState();
@@ -109,7 +112,8 @@ void GameCamera::Update()
 void GameCamera::PostUpdate() {
 
 	if (GameManager::GetInstance().m_player == nullptr) return;
-	if (m_state == State::enPerformanceCamera) return;
+	if (m_state == State::enLerpPerformanceCamera) return;
+	if (m_state == State::enSlerpPerformanceCamera) return;
 
 	const float PlayerCameraRatio = 1.f;
 	const float EnemyCameraRatio = 0.f;
@@ -360,7 +364,7 @@ void GameCamera::CalcPlayerCamera() {
 
 }
 
-void GameCamera::CalcPerformanceCamera() {
+void GameCamera::CalcSlerpPerformanceCamera() {
 
 	//•âŠ®’†
 	auto vecCtoBCP = m_pfrmCamBeginPos - m_pfrmCenterPos;
@@ -389,7 +393,7 @@ void GameCamera::CalcPerformanceCamera() {
 	auto tar = Math::Lerp(m_pfrmCameraChangeRatio, m_pfrmTarBeginPos, m_pfrmTarEndPos);
 	g_camera3D->SetTarget(tar);
 
-	m_pfrmCameraChangeRatio = min(1.f, m_pfrmCameraChangeRatio += m_pfrmTime * gameTime()->GetDeltaTime());
+	m_pfrmCameraChangeRatio = min(1.f, m_pfrmCameraChangeRatio += m_pfrmTimeSec * gameTime()->GetDeltaTime());
 
 	if (m_pfrmCameraChangeRatio == 1.f) {
 		m_state = State::enPlayerCamera;
@@ -397,6 +401,25 @@ void GameCamera::CalcPerformanceCamera() {
 		GameManager::GetInstance().m_menu->ResumeGame();
 	}
 
+}
+
+void GameCamera::CalcLerpPerformanceCamera() {
+
+	Vector3 currentPos;
+	currentPos.Lerp(m_pfrmCameraChangeRatio, m_pfrmCamBeginPos, m_pfrmCamEndPos);
+	m_position = currentPos;
+	g_camera3D->SetPosition(m_position);
+	auto tar = Math::Lerp(m_pfrmCameraChangeRatio, m_pfrmTarBeginPos, m_pfrmTarEndPos);
+	g_camera3D->SetTarget(tar);
+
+	if (m_pfrmCameraChangeRatio == 1.f) {
+		m_state = State::enPlayerCamera;
+		m_cameraChangeRatio = 1.f;
+		GameManager::GetInstance().m_menu->ResumeGame();
+	}
+
+	m_pfrmTimer = min(m_pfrmTimeSec, m_pfrmTimer + gameTime()->GetDeltaTime());
+	m_pfrmCameraChangeRatio = m_pfrmTimer / m_pfrmTimeSec;
 }
 
 void GameCamera::UpdateState() {
@@ -479,12 +502,26 @@ void GameCamera::Perform(
 	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& center, const float sec)
 {
 	GameManager::GetInstance().m_menu->PauseGame();
-	m_state = State::enPerformanceCamera;
+	m_state = State::enSlerpPerformanceCamera;
 	m_pfrmCameraChangeRatio = 0.f;
-	m_pfrmTime = sec;
+	m_pfrmTimeSec = sec;
 	m_pfrmCamBeginPos = cameraBeginPos;
 	m_pfrmCamEndPos = cameraEndPos;
 	m_pfrmTarBeginPos = targetBeginPos;
 	m_pfrmTarEndPos = targetEndPos;
 	m_pfrmCenterPos = center;
 }
+
+void GameCamera::Perform(
+	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec)
+{
+	GameManager::GetInstance().m_menu->PauseGame();
+	m_state = State::enLerpPerformanceCamera;
+	m_pfrmCameraChangeRatio = 0.f;
+	m_pfrmTimeSec = sec;
+	m_pfrmCamBeginPos = cameraBeginPos;
+	m_pfrmCamEndPos = cameraEndPos;
+	m_pfrmTarBeginPos = targetBeginPos;
+	m_pfrmTarEndPos = targetEndPos;
+}
+
