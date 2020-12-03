@@ -72,7 +72,7 @@ void EnemyShortRangeComingState::Move(IEnemy* e)
 	auto vecToPlayer = ppos - epos;
 	vecToPlayer.Normalize();
 	
-	const float walkSpeed = 50.0f;
+	const float walkSpeed = 40.0f;
 	Vector3 moveSpeed = vecToPlayer * walkSpeed;
 
 	//èdóÕÅB
