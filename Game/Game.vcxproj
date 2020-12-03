@@ -192,6 +192,7 @@
     <ClInclude Include="Enemy\IEnemy.h" />
     <ClInclude Include="Enemy\State\EnemyBattleState.h" />
     <ClInclude Include="Enemy\State\EnemyDeadState.h" />
+    <ClInclude Include="Enemy\State\EnemyExplosionBombState.h" />
     <ClInclude Include="Enemy\State\EnemyExplosionKamikazeState.h" />
     <ClInclude Include="Enemy\State\EnemyIdleState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="Enemy\IEnemy.cpp" />
     <ClCompile Include="Enemy\State\EnemyBattleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyDeadState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyExplosionBombState.cpp" />
     <ClCompile Include="Enemy\State\EnemyExplosionKamikazeState.cpp" />
     <ClCompile Include="Enemy\State\EnemyIdleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
