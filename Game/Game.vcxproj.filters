@@ -215,6 +215,9 @@
     <ClInclude Include="Enemy\State\EnemyShortRangeIdleState.h">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Zako\Zako_ExplosionMonster.h">
+      <Filter>Enemy\Zako</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -431,6 +434,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyShortRangeIdleState.cpp">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Zako\Zako_ExplosionMonster.cpp">
+      <Filter>Enemy\Zako</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
