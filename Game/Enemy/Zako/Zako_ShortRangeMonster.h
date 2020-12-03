@@ -2,7 +2,7 @@
 
 #include "Enemy/IEnemy.h"
 #include "Enemy/State/EnemyDeadState.h"
-#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/EnemyShortRangeIdleState.h"
 #include "Enemy/State/EnemyShortRangeComingState.h"
 #include "Enemy/State/EnemyShortRangePunchState.h"
 #include "Enemy/State/EnemyShortRangeStrongPunchState.h"

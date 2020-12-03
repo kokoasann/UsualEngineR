@@ -30,7 +30,7 @@ void Zako_ShortRangeMonster::Init()
 	InitAnimation();
 	
 	//State
-	SetState(m_stateMap[static_cast<int>(IEnemy::EnState::enIdleState)]);
+	SetState(m_stateMap[TO_INT(IEnemy::EnState::enIdleState)]);
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
@@ -59,7 +59,7 @@ void Zako_ShortRangeMonster::InitState()
 		m_stateMap.insert(p);
 	}
 	{
-		auto p = std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new EnemyIdleState());
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new EnemyShortRangeIdleState());
 		m_stateMap.insert(p);
 	}
 	{
