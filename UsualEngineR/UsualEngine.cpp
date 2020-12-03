@@ -57,7 +57,7 @@ namespace UER
 			g_engine->BeginFrame();
 
 
-			
+			DebugSwitch::Instance()->Update();
 			/*#
 			###	RayTracingの奴の残留思念。
 			###
