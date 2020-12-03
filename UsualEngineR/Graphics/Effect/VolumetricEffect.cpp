@@ -362,8 +362,11 @@ namespace UER
 		cbData.data.offset = fogData.offset;
 		cbData.data.perlinScale = fogData.perlinScale;
 		cbData.data.worleyScale = fogData.worleyScale;
+		cbData.data.ratioParlin = fogData.ratioParlin;
 		cbData.data.ratioParlinWorley = fogData.ratioParlinWorley;
 		cbData.data.concentration = fogData.concentration;
+		cbData.data.centerOffsetY = fogData.centerOffsetY;
+
 		cbData.data.centerPos = m_anchorModel.GetCenter();
 		mworld.Apply(cbData.data.centerPos);
 		//cbData.data.centerAxis = m_anchorModel.GetCenterAxis();

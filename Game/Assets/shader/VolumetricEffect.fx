@@ -10,9 +10,9 @@ struct FogData
 
     float decayCenterToXZ;        //中心からの減衰。
     float decayCenterToY;
-
+    float centerOffsetY;
     float3 centerPos;
-    int p1;
+    //int p1;
 
     float3 centerBottom;
     int p2;
@@ -22,17 +22,16 @@ struct FogData
     
 
     float3 color;           //フォグの色。
-    int p3;
-
+    //int p3;
+    float ratioParlin;    //パーリンノイズ割合。
     float concentration;    //濃度。
     float perlinScale;      //パーリンノイズのスケール
     float worleyScale;      //ウォーリーノイズのスケール
     float ratioParlinWorley;    //パーリンノイズとウォーリーノイズの合成の割合(0がPerlin、1がWorley)
+    
 
     float3 offset;              //位置のオフセット
     int p4;
-    
-    
 
 };
 
@@ -98,6 +97,13 @@ float4 PSMain(PSInput In):SV_TARGET0
 
     float vol = 0.f;
 
+    //float3 bottomH = b2tNor*cb_data.centerBottom;
+    float bottomD = dot(b2tNor,cb_data.centerBottom);
+    float3 bottomABC = b2tNor;
+
+    float topD = dot(-b2tNor,cb_data.centerTop);
+    float3 topABC = -b2tNor;
+
     //[unroll(ray_count)]
     //for(int i=0;i<ray_count;i++)
     for(int i=0;i<cb_data.rayCount;i++)
@@ -114,7 +120,8 @@ float4 PSMain(PSInput In):SV_TARGET0
         //float pn = PerlinNoise3D(mad(pos, cb_data.perlinScale, cb_data.offset));
         float pn = FBM3D_FBMx2(pos*cb_data.perlinScale,cb_data.offset,0.8f);
         
-        float addvol = lerp(wn,pn,cb_data.ratioParlinWorley)*cb_data.concentration;
+        //float addvol = lerp(wn,pn,cb_data.ratioParlinWorley)*cb_data.concentration;
+        float addvol = saturate(pn * cb_data.ratioParlin + wn * cb_data.ratioParlinWorley)*cb_data.concentration;
 
         
         {
@@ -127,8 +134,19 @@ float4 PSMain(PSInput In):SV_TARGET0
 
             addvol = mad(-addvol * shortLen, cb_data.decayCenterToXZ, addvol);
 
-            float3 cp = pos - cb_data.centerPos;
-            addvol = mad(-addvol * abs(dot(b2tNor,cp)), cb_data.decayCenterToY, addvol);
+            float3 cp = pos - (cb_data.centerPos + b2tNor * cb_data.centerOffsetY);
+            //cp += b2tNor * cb_data.centerOffsetY;
+            //cp = normalize(cp);
+            //addvol = mad(-addvol * abs(dot(b2tNor,cp)), cb_data.decayCenterToY, addvol);
+
+
+            float blen = abs(dot(bottomABC,cp)+bottomD);//*rcp(length(bottomABC));
+            float tlen = abs(dot(topABC,cp)+topD);//*rcp(length(topABC));
+
+            float delen = 100.f;
+            float t = min(blen,tlen);
+            t = min(delen,t);
+            addvol = mad(-addvol * (t*rcp(delen)), cb_data.decayCenterToY, addvol);
         }
         
 

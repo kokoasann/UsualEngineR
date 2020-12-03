@@ -79,9 +79,10 @@ namespace UER
 
 			float decayCenterToXZ = 0.f;        //中心からの減衰。
 			float decayCenterToY = 0.f;
+			float centerOffsetY = 0.f;
 
 			Vector3 color = { 1,1,1 };           //フォグの色。
-
+			float ratioParlin = 0.4f;
 			float concentration = 0.02;    //濃度。
 			float perlinScale = 0.08f;      //パーリンノイズのスケール
 			float worleyScale = 0.07f;      //ウォーリーノイズのスケール
@@ -107,9 +108,10 @@ namespace UER
 
 			float decayCenterToXZ = 0.f;        //中心からの減衰。
 			float decayCenterToY = 0.f;
-
+			
+			float centerOffsetY = 0.f;
 			Vector3 centerPos = g_vec3Zero;
-			PADDING p1;
+			//PADDING p1;
 
 			Vector3 centerBottom = g_vec3AxisY;
 			PADDING p2;
@@ -118,8 +120,8 @@ namespace UER
 			PADDING p2_1;
 
 			Vector3 color = {1,1,1};           //フォグの色。
-			PADDING p3;
-
+			//PADDING p3;
+			float ratioParlin = 0.4f;
 			float concentration = 0.02;    //濃度。
 			float perlinScale = 0.08f;      //パーリンノイズのスケール
 			float worleyScale = 0.07f;      //ウォーリーノイズのスケール
@@ -179,6 +181,19 @@ namespace UER
 		void SetRot(const Quaternion& q)
 		{
 			m_rot = q;
+		}
+
+		const Vector3& GetPos() const
+		{
+			return m_pos;
+		}
+		const Vector3& GetSca() const
+		{
+			return m_sca;
+		}
+		const Quaternion& GetRot() const
+		{
+			return m_rot;
 		}
 
 		VolumetricEffect::FogData& GetFogData()
