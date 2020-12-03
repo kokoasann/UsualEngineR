@@ -180,6 +180,7 @@
     <ClInclude Include="Camera\GameCamera.h" />
     <ClInclude Include="Camera\SpringCamera.h" />
     <ClInclude Include="Effect\Ballistic.h" />
+    <ClInclude Include="Effect\ExplosionEffect.h" />
     <ClInclude Include="Effect\JetEffect.h" />
     <ClInclude Include="Effect\MuzzleFlash.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h" />
+    <ClInclude Include="Enemy\State\EnemyShortRangeIdleState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangePunchState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeStrongPunchState.h" />
     <ClInclude Include="Enemy\State\EnemySlashState.h" />
@@ -256,6 +258,7 @@
     <ClCompile Include="Camera\GameCamera.cpp" />
     <ClCompile Include="Camera\SpringCamera.cpp" />
     <ClCompile Include="Effect\Ballistic.cpp" />
+    <ClCompile Include="Effect\ExplosionEffect.cpp" />
     <ClCompile Include="Effect\JetEffect.cpp" />
     <ClCompile Include="Effect\MuzzleFlash.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
@@ -272,6 +275,7 @@
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyShortRangeIdleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangePunchState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeStrongPunchState.cpp" />
     <ClCompile Include="Enemy\State\EnemySlashState.cpp" />
