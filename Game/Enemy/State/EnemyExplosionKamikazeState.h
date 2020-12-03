@@ -13,6 +13,7 @@ private:
 	/// <summary>
 	/// ˆÚ“®ŠÖ”B
 	/// </summary>
-	void Move();
+	void Move(IEnemy* e);
 private:
+	float			m_bombTimer = 0;						//”š”­‚Ü‚Å‚ÌŠÔŒv‘ªB
 };
