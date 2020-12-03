@@ -179,14 +179,8 @@
     <ClInclude Include="Enemy\State\EnemyIdleState.h">
       <Filter>Enemy\State\DefaultState</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClInclude>
     <ClInclude Include="Player\State\PlayerStunState.h">
       <Filter>Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h">
-      <Filter>Enemy\State\DefaultState</Filter>
     </ClInclude>
     <ClInclude Include="Effect\MuzzleFlash.h">
       <Filter>Effect</Filter>
@@ -197,20 +191,26 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyShortRangePunchState.h">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\State\EnemyShortRangeStrongPunchState.h">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClInclude>
     <ClInclude Include="Effect\ExplosionEffect.h">
       <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h">
+      <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h">
+      <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangePunchState.h">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangeStrongPunchState.h">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -390,17 +390,11 @@
     <ClCompile Include="Enemy\State\EnemyIdleState.cpp">
       <Filter>Enemy\State\DefaultState</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\State\EnemySlashState.cpp">
       <Filter>Enemy\State\DefaultState</Filter>
     </ClCompile>
     <ClCompile Include="Player\State\PlayerStunState.cpp">
       <Filter>Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp">
-      <Filter>Enemy\State\DefaultState</Filter>
     </ClCompile>
     <ClCompile Include="Effect\MuzzleFlash.cpp">
       <Filter>Effect</Filter>
@@ -411,20 +405,26 @@
     <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp">
       <Filter>Enemy\Zako</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyShortRangePunchState.cpp">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyShortRangeStrongPunchState.cpp">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp">
-      <Filter>Enemy\State\DefaultState</Filter>
-    </ClCompile>
     <ClCompile Include="Effect\ExplosionEffect.cpp">
       <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp">
+      <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp">
+      <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangePunchState.cpp">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangeStrongPunchState.cpp">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,6 +526,15 @@
     </Filter>
     <Filter Include="Assets\modelData\zako">
       <UniqueIdentifier>{b12c4b60-263a-44ba-b80f-41b44ea15ac3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\Zako">
+      <UniqueIdentifier>{4e04933f-4d34-4343-84bd-513cd83d98f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\Zako\LongDistanceMachineState">
+      <UniqueIdentifier>{8b8dbfd2-5c4c-4050-af42-e367eafe2abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\Zako\ShortRangeMonsterState">
+      <UniqueIdentifier>{2f2cf191-c49a-4bd3-a82a-543f7d100e62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
