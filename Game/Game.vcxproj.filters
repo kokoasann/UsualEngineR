@@ -209,6 +209,9 @@
     <ClInclude Include="Enemy\State\EnemyShortRangeStrongPunchState.h">
       <Filter>Enemy\State\DefaultState</Filter>
     </ClInclude>
+    <ClInclude Include="Effect\ExplosionEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -419,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp">
       <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\ExplosionEffect.cpp">
+      <Filter>Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
