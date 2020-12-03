@@ -218,6 +218,9 @@
     <ClInclude Include="Enemy\Zako\Zako_ExplosionMonster.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyExplosionKamikazeState.h">
+      <Filter>Enemy\State\Zako\ExplosionMonsterState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -438,6 +441,9 @@
     <ClCompile Include="Enemy\Zako\Zako_ExplosionMonster.cpp">
       <Filter>Enemy\Zako</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyExplosionKamikazeState.cpp">
+      <Filter>Enemy\State\Zako\ExplosionMonsterState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -547,6 +553,9 @@
     </Filter>
     <Filter Include="Enemy\State\Zako\ShortRangeMonsterState">
       <UniqueIdentifier>{2f2cf191-c49a-4bd3-a82a-543f7d100e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\Zako\ExplosionMonsterState">
+      <UniqueIdentifier>{be77400a-a2a3-4a9e-a224-8716bf982bb9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
