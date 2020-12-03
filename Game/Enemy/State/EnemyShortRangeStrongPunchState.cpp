@@ -20,7 +20,6 @@ void EnemyShortRangeStrongPunchState::Enter(IEnemy* e)
 
 IEnemyState* EnemyShortRangeStrongPunchState::Update(IEnemy* e)
 {
-	//ˆê’èŽžŠÔ‚¨‚«‚É‰£‚éB
 	if (!e->GetModel()->IsAnimPlaying()){
 		auto& p = GameManager::GetInstance().m_player;
 		p->ApplyDamage(m_damage);

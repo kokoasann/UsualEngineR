@@ -20,7 +20,6 @@ void EnemyShortRangeDanceState::Enter(IEnemy* e)
 
 IEnemyState* EnemyShortRangeDanceState::Update(IEnemy* e)
 {
-	//一定時間経ったらステートを戻す。
 	if (!e->GetModel()->IsAnimPlaying())
 	{
 		return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enComing));

@@ -3,6 +3,7 @@
 #include "Enemy/IEnemy.h"
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Zako/Zako_ShortRangeMonster.h"
+#include "GameManager.h"
 
 EnemyShortRangeComingState::EnemyShortRangeComingState()
 {
@@ -19,7 +20,7 @@ void EnemyShortRangeComingState::Enter(IEnemy* e)
 
 IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 {
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().m_player;
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
