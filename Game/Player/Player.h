@@ -435,5 +435,5 @@ private:
 
 	//Hands
 	SphereCollider		m_sphereCollider;
-	const float m_HandRadius = 3.f;
+	const float m_HandRadius = 5.f;
 };

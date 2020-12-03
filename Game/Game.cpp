@@ -29,11 +29,27 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 
 	auto cam = GameManager::GetInstance().m_camera;
 	auto tar = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto center = GameManager::GetInstance().m_player->GetPosition();
+
+	auto vecTargetToCenter = center - tar;
+	auto camBeginPos = center + vecTargetToCenter;
+	camBeginPos.y += 10.f;
+	Quaternion rot = Quaternion::Identity;
+	rot.SetRotationDegY(10.f);
+	auto camEndPos = camBeginPos;
+	camEndPos.y += 20.f;
+	rot.Apply(camEndPos);
+	auto sec = 1.5f;
+
+	//cam->Perform(
+	//camBeginPos, camEndPos,
+	//	tar, tar,
+	//	center, sec
+	//);
 
 	cam->Perform(
-		cam->m_playerCameraPos, cam->m_enemyCameraPos,
-		tar, tar,
-		cam->m_charaPos, 0.25f
+		camBeginPos, camEndPos,
+		tar, tar, sec
 	);
 
 }
