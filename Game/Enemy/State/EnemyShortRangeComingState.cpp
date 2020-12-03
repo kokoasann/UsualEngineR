@@ -23,9 +23,16 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
+
+	//プレイヤーが空中にいるなら動かない。
+	const float airPlayerYPos = 70.0f;
+	if (ppos.y > airPlayerYPos) {
+		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
+	}
+
 	const float moveRange = 10.f;
 	const float attackRange = 10.f;
-	const float idleRange = 300.f;
+	const float idleRange = 100.f;
 
 	if (player->GetCurrentHP() > 0.f) {
 		//近づいたら行動。
