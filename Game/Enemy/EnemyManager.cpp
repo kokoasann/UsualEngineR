@@ -5,6 +5,7 @@
 #include "EnemyTest.h"
 #include <random>
 
+#include "Zako/Zako_ShortRangeMonster.h"
 #include "Zako/Zako_LongDistanceMachine.h"
 #include "Equipment/Enemy_Bullet.h"
 
@@ -42,6 +43,7 @@ void EnemyManager::SpawnEnemies() {
 			if (objData.name == L"LongDistanceMachine")
 			{
 				auto e = NewGO<Zako_LongDistanceMachine>(0);
+				ab.InitHP(60);
 				e->SetAbility(ab);
 				e->SetPosition(objData.position * 100.f);
 				e->SetRotation(objData.rotation);
@@ -61,8 +63,15 @@ void EnemyManager::SpawnEnemies() {
 		}
 	);
 
-	return;
 
+	auto srm = NewGO<Zako_ShortRangeMonster>(0);
+	ab.InitHP(60);
+	srm->SetAbility(ab);
+	srm->SetPosition({ 200,73,-100 });
+	m_enemies.push_back(srm);
+	
+	return;
+	
 
 	//Zako!
 	std::random_device rd;

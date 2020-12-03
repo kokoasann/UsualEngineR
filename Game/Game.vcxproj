@@ -210,6 +210,7 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeOverheatState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h" />
+    <ClInclude Include="Enemy\Zako\Zako_ExplosionMonster.h" />
     <ClInclude Include="Enemy\Zako\Zako_LongDistanceMachine.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeOverheatState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp" />
+    <ClCompile Include="Enemy\Zako\Zako_ExplosionMonster.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_LongDistanceMachine.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp" />

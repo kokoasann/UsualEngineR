@@ -32,7 +32,7 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 
 	const float moveRange = 10.f;
 	const float attackRange = 5.f;
-	const float idleRange = 100.f;
+	const float idleRange = 200.f;
 
 	if (player->GetCurrentHP() > 0.f) {
 		//近づいたら行動。
@@ -70,6 +70,7 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 		auto rand = GRandom().Rand();
 		//約15%の確率で踊る。
 		if (rand < 0.15f) {
+			m_danceTimer = 0.f;
 			//ダンス。
 			return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enDance));	
 		}
@@ -92,7 +93,7 @@ void EnemyShortRangeComingState::Move(IEnemy* e)
 	auto vecToPlayer = ppos - epos;
 	vecToPlayer.Normalize();
 	
-	const float walkSpeed = 40.0f;
+	const float walkSpeed = 60.0f;
 	Vector3 moveSpeed = vecToPlayer * walkSpeed;
 
 	//重力。
