@@ -1,6 +1,11 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
+#include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/EnemyExplosionKamikazeState.h"
+#include "Enemy/State/EnemyExplosionBombState.h"
+
 /// <summary>
 /// 
 /// </summary>
@@ -19,6 +24,15 @@ public:
 		return Player::EnAttackType::enNone;
 	}
 
+	////デフォルトのアニメーションステート用。
+	//void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) override {
+	//	m_model->Play(static_cast<int>(anim), interpolate);
+	//}
+
+	////拡張されたアニメーションステート用。
+	//void PlayAnimation(const int animNo, const float interpolate = 0.2f) override {
+	//	m_model->Play(animNo, interpolate);
+	//}
 	
 	enum class EnStateEX :int
 	{
@@ -31,10 +45,12 @@ public:
 		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
 		Num,
 	};
-
 private:
-	//Model
-	ModelRender* m_model = nullptr;
+	/// <summary>
+	/// アニメーションの初期設定。
+	/// </summary>
+	void InitAnimation();
+private:
 	float m_scale = 1.f;
 
 	//Physics
