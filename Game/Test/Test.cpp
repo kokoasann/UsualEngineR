@@ -3,7 +3,7 @@
 #include "ThreadTest.h"
 
 
-
+#include "Effect/ExplosionEffect.h"
 
 
 void Test::Release()
@@ -231,6 +231,19 @@ void Test::Awake()
 	m_backpackBone[2] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_L.002"));
 	m_backpackBone[3] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_R.001"));
 	m_backpackBone[4] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_R.002"));
+
+
+	std::function<void()> func1 = [&]()
+	{
+		ExplosionEffect* ef = NewGO<ExplosionEffect>(0);
+		ef->Init();
+		ef->Play();
+	};
+	std::function<void()> func2 = [&]()
+	{
+	};
+	DebugSwitchAddCheck(DebugSwitchNewSwitch('Q', (char)0, func1, func2));
+	
 }
 
 void Test::Update()
@@ -275,6 +288,7 @@ void Test::Update()
 	static Vector3 p = { 50,10,0 };
 	rot.Apply(p);*/
 	//m_3dSprite->SetPos(p);
+	
 }
 
 void Test::Render()

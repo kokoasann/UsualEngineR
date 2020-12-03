@@ -85,6 +85,11 @@ public:
 	/// <param name="sec"></param>
 	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos,const float sec);
 
+	void ChangePlayerCam()
+	{
+		m_state = State::enPlayerCamera;
+		m_cameraChangeRatio = 1.f;
+	}
 private:
 
 	enum class State{

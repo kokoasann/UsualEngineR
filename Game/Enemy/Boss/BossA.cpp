@@ -24,7 +24,8 @@ void BossA::Init() {
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
-	m_model->SetMulColor({ 20,1,1,1 });
+	//m_model->SetMulColor({ 20,1,1,1 });
+	m_model->SetMulColor({ 0,0,0,0 });
 
 	//Idle
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/sp/anim/sp_idle.tka", true);

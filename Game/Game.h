@@ -58,6 +58,13 @@ public:
 
 	void OnEnterBattle(IEnemy* enemy);
 
+	void EndBossPerform()
+	{
+		m_isBossCamPerform = false;
+	}
 private:
 	bool m_isCreateEnemyManager = false;		//EnemyManager‚ğì¬‚µ‚½‚©‚Ç‚¤‚©B
+	bool m_isBossCamPerform = false;
+	IEnemy* m_boss = nullptr;
+	float m_timer = 0.f;
 };

@@ -31,15 +31,18 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	auto tar = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
 	auto center = GameManager::GetInstance().m_player->GetPosition();
 
+	tar.y += 20.f;
+
 	auto vecTargetToCenter = center - tar;
 	auto camBeginPos = center + vecTargetToCenter;
 	camBeginPos.y += 10.f;
 	Quaternion rot = Quaternion::Identity;
 	rot.SetRotationDegY(10.f);
-	auto camEndPos = camBeginPos;
-	camEndPos.y += 20.f;
-	rot.Apply(camEndPos);
-	auto sec = 1.5f;
+	auto camEndPos = enemy->GetPosition();
+	camEndPos.y += 15.f;
+	camEndPos.z += 10.f;
+	//rot.Apply(camEndPos);
+	auto sec = 2.5f;
 
 	//cam->Perform(
 	//camBeginPos, camEndPos,
@@ -51,7 +54,8 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 		camBeginPos, camEndPos,
 		tar, tar, sec
 	);
-
+	m_isBossCamPerform = true;
+	m_boss = enemy;
 }
 
 bool Game::Start()
@@ -83,6 +87,25 @@ void Game::Update()
 		eM.SpawnEnemies();
 		eM.SetPlayer(GameManager::GetInstance().m_player);
 		m_isCreateEnemyManager = true;
+	}
+
+	if (m_boss != nullptr && !m_isBossCamPerform)
+	{
+		if (m_timer > 1.7f)
+		{
+			auto cam = GameManager::GetInstance().m_camera;
+			cam->ChangePlayerCam();
+			GameManager::GetInstance().m_menu->ResumeGame();
+			m_timer = 0.f;
+			m_boss = nullptr;
+			return;
+		}
+		if (m_timer > 1.f)
+		{
+			m_boss->Performance();
+		}
+
+		m_timer += gameTime()->GetDeltaTime();
 	}
 }
 

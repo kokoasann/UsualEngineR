@@ -155,6 +155,7 @@ public:
 		return m_rotation;
 	}
 
+	virtual void Performance() {}
 protected:
 	//ƒLƒƒƒ‰ƒRƒ“ì¬
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);

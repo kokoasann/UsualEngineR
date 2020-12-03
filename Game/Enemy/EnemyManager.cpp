@@ -49,8 +49,16 @@ void EnemyManager::SpawnEnemies() {
 				e->SetRotation(objData.rotation);
 				m_enemies.push_back(e);
 			}
-
-			if (objData.name == L"MeleeBoss") {
+			else if (objData.name == L"ShortRangeMonster")
+			{
+				auto e = NewGO<Zako_ShortRangeMonster>(0);
+				ab.InitHP(60);
+				e->SetAbility(ab);
+				e->SetPosition(objData.position * 100.f);
+				e->SetRotation(objData.rotation);
+				m_enemies.push_back(e);
+			}
+			else if (objData.name == L"MeleeBoss") {
 				auto bene = NewGO<BossA>(0);
 				ab.InitHP(BOSS_A_HP);
 				ab.InitStamina(BOSS_A_STAMINA);

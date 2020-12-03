@@ -63,7 +63,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GRandom().Init(0);
 
 	
-	auto test = NewGO<Test>(0);
+	//auto test = NewGO<Test>(0);
 	//test->Test_CreateTransform();
 
 	NewGO<Game>(0);

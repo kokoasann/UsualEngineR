@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Effect/ParticleEffect.h"
+#include "Effect/VolumetricEffect.h"
 /// <summary>
 /// 
 /// </summary>
@@ -19,6 +20,8 @@ public:
 	/// 面倒くさければRelease関数と同じでもよい。
 	/// </summary>
 	virtual void OnDestroy() override;
+
+	void Init();
 
 	/// <summary>
 	/// NewGO時に即座に呼ばれる関数。
@@ -45,7 +48,42 @@ public:
 	/// </summary>
 	void PostUpdate() override;
 
+	void SetPos(const Vector3& v)
+	{
+		m_effect->SetPos(v);
+		//m_volumeEffect->SetPos({ v.x, v.y+m_volumeEffect->GetSca().y - m_volumeOffsetPos, v.z });
+	}
+	void SetSca(const Vector3& v)
+	{
+		m_effect->SetSca(v);
+		//m_volumeEffect->SetSca()
+	}
 
+	void Play()
+	{
+		//m_isPlay = true;
+		m_effect->SetGenerateFlag(true);
+		//m_isTimeStop = false;
+	}
+	void Stop()
+	{
+		//m_isPlay = false;
+		m_effect->SetGenerateFlag(false);
+		//m_isTimeStop = false;
+	}
 private:
+	PlaneParticleEffectRender* m_effect = nullptr;
+	float m_particleTimer = 0.f;
+	/*VolumetricEffectRender* m_volumeEffect = nullptr;
+	bool m_isPlay = false;
 
+	float m_timer = 0.f;
+	float m_timeLimit = 3.f;
+	bool m_isTimeStop = true;
+
+	Vector3 m_volumeColor = { 0.05,0.05,0.05 };
+	float m_volumeConcentration = 0.1f;
+
+	float m_volumeOffsetPos = 20.f;
+	float m_volumeOffsetCenterOffsetY = 50.f;*/
 };

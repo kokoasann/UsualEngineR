@@ -7,6 +7,7 @@
 #include <limits>
 #include "../GameManager.h"
 #include "../GameSceneMenu.h"
+#include "Game.h"
 //#define POS_CHECK
 
 GameCamera::GameCamera()
@@ -413,9 +414,10 @@ void GameCamera::CalcLerpPerformanceCamera() {
 	g_camera3D->SetTarget(tar);
 
 	if (m_pfrmCameraChangeRatio == 1.f) {
-		m_state = State::enPlayerCamera;
-		m_cameraChangeRatio = 1.f;
-		GameManager::GetInstance().m_menu->ResumeGame();
+		//m_state = State::enPlayerCamera;
+		//m_cameraChangeRatio = 1.f;
+		//GameManager::GetInstance().m_menu->ResumeGame();
+		GameManager::GetInstance().m_gameScene->EndBossPerform();
 	}
 
 	m_pfrmTimer = min(m_pfrmTimeSec, m_pfrmTimer + gameTime()->GetDeltaTime());

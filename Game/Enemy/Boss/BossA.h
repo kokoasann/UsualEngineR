@@ -48,6 +48,10 @@ public:
 		NumJetBone
 	};
 
+	void Performance()
+	{
+		m_model->SetMulColor({ 20,1,1,1 });
+	}
 private:
 
 	//Model
