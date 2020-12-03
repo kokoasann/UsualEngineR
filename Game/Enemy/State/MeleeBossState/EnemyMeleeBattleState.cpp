@@ -5,7 +5,7 @@
 #include "../../../Player/Player.h"
 #include "../../Boss/BossA.h"
 #include "../../../Effect/JetEffect.h"
-#include "../../GameManager.h"
+#include "GameManager.h"
 #include "../../../Game.h"
 
 EnemyMeleeBattleState::EnemyMeleeBattleState() {
