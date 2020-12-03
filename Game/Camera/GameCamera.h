@@ -64,11 +64,17 @@ public:
 		m_dist = m_toCameraPos;
 	}
 
-private:
+	/// <summary>
+	/// 演出する.
+	/// </summary>
+	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& centerPos, const float sec);
+
+//private:
 
 	enum class State{
 		enEnemyCamera,
 		enPlayerCamera,
+		enPerformanceCamera,
 		enNumState
 	};
 	
@@ -91,6 +97,7 @@ private:
 	void CalcTarget();
 	void CalcEnemyCamera();
 	void CalcPlayerCamera();
+	void CalcPerformanceCamera();
 
 	/// <summary>
 	/// カメラのターゲットになる敵を計算. (存在しない場合は-1を返す).
@@ -104,6 +111,15 @@ private:
 
 	Vector3 m_enemyCameraPos = m_position;
 	Vector3 m_enemyCameraTargetPos = Vector3::Zero;
+
+	//パフォーマンス用変数
+	float m_pfrmTime = 0.f;
+	float m_pfrmCameraChangeRatio = 0.f;
+	Vector3 m_pfrmCenterPos = Vector3::Zero;
+	Vector3 m_pfrmCamBeginPos = Vector3::Zero;
+	Vector3 m_pfrmCamEndPos = Vector3::Zero;
+	Vector3 m_pfrmTarBeginPos = Vector3::Zero;
+	Vector3 m_pfrmTarEndPos = Vector3::Zero;
 
 	//test
 	Vector3 m_enemyCameraNextTargetPos = Vector3::Zero;

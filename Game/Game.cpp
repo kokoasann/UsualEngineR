@@ -20,13 +20,29 @@ void Game::OnDestroy()
 
 void Game::Awake()
 {
-	
-	
+}
+
+
+void Game::OnEnterBattle(IEnemy* enemy) {
+
+	DebugPrint_WATA("enter battle\n");
+
+	auto cam = GameManager::GetInstance().m_camera;
+	auto tar = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+
+	cam->Perform(
+		cam->m_playerCameraPos, cam->m_enemyCameraPos,
+		tar, tar,
+		cam->m_charaPos, 0.25f
+	);
+
 }
 
 bool Game::Start()
 {
 	GameManager::GetInstance().InitGameWorld();
+	GameManager::GetInstance().m_gameScene = this;
+
 	return true;
 }
 
