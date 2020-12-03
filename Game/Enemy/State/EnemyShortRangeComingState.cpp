@@ -44,7 +44,7 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 				//ダンス。
 				return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enDance));
 			}
-			else if (rand < 0.55f) {
+			else if (rand < 0.7f) {
 				//パンチ。
 				return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
 			}
