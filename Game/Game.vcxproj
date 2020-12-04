@@ -191,6 +191,7 @@
     <ClInclude Include="Enemy\Equipment\Enemy_Bullet.h" />
     <ClInclude Include="Enemy\HealthBar.h" />
     <ClInclude Include="Enemy\IEnemy.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.h" />
     <ClInclude Include="Enemy\State\EnemyBattleState.h" />
     <ClInclude Include="Enemy\State\EnemyDeadState.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="Enemy\Equipment\Enemy_Bullet.cpp" />
     <ClCompile Include="Enemy\HealthBar.cpp" />
     <ClCompile Include="Enemy\IEnemy.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.cpp" />
     <ClCompile Include="Enemy\State\EnemyBattleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyDeadState.cpp" />

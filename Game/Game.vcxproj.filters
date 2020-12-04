@@ -230,6 +230,9 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.h">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -460,6 +463,9 @@
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
   </ItemGroup>
