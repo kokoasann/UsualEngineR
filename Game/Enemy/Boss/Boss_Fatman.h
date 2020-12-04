@@ -1,8 +1,11 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
+#include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyShortRangeIdleState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
 /// <summary>
-/// 
+/// ファットマン。
 /// </summary>
 class Boss_Fatman final :public IEnemy
 {
