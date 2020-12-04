@@ -28,7 +28,7 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	DebugPrint_WATA("enter battle\n");
 
 	auto cam = GameManager::GetInstance().m_camera;
-	auto tar = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto tar = enemy->GetPosition();
 	auto center = GameManager::GetInstance().m_player->GetPosition();
 
 	tar.y += 20.f;
@@ -56,6 +56,29 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	);
 	m_isBossCamPerform = true;
 	m_boss = enemy;
+}
+
+void Game::OnEnemyDied(IEnemy* enemy) {
+
+	DebugPrint_WATA("enemy died\n");
+
+	auto cam = GameManager::GetInstance().m_camera;
+	auto tar = enemy->GetPosition();
+	tar.y += 20.f;
+
+	auto eneForward = enemy->GetForward();
+	auto camEndPos = enemy->GetPosition() + eneForward * 45.f;
+	camEndPos.y += 15.f;
+	auto sec = 1.f;
+
+	cam->Perform(
+		camEndPos, camEndPos,
+		tar, tar, sec
+	);
+
+	m_isBossCamPerform = true;
+	m_boss = enemy;
+
 }
 
 bool Game::Start()
@@ -93,6 +116,10 @@ void Game::Update()
 	{
 		if (m_timer > 1.7f)
 		{
+			if (m_boss->GetCurrentState() == m_boss->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				GameObject* enemy = reinterpret_cast<GameObject*>(m_boss);
+				EnemyManager::GetEnemyManager().DestroyEnemy(m_boss);
+			}
 			auto cam = GameManager::GetInstance().m_camera;
 			cam->ChangePlayerCam();
 			GameManager::GetInstance().m_menu->ResumeGame();

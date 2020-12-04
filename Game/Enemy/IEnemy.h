@@ -139,7 +139,7 @@ public:
 		return m_charaCon.IsOnGround();
 	}
 
-	const ModelRender* GetModel() const{
+	ModelRender* GetModel() const{
 		return m_model;
 	}
 
@@ -153,6 +153,16 @@ public:
 
 	const Quaternion& GetRotation() {
 		return m_rotation;
+	}
+
+	const Vector3& GetForward() {
+		auto& world = m_model->GetModel().GetWorldMatrix();
+		Vector3 forward;
+		forward.x = world.mat._31;
+		forward.y = world.mat._32;
+		forward.z = world.mat._33;
+		forward.Normalize();
+		return forward;
 	}
 
 	virtual void Performance() {}

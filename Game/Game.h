@@ -58,6 +58,9 @@ public:
 
 	void OnEnterBattle(IEnemy* enemy);
 
+	void OnEnemyDied(IEnemy* enemy);
+
+
 	void EndBossPerform()
 	{
 		m_isBossCamPerform = false;
