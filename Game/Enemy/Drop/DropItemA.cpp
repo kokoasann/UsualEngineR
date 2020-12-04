@@ -2,6 +2,8 @@
 #include "DropItemA.h"
 #include "../EnemyManager.h"
 #include "../../Player/Player.h"
+#include "GameManager.h"
+#include "Game.h"
 
 DropItemA::DropItemA()
 {
@@ -67,7 +69,9 @@ void DropItemA::PostUpdate()
 
 	if (dist < m_GRASP_RANGE) {
 		//p->UnlockSkill(m_typeId);
+		GameManager::GetInstance().m_gameScene->OnItemUnlocked();
 		p->UnlockPreset(Player::EnAttackPreset::enMeleePreset);
+
 		auto gameObj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(gameObj);
 	}

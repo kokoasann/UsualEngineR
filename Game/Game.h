@@ -60,6 +60,7 @@ public:
 
 	void OnEnemyDied(IEnemy* enemy);
 
+	void OnItemUnlocked();
 
 	void EndBossPerform()
 	{

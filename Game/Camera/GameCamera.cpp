@@ -420,8 +420,14 @@ void GameCamera::CalcLerpPerformanceCamera() {
 		GameManager::GetInstance().m_gameScene->EndBossPerform();
 	}
 
-	m_pfrmTimer = min(m_pfrmTimeSec, m_pfrmTimer + gameTime()->GetDeltaTime());
-	m_pfrmCameraChangeRatio = m_pfrmTimer / m_pfrmTimeSec;
+	if (m_pfrmTimer >= m_pfrmTimeSec + m_pfrmGameResumeInterval) {
+		m_state = State::enPlayerCamera;
+		GameManager::GetInstance().m_menu->ResumeGame();
+		m_cameraChangeRatio = 1.f;
+	}
+
+	m_pfrmTimer = m_pfrmTimer + gameTime()->GetDeltaTime();
+	m_pfrmCameraChangeRatio = min(1.f, m_pfrmTimer / m_pfrmTimeSec);
 }
 
 void GameCamera::UpdateState() {
@@ -499,23 +505,23 @@ std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
 
 	return std::forward_as_tuple(index, iLeft, iRight);
 }
+//
+//void GameCamera::Perform(
+//	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& center, const float sec)
+//{
+//	GameManager::GetInstance().m_menu->PauseGame();
+//	m_state = State::enSlerpPerformanceCamera;
+//	m_pfrmCameraChangeRatio = 0.f;
+//	m_pfrmTimeSec = sec;
+//	m_pfrmCamBeginPos = cameraBeginPos;
+//	m_pfrmCamEndPos = cameraEndPos;
+//	m_pfrmTarBeginPos = targetBeginPos;
+//	m_pfrmTarEndPos = targetEndPos;
+//	m_pfrmCenterPos = center;
+//}
 
 void GameCamera::Perform(
-	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& center, const float sec)
-{
-	GameManager::GetInstance().m_menu->PauseGame();
-	m_state = State::enSlerpPerformanceCamera;
-	m_pfrmCameraChangeRatio = 0.f;
-	m_pfrmTimeSec = sec;
-	m_pfrmCamBeginPos = cameraBeginPos;
-	m_pfrmCamEndPos = cameraEndPos;
-	m_pfrmTarBeginPos = targetBeginPos;
-	m_pfrmTarEndPos = targetEndPos;
-	m_pfrmCenterPos = center;
-}
-
-void GameCamera::Perform(
-	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec)
+	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec, const float resumeInterval)
 {
 	GameManager::GetInstance().m_menu->PauseGame();
 	m_state = State::enLerpPerformanceCamera;
@@ -525,5 +531,6 @@ void GameCamera::Perform(
 	m_pfrmCamEndPos = cameraEndPos;
 	m_pfrmTarBeginPos = targetBeginPos;
 	m_pfrmTarEndPos = targetEndPos;
+	m_pfrmGameResumeInterval = resumeInterval;
 }
 
