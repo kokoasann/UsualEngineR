@@ -224,6 +224,15 @@
     <ClInclude Include="Enemy\State\EnemyExplosionBombState.h">
       <Filter>Enemy\State\Zako\ExplosionMonsterState</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Boss\Boss_Fatman.h">
+      <Filter>Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -450,6 +459,15 @@
     <ClCompile Include="Enemy\State\EnemyExplosionBombState.cpp">
       <Filter>Enemy\State\Zako\ExplosionMonsterState</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Boss\Boss_Fatman.cpp">
+      <Filter>Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -562,6 +580,9 @@
     </Filter>
     <Filter Include="Enemy\State\Zako\ExplosionMonsterState">
       <UniqueIdentifier>{be77400a-a2a3-4a9e-a224-8716bf982bb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\BossFatman">
+      <UniqueIdentifier>{f43f0adf-2395-4004-9f6f-69d1718603df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

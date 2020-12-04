@@ -71,13 +71,6 @@ void EnemyManager::SpawnEnemies() {
 		}
 	);
 
-
-	auto srm = NewGO<Zako_ShortRangeMonster>(0);
-	ab.InitHP(60);
-	srm->SetAbility(ab);
-	srm->SetPosition({ 200,73,-100 });
-	m_enemies.push_back(srm);
-	
 	return;
 	
 
