@@ -99,12 +99,31 @@ void ExplosionEffect::Init()
 					ParticleData pd;
 					pd.pos = pos;
 					pd.dir = pos;
-					pd.dir.y += 20.f;
+					pd.dir.y += 0.f;
 					pd.dir.Normalize();
 					pd.lifeTime = GRandom().Rand() * 1.5;
 					pd.kind = ParticleKind::Rise;
 					pd.dir.x = GRandom().Rand() * 80.;
 					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 3.), g_quatIdentity, col, pd.lifeTime, pd, false);
+				}
+			}
+
+			if (m_particleTimer > 0.2f && m_particleTimer < 1.3f)
+			{
+				for (int i = 0; i < 7; i++)
+				{
+					Vector3 pos(GRandom().Rand() - 0.5, GRandom().Rand() - 0.5, GRandom().Rand() - 0.5);
+					pos *= 15.f * 2.f;
+					pos.y += GRandom().Rand() * 45.;
+					ParticleData pd;
+					pd.pos = pos;
+					pd.dir = pos;
+					pd.dir.y += 40.f;
+					pd.dir.Normalize();
+					pd.lifeTime = GRandom().Rand() * 1.;
+					pd.kind = ParticleKind::Gass;
+					pd.dir.x = GRandom().Rand() * 80.;
+					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, false);
 				}
 			}
 			//m_isPlay = false;
@@ -114,8 +133,8 @@ void ExplosionEffect::Init()
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
 	{
-		Vector4 col = { 3.f,1.f,.3f,1.f };
-		Vector4 colE = { 3.f,1.f,.3f,0.f };
+		Vector4 col = { 3.f,1.f,0.3f,1.f };
+		Vector4 colE = { 3.f,1.f,0.3f,0.f };
 		ParticleData* pd = reinterpret_cast<ParticleData*>(extendData);
 		float t = data.lifeTime / pd->lifeTime;
 		switch (pd->kind)
@@ -142,6 +161,15 @@ void ExplosionEffect::Init()
 			data.particleData.pos.y = pd->pos.y + (pd->dir.x * (1.f - powf(1.f - (1.f - t), 10.f)));
 
 			data.particleData.mulColor.Lerp(t, colE, col);
+		}
+			break;
+		case ParticleKind::Gass:
+		{
+			data.particleData.pos.y += 50.f * deltaTime;
+
+			t = 1.f - (powf(1.f - t * 2.f, 4.f));
+			
+			data.particleData.mulColor.Lerp(t, { 0.04, 0.04 ,0.04 ,0. }, { 0.04, 0.04 ,0.04 ,0.8 });
 		}
 			break;
 		}
