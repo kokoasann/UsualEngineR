@@ -91,6 +91,7 @@ void IEnemy::SetState(IEnemyState* s) {
 
 void IEnemy::ApplyDamage(const float damage) {
 	m_ability.hp = max(0.f, m_ability.hp - damage);
+	m_currentState->OnAttacked(this);
 	if (m_healthBar != nullptr) {
 		m_healthBar->ShowHealthBar();
 		//update hp bar

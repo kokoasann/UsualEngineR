@@ -9,5 +9,7 @@ public:
 	virtual void Enter(IEnemy* e) = 0;
 	virtual IEnemyState* Update(IEnemy* e) = 0;
 	virtual void Exit(IEnemy* e) = 0;
+
+	virtual void  OnAttacked(IEnemy* e) {}
 };
 
