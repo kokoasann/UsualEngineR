@@ -55,7 +55,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
 	const float distLimit = 20.f;
-	const float attackRange = 5.f;
+	const float attackRange = e->GetCharaRadius() + player->GetCharaRadius() + 5.f;
 	const float teleportationDist = 200.f;
 
 	//Teleportation
