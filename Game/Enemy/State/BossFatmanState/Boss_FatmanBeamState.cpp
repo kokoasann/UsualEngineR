@@ -40,10 +40,15 @@ bool Boss_FatmanBeamState::Judge(IEnemy* e)
 	//m_positionは最初にロックオンしたときのプレイヤーの位置。
 	Vector3 vecEtoP = m_position - epos;
 
-	//外積。横方向に伸びたVecPtoEに直行するベクトル。
-	Vector3 ECross;
-	ECross.Cross(vecEtoP, Vector3::Up);
-	ECross.Normalize();
+	//外積。横方向に伸びた、VecPtoEに直行するベクトル。
+	Vector3 EWidth;
+	EWidth.Cross(vecEtoP, Vector3::Up);
+	EWidth.Normalize();
+	
+	//外積。縦方向に伸びた、VecPtoEに直行するベクトル。
+	Vector3 EHeight;
+	EHeight.Cross(vecEtoP, Vector3::Right);
+	EHeight.Normalize();
 
 	//pposは現在のプレイヤーの位置。
 	auto& p = GameManager::GetInstance().m_player;
@@ -51,14 +56,17 @@ bool Boss_FatmanBeamState::Judge(IEnemy* e)
 	Vector3 vecEtoCurrentP = ppos - epos;
 
 	//プレイヤーと敵を横に並べたと仮定したときの距離。
-	float dir = ECross.Dot(vecEtoCurrentP);
+	float dirW = EWidth.Dot(vecEtoCurrentP);
+	
+	//プレイヤーと敵を縦に並べたと仮定したときの距離。
+	float dirH = EHeight.Dot(vecEtoCurrentP);
 
 	//正面にいるかどうか判定するための内積。
 	//マイナスだったら後ろ。
 	float front = vecEtoP.Dot(vecEtoCurrentP);
 
 	const float beamWidth = 20.0f;		//ビームの幅。
-	if (std::abs(dir) < beamWidth and front > 0){
+	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0){
 		return true;
 	}
 	return false;
