@@ -339,6 +339,10 @@ public:
 
 	const bool ColCheck(const Player::EnPlayerBone&);
 
+	const float GetCharaRadius() {
+		return m_charaConRadius;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -390,8 +394,8 @@ private:
 	float m_speed = 30.f;
 
 	//Physics
-	float m_charaConRadius = 1.f;
-	float m_charaConHeight = 6.f;
+	const float m_charaConRadius = 1.f;
+	const float m_charaConHeight = 6.f;
 
 	//Pod
 	Pod* m_pod = nullptr;

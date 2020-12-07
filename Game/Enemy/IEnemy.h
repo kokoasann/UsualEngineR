@@ -165,6 +165,10 @@ public:
 		return forward;
 	}
 
+	const float GetCharaRadius() {
+		return m_radius;
+	}
+
 	virtual void Performance() {}
 protected:
 	//ƒLƒƒƒ‰ƒRƒ“ì¬
@@ -195,6 +199,7 @@ protected:
 	//Physics
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
+	float m_radius = 1.f;
 
 private:
 

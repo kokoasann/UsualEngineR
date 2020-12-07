@@ -38,7 +38,7 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 
 	e->RecoverStamina(m_stamina_recover_amount * delta);
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));

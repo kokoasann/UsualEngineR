@@ -19,7 +19,12 @@ GameHUD::~GameHUD()
 
 void GameHUD::Release()
 {
+	DeleteGO(m_spPlayerHP);
+	DeleteGO(m_spPlayerEndurance);
+	DeleteGO(m_spPlayerBoost);
 
+	DeleteGO(m_spEnemyHP);
+	DeleteGO(m_presetSp);
 }
 
 void GameHUD::OnDestroy()
@@ -30,9 +35,7 @@ void GameHUD::OnDestroy()
 
 void GameHUD::Awake()
 {
-	DeleteGO(m_spPlayerHP);
-	DeleteGO(m_spPlayerEndurance);
-	DeleteGO(m_spPlayerBoost);
+
 }
 
 bool GameHUD::Start()

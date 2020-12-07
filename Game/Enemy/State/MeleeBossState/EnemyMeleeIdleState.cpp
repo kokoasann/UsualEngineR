@@ -19,6 +19,8 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 
 	e->SetVelocity(Vector3::Zero);
 
+	m_isAttacked = false;
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee idle\n");
 #endif
@@ -26,7 +28,8 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
@@ -38,7 +41,7 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 	//if(!e->IsOnGround())
 //		e->SetVelocity(vel);
 
-	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
+	if ((vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) or m_isAttacked) {
 		return e->GetStateMap().at(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
@@ -49,4 +52,9 @@ void EnemyMeleeIdleState::Exit(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Exit enemy melee idle\n");
 #endif
+}
+
+void EnemyMeleeIdleState::OnAttacked(IEnemy* e) {
+	//printf("boss is attacked by player\n");
+	m_isAttacked = true;
 }

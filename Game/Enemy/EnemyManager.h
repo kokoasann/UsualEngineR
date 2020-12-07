@@ -60,18 +60,6 @@ public:
 		return m_enemies.at(nearestIndex);
 	}
 
-	void SetPlayer(Player* player) {
-		m_player = player;
-	}
-
-	Player* GetPlayer() const{
-		if (m_player == nullptr) {
-			DebugPrint_WATA("Please set a player instance");
-			assert(false);
-		}
-		return m_player;
-	}
-
 	const IEnemy* GetTargettingEnemy() {
 		return m_targetEnemy;
 	}
@@ -97,7 +85,6 @@ private:
 	const float m_maxSpawnRange = 100.f;
 	const float m_defaultHeight = 130.f;
 	std::vector<IEnemy*> m_enemies;
-	Player* m_player = nullptr;
 	IEnemy* m_targetEnemy = nullptr;
 
 	const float BOSS_A_HP = 500.f;

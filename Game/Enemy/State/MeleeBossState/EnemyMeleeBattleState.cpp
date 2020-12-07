@@ -41,7 +41,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 	const auto stamina = e->GetAbility().stamina;
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
@@ -55,7 +55,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
 	const float distLimit = 20.f;
-	const float attackRange = 5.f;
+	const float attackRange = e->GetCharaRadius() + player->GetCharaRadius() + 5.f;
 	const float teleportationDist = 200.f;
 
 	//Teleportation

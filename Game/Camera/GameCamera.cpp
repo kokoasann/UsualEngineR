@@ -246,8 +246,9 @@ void GameCamera::CalcTarget() {
 }
 
 void GameCamera::CalcEnemyCamera() {
-	static float distParam = 30.f;
-	static float cameraHeight = 8.f;
+	static float distParam = 40.f;
+	static float cameraAdditionalHeight = 35.f;
+	static float cameraAdditionalTargetHeight = 15.f;
 	static float charaSlideParam = 5.f;
 	static float targetSlideParam = 30.f;
 
@@ -279,7 +280,7 @@ void GameCamera::CalcEnemyCamera() {
 	vecTargetToChara.Normalize();
 	ecPos = m_targetPos + vecTargetToChara * (length + distParam);
 	//カメラの位置を上げる.
-	ecPos.y += cameraHeight;
+	ecPos.y += cameraAdditionalHeight;
 
 	//カメラを右側にずらす.
 	auto vecRight = vecTargetToChara;
@@ -294,7 +295,7 @@ void GameCamera::CalcEnemyCamera() {
 	tarp -= vecRight * targetSlideParam;
 	tarp = m_charaPos + vecRight * charaSlideParam;
 	//ターゲットの位置を上げる.
-	tarp.y += cameraHeight;
+	tarp.y += cameraAdditionalTargetHeight;
 
 	m_enemyCameraPos = ecPos;
 	m_enemyCameraTargetPos = tarp;
@@ -524,6 +525,7 @@ void GameCamera::Perform(
 	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec, const float resumeInterval)
 {
 	GameManager::GetInstance().m_menu->PauseGame();
+	m_pfrmTimer = 0.f;
 	m_state = State::enLerpPerformanceCamera;
 	m_pfrmCameraChangeRatio = 0.f;
 	m_pfrmTimeSec = sec;

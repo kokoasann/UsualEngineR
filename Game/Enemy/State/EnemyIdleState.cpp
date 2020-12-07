@@ -4,6 +4,7 @@
 #include "../EnemyManager.h"
 #include "../IEnemy.h"
 #include "../../Player/Player.h"
+#include "GameManager.h"
 
 EnemyIdleState::EnemyIdleState() {
 
@@ -34,7 +35,7 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	//e->SetVelocity(vel);
 
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().m_player;
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;

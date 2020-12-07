@@ -29,7 +29,7 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 	e->PlayAnimation(IEnemy::EnAnimation::enAttackB);
 	m_timer = 0.f;
 	//e->playAttackAnimation();
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().m_player;
 
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
@@ -63,7 +63,8 @@ IEnemyState* EnemyDashPunchState::Update(IEnemy* e) {
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;

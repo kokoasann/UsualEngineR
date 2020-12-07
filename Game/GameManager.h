@@ -20,6 +20,10 @@ public:
 	void InitGameWorld();
 	void Release();
 
+	Player* GetPlayer() const{
+		return m_player;
+	}
+
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
 

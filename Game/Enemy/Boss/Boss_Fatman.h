@@ -1,8 +1,12 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
+#include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanBeamState.h"
 /// <summary>
-/// 
+/// ファットマン。
 /// </summary>
 class Boss_Fatman final :public IEnemy
 {
@@ -33,8 +37,6 @@ public:
 	};
 
 private:
-	//Model
-	ModelRender* m_model = nullptr;
 	float m_scale = 1.f;
 
 	//Physics

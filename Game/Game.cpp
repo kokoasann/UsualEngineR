@@ -8,14 +8,17 @@
 #include "GameHUD.h"
 #include "GameManager.h"
 #include "GameSceneMenu.h"
+#include "Title.h"
 
 void Game::Release()
 {
 	GameManager::GetInstance().Release();
+	EnemyManager::GetEnemyManager().Release();
 }
 
 void Game::OnDestroy()
 {
+	Release();
 }
 
 void Game::Awake()
@@ -89,10 +92,10 @@ void Game::OnItemUnlocked() {
 
 	auto plForward = player->GetForward();
 	auto camBeginPos = player->GetPosition() + plForward * 45.f;
-	auto camEndPos = player->GetPosition() + plForward * 15.f;
+	auto camEndPos = player->GetPosition() + plForward * 25.f;
 	camBeginPos.y += 5.f;
-	auto sec = 2.5f;
-	auto interval = 1.7f;
+	auto sec = 1.5f;
+	auto interval = 0.f;
 
 	cam->Perform(
 		camBeginPos, camEndPos,
@@ -110,24 +113,14 @@ bool Game::Start()
 
 void Game::PreUpdate()
 {
-
 }
 
 void Game::Update()
 {
-	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
-		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
-			GameManager::GetInstance().m_menu->ResumeGame();
-		}
-		else {
-			GameManager::GetInstance().m_menu->PauseGame();
-		}
-	}
 
 	if (GameManager::GetInstance().m_stage->HasMapLoadingDone() and m_isCreateEnemyManager == false) {
 		auto& eM = EnemyManager::GetEnemyManager();
 		eM.SpawnEnemies();
-		eM.SetPlayer(GameManager::GetInstance().m_player);
 		m_isCreateEnemyManager = true;
 	}
 
@@ -157,7 +150,20 @@ void Game::Update()
 
 void Game::PostUpdate()
 {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
+		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
+			GameManager::GetInstance().m_menu->ResumeGame();
+		}
+		else {
+			GameManager::GetInstance().m_menu->PauseGame();
+		}
+	}
 
+	if (g_pad[0]->IsTrigger(enButtonLB3)) {
+		NewGO<Title>(0);
+		auto go = reinterpret_cast<GameObject*>(this);
+		DeleteGO(go);
+	}
 }
 
 void Game::Render()
