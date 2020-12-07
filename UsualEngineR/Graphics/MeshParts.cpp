@@ -107,6 +107,12 @@ namespace UER
 				descriptorHeapNo++;
 			}
 		}
+		if (m_meshs[0]->skinFlags[0])
+		{
+			m_shadowDescHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_bone), m_boneMatricesStructureBuffer);
+		}
+		m_shadowDescHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_modelData), m_commonConstantBuffer);
+		m_shadowDescHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), g_lockCamera3D.Get()->GetConstBuffer());
 	}
 	void MeshParts::CreateMeshFromTkmMesh(
 		const TkmFile::SMesh& tkmMesh, 
@@ -213,12 +219,16 @@ namespace UER
 	
 		m_commonConstantBuffer.CopyToVRAM(&cb);
 	
-		if (m_expandData) {
-			m_expandConstantBuffer.CopyToVRAM(m_expandData);
-		}
-		if (m_boneMatricesStructureBuffer.IsInited()) {
-			//ボーン行列を更新する。
-			m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
+		if (!m_isDrawShadow)
+		{
+			if (m_expandData) {
+				m_expandConstantBuffer.CopyToVRAM(m_expandData);
+			}
+			if (m_boneMatricesStructureBuffer.IsInited()) {
+				//ボーン行列を更新する。
+				m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
+			}
+			m_isDrawShadow = false;
 		}
 		int descriptorHeapNo = 0;
 		for (auto& mesh : m_meshs) {
@@ -240,6 +250,51 @@ namespace UER
 			}
 		}
 	#endif
+	}
+
+	void MeshParts::DrawShadow(RenderContext& rc, const Matrix& mWorld)
+	{
+		//メッシュごとにドロー
+		//プリミティブのトポロジーはトライアングルリストのみ。
+		rc.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		if (!m_isDrawShadow)
+		{
+			//定数バッファを更新する。
+			SConstantBuffer cb;
+			cb.mWorld = mWorld;
+
+			m_commonConstantBuffer.CopyToVRAM(&cb);
+
+			if (m_expandData) {
+				m_expandConstantBuffer.CopyToVRAM(m_expandData);
+			}
+			if (m_boneMatricesStructureBuffer.IsInited()) {
+				//ボーン行列を更新する。
+				m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
+			}
+		}
+		int descriptorHeapNo = 0;
+		for (auto& mesh : m_meshs) {
+			//頂点バッファを設定。
+			rc.SetVertexBuffer(mesh->m_vertexBuffer);
+			//マテリアルごとにドロー。
+			for (int matNo = 0; matNo < mesh->m_materials.size(); matNo++) {
+				//このマテリアルが貼られているメッシュの描画開始。
+				mesh->m_materials[matNo]->BeginRenderShadow(rc, mesh->skinFlags[matNo]);
+				//ディスクリプタヒープを登録。
+				rc.SetDescriptorHeap(m_shadowDescHeap);
+				//インデックスバッファを設定。
+				auto& ib = mesh->m_indexBufferArray[matNo];
+				rc.SetIndexBuffer(*ib);
+
+				//ドロー。
+				rc.DrawIndexed(ib->GetCount());
+				descriptorHeapNo++;
+			}
+		}
+
+		m_isDrawShadow = true;
 	}
 
 }

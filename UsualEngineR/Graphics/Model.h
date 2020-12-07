@@ -80,6 +80,8 @@ namespace UER
 		/// </summary>
 		/// <param name="renderContext">レンダリングコンテキスト</param>
 		void Draw(RenderContext& renderContext, const Vector4& mulcolor);
+
+		void DrawShadow(RenderContext& rc);
 		/// <summary>
 		/// ワールド行列を取得。
 		/// </summary>

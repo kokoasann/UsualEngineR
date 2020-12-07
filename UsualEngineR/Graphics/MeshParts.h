@@ -63,6 +63,8 @@ namespace UER
 		/// <param name="mProj">プロジェクション行列</param>
 		/// <param name="light">ライト</param>
 		void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj, const Vector4& mulcolor);
+
+		void DrawShadow(RenderContext& rc, const Matrix& mWorld);
 		/// <summary>
 		/// スケルトンを関連付ける。
 		/// </summary>
@@ -131,8 +133,12 @@ namespace UER
 		StructuredBuffer m_boneMatricesStructureBuffer;			//ボーン行列の構造化バッファ。
 		std::vector< SMesh* > m_meshs;							//メッシュ。
 		std::vector< DescriptorHeap > m_descriptorHeap;			//ディスクリプタヒープ。
+		DescriptorHeap m_shadowDescHeap;						//影用()
+
 		Skeleton* m_skeleton = nullptr;							//スケルトン。
 		void* m_expandData = nullptr;							//ユーザー拡張データ。
+
+		bool m_isDrawShadow = false;
 	};
 
 }

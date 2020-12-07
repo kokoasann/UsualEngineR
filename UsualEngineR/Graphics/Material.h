@@ -26,6 +26,8 @@ namespace UER
 		/// <param name="rc">レンダリングコンテキスト</param>
 		/// <param name="hasSkin">スキンがあるかどうかのフラグ</param>
 		void BeginRender(RenderContext& rc, int hasSkin);
+
+		void BeginRenderShadow(RenderContext& rc, int hasSkin);
 	
 		/// <summary>
 		/// アルベドマップを取得。
@@ -109,9 +111,12 @@ namespace UER
 		PipelineState m_transNonSkinModelPipelineState;	//スキンなしモデル用のパイプラインステート(半透明マテリアル)。
 		PipelineState m_gBufferNonSkinModelPipelineState;
 		PipelineState m_gBufferSkinModelPipelineState;
+		PipelineState m_shadowNonSkinModelPipelineState;//影用(non skin model)
+		PipelineState m_shadowSkinModelPipelineState;	//影用(skin model)
 		Shader m_vsNonSkinModel;						//スキンなしモデル用の頂点シェーダー。
 		Shader m_vsSkinModel;							//スキンありモデル用の頂点シェーダー。
 		Shader m_psModel;								//モデル用のピクセルシェーダー。
+		Shader m_psShadow;								//影用。
 
 		Texture m_emmissionMap;							//エミッションマップ
 		bool m_isLoadEmmission = false;

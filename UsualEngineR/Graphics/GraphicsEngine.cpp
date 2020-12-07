@@ -55,21 +55,7 @@ namespace UER
 	
 		CloseHandle(m_fenceEvent);
 	}
-	void GraphicsEngine::WaitDraw()
-	{
-		//描画終了待ち
-		// Signal and increment the fence value.
-		const UINT64 fence = m_fenceValue;
-		m_commandQueue->Signal(m_fence, fence);
-		m_fenceValue++;
 	
-		// Wait until the previous frame is finished.
-		if (m_fence->GetCompletedValue() < fence)
-		{
-			m_fence->SetEventOnCompletion(fence, m_fenceEvent);
-			WaitForSingleObject(m_fenceEvent, INFINITE);
-		}
-	}
 	bool GraphicsEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
 	{
 		m_frameBufferWidth = frameBufferWidth;
@@ -583,8 +569,6 @@ namespace UER
 		//レンダリングコンテキストを閉じる。
 		m_renderContext.Close();
 
-		
-	
 		//コマンドを実行。
 		ID3D12CommandList* ppCommandLists[] = { m_commandList };
 		m_commandQueue->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
@@ -596,6 +580,32 @@ namespace UER
 		m_swapChain->Present(1, 0);
 	#endif
 		//描画完了待ち。
+		WaitDraw();
+	}
+
+	void GraphicsEngine::WaitDraw()
+	{
+		//描画終了待ち
+		// Signal and increment the fence value.
+		const UINT64 fence = m_fenceValue;
+		m_commandQueue->Signal(m_fence, fence);
+		m_fenceValue++;
+
+		// Wait until the previous frame is finished.
+		if (m_fence->GetCompletedValue() < fence)
+		{
+			m_fence->SetEventOnCompletion(fence, m_fenceEvent);
+			WaitForSingleObject(m_fenceEvent, INFINITE);
+		}
+	}
+
+	void GraphicsEngine::ExecuteCommandList()
+	{
+		m_renderContext.Close();
+		//コマンドを実行。
+		ID3D12CommandList* ppCommandLists[] = { m_commandList };
+		m_commandQueue->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
+
 		WaitDraw();
 	}
 

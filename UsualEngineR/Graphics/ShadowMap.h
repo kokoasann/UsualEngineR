@@ -20,9 +20,9 @@ namespace UER
 
 		void Send2GPU();
 
-		void Render();
+		void Render(RenderContext& rc);
 
-		void AddShadowCaster(SkinModel* m)
+		void AddShadowCaster(Model* m)
 		{
 			m_shadowCaster.push_back(m);
 			
@@ -43,9 +43,15 @@ namespace UER
 		float m_lightHeight = 1000.f;
 		RenderTarget m_shadowMapRT[MAX_SHADOW_MAP];
 		ConstantBuffer m_shadowCB;
-		std::vector<SkinModel*> m_shadowCaster;
+		std::vector<Model*> m_shadowCaster;
 		Matrix m_mLVP[MAX_SHADOW_MAP] = {Matrix::Identity};
 		SShadowCB m_shadowCBEntity;
 		D3D12_VIEWPORT m_viewPort;
+
+		struct SConstBufferLight
+		{
+			Matrix mvp;
+		};
+		ConstantBuffer m_constBufferLight;
 	};
 }

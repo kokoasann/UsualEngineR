@@ -104,6 +104,10 @@ namespace UER
 			m_model.CreateIK(startBone, endBone, radius);
 		}
 
+		void SetShadowCasterFrag(bool b)
+		{
+			m_isShadowCaster = b;
+		}
 	private:
 		Model m_model;				//モデル
 		CAnimation m_animation;		//アニメーション
@@ -117,5 +121,7 @@ namespace UER
 		bool m_isRender = false;	//レンダリングする?
 
 		float m_animPlaySpeed = 1.f;
+
+		bool m_isShadowCaster = false;
 	};
 }

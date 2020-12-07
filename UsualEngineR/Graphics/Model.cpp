@@ -113,6 +113,11 @@ namespace UER
 		
 	}
 
+	void Model::DrawShadow(RenderContext& rc)
+	{
+		m_meshParts.DrawShadow(rc, m_world);
+	}
+
 	IK* Model::CreateIK(Bone* startBone, Bone* endBone, float radius)
 	{
 		IK* ik = new IK(&m_skeleton, startBone, endBone, radius);

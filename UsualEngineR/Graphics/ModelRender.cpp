@@ -47,6 +47,11 @@ namespace UER
 		m_model.UpdateSkeleton();
 		
 		//m_model.UpdateSkeleton();
+
+		if(m_isShadowCaster)
+			g_graphicsEngine->GetShadowMap().AddShadowCaster(&m_model);
+
+
 	}
 	void ModelRender::Render()
 	{

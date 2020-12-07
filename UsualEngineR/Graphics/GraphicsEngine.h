@@ -18,6 +18,8 @@
 #include "PostEffect/PostEffect.h"
 #include "PreRender/PreRender.h"
 
+#include "ShadowMap.h"
+
 #include "Camera.h"
 
 
@@ -58,6 +60,9 @@ namespace UER
 		/// 1フレームのレンダリングの終了時に呼び出してください。
 		/// </remarks>
 		void EndRender();
+
+
+		void ExecuteCommandList();
 
 		/// <summary>
 		/// 
@@ -244,6 +249,11 @@ namespace UER
 		{
 			return m_primitive;
 		}
+
+		ShadowMap& GetShadowMap()
+		{
+			return m_shadowMap;
+		}
 	private:
 		/// <summary>
 		/// D3Dデバイスの作成。
@@ -310,6 +320,8 @@ namespace UER
 		/// </summary>
 		void WaitDraw();
 		
+
+		
 	public:
 		enum { FRAME_BUFFER_COUNT = 2 };						//フレームバッファの数。
 	private:
@@ -358,6 +370,8 @@ namespace UER
 		LightManager m_lightManager;
 		PostEffect m_postEffect;
 		PreRender m_preRender;
+
+		ShadowMap m_shadowMap;
 
 		Primitive m_primitive;
 		RootSignature m_copyRootSign;

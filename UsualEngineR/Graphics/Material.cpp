@@ -127,26 +127,41 @@ namespace UER
 	
 		m_skinModelPipelineState.Init(psoDesc);
 
-		
 
-	
 		//続いてスキンなしモデル用を作成。
 		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsNonSkinModel.GetCompiledBlob());
 		m_nonSkinModelPipelineState.Init(psoDesc);
-	
-		//続いて半透明マテリアル用。
+
+
+
+		//SHADOW NON SKIN MODEL
+		psoDesc.NumRenderTargets = 1;
+		psoDesc.RTVFormats[0] = DXGI_FORMAT_R32_FLOAT;		//light view depth。
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Normal)] = DXGI_FORMAT_UNKNOWN;			//法線出力用。	
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Depth)] = DXGI_FORMAT_UNKNOWN;	//Z値。
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Specular)] = DXGI_FORMAT_UNKNOWN;			//法線出力用。	
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Tangent)] = DXGI_FORMAT_UNKNOWN;	//Z値。
+		psoDesc.PS = CD3DX12_SHADER_BYTECODE(m_psShadow.GetCompiledBlob());
+		m_shadowSkinModelPipelineState.Init(psoDesc);
+
+		// SHADOW SKIN MODEL
 		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsSkinModel.GetCompiledBlob());
-		psoDesc.BlendState.IndependentBlendEnable = TRUE;
-		psoDesc.BlendState.RenderTarget[0].BlendEnable = TRUE;
-		psoDesc.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
-		psoDesc.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
-		psoDesc.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+		m_shadowSkinModelPipelineState.Init(psoDesc);
 	
-		
-		m_transSkinModelPipelineState.Init(psoDesc);
+
+		////続いて半透明マテリアル用。
+		//psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsSkinModel.GetCompiledBlob());
+		//psoDesc.BlendState.IndependentBlendEnable = TRUE;
+		//psoDesc.BlendState.RenderTarget[0].BlendEnable = TRUE;
+		//psoDesc.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		//psoDesc.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		//psoDesc.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
 	
-		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsNonSkinModel.GetCompiledBlob());
-		m_transNonSkinModelPipelineState.Init(psoDesc);
+		//
+		//m_transSkinModelPipelineState.Init(psoDesc);
+	
+		//psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsNonSkinModel.GetCompiledBlob());
+		//m_transNonSkinModelPipelineState.Init(psoDesc);
 	
 	}
 	void Material::InitShaders(
@@ -159,18 +174,32 @@ namespace UER
 		m_vsNonSkinModel.LoadVS(fxFilePath, vsEntryPointFunc);
 		m_vsSkinModel.LoadVS(fxFilePath, vsEntryPointFunc);
 		m_psModel.LoadPS(psfxFilePath, psEntryPointFunc);
+
+		m_psShadow.LoadPS(L"Assets/shader/Shadow.fx", "PSMain");
 	}
 	void Material::BeginRender(RenderContext& rc, int hasSkin)
 	{
 		rc.SetRootSignature(m_rootSignature);
 		
 		if (hasSkin) {
-		//	rc.SetPipelineState(m_skinModelPipelineState);
-			rc.SetPipelineState(m_transSkinModelPipelineState);
+			rc.SetPipelineState(m_skinModelPipelineState);
+			//rc.SetPipelineState(m_transSkinModelPipelineState);
 		}
 		else {
-		//	rc.SetPipelineState(m_nonSkinModelPipelineState);
-			rc.SetPipelineState(m_transNonSkinModelPipelineState);
+			rc.SetPipelineState(m_nonSkinModelPipelineState);
+			//rc.SetPipelineState(m_transNonSkinModelPipelineState);
+		}
+	}
+
+	void Material::BeginRenderShadow(RenderContext& rc, int hasSkin)
+	{
+		rc.SetRootSignature(m_rootSignature);
+
+		if (hasSkin) {
+			rc.SetPipelineState(m_shadowSkinModelPipelineState);
+		}
+		else {
+			rc.SetPipelineState(m_shadowNonSkinModelPipelineState);
 		}
 	}
 
