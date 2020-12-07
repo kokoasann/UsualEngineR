@@ -110,19 +110,10 @@ bool Game::Start()
 
 void Game::PreUpdate()
 {
-
 }
 
 void Game::Update()
 {
-	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
-		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
-			GameManager::GetInstance().m_menu->ResumeGame();
-		}
-		else {
-			GameManager::GetInstance().m_menu->PauseGame();
-		}
-	}
 
 	if (GameManager::GetInstance().m_stage->HasMapLoadingDone() and m_isCreateEnemyManager == false) {
 		auto& eM = EnemyManager::GetEnemyManager();
@@ -157,7 +148,14 @@ void Game::Update()
 
 void Game::PostUpdate()
 {
-
+	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
+		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
+			GameManager::GetInstance().m_menu->ResumeGame();
+		}
+		else {
+			GameManager::GetInstance().m_menu->PauseGame();
+		}
+	}
 }
 
 void Game::Render()
