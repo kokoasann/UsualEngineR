@@ -4,6 +4,7 @@
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
 #include "../../Boss/BossA.h"
+#include "GameManager.h"
 
 EnemyTeleportationState::EnemyTeleportationState() {
 
@@ -37,7 +38,8 @@ IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().m_player;
+
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;

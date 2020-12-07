@@ -64,7 +64,7 @@ void DropItemA::Update()
 
 void DropItemA::PostUpdate()
 {
-	auto p = EnemyManager::GetEnemyManager().GetPlayer();
+	auto p = GameManager::GetInstance().m_player;
 	auto dist = (p->GetPosition() - m_position).Length();
 
 	if (dist < m_GRASP_RANGE) {

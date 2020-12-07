@@ -41,7 +41,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 	const auto stamina = e->GetAbility().stamina;
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
 
 	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));

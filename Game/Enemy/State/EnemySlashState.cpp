@@ -19,7 +19,8 @@ void EnemySlashState::Enter(IEnemy* e) {
 #endif
 	m_timer = 0.f;
 	//e->playAttackAnimation();
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	player->ApplyDamage(m_damageAmount);
 }
 

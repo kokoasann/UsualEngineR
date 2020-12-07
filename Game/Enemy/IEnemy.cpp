@@ -47,7 +47,7 @@ void IEnemy::OnDestroy() {
 
 void IEnemy::Update() {
 
-	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_nextState = m_currentState->Update(this);
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);

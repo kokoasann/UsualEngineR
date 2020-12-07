@@ -1,4 +1,5 @@
 #pragma once
+#include "GameManager.h"
 class IEnemy;
 
 class IEnemyState

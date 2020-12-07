@@ -28,7 +28,8 @@ void EnemyMeleePunchState::Enter(IEnemy* e) {
 
 	m_timer = 0.f;
 	//e->playAttackAnimation();
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	player->ApplyDamage(m_damageAmount);
 
 #ifdef _PRINT_ENEMY_STATE

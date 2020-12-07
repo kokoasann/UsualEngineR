@@ -3,6 +3,7 @@
 #include "../IEnemy.h"
 #include "../EnemyManager.h"
 #include "../../Player/Player.h"
+#include "GameManager.h"
 
 EnemyBattleState::EnemyBattleState() {
 }
@@ -21,7 +22,7 @@ void EnemyBattleState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyBattleState::Update(IEnemy* e) {
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().m_player;
 
 	if (player->GetCurrentHP() <= 0) {
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));

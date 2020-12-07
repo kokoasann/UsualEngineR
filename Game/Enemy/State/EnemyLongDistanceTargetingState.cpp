@@ -5,6 +5,7 @@
 #include "Enemy/Zako/Zako_LongDistanceMachine.h"
 #include "EnemyLongDistanceAttackState.h"
 #include "Player/Player.h"
+#include "GameManager.h"
 
 EnemyLongDistanceTargetingState::EnemyLongDistanceTargetingState()
 {
@@ -36,7 +37,8 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 	
 	const float dtime = gameTime()->GetDeltaTime();
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().m_player;
+
 	auto pvel = player->GetVelocity();
 	float pvelLen = pvel.Length();
 	pvel.Normalize();

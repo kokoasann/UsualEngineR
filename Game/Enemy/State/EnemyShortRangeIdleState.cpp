@@ -22,7 +22,8 @@ void EnemyShortRangeIdleState::Enter(IEnemy* e)
 
 IEnemyState* EnemyShortRangeIdleState::Update(IEnemy* e)
 {
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 

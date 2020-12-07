@@ -88,7 +88,8 @@ void EnemyShortRangeComingState::Exit(IEnemy* e)
 
 void EnemyShortRangeComingState::Move(IEnemy* e)
 {
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;

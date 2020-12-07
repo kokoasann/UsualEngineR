@@ -28,7 +28,8 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 
 IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 
-	auto player = EnemyManager::GetEnemyManager().GetPlayer();
+	auto player = GameManager::GetInstance().GetPlayer();
+
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
