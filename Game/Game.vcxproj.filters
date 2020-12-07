@@ -233,6 +233,7 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -468,6 +469,7 @@
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

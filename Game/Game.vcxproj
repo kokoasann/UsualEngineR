@@ -258,6 +258,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Test\Test.h" />
     <ClInclude Include="Test\ThreadTest.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera\CCameraCollisionSlover.cpp" />
@@ -348,6 +349,7 @@
     </ClCompile>
     <ClCompile Include="Test\Test.cpp" />
     <ClCompile Include="Test\ThreadTest.cpp" />
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">

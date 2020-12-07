@@ -8,14 +8,17 @@
 #include "GameHUD.h"
 #include "GameManager.h"
 #include "GameSceneMenu.h"
+#include "Title.h"
 
 void Game::Release()
 {
 	GameManager::GetInstance().Release();
+	EnemyManager::GetEnemyManager().Release();
 }
 
 void Game::OnDestroy()
 {
+	Release();
 }
 
 void Game::Awake()
@@ -118,7 +121,6 @@ void Game::Update()
 	if (GameManager::GetInstance().m_stage->HasMapLoadingDone() and m_isCreateEnemyManager == false) {
 		auto& eM = EnemyManager::GetEnemyManager();
 		eM.SpawnEnemies();
-		eM.SetPlayer(GameManager::GetInstance().m_player);
 		m_isCreateEnemyManager = true;
 	}
 
@@ -155,6 +157,12 @@ void Game::PostUpdate()
 		else {
 			GameManager::GetInstance().m_menu->PauseGame();
 		}
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonLB3)) {
+		NewGO<Title>(0);
+		auto go = reinterpret_cast<GameObject*>(this);
+		DeleteGO(go);
 	}
 }
 
