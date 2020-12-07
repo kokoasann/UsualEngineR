@@ -524,6 +524,7 @@ void GameCamera::Perform(
 	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec, const float resumeInterval)
 {
 	GameManager::GetInstance().m_menu->PauseGame();
+	m_pfrmTimer = 0.f;
 	m_state = State::enLerpPerformanceCamera;
 	m_pfrmCameraChangeRatio = 0.f;
 	m_pfrmTimeSec = sec;

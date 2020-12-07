@@ -89,10 +89,10 @@ void Game::OnItemUnlocked() {
 
 	auto plForward = player->GetForward();
 	auto camBeginPos = player->GetPosition() + plForward * 45.f;
-	auto camEndPos = player->GetPosition() + plForward * 15.f;
+	auto camEndPos = player->GetPosition() + plForward * 25.f;
 	camBeginPos.y += 5.f;
-	auto sec = 2.5f;
-	auto interval = 1.7f;
+	auto sec = 1.5f;
+	auto interval = 0.f;
 
 	cam->Perform(
 		camBeginPos, camEndPos,
