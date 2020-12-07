@@ -115,6 +115,17 @@ void Pod::Update()
 void Pod::PostUpdate()
 {
 
+	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
+
+	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
+	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
+
+	//m_rotation = mp_player->GetRotation();
+
+	m_model->SetPosition(m_pos);
+	m_model->SetRotation(m_rotation);
+
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
@@ -196,16 +207,6 @@ void Pod::PostUpdate()
 		BackToIdlePos();
 	}
 
-	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
-	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
-
-	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
-	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
-
-	//m_rotation = mp_player->GetRotation();
-
-	m_model->SetPosition(m_pos);
-	m_model->SetRotation(m_rotation);
 }
 
 
