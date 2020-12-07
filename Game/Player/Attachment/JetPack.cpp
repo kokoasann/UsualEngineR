@@ -18,6 +18,10 @@ JetPack::~JetPack()
 void JetPack::Release()
 {
 	DeleteGO(m_model);
+
+	for (int i = 0; i < m_jetEffects.size(); i++) {
+		DeleteGO(m_jetEffects.at(i));
+	}
 }
 
 void JetPack::OnDestroy()
