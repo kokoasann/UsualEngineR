@@ -11,7 +11,7 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
-	bool CrossJudge(IEnemy* e);
+	bool Judge(IEnemy* e);
 private:
 	Vector3			m_position = Vector3::Zero;
 	const float		m_damage = Player::GetMaxHP() / 2000.0f;
