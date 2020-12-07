@@ -50,7 +50,12 @@ public:
 
 	void Performance()
 	{
-		m_model->SetMulColor({ 20,1,1,1 });
+		if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+			m_model->SetMulColor({ 0.f,0.f,0.f,1.f });
+		}
+		else {
+			m_model->SetMulColor({ 20,1,1,1 });
+		}
 	}
 private:
 

@@ -19,24 +19,22 @@ PlayerLongRangeAttack::PlayerLongRangeAttack() {
 		muzzleFlash->SetSca(Vector3::One * 0.1);
 		m_muzzleFlashes.push_back(muzzleFlash);
 	}
-
 }
 
 PlayerLongRangeAttack::~PlayerLongRangeAttack() {
-
+	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
+		DeleteGO(m_muzzleFlashes.at(i));
+	}
 }
 
 void PlayerLongRangeAttack::Execute(Player* p) {
 	auto delta = gameTime()->GetDeltaTime();
 	m_shotIntervalTimer += delta;
+
+	auto& bones = p->GetPod()->GetBones();
+	auto pvel = p->GetVelocity() * delta;
+
 	if (m_shotIntervalTimer >= m_interval) {
-		DebugPrint_WATA("distant attacking\n");
-
-		//p->GetPod().
-
-		//Enemy_Bullet* eb = NewGO<Enemy_Bullet>(0, true);
-		//eb->Init(p, 0.25f, m_velocity, m_speed, 5, 1);
-
 
 		auto targetE = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 
@@ -65,41 +63,64 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 
 		float speed = defSpeed + p->GetVelocity().Length();
 
-		auto& bones = p->GetPod()->GetBones();
-		auto pvel = p->GetVelocity() * delta;
-
-		auto posR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetTransrate() + pvel;
-		auto rotR1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetRotate();
-		projectileR1->Init(posR1, scale, vel, speed, lifeSpan, range);
+		projectileR1->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R1)], scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->Play();
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetPos(posR1);
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetRot(rotR1);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetSca(Vector3::One * flashScale);
 
-		auto posR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetTransrate() + pvel;
-		auto rotR2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetRotate();
-		projectileR2->Init(posR2, scale, vel, speed, lifeSpan, range);
+		projectileR2->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R2)], scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->Play();
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetPos(posR2);
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetRot(rotR2);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetSca(Vector3::One * flashScale);
 
-		auto posL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetTransrate() + pvel;
-		auto rotL1 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetRotate();
-		projectileL1->Init(posL1, scale, vel, speed, lifeSpan, range);
+		projectileL1->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L1)], scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->Play();
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetPos(posL1);
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetRot(rotL1);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetSca(Vector3::One * flashScale);
 
-		auto posL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetTransrate() + pvel;
-		auto rotL2 = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetRotate();
-		projectileL2->Init(posL2, scale, vel, speed, lifeSpan, range);
+		projectileL2->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L2)], scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->Play();
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetPos(posL2);
-		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetRot(rotL2);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetSca(Vector3::One * flashScale);
 
 		m_shotIntervalTimer = 0.f;
 	}
+
+}
+
+
+void PlayerLongRangeAttack::CalcEffectsTransform() {
+
+	auto delta = gameTime()->GetDeltaTime();
+	auto p = GameManager::GetInstance().m_player;
+	auto& bones = p->GetPod()->GetBones();
+	auto pvel = p->GetVelocity() * delta;
+
+	//R1
+	m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R1)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetTransrate() + pvel;
+	m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_R1)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_R1))->GetWorldMatrix().GetRotate();
+	//R2
+	m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R2)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetTransrate() + pvel;
+	m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_R2)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_R2))->GetWorldMatrix().GetRotate();
+	//L1
+	m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L1)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetTransrate() + pvel;
+	m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_L1)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_L1))->GetWorldMatrix().GetRotate();
+	//L2
+	m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L2)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetTransrate() + pvel;
+	m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_L2)] = bones.at(TO_INT(Pod::EnPodBone::Burrel_L2))->GetWorldMatrix().GetRotate();
+
+
+}
+
+void PlayerLongRangeAttack::UpdateEffectPos() {
+	CalcEffectsTransform();
+	//R1
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetPos(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R1)]);
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetRot(m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_R1)]);
+	//R2
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetPos(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R2)]);
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetRot(m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_R2)]);
+	//L1
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetPos(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L1)]);
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetRot(m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_L1)]);
+	//L2
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetPos(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L2)]);
+	m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetRot(m_effectTransforms.m_rotList[TO_INT(Pod::EnPodBone::Burrel_L2)]);
+
 }

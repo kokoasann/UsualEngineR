@@ -10,5 +10,5 @@ public:
 	virtual IEnemyState* Update(IEnemy* e) override;
 	virtual void Exit(IEnemy* e) override;
 private:
-
+	bool m_isPerformed = false;
 };

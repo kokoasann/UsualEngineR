@@ -22,13 +22,12 @@ void Game::Awake()
 {
 }
 
-
 void Game::OnEnterBattle(IEnemy* enemy) {
 
 	DebugPrint_WATA("enter battle\n");
 
 	auto cam = GameManager::GetInstance().m_camera;
-	auto tar = EnemyManager::GetEnemyManager().GetNearestBossEnemy()->GetPosition();
+	auto tar = enemy->GetPosition();
 	auto center = GameManager::GetInstance().m_player->GetPosition();
 
 	tar.y += 20.f;
@@ -43,7 +42,7 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	camEndPos.z += 10.f;
 	//rot.Apply(camEndPos);
 	auto sec = 2.5f;
-
+	auto interval = 1.7f;
 	//cam->Perform(
 	//camBeginPos, camEndPos,
 	//	tar, tar,
@@ -52,10 +51,53 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 
 	cam->Perform(
 		camBeginPos, camEndPos,
-		tar, tar, sec
+		tar, tar, sec, interval
 	);
 	m_isBossCamPerform = true;
 	m_boss = enemy;
+}
+
+void Game::OnEnemyDied(IEnemy* enemy) {
+
+	DebugPrint_WATA("enemy died\n");
+
+	auto cam = GameManager::GetInstance().m_camera;
+	auto tar = enemy->GetPosition();
+	tar.y += 20.f;
+
+	auto eneForward = enemy->GetForward();
+	auto camEndPos = enemy->GetPosition() + eneForward * 45.f;
+	camEndPos.y += 15.f;
+	auto sec = 1.f;
+	auto interval = 1.7f;
+
+	cam->Perform(
+		camEndPos, camEndPos,
+		tar, tar, sec, interval
+	);
+
+	m_isBossCamPerform = true;
+	m_boss = enemy;
+
+}
+
+void Game::OnItemUnlocked() {
+	DebugPrint_WATA("Nannka Item has been unlocked\n");
+	auto player = GameManager::GetInstance().m_player;
+	auto cam = GameManager::GetInstance().m_camera;
+	auto tar = player->GetPosition();
+
+	auto plForward = player->GetForward();
+	auto camBeginPos = player->GetPosition() + plForward * 45.f;
+	auto camEndPos = player->GetPosition() + plForward * 25.f;
+	camBeginPos.y += 5.f;
+	auto sec = 1.5f;
+	auto interval = 0.f;
+
+	cam->Perform(
+		camBeginPos, camEndPos,
+		tar, tar, sec, interval
+	);
 }
 
 bool Game::Start()
@@ -93,9 +135,13 @@ void Game::Update()
 	{
 		if (m_timer > 1.7f)
 		{
-			auto cam = GameManager::GetInstance().m_camera;
-			cam->ChangePlayerCam();
-			GameManager::GetInstance().m_menu->ResumeGame();
+			if (m_boss->GetCurrentState() == m_boss->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				GameObject* enemy = reinterpret_cast<GameObject*>(m_boss);
+				EnemyManager::GetEnemyManager().DestroyEnemy(m_boss);
+			}
+			//auto cam = GameManager::GetInstance().m_camera;
+			//cam->ChangePlayerCam();
+			//GameManager::GetInstance().m_menu->ResumeGame();
 			m_timer = 0.f;
 			m_boss = nullptr;
 			return;

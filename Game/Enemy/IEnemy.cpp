@@ -91,6 +91,7 @@ void IEnemy::SetState(IEnemyState* s) {
 
 void IEnemy::ApplyDamage(const float damage) {
 	m_ability.hp = max(0.f, m_ability.hp - damage);
+	m_currentState->OnAttacked(this);
 	if (m_healthBar != nullptr) {
 		m_healthBar->ShowHealthBar();
 		//update hp bar
@@ -109,6 +110,7 @@ void IEnemy::RecoverStamina(const float amount) {
 }
 
 void IEnemy::InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody) {
+	m_radius = radius;
 	m_charaCon.Init(radius, height, pos, /*isUseRigidBody */ true);
 	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Enemy);
 }

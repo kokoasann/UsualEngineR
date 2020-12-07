@@ -73,7 +73,7 @@ public:
 	/// <param name="targetEndPos">ターゲット線形補完終了座標</param>
 	/// <param name="centerPos">球面線形補完中心座標</param>
 	/// <param name="sec">補完時間(秒)</param>
-	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& centerPos, const float sec);
+	//void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const Vector3& centerPos, const float sec);
 
 	/// <summary>
 	/// 線形補完演出カメラ
@@ -83,7 +83,7 @@ public:
 	/// <param name="targetBeginPos"></param>
 	/// <param name="targetEndPos"></param>
 	/// <param name="sec"></param>
-	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos,const float sec);
+	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos,const float sec, const float resumeInterval = 0.f);
 
 	void ChangePlayerCam()
 	{
@@ -139,6 +139,7 @@ private:
 	float m_pfrmTimeSec = 0.f;
 	float m_pfrmTimer = 0.f;
 	float m_pfrmCameraChangeRatio = 0.f;
+	float m_pfrmGameResumeInterval = 0.f;
 	Vector3 m_pfrmCenterPos = Vector3::Zero;
 	Vector3 m_pfrmCamBeginPos = Vector3::Zero;
 	Vector3 m_pfrmCamEndPos = Vector3::Zero;

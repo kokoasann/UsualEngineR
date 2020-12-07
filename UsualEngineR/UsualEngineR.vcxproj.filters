@@ -310,6 +310,9 @@
     <ClInclude Include="Graphics\IK\IK.h">
       <Filter>Graphics\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\ShadowMap.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -585,6 +588,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\IK\IK.cpp">
       <Filter>Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\ShadowMap.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

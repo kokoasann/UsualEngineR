@@ -144,6 +144,7 @@ void Pod::PostUpdate()
 		auto& preset = mp_player->GetCurrentAttackPreset();
 
 		if (preset == Player::EnAttackPreset::enDefault) {
+			m_longRangeAttack.UpdateEffectPos();
 			if (g_pad[0]->IsPress(EnButton::enButtonRB1)) {
 				m_longRangeAttack.Execute(mp_player);
 			}

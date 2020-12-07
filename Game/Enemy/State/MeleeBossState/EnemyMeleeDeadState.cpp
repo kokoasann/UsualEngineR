@@ -4,6 +4,8 @@
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
 #include "../../Drop/DropItemA.h"
+#include "GameManager.h"
+#include "Game.h"
 
 EnemyMeleeDeadState::EnemyMeleeDeadState() {
 
@@ -21,8 +23,14 @@ void EnemyMeleeDeadState::Enter(IEnemy* e) {
 	auto item = NewGO<DropItemA>(0);
 	item->SetPosition(e->GetPosition());
 
-	GameObject* enemy = reinterpret_cast<GameObject*>(e);
-	EnemyManager::GetEnemyManager().DestroyEnemy(e);
+	if (!m_isPerformed) {
+		e->GetModel()->SetMulColor({ 20,1,1,1 });
+		GameManager::GetInstance().m_gameScene->OnEnemyDied(e);
+		m_isPerformed = true;
+	}
+
+	//GameObject* enemy = reinterpret_cast<GameObject*>(e);
+	//EnemyManager::GetEnemyManager().DestroyEnemy(e);
 }
 
 IEnemyState* EnemyMeleeDeadState::Update(IEnemy* e) {
