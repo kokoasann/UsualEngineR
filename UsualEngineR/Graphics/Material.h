@@ -116,7 +116,10 @@ namespace UER
 		Shader m_vsNonSkinModel;						//スキンなしモデル用の頂点シェーダー。
 		Shader m_vsSkinModel;							//スキンありモデル用の頂点シェーダー。
 		Shader m_psModel;								//モデル用のピクセルシェーダー。
+		Shader m_vsNonSkinShadow;
+		Shader m_vsSkinShadow;
 		Shader m_psShadow;								//影用。
+		
 
 		Texture m_emmissionMap;							//エミッションマップ
 		bool m_isLoadEmmission = false;

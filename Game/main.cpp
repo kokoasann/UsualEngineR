@@ -73,7 +73,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 
 	auto lig = NewGO<LightDirection>(0);
-	lig->SetDir({ 0.707,0.707,0 });
+	lig->SetDir({ 0.707,-0.707,0 });
 	lig->SetCol(g_vec3One * 0.3);
 	lig = NewGO<LightDirection>(0);
 	lig->SetDir({ -0.707,0.707,0 });

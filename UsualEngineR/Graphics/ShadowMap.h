@@ -25,7 +25,11 @@ namespace UER
 		void AddShadowCaster(Model* m)
 		{
 			m_shadowCaster.push_back(m);
-			
+		}
+
+		ConstantBuffer& GetConstBufferLight()
+		{
+			return m_constBufferLight;
 		}
 	private:
 		struct SShadowCB
@@ -38,8 +42,8 @@ namespace UER
 			float ligFar[MAX_SHADOW_MAP];
 		};
 		Vector3 m_lightDirection = Vector3::Down;				//ƒ‰ƒCƒg‚Ì•ûŒü
-		float m_near = 0.1f;
-		float m_far = 100000.f;
+		float m_near = 0.00001f;
+		float m_far = 10000.f;
 		float m_lightHeight = 1000.f;
 		RenderTarget m_shadowMapRT[MAX_SHADOW_MAP];
 		ConstantBuffer m_shadowCB;

@@ -20,7 +20,8 @@ namespace UER
 		
 		for (int i = 0; i < MAX_SHADOW_MAP; i++)
 		{
-			m_shadowMapRT[i].Create(iw, ih, 1, 1, DXGI_FORMAT_R32_FLOAT, DXGI_FORMAT_D32_FLOAT);
+			float cc[4] = { 1,1,1,1 };
+			m_shadowMapRT[i].Create(iw, ih, 1, 1, DXGI_FORMAT_R32_FLOAT, DXGI_FORMAT_D32_FLOAT, cc);
 			
 
 			m_shadowCBEntity.pixSize[i].x = 1.f / iw;
@@ -35,7 +36,7 @@ namespace UER
 		m_shadowCBEntity.depthoffset.y = 0.0001f;
 		m_shadowCBEntity.depthoffset.z = 0.0001f;
 
-		m_lightHeight = 2000.f;
+		m_lightHeight = 100.f;
 
 		m_lightDirection = { -0.3f,-1,-0.2f };
 		m_lightDirection.Normalize();
@@ -221,24 +222,36 @@ namespace UER
 		int numRenderTargetViews;
 		//rc.OMGetRenderTargets(numRenderTargetViews, oldRenderTargets);
 
-		
-		for (int i = 0; i < MAX_SHADOW_MAP; i++)
+		m_constBufferLight.CopyToVRAM(m_mLVP[0]);
+		for (int i = 0; i < 1; i++)
 		{
-			m_constBufferLight.CopyToVRAM(m_mLVP[i]);
+			rc.WaitUntilToPossibleSetRenderTarget(m_shadowMapRT[i]);
+
+			
 
 			RenderTarget* rts[MAX_SHADOW_MAP] = { &m_shadowMapRT[i] };
 			rc.SetRenderTargets(1, rts);
 
 			m_shadowMapRT[i].Clear(rc);
 
-			CD3DX12_VIEWPORT vp(0.f, 0.f, m_shadowMapRT[i].GetWidth(), m_shadowMapRT[i].GetHeight());
+			D3D12_VIEWPORT vp = { 0.f, 0.f, m_shadowMapRT[i].GetWidth(), m_shadowMapRT[i].GetHeight(), D3D12_MIN_DEPTH, D3D12_MAX_DEPTH };
 			rc.SetViewport(vp);
+
+			D3D12_RECT rect;
+			rect.left = 0;
+			rect.top = 0;
+			rect.right = m_shadowMapRT[i].GetWidth();
+			rect.bottom = m_shadowMapRT[i].GetHeight();
+			rc.SetScissorRect(rect);
 
 			for (auto cast : m_shadowCaster)
 			{
 				cast->DrawShadow(rc);
 			}
-			g_graphicsEngine->ExecuteCommandList();
+
+			rc.WaitUntilFinishDrawingToRenderTarget(m_shadowMapRT[i]);
+			//g_graphicsEngine->ExecuteCommandList();
+			//g_graphicsEngine->ResetRender();
 		}
 		m_shadowCaster.clear();
 
@@ -250,5 +263,12 @@ namespace UER
 		m_viewPort.MaxDepth = 1.f;
 		m_viewPort.MinDepth = 0.f;
 		rc.SetViewport(m_viewPort);
+
+		D3D12_RECT rect;
+		rect.left = 0;
+		rect.top = 0;
+		rect.right = FRAME_BUFFER_W;
+		rect.bottom = FRAME_BUFFER_H;
+		rc.SetScissorRect(rect);
 	}
 }

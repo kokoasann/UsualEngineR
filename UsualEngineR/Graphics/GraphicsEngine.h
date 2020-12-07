@@ -61,6 +61,7 @@ namespace UER
 		/// </remarks>
 		void EndRender();
 
+		void ResetRender();
 
 		void ExecuteCommandList();
 

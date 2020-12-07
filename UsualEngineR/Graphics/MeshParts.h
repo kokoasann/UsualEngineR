@@ -133,7 +133,7 @@ namespace UER
 		StructuredBuffer m_boneMatricesStructureBuffer;			//ボーン行列の構造化バッファ。
 		std::vector< SMesh* > m_meshs;							//メッシュ。
 		std::vector< DescriptorHeap > m_descriptorHeap;			//ディスクリプタヒープ。
-		DescriptorHeap m_shadowDescHeap;						//影用()
+		DescriptorHeap m_shadowDescHeap[3];						//影用()
 
 		Skeleton* m_skeleton = nullptr;							//スケルトン。
 		void* m_expandData = nullptr;							//ユーザー拡張データ。

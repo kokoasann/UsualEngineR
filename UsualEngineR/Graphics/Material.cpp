@@ -136,16 +136,17 @@ namespace UER
 
 		//SHADOW NON SKIN MODEL
 		psoDesc.NumRenderTargets = 1;
-		psoDesc.RTVFormats[0] = DXGI_FORMAT_R32_FLOAT;		//light view depth。
+		psoDesc.RTVFormats[0] = DXGI_FORMAT_R32_FLOAT;									//light view depth。
 		psoDesc.RTVFormats[TO_INT(EGBufferKind::Normal)] = DXGI_FORMAT_UNKNOWN;			//法線出力用。	
-		psoDesc.RTVFormats[TO_INT(EGBufferKind::Depth)] = DXGI_FORMAT_UNKNOWN;	//Z値。
-		psoDesc.RTVFormats[TO_INT(EGBufferKind::Specular)] = DXGI_FORMAT_UNKNOWN;			//法線出力用。	
-		psoDesc.RTVFormats[TO_INT(EGBufferKind::Tangent)] = DXGI_FORMAT_UNKNOWN;	//Z値。
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Depth)] = DXGI_FORMAT_UNKNOWN;			//Z値。
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Specular)] = DXGI_FORMAT_UNKNOWN;		//法線出力用。	
+		psoDesc.RTVFormats[TO_INT(EGBufferKind::Tangent)] = DXGI_FORMAT_UNKNOWN;		//Z値。
 		psoDesc.PS = CD3DX12_SHADER_BYTECODE(m_psShadow.GetCompiledBlob());
-		m_shadowSkinModelPipelineState.Init(psoDesc);
+		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsNonSkinShadow.GetCompiledBlob());
+		m_shadowNonSkinModelPipelineState.Init(psoDesc);
 
 		// SHADOW SKIN MODEL
-		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsSkinModel.GetCompiledBlob());
+		psoDesc.VS = CD3DX12_SHADER_BYTECODE(m_vsSkinShadow.GetCompiledBlob());
 		m_shadowSkinModelPipelineState.Init(psoDesc);
 	
 
@@ -175,6 +176,8 @@ namespace UER
 		m_vsSkinModel.LoadVS(fxFilePath, vsEntryPointFunc);
 		m_psModel.LoadPS(psfxFilePath, psEntryPointFunc);
 
+		m_vsSkinShadow.LoadVS(L"Assets/shader/Shadow.fx", "VSMain_Skin");
+		m_vsNonSkinShadow.LoadVS(L"Assets/shader/Shadow.fx", "VSMain_NonSkin");
 		m_psShadow.LoadPS(L"Assets/shader/Shadow.fx", "PSMain");
 	}
 	void Material::BeginRender(RenderContext& rc, int hasSkin)

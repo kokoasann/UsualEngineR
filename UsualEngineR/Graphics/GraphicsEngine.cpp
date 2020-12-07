@@ -255,6 +255,8 @@ namespace UER
 		m_preRender.Init();
 
 		g_camera3D->Init();
+
+		m_shadowMap.Init(1024, 1024);
 		return true;
 	}
 	IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()
@@ -581,6 +583,14 @@ namespace UER
 	#endif
 		//描画完了待ち。
 		WaitDraw();
+	}
+
+	void GraphicsEngine::ResetRender()
+	{
+		//コマンドアロケータををリセット。
+		m_commandAllocator->Reset();
+		//レンダリングコンテキストもリセット。
+		m_renderContext.Reset(m_commandAllocator, m_pipelineState);
 	}
 
 	void GraphicsEngine::WaitDraw()

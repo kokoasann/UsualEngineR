@@ -107,12 +107,16 @@ namespace UER
 				descriptorHeapNo++;
 			}
 		}
-		if (m_meshs[0]->skinFlags[0])
+		for (int i = 0; i < 3; i++)
 		{
-			m_shadowDescHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_bone), m_boneMatricesStructureBuffer);
+			if (m_meshs[0]->skinFlags[0])
+			{
+				m_shadowDescHeap[i].RegistShaderResource(TO_INT(ETextureBuffer::tb_bone), m_boneMatricesStructureBuffer);
+			}
+			m_shadowDescHeap[i].RegistConstantBuffer(TO_INT(EConstantBuffer::cb_modelData), m_commonConstantBuffer);
+			m_shadowDescHeap[i].RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), g_graphicsEngine->GetShadowMap().GetConstBufferLight());
+			m_shadowDescHeap[i].Commit();
 		}
-		m_shadowDescHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_modelData), m_commonConstantBuffer);
-		m_shadowDescHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), g_lockCamera3D.Get()->GetConstBuffer());
 	}
 	void MeshParts::CreateMeshFromTkmMesh(
 		const TkmFile::SMesh& tkmMesh, 
@@ -204,8 +208,6 @@ namespace UER
 		const Vector4& mulcolor
 	)
 	{
-	#if 1
-	
 		//メッシュごとにドロー
 		//プリミティブのトポロジーはトライアングルリストのみ。
 		rc.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -228,7 +230,7 @@ namespace UER
 				//ボーン行列を更新する。
 				m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
 			}
-			m_isDrawShadow = false;
+			
 		}
 		int descriptorHeapNo = 0;
 		for (auto& mesh : m_meshs) {
@@ -249,7 +251,7 @@ namespace UER
 				descriptorHeapNo++;
 			}
 		}
-	#endif
+		m_isDrawShadow = false;
 	}
 
 	void MeshParts::DrawShadow(RenderContext& rc, const Matrix& mWorld)
@@ -283,7 +285,7 @@ namespace UER
 				//このマテリアルが貼られているメッシュの描画開始。
 				mesh->m_materials[matNo]->BeginRenderShadow(rc, mesh->skinFlags[matNo]);
 				//ディスクリプタヒープを登録。
-				rc.SetDescriptorHeap(m_shadowDescHeap);
+				rc.SetDescriptorHeap(m_shadowDescHeap[0]);
 				//インデックスバッファを設定。
 				auto& ib = mesh->m_indexBufferArray[matNo];
 				rc.SetIndexBuffer(*ib);

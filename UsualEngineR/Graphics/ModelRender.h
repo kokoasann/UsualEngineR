@@ -122,6 +122,6 @@ namespace UER
 
 		float m_animPlaySpeed = 1.f;
 
-		bool m_isShadowCaster = false;
+		bool m_isShadowCaster = true;
 	};
 }

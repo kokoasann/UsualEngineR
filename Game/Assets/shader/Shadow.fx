@@ -3,6 +3,7 @@
 cbuffer ConstBuffer:register(b0)
 {
     float4x4 mWorld;
+    float4 mulcol;
 }
 
 cbuffer ConstBufferLight:register(b1)
@@ -14,11 +15,21 @@ cbuffer ConstBufferLight:register(b1)
 struct SVSIn
 {
 	float4 pos 		: POSITION;		//モデルの頂点座標。
+    float3 normal : NORMAL;			    //法線。
+	float2 uv : TEXCOORD0;		        //UV
+	float3 tangent : TANGENT;			//tangent
+	float3 binormal : BINORMAL;
+	uint4  indices : BLENDINDICES0;		//ボーンの番号。
+	float4 weights : BLENDWEIGHT0;		//ボーンのウェイト
 };
 struct SVSIn_Skin
 {
 	float4 pos 		: POSITION;		//モデルの頂点座標。
-    uint4  indices : BLENDINDICES0;		//ボーンの番号。
+    float3 normal : NORMAL;			    //法線。
+	float2 uv : TEXCOORD0;		        //UV
+	float3 tangent : TANGENT;			//tangent
+	float3 binormal : BINORMAL;
+	uint4  indices : BLENDINDICES0;		//ボーンの番号。
 	float4 weights : BLENDWEIGHT0;		//ボーンのウェイト
 };
 
@@ -57,7 +68,7 @@ SPSIn VSMain_Skin(SVSIn_Skin vsIn)
     }
 
 	//psIn.pos = mul(mWorld, psIn.pos);
-	psIn.pos = psIn.pos;
+	//psIn.pos = psIn.pos;
     psIn.pos = mul(mvp, psIn.pos);
 
     return psIn;
@@ -65,5 +76,7 @@ SPSIn VSMain_Skin(SVSIn_Skin vsIn)
 
 float PSMain(SPSIn In):SV_Target0
 {
-    return In.pos.z * rcp(In.pos.w);
+    float4 c = In.pos.z;
+    c.a = 1.f;
+    return In.pos.z;// * rcp(In.pos.w);
 }
