@@ -25,6 +25,13 @@ void Game::Awake()
 {
 }
 
+void Game::OnGoal() {
+	DebugPrint_WATA("goal\n");
+	NewGO<Title>(0);
+	auto go = reinterpret_cast<GameObject*>(this);
+	DeleteGO(go);
+}
+
 void Game::OnEnterBattle(IEnemy* enemy) {
 
 	DebugPrint_WATA("enter battle\n");

@@ -7,6 +7,7 @@ class GameHUD;
 class ItemManager;
 class GameSceneMenu;
 class Game;
+class Goal;
 
 class GameManager
 {
@@ -40,4 +41,7 @@ public:
 
 	//GameScene
 	Game* m_gameScene = nullptr;;
+
+	//Goal
+	Goal* m_goal = nullptr;
 };

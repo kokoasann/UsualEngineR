@@ -234,6 +234,7 @@
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
     <ClInclude Include="Title.h" />
+    <ClInclude Include="Goal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -470,6 +471,7 @@
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Goal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
