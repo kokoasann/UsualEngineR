@@ -422,9 +422,7 @@ void GameCamera::CalcLerpPerformanceCamera() {
 	}
 
 	if (m_pfrmTimer >= m_pfrmTimeSec + m_pfrmGameResumeInterval) {
-		m_state = State::enPlayerCamera;
 		GameManager::GetInstance().m_menu->ResumeGame();
-		m_cameraChangeRatio = 1.f;
 	}
 
 	m_pfrmTimer = m_pfrmTimer + gameTime()->GetDeltaTime();

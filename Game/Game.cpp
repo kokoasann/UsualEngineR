@@ -131,6 +131,10 @@ void Game::Update()
 			if (m_boss->GetCurrentState() == m_boss->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
 				GameObject* enemy = reinterpret_cast<GameObject*>(m_boss);
 				EnemyManager::GetEnemyManager().DestroyEnemy(m_boss);
+				GameManager::GetInstance().m_camera->ChangePlayerCam();
+			}
+			else {
+				GameManager::GetInstance().m_camera->ChangeStateToEnemyCam();
 			}
 			//auto cam = GameManager::GetInstance().m_camera;
 			//cam->ChangePlayerCam();

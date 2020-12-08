@@ -90,6 +90,11 @@ public:
 		m_state = State::enPlayerCamera;
 		m_cameraChangeRatio = 1.f;
 	}
+
+	void ChangeStateToEnemyCam() {
+		m_state = State::enEnemyCamera;
+		m_cameraChangeRatio = 0.f;
+	}
 private:
 
 	enum class State{
