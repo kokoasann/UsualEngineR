@@ -84,6 +84,8 @@ namespace UER
 
 		Debug::Instance().DrawLog();
 
+		UpdateDeadProcess();
+
 		for (auto& ngd : m_newGOBuffer)
 		{
 			m_gameObjectList[ngd.prio].push_back(ngd.go);
@@ -183,45 +185,7 @@ namespace UER
 		ReleaseThread();
 
 		
-		//Ž€‚ñ‚¾“z‚Ìˆ—B
-		for (auto& goList : m_gameObjectList)
-		{
-			for (auto go : goList)
-			{
-				if (go->IsDead())
-				{
-					DeadData dd;
-					dd.ind = Count;
-					dd.prio = go->GetPrio();
-					m_ddList.push_back(dd);
-				}
-				Count++;
-			}
-			Count = 0;
-		}
-		Count = 0;
-		int nowprio = 0;
-		for (auto& dd : m_ddList)
-		{
-			if (nowprio != dd.prio)
-			{
-				Count = 0;
-				nowprio = dd.prio;
-			}
-			GameObject* go = m_gameObjectList[dd.prio][dd.ind-Count];
-			auto it = std::find(m_gameObjectList[dd.prio].begin(), m_gameObjectList[dd.prio].end(), go);
-			m_gameObjectList[dd.prio].erase(it);
-			if (go->IsCreatedInGameObjedtManager())
-			{
-				if (go->IsTrashTake())
-					m_trashBox.push_back(go);
-				else
-					delete go;
-			}
-			Count++;
-
-		}
-		m_ddList.clear();
+		
 	}
 
 	void GameObjectManager::UpdatePreRender()
@@ -260,6 +224,50 @@ namespace UER
 				go->WrapPostRender();
 			}
 		}
+	}
+
+	void GameObjectManager::UpdateDeadProcess()
+	{
+		int Count = 0;
+		//Ž€‚ñ‚¾“z‚Ìˆ—B
+		for (auto& goList : m_gameObjectList)
+		{
+			for (auto go : goList)
+			{
+				if (go->IsDead())
+				{
+					DeadData dd;
+					dd.ind = Count;
+					dd.prio = go->GetPrio();
+					m_ddList.push_back(dd);
+				}
+				Count++;
+			}
+			Count = 0;
+		}
+		Count = 0;
+		int nowprio = 0;
+		for (auto& dd : m_ddList)
+		{
+			if (nowprio != dd.prio)
+			{
+				Count = 0;
+				nowprio = dd.prio;
+			}
+			GameObject* go = m_gameObjectList[dd.prio][dd.ind - Count];
+			auto it = std::find(m_gameObjectList[dd.prio].begin(), m_gameObjectList[dd.prio].end(), go);
+			m_gameObjectList[dd.prio].erase(it);
+			if (go->IsCreatedInGameObjedtManager())
+			{
+				if (go->IsTrashTake())
+					m_trashBox.push_back(go);
+				else
+					delete go;
+			}
+			Count++;
+
+		}
+		m_ddList.clear();
 	}
 
 	void GameObjectManager::AddReserved(int prio, int add)

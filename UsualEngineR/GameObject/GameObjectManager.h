@@ -142,6 +142,8 @@ namespace UER
 		/// </summary>
 		void UpdatePostRender();
 
+		void UpdateDeadProcess();
+
 		/// <summary>
 		/// オブジェクトリストのキャパシティをadd分増やす
 		/// </summary>
