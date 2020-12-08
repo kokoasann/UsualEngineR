@@ -66,6 +66,8 @@ public:
 	{
 		m_isBossCamPerform = false;
 	}
+
+	void OnGoal();
 private:
 	bool m_isCreateEnemyManager = false;		//EnemyManager‚ğì¬‚µ‚½‚©‚Ç‚¤‚©B
 	bool m_isBossCamPerform = false;
