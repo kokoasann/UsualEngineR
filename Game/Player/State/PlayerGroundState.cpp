@@ -57,8 +57,6 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 	//boost recharge
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
-	//endurance recharge
-	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
 	return this;
 }
@@ -151,6 +149,12 @@ void PlayerGroundState::TargettingEnemyMove(Player* p) {
 		p->SetRotation(rot);
 	}
 
+	//Stamina
+	if (!isRunning) {
+		//endurance recharge
+		p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
+	}
+
 }
 
 void PlayerGroundState::CameraWorldMove(Player* p) {
@@ -225,5 +229,11 @@ void PlayerGroundState::CameraWorldMove(Player* p) {
 		theta = theta * (180.f / Math::PI);
 		rot.SetRotationDegY(theta);
 		p->SetRotation(rot);
+	}
+
+	//Stamina
+	if (!isRunning) {
+		//endurance recharge
+		p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 	}
 }

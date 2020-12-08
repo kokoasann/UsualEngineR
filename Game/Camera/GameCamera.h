@@ -124,7 +124,7 @@ private:
 	void CalcTarget();
 	void CalcEnemyCamera();
 	void CalcPlayerCamera();
-	void CalcSlerpPerformanceCamera();
+	//void CalcSlerpPerformanceCamera();
 	void CalcLerpPerformanceCamera();
 
 	/// <summary>
@@ -150,6 +150,7 @@ private:
 	Vector3 m_pfrmCamEndPos = Vector3::Zero;
 	Vector3 m_pfrmTarBeginPos = Vector3::Zero;
 	Vector3 m_pfrmTarEndPos = Vector3::Zero;
+
 
 	//test
 	Vector3 m_enemyCameraNextTargetPos = Vector3::Zero;

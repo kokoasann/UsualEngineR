@@ -33,5 +33,6 @@ private:
 
 	int m_combo = 0;
 	bool m_hasAlreadyAttacked = false;
+	bool m_canDoAttack = true;
 };
 

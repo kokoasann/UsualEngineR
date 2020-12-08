@@ -76,7 +76,7 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	//BOOST
 	if (g_pad[0]->IsPress(enButtonX)) {
 		m_velocityGoal *= m_VELOCITY_BOOST;
-		p->UseBoost(m_BOOST_EFFICIENCY * m_ACCELERATE_PARAM * gameTime()->GetDeltaTime());
+		p->UseBoost(m_BOOST_RUN_EFFICIENCY *  gameTime()->GetDeltaTime());
 		isMovingFaster = true;
 	}
 	else {
@@ -85,7 +85,7 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 	//上昇してるなら追加でブーストを消費
 	if (m_velocityGoal.y > 0.f) {
-		p->UseBoost(m_BOOST_EFFICIENCY * m_RISE_BOOST_PARAM * gameTime()->GetDeltaTime());
+		p->UseBoost(m_RISE_BOOST_EFFICIENCY * gameTime()->GetDeltaTime());
 	}
 
 	auto delta = gameTime()->GetDeltaTime();
@@ -127,6 +127,8 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	else {
 		p->PlayAnimation(Player::EnAnimation::enHovering);
 	}
+
+	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
 	return this;
 }

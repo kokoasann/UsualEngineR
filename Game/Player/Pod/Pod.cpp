@@ -139,6 +139,35 @@ void Pod::PostUpdate()
 			theta = theta * (180.f / Math::PI);
 			rot.SetRotationDegY(theta);
 			m_rotation = rot;
+
+			auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+			if (target != nullptr) {
+
+				Vector3 forward, right, up;
+				auto& world = m_model->GetModel().GetWorldMatrix();
+				forward.x = world.mat._31;
+				forward.y = world.mat._32;
+				forward.z = world.mat._33;
+				forward.Normalize();
+
+				right.x = world.mat._11;
+				right.y = world.mat._12;
+				right.z = world.mat._13;
+				right.Normalize();
+
+				up.x = world.mat._21;
+				up.y = world.mat._22;
+				up.z = world.mat._23;
+				up.Normalize();
+				
+				Quaternion rotY;
+				auto vecPodToTarget = target->GetPosition() - m_pos;
+				vecPodToTarget.Normalize();
+				auto degY = atan2(vecPodToTarget.x, vecPodToTarget.z);
+				degY = Math::RadToDeg(degY);
+				rotY.SetRotationDeg(up,degY);
+				m_rotation = rotY;
+			}
 		}
 		else {
 			m_rotation = mp_player->GetRotation();
