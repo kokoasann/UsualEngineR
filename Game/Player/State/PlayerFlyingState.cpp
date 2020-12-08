@@ -128,6 +128,8 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 		p->PlayAnimation(Player::EnAnimation::enHovering);
 	}
 
+	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
+
 	return this;
 }
 
