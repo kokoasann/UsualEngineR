@@ -53,12 +53,16 @@ namespace UER
 		//sw.Start();
 		UpdateUpdate();
 
+		UpdateDeadProcess();
+
 		g_graphicsEngine->GetLightManager().Update();
 		/*auto t = sw.Stop();
 		char str[255] = { 0 };
 		sprintf(str, "%.3f\n", t);
 		OutputDebugString(str);*/
 		auto& rc = g_graphicsEngine->GetRenderContext();
+
+		UpdatePreRender();
 
 		g_graphicsEngine->GetShadowMap().Update();
 		g_graphicsEngine->GetShadowMap().Render(rc);
@@ -72,8 +76,6 @@ namespace UER
 		preRender.LightingRender(rc);
 
 
-		UpdatePreRender();
-
 		UpdatePrePostRender();
 		
 		RenderingSituation::Set(ERenderSituation::PostRender);
@@ -84,7 +86,7 @@ namespace UER
 
 		Debug::Instance().DrawLog();
 
-		UpdateDeadProcess();
+		//g_graphicsEngine->GetShadowMap().ClearModelList();
 
 		for (auto& ngd : m_newGOBuffer)
 		{
@@ -190,7 +192,13 @@ namespace UER
 
 	void GameObjectManager::UpdatePreRender()
 	{
-		//usualEngine()->GetGraphicsEngine()->PreRenderDraw();
+		for (auto& goList : m_gameObjectList)
+		{
+			for (auto go : goList)
+			{
+				go->WrapPreRender();
+			}
+		}
 	}
 
 	void GameObjectManager::UpdateRender()
@@ -240,6 +248,7 @@ namespace UER
 					dd.ind = Count;
 					dd.prio = go->GetPrio();
 					m_ddList.push_back(dd);
+					
 				}
 				Count++;
 			}

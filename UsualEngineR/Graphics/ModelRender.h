@@ -34,6 +34,7 @@ namespace UER
 
 		void Update() override;
 
+		void PreRender() override;
 		void Render() override;
 
 		void Play(const int animNum,float interpolateTime=0.0f)
@@ -107,6 +108,11 @@ namespace UER
 		void SetShadowCasterFrag(bool b)
 		{
 			m_isShadowCaster = b;
+		}
+
+		bool IsShadowCaster() const
+		{
+			return m_isShadowCaster;
 		}
 	private:
 		Model m_model;				//ƒ‚ƒfƒ‹

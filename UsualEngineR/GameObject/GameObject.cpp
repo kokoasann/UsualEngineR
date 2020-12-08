@@ -41,6 +41,14 @@ void UER::GameObject::WrapPostUpdate()
 	}
 }
 
+void UER::GameObject::WrapPreRender()
+{
+	if (m_isStartGO && m_isActiveGO && !m_isDeadGO)
+	{
+		PreRender();
+	}
+}
+
 void UER::GameObject::WrapRender()
 {
 	if (m_isStartGO && m_isActiveGO && !m_isDeadGO)

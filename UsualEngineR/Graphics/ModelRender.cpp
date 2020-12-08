@@ -48,15 +48,21 @@ namespace UER
 		
 		//m_model.UpdateSkeleton();
 
-		if(m_isShadowCaster)
+	}
+	void ModelRender::PreRender()
+	{
+		if (!m_isRender || !m_isInit)
+			return;
+
+		if (m_isShadowCaster)
 			g_graphicsEngine->GetShadowMap().AddShadowCaster(&m_model);
-
-
 	}
 	void ModelRender::Render()
 	{
 		if (!m_isRender || !m_isInit)
 			return;
+
+		
 
 		auto& rc = g_graphicsEngine->GetRenderContext();
 		m_model.Draw(rc,m_mulColor);

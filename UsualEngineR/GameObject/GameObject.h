@@ -50,6 +50,7 @@ namespace UER
 		//スタート関数でtrueが返ってきた次のフレームから毎フレーム呼ばれるようになる。Updateの後に呼ばれる。
 		virtual void PostUpdate() {};
 
+		virtual void PreRender() {};
 		virtual void Render() {};
 		virtual void PrePostRender() {};
 		virtual void PostRender() {};
@@ -59,6 +60,7 @@ namespace UER
 		void WrapPreUpdate();
 		void WrapUpdate();
 		void WrapPostUpdate();
+		void WrapPreRender();
 		void WrapRender();
 		void WrapPrePostRender();
 		void WrapPostRender();
