@@ -22,10 +22,10 @@ private:
 	void TargettingEnemyMove(Player*);
 
 	//Auto charge
-	const float m_BOOST_AUTO_CHARGE_AMOUNT = 5.f;
-	const float m_ENDURANCE_AUTO_CHARGE_AMOUNT = 5.f;
+	const float m_BOOST_AUTO_CHARGE_AMOUNT = 300.f / 30.f;
+	const float m_ENDURANCE_AUTO_CHARGE_AMOUNT = 300.f / 30.f;
 
-	const float m_RUN_COST = 20.f;
+	const float m_RUN_COST = 300.f / 20.f;
 	const float m_VELOCITY_MAX = 2.f;
 	const float m_SIDE_MOVE_VELOCITY_MAX = 1.5f;
 	const float m_GRAVITY = -15.f;
