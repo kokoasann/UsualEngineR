@@ -15,7 +15,49 @@ void Boss_FatmanBeamState::Enter(IEnemy* e)
 {
 	auto& p = GameManager::GetInstance().m_player;
 	m_position = p->GetPosition();
+
+	PreRotation(e);
 }
+
+void Boss_FatmanBeamState::PreRotation(IEnemy* e)
+{
+	auto& p = GameManager::GetInstance().m_player;
+	const auto& ppos = p->GetPosition();
+	const auto& epos = e->GetPosition();
+	Vector3 vecToPlayer = ppos - epos;
+
+	//‰¡‰ñ“]B
+	float angleW = atan2(vecToPlayer.x, vecToPlayer.z);
+	Quaternion rot;
+	rot.SetRotation(Vector3::AxisY, angleW);
+
+	//c‰ñ“]B
+	Vector3 vecToPlayerXZ = vecToPlayer;
+	vecToPlayerXZ.y = 0.0f;
+	vecToPlayer.Normalize();
+	vecToPlayerXZ.Normalize();
+	float dot = vecToPlayer.Dot(vecToPlayerXZ);
+	float angleH = acos(dot);
+
+	//‰ñ“]Ž²B
+	Vector3 axis;
+	axis.Cross(vecToPlayer, vecToPlayerXZ);
+	axis.Normalize();
+
+	Quaternion rot2;
+	rot2.SetRotation(axis, -angleH);
+
+	//‰ñ“]‚Ì‡¬B
+	rot.Multiply(rot2);
+
+	//
+	/*Quaternion rot3;
+	rot3.SetRotationDeg(Vector3::AxisY, 90.f);
+	rot.Multiply(rot3);*/
+
+	e->GetModel()->SetRotation(rot);
+}
+
 
 IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 {
@@ -24,11 +66,23 @@ IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 		auto& p = GameManager::GetInstance().m_player;
 		p->ApplyDamage(m_damage);
 	}
+
+
+	//UpdateRotation(e);
+
 	return this;
 }
 
 void Boss_FatmanBeamState::Exit(IEnemy* e)
 {
+}
+
+
+void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
+{
+	Quaternion rot;
+	rot.SetRotationDeg(Vector3::AxisY, -1.f);
+	e->GetModel()->SetRotation(rot);
 }
 
 bool Boss_FatmanBeamState::Judge(IEnemy* e)

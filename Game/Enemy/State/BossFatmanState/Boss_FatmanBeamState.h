@@ -11,6 +11,21 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
+	/// <summary>
+	/// ビームを撃つ前の初期位置を設定する関数。
+	/// </summary>
+	/// <param name="e">IEnemyを継承した敵の情報。</param>
+	void PreRotation(IEnemy* e);
+	/// <summary>
+	/// 回転の更新。
+	/// </summary>
+	/// <param name="e">IEnemyを継承した敵の情報。</param>
+	void UpdateRotation(IEnemy* e);
+	/// <summary>
+	/// ビームの当たり判定。
+	/// </summary>
+	/// <param name="e">IEnemyを継承した敵の情報。</param>
+	/// <returns>ビームに当たっているかどうか。</returns>
 	bool Judge(IEnemy* e);
 private:
 	Vector3			m_position = Vector3::Zero;
