@@ -16,6 +16,11 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 	std::string s = "attack Kick combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+	
+	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
+		return;
+	}
+
 	m_isDone = false;
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enKick);
@@ -33,6 +38,10 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 }
 
 void PlayerAttackKick::Execute(Player* player) {
+	if (!m_canDoAttack) {
+		m_isDone = true;
+		return;
+	}
 	if(!player->IsPlayingAnimation()){
 		m_timer += gameTime()->GetDeltaTime();
 	}
