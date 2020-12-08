@@ -65,7 +65,9 @@ namespace UER
 		{
 			Matrix mLVP[MAX_SHADOW_MAP] = { Matrix::Identity };
 			Vector4 depthoffset;
+			Vector4 AreaDepthInVew;
 			Vector2 pixSize[MAX_SHADOW_MAP];
+
 		};
 		Vector3 m_lightDirection = Vector3::Down;				//ƒ‰ƒCƒg‚Ì•ûŒü
 		float m_near = 0.00001f;

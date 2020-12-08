@@ -9,6 +9,7 @@ float3 DrawProcess(
     float3 normal,      //法線。
     float specular,     //スペキュラ
     float3 worldPos,    //ピクセルのワールド座標。
+	float2 uv,			//uv
     float3 camPos       //カメラのワールド座標。
 )
 {
@@ -40,7 +41,7 @@ float3 DrawProcess(
 		) * lig_DirLights[ligNo].color * specular;
 
 		lig += (diffuse + spec) ;
-		lig *= 1.f - ShadowRecieve(worldPos);
+		lig *= 1.f - ShadowRecieve(worldPos, uv, depth);
 	}
     
 	for( int ligNo = 1; ligNo < lig_DLcount; ligNo++ ){

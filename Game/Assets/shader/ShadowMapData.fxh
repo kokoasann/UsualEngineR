@@ -26,10 +26,12 @@ cbuffer ShadowMapData:register(REGISTER_B(SHADOWMAP_DATA_REGISTER))
 {
     float4x4 shadowMap_mLVP[MAX_SHADOWMAP_NUM];
     float4 shadowMap_offset;
+    float4 shadowMap_areaDepthInView;
     float2 shadowMap_pixSize[MAX_SHADOWMAP_NUM];
 }
 
 
 Texture2D<float1> g_shadowMap_1      : register(REGISTER_T(SHADOWMAP_1));
+//Texture2D<float1> g_shadowMap_1      : register(t8);
 Texture2D<float1> g_shadowMap_2      : register(REGISTER_T(SHADOWMAP_2));
 Texture2D<float1> g_shadowMap_3      : register(REGISTER_T(SHADOWMAP_3));

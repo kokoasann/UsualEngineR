@@ -28,6 +28,9 @@ namespace UER
 			Matrix mVPI;
 			Vector4 camPos;
 			Vector4 camDir;
+
+			float camNear;
+			float camFar;
 		};
 		ConstantBuffer m_deferredCB;
 

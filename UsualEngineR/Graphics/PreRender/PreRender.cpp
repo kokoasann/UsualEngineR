@@ -20,7 +20,7 @@ namespace UER
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
-			8, 8, 1);
+			8, 11, 1);
 
 		// 頂点レイアウトを定義する。
 		D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
@@ -81,6 +81,8 @@ namespace UER
 		dcb.mVPI.Inverse();
 		dcb.camPos = g_camera3D->GetPosition();
 		dcb.camDir = g_camera3D->GetForward();
+		dcb.camNear = g_camera3D->GetNear();
+		dcb.camFar = g_camera3D->GetFar();
 		m_deferredCB.CopyToVRAM(dcb);
 
 		//rc.WaitUntilFinishDrawingToRenderTargets(TO_INT(EGBufferKind::NumKind), m_gBuffer.GetGBuffer());
