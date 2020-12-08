@@ -196,11 +196,12 @@ namespace UER
 			m_mLVP[i].Multiply(mLightView, proj);
 			m_shadowCBEntity.mLVP[i] = m_mLVP[i];
 
-			m_shadowCBEntity.ligFar[i] = m_far;
-			m_shadowCBEntity.ligNear[i] = m_near;
+			//m_shadowCBEntity.ligFar[i] = m_far;
+			//m_shadowCBEntity.ligNear[i] = m_near;
 
 			nearPlaneZ = farPlaneZ;
 		}
+		m_shadowCB.CopyToVRAM(m_shadowCBEntity);
 	}
 	void ShadowMap::Send2GPU()
 	{

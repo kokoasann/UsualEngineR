@@ -250,13 +250,15 @@ namespace UER
 		psoDesc.SampleDesc.Count = 1;
 		m_copyPipeState.Init(psoDesc);
 
+		m_shadowMap.Init(1024, 1024);
+
 		m_lightManager.Init();
 		m_postEffect.Init();
 		m_preRender.Init();
 
 		g_camera3D->Init();
 
-		m_shadowMap.Init(1024, 1024);
+		
 		return true;
 	}
 	IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()

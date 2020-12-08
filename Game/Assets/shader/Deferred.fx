@@ -1,8 +1,9 @@
-#pragma once
+
 #include "ScreenVertexProcess.fxh"
 #include "DrawProcess.fxh"
 #include "GBufferData.fxh"
 #include "Math.fxh"
+#include "G_Sampler.fxh"
 
 cbuffer DeferredCB:register(b0)
 {
@@ -10,8 +11,6 @@ cbuffer DeferredCB:register(b0)
     float4 def_camPos;
     float4 def_camDir;
 }
-
-sampler g_sampler : register(s0);
 
 float4 PSMain(PSInput In):SV_Target0
 {

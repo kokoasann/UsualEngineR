@@ -63,9 +63,10 @@ namespace UER
 		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_dirLight), ligMana.GetDirLightStructuredBuffer());
 		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_pointLight), ligMana.GetPointLightStructuredBuffer());
 
-		/*m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow1), g_graphicsEngine->GetShadowMap().GetShadowMap(0).GetRenderTargetTexture());
+		m_descHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_shadowData), g_graphicsEngine->GetShadowMap().GetShadowCB());
+		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow1), g_graphicsEngine->GetShadowMap().GetShadowMap(0).GetRenderTargetTexture());
 		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow2), g_graphicsEngine->GetShadowMap().GetShadowMap(1).GetRenderTargetTexture());
-		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow3), g_graphicsEngine->GetShadowMap().GetShadowMap(2).GetRenderTargetTexture());*/
+		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow3), g_graphicsEngine->GetShadowMap().GetShadowMap(2).GetRenderTargetTexture());
 
 		m_descHeap.Commit();
 	}
