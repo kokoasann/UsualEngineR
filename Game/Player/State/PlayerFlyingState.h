@@ -33,10 +33,10 @@ private:
 
 	//const float m_AUTO_RISE_BOOST_COST = 50.f;
 	const float m_FIRST_RISE_BOOST_COST = 50.f; //DEBUG
-	const float m_BOOST_EFFICIENCY = 300.f / 20.f; //”R”ï,’l‚ª‘å‚«‚¢‚Ù‚Çˆ«‚¢...
+	const float m_BOOST_EFFICIENCY = 300.f / 15.f; //”R”ï,’l‚ª‘å‚«‚¢‚Ù‚Çˆ«‚¢...
 	const float m_BOOST_RUN_EFFICIENCY = 300.f / 5.f;
 	//const float m_BOOST_EFFICIENCY = 0.f; //”R DEBUG.
-	const float m_RISE_BOOST_EFFICIENCY = 300.f / 5.f;
+	const float m_RISE_BOOST_EFFICIENCY = 300.f / 2.5f;
 	//const float m_RISE_BOOST_PARAM = 3.f; //ã¸‚É‰½”{‚­‚ç‚¢”R”ï‚ğˆ«‚­‚·‚é?
 	//const float m_ACCELERATE_PARAM = 1.5f; //‰Á‘¬‚Ì”R”ï‚Í’Êí‚Ì‰½”{‚É‚·‚é‚©
 
