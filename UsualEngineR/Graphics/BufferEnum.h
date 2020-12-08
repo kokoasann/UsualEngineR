@@ -21,5 +21,8 @@ enum class ETextureBuffer : char
 	tb_bone			= 5,
 	tb_dirLight		= 6,
 	tb_pointLight	= 7,
+	tb_shadow1,
+	tb_shadow2,
+	tb_shadow3,
 };
 

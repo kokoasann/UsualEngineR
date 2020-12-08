@@ -107,14 +107,16 @@ namespace UER
 				descriptorHeapNo++;
 			}
 		}
-		for (int i = 0; i < 3; i++)
+		int shadowMapNum = 0;
+		auto shadowCB = g_graphicsEngine->GetShadowMap().GetConstBufferLight(shadowMapNum);
+		for (int i = 0; i < shadowMapNum; i++)
 		{
 			if (m_meshs[0]->skinFlags[0])
 			{
 				m_shadowDescHeap[i].RegistShaderResource(TO_INT(ETextureBuffer::tb_bone), m_boneMatricesStructureBuffer);
 			}
 			m_shadowDescHeap[i].RegistConstantBuffer(TO_INT(EConstantBuffer::cb_modelData), m_commonConstantBuffer);
-			m_shadowDescHeap[i].RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), g_graphicsEngine->GetShadowMap().GetConstBufferLight());
+			m_shadowDescHeap[i].RegistConstantBuffer(TO_INT(EConstantBuffer::cb_cameraData), shadowCB[i]);
 			m_shadowDescHeap[i].Commit();
 		}
 	}
@@ -285,7 +287,7 @@ namespace UER
 				//このマテリアルが貼られているメッシュの描画開始。
 				mesh->m_materials[matNo]->BeginRenderShadow(rc, mesh->skinFlags[matNo]);
 				//ディスクリプタヒープを登録。
-				rc.SetDescriptorHeap(m_shadowDescHeap[0]);
+				rc.SetDescriptorHeap(m_shadowDescHeap[g_graphicsEngine->GetShadowMap().GetRenderingShadowMapNum()]);
 				//インデックスバッファを設定。
 				auto& ib = mesh->m_indexBufferArray[matNo];
 				rc.SetIndexBuffer(*ib);

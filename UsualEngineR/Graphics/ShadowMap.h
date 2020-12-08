@@ -27,9 +27,24 @@ namespace UER
 			m_shadowCaster.push_back(m);
 		}
 
-		ConstantBuffer& GetConstBufferLight()
+		ConstantBuffer* GetConstBufferLight(int& num)
 		{
+			num = MAX_SHADOW_MAP;
 			return m_constBufferLight;
+		}
+		int GetRenderingShadowMapNum() const
+		{
+			return m_renderingShadowMapNum;
+		}
+
+		RenderTarget& GetShadowMap(int i)
+		{
+			return m_shadowMapRT[i];
+		}
+
+		void ClearModelList()
+		{
+			m_shadowCaster.clear();
 		}
 	private:
 		struct SShadowCB
@@ -41,9 +56,15 @@ namespace UER
 			float ligNear[MAX_SHADOW_MAP];
 			float ligFar[MAX_SHADOW_MAP];
 		};
+		/*struct SShadowCB
+		{
+			Matrix mLVP[MAX_SHADOW_MAP] = { Matrix::Identity };
+			Vector4 depthoffset;
+			Vector4 pixSize;
+		};*/
 		Vector3 m_lightDirection = Vector3::Down;				//ƒ‰ƒCƒg‚Ì•ûŒü
 		float m_near = 0.00001f;
-		float m_far = 10000.f;
+		float m_far = 100000.f;
 		float m_lightHeight = 1000.f;
 		RenderTarget m_shadowMapRT[MAX_SHADOW_MAP];
 		ConstantBuffer m_shadowCB;
@@ -56,6 +77,8 @@ namespace UER
 		{
 			Matrix mvp;
 		};
-		ConstantBuffer m_constBufferLight;
+		ConstantBuffer m_constBufferLight[MAX_SHADOW_MAP];
+
+		int m_renderingShadowMapNum = 0;
 	};
 }

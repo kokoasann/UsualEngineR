@@ -78,5 +78,5 @@ float PSMain(SPSIn In):SV_Target0
 {
     float4 c = In.pos.z;
     c.a = 1.f;
-    return In.pos.z;// * rcp(In.pos.w);
+    return In.pos.z;
 }

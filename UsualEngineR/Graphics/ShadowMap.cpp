@@ -36,12 +36,15 @@ namespace UER
 		m_shadowCBEntity.depthoffset.y = 0.0001f;
 		m_shadowCBEntity.depthoffset.z = 0.0001f;
 
-		m_lightHeight = 100.f;
+		m_lightHeight = 500.f;
 
 		m_lightDirection = { -0.3f,-1,-0.2f };
 		m_lightDirection.Normalize();
 
-		m_constBufferLight.Init(sizeof(SConstBufferLight));
+		for (int i = 0; i < MAX_SHADOW_MAP; i++)
+		{
+			m_constBufferLight[i].Init(sizeof(SConstBufferLight));
+		}
 	}
 	void ShadowMap::Update()
 	{
@@ -222,11 +225,13 @@ namespace UER
 		int numRenderTargetViews;
 		//rc.OMGetRenderTargets(numRenderTargetViews, oldRenderTargets);
 
-		m_constBufferLight.CopyToVRAM(m_mLVP[0]);
-		for (int i = 0; i < 1; i++)
+		
+		for (int i = 0; i < MAX_SHADOW_MAP; i++)
 		{
-			rc.WaitUntilToPossibleSetRenderTarget(m_shadowMapRT[i]);
+			m_renderingShadowMapNum = i;
 
+			rc.WaitUntilToPossibleSetRenderTarget(m_shadowMapRT[i]);
+			m_constBufferLight[i].CopyToVRAM(m_mLVP[i]);
 			
 
 			RenderTarget* rts[MAX_SHADOW_MAP] = { &m_shadowMapRT[i] };
