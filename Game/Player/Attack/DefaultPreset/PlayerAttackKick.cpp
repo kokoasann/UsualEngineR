@@ -18,7 +18,11 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 #endif
 	
 	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
+		m_canDoAttack = false;
 		return;
+	}
+	else {
+		m_canDoAttack = true;
 	}
 
 	m_isDone = false;
