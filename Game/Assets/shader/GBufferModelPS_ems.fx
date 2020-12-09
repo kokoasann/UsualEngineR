@@ -1,4 +1,3 @@
-#pragma once
 
 //#include "Light.fxh"
 #include "ModelData.fxh"

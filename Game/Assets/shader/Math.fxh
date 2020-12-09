@@ -1,5 +1,5 @@
 
-
+#ifndef MATH_HELPER
 //uvと深度値とビュープロジェクション逆行列からワールド座標を求める。
 float3 GetWorldPosition(float2 uv,float depth,float4x4 mVPI)
 {
@@ -8,3 +8,5 @@ float3 GetWorldPosition(float2 uv,float depth,float4x4 mVPI)
     float4 pos = mul(mVPI,projPos);
     return pos.xyz * rcp(pos.w);
 }
+#define MATH_HELPER
+#endif

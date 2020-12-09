@@ -92,7 +92,7 @@ void GameCamera::Update()
 #endif // POS_CHECK
 
 	if (m_state == State::enSlerpPerformanceCamera) {
-		CalcSlerpPerformanceCamera();
+		//CalcSlerpPerformanceCamera();
 	}
 	else if (m_state == State::enLerpPerformanceCamera) {
 		CalcLerpPerformanceCamera();
@@ -365,7 +365,7 @@ void GameCamera::CalcPlayerCamera() {
 	}
 
 }
-
+/*
 void GameCamera::CalcSlerpPerformanceCamera() {
 
 	//•âŠ®’†
@@ -404,7 +404,7 @@ void GameCamera::CalcSlerpPerformanceCamera() {
 	}
 
 }
-
+*/
 void GameCamera::CalcLerpPerformanceCamera() {
 
 	Vector3 currentPos;
@@ -421,7 +421,9 @@ void GameCamera::CalcLerpPerformanceCamera() {
 		GameManager::GetInstance().m_gameScene->EndBossPerform();
 	}
 
+
 	if (m_pfrmTimer >= m_pfrmTimeSec + m_pfrmGameResumeInterval) {
+		ChangePlayerCam();
 		GameManager::GetInstance().m_menu->ResumeGame();
 	}
 

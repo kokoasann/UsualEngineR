@@ -76,7 +76,5 @@ SPSIn VSMain_Skin(SVSIn_Skin vsIn)
 
 float PSMain(SPSIn In):SV_Target0
 {
-    float4 c = In.pos.z;
-    c.a = 1.f;
     return In.pos.z;
 }

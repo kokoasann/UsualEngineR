@@ -84,7 +84,7 @@ bool GameStage::Start()
 				mid.m_tkmFilePath = filePath;
 				mr->Init(mid);
 				m_mapmodel.push_back(mr);
-				//mr->SetMulColor({ 0.8,0.7,0.3,1 });
+				mr->SetMulColor({ 0.6,0.6,0.6,1 });
 
 
 				RigidBodyMutex.lock();

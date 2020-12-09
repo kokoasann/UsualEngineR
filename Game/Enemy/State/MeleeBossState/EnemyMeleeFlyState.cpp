@@ -51,10 +51,6 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 		return e->GetState(TO_INT(BossA::EnState::enOverheat));
 	}
 
-	if (player->GetCurrentState() != player->GetState(Player::EnState::enFlying)) {
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
-	}
-
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
@@ -64,6 +60,12 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 
 	const float distLimit = 20.f;
 	const float attackRange = 30.f;
+
+	const float heightDiff = -4.f;
+	//Fly
+	if (len <= heightDiff) {
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+	}
 
 	//Teleportation
 	const float teleportationDist = 80.f;

@@ -32,9 +32,9 @@ namespace UER
 		//m_shadowCB.Create(&m_shadowCBEntity, sizeof(m_shadowCBEntity));
 		m_shadowCB.Init(sizeof(m_shadowCBEntity));
 		
-		m_shadowCBEntity.depthoffset.x = 0.0001f;
-		m_shadowCBEntity.depthoffset.y = 0.0001f;
-		m_shadowCBEntity.depthoffset.z = 0.0001f;
+		m_shadowCBEntity.depthoffset.x = 0.00001f;
+		m_shadowCBEntity.depthoffset.y = 0.0003f;
+		m_shadowCBEntity.depthoffset.z = 0.0004f;
 
 		m_lightHeight = 500.f;
 
@@ -54,6 +54,8 @@ namespace UER
 		else
 			m_lightDirection = Vector3::Up;
 		m_lightDirection.Normalize();
+
+		m_lightDirection *= -1.f;
 
 		Camera& MainCamera = *g_camera3D;
 		//m_lightHeight = MainCamera.GetPosition().y + 500.f;
@@ -196,11 +198,12 @@ namespace UER
 			m_mLVP[i].Multiply(mLightView, proj);
 			m_shadowCBEntity.mLVP[i] = m_mLVP[i];
 
-			m_shadowCBEntity.ligFar[i] = m_far;
-			m_shadowCBEntity.ligNear[i] = m_near;
-
+			//m_shadowCBEntity.ligFar[i] = m_far;
+			//m_shadowCBEntity.ligNear[i] = m_near;
+			m_shadowCBEntity.AreaDepthInVew.v[i] = farPlaneZ * 0.99f;
 			nearPlaneZ = farPlaneZ;
 		}
+		m_shadowCB.CopyToVRAM(m_shadowCBEntity);
 	}
 	void ShadowMap::Send2GPU()
 	{

@@ -7,6 +7,7 @@ enum class EConstantBuffer : char
 	cb_modelData,
 	cb_cameraData,
 	cb_lightData,
+	cb_shadowData,
 };
 
 /// <summary>

@@ -20,7 +20,7 @@ namespace UER
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
-			8, 8, 1);
+			8, 11, 1);
 
 		// 頂点レイアウトを定義する。
 		D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
@@ -63,9 +63,10 @@ namespace UER
 		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_dirLight), ligMana.GetDirLightStructuredBuffer());
 		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_pointLight), ligMana.GetPointLightStructuredBuffer());
 
-		/*m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow1), g_graphicsEngine->GetShadowMap().GetShadowMap(0).GetRenderTargetTexture());
+		m_descHeap.RegistConstantBuffer(TO_INT(EConstantBuffer::cb_shadowData), g_graphicsEngine->GetShadowMap().GetShadowCB());
+		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow1), g_graphicsEngine->GetShadowMap().GetShadowMap(0).GetRenderTargetTexture());
 		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow2), g_graphicsEngine->GetShadowMap().GetShadowMap(1).GetRenderTargetTexture());
-		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow3), g_graphicsEngine->GetShadowMap().GetShadowMap(2).GetRenderTargetTexture());*/
+		m_descHeap.RegistShaderResource(TO_INT(ETextureBuffer::tb_shadow3), g_graphicsEngine->GetShadowMap().GetShadowMap(2).GetRenderTargetTexture());
 
 		m_descHeap.Commit();
 	}
@@ -80,6 +81,8 @@ namespace UER
 		dcb.mVPI.Inverse();
 		dcb.camPos = g_camera3D->GetPosition();
 		dcb.camDir = g_camera3D->GetForward();
+		dcb.camNear = g_camera3D->GetNear();
+		dcb.camFar = g_camera3D->GetFar();
 		m_deferredCB.CopyToVRAM(dcb);
 
 		//rc.WaitUntilFinishDrawingToRenderTargets(TO_INT(EGBufferKind::NumKind), m_gBuffer.GetGBuffer());

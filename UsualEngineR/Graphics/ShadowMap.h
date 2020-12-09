@@ -27,6 +27,11 @@ namespace UER
 			m_shadowCaster.push_back(m);
 		}
 
+		ConstantBuffer& GetShadowCB()
+		{
+			return m_shadowCB;
+		}
+
 		ConstantBuffer* GetConstBufferLight(int& num)
 		{
 			num = MAX_SHADOW_MAP;
@@ -47,7 +52,7 @@ namespace UER
 			m_shadowCaster.clear();
 		}
 	private:
-		struct SShadowCB
+		/*struct SShadowCB
 		{
 			Matrix mLVP[MAX_SHADOW_MAP] = { Matrix::Identity };
 			Vector4 texoffset[MAX_SHADOW_MAP];
@@ -55,13 +60,15 @@ namespace UER
 			Vector4 depthoffset;
 			float ligNear[MAX_SHADOW_MAP];
 			float ligFar[MAX_SHADOW_MAP];
-		};
-		/*struct SShadowCB
+		};*/
+		struct SShadowCB
 		{
 			Matrix mLVP[MAX_SHADOW_MAP] = { Matrix::Identity };
 			Vector4 depthoffset;
-			Vector4 pixSize;
-		};*/
+			Vector4 AreaDepthInVew;
+			Vector2 pixSize[MAX_SHADOW_MAP];
+
+		};
 		Vector3 m_lightDirection = Vector3::Down;				//ƒ‰ƒCƒg‚Ì•ûŒü
 		float m_near = 0.00001f;
 		float m_far = 100000.f;
