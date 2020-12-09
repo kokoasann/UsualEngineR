@@ -65,6 +65,13 @@ void DropItemA::Update()
 void DropItemA::PostUpdate()
 {
 	auto p = GameManager::GetInstance().m_player;
+
+	if (p == nullptr) {
+		auto go = reinterpret_cast<GameObject*>(this);
+		DeleteGO(go);
+		return;
+	}
+
 	auto dist = (p->GetPosition() - m_position).Length();
 
 	if (dist < m_GRASP_RANGE) {

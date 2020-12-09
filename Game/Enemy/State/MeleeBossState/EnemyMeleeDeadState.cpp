@@ -12,16 +12,18 @@ EnemyMeleeDeadState::EnemyMeleeDeadState() {
 }
 
 EnemyMeleeDeadState::~EnemyMeleeDeadState() {
-
+	auto item = NewGO<DropItemA>(0);
+	item->SetPosition(m_pos);
 }
 
 void EnemyMeleeDeadState::Enter(IEnemy* e) {
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee dead\n");
 #endif
 
-	auto item = NewGO<DropItemA>(0);
-	item->SetPosition(e->GetPosition());
+	m_pos = e->GetPosition();
+	//m_pos.y += 15.f;
 
 	if (!m_isPerformed) {
 		e->GetModel()->SetMulColor({ 20,1,1,1 });

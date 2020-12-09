@@ -21,6 +21,14 @@ void Boss_FatmanBeamState::Enter(IEnemy* e)
 
 	//回転角度のリセット。
 	m_countRot = 0.f;
+
+	//ダメージ数を計算。
+	const float time = 20.f;
+	float hp = p->GetMaxHP();
+	//1秒間に行われるフレーム数。
+	float frame = 1.f / gameTime()->GetDeltaTime();
+	//1フレームあたりの回転量。
+	m_damage = hp / time / frame;
 }
 
 void Boss_FatmanBeamState::PreRotation(IEnemy* e)
@@ -57,7 +65,7 @@ void Boss_FatmanBeamState::PreRotation(IEnemy* e)
 
 	//少し傾ける。
 	Quaternion rot3;
-	rot3.SetRotationDeg(Vector3::AxisY, -90.f);
+	rot3.SetRotationDeg(Vector3::AxisY, m_rotStartAngle);
 	rot.Multiply(rot3);
 
 	m_startRot = rot;
@@ -71,7 +79,6 @@ IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 	
 	if (m_countRot > 0.f) {
 		if (Judge(e)) {
-			//m_damageTimer += gameTime()->GetDeltaTime();
 			auto& p = GameManager::GetInstance().m_player;
 			p->ApplyDamage(m_damage);
 		}
@@ -86,15 +93,12 @@ void Boss_FatmanBeamState::Exit(IEnemy* e)
 
 void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
 {
-	const float maxTime = 2.0f;
-	const float maxAngle = 180.0f;
-
-	if (m_countRot < maxAngle) {
+	if (m_countRot < m_rotAngle) {
 		//1秒間に行われるフレーム数。
 		float frame = 1.f / gameTime()->GetDeltaTime();
 
 		//1フレームあたりの回転量。
-		float oneFrameAngle = maxAngle / maxTime / frame;
+		float oneFrameAngle = m_rotAngle / m_rotTime / frame;
 		
 		//角度の合計量。
 		m_countRot += oneFrameAngle;
