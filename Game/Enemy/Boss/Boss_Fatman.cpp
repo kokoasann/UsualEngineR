@@ -16,7 +16,9 @@ void Boss_Fatman::Init()
 {
 	//Model
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/test/test.tkm";
+	mid.m_tkmFilePath = "Assets/modelData/enemy/ShortRangeMonster/srm.tkm";
+	mid.m_tksFilePath = "Assets/modelData/enemy/ShortRangeMonster/srm.tks";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";
 	mid.m_upAxis = enUpAxisY;
@@ -54,7 +56,7 @@ void Boss_Fatman::InitState()
 void Boss_Fatman::Execute()
 {
 	m_model->SetPosition(m_position);
-	m_model->SetRotation(m_rotation);
+	//m_model->SetRotation(m_rotation);
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
