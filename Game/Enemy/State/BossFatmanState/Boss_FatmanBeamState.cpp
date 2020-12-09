@@ -2,6 +2,7 @@
 #include "Boss_FatmanBeamState.h"
 #include "Enemy/IEnemy.h"
 #include "GameManager.h"
+#include "Enemy/Boss/Boss_Fatman.h"
 
 Boss_FatmanBeamState::Boss_FatmanBeamState()
 {
@@ -17,18 +18,19 @@ void Boss_FatmanBeamState::Enter(IEnemy* e)
 	auto& p = GameManager::GetInstance().m_player;
 	m_position = p->GetPosition();
 
-	PreRotation(e);
+	//少し傾ける。
+	Quaternion rot;
+	rot.SetRotationDeg(Vector3::AxisY, m_rotStartAngle);
+	rot.Multiply(Boss_Fatman::EnemyToPlayerRotation(e));
+	m_startRot = rot;
+	e->GetModel()->SetRotation(rot);
 
 	//回転角度のリセット。
 	m_countRot = 0.f;
 
 	//ダメージ数を計算。
 	const float time = 20.f;
-	float hp = p->GetMaxHP();
-	//1秒間に行われるフレーム数。
-	float frame = 1.f / gameTime()->GetDeltaTime();
-	//1フレームあたりの回転量。
-	m_damage = hp / time / frame;
+	m_damage = Boss_Fatman::CalcDamage(time);
 }
 
 void Boss_FatmanBeamState::PreRotation(IEnemy* e)
