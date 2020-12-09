@@ -102,7 +102,12 @@ namespace UER
 
 		IK* CreateIK(Bone* startBone, Bone* endBone, float radius)
 		{
-			m_model.CreateIK(startBone, endBone, radius);
+			return m_model.CreateIK(startBone, endBone, radius);
+		}
+
+		IK* CreateIK(Bone* startBone, int len, float radius)
+		{
+			return m_model.CreateIK(startBone, len, radius);
 		}
 
 		void SetShadowCasterFrag(bool b)

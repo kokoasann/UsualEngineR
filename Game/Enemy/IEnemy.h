@@ -170,7 +170,7 @@ public:
 		return m_rotation;
 	}
 
-	const Vector3& GetForward() {
+	Vector3 GetForward() {
 		auto& world = m_model->GetModel().GetWorldMatrix();
 		Vector3 forward;
 		forward.x = world.mat._31;
