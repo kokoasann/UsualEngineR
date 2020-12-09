@@ -238,6 +238,9 @@
     <ClInclude Include="Enemy\State\EnemyStunState.h">
       <Filter>Enemy\State\DefaultState</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -477,6 +480,9 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Enemy\State\EnemyStunState.cpp">
       <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
