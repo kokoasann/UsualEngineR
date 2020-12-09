@@ -9,11 +9,6 @@ public:
 	void Enter(IEnemy* e) override;
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
-
-	void SetHeadIK(IK* ik)
-	{
-		m_headIK = ik;
-	}
 private:
 	/// <summary>
 	/// ˆÚ“®B
