@@ -16,6 +16,10 @@ EnemyTeleportationState::~EnemyTeleportationState() {
 
 void EnemyTeleportationState::Enter(IEnemy* e) {
 
+#ifdef _PRINT_ENEMY_STATE
+	DebugPrint_WATA("Enter enemy teleportation\n");
+#endif
+
 	m_canExecute = true;
 
 	if (e->GetAbility().stamina < m_cost) {
@@ -26,16 +30,12 @@ void EnemyTeleportationState::Enter(IEnemy* e) {
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
 	e->UseStamina(m_cost);
-
-#ifdef _PRINT_ENEMY_STATE
-	DebugPrint_WATA("Enter enemy teleportation\n");
-#endif
 }
 
 IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
 
 	if (!m_canExecute) {
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetState(TO_INT(BossA::EnState::enFlyState));
 	}
 
 	auto player = GameManager::GetInstance().m_player;
