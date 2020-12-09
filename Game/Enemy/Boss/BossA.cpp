@@ -9,6 +9,7 @@
 #include "../State/MeleeBossState/EnemyMeleeDeadState.h"
 #include "../State/MeleeBossState/EnemyMeleeOverheatState.h"
 #include "../State/MeleeBossState/EnemyTeleportationState.h"
+#include "Enemy/State/EnemyStunState.h"
 
 void BossA::Init() {
 
@@ -154,6 +155,7 @@ void BossA::InitState() {
 	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new EnemyMeleeIdleState()));
 	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enBattleState), new EnemyMeleeBattleState()));
 	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyMeleeDeadState()));
+	m_stateMap.insert(std::make_pair(TO_INT(IEnemy::EnState::enStunState), new EnemyStunState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enFlyState), new EnemyMeleeFlyState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enTeleportation), new EnemyTeleportationState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enPunch), new EnemyMeleePunchState()));
