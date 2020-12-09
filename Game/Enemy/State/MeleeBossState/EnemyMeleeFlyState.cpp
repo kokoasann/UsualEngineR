@@ -45,7 +45,7 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 	}
 	m_flyTimer += delta;
 
-	printf("time : %f\n", m_flyTimer);
+	//printf("time : %f\n", m_flyTimer);
 
 	if (m_flyTimer > m_flyLimitTime) {
 		return e->GetState(TO_INT(BossA::EnState::enOverheat));
