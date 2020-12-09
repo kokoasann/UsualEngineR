@@ -42,6 +42,7 @@ float3 DrawProcess(
 
 		lig += (diffuse + spec) ;
 		lig *= 1.f - ShadowRecieve(worldPos, uv, depth);
+		//lig += ShadowRecieve_Debug(worldPos, uv, depth);
 	}
     
 	for( int ligNo = 1; ligNo < lig_DLcount; ligNo++ ){

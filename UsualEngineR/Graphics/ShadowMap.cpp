@@ -33,7 +33,7 @@ namespace UER
 		m_shadowCB.Init(sizeof(m_shadowCBEntity));
 		
 		m_shadowCBEntity.depthoffset.x = 0.00001f;
-		m_shadowCBEntity.depthoffset.y = 0.0001f;
+		m_shadowCBEntity.depthoffset.y = 0.00004f;
 		m_shadowCBEntity.depthoffset.z = 0.0001f;
 
 		m_lightHeight = 500.f;
@@ -60,15 +60,17 @@ namespace UER
 		Camera& MainCamera = *g_camera3D;
 		//m_lightHeight = MainCamera.GetPosition().y + 500.f;
 		//シーンをレンダリング使用としているカメラを使って、ライトカメラの回転を求める。
-		Vector3 cameraDirXZ = MainCamera.GetForward();
-		//cameraDirXZ.y = 0.f;
+		Vector3 cameraDir = MainCamera.GetForward();
+		Vector3 cameraDirXZ = cameraDir;
+		cameraDirXZ.y = 0.f;
 		cameraDirXZ.Normalize();
-		if (fabs(cameraDirXZ.x) < FLT_EPSILON && fabsf(cameraDirXZ.z) < FLT_EPSILON) {
+		cameraDir.Normalize();
+		if (fabs(cameraDir.x) < FLT_EPSILON && fabsf(cameraDir.z) < FLT_EPSILON) {
 			//ほぼ真上をむいている。
 			return;
 		}
-		/*cameraDirXZ.y = 0.0f;
-		cameraDirXZ.Normalize();*/
+		/*cameraDir.y = 0.0f;
+		cameraDir.Normalize();*/
 		//ライトビュー行列の回転成分をを計算する。
 		Vector3 lightViewForward = m_lightDirection;
 		Vector3 lightViewUp;
@@ -105,18 +107,18 @@ namespace UER
 		Vector3 lightTarget;
 		lightTarget = MainCamera.GetPosition();
 		lightTarget.y = MainCamera.GetTarget().y;
-		//lightTarget += cameraDirXZ;				//?
+		//lightTarget += cameraDir;				//?
 		Vector3 lightPos = lightTarget + m_lightDirection * -m_lightHeight;
 
 		float lightHeight = MainCamera.GetPosition().y + m_lightHeight;
 
-		float nearPlaneZ = 0.0f;
+		float nearPlaneZ = 10+m_near;
 		float farPlaneZ;
 		Vector3 cameraUp;
 		cameraUp.Cross(MainCamera.GetRight(), MainCamera.GetForward());
 
 		//float shadowAriaTable[3] = { 1.f,10.0f,20.5f };
-		float shadowAriaTable[3] = { 0.1f,0.5f,1.f };
+		float shadowAriaTable[3] = { 0.05f,0.3f,1.5f };
 		//float shadowAriaTable[3] = { 0.4f,0.8f,1.6f };
 		//float shadowPosTable[3] = { 1,0.5f,0.25f };
 		//float offsetLen[3] = { 0.5,1,1.5 };
@@ -133,7 +135,7 @@ namespace UER
 			float fFar, fNear;
 			Vector3 v[8];
 			{
-				//cameraDirXZ.y *= 0.f;
+				//cameraDir.y *= 0.f;
 
 				float t = tan(halfViewAngle);
 				Vector3 toUpperNear, toUpperFar;
@@ -141,7 +143,7 @@ namespace UER
 				toUpperFar = cameraUp * t * farPlaneZ;
 				t *= MainCamera.GetAspect();
 				//近平面の中央座標を計算。
-				Vector3 nearWK = MainCamera.GetPosition() + cameraDirXZ * nearPlaneZ;
+				Vector3 nearWK = MainCamera.GetPosition() + cameraDir * nearPlaneZ;
 				v[0] = nearWK + MainCamera.GetRight() * t * nearPlaneZ + toUpperNear;
 				v[1] = v[0] - toUpperNear * 2.0f;
 
@@ -149,7 +151,7 @@ namespace UER
 				v[3] = v[2] - toUpperNear * 2.0f;
 
 				//遠平面の中央座標を計算。
-				Vector3 farWK = MainCamera.GetPosition() + cameraDirXZ * farPlaneZ;
+				Vector3 farWK = MainCamera.GetPosition() + cameraDir * farPlaneZ;
 				v[4] = farWK + MainCamera.GetRight() * t * farPlaneZ + toUpperFar;
 				v[5] = v[4] - toUpperFar * 2.0f;
 				v[6] = farWK + MainCamera.GetRight() * -t * farPlaneZ + toUpperFar;
@@ -168,7 +170,7 @@ namespace UER
 
 				Vector3 half = (nearWK + farWK) * 0.5f;
 				float alpha = (lightHeight - half.y) / m_lightDirection.y;
-				Vector3 lightPos = half + m_lightDirection*alpha;
+				Vector3 lightPos = half + m_lightDirection * alpha + cameraDirXZ * 10.f;
 
 				mLightView = lightViewRot;
 				mLightView.m[3][0] = lightPos.x;

@@ -40,6 +40,25 @@ int GetShadowMapIndex(float viewZ)
             return i;
     }
     return -1;
+
+    
+}
+int GetShadowMapIndex(float3 worldPos)
+{
+    [unroll]
+    for(int i=0;i<3;i++)
+    {
+        float4 lvpPos = mul(shadowMap_mLVP[i],float4(worldPos,1.f));
+        lvpPos.xyz *= rcp(lvpPos.w);
+        float lvpDepth = lvpPos.z;
+
+        float2 smuv = mad(float2(0.5f, -0.5f), lvpPos.xy, float2(0.5f, 0.5f));
+
+        bool isInUV = (step(smuv.x,0.95f)) * (step(smuv.y,0.95f)) * (step(0.05f,smuv.x)) * (step(0.05f,smuv.y));
+        if(isInUV)
+            return i;
+    }
+    return -1;
 }
 
 float FetchShadow(float3 worldPos)
@@ -113,7 +132,7 @@ float PCF(
             // sum += FetchShadow(pos);
             // count++;
 
-            float2 suv = smuv + (float2(i-3,j-3)+0.5f) * (ScreenOffset * radius);
+            float2 suv = smuv + (float2(i-3,j-3)) * (ScreenOffset * radius);
             float shadowDepth = shadowMap.Sample(g_sampler,suv);
             float isShadow = 1.f - step(lvpDepth,shadowDepth+shadowMap_offset[ind]);
             sum += isShadow * weight[i][j];
@@ -144,23 +163,37 @@ float PCSS(
 
     bool isInUV = (step(smuv.x,1.f)) * (step(smuv.y,1.f)) * (step(0.f,smuv.x)) * (step(0.f,smuv.y));
 
-    float blocker = shadowMap.Sample(g_sampler,smuv);
-    float isShadow = 1.f - step(lvpDepth,blocker+shadowMap_offset[ind]);
-    // float p[9] = 
-    // {
-    //     float2()
-    // };
-    // for(int i=0;i<9;i++)
-    // {
-    //     float blocker = shadowMap.Sample(g_sampler,smuv);
-    //     float isShadow = 1.f - step(lvpDepth,blocker+shadowMap_offset[ind]);
-    // }
-    if(!isInUV)
+    //float blocker = shadowMap.Sample(g_sampler,smuv);
+    //float isShadow = 1.f - step(lvpDepth,blocker+shadowMap_offset[ind]);
+
+    
+    float rad = 3.f;
+    float d45 = rad * .7071067f;
+    float2 p[9] = 
+    {
+        smuv+float2(ScreenOffset*-d45, ScreenOffset*d45), float2(0.f, ScreenOffset*rad), smuv+float2(ScreenOffset*d45, ScreenOffset*d45),
+        smuv+float2(ScreenOffset*-rad, 0.f), smuv, smuv+float2(ScreenOffset*rad, 0.f),
+        smuv+float2(ScreenOffset*-d45, ScreenOffset*-d45), float2(0.f, ScreenOffset*-rad), smuv+float2(ScreenOffset*d45, ScreenOffset*-d45),
+    };
+    float blockerSum = 0.f;
+    float count = 0.f;
+    [unroll]
+    for(int i=0;i<9;i++)
+    {
+        float blocker = shadowMap.Sample(g_sampler,p[i]);
+        float isShadow = 1.f - step(lvpDepth,blocker+shadowMap_offset[ind]);
+        count += isShadow;
+        blockerSum += isShadow * blocker;
+    }
+
+    if(!isInUV || count == 0)
         return 0.f;
 
+    float blocker = blockerSum / count;
 
-    //return PCF(worldPos, uv, 10, shadowMap, ScreenOffset, ind);
-    return PCF(worldPos, uv, ((lvpDepth-blocker)/blocker), shadowMap, ScreenOffset, ind);
+
+    //return PCF(worldPos, uv, 10./3., shadowMap, ScreenOffset, ind);
+    return PCF(worldPos, smuv, ((lvpDepth-blocker)/blocker)*3.333f, shadowMap, ScreenOffset, ind);
 
     return 0.f;
 }
@@ -168,7 +201,8 @@ float PCSS(
 float ShadowRecieve(float3 worldPos, float2 uv,float depth)
 {
     float viewZ = GetViewZ(depth);
-    int ind = GetShadowMapIndex(abs(viewZ));
+    //int ind = GetShadowMapIndex(abs(viewZ));
+    int ind = GetShadowMapIndex(worldPos);
     if(ind == 0)
     {
         return PCSS(worldPos, uv, g_shadowMap_1, shadowMap_pixSize[0].x, ind);
@@ -176,13 +210,49 @@ float ShadowRecieve(float3 worldPos, float2 uv,float depth)
     else if(ind == 1)
     {
         //return PCF(worldPos, uv, 0.2f, g_shadowMap_2, shadowMap_pixSize[1].x, ind);
-        return PCSS(worldPos, uv, g_shadowMap_2, shadowMap_pixSize[1].x, ind);
+        return PCSS(worldPos, uv, g_shadowMap_2, shadowMap_pixSize[1].x*0.1666667, ind);
     }
     else if(ind == 2)
     {
         //return PCF(worldPos, uv, 0.2f, g_shadowMap_3, shadowMap_pixSize[2].x, ind);
-        return PCSS(worldPos, uv, g_shadowMap_3, shadowMap_pixSize[2].x, ind);
+        return PCSS(worldPos, uv, g_shadowMap_3, shadowMap_pixSize[2].x*0.1666667*0.2, ind);
     }
     //return FetchShadow(GetWorldPosition(uv,g_GDepth.Sample(g_sampler, uv),def_mvpi));
+    return 0.f;
+}
+
+
+float ViewMap_Debug(int ind,float3 worldPos)
+{
+    float4 lvpPos = mul(shadowMap_mLVP[ind],float4(worldPos,1.f));
+    lvpPos.xyz *= rcp(lvpPos.w);
+    float lvpDepth = lvpPos.z;
+
+    float2 smuv = mad(float2(0.5f, -0.5f), lvpPos.xy, float2(0.5f, 0.5f));
+
+    bool isInUV = (step(smuv.x,1.f)) * (step(smuv.y,1.f)) * (step(0.f,smuv.x)) * (step(0.f,smuv.y));
+    return isInUV;
+}
+float3 ShadowRecieve_Debug(float3 worldPos, float2 uv,float depth)
+{
+    float viewZ = GetViewZ(depth);
+    //int ind = GetShadowMapIndex(abs(viewZ));
+    int ind = GetShadowMapIndex(worldPos);
+    if(ind == 0)
+    {
+        ind = 0;
+        float s = PCSS(worldPos, uv, g_shadowMap_1, shadowMap_pixSize[0].x, ind);
+        return float3(1.f,0.5,0.5)*ViewMap_Debug(ind,worldPos) * 1.-s;
+    }
+    else if(ind == 1)
+    {
+        float s = PCSS(worldPos, uv, g_shadowMap_2, shadowMap_pixSize[0].x*0.2, ind);
+        return float3(0.5,1.0,0.5)*ViewMap_Debug(ind,worldPos) * 1.-s;
+    }
+    else if(ind == 2)
+    {
+        float s = PCSS(worldPos, uv, g_shadowMap_3, shadowMap_pixSize[0].x*0.2*0.5, ind);
+        return float3(0.5,0.5,1.0)*ViewMap_Debug(ind,worldPos) * 1.-s;
+    }
     return 0.f;
 }
