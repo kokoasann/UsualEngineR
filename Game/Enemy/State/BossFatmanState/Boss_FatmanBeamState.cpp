@@ -33,48 +33,6 @@ void Boss_FatmanBeamState::Enter(IEnemy* e)
 	m_damage = Boss_Fatman::CalcDamage(time);
 }
 
-void Boss_FatmanBeamState::PreRotation(IEnemy* e)
-{
-	//‰¡‰ñ“]‚Æc‰ñ“]‚ðŒvŽZ‚µAƒvƒŒƒCƒ„[‚Ì•ûŒü‚ðŒü‚­‚æ‚¤‚É‚µ‚Ä‚¢‚éB
-	auto& p = GameManager::GetInstance().m_player;
-	const auto& ppos = p->GetPosition();
-	const auto& epos = e->GetPosition();
-	Vector3 vecToPlayer = ppos - epos;
-
-	//‰¡‰ñ“]B
-	float angleW = atan2(vecToPlayer.x, vecToPlayer.z);
-	Quaternion rot;
-	rot.SetRotation(Vector3::AxisY, angleW);
-
-	//c‰ñ“]B
-	Vector3 vecToPlayerXZ = vecToPlayer;
-	vecToPlayerXZ.y = 0.0f;
-	vecToPlayer.Normalize();
-	vecToPlayerXZ.Normalize();
-	float dot = vecToPlayer.Dot(vecToPlayerXZ);
-	float angleH = acos(dot);
-
-	//‰ñ“]Ž²B
-	Vector3 axis;
-	axis.Cross(vecToPlayer, vecToPlayerXZ);
-	axis.Normalize();
-
-	Quaternion rot2;
-	rot2.SetRotation(axis, -angleH);
-
-	//‰ñ“]‚Ì‡¬B
-	rot.Multiply(rot2);
-
-	//­‚µŒX‚¯‚éB
-	Quaternion rot3;
-	rot3.SetRotationDeg(Vector3::AxisY, m_rotStartAngle);
-	rot.Multiply(rot3);
-
-	m_startRot = rot;
-	
-	e->GetModel()->SetRotation(rot);
-}
-
 IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 {
 	UpdateRotation(e);

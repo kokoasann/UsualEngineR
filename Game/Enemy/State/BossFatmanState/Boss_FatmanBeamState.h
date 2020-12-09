@@ -12,11 +12,6 @@ public:
 	void Exit(IEnemy* e) override;
 private:
 	/// <summary>
-	/// ビームを撃つ前の初期位置を設定する関数。
-	/// </summary>
-	/// <param name="e">IEnemyを継承した敵の情報。</param>
-	void PreRotation(IEnemy* e);
-	/// <summary>
 	/// 回転の更新。
 	/// </summary>
 	/// <param name="e">IEnemyを継承した敵の情報。</param>
