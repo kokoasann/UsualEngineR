@@ -26,15 +26,15 @@ namespace UER
 
 			m_shadowCBEntity.pixSize[i].x = 1.f / iw;
 			m_shadowCBEntity.pixSize[i].y = 1.f / ih;
-			iw >>= 1;
-			ih >>= 1;
+			//iw >>= 1;
+			//ih >>= 1;
 		}
 		//m_shadowCB.Create(&m_shadowCBEntity, sizeof(m_shadowCBEntity));
 		m_shadowCB.Init(sizeof(m_shadowCBEntity));
 		
 		m_shadowCBEntity.depthoffset.x = 0.00001f;
-		m_shadowCBEntity.depthoffset.y = 0.0003f;
-		m_shadowCBEntity.depthoffset.z = 0.0004f;
+		m_shadowCBEntity.depthoffset.y = 0.0001f;
+		m_shadowCBEntity.depthoffset.z = 0.0001f;
 
 		m_lightHeight = 500.f;
 
@@ -116,7 +116,7 @@ namespace UER
 		cameraUp.Cross(MainCamera.GetRight(), MainCamera.GetForward());
 
 		//float shadowAriaTable[3] = { 1.f,10.0f,20.5f };
-		float shadowAriaTable[3] = { 0.1f,0.5f,1.5f };
+		float shadowAriaTable[3] = { 0.1f,0.5f,1.f };
 		//float shadowAriaTable[3] = { 0.4f,0.8f,1.6f };
 		//float shadowPosTable[3] = { 1,0.5f,0.25f };
 		//float offsetLen[3] = { 0.5,1,1.5 };

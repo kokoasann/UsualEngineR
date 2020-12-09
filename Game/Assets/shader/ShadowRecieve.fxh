@@ -82,9 +82,10 @@ float PCF(
     float2 smuv = mad(float2(0.5f, -0.5f), lvpPos.xy, float2(0.5f, 0.5f));
 
     bool isInUV = (step(smuv.x,1.f)) * (step(smuv.y,1.f)) * (step(0.f,smuv.x)) * (step(0.f,smuv.y));
-    if(!isInUV)
-        return 0.f;
+    //if(!isInUV)
+        //return 0.f;
 
+    //gauss modoki
     float weight[6][6] = {
         {.125, .05, 0.1, 0.1, .05, .0125},
         {.05, 0.2, 0.4, 0.4, 0.2, .05},
@@ -112,7 +113,7 @@ float PCF(
             // sum += FetchShadow(pos);
             // count++;
 
-            float2 suv = smuv + float2(i-3,j-3) * (ScreenOffset * radius);
+            float2 suv = smuv + (float2(i-3,j-3)+0.5f) * (ScreenOffset * radius);
             float shadowDepth = shadowMap.Sample(g_sampler,suv);
             float isShadow = 1.f - step(lvpDepth,shadowDepth+shadowMap_offset[ind]);
             sum += isShadow * weight[i][j];
@@ -123,6 +124,10 @@ float PCF(
     return sum;
 }
 
+float GetViewZ_L(float depth)
+{
+    return (100000.f*0.00001f)/((100000.f-0.00001f)*depth-100000.f);
+}
 float PCSS(
     float3 worldPos,
     float2 uv,
@@ -138,12 +143,24 @@ float PCSS(
     float2 smuv = mad(float2(0.5f, -0.5f), lvpPos.xy, float2(0.5f, 0.5f));
 
     bool isInUV = (step(smuv.x,1.f)) * (step(smuv.y,1.f)) * (step(0.f,smuv.x)) * (step(0.f,smuv.y));
+
+    float blocker = shadowMap.Sample(g_sampler,smuv);
+    float isShadow = 1.f - step(lvpDepth,blocker+shadowMap_offset[ind]);
+    // float p[9] = 
+    // {
+    //     float2()
+    // };
+    // for(int i=0;i<9;i++)
+    // {
+    //     float blocker = shadowMap.Sample(g_sampler,smuv);
+    //     float isShadow = 1.f - step(lvpDepth,blocker+shadowMap_offset[ind]);
+    // }
     if(!isInUV)
         return 0.f;
 
-    float blocker = shadowMap.Sample(g_sampler,smuv);
 
-    return PCF(worldPos, uv, ((lvpDepth-blocker)/blocker)*150.f, g_shadowMap_1, 1./1024., ind);
+    //return PCF(worldPos, uv, 10, shadowMap, ScreenOffset, ind);
+    return PCF(worldPos, uv, ((lvpDepth-blocker)/blocker), shadowMap, ScreenOffset, ind);
 
     return 0.f;
 }
@@ -154,15 +171,17 @@ float ShadowRecieve(float3 worldPos, float2 uv,float depth)
     int ind = GetShadowMapIndex(abs(viewZ));
     if(ind == 0)
     {
-        return PCSS(worldPos, uv, g_shadowMap_1, 1./1024., ind);
+        return PCSS(worldPos, uv, g_shadowMap_1, shadowMap_pixSize[0].x, ind);
     }
     else if(ind == 1)
     {
-        return PCF(worldPos, uv, 0.2f, g_shadowMap_2, 1./512., ind);
+        //return PCF(worldPos, uv, 0.2f, g_shadowMap_2, shadowMap_pixSize[1].x, ind);
+        return PCSS(worldPos, uv, g_shadowMap_2, shadowMap_pixSize[1].x, ind);
     }
     else if(ind == 2)
     {
-        return PCF(worldPos, uv, 0.2f, g_shadowMap_3, 1./256., ind);
+        //return PCF(worldPos, uv, 0.2f, g_shadowMap_3, shadowMap_pixSize[2].x, ind);
+        return PCSS(worldPos, uv, g_shadowMap_3, shadowMap_pixSize[2].x, ind);
     }
     //return FetchShadow(GetWorldPosition(uv,g_GDepth.Sample(g_sampler, uv),def_mvpi));
     return 0.f;
