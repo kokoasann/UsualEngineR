@@ -127,7 +127,7 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 		//v.Normalize();
 		
 		m_lda.SetTarget(std::move(tpos));
-		return &m_lda;
+		//return &m_lda;
 	}
 	
 	return this;
