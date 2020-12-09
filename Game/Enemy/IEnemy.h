@@ -14,6 +14,7 @@ public:
 		enAttackA,
 		enAttackB,
 		enDeadState,
+		enStunState,
 		enNumState
 	};
 
@@ -91,6 +92,12 @@ public:
 		return m_currentState;
 	}
 
+	/*
+	IEnemyState* GetPreviousState() const {
+		return m_previousState;
+	}
+	*/
+
 	void SetPosition(const Vector3& pos) 
 	{
 		m_position = pos;
@@ -109,7 +116,7 @@ public:
 		return m_ability.max_hp;
 	}
 
-	void ApplyDamage(const float damage);
+	void ApplyDamage(const float damage, const bool stunFlag = false, const Vector3& impulse = Vector3::Zero);
 
 	void UseStamina(const float amount);
 
@@ -129,6 +136,14 @@ public:
 
 	void SetVelocity(const Vector3& velocity) {
 		m_velocity = velocity;
+	}
+
+	const Vector3& GetKnockBackImpulse() {
+		return m_impulse;
+	}
+
+	void SetKnockBackImpulse(const Vector3& imp) {
+		m_impulse = imp;
 	}
 
 	const std::map<int, IEnemyState*>& GetStateMap() const{
@@ -170,6 +185,10 @@ public:
 	}
 
 	virtual void Performance() {}
+
+	void SetAutoRotateFlag(const bool flag) {
+		m_isUseAutoRotateSystem = flag;
+	}
 protected:
 	//ÉLÉÉÉâÉRÉìçÏê¨
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
@@ -199,6 +218,7 @@ protected:
 	//Physics
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
+	Vector3 m_impulse = Vector3::Zero;
 	float m_radius = 1.f;
 
 private:
@@ -207,8 +227,11 @@ private:
 
 	//State
 	IEnemyState* m_currentState = nullptr;
+	IEnemyState* m_previousState = nullptr;
 	IEnemyState* m_nextState = nullptr;
 
+
+	bool m_isUseAutoRotateSystem = true;
 
 };
 

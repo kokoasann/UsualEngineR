@@ -8,6 +8,7 @@
 #include "State/EnemyBattleState.h"
 #include "State/EnemySlashState.h"
 #include "State/EnemyDeadState.h"
+#include "State/EnemyStunState.h"
 
 void IEnemy::Awake() {
 }
@@ -16,6 +17,7 @@ void IEnemy::InitState() {
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyIdleState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enBattleState), new EnemyBattleState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackA), new EnemySlashState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enStunState), new EnemyStunState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackB), new EnemySlashState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemySlashState()));
 }
@@ -54,12 +56,14 @@ void IEnemy::Update() {
 	m_position = m_charaCon.GetPosition();
 
 	//Rotation
-	if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
-		Quaternion rot = Quaternion::Identity;
-		auto theta = atan2(m_velocity.x, m_velocity.z);
-		theta = theta * (180.f / Math::PI);
-		rot.SetRotationDegY(theta);
-		m_rotation = rot;
+	if (m_isUseAutoRotateSystem) {
+		if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
+			Quaternion rot = Quaternion::Identity;
+			auto theta = atan2(m_velocity.x, m_velocity.z);
+			theta = theta * (180.f / Math::PI);
+			rot.SetRotationDegY(theta);
+			m_rotation = rot;
+		}
 	}
 
 	Execute();
@@ -79,23 +83,31 @@ void IEnemy::Update() {
 void IEnemy::SetState(IEnemyState* s) {
 
 	if (m_currentState == nullptr) {
-		m_currentState = s;
+		m_previousState = m_currentState = s;
 		m_currentState->Enter(this);
 		return;
 	}
 
 	if (s == m_currentState) return;
-
+	m_previousState = m_currentState;
 	m_nextState = s;
 }
 
-void IEnemy::ApplyDamage(const float damage) {
+void IEnemy::ApplyDamage(const float damage, const bool stunFlag, const Vector3& imp) {
 	m_ability.hp = max(0.f, m_ability.hp - damage);
 	m_currentState->OnAttacked(this);
 	if (m_healthBar != nullptr) {
 		m_healthBar->ShowHealthBar();
 		//update hp bar
 		m_healthBar->SetHealthRatio(GetCurrentHP() / GetMaxHP());
+	}
+
+	if (stunFlag) {
+		m_previousState = m_currentState;
+		m_currentState->Exit(this);
+		m_currentState = m_nextState = GetState((TO_INT(EnState::enStunState)));
+		m_currentState->Enter(this);
+		m_impulse = imp;
 	}
 }
 

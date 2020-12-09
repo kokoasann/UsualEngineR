@@ -235,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Title.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="Enemy\State\EnemyStunState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -472,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="Enemy\State\EnemyStunState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
