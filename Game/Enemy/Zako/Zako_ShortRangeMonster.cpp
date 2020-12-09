@@ -27,11 +27,11 @@ void Zako_ShortRangeMonster::Init()
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
 
-	auto ske = m_model->GetModel().GetSkelton();
+	/*auto ske = m_model->GetModel().GetSkelton();
 	IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 1);
 	headik->SetIKMode(IK::enMode_NoneHit);
 	auto coming = reinterpret_cast<EnemyShortRangeComingState*>(GetState(TO_INT(EnStateEX::enComing)));
-	coming->SetHeadIK(headik);
+	coming->SetHeadIK(headik);*/
 
 	InitAnimation();
 	
@@ -84,6 +84,15 @@ void Zako_ShortRangeMonster::InitState()
 		auto p = std::make_pair(TO_INT(EnStateEX::enDance), new EnemyShortRangeDanceState());
 		m_stateMap.insert(p);
 	}
+}
+
+void Zako_ShortRangeMonster::InitIK()
+{
+	auto ske = m_model->GetModel().GetSkelton();
+	IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 1);
+	headik->SetIKMode(IK::enMode_NoneHit);
+
+	SetIK(TO_INT(EnIK::enHead), headik);
 }
 
 void Zako_ShortRangeMonster::Execute()

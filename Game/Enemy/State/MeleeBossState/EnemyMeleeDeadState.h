@@ -11,4 +11,5 @@ public:
 	virtual void Exit(IEnemy* e) override;
 private:
 	bool m_isPerformed = false;
+	Vector3 m_pos = Vector3::Zero;
 };

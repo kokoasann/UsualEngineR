@@ -39,7 +39,7 @@ IEnemyState* EnemyMeleeOverheatState::Update(IEnemy* e) {
 	vel.y = GRAVITY;
 	e->SetVelocity(vel);
 
-	if (m_timer > m_time and e->IsOnGround()) {
+	if (m_timer > m_time) {
 		return e->GetStateMap().at(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
