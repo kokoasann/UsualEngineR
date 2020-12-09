@@ -19,6 +19,7 @@ public:
 
 	void Init() override;
 	void InitState() override;
+	void InitIK() override;
 	void Execute() override;
 	void Terminate() override;
 	Player::EnAttackType GetDropID() override

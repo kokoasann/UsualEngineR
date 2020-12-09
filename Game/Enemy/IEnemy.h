@@ -27,10 +27,21 @@ public:
 		enNumAnim
 	};
 
+	enum class EnIK
+	{
+		enHead,
+		enArm_L,
+		enArm_R,
+		enFoot_L,
+		enFoot_R,
+		enNumIK
+	};
+
 	virtual~IEnemy() {};
 
 	virtual void Init() {};
 	virtual void InitState();
+	virtual void InitIK() {};
 	virtual void Execute() {};
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
@@ -73,19 +84,40 @@ public:
 
 	IEnemyState* GetState(const int stateNo) const {
 		if (m_stateMap.size() == 0) return nullptr;
+
+		auto it = m_stateMap.find(stateNo);
 #ifdef DEBUG
-		if (m_stateMap.find(stateNo) == m_stateMap.end()) {
+		if (it == m_stateMap.end()) {
 			assert(false, "取得しようとしたステートが無いんですけどっ！！");
 		}
 #endif // DEBUG
 
 #ifndef DEBUG
-		if (m_stateMap.find(stateNo) == m_stateMap.end()) {
+		if (it == m_stateMap.end()) {
 			return m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState));
 		}
 #endif // !DEBUG
 
-		return m_stateMap.at(stateNo);
+		return it->second;
+	}
+
+	/// <summary>
+	/// IKをゲット
+	/// ない場合はnullptrを返す
+	/// </summary>
+	/// <param name="ikKind">EnIKとか</param>
+	/// <returns></returns>
+	IK* GetIK(const int ikKind) const
+	{
+		if (m_ikMap.size() == 0) return nullptr;
+
+		auto it = m_ikMap.find(ikKind);
+
+		if (it == m_ikMap.end()) {
+			return nullptr;
+		}
+
+		return it->second;
 	}
 
 	const IEnemyState* GetCurrentState() const{
@@ -198,12 +230,18 @@ protected:
 
 	std::map<int, IEnemyState*> m_stateMap;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
+	std::map<int, IK*> m_ikMap;
 
 	void SetAnimation(const int no, const char* path, const bool loopFlag) {
 		m_animationMap.insert(std::make_pair(no, std::make_unique<CAnimationClip>()));
 		m_animationMap.at(no)->Load(path);
 		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
 		m_animationMap.at(no)->SetLoopFlag(loopFlag);
+	}
+
+	void SetIK(const int no, IK* ik)
+	{
+		m_ikMap.insert(std::make_pair(no, ik));
 	}
 
 	ModelRender* m_model = nullptr;
