@@ -11,6 +11,7 @@ Boss_FatmanBeamState::~Boss_FatmanBeamState()
 {
 }
 
+//モデルに回転の反映はさせないかもしれない。
 void Boss_FatmanBeamState::Enter(IEnemy* e)
 {
 	auto& p = GameManager::GetInstance().m_player;
@@ -59,21 +60,22 @@ void Boss_FatmanBeamState::PreRotation(IEnemy* e)
 	rot3.SetRotationDeg(Vector3::AxisY, -90.f);
 	rot.Multiply(rot3);
 
-	m_rotation = rot;
+	m_startRot = rot;
 	
 	e->GetModel()->SetRotation(rot);
 }
 
-
 IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 {
-	if (Judge(e)) {
-		//m_damageTimer += gameTime()->GetDeltaTime();
-		auto& p = GameManager::GetInstance().m_player;
-		p->ApplyDamage(m_damage);
-	}
-
 	UpdateRotation(e);
+	
+	if (m_countRot > 0.f) {
+		if (Judge(e)) {
+			//m_damageTimer += gameTime()->GetDeltaTime();
+			auto& p = GameManager::GetInstance().m_player;
+			p->ApplyDamage(m_damage);
+		}
+	}
 
 	return this;
 }
@@ -82,10 +84,9 @@ void Boss_FatmanBeamState::Exit(IEnemy* e)
 {
 }
 
-
 void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
 {
-	const float maxTime = 5.0f;
+	const float maxTime = 2.0f;
 	const float maxAngle = 180.0f;
 
 	if (m_countRot < maxAngle) {
@@ -95,14 +96,14 @@ void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
 		//1フレームあたりの回転量。
 		float oneFrameAngle = maxAngle / maxTime / frame;
 		
-		//未回転の角度量。
+		//角度の合計量。
 		m_countRot += oneFrameAngle;
 		
 		//回転。
-		Quaternion rot;
-		rot.SetRotationDeg(Vector3::AxisY, m_countRot);
-		rot.Multiply(m_rotation);
-		e->GetModel()->SetRotation(rot);		
+		m_rotation.SetRotationDeg(Vector3::AxisY, m_countRot);
+		Quaternion rot = m_rotation;
+		rot.Multiply(m_startRot);
+		e->GetModel()->SetRotation(rot);
 	}
 }
 
@@ -114,6 +115,7 @@ bool Boss_FatmanBeamState::Judge(IEnemy* e)
 	//敵からプレイヤーに向かうベクトル。
 	//m_positionは最初にロックオンしたときのプレイヤーの位置。
 	Vector3 vecEtoP = m_position - epos;
+	m_rotation.Apply(vecEtoP);
 
 	//外積。横方向に伸びた、VecPtoEに直行するベクトル。
 	Vector3 EWidth;
@@ -140,7 +142,7 @@ bool Boss_FatmanBeamState::Judge(IEnemy* e)
 	//マイナスだったら後ろ。
 	float front = vecEtoP.Dot(vecEtoCurrentP);
 
-	const float beamWidth = 20.0f;		//ビームの幅。
+	const float beamWidth = 15.0f;		//ビームの幅。
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0){
 		return true;
 	}

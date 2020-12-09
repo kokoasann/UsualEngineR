@@ -29,10 +29,10 @@ private:
 	bool Judge(IEnemy* e);
 private:
 	Vector3			m_position = Vector3::Zero;
-	const float		m_damage = Player::GetMaxHP() / 2000.f;
+	const float		m_damage = Player::GetMaxHP() / 20.f;
 	float			m_damageTimer = 0.f;
 
+	Quaternion		m_startRot = Quaternion::Identity;
 	Quaternion		m_rotation = Quaternion::Identity;
 	float			m_countRot = 0.f;
-	float			m_timer= 0.f;
 };
