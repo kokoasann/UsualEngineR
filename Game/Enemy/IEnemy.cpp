@@ -96,7 +96,6 @@ void IEnemy::SetState(IEnemyState* s) {
 	}
 
 	if (s == m_currentState) return;
-	m_previousState = m_currentState;
 	m_nextState = s;
 }
 
