@@ -2,6 +2,7 @@
 #include "../IEnemy.h"
 #include "../../Player/Player.h"
 #include "physics/SphereCollider.h"
+#include "Effect/ExplosionEffect.h"
 
 class JetEffect;
 
@@ -50,13 +51,24 @@ public:
 
 	void Performance()
 	{
+
 		if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enDeadState))) {
 			m_model->SetMulColor({ 0.f,0.f,0.f,1.f });
 		}
 		else {
 			m_model->SetMulColor({ 20,1,1,1 });
 		}
+
 	}
+
+	void Explode() override {
+		auto forward = GetForward();
+		forward *= -30.f;
+		m_explodeEffect->SetPos(m_position + forward);
+		//m_explodeEffect->SetPos(Vector3::One);
+		m_explodeEffect->Play();
+	}
+
 private:
 
 	//Model
@@ -65,7 +77,7 @@ private:
 
 	//Physics
 	const float m_radius = 5.5f;
-	const float m_height = 3.f;
+	const float m_height = 2.f;
 	//Hands
 	//SphereCollider		m_rightHandCollider;
 	//const float m_HandRadius = 1.f;

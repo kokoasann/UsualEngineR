@@ -1,6 +1,8 @@
 #pragma once
 class IEnemyState;
 class HealthBar;
+class ExplosionEffect;
+
 #include "../../UsualEngineR/Character/CharacterController.h"
 #include "../Player/Player.h"
 
@@ -221,6 +223,9 @@ public:
 	void SetAutoRotateFlag(const bool flag) {
 		m_isUseAutoRotateSystem = flag;
 	}
+
+	virtual void Explode() {};
+
 protected:
 	//ÉLÉÉÉâÉRÉìçÏê¨
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
@@ -252,12 +257,15 @@ protected:
 	//Effects
 	std::vector<Bone*> m_bones;
 	std::vector<JetEffect*> m_jetEffects;
+	ExplosionEffect* m_explodeEffect = nullptr;
 
 	//Physics
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_impulse = Vector3::Zero;
 	float m_radius = 1.f;
+
+
 
 private:
 

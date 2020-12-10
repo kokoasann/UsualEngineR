@@ -139,6 +139,7 @@ void Game::Update()
 				GameObject* enemy = reinterpret_cast<GameObject*>(m_boss);
 				EnemyManager::GetEnemyManager().DestroyEnemy(m_boss);
 				GameManager::GetInstance().m_camera->ChangePlayerCam();
+				m_isCalledExplode = false;
 			}
 			else {
 				GameManager::GetInstance().m_camera->ChangeStateToEnemyCam();
@@ -153,6 +154,12 @@ void Game::Update()
 		if (m_timer > 1.f)
 		{
 			m_boss->Performance();
+		}
+		if (m_timer > 0.1 and !m_isCalledExplode) {
+			if (m_boss->GetCurrentState() == m_boss->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				m_boss->Explode();
+				m_isCalledExplode = true;
+			}
 		}
 
 		m_timer += gameTime()->GetDeltaTime();

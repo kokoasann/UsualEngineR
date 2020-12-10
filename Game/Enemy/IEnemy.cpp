@@ -9,6 +9,7 @@
 #include "State/EnemySlashState.h"
 #include "State/EnemyDeadState.h"
 #include "State/EnemyStunState.h"
+#include "Effect/ExplosionEffect.h"
 
 void IEnemy::Awake() {
 }
@@ -29,6 +30,10 @@ bool IEnemy::Start() {
 	if (m_isDrawHpBarAboveMyself) {
 		m_healthBar = NewGO<HealthBar>(0);
 	}
+
+	m_explodeEffect = NewGO<ExplosionEffect>(0);
+	m_explodeEffect->Init();
+
 	return true;
 }
 

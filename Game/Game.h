@@ -72,5 +72,6 @@ private:
 	bool m_isCreateEnemyManager = false;		//EnemyManager‚ğì¬‚µ‚½‚©‚Ç‚¤‚©B
 	bool m_isBossCamPerform = false;
 	IEnemy* m_boss = nullptr;
+	bool m_isCalledExplode = false ;
 	float m_timer = 0.f;
 };
