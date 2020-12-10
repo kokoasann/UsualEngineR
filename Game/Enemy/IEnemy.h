@@ -127,11 +127,9 @@ public:
 		return m_currentState;
 	}
 
-	/*
 	IEnemyState* GetPreviousState() const {
 		return m_previousState;
 	}
-	*/
 
 	void SetPosition(const Vector3& pos) 
 	{

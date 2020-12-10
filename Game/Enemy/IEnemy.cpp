@@ -80,6 +80,7 @@ void IEnemy::Update() {
 
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);
+		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 		m_currentState->Enter(this);
 	}
