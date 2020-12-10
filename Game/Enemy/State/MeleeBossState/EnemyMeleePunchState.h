@@ -13,10 +13,10 @@ private:
 	float m_timer = 0.f;
 	const float m_damageAmount = 5.f;
 	const float m_range = 30.f;
-	const float m_intervalSec = 0.3f;
+	const float m_intervalSec = 1.f;
 
 	//stamina
-	const float m_cost = 20.f;
+	const float m_cost = 0.f;
 	bool m_canExecute = true;
 };
 
