@@ -58,7 +58,7 @@ void IEnemy::Update() {
 	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_nextState = m_currentState->Update(this);
-	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
+	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
 	m_position = m_charaCon.GetPosition();
 
 	//Rotation
