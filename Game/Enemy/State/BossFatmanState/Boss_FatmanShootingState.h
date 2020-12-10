@@ -10,4 +10,6 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
+	float		m_shotTimer = 0.f;
+	float		m_damage = 0.f;
 };
