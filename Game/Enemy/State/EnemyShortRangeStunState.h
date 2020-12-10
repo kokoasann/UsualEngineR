@@ -17,5 +17,7 @@ private:
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_velocityEnd = Vector3::Zero;
 
+	Vector3 m_knockBack = Vector3::Zero;
+
 	IK* m_ik = nullptr;
 };
