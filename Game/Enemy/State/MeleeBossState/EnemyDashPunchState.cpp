@@ -47,9 +47,10 @@ void EnemyDashPunchState::Enter(IEnemy* e) {
 	effects.at(TO_INT(BossA::EnJetBone::ElbowL))->SetGenerateFlag(true);
 	effects.at(TO_INT(BossA::EnJetBone::ElbowR))->SetGenerateFlag(true);
 
-	const float knockbackParam = 150.f;
-	v.y = 0.f;
-	player->ApplyDamage(m_damageAmount, true, v * knockbackParam);
+	const float knockbackParam = 250.f;
+	v *= knockbackParam;
+	v.y = 150.f;
+	player->ApplyDamage(m_damageAmount, true, v);
 
 
 #ifdef _PRINT_ENEMY_STATE
