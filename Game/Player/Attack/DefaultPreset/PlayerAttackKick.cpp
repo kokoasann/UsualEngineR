@@ -39,6 +39,8 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 	m_combo = combo;
 
 	player->FireThrusters();
+
+	m_attackedEnemyMap.clear();
 }
 
 void PlayerAttackKick::Execute(Player* player) {
@@ -50,11 +52,14 @@ void PlayerAttackKick::Execute(Player* player) {
 		m_timer += gameTime()->GetDeltaTime();
 	}
 	else {
-		if (player->ColCheck(Player::EnPlayerBone::enSOLE_R) and !m_hasAlreadyAttacked) {
+		if (player->ColCheck(Player::EnPlayerBone::enSOLE_R)) {
 			auto& enemyManager = EnemyManager::GetEnemyManager();
 			auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix().GetTransrate());
-			nearestEnemy->ApplyDamage(m_damageAmount * m_combo);
-			m_hasAlreadyAttacked = true;
+			if (m_attackedEnemyMap.find(nearestEnemy) == m_attackedEnemyMap.end()) {
+				nearestEnemy->ApplyDamage(m_damageAmount * m_combo);
+				m_attackedEnemyMap.insert(std::make_pair(nearestEnemy, true));
+			}
+			//m_hasAlreadyAttacked = true;
 		}
 	}
 
