@@ -102,7 +102,7 @@ void Zako_ShortRangeMonster::InitIK()
 		SetIK(TO_INT(EnIK::enHead), headik);
 	}
 	{
-		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 2, 1);
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 3, 1);
 		ik->SetIKMode(IK::enMode_NoneHit);
 
 		SetIK(TO_INT(EnIK::enChest), ik);

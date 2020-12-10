@@ -17,12 +17,21 @@ void EnemyShortRangeStunState::Enter(IEnemy* e)
 
 	if (m_ik == nullptr)
 		m_ik = e->GetIK(TO_INT(IEnemy::EnIK::enChest));
-	m_velocity = m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();
-	m_velocityEnd = m_velocity + e->GetKnockBackImpulse()/100;
-	e->SetKnockBackImpulse(Vector3::Zero);
-	m_timeLimit = m_velocityEnd.Length() / 1000.f;
+	auto knockBack = e->GetKnockBackImpulse();
+	auto knockBockVec = knockBack;
+	knockBockVec.Normalize();
+	float knockBackLen = knockBack.Length();
+	//m_velocity = m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();
+	m_velocityEnd = knockBack/150.f;
+	
+	m_timeLimit = knockBackLen / 300.f;
 	m_timer = 0.;
 	m_t = 0.;
+
+	m_knockBack = knockBack - knockBockVec*min(knockBackLen,150.f);
+	//m_knockBack /= 10.f;
+
+	e->SetKnockBackImpulse(Vector3::Zero);
 }
 
 IEnemyState* EnemyShortRangeStunState::Update(IEnemy* e)
@@ -37,8 +46,11 @@ IEnemyState* EnemyShortRangeStunState::Update(IEnemy* e)
 	float s = (t - t * t) * 4.f;
 	Vector3 p;
 	p.Lerp(s, m_velocity, m_velocityEnd);
-	m_ik->SetNextTarget(p);
+	m_ik->SetNextTarget(p + m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate());
 
+	//m_knockBack * t;
+	e->SetVelocity(m_knockBack);
+	
 	return this;
 }
 

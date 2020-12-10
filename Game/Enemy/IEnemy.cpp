@@ -113,8 +113,9 @@ void IEnemy::ApplyDamage(const float damage, const bool stunFlag, const Vector3&
 		m_previousState = m_currentState;
 		m_currentState->Exit(this);
 		m_currentState = m_nextState = GetState((TO_INT(EnState::enStunState)));
-		m_currentState->Enter(this);
 		m_impulse = imp;
+		m_currentState->Enter(this);
+		
 	}
 }
 
