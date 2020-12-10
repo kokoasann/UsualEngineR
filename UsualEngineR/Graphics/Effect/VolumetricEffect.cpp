@@ -274,6 +274,11 @@ namespace UER
 		m_descHeap.RegistShaderResource(2, m_stencilRT.GetRenderTargetTexture());
 		m_descHeap.RegistShaderResource(3, g_graphicsEngine->GetPreRender().GetGBuffer().GetGBuffer(EGBufferKind::Depth).GetRenderTargetTexture());
 		m_descHeap.RegistConstantBuffer(0, m_constBuffer);
+		auto& shadowMap = g_graphicsEngine->GetShadowMap();
+		m_descHeap.RegistShaderResource(4, shadowMap.GetShadowMap(0).GetRenderTargetTexture());
+		m_descHeap.RegistShaderResource(5, shadowMap.GetShadowMap(1).GetRenderTargetTexture());
+		m_descHeap.RegistShaderResource(6, shadowMap.GetShadowMap(2).GetRenderTargetTexture());
+		m_descHeap.RegistConstantBuffer(1, shadowMap.GetShadowCB());
 
 		m_descHeap.Commit();
 	}

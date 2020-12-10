@@ -1,6 +1,6 @@
 #pragma once
 #include "level/Level.h"
-
+#include "Effect/VolumetricEffect.h"
 /// <summary>
 /// 
 /// </summary>
@@ -70,4 +70,7 @@ private:
 	std::vector<RigidBody*> m_rigidBodys;		//剛体達。
 
 	bool m_isLoaded = false;
+
+
+	VolumetricEffectRender* m_sandSmoke = nullptr;
 };
