@@ -343,6 +343,10 @@ public:
 		return m_charaConRadius;
 	}
 
+	void SetExternalVelocity(const Vector3& velocity) {
+		m_externalVelocity = velocity;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -392,6 +396,7 @@ private:
 	//Move
 	CharacterController m_charaCon;
 	float m_speed = 30.f;
+	Vector3 m_externalVelocity = Vector3::Zero; //外部からの影響
 
 	//Physics
 	const float m_charaConRadius = 1.f;
