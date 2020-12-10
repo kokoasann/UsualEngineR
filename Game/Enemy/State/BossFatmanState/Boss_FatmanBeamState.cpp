@@ -2,6 +2,7 @@
 #include "Boss_FatmanBeamState.h"
 #include "Enemy/IEnemy.h"
 #include "GameManager.h"
+#include "Enemy/Boss/Boss_Fatman.h"
 
 Boss_FatmanBeamState::Boss_FatmanBeamState()
 {
@@ -17,60 +18,19 @@ void Boss_FatmanBeamState::Enter(IEnemy* e)
 	auto& p = GameManager::GetInstance().m_player;
 	m_position = p->GetPosition();
 
-	PreRotation(e);
+	//­‚µŒX‚¯‚éB
+	Quaternion rot;
+	rot.SetRotationDeg(Vector3::AxisY, m_rotStartAngle);
+	rot.Multiply(Boss_Fatman::EnemyToPlayerRotation(e));
+	m_startRot = rot;
+	e->GetModel()->SetRotation(rot);
 
 	//‰ñ“]Šp“x‚ÌƒŠƒZƒbƒgB
 	m_countRot = 0.f;
 
 	//ƒ_ƒ[ƒW”‚ðŒvŽZB
 	const float time = 20.f;
-	float hp = p->GetMaxHP();
-	//1•bŠÔ‚És‚í‚ê‚éƒtƒŒ[ƒ€”B
-	float frame = 1.f / gameTime()->GetDeltaTime();
-	//1ƒtƒŒ[ƒ€‚ ‚½‚è‚Ì‰ñ“]—ÊB
-	m_damage = hp / time / frame;
-}
-
-void Boss_FatmanBeamState::PreRotation(IEnemy* e)
-{
-	//‰¡‰ñ“]‚Æc‰ñ“]‚ðŒvŽZ‚µAƒvƒŒƒCƒ„[‚Ì•ûŒü‚ðŒü‚­‚æ‚¤‚É‚µ‚Ä‚¢‚éB
-	auto& p = GameManager::GetInstance().m_player;
-	const auto& ppos = p->GetPosition();
-	const auto& epos = e->GetPosition();
-	Vector3 vecToPlayer = ppos - epos;
-
-	//‰¡‰ñ“]B
-	float angleW = atan2(vecToPlayer.x, vecToPlayer.z);
-	Quaternion rot;
-	rot.SetRotation(Vector3::AxisY, angleW);
-
-	//c‰ñ“]B
-	Vector3 vecToPlayerXZ = vecToPlayer;
-	vecToPlayerXZ.y = 0.0f;
-	vecToPlayer.Normalize();
-	vecToPlayerXZ.Normalize();
-	float dot = vecToPlayer.Dot(vecToPlayerXZ);
-	float angleH = acos(dot);
-
-	//‰ñ“]Ž²B
-	Vector3 axis;
-	axis.Cross(vecToPlayer, vecToPlayerXZ);
-	axis.Normalize();
-
-	Quaternion rot2;
-	rot2.SetRotation(axis, -angleH);
-
-	//‰ñ“]‚Ì‡¬B
-	rot.Multiply(rot2);
-
-	//­‚µŒX‚¯‚éB
-	Quaternion rot3;
-	rot3.SetRotationDeg(Vector3::AxisY, m_rotStartAngle);
-	rot.Multiply(rot3);
-
-	m_startRot = rot;
-	
-	e->GetModel()->SetRotation(rot);
+	m_damage = Boss_Fatman::CalcDamage(time);
 }
 
 IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)

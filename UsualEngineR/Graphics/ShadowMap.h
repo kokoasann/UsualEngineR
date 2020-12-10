@@ -72,7 +72,7 @@ namespace UER
 		Vector3 m_lightDirection = Vector3::Down;				//ƒ‰ƒCƒg‚Ì•ûŒü
 		float m_near = 0.00001f;
 		float m_far = 100000.f;
-		float m_lightHeight = 1000.f;
+		float m_lightHeight = 8000.f;
 		RenderTarget m_shadowMapRT[MAX_SHADOW_MAP];
 		ConstantBuffer m_shadowCB;
 		std::vector<Model*> m_shadowCaster;
