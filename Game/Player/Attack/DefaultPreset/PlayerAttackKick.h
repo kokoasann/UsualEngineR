@@ -37,5 +37,7 @@ private:
 	bool m_canDoAttack = true;
 
 	std::map<IEnemy*, bool> m_attackedEnemyMap;
+
+	const float m_knockBack = 250.f;
 };
 

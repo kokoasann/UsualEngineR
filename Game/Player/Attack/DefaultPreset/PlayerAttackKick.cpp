@@ -56,7 +56,13 @@ void PlayerAttackKick::Execute(Player* player) {
 			auto& enemyManager = EnemyManager::GetEnemyManager();
 			auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix().GetTransrate());
 			if (m_attackedEnemyMap.find(nearestEnemy) == m_attackedEnemyMap.end()) {
-				nearestEnemy->ApplyDamage(m_damageAmount * m_combo);
+				auto v = nearestEnemy->GetPosition() - player->GetPosition();
+				v.Normalize();
+				v.y = 3.f;
+				v.Normalize();
+				v *= m_knockBack;
+
+				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, true, v);
 				m_attackedEnemyMap.insert(std::make_pair(nearestEnemy, true));
 			}
 			//m_hasAlreadyAttacked = true;
