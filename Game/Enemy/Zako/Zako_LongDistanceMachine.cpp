@@ -5,6 +5,7 @@
 #include "Enemy/State/EnemyIdleState.h"
 #include "Enemy/State/EnemyLongDistanceAttackState.h"
 #include "Enemy/State/EnemyLongDistanceTargetingState.h"
+#include "Enemy/State/EnemyShortRangeStunState.h"
 
 Zako_LongDistanceMachine::Zako_LongDistanceMachine()
 {
@@ -87,6 +88,21 @@ void Zako_LongDistanceMachine::InitState()
 	{
 		auto p = std::make_pair(TO_INT(EStateEX::LongDistanceTargeting), new EnemyLongDistanceTargetingState());
 		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnState::enStunState), new EnemyShortRangeStunState());
+		m_stateMap.insert(p);
+	}
+}
+
+void Zako_LongDistanceMachine::InitIK()
+{
+	auto ske = m_model->GetModel().GetSkelton();
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone")), 1, 1);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enChest), ik);
 	}
 }
 
