@@ -55,6 +55,10 @@ void Boss_Fatman::InitState()
 		auto p = std::make_pair(TO_INT(IEnemy::EnState::enAttackB), new Boss_FatmanChargeBeamState());
 		m_stateMap.insert(p);
 	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enAttackC), new Boss_FatmanShootingState());
+		m_stateMap.insert(p);
+	}
 }
 
 void Boss_Fatman::Execute()
