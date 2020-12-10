@@ -59,14 +59,14 @@ IPlayerState* PlayerStunState::Update(Player* p) {
 
 	p->SetVelocity(vel);
 
-	//Rotation
-	if (vel.x != 0.f or vel.z != 0.f) {
-		Quaternion rot = Quaternion::Identity;
-		auto theta = atan2(vel.x, vel.z);
-		theta = theta * (180.f / Math::PI);
-		rot.SetRotationDegY(theta);
-		p->SetRotation(rot);
-	}
+	////Rotation
+	//if (vel.x != 0.f or vel.z != 0.f) {
+	//	Quaternion rot = Quaternion::Identity;
+	//	auto theta = atan2(vel.x, vel.z);
+	//	theta = theta * (180.f / Math::PI);
+	//	rot.SetRotationDegY(theta);
+	//	p->SetRotation(rot);
+	//}
 
 	//State
 	if (m_velocity.x == 0 and m_velocity.z == 0) {

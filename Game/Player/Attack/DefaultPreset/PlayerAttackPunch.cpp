@@ -43,7 +43,13 @@ void PlayerAttackPunch::Execute(Player* player) {
 	}
 	else{
 
-		const float knockbackParam = 150.f;
+		float knockbackParam = 150.f;
+		bool stunFlag = true;
+		const int MAX_COMBO = 3;
+		if (m_combo == MAX_COMBO) {
+			stunFlag = true;
+			knockbackParam = 200;
+		}
 
 		if (m_combo % 2 == 0) {
 			if (player->ColCheck(Player::EnPlayerBone::enHand_L) and !m_hasAlreadyAttacked) {
@@ -53,7 +59,7 @@ void PlayerAttackPunch::Execute(Player* player) {
 				auto vecPlayerToEnemy = nearestEnemy->GetPosition() - player->GetPosition();
 				vecPlayerToEnemy.Normalize();
 
-				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, true, vecPlayerToEnemy * knockbackParam);
+				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, stunFlag, vecPlayerToEnemy * knockbackParam);
 				m_hasAlreadyAttacked = true;
 			}
 		}
@@ -66,7 +72,7 @@ void PlayerAttackPunch::Execute(Player* player) {
 				auto vecPlayerToEnemy = nearestEnemy->GetPosition() - player->GetPosition();
 				vecPlayerToEnemy.Normalize();
 
-				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, true, vecPlayerToEnemy * knockbackParam);
+				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, stunFlag, vecPlayerToEnemy * knockbackParam);
 				m_hasAlreadyAttacked = true;
 			}
 		}

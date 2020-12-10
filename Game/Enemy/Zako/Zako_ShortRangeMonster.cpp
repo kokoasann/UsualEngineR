@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Zako_ShortRangeMonster.h"
 
+#include "Enemy/State/EnemyShortRangeStunState.h"
+
 
 Zako_ShortRangeMonster::Zako_ShortRangeMonster()
 {
@@ -84,15 +86,27 @@ void Zako_ShortRangeMonster::InitState()
 		auto p = std::make_pair(TO_INT(EnStateEX::enDance), new EnemyShortRangeDanceState());
 		m_stateMap.insert(p);
 	}
+	{
+		auto p = std::make_pair(TO_INT(EnState::enStunState), new EnemyShortRangeStunState());
+		m_stateMap.insert(p);
+	}
 }
 
 void Zako_ShortRangeMonster::InitIK()
 {
 	auto ske = m_model->GetModel().GetSkelton();
-	IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 1);
-	headik->SetIKMode(IK::enMode_NoneHit);
+	{
+		IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 1);
+		headik->SetIKMode(IK::enMode_NoneHit);
 
-	SetIK(TO_INT(EnIK::enHead), headik);
+		SetIK(TO_INT(EnIK::enHead), headik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 3, 1);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enChest), ik);
+	}
 }
 
 void Zako_ShortRangeMonster::Execute()

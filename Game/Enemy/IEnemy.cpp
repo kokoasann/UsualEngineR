@@ -9,6 +9,7 @@
 #include "State/EnemySlashState.h"
 #include "State/EnemyDeadState.h"
 #include "State/EnemyStunState.h"
+#include "Effect/ExplosionEffect.h"
 
 void IEnemy::Awake() {
 }
@@ -29,6 +30,10 @@ bool IEnemy::Start() {
 	if (m_isDrawHpBarAboveMyself) {
 		m_healthBar = NewGO<HealthBar>(0);
 	}
+
+	m_explodeEffect = NewGO<ExplosionEffect>(0);
+	m_explodeEffect->Init();
+
 	return true;
 }
 
@@ -75,6 +80,7 @@ void IEnemy::Update() {
 
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);
+		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 		m_currentState->Enter(this);
 	}
@@ -107,8 +113,9 @@ void IEnemy::ApplyDamage(const float damage, const bool stunFlag, const Vector3&
 		m_previousState = m_currentState;
 		m_currentState->Exit(this);
 		m_currentState = m_nextState = GetState((TO_INT(EnState::enStunState)));
-		m_currentState->Enter(this);
 		m_impulse = imp;
+		m_currentState->Enter(this);
+		
 	}
 }
 

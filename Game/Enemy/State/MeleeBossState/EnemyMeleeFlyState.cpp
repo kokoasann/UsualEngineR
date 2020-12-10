@@ -18,9 +18,12 @@ void EnemyMeleeFlyState::Enter(IEnemy* e) {
 
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
-	bool flag = e->IsOnGround();
-	if (flag) {
+	if (e->IsOnGround() or (e->GetPreviousState() == e->GetState(TO_INT(BossA::EnState::enOverheat)))) {
 		m_flyTimer = 0.f;
+		printf("nyan!\n");
+	}
+	else {
+		printf("wan\n");
 	}
 
 	auto& effects = e->GetJetEffects();
@@ -64,7 +67,7 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 	const float heightDiff = -4.f;
 	//Fly
 	if (len <= heightDiff) {
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		//return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
 	//Teleportation

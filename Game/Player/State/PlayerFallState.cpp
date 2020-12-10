@@ -13,7 +13,7 @@ PlayerFallState::~PlayerFallState()
 
 void PlayerFallState::Enter(Player* p){
 
-	p->StopThrusters();
+	//p->StopThrusters();
 
 	m_velocity = p->GetLocalVelocity();
 	p->PlayAnimation(Player::EnAnimation::enIdle, m_AnimInterpolate);
@@ -34,11 +34,51 @@ IPlayerState* PlayerFallState::Update(Player* p) {
 		return nextState;
 	}
 
-	auto vel = Vector3::Zero;
-	vel.y += m_GRAVITY;
+	//Move
+	auto lxf = g_pad[0]->GetLStickXF();
+	auto lyf = g_pad[0]->GetLStickYF();
+	auto r2f = g_pad[0]->GetR2Button();
+
+	m_velocityGoal.x = lxf * m_VELOCITY_MAX;
+	m_velocityGoal.z = lyf * m_VELOCITY_MAX;
+	if (g_pad[0]->IsPress(enButtonRB2)) {
+		m_velocityGoal.y = m_GRAVITY * 0.25f;
+	}
+	else {
+		m_velocityGoal.y = m_GRAVITY;
+	}
+
+	auto delta = gameTime()->GetDeltaTime();
+
+	auto cam = g_lockCamera3D.Get();
+	auto forward = cam->GetForward();
+	forward.y = 0.f;
+	forward.Normalize();
+	Vector3 up = { 0,1,0 };
+	Vector3 right = forward;
+	right.Cross(up);
+	right.Normalize();
+
+	m_velocity.x = Approach(m_velocityGoal.x, m_velocity.x, delta * m_QUICKNESS);
+	m_velocity.z = Approach(m_velocityGoal.z, m_velocity.z, delta * m_QUICKNESS);
+	m_velocity.y = Approach(m_velocityGoal.y, m_velocity.y, delta * m_QUICKNESS);
+
+	auto vel = forward * m_velocity.z + right * -m_velocity.x + up * m_velocity.y;
 
 	vel *= p->GetSpeed();
 	p->SetVelocity(vel);
+	p->SetLocalVelocity(m_velocity);
+
+	//Rotation
+	if (vel.x != 0.f or vel.z != 0.f) {
+		Quaternion rot = Quaternion::Identity;
+		auto theta = atan2(vel.x, vel.z);
+		theta = theta * (180.f / Math::PI);
+		rot.SetRotationDegY(theta);
+		p->SetRotation(rot);
+	}
+
+	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
 	return this;
 }
