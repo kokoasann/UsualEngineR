@@ -16,23 +16,24 @@ EnemyMeleeFlyState::~EnemyMeleeFlyState() {
 
 void EnemyMeleeFlyState::Enter(IEnemy* e) {
 
+#ifdef _PRINT_ENEMY_STATE
+	DebugPrint_WATA("Enter enemy fly\n");
+#endif
+
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
-	if (e->IsOnGround() or (e->GetPreviousState() == e->GetState(TO_INT(BossA::EnState::enOverheat)))) {
+	if (e->IsOnGround()) {
 		m_flyTimer = 0.f;
-		printf("nyan!\n");
 	}
-	else {
-		printf("wan\n");
+
+	if (e->GetAbility().stamina == e->GetAbility().max_stamina){
+		m_flyTimer = 0.f;
 	}
 
 	auto& effects = e->GetJetEffects();
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetGenerateFlag(true);
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetGenerateFlag(true);
 
-#ifdef _PRINT_ENEMY_STATE
-	DebugPrint_WATA("Enter enemy fly\n");
-#endif
 }
 
 IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
