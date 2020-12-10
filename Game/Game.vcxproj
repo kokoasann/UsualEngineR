@@ -207,6 +207,7 @@
     <ClInclude Include="Enemy\State\EnemyShortRangeIdleState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangePunchState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeStrongPunchState.h" />
+    <ClInclude Include="Enemy\State\EnemyShortRangeStunState.h" />
     <ClInclude Include="Enemy\State\EnemySlashState.h" />
     <ClInclude Include="Enemy\State\EnemyStunState.h" />
     <ClInclude Include="Enemy\State\IEnemyState.h" />
@@ -296,6 +297,7 @@
     <ClCompile Include="Enemy\State\EnemyShortRangeIdleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangePunchState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeStrongPunchState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyShortRangeStunState.cpp" />
     <ClCompile Include="Enemy\State\EnemySlashState.cpp" />
     <ClCompile Include="Enemy\State\EnemyStunState.cpp" />
     <ClCompile Include="Enemy\State\IEnemyState.cpp" />

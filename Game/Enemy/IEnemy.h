@@ -30,6 +30,7 @@ public:
 	enum class EnIK
 	{
 		enHead,
+		enChest,
 		enArm_L,
 		enArm_R,
 		enFoot_L,
