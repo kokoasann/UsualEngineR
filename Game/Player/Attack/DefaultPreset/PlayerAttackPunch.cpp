@@ -43,11 +43,12 @@ void PlayerAttackPunch::Execute(Player* player) {
 	}
 	else{
 
-		const float knockbackParam = 150.f;
-		bool stunFlag = false;
+		float knockbackParam = 150.f;
+		bool stunFlag = true;
 		const int MAX_COMBO = 3;
 		if (m_combo == MAX_COMBO) {
 			stunFlag = true;
+			knockbackParam = 200;
 		}
 
 		if (m_combo % 2 == 0) {
