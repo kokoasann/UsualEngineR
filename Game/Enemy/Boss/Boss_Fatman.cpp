@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "Boss_Fatman.h"
-
+#include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanBeamState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanShootingState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 
 Boss_Fatman::Boss_Fatman()
 {
@@ -57,6 +63,10 @@ void Boss_Fatman::InitState()
 	}
 	{
 		auto p = std::make_pair(TO_INT(EnStateEX::enAttackC), new Boss_FatmanShootingState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enAttackD), new Boss_FatmanShootingState());
 		m_stateMap.insert(p);
 	}
 }

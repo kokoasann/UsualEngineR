@@ -1,12 +1,7 @@
 #pragma once
 #include "GameManager.h"
 #include "Enemy/IEnemy.h"
-#include "Enemy/State/EnemyDeadState.h"
-#include "Enemy/State/EnemyIdleState.h"
-#include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
-#include "Enemy/State/BossFatmanState/Boss_FatmanBeamState.h"
-#include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamState.h"
-#include "Enemy/State/BossFatmanState/Boss_FatmanShootingState.h"
+
 /// <summary>
 /// ファットマン。
 /// </summary>
@@ -29,6 +24,7 @@ public:
 	enum class EnStateEX :int
 	{
 		enAttackC = TO_INT(IEnemy::EnState::enNumState),
+		enAttackD,
 		Num,
 	};
 
