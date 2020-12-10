@@ -127,11 +127,9 @@ public:
 		return m_currentState;
 	}
 
-	/*
 	IEnemyState* GetPreviousState() const {
 		return m_previousState;
 	}
-	*/
 
 	void SetPosition(const Vector3& pos) 
 	{
@@ -227,6 +225,10 @@ public:
 
 	virtual void Explode() {};
 
+	void SetExternalVelocity(const Vector3& velocity) {
+		m_externalVelocity = velocity;
+	}
+
 protected:
 	//ƒLƒƒƒ‰ƒRƒ“ì¬
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
@@ -263,6 +265,7 @@ protected:
 	//Physics
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
+	Vector3 m_externalVelocity = Vector3::Zero; //ŠO•”‚©‚ç‚Ì‰e‹¿
 	Vector3 m_impulse = Vector3::Zero;
 	float m_radius = 1.f;
 

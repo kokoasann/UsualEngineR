@@ -16,10 +16,17 @@ EnemyMeleeFlyState::~EnemyMeleeFlyState() {
 
 void EnemyMeleeFlyState::Enter(IEnemy* e) {
 
+#ifdef _PRINT_ENEMY_STATE
+	DebugPrint_WATA("Enter enemy fly\n");
+#endif
+
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
-	bool flag = e->IsOnGround();
-	if (flag) {
+	if (e->IsOnGround()) {
+		m_flyTimer = 0.f;
+	}
+
+	if (e->GetAbility().stamina == e->GetAbility().max_stamina){
 		m_flyTimer = 0.f;
 	}
 
@@ -27,9 +34,6 @@ void EnemyMeleeFlyState::Enter(IEnemy* e) {
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetGenerateFlag(true);
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetGenerateFlag(true);
 
-#ifdef _PRINT_ENEMY_STATE
-	DebugPrint_WATA("Enter enemy fly\n");
-#endif
 }
 
 IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
@@ -64,7 +68,7 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 	const float heightDiff = -4.f;
 	//Fly
 	if (len <= heightDiff) {
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		//return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
 	//Teleportation

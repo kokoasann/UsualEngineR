@@ -58,7 +58,7 @@ void IEnemy::Update() {
 	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_nextState = m_currentState->Update(this);
-	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
+	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
 	m_position = m_charaCon.GetPosition();
 
 	//Rotation
@@ -80,6 +80,7 @@ void IEnemy::Update() {
 
 	if (m_nextState != m_currentState) {
 		m_currentState->Exit(this);
+		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 		m_currentState->Enter(this);
 	}
@@ -95,7 +96,6 @@ void IEnemy::SetState(IEnemyState* s) {
 	}
 
 	if (s == m_currentState) return;
-	m_previousState = m_currentState;
 	m_nextState = s;
 }
 

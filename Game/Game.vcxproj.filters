@@ -247,6 +247,12 @@
     <ClInclude Include="Enemy\State\EnemyShortRangeStunState.h">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanTackleState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanTakeDistanceState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -495,6 +501,12 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyShortRangeStunState.cpp">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanTackleState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanTakeDistanceState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

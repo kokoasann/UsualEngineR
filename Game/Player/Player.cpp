@@ -221,7 +221,7 @@ void Player::PreUpdate()
 {
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
-	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity);
+	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
 
 	//DebugPrintVector3(EDebugConsoloUser::WATA, m_velocity);
 

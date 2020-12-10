@@ -6,6 +6,7 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanBeamState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanShootingState.h"
 /// <summary>
 /// ファットマン。
 /// </summary>
@@ -27,7 +28,7 @@ public:
 	
 	enum class EnStateEX :int
 	{
-		Expand = TO_INT(IEnemy::EnState::enNumState),
+		enAttackC = TO_INT(IEnemy::EnState::enNumState),
 		Num,
 	};
 

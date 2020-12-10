@@ -24,6 +24,8 @@ void EnemyMeleeOverheatState::Enter(IEnemy* e) {
 	effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetScale(0.01f);
 	effects.at(TO_INT(BossA::EnJetBone::Skirt))->SetScale(0.01f);
 
+	m_timer = 0.f;
+
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy overheat\n");
 #endif
