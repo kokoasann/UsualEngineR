@@ -57,7 +57,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	const float teleportationDist = 200.f;
 	const float tpIntervalSec = 3.f;
 	const float flyDist = 0.f;
-	const float tpChance = 0.3;
+	const float tpChance = 0.1; // 10% chance
 	const auto rnd = GRandom().Rand();
 
 	//Fly
@@ -70,6 +70,13 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
 		m_tpTimer = 0.f;
 	}
+
+	//printf("TP TIMER : %f\n",m_tpTimer);
+
+	if (m_tpTimer > tpIntervalSec) {
+		m_tpTimer = 0.f;
+	}
+
 	//}
 
 	const float GRAVITY = -30.f;

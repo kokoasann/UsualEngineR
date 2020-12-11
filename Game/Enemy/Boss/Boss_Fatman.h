@@ -96,6 +96,6 @@ private:
 	float m_scale = 1.f;
 
 	//Physics
-	const float m_radius = 1.f;
+	const float m_radius = 2.f;
 	const float m_height = 3.f;
 };

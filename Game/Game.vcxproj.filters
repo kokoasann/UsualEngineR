@@ -256,6 +256,9 @@
     <ClInclude Include="Enemy\State\EnemyShortRangeLongJampAttackState.h">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.h">
+      <Filter>Enemy\State\MeleeBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -513,6 +516,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyShortRangeLongJampAttackState.cpp">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.cpp">
+      <Filter>Enemy\State\MeleeBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
