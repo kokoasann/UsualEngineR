@@ -16,13 +16,16 @@ EnemyShortRangeStrongPunchState::~EnemyShortRangeStrongPunchState()
 void EnemyShortRangeStrongPunchState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(IEnemy::EnAnimation::enAttackB);
+	auto& p = GameManager::GetInstance().m_player;
+	auto v = p->GetPosition() - e->GetPosition();
+	v.Normalize();
+	v *= 100.f;
+	p->ApplyDamage(m_damage, true, v);
 }
 
 IEnemyState* EnemyShortRangeStrongPunchState::Update(IEnemy* e)
 {
 	if (!e->GetModel()->IsAnimPlaying()){
-		auto& p = GameManager::GetInstance().m_player;
-		p->ApplyDamage(m_damage);
 		return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enComing));
 	}
 	return this;
