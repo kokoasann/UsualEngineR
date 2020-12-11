@@ -16,26 +16,35 @@ void Boss_FatmanTackleState::Enter(IEnemy* e)
 {
 	m_timer = 0.f;
 	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
-
-	//プレイヤーがノックバック。
 	auto& p = GameManager::GetInstance().m_player;
-	const auto& epos = e->GetPosition();
 	const auto& ppos = p->GetPosition();
-	auto vecToPlayer = ppos - epos;
-	vecToPlayer.Normalize();
-	const float knockbackParam = 100.f;
-	vecToPlayer *= knockbackParam;
-	//vecToPlayer.y = 150.f;
-	p->ApplyDamage(m_damage, true, vecToPlayer);
+	m_playerPosition = ppos;
 }
 
 IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 {
-	const float intervalSec = 1.f;
-	m_timer += gameTime()->GetDeltaTime();
-	if (m_timer >= intervalSec) {
+	auto& p = GameManager::GetInstance().m_player;
+	const auto& epos = e->GetPosition();
+	auto vecToPlayer = m_playerPosition - epos;
+	float distance = vecToPlayer.Length();
+
+	if (distance < 5.f) {
+		//プレイヤーがノックバック。
+		/*auto& p = GameManager::GetInstance().m_player;
+		const auto& epos = e->GetPosition();
+		const auto& ppos = p->GetPosition();
+		m_playerPosition = ppos;
+		auto vecToPlayer = ppos - epos;
+		vecToPlayer.Normalize();
+		const float knockbackParam = 100.f;
+		vecToPlayer *= knockbackParam;
+		p->ApplyDamage(m_damage, true, vecToPlayer);*/
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
+	
+	vecToPlayer.Normalize();
+	Vector3 movespeed = vecToPlayer * 20.f;
+	e->SetVelocity(movespeed);
 	return this;
 }
 
