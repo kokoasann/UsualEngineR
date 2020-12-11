@@ -47,6 +47,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 
+	m_tpTimer += delta;
 
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
@@ -54,17 +55,22 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	const float distLimit = 20.f;
 	const float attackRange = e->GetCharaRadius() + player->GetCharaRadius() + 5.f;
 	const float teleportationDist = 200.f;
-
+	const float tpIntervalSec = 3.f;
 	const float flyDist = 0.f;
+	const float tpChance = 0.3;
+	const auto rnd = GRandom().Rand();
+
 	//Fly
 	if (player->GetCurrentState() == player->GetState(Player::EnState::enFlying) or vecToPlayer.y > flyDist) {
 		return e->GetState(TO_INT(BossA::EnState::enFlyState));
 	}
 
 	//Teleportation
-	if (vecToPlayer.Length() > teleportationDist) {
+	if ((vecToPlayer.Length() > teleportationDist) or (m_tpTimer > tpIntervalSec and vecToPlayer.Length() > attackRange and rnd <= tpChance)) {
 		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
+		m_tpTimer = 0.f;
 	}
+	//}
 
 	const float GRAVITY = -30.f;
 
@@ -83,7 +89,6 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 
 	if (vecToPlayer.Length() < attackRange) {
-		auto rnd = GRandom().Rand();
 
 		if (rnd >= 0.5f) {
 			return e->GetState(TO_INT(BossA::EnState::enPunch));

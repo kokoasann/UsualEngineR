@@ -12,4 +12,5 @@ public:
 private:
 	const float m_stamina_recover_amount = 5.f;
 	bool m_isPerformed = false;
+	float m_tpTimer = 0.f;
 };
