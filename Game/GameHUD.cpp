@@ -122,7 +122,7 @@ void GameHUD::Update()
 
 	//Enemy HP
 	//auto target = m_pPlayer->GetTargetEnemy();
-	auto target = EnemyManager::GetEnemyManager().GetNearestBossEnemy();
+	auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (target == nullptr or !target->IsBoss()) {
 		m_enemyHpScale.x = 0.f;
 	}

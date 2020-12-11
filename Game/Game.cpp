@@ -59,6 +59,8 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	//	center, sec
 	//);
 
+	EnemyManager::GetEnemyManager().SetTargetEnemy(enemy);
+
 	cam->Perform(
 		camBeginPos, camEndPos,
 		tar, tar, sec, interval

@@ -60,7 +60,7 @@ public:
 		return m_enemies.at(nearestIndex);
 	}
 
-	const IEnemy* GetTargettingEnemy() {
+	IEnemy* GetTargettingEnemy() const{
 		return m_targetEnemy;
 	}
 
