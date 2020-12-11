@@ -41,7 +41,7 @@ public:
 	/// </summary>
 	/// <param name="e">IEnemyを継承した敵の情報。</param>
 	/// <returns>プレイヤーの方向に向くQuaternion。</returns>
-	static Quaternion EnemyToPlayerRotation(IEnemy* e)
+	static const Quaternion& EnemyToPlayerRotation(IEnemy* e)
 	{
 		//横回転と縦回転を計算し、プレイヤーの方向を向くようにしている。
 		auto& p = GameManager::GetInstance().m_player;
@@ -82,7 +82,7 @@ public:
 	/// </summary>
 	/// <param name="time">秒数。</param>
 	/// <returns>ダメージ量。</returns>
-	static float CalcDamage(float time) {
+	static const float CalcDamage(float time) {
 		auto& p = GameManager::GetInstance().m_player;
 		float hp = p->GetMaxHP();
 		//1秒間に行われるフレーム数。
