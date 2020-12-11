@@ -8,6 +8,7 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanShootingState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanTackleState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 
 Boss_Fatman::Boss_Fatman()
 {
@@ -72,6 +73,10 @@ void Boss_Fatman::InitState()
 	}
 	{
 		auto p = std::make_pair(TO_INT(EnStateEX::enAttackE), new Boss_FatmanTackleState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enTakeDistance), new Boss_FatmanTakeDistanceState());
 		m_stateMap.insert(p);
 	}
 }
