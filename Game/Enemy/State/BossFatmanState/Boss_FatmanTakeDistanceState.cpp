@@ -23,16 +23,15 @@ IEnemyState* Boss_FatmanTakeDistanceState::Update(IEnemy* e)
 	auto& p = GameManager::GetInstance().m_player;
 	const auto& epos = e->GetPosition();
 	const auto& ppos = p->GetPosition();
-	auto vecToPlayer2 = ppos - epos;
-	float t = vecToPlayer2.Length();
+	auto vecToPlayer = epos - ppos;
+	float distance = vecToPlayer.Length();
 
-	if (t > 100.f) {
+	if (std::abs(distance) > 100.f){
 		e->SetVelocity(Vector3::Zero);
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
-	auto vecToPlayer = epos - ppos;
+	
 	vecToPlayer.Normalize();
-	//vecToPlayer.y = 0.f;
 	Vector3 movespeed = vecToPlayer * 100.f;
 	e->SetVelocity(movespeed);
 	return this;
