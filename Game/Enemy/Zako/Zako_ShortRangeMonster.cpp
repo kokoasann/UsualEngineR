@@ -2,6 +2,12 @@
 #include "Zako_ShortRangeMonster.h"
 
 #include "Enemy/State/EnemyShortRangeStunState.h"
+#include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/EnemyShortRangeIdleState.h"
+#include "Enemy/State/EnemyShortRangeComingState.h"
+#include "Enemy/State/EnemyShortRangePunchState.h"
+#include "Enemy/State/EnemyShortRangeStrongPunchState.h"
+#include "Enemy/State/EnemyShortRangeDanceState.h"
 
 
 Zako_ShortRangeMonster::Zako_ShortRangeMonster()
