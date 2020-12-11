@@ -32,10 +32,10 @@ private:
 	const float m_AUTO_RISE_PARAM = 10.f; //自動上昇時の最大Velocityは通常時の何倍か
 
 	const float m_FIRST_RISE_BOOST_COST = 50.f;
-	//const float m_BOOST_EFFICIENCY = 300.f / 15.f; //燃費,値が大きいほど悪い...
-	const float m_BOOST_EFFICIENCY = 0.f; //燃費,値が大きいほど悪い...
-	//const float m_BOOST_RUN_EFFICIENCY = 300.f / 5.f;
-	const float m_BOOST_RUN_EFFICIENCY = 0.f;
-	//const float m_RISE_BOOST_EFFICIENCY = 300.f / 2.5f;
-	const float m_RISE_BOOST_EFFICIENCY = 0.f;
+	const float m_BOOST_EFFICIENCY = 300.f / 15.f; //燃費,値が大きいほど悪い...
+	//const float m_BOOST_EFFICIENCY = 0.f; //燃費,値が大きいほど悪い...
+	const float m_BOOST_RUN_EFFICIENCY = 300.f / 5.f;
+	//const float m_BOOST_RUN_EFFICIENCY = 0.f;
+	const float m_RISE_BOOST_EFFICIENCY = 300.f / 1.5f;
+	//const float m_RISE_BOOST_EFFICIENCY = 0.f;
 };
