@@ -25,6 +25,7 @@ public:
 	{
 		enAttackC = TO_INT(IEnemy::EnState::enNumState),
 		enAttackD,
+		enAttackE,
 		Num,
 	};
 
