@@ -1,12 +1,7 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
-#include "Enemy/State/EnemyDeadState.h"
-#include "Enemy/State/EnemyShortRangeIdleState.h"
-#include "Enemy/State/EnemyShortRangeComingState.h"
-#include "Enemy/State/EnemyShortRangePunchState.h"
-#include "Enemy/State/EnemyShortRangeStrongPunchState.h"
-#include "Enemy/State/EnemyShortRangeDanceState.h"
+
 
 /// <summary>
 /// 
@@ -41,6 +36,7 @@ public:
 	{
 		enComing = TO_INT(IEnemy::EnState::enBattleState),
 		enDance = TO_INT(IEnemy::EnState::enNumState),
+		enLongJampAttack,
 		Num,
 	};
 
