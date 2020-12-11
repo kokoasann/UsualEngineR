@@ -71,18 +71,18 @@ IEnemyState* EnemyMeleeFlyState::Update(IEnemy* e) {
 		//return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	//Teleportation
-	const float teleportationDist = 80.f;
-	if (vecToPlayer.Length() > teleportationDist) {
-		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
-	}
-
 	//Chase
 	if (vecToPlayer.Length() > distLimit) {
 		auto v = vecToPlayer;
 		v.Normalize();
 		auto velocity = v * m_chaseSpeed;
 		e->SetVelocity(velocity);
+	}
+
+	//Teleportation
+	const float teleportationDist = 80.f;
+	if (vecToPlayer.Length() > teleportationDist) {
+		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
 	}
 
 	if (vecToPlayer.Length() < attackRange) {
