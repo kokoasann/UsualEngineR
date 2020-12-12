@@ -14,7 +14,9 @@ Boss_FatmanTakeDistanceState::~Boss_FatmanTakeDistanceState()
 
 void Boss_FatmanTakeDistanceState::Enter(IEnemy* e)
 {
-	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
+	const auto& rot = Boss_Fatman::EnemyToPlayerRotation(e, false);
+	e->GetModel()->SetRotation(rot);
+	int a = 0;
 }
 
 IEnemyState* Boss_FatmanTakeDistanceState::Update(IEnemy* e)
