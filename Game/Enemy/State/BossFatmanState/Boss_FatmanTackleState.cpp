@@ -26,11 +26,13 @@ void Boss_FatmanTackleState::Enter(IEnemy* e)
 IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 {
 	auto& p = GameManager::GetInstance().m_player;
+	const auto& ppos = p->GetPosition();
 	const auto& epos = e->GetPosition();
-	auto vecToPlayer = m_playerPosition - epos;
-	float distance = vecToPlayer.Length();
+	auto vecToPlayer = ppos - epos;
+	float distanceToCurrentP = vecToPlayer.Length();
 
-	if (distance < 5.f) {
+	const float distance = 5.f;
+	if (std::abs(distanceToCurrentP) < distance){
 		//プレイヤーがノックバック。
 		auto& p = GameManager::GetInstance().m_player;
 		const auto& epos = e->GetPosition();
@@ -44,9 +46,15 @@ IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	
-	vecToPlayer.Normalize();
+	auto vecToPlayer2 = m_playerPosition - epos;
+	float distanceToOldP = vecToPlayer2.Length();
+	if (std::abs(distanceToOldP) < distance) {
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+	}
+
+	vecToPlayer2.Normalize();
 	const float speed = 80.f;
-	Vector3 movespeed = vecToPlayer * speed;
+	Vector3 movespeed = vecToPlayer2 * speed;
 	e->SetVelocity(movespeed);
 	return this;
 }
