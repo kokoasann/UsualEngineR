@@ -13,6 +13,10 @@ Boss_FatmanMainState::~Boss_FatmanMainState()
 
 void Boss_FatmanMainState::Enter(IEnemy* e)
 {
+	//d—ÍB
+	Vector3 gravity = Vector3::Zero;
+	gravity.y = -5000.f;
+	e->SetVelocity(gravity);
 }
 
 IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
