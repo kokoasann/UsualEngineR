@@ -22,11 +22,11 @@ void Boss_FatmanShootingState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 {
-	const float shotTime = 0.05f;
+	const float shotTime = 0.03f;
 	m_shotTimer += gameTime()->GetDeltaTime();
 
 	//一定間隔で弾を撃つ。
-	//if (m_shotTimer > shotTime) {
+	if (m_shotTimer > shotTime) {
 		//撃ちだす方向を決める。
 		//少し上に設定。
 		const float upY = 6.f;
@@ -72,9 +72,17 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 
 		//弾の初期化。
 		eb->Init(epos, 0.6f, dir, 400.f, 5.f, 2.f);
-		eb->SetDamage(m_damage);
+		//プレイヤーが飛んでいたら撃ち落とす。
+		const float flyRange = 5.f;
+		if (std::abs(ppos.y - epos.y) > flyRange) {
+			eb->SetDamage(m_damage, true, Vector3::Zero);
+		}
+		else {
+			eb->SetDamage(m_damage);
+		}
+		
 		m_shotTimer = 0.f;
-	//}
+	}
 	return this;
 }
 

@@ -25,4 +25,5 @@ private:
 	Vector3			m_position = Vector3::Zero;
 	float			m_damage = 0.f;
 	float			m_chargeTimer = 0.f;
+	float			m_endBeamTimer = 0.f;
 };

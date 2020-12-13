@@ -32,4 +32,6 @@ private:
 	Quaternion		m_startRot = Quaternion::Identity;
 	Quaternion		m_rotation = Quaternion::Identity;
 	float			m_countRot = 0.f;
+
+	bool			m_isState = false;
 };

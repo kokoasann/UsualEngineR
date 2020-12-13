@@ -31,16 +31,31 @@ void Boss_FatmanBeamState::Enter(IEnemy* e)
 	//ダメージ数を計算。
 	const float time = 20.f;
 	m_damage = Boss_Fatman::CalcDamage(time);
+
+	m_isState = false;
 }
 
 IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 {
 	UpdateRotation(e);
 	
+	if (m_isState) {
+		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+	}
+
 	if (m_countRot > 0.f) {
 		if (Judge(e)) {
+			//プレイヤーが飛んでいたら撃ち落とす。
+			const float flyRange = 5.f;
+			auto epos = e->GetPosition();
 			auto& p = GameManager::GetInstance().m_player;
-			p->ApplyDamage(m_damage);
+			auto ppos = p->GetPosition();
+			if (std::abs(ppos.y - epos.y) > flyRange) {
+				p->ApplyDamage(m_damage, true, Vector3::Zero);
+			}
+			else {
+				p->ApplyDamage(m_damage);
+			}
 		}
 	}
 
@@ -68,6 +83,9 @@ void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
 		Quaternion rot = m_rotation;
 		rot.Multiply(m_startRot);
 		e->GetModel()->SetRotation(rot);
+	}
+	else {
+		m_isState = true;
 	}
 }
 

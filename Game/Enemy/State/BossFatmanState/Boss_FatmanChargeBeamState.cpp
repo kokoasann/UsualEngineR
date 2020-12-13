@@ -25,14 +25,31 @@ void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 
 	//タイマーのリセット。
 	m_chargeTimer = 0.f;
+	m_endBeamTimer = 0.f;
 }
 
 IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 {
 	if (Charge()) {
-		if (Beam(e)) {
-			auto& p = GameManager::GetInstance().m_player;
-			p->ApplyDamage(m_damage);
+		m_endBeamTimer += gameTime()->GetDeltaTime();
+		const float endTime = 2.f;
+		if (m_endBeamTimer < endTime) {
+			if (Beam(e)) {
+				//プレイヤーが飛んでいたら撃ち落とす。
+				const float flyRange = 5.f;
+				auto epos = e->GetPosition();
+				auto& p = GameManager::GetInstance().m_player;
+				auto ppos = p->GetPosition();
+				if (std::abs(ppos.y - epos.y) > flyRange) {
+					p->ApplyDamage(m_damage, true, Vector3::Zero);
+				}
+				else {
+					p->ApplyDamage(m_damage);
+				}
+			}
+		}
+		else {
+			return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 		}
 	}
 	return this;
