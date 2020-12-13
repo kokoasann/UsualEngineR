@@ -76,9 +76,11 @@ public:
 		return m_speed;
 	}
 
-	void SetDamage(const float f)
+	void SetDamage(const float f, const bool stunFlag = false, const Vector3& vel = Vector3::Zero)
 	{
 		m_damage = f;
+		m_isStunFlag = stunFlag;
+		m_vel = vel;
 	}
 
 private:
@@ -93,6 +95,8 @@ private:
 
 	float m_attackRange = 0.f;
 	float m_damage = 10.f;
+	bool  m_isStunFlag = false;
+	Vector3 m_vel = Vector3::Zero;
 
 	SphereCollider m_sphere;
 

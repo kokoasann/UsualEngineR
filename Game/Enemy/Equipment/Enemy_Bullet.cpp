@@ -154,7 +154,7 @@ void Enemy_Bullet::Update()
 		{
 			auto& gm = GameManager::GetInstance();
 
-			gm.m_player->ApplyDamage(m_damage);
+			gm.m_player->ApplyDamage(m_damage, m_isStunFlag, m_vel);
 		}
 		else if (sr.collAttr & GameCollisionAttribute::Enemy)
 		{
