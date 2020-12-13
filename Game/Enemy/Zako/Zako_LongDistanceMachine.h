@@ -48,7 +48,7 @@ private:
 	float m_scale = 2.f;
 
 	//Physics
-	const float m_radius = 1.f;
+	const float m_radius = 2.5f;
 	const float m_height = 3.f;
 
 	Quaternion m_rot = Quaternion::Identity;

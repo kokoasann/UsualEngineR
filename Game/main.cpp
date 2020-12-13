@@ -70,6 +70,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//NewGO<Title>(0);
 	NewGO<Game>(0);
 
+	//Ghost Object test
+	/*BoxCollider bc;
+	bc.Create({ 50,50,50 });
+	GhostObject go;
+	go.Create(&bc, Vector3::Zero, { 0,0,0,1 });*/
+
 
 	Vector3 dir = { 0.707,0.707,0 };
 	dir.Normalize();

@@ -57,8 +57,9 @@ void PlayerAttackKick::Execute(Player* player) {
 			auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enSOLE_R)->GetWorldMatrix().GetTransrate());
 			if (m_attackedEnemyMap.find(nearestEnemy) == m_attackedEnemyMap.end()) {
 				auto v = nearestEnemy->GetPosition() - player->GetPosition();
+				v.y = 0;
 				v.Normalize();
-				v.y = 3.f;
+				v.y = 2.f;
 				v.Normalize();
 				v *= m_knockBack;
 

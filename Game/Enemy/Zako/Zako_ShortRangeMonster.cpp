@@ -8,6 +8,8 @@
 #include "Enemy/State/EnemyShortRangePunchState.h"
 #include "Enemy/State/EnemyShortRangeStrongPunchState.h"
 #include "Enemy/State/EnemyShortRangeDanceState.h"
+#include "Enemy/State/EnemyShortRangeLongJampAttackState.h"
+#include "Enemy/State/EnemyShortRangeBlownState.h"
 
 
 Zako_ShortRangeMonster::Zako_ShortRangeMonster()
@@ -56,12 +58,16 @@ void Zako_ShortRangeMonster::InitAnimation()
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_idle.tka", true);
 	//Walk
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enWalk), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_walk.tka", true);
+	//run
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enRun), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_run.tka", true);
 	//Punch
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackA), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_punch.tka", false);
 	//StrongPunch
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackB), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_strong_punch.tka", false);
 	//Dance
 	SetAnimation(TO_INT(EnAnimEX::enDance), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_dance.tka", false);
+	//Down
+	SetAnimation(TO_INT(EnAnimEX::enDown), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_down.tka", false);
 
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 }
@@ -69,7 +75,7 @@ void Zako_ShortRangeMonster::InitAnimation()
 void Zako_ShortRangeMonster::InitState()
 {
 	{
-		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyDeadState());
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyShortRangeBlownState());
 		m_stateMap.insert(p);
 	}
 	{
@@ -96,22 +102,51 @@ void Zako_ShortRangeMonster::InitState()
 		auto p = std::make_pair(TO_INT(EnState::enStunState), new EnemyShortRangeStunState());
 		m_stateMap.insert(p);
 	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enLongJampAttack), new EnemyShortRangeLongJampAttackState());
+		m_stateMap.insert(p);
+	}
 }
 
 void Zako_ShortRangeMonster::InitIK()
 {
+	float radius = 0.5f;
 	auto ske = m_model->GetModel().GetSkelton();
 	{
-		IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 1);
+		IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, radius);
 		headik->SetIKMode(IK::enMode_NoneHit);
 
 		SetIK(TO_INT(EnIK::enHead), headik);
 	}
 	{
-		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 2, 1);
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 2, radius);
 		ik->SetIKMode(IK::enMode_NoneHit);
 
 		SetIK(TO_INT(EnIK::enChest), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Arm_L_IK")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enArm_L), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Arm_R_IK")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enArm_R), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_L.003")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enFoot_L), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_R.003")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enFoot_R), ik);
 	}
 }
 

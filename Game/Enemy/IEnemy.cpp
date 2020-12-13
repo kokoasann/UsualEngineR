@@ -107,12 +107,14 @@ void IEnemy::ApplyDamage(const float damage, const bool stunFlag, const Vector3&
 		//update hp bar
 		m_healthBar->SetHealthRatio(GetCurrentHP() / GetMaxHP());
 	}
-
-	if (stunFlag) {
+	
+	if(stunFlag)
+		m_impulse = imp;
+	if (stunFlag && (m_ability.hp > FLT_EPSILON)) {
 		m_previousState = m_currentState;
 		m_currentState->Exit(this);
 		m_currentState = m_nextState = GetState((TO_INT(EnState::enStunState)));
-		m_impulse = imp;
+		
 		m_currentState->Enter(this);
 		
 	}

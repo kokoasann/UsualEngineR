@@ -13,6 +13,7 @@ namespace UER
 			enMode_Normal,
 			enMode_Foot,		//footIK
 			enMode_NoneHit,
+			enMode_NoAnimHit,
 		};
 		/// <summary>
 		/// 使用するIKの種類。
@@ -41,6 +42,7 @@ namespace UER
 		void UpdateTarget_Normal(const Matrix& worldMat);
 		void UpdateTarget_Foot(const Matrix& worldMat);
 		void UpdateTarget_NoneHit(const Matrix& worldMat);
+		void UpdateTarget_NoAnimHit(const Matrix& worldMat);
 		/// <summary>
 		/// IKの更新。
 		/// </summary>
@@ -70,6 +72,8 @@ namespace UER
 		void SetIKMode(IKMode mode)
 		{
 			m_ikMode = mode;
+			if (m_ikMode == enMode_NoAnimHit)
+				m_isToggleNoAnimHit = true;
 		}
 
 		/// <summary>
@@ -190,6 +194,11 @@ namespace UER
 			m_isSetNextTarget = true;
 		}
 
+		void SetVelocity(const Vector3& v)
+		{
+			m_velocity = v;
+		}
+
 		void SetGravity(const float grav)
 		{
 			m_gravity = grav;
@@ -237,6 +246,10 @@ namespace UER
 		Vector3 m_offset = Vector3::Zero;			
 		Vector3 m_target = Vector3::Zero;			//IKのターゲット
 		Vector3 m_oldTarget = Vector3::Zero;		//old IKのターゲット
+
+		Vector3 m_velocity = Vector3::Zero;
+		
+
 		//Vector3 m_rubTarget = Vector3::Zero;		//擦った先のポジション。
 		//Vector3 m_move = Vector3::Zero;				//移動ベクトル
 		//Vector3 m_animMove = Vector3::Zero;
@@ -260,6 +273,8 @@ namespace UER
 		Vector3 m_oldNewTarget = Vector3::Zero;		
 
 		btCollisionObject* m_hitCollision = nullptr;
+
+		bool m_isToggleNoAnimHit = false;
 	};
 
 }

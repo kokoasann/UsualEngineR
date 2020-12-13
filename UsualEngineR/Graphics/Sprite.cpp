@@ -126,7 +126,12 @@ namespace UER
 				{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 			};
-	
+			auto blendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+			blendState.RenderTarget[0].BlendEnable = TRUE;
+			blendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+			blendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+			blendState.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+			blendState.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_INV_SRC_ALPHA;
 			//パイプラインステートを作成。
 			D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = { 0 };
 			psoDesc.InputLayout = { inputElementDescs, _countof(inputElementDescs) };
@@ -135,7 +140,7 @@ namespace UER
 			psoDesc.PS = CD3DX12_SHADER_BYTECODE(m_ps.GetCompiledBlob());
 			psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
 			psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-			psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+			psoDesc.BlendState = blendState;
 			psoDesc.DepthStencilState.DepthEnable = FALSE;
 			psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 			psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;

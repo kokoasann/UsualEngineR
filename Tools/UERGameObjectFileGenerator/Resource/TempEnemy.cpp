@@ -37,6 +37,12 @@ void XXX::InitState()
 
 }
 :end
+:block InitIK
+void XXX::InitIK()
+{
+
+}
+:end
 
 void XXX::Execute()
 {

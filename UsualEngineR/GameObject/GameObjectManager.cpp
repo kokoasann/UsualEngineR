@@ -81,6 +81,9 @@ namespace UER
 		RenderingSituation::Set(ERenderSituation::PostRender);
 
 		UpdatePostRender();
+		
+		if(Debug::Instance().debugState.isPhysicsDebugDraw)
+			Physics().DebugDraw();
 
 		g_graphicsEngine->RenderPostEffect();
 

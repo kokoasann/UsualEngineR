@@ -15,7 +15,7 @@ EnemyShortRangeComingState::~EnemyShortRangeComingState()
 
 void EnemyShortRangeComingState::Enter(IEnemy* e)
 {
-	e->PlayAnimation(IEnemy::EnAnimation::enWalk);
+	e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enRun));
 
 	if (m_headIK == nullptr)
 	{
@@ -25,6 +25,9 @@ void EnemyShortRangeComingState::Enter(IEnemy* e)
 
 IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 {
+	if(e->GetPreviousState() == e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enLongJampAttack)))
+		return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enDance));
+
 	auto player = GameManager::GetInstance().m_player;
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
@@ -45,12 +48,18 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 	}
 
 	const float moveRange = 10.f;
-	const float attackRange = 5.f;
+	const float attackRange = 10.f;
 	const float idleRange = 200.f;
 
+	const float vec2PlayerLen = vecToPlayer.Length();
+	vecToPlayer /= vec2PlayerLen;
+
 	if (player->GetCurrentHP() > 0.f) {
+
+		float t = acosf(vecToPlayer.Dot(e->GetForward()));
+
 		//近づいたら行動。
-		if (vecToPlayer.Length() < attackRange) {
+		if (vec2PlayerLen < attackRange && t < Math::PI * 0.3f) {
 			auto rand = GRandom().Rand();
 			//約30%の確率で行動変化。
 			if (rand < 0.1f) {
@@ -66,13 +75,17 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 				return e->GetState(TO_INT(IEnemy::EnState::enAttackB));
 			}
 		}
+		else if (vec2PlayerLen < 35 && t < Math::PI * 0.3f)
+		{
+			return e->GetState(TO_INT(Zako_ShortRangeMonster::EnStateEX::enLongJampAttack));
+		}
 		//離れたら移動。
 		else {
 			Move(e);
 		}
 
 		//離れたら移動停止。
-		if (vecToPlayer.Length() > idleRange) {
+		if (vec2PlayerLen > idleRange) {
 			return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 		}
 	}

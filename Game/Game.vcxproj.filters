@@ -259,6 +259,9 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.h">
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyShortRangeBlownState.h">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -520,6 +523,9 @@
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.cpp">
       <Filter>Enemy\State\MeleeBoss</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyShortRangeBlownState.cpp">
+      <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -672,5 +678,16 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Image\white.png">
+      <Filter>Assets\image</Filter>
+    </Image>
+    <Image Include="Assets\Image\whiteFade_TB.png">
+      <Filter>Assets\image</Filter>
+    </Image>
+    <Image Include="Assets\Image\whiteGrad_B.png">
+      <Filter>Assets\image</Filter>
+    </Image>
   </ItemGroup>
 </Project>

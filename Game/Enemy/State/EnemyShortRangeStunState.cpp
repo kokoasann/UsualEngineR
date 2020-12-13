@@ -29,17 +29,23 @@ void EnemyShortRangeStunState::Enter(IEnemy* e)
 	m_t = 0.;
 
 	m_knockBack = knockBack - knockBockVec*min(knockBackLen,150.f);
+	m_up = m_knockBack.y * m_timeLimit;
+	m_knockBack.y = 0;
 	//m_knockBack /= 10.f;
 
-	e->SetKnockBackImpulse(Vector3::Zero);
+	//e->SetKnockBackImpulse(Vector3::Zero);
 }
 
 IEnemyState* EnemyShortRangeStunState::Update(IEnemy* e)
 {
-	m_timer += gameTime()->GetDeltaTime();
+	float dtime = gameTime()->GetDeltaTime();
+	m_timer += dtime;
 
-	if (m_timer >= m_timeLimit)
+	if (m_timer >= m_timeLimit && e->IsOnGround())
+	{
+		e->SetExternalVelocity(Vector3::Zero);
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+	}
 
 	float t = m_timer / m_timeLimit;
 
@@ -48,12 +54,14 @@ IEnemyState* EnemyShortRangeStunState::Update(IEnemy* e)
 	p.Lerp(s, m_velocity, m_velocityEnd);
 	m_ik->SetNextTarget(p + m_ik->GetEffectorBone()->GetWorldMatrix().GetTransrate());
 
+	m_up -= m_grav * dtime;
 	//m_knockBack * t;
-	e->SetVelocity(m_knockBack);
+	e->SetExternalVelocity({ m_knockBack.x,m_up,m_knockBack.z });
 	
 	return this;
 }
 
 void EnemyShortRangeStunState::Exit(IEnemy* e)
 {
+	e->SetExternalVelocity(Vector3::Zero);
 }

@@ -260,7 +260,12 @@ namespace UER
 		case enMode_NoneHit:
 			UpdateTarget_NoneHit(worldMat);
 			break;
+		case enMode_NoAnimHit:
+			UpdateTarget_NoAnimHit(worldMat);
+			break;
 		}
+		//if (m_ikMode != enMode_NoAnimHit)
+		m_isToggleNoAnimHit = false;
 	}
 
 
@@ -274,7 +279,7 @@ namespace UER
 		auto effpos = effmat.GetTransrate();
 		auto currentBone = m_skeleton->GetBone(m_effectorBone->GetParentBoneNo());						//作業中のボーン
 
-		auto newpos = effpos + m_offset;	//移動先のポジション
+		auto newpos = effpos + m_velocity;	//移動先のポジション
 		if (m_isSetNextTarget)
 		{
 			newpos = m_nextTarget;
@@ -373,7 +378,8 @@ namespace UER
 		//auto o2n = m_target - oldpos;
 		//m_effectorBone->SetMove(m_move);
 
-		m_offset = Vector3::Zero;
+		//m_offset = Vector3::Zero;
+		m_velocity = Vector3::Zero;
 		if (m_isUseRigidBody)
 			UpdateRigidBody(m_target);
 	}
@@ -594,6 +600,98 @@ namespace UER
 			UpdateRigidBody(m_target);
 	}
 
+	void IK::UpdateTarget_NoAnimHit(const Matrix& worldMat)
+	{
+
+		if (m_isToggleNoAnimHit)
+		{
+			auto effmat = GetBoneWorldMatrix(m_skeleton, m_effectorBone, worldMat);
+			m_target = effmat.GetTransrate();
+		}
+
+		Vector3 newpos = m_target;
+
+		if (m_isSetNextTarget)
+		{
+			newpos = m_nextTarget;
+			m_isSetNextTarget = false;
+			m_isSetOldTarget = true;
+		}
+		newpos += m_velocity;
+
+		auto oldpos = m_effectorBone->GetWorldMatrix().GetTransrate();	//移動前のポジション
+		if (m_isFirst)
+		{
+			oldpos += worldMat.GetTransrate();
+			m_isFirst = false;
+		}
+		else
+		{
+			oldpos = m_target;
+		}
+		Vector3 o2n = (newpos - oldpos);
+		if (o2n.Length() <= 2.0e-5f)
+			return;
+
+		SweepResultIK sr;
+		sr.startPos = oldpos;
+		sr.me = m_rigidBody.GetBody();
+
+		Vector3 target = newpos;//ターゲット
+
+
+		btTransform bstart, bend;
+		bstart.setIdentity();
+		bend.setIdentity();
+		bstart.setOrigin(btVector3(oldpos.x, oldpos.y, oldpos.z));
+		bend.setOrigin(btVector3(newpos.x, newpos.y, newpos.z));
+		bool isHit = false;
+		Vector3 tarbuf = newpos;
+		while (true)
+		{
+
+			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), bstart, bend, sr);
+			if (sr.isHit)
+			{
+				auto meri = target - sr.hitPos;
+				float rad = sr.hitNormal.Dot(meri);
+				if (!m_isHit)
+				{
+					target = sr.hitPos + sr.hitNormal * (m_radius + 0.2f);
+				}
+				else
+				{
+					target = sr.hitPos + sr.hitNormal * (m_radius + 0.2f);
+				}
+				auto t2t = (target - tarbuf);
+				float l = t2t.Length();
+				if (l < 2.0e-5f)
+					break;
+				auto o2t = (target - oldpos);
+				l = o2t.Length();
+				if (l < 2.0e-5f)
+					return;
+				isHit = true;
+				tarbuf = target;
+				bend.setOrigin(btVector3(target.x, target.y, target.z));
+				sr.dist = FLT_MAX;
+				sr.isHit = false;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		m_target = target;
+
+		m_isHit = isHit;
+
+		m_velocity = Vector3::Zero;
+		if (m_isUseRigidBody)
+			UpdateRigidBody(m_target);
+	}
+
 	void IK::Update(const Matrix& worldMat)
 	{
 		switch (m_usingIK)
@@ -613,11 +711,11 @@ namespace UER
 		case IKMode::enMode_Foot:
 			break;
 		case IKMode::enMode_Normal:
-			if (!(m_isHit or m_isSetNextTarget))
-				return;
+			/*if (!(m_isHit or m_isSetNextTarget))
+				return;*/
 			break;
 		case IKMode::enMode_NoneHit:
-			if (!m_isSetNextTarget)
+			if (!m_isSetNextTarget && m_velocity.Length() <= FLT_EPSILON)
 				return;
 			break;
 		}

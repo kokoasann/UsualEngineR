@@ -43,6 +43,7 @@ public:
 	enum class EnAnimEX :int
 	{
 		enDance = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		enDown,
 		Num,
 	};
 private:
@@ -54,6 +55,6 @@ private:
 	float m_scale = 1.5f;
 
 	//Physics
-	const float m_radius = 1.f;
+	const float m_radius = 2.f;
 	const float m_height = 3.f;
 };

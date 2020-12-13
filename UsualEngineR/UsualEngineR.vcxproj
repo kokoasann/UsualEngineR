@@ -268,6 +268,7 @@
     <ClInclude Include="Physics\BoxCollider.h" />
     <ClInclude Include="Physics\CapsuleCollider.h" />
     <ClInclude Include="Physics\CollisionAttr.h" />
+    <ClInclude Include="Physics\GhostObject.h" />
     <ClInclude Include="Physics\ICollider.h" />
     <ClInclude Include="Physics\MeshCollider.h" />
     <ClInclude Include="Physics\Physics.h" />
@@ -379,6 +380,7 @@
     <ClCompile Include="math\Vector.cpp" />
     <ClCompile Include="Physics\BoxCollider.cpp" />
     <ClCompile Include="Physics\CapsuleCollider.cpp" />
+    <ClCompile Include="Physics\GhostObject.cpp" />
     <ClCompile Include="Physics\MeshCollider.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
     <ClCompile Include="Physics\PhysicsDebugDraw.cpp" />

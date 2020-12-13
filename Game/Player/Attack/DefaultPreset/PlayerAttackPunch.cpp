@@ -56,7 +56,8 @@ void PlayerAttackPunch::Execute(Player* player) {
 				auto& enemyManager = EnemyManager::GetEnemyManager();
 				auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enHand_L)->GetWorldMatrix().GetTransrate());
 
-				auto vecPlayerToEnemy = nearestEnemy->GetPosition() - player->GetPosition();
+				//auto vecPlayerToEnemy = nearestEnemy->GetPosition() - player->GetPosition();
+				auto vecPlayerToEnemy = player->GetForward();
 				vecPlayerToEnemy.Normalize();
 
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, stunFlag, vecPlayerToEnemy * knockbackParam);
@@ -69,7 +70,8 @@ void PlayerAttackPunch::Execute(Player* player) {
 				auto& enemyManager = EnemyManager::GetEnemyManager();
 				auto nearestEnemy = enemyManager.GetNearestEnemy(player->GetBone(Player::EnPlayerBone::enHand_R)->GetWorldMatrix().GetTransrate());
 
-				auto vecPlayerToEnemy = nearestEnemy->GetPosition() - player->GetPosition();
+				//auto vecPlayerToEnemy = nearestEnemy->GetPosition() - player->GetPosition();
+				auto vecPlayerToEnemy = player->GetForward();
 				vecPlayerToEnemy.Normalize();
 
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, stunFlag, vecPlayerToEnemy * knockbackParam);

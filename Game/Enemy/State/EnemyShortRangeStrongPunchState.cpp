@@ -18,9 +18,14 @@ void EnemyShortRangeStrongPunchState::Enter(IEnemy* e)
 	e->PlayAnimation(IEnemy::EnAnimation::enAttackB);
 	auto& p = GameManager::GetInstance().m_player;
 	auto v = p->GetPosition() - e->GetPosition();
-	v.Normalize();
-	v *= 100.f;
-	p->ApplyDamage(m_damage, true, v);
+	v.y = 0.f;
+	float vlen = v.Length();
+	v /= vlen;
+
+	auto f = e->GetForward();
+	auto t = acosf(v.Dot(f));
+	if (vlen < 5.f && t < Math::PI * 0.5f)
+		p->ApplyDamage(m_damage, true, f);
 }
 
 IEnemyState* EnemyShortRangeStrongPunchState::Update(IEnemy* e)

@@ -101,6 +101,7 @@
 #include "Physics/Physics.h"
 #include "Physics/PhysicsStaticObject.h"
 #include "Physics/RigidBody.h"
+#include "Physics/GhostObject.h"
 
 #include "GameObject/GameObject.h"
 #include "GameObject/GameObjectManager.h"
