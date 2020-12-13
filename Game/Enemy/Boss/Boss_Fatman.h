@@ -41,7 +41,7 @@ public:
 	/// </summary>
 	/// <param name="e">IEnemyを継承した敵の情報。</param>
 	/// <returns>プレイヤーの方向に向くQuaternion。</returns>
-	static const Quaternion& EnemyToPlayerRotation(IEnemy* e)
+	static const Quaternion EnemyToPlayerRotation(IEnemy* e, bool isRotY = true)
 	{
 		//横回転と縦回転を計算し、プレイヤーの方向を向くようにしている。
 		auto& p = GameManager::GetInstance().m_player;
@@ -54,24 +54,26 @@ public:
 		Quaternion rot;
 		rot.SetRotation(Vector3::AxisY, angleW);
 
-		//縦回転。
-		Vector3 vecToPlayerXZ = vecToPlayer;
-		vecToPlayerXZ.y = 0.0f;
-		vecToPlayer.Normalize();
-		vecToPlayerXZ.Normalize();
-		float dot = vecToPlayer.Dot(vecToPlayerXZ);
-		float angleH = acos(dot);
+		if (isRotY) {
+			//縦回転。
+			Vector3 vecToPlayerXZ = vecToPlayer;
+			vecToPlayerXZ.y = 0.0f;
+			vecToPlayer.Normalize();
+			vecToPlayerXZ.Normalize();
+			float dot = vecToPlayer.Dot(vecToPlayerXZ);
+			float angleH = acos(dot);
 
-		//回転軸。
-		Vector3 axis;
-		axis.Cross(vecToPlayer, vecToPlayerXZ);
-		axis.Normalize();
+			//回転軸。
+			Vector3 axis;
+			axis.Cross(vecToPlayer, vecToPlayerXZ);
+			axis.Normalize();
 
-		Quaternion rot2;
-		rot2.SetRotation(axis, -angleH);
+			Quaternion rot2;
+			rot2.SetRotation(axis, -angleH);
 
-		//回転の合成。
-		rot.Multiply(rot2);
+			//回転の合成。
+			rot.Multiply(rot2);
+		}
 
 		return rot;
 	}
