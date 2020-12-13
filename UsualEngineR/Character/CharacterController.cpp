@@ -711,6 +711,7 @@ namespace UER
 		start.setIdentity();
 		end.setIdentity();
 		//始点はカプセルコライダーの中心。
+		//start.setOrigin(btVector3(nowPos.x, (nowPos.y)+Ypos, nowPos.z));
 		start.setOrigin(btVector3(nowPos.x, (nowPos.y + m_height * 0.5f + m_radius) + Ypos, nowPos.z));
 		//start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius + 0.1f, m_position.z));
 
@@ -727,6 +728,7 @@ namespace UER
 				//ジャンプ中とかで上昇中。
 				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
 				endPos.y -= addPos.y * 0.01f;
+				//endPos.y -= 1.f;
 			}
 			else {
 				//落下している場合はそのまま下を調べる。
@@ -739,10 +741,11 @@ namespace UER
 		}
 		else {
 			//地面上にいない場合は1m下を見る。
-			//endPos.y -= 1.0f;
-			endPos.y += addPos.y;
+			endPos.y -= 1.0f;
+			//endPos.y += addPos.y;
 		}
 		end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
+		//end.setOrigin(btVector3(endPos.x, endPos.y + m_height * 0.5f + m_radius, endPos.z));
 		SweepResultGround callback;
 		if (m_isUseRigidBody)
 			callback.me = m_rigidBody.GetBody();
