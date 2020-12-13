@@ -10,4 +10,10 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
+	/// <summary>
+	/// 遠距離攻撃のステート遷移。
+	/// </summary>
+	IEnemyState* LongRangeAttack(IEnemy* e);
+private:
+	float m_fatTimer = 0.f;
 };
