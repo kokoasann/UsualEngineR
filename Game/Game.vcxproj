@@ -204,6 +204,7 @@
     <ClInclude Include="Enemy\State\EnemyIdleState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h" />
+    <ClInclude Include="Enemy\State\EnemyShortRangeBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeIdleState.h" />
@@ -298,6 +299,7 @@
     <ClCompile Include="Enemy\State\EnemyIdleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyShortRangeBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeIdleState.cpp" />
@@ -427,6 +429,15 @@
     <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\Image\white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
