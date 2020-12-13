@@ -68,11 +68,7 @@ void Boss_Fatman::InitState()
 		m_stateMap.insert(p);
 	}
 	{
-		auto p = std::make_pair(TO_INT(EnStateEX::enAttackD), new Boss_FatmanShootingState());
-		m_stateMap.insert(p);
-	}
-	{
-		auto p = std::make_pair(TO_INT(EnStateEX::enAttackE), new Boss_FatmanTackleState());
+		auto p = std::make_pair(TO_INT(EnStateEX::enAttackD), new Boss_FatmanTackleState());
 		m_stateMap.insert(p);
 	}
 	{
