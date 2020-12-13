@@ -35,6 +35,10 @@ namespace UER
 
 		m_physicsWorld = new PhysicsWorld();
 		m_physicsWorld->Init();
+
+#if DEBUG_FUNC
+		Debug::Instance().InitDebugSwitch();
+#endif
 	}
 	void UsualEngine::GameLoop()
 	{
@@ -56,8 +60,9 @@ namespace UER
 			//レンダリング開始。
 			g_engine->BeginFrame();
 
-
+#if DEBUG_FUNC
 			DebugSwitch::Instance()->Update();
+#endif
 			/*#
 			###	RayTracingの奴の残留思念。
 			###

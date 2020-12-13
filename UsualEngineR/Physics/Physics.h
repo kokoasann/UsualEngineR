@@ -41,6 +41,19 @@ namespace UER
 		* @brief	剛体を破棄。
 		*/
 		void RemoveRigidBody(RigidBody& rb);
+
+		void AddCollisionObject(btCollisionObject& colliObj)
+		{
+			dynamicWorld->addCollisionObject(&colliObj);
+		}
+		/*!
+		* @brief	コリジョンオブジェクトをワールドから削除。
+		*@param[in]	colliObj	コリジョンオブジェクト。
+		*/
+		void RemoveCollisionObject(btCollisionObject& colliObj)
+		{
+			dynamicWorld->removeCollisionObject(&colliObj);
+		}
 		void ConvexSweepTest(
 			const btConvexShape* castShape,
 			const btTransform& convexFromWorld,
@@ -51,7 +64,7 @@ namespace UER
 		{
 			dynamicWorld->convexSweepTest(castShape, convexFromWorld, convexToWorld, resultCallback, allowedCcdPenetration);
 		}
-		void ContactText(
+		void ContactTest(
 			btCollisionObject* colObj,
 			btCollisionWorld::ContactResultCallback& resultCallback
 		)

@@ -7,7 +7,7 @@ namespace UER
 {
 	void PhysicsDebugDraw::Init()
 	{
-		m_primi.Cteate(D3D_PRIMITIVE_TOPOLOGY_LINELIST, MAX_VERTEX * sizeof(Vector4), sizeof(Vector4), &m_vertexBuffer[0], MAX_VERTEX, Primitive::it_4byte, &m_indexBuffer[0]);
+		m_primi.Cteate(D3D_PRIMITIVE_TOPOLOGY_LINELIST, MAX_VERTEX, sizeof(SVertexData), &m_vertexBuffer[0], MAX_VERTEX, Primitive::it_4byte, &m_indexBuffer[0]);
 		m_vs.LoadVS(L"Assets/shader/linePrimitive.fx", "VSMain");
 		m_ps.LoadPS(L"Assets/shader/linePrimitive.fx", "PSMain");
 
@@ -22,6 +22,7 @@ namespace UER
 		D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 
 		};
 
@@ -39,7 +40,7 @@ namespace UER
 		psoDesc.SampleMask = UINT_MAX;
 		psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 		psoDesc.NumRenderTargets = 1;
-		psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;		//アルベドカラー出力用。s
+		psoDesc.RTVFormats[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;		//アルベドカラー出力用。s
 		psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 		psoDesc.SampleDesc.Count = 1;
 
@@ -79,8 +80,8 @@ namespace UER
 	void PhysicsDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 	{
 		int base = m_numLine * 2;
-		m_vertexBuffer[base].Set(Vector3{ from.x(),from.y(),from.z() });
-		m_vertexBuffer[base + 1].Set(Vector3{ to.x(),to.y(),to.z() });
+		m_vertexBuffer[base] = { { from.x(),from.y(),from.z() },{color.x(),color.y(),color.z()} };
+		m_vertexBuffer[base + 1] = { Vector3{ to.x(),to.y(),to.z() }, { color.x(),color.y(),color.z() } };
 		m_indexBuffer[base] = base;
 		m_indexBuffer[base+1] = base+1;
 		m_numLine++;

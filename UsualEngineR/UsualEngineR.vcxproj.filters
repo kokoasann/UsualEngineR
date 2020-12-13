@@ -313,6 +313,9 @@
     <ClInclude Include="Graphics\ShadowMap.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\GhostObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -591,6 +594,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\ShadowMap.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\GhostObject.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,12 @@ namespace UER
 			Matrix mView;
 			Matrix mProj;
 		};
+
+		struct SVertexData
+		{
+			Vector3 pos;
+			Vector3 color;
+		};
 	public:
 		PhysicsDebugDraw() {}
 		~PhysicsDebugDraw(){}
@@ -49,8 +55,8 @@ namespace UER
 		Primitive m_primi;
 		Shader m_vs;
 		Shader m_ps;
-		static const unsigned int MAX_VERTEX = 10000;
-		std::array<Vector4, MAX_VERTEX> m_vertexBuffer;
+		static const unsigned int MAX_VERTEX = 500000;
+		std::array<SVertexData, MAX_VERTEX> m_vertexBuffer;
 		std::array<int, MAX_VERTEX> m_indexBuffer;
 		int m_numLine = 0;
 
