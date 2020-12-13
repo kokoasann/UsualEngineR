@@ -15,7 +15,7 @@ EnemyShortRangeComingState::~EnemyShortRangeComingState()
 
 void EnemyShortRangeComingState::Enter(IEnemy* e)
 {
-	e->PlayAnimation(IEnemy::EnAnimation::enWalk);
+	e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enRun));
 
 	if (m_headIK == nullptr)
 	{

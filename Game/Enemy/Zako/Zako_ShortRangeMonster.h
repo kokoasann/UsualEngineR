@@ -43,6 +43,7 @@ public:
 	enum class EnAnimEX :int
 	{
 		enDance = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		enDown,
 		Num,
 	};
 private:

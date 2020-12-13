@@ -33,7 +33,7 @@ void EnemyShortRangeStunState::Enter(IEnemy* e)
 	m_knockBack.y = 0;
 	//m_knockBack /= 10.f;
 
-	e->SetKnockBackImpulse(Vector3::Zero);
+	//e->SetKnockBackImpulse(Vector3::Zero);
 }
 
 IEnemyState* EnemyShortRangeStunState::Update(IEnemy* e)
@@ -63,4 +63,5 @@ IEnemyState* EnemyShortRangeStunState::Update(IEnemy* e)
 
 void EnemyShortRangeStunState::Exit(IEnemy* e)
 {
+	e->SetExternalVelocity(Vector3::Zero);
 }

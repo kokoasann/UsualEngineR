@@ -31,7 +31,7 @@ IEnemyState* EnemyShortRangeLongJampAttackState::Update(IEnemy* e)
 	
 	if (m_isTakOff && e->IsOnGround())
 	{
-		e->SetVelocity(Vector3::Zero);
+		
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	
@@ -71,4 +71,5 @@ IEnemyState* EnemyShortRangeLongJampAttackState::Update(IEnemy* e)
 
 void EnemyShortRangeLongJampAttackState::Exit(IEnemy* e)
 {
+	e->SetVelocity(Vector3::Zero);
 }
