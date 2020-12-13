@@ -14,6 +14,9 @@ public:
 :block InitState
 	void InitState() override;
 :end
+:block InitIK
+	void InitIK() override;
+:end
 	void Execute() override;
 	void Terminate() override;
 	Player::EnAttackType GetDropID() override
@@ -36,7 +39,7 @@ public:
 
 private:
 	//Model
-	ModelRender* m_model = nullptr;
+	//ModelRender* m_model = nullptr;
 	float m_scale = 1.f;
 
 	//Physics

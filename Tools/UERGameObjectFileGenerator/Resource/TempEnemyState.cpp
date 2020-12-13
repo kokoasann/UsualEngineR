@@ -23,3 +23,9 @@ IEnemyState* XXX::Update(IEnemy* e)
 void XXX::Exit(IEnemy* e)
 {
 }
+
+:block OnAttacked
+void XXX::OnAttacked(IEnemy* e)
+{
+}
+:end
