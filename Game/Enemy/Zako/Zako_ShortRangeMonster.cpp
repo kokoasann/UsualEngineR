@@ -8,6 +8,7 @@
 #include "Enemy/State/EnemyShortRangePunchState.h"
 #include "Enemy/State/EnemyShortRangeStrongPunchState.h"
 #include "Enemy/State/EnemyShortRangeDanceState.h"
+#include "Enemy/State/EnemyShortRangeLongJampAttackState.h"
 
 
 Zako_ShortRangeMonster::Zako_ShortRangeMonster()
@@ -94,6 +95,10 @@ void Zako_ShortRangeMonster::InitState()
 	}
 	{
 		auto p = std::make_pair(TO_INT(EnState::enStunState), new EnemyShortRangeStunState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enLongJampAttack), new EnemyShortRangeLongJampAttackState());
 		m_stateMap.insert(p);
 	}
 }

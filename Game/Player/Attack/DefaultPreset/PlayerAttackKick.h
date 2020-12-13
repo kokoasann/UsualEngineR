@@ -38,6 +38,6 @@ private:
 
 	std::map<IEnemy*, bool> m_attackedEnemyMap;
 
-	const float m_knockBack = 250.f;
+	const float m_knockBack = 230.f;
 };
 

@@ -71,6 +71,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	NewGO<Game>(0);
 
 
+	BoxCollider bc;
+	bc.Create({ 50,50,50 });
+	GhostObject go;
+	go.Create(&bc, Vector3::Zero, { 0,0,0,1 });
+
+
 	Vector3 dir = { 0.707,0.707,0 };
 	dir.Normalize();
 	auto lig = NewGO<LightDirection>(0);
