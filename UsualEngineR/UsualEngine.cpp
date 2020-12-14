@@ -45,6 +45,9 @@ namespace UER
 		// ここからゲームループ。
 		while (true)
 		{
+			Stopwatch sw;
+			sw.Start();
+
 			bool isGO = DispatchWindowMessage();
 			if (!isGO)
 			{
@@ -52,8 +55,7 @@ namespace UER
 
 				break;
 			}
-			Stopwatch sw;
-			sw.Start();
+			
 
 			m_physicsWorld->Update();
 
