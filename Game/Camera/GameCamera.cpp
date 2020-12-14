@@ -255,14 +255,21 @@ void GameCamera::CalcEnemyCamera() {
 	Vector3 ecPos;
 
 	auto targettingEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
-	if (targettingEnemy != nullptr) {
-		m_targetPos = targettingEnemy->GetPosition();
-		m_enemyCameraNextTargetPos = targettingEnemy->GetPosition();
-	}
-	else {
+
+	if (targettingEnemy == nullptr) {
 		m_state = State::enPlayerCamera;
 		m_targetEnemyNo = -1;
 	}
+	else if(targettingEnemy->GetCurrentState() == targettingEnemy->GetState(TO_INT(IEnemy::EnState::enDeadState))){
+		m_state = State::enPlayerCamera;
+		m_targetEnemyNo = -1;
+	}
+	else {
+		m_targetPos = targettingEnemy->GetPosition();
+		m_enemyCameraNextTargetPos = targettingEnemy->GetPosition();
+	}
+
+
 
 	//ターゲットの位置を切替先まで補完する.
 	auto vecCurrentToNext = m_enemyCameraNextTargetPos - m_enemyCameraCurrentTargetPos;
@@ -460,6 +467,11 @@ std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
 	std::map<float, int, std::greater<float>> sortedEnemiesMap;
 
 	for (int i = 0; i < enemies.size(); i++) {
+
+		if (enemies.at(i)->GetCurrentState() == enemies.at(i)->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+			continue;
+		}
+
 		const auto& enemyPos = enemies.at(i)->GetPosition();
 		auto vecCameraToEnemy = enemyPos - cameraPos;
 		if (vecCameraToEnemy.Length() < AUTO_TARGET_RANGE) {

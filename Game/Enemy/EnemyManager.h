@@ -30,33 +30,57 @@ public:
 
 	void Release();
 
-	IEnemy* GetNearestBossEnemy() const {
-		//TODO : implement this func
+	IEnemy* GetNearestBossEnemy(const Vector3& pos) const {
 		if (m_enemies.size() == 0) return nullptr;
 
-		for (int i = 0; i < m_enemies.size(); i++) {
-			if (m_enemies.at(i)->IsBoss()) {
-				return m_enemies.at(i);
-			}
-		}
-		return nullptr;
-		//return m_enemies[0];
-	}
-
-	IEnemy* GetNearestEnemy(const Vector3 pos) const {
-		//TODO : implement this func
-		if (m_enemies.size() == 0) return nullptr;
-
-		int nearestIndex;
+		int nearestIndex = 0;
 		float minLen = FLT_MAX;
 
 		for (int i = 0; i < m_enemies.size(); i++) {
+
+			if (m_enemies.at(i)->GetCurrentState() == m_enemies.at(i)->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				continue;
+			}
+
+			if (!m_enemies.at(i)->IsBoss()) {
+				continue;
+			}
+
 			float len = (m_enemies.at(i)->GetPosition() - pos).Length();
 			if (len < minLen) {
 				nearestIndex = i;
 				minLen = len;
 			}
 		}
+
+		if (m_enemies.at(nearestIndex)->GetCurrentState() == m_enemies.at(nearestIndex)->GetState(TO_INT(IEnemy::EnState::enDeadState)))
+			return nullptr;
+
+		return m_enemies.at(nearestIndex);
+	}
+
+	IEnemy* GetNearestEnemy(const Vector3 pos) const {
+		if (m_enemies.size() == 0) return nullptr;
+
+		int nearestIndex = 0;
+		float minLen = FLT_MAX;
+
+		for (int i = 0; i < m_enemies.size(); i++) {
+
+			if (m_enemies.at(i)->GetCurrentState() == m_enemies.at(i)->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				continue;
+			}
+
+			float len = (m_enemies.at(i)->GetPosition() - pos).Length();
+			if (len < minLen) {
+				nearestIndex = i;
+				minLen = len;
+			}
+		}
+
+		if (m_enemies.at(nearestIndex)->GetCurrentState() == m_enemies.at(nearestIndex)->GetState(TO_INT(IEnemy::EnState::enDeadState)))
+			return nullptr;
+			
 		return m_enemies.at(nearestIndex);
 	}
 
