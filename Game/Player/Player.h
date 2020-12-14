@@ -223,6 +223,12 @@ public:
 		auto finalDamage = damageAmount - (damageAmount * m_armorParam / 100.f);
 		m_hp = max(0.f, m_hp - finalDamage);
 		if(stunFlag){
+
+			//ガード中はスタン攻撃を無視.
+			if (GetCurrentState() == GetState(Player::EnState::enGuard)) {
+				return;
+			}
+
 			m_previousState = m_currentState;
 			m_currentState->Exit(this);
 			m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enStun)];
