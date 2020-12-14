@@ -205,7 +205,7 @@ namespace UER
 		//const float OFFSETY = fabsf(addPos.y)*0.5f*0 + 0.1;
 
 		m_offsetXZ = Vector3(addPos.x, 0, addPos.z).Length() * 0.1 + m_radius;
-		m_offsetY = m_radius;
+		//m_offsetY = m_radius;
 
 		Vector3 oldnextPos = m_position;
 
@@ -620,10 +620,10 @@ namespace UER
 					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
 
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WALL FLOOR HIT !!!!");
+				/*DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WALL FLOOR HIT !!!!");
 				DebugPrintValue(EDebugConsoleKind::master, "fT0", fT0);
 				DebugPrintValue(EDebugConsoleKind::master, "m_radius", m_radius);
-				DebugPrintValue(EDebugConsoleKind::master,"-fT0 + m_radius", -fT0 + m_radius);
+				DebugPrintValue(EDebugConsoleKind::master,"-fT0 + m_radius", -fT0 + m_radius);*/
 				
 			}
 
@@ -711,7 +711,7 @@ namespace UER
 		start.setIdentity();
 		end.setIdentity();
 		//始点はカプセルコライダーの中心。
-		//start.setOrigin(btVector3(nowPos.x, (nowPos.y)+Ypos, nowPos.z));
+		//start.setOrigin(btVector3(nowPos.x, (nowPos.y), nowPos.z));
 		start.setOrigin(btVector3(nowPos.x, (nowPos.y + m_height * 0.5f + m_radius) + Ypos, nowPos.z));
 		//start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius + 0.1f, m_position.z));
 
@@ -727,8 +727,8 @@ namespace UER
 			if (addPos.y > 0.0f) {
 				//ジャンプ中とかで上昇中。
 				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
-				endPos.y -= addPos.y * 0.01f;
-				//endPos.y -= 1.f;
+				endPos.y -= addPos.y * 0.005f;
+				//endPos.y -= 0.01f;
 			}
 			else {
 				//落下している場合はそのまま下を調べる。
@@ -741,11 +741,12 @@ namespace UER
 		}
 		else {
 			//地面上にいない場合は1m下を見る。
-			endPos.y -= 1.0f;
+			//endPos.y -= 1.f;
+			endPos.y -= m_radius + m_height * 0.5f;
 			//endPos.y += addPos.y;
 		}
-		end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
-		//end.setOrigin(btVector3(endPos.x, endPos.y + m_height * 0.5f + m_radius, endPos.z));
+		//end.setOrigin(btVector3(endPos.x, endPos.y+ Ypos, endPos.z));
+		end.setOrigin(btVector3(endPos.x, endPos.y + m_radius + m_height * 0.5f + Ypos, endPos.z));
 		SweepResultGround callback;
 		if (m_isUseRigidBody)
 			callback.me = m_rigidBody.GetBody();
@@ -761,8 +762,8 @@ namespace UER
 				m_isOnGround = true;
 				nextPos.y = callback.hitPos.y + m_offsetY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
 				//nextPosition = callback.hitPos;
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
-				DebugPrintVector3(EDebugConsoleKind::master, nextPos);
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
+				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
@@ -772,6 +773,9 @@ namespace UER
 			}
 			if (!isNearFloor && callback.isHitWall && isFall && 1)
 			{
+				m_isJump = false;
+				m_isOnGround = true;
+
 				Vector3 vT0, vT1;
 				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
 				vT0.Set(nextPos.x, 0.0f, nextPos.z);
@@ -793,7 +797,9 @@ namespace UER
 				nextPos += hitNormalXZ * (m_radius + m_offsetXZ);
 				nextPos.y = callback.wallHitPos.y;
 
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
+				
+
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
@@ -804,6 +810,7 @@ namespace UER
 				//Vector3 newpos(nowPos.x, nextPos.y, nowPos.z);
 				//ExecuteWall(newpos, nextPos, originalXZDir, Ypos);
 			}
+			//nextPos.y += m_height * 0.5f + m_radius;
 			if (!(callback.isHit || callback.isHitWall))
 			{
 				//地面上にいない。
