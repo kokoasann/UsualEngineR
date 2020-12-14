@@ -19,7 +19,7 @@ void GameManager::InitGameWorld() {
 	m_gameHUD = NewGO<GameHUD>(0);
 	m_itemManager = NewGO<ItemManager>(0);
 	m_menu = NewGO<GameSceneMenu>(0);
-	m_goal = NewGO<Goal>(0);
+	//m_goal = NewGO<Goal>(0);
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);
 	//m_player->SetGameCamera(m_camera);
