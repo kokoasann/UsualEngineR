@@ -32,6 +32,7 @@ public:
 		enPunch,
 		enDashPunch,
 		enOverheat,
+		enThrusterAttack,
 		enNumState
 	};
 
