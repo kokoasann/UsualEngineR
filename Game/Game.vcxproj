@@ -445,6 +445,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\Image\targetMarker.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

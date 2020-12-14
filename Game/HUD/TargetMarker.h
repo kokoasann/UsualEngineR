@@ -79,9 +79,10 @@ private:
 	bool m_shouldBeDrawn = false;
 	Vector3 m_parentPos = Vector3::Zero;
 	SpriteRender* m_spMarker = nullptr;
-	const float m_flSpHpHeight = 16;
-	const float m_flSpHpWidth = 16;
+	const float m_flSpHpHeight = 32;
+	const float m_flSpHpWidth = 32;
 	const Vector3 m_markerScale = { 1.f / 200.f , 1.f / 200.f,1 };
-	Vector3 m_markerPosOffset = { 0.f,10.f,0.f };
+	Vector3 m_markerPosOffset = { 0.f,0.f,0.f };
 	const Vector2 m_SPRITE_PIVOT = { 1.f,0.f };
+	const Vector4 m_COLOR = { 1,1,1,1 };
 };

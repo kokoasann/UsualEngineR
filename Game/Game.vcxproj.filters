@@ -699,6 +699,9 @@
     <ImageContentTask Include="Assets\Image\white.png" />
     <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
     <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
+    <ImageContentTask Include="Assets\Image\targetMarker.png">
+      <Filter>Assets\image</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />

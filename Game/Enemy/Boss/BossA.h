@@ -78,7 +78,7 @@ private:
 
 	//Physics
 	const float m_radius = 5.5f;
-	const float m_height = 2.f;
+	const float m_height = 7.5f;
 	//Hands
 	//SphereCollider		m_rightHandCollider;
 	//const float m_HandRadius = 1.f;

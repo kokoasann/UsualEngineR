@@ -35,7 +35,7 @@ bool TargetMarker::Start()
 
 	SpriteInitData sd;
 	m_spMarker = NewGO<SpriteRender>(0);
-	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+	sd.m_ddsFilePath[0] = "Assets/Image/targetMarker.dds";
 	sd.m_height = m_flSpHpHeight;
 	sd.m_width = m_flSpHpWidth;
 	m_spMarker->Init(sd);
@@ -44,6 +44,7 @@ bool TargetMarker::Start()
 	m_spMarker->MainCameraView();
 	m_spMarker->Mode_BillBord();
 	m_spMarker->CameraScaleLock();
+	m_spMarker->SetMulColor(m_COLOR);
 
 	return true;
 }

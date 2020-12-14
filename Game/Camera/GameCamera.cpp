@@ -10,6 +10,26 @@
 #include "Game.h"
 //#define POS_CHECK
 
+struct RayTestResult : public btCollisionWorld::RayResultCallback {
+	bool isHit = false;
+	float dist = FLT_MAX;
+	int collAttr = enCollisionAttr_None;
+
+	btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
+	{
+		int index = rayResult.m_collisionObject->getUserIndex();
+		if (!(index & enCollisionAttr_Ground))
+		{
+			return 0.f;
+		}
+
+		isHit = true;
+		collAttr = index;
+		return 0.0f;
+	}
+
+};
+
 GameCamera::GameCamera()
 {
 
@@ -103,11 +123,6 @@ void GameCamera::Update()
 		CalcEnemyCamera();
 		CalcPlayerCamera();
 	}
-
-	//DEBUG
-	//if (g_pad[0]->IsTrigger(enButtonB)) {
-	//	Perform(m_playerCameraPos, m_enemyCameraPos, m_playerCameraTargetPos, m_enemyCameraTargetPos, m_charaPos, 0.001f);
-	//}
 }
 
 void GameCamera::PostUpdate() {
@@ -462,13 +477,29 @@ std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
 	float minDist = FLT_MAX;
 	int forwardEnemyIndex = 0;
 
-	const float AUTO_TARGET_RANGE = 300.f;
+	const float AUTO_TARGET_RANGE = 150.f;
 
 	std::map<float, int, std::greater<float>> sortedEnemiesMap;
 
 	for (int i = 0; i < enemies.size(); i++) {
 
 		if (enemies.at(i)->GetCurrentState() == enemies.at(i)->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+			continue;
+		}
+
+		btVector3 from, to;
+		from.setX(m_position.x);
+		from.setY(m_position.y);
+		from.setZ(m_position.z);
+
+		to.setX(enemies.at(i)->GetPosition().x);
+		to.setY(enemies.at(i)->GetPosition().y);
+		to.setZ(enemies.at(i)->GetPosition().z);
+
+		RayTestResult cb;
+		Physics().GetDynamicWorld()->rayTest(from, to, cb);
+
+		if (cb.isHit) {
 			continue;
 		}
 

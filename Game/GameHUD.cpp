@@ -22,8 +22,19 @@ GameHUD::~GameHUD()
 void GameHUD::Release()
 {
 	DeleteGO(m_spPlayerHP);
+	DeleteGO(m_spPlayerHP_Back);
+	DeleteGO(m_spPlayerHP_Deco[0]);
+	DeleteGO(m_spPlayerHP_Deco[1]);
+
 	DeleteGO(m_spPlayerEndurance);
+	DeleteGO(m_spPlayerEndurance_Back);
+	DeleteGO(m_spPlayerEndurance_Deco[0]);
+	DeleteGO(m_spPlayerEndurance_Deco[1]);
+
 	DeleteGO(m_spPlayerBoost);
+	DeleteGO(m_spPlayerBoost_Back);
+	DeleteGO(m_spPlayerBoost_Deco[0]);
+	DeleteGO(m_spPlayerBoost_Deco[1]);
 
 	DeleteGO(m_spEnemyHP);
 	DeleteGO(m_presetSp);
@@ -71,7 +82,7 @@ bool GameHUD::Start()
 		}
 		{
 			//Player HP Decoration left
-			auto spPlayerHP_Deco = m_spPlayerHP_Deco[0];
+			auto& spPlayerHP_Deco = m_spPlayerHP_Deco[0];
 			spPlayerHP_Deco = NewGO<SpriteRender>(1);
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = m_flSpHpHeight;
@@ -84,7 +95,7 @@ bool GameHUD::Start()
 		}
 		{
 			//Player HP Decoration right
-			auto spPlayerHP_Deco = m_spPlayerHP_Deco[1];
+			auto& spPlayerHP_Deco = m_spPlayerHP_Deco[1];
 			spPlayerHP_Deco = NewGO<SpriteRender>(1);
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = m_flSpHpHeight;
@@ -122,7 +133,7 @@ bool GameHUD::Start()
 		}
 		{
 			//Player Endurance Decoration left
-			auto spPlayerHP_Deco = m_spPlayerEndurance_Deco[0];
+			auto& spPlayerHP_Deco = m_spPlayerEndurance_Deco[0];
 			spPlayerHP_Deco = NewGO<SpriteRender>(1);
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = m_flSpEnduranceHeight;
@@ -135,7 +146,7 @@ bool GameHUD::Start()
 		}
 		{
 			//Player Endurance Decoration right
-			auto spPlayerHP_Deco = m_spPlayerEndurance_Deco[1];
+			auto& spPlayerHP_Deco = m_spPlayerEndurance_Deco[1];
 			spPlayerHP_Deco = NewGO<SpriteRender>(1);
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = m_flSpEnduranceHeight;
@@ -173,7 +184,7 @@ bool GameHUD::Start()
 		}
 		{
 			//Player Boost Decoration left
-			auto spPlayerHP_Deco = m_spPlayerBoost_Deco[0];
+			auto& spPlayerHP_Deco = m_spPlayerBoost_Deco[0];
 			spPlayerHP_Deco = NewGO<SpriteRender>(1);
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = 5.f;
@@ -186,7 +197,7 @@ bool GameHUD::Start()
 		}
 		{
 			//Player Boost Decoration right
-			auto spPlayerHP_Deco = m_spPlayerBoost_Deco[1];
+			auto& spPlayerHP_Deco = m_spPlayerBoost_Deco[1];
 			spPlayerHP_Deco = NewGO<SpriteRender>(1);
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = 5.f;
@@ -282,7 +293,10 @@ void GameHUD::Update()
 	m_targetMarker->SetDrawFlag(gameCamera->IsTargettingEnemy());
 	auto targetEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (targetEnemy != nullptr) {
-		m_targetMarker->SetParentPos(targetEnemy->GetPosition());
+		auto pos = targetEnemy->GetPosition();
+		pos.y += targetEnemy->GetCharaconHeghit()*0.5f;
+		pos.y += targetEnemy->GetCharaconRadius();
+		m_targetMarker->SetParentPos(pos);
 	}
 
 }
