@@ -16,7 +16,7 @@ TargetMarker::~TargetMarker()
 
 void TargetMarker::Release()
 {
-
+	DeleteGO(m_spMarker);
 }
 
 void TargetMarker::OnDestroy()
