@@ -262,6 +262,12 @@
     <ClInclude Include="Enemy\State\EnemyShortRangeBlownState.h">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClInclude>
+    <ClInclude Include="Item\EnergyPotion.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\TargetMarker.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -526,6 +532,12 @@
     <ClCompile Include="Enemy\State\EnemyShortRangeBlownState.cpp">
       <Filter>Enemy\State\Zako\ShortRangeMonsterState</Filter>
     </ClCompile>
+    <ClCompile Include="Item\EnergyPotion.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\TargetMarker.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -642,6 +654,9 @@
     <Filter Include="Enemy\State\BossFatman">
       <UniqueIdentifier>{f43f0adf-2395-4004-9f6f-69d1718603df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{684154d6-8c71-4f7c-89cc-c5da64427219}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -675,19 +690,11 @@
     <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
       <Filter>Assets\modelData\boss\sp</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\Image\white.png" />
+    <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
+    <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\Image\white.png">
-      <Filter>Assets\image</Filter>
-    </Image>
-    <Image Include="Assets\Image\whiteFade_TB.png">
-      <Filter>Assets\image</Filter>
-    </Image>
-    <Image Include="Assets\Image\whiteGrad_B.png">
-      <Filter>Assets\image</Filter>
-    </Image>
   </ItemGroup>
 </Project>

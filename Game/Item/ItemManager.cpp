@@ -4,6 +4,7 @@
 #include "../GameManager.h"
 #include "../Player/Player.h"
 #include "RedPotion.h"
+#include "EnergyPotion.h"
 
 ItemManager::ItemManager()
 {
@@ -41,6 +42,10 @@ bool ItemManager::Start()
 	auto item = new RedPotion();
 	m_items.push_back(item);
 
+	auto energy = new EnergyPotion();
+	energy->SetPosition({ 150,0,0. });
+	m_items.push_back(energy);
+
 	return true;
 }
 
@@ -55,7 +60,9 @@ void ItemManager::Update()
 	for (int i = 0; i < m_items.size(); i++) {
 		auto player = GameManager::GetInstance().m_player;
 		if (player == nullptr) return;
-		
+
+		m_items.at(i)->Update();
+
 		auto dist = (player->GetPosition() - m_items[i]->GetPosition()).Length();
 		if (dist < m_items[i]->GetRange()) {
 			m_items[i]->Apply(player);
