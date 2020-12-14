@@ -40,7 +40,7 @@ IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 		m_playerPosition = ppos;
 		auto vecToPlayer = ppos - epos;
 		vecToPlayer.Normalize();
-		const float knockbackParam = 100.f;
+		const float knockbackParam = 300.f;
 		vecToPlayer *= knockbackParam;
 		p->ApplyDamage(m_damage, true, vecToPlayer);
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
