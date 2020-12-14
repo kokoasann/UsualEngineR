@@ -265,6 +265,9 @@
     <ClInclude Include="Item\EnergyPotion.h">
       <Filter>Item</Filter>
     </ClInclude>
+    <ClInclude Include="HUD\TargetMarker.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -532,6 +535,9 @@
     <ClCompile Include="Item\EnergyPotion.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="HUD\TargetMarker.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -647,6 +653,9 @@
     </Filter>
     <Filter Include="Enemy\State\BossFatman">
       <UniqueIdentifier>{f43f0adf-2395-4004-9f6f-69d1718603df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{684154d6-8c71-4f7c-89cc-c5da64427219}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

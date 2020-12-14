@@ -234,6 +234,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSceneMenu.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="HUD\TargetMarker.h" />
     <ClInclude Include="Item\EnergyPotion.h" />
     <ClInclude Include="Item\IItem.h" />
     <ClInclude Include="Item\ItemManager.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSceneMenu.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="HUD\TargetMarker.cpp" />
     <ClCompile Include="Item\EnergyPotion.cpp" />
     <ClCompile Include="Item\IItem.cpp" />
     <ClCompile Include="Item\ItemManager.cpp" />
