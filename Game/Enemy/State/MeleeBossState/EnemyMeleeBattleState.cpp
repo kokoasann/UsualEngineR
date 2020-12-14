@@ -53,7 +53,9 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
 	const float distLimit = 20.f;
-	const float attackRange = e->GetCharaRadius() + player->GetCharaRadius() + 5.f;
+	const float PunchAttackRange = e->GetCharaRadius() + player->GetCharaRadius() + 5.f;
+	const float ThrusterAttackRange = e->GetCharaRadius() + player->GetCharaRadius() + 25.f;
+
 	const float teleportationDist = 200.f;
 	const float tpIntervalSec = 3.f;
 	const float flyDist = 0.f;
@@ -66,7 +68,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	}
 
 	//Teleportation
-	if ((vecToPlayer.Length() > teleportationDist) or (m_tpTimer > tpIntervalSec and vecToPlayer.Length() > attackRange and rnd <= tpChance)) {
+	if ((vecToPlayer.Length() > teleportationDist) or (m_tpTimer > tpIntervalSec and vecToPlayer.Length() > PunchAttackRange and rnd <= tpChance)) {
 		return e->GetState(TO_INT(BossA::EnState::enTeleportation));
 		m_tpTimer = 0.f;
 	}
@@ -94,13 +96,28 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 		e->SetVelocity(velocity);
 	}
 
+	if (vecToPlayer.Length() < ThrusterAttackRange) {
+		const float thrustTime = 0.3f;
+		m_thrustTimer += delta;
+		if (m_thrustTimer >= thrustTime) {
+			m_thrustTimer = 0.f;
+			return e->GetState(TO_INT(BossA::EnState::enThrusterAttack));
+		}
+	}
 
-	if (vecToPlayer.Length() < attackRange) {
+	if (vecToPlayer.Length() < PunchAttackRange) {
+		const float numAttack = 2.f;
+		const float chance = 1.f / numAttack;
+		const float c1 = chance;
+		const float c2 = chance * 2.f;
+		//const float c3 = chance *3.f;
 
-		if (rnd >= 0.5f) {
+		if (rnd >= 0 and rnd <= c1) {
+			//attack1
 			return e->GetState(TO_INT(BossA::EnState::enPunch));
 		}
-		else {
+		else if (rnd > c1 and rnd <= c2) {
+			//attack2
 			return e->GetState(TO_INT(BossA::EnState::enDashPunch));
 		}
 	}

@@ -25,6 +25,10 @@ public:
 		return m_player;
 	}
 
+	GameCamera* GetGameCamera() const {
+		return m_camera;
+	}
+
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
 

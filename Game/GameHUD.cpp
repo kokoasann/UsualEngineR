@@ -4,6 +4,8 @@
 #include "Enemy/IEnemy.h"
 #include "Enemy/EnemyManager.h"
 #include "GameManager.h"
+#include "HUD/TargetMarker.h"
+#include "Camera/GameCamera.h"
 
 GameHUD::GameHUD()
 {
@@ -25,6 +27,8 @@ void GameHUD::Release()
 
 	DeleteGO(m_spEnemyHP);
 	DeleteGO(m_presetSp);
+
+	DeleteGO(m_targetMarker);
 }
 
 void GameHUD::OnDestroy()
@@ -35,12 +39,11 @@ void GameHUD::OnDestroy()
 
 void GameHUD::Awake()
 {
-
+	m_targetMarker = NewGO<TargetMarker>(0);
 }
 
 bool GameHUD::Start()
 {
-
 
 	SpriteInitData sd;
 	//Player HP
@@ -271,6 +274,15 @@ void GameHUD::Update()
 
 	if (preset == Player::EnAttackPreset::enExposivePreset) {
 		m_presetSp->SetMulColor({ 0,0,1,1 });
+	}
+
+
+	//Marker
+	auto gameCamera = GameManager::GetInstance().GetGameCamera();
+	m_targetMarker->SetDrawFlag(gameCamera->IsTargettingEnemy());
+	auto targetEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+	if (targetEnemy != nullptr) {
+		m_targetMarker->SetParentPos(targetEnemy->GetPosition());
 	}
 
 }

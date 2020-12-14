@@ -108,7 +108,7 @@ namespace UER
 		RigidBody			m_rigidBody;					//剛体。
 		bool				m_isUseRigidBody = true;		//リジッドボデューを使う？
 
-		float				m_offsetXZ = 0.1f;
-		float				m_offsetY = 0.1f;
+		float				m_offsetXZ = 0.01f;
+		float				m_offsetY = 0.0f;
 	};
 }

@@ -36,6 +36,7 @@ void EnemyMeleeThrusterAttackState::Enter(IEnemy* e) {
 	effects.at(TO_INT(BossA::EnJetBone::Skirt))->SetScale(0.5f);
 
 	m_fireTimer = 0.f;
+	e->SetVelocity(Vector3::Zero);
 
 	e->UseStamina(m_cost);
 }
@@ -51,7 +52,7 @@ IEnemyState* EnemyMeleeThrusterAttackState::Update(IEnemy* e) {
 	auto dist = (player->GetPosition() - e->GetPosition()).Length();
 
 	if (dist < m_range) {
-		const float knockBackParam = 150.f;
+		const float knockBackParam = 200.f;
 		auto vecToPlayer = player->GetPosition() - e->GetPosition();
 		vecToPlayer.Normalize();
 		vecToPlayer *= knockBackParam;
@@ -61,6 +62,8 @@ IEnemyState* EnemyMeleeThrusterAttackState::Update(IEnemy* e) {
 	if (m_fireTimer > m_fireTime) {
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
+
+	m_fireTimer += gameTime()->GetDeltaTime();
 
 	return this;
 }

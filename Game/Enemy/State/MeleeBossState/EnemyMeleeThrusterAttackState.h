@@ -16,6 +16,6 @@ private:
 	const float m_range = 50.f;
 	const float m_damage = 10.f;
 
-	const float m_fireTime = 3.f;
+	const float m_fireTime = 1.f;
 	float m_fireTimer = 0.f;
 };

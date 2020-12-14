@@ -2,6 +2,7 @@
 #include "../UsualEngineR/Graphics/SpriteRender.h"
 class Player;
 class IEnemy;
+class TargetMarker;
 
 /// <summary>
 /// 
@@ -183,4 +184,7 @@ private:
 		ANCHOR_BOTTOM_LEFT.y + 50.f,
 		0.f
 	};
+
+	//Marker
+	TargetMarker* m_targetMarker = nullptr;
 };
