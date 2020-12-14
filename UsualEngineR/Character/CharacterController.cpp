@@ -752,7 +752,8 @@ namespace UER
 			callback.me = m_rigidBody.GetBody();
 		callback.startPos.Set(start.getOrigin());
 		//衝突検出。
-		if (fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON) {
+		//if (fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON) {
+		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) {
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 			bool isNearFloor = callback.dist < callback.wallDist;
 			if (isNearFloor && callback.isHit) {
