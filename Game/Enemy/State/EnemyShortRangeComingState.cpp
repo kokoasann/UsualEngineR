@@ -119,13 +119,17 @@ void EnemyShortRangeComingState::Move(IEnemy* e)
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
 	auto vecToPlayer = ppos - epos;
+	vecToPlayer.y = 0.f;
 	vecToPlayer.Normalize();
 	
 	const float walkSpeed = 60.0f;
 	Vector3 moveSpeed = vecToPlayer * walkSpeed;
 
 	//d—ÍB
-	moveSpeed.y -= 100.0f;
+	if (!e->IsOnGround())
+		moveSpeed.y -= 100.0f;
+	else
+		DebugPrint_NOMOTO("is on ground");
 	
 	e->SetVelocity(moveSpeed);
 }
