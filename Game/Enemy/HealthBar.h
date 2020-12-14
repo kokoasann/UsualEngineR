@@ -88,7 +88,7 @@ private:
 	SpriteRender* m_spHp = nullptr;
 	const float m_flSpHpHeight = 16;
 	const float m_flSpHpWidth = 16;
-	const Vector3 m_hpScale = { 1.f / 50.f , 1.f / 500.f,1 };
+	const Vector3 m_hpScale = { 1.f / 160.f , 1.f / 860.f,1 };
 	Vector3 m_currentHpScale = m_hpScale;
 	Vector3 m_hpPosOffset = { 0.f,10.f,0.f };
 	const Vector2 m_SPRITE_PIVOT = { 1.f,0.f };

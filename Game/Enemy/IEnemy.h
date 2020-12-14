@@ -229,6 +229,15 @@ public:
 		m_externalVelocity = velocity;
 	}
 
+	float GetCharaconHeghit() const
+	{
+		return m_charaCon.GetHeight();
+	}
+
+	float GetCharaconRadius() const
+	{
+		return m_charaCon.GetRadius();
+	}
 protected:
 	//ƒLƒƒƒ‰ƒRƒ“ì¬
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);

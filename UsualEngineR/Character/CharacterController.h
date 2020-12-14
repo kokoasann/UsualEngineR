@@ -98,6 +98,15 @@ namespace UER
 		* @brief	剛体を物理エンジンから削除。。
 		*/
 		void RemoveRigidBoby();
+
+		float GetRadius() const
+		{
+			return m_radius;
+		}
+		float GetHeight() const
+		{
+			return m_height;
+		}
 	private:
 		Vector3 			m_position = g_vec3Zero;	//座標。
 		bool 				m_isJump = false;				//ジャンプ中？
