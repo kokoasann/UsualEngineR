@@ -162,6 +162,8 @@ private:
 
 	//Enemy HP
 	SpriteRender* m_spEnemyHP = nullptr;
+	SpriteRender* m_spEnemyHP_Deco[2] = { nullptr };
+	SpriteRender* m_spEnemyHP_Back = nullptr;
 	const float m_flSpEnemyHPHeight = 20.f;
 	const float m_flSpEnemyHPWidth = 800.f;
 	Vector3 m_enemyHpScale = Vector3::One;
