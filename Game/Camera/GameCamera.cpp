@@ -243,11 +243,15 @@ void GameCamera::CalcTarget() {
 
 			//center
 			if (g_pad[0]->IsTrigger(enButtonRB3)) {
-				isChangeTarget = true;
 				std::tie(centerIndex, leftIndex, rightIndex) = GetTargetEnemyIndexes();
 				if (centerIndex != -1) {
+					isChangeTarget = true;
 					m_targetEnemyNo = centerIndex;
 					m_enemyCameraCurrentTargetPos = m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
+				}
+				else {
+					isChangeTarget = false;
+					EnemyManager::GetEnemyManager().SetTargetEnemy(nullptr);
 				}
 			}
 
@@ -256,6 +260,7 @@ void GameCamera::CalcTarget() {
 				m_enemyCameraNextTargetPos = enemies.at(m_targetEnemyNo)->GetPosition();
 				EnemyManager::GetEnemyManager().SetTargetEnemy(enemies.at(m_targetEnemyNo));
 			}
+
 		}
 	}
 }
