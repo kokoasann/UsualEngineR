@@ -57,13 +57,15 @@ void EnemyShortRangeBlownState::Enter(IEnemy* e)
 	m_timer = 0.f;
 	m_isTakeOff = m_isNoBlown;
 	m_isTakeOn = false;
+
+	e->RemoveRigidBody();
 }
 
 IEnemyState* EnemyShortRangeBlownState::Update(IEnemy* e)
 {
 	if (m_timer >= m_timeLimit)
 	{
-
+		
 	}
 	float dtime = gameTime()->GetDeltaTime();
 
@@ -109,7 +111,7 @@ IEnemyState* EnemyShortRangeBlownState::Update(IEnemy* e)
 
 
 	m_velocityY -= m_grav * dtime;
-	m_timer = dtime;
+	//m_timer += dtime;
 
 	return this;
 }

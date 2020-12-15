@@ -57,6 +57,11 @@ public:
 	virtual void Release() override final;
 	virtual void OnDestroy() override final;
 
+	void RemoveRigidBody()
+	{
+		m_charaCon.RemoveRigidBoby();
+	}
+
 	//ƒpƒXŒŸõ‚Æ‚©d‚ß‚Ì‹¤’Êˆ—
 	void PathFind(Vector3 start, Vector3 end) { Sleep(1000); };
 

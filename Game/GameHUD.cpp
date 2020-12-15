@@ -37,6 +37,10 @@ void GameHUD::Release()
 	DeleteGO(m_spPlayerBoost_Deco[1]);
 
 	DeleteGO(m_spEnemyHP);
+	DeleteGO(m_spEnemyHP_Back);
+	DeleteGO(m_spEnemyHP_Deco[0]);
+	DeleteGO(m_spEnemyHP_Deco[1]);
+
 	DeleteGO(m_presetSp);
 
 	DeleteGO(m_targetMarker);
@@ -211,14 +215,53 @@ bool GameHUD::Start()
 	}
 
 	//Enemy HP
-	m_spEnemyHP = NewGO<SpriteRender>(0);
-	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
-	sd.m_height = m_flSpEnemyHPHeight;
-	sd.m_width = m_flSpEnemyHPWidth;
-	m_spEnemyHP->Init(sd);
-	m_spEnemyHP->SetPos(m_enemyHPPos);
-	m_spEnemyHP->SetSca(m_enemyHpScale);
-	m_spEnemyHP->SetPivot(m_SPRITE_PIVOT);
+	{
+		m_spEnemyHP = NewGO<SpriteRender>(1);
+		sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
+		sd.m_height = m_flSpEnemyHPHeight;
+		sd.m_width = m_flSpEnemyHPWidth;
+		m_spEnemyHP->Init(sd);
+		m_spEnemyHP->SetPos(m_enemyHPPos);
+		m_spEnemyHP->SetSca(m_enemyHpScale);
+		m_spEnemyHP->SetPivot(m_SPRITE_PIVOT);
+
+		//Back
+		m_spEnemyHP_Back = NewGO<SpriteRender>(0);
+		sd.m_ddsFilePath[0] = "Assets/Image/whiteFade_TB.dds";
+		sd.m_height = m_flSpEnemyHPHeight+5.f;
+		sd.m_width = m_flSpEnemyHPWidth+8.f;
+		m_spEnemyHP_Back->Init(sd);
+		m_spEnemyHP_Back->SetPos({ m_enemyHPPos.x-4.f,m_enemyHPPos.y-2.5f,m_enemyHPPos.z });
+		m_spEnemyHP_Back->SetSca(m_enemyHpScale);
+		m_spEnemyHP_Back->SetPivot(m_SPRITE_PIVOT);
+		m_spEnemyHP_Back->SetMulColor(m_BACK_COLOR);
+
+		//decoration
+		{
+			auto& deco = m_spEnemyHP_Deco[0];
+			deco = NewGO<SpriteRender>(1);
+			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+			sd.m_height = m_flSpEnemyHPHeight;
+			sd.m_width = 5;
+			deco->Init(sd);
+			deco->SetPos({ m_enemyHPPos.x-7.f,m_enemyHPPos.y,m_enemyHPPos.z });
+			deco->SetSca(m_enemyHpScale);
+			deco->SetPivot(m_SPRITE_PIVOT);
+			deco->SetMulColor(m_HP_DECO_COLOR);
+		}
+		{
+			auto& deco = m_spEnemyHP_Deco[1];
+			deco = NewGO<SpriteRender>(1);
+			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+			sd.m_height = m_flSpEnemyHPHeight;
+			sd.m_width = 5;
+			deco->Init(sd);
+			deco->SetPos({ m_enemyHPPos.x + m_flSpEnemyHPWidth +2.f,m_enemyHPPos.y,m_enemyHPPos.z });
+			deco->SetSca(m_enemyHpScale);
+			deco->SetPivot(m_SPRITE_PIVOT);
+			deco->SetMulColor(m_HP_DECO_COLOR);
+		}
+	}
 
 	//Player Weapon
 	m_presetSp = NewGO<SpriteRender>(0);
@@ -262,11 +305,18 @@ void GameHUD::Update()
 	auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (target == nullptr or !target->IsBoss()) {
 		m_enemyHpScale.x = 0.f;
+		m_spEnemyHP_Back->SetActive(false);
+		m_spEnemyHP_Deco[0]->SetActive(false);
+		m_spEnemyHP_Deco[1]->SetActive(false);
 	}
 	else {
 		m_enemyHpScale.x = target->GetCurrentHP() / target->GetMaxHP();
+		m_spEnemyHP_Back->SetActive(true);
+		m_spEnemyHP_Deco[0]->SetActive(true);
+		m_spEnemyHP_Deco[1]->SetActive(true);
 	}
 	m_spEnemyHP->SetSca(m_enemyHpScale);
+	
 
 	//Player Weapon
 	auto preset = player->GetCurrentAttackPreset();
