@@ -79,10 +79,10 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="Player\Attack\PlayerLongRangeAttack.h">
-      <Filter>Player\Attack\PodAttack</Filter>
+      <Filter>Player\Pod\PodAttack</Filter>
     </ClInclude>
     <ClInclude Include="Player\Attack\Projectile.h">
-      <Filter>Player\Attack\PodAttack</Filter>
+      <Filter>Player\Pod\PodAttack</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\Drop\DropItemA.h">
       <Filter>Enemy\Drop</Filter>
@@ -352,10 +352,10 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="Player\Attack\PlayerLongRangeAttack.cpp">
-      <Filter>Player\Attack\PodAttack</Filter>
+      <Filter>Player\Pod\PodAttack</Filter>
     </ClCompile>
     <ClCompile Include="Player\Attack\Projectile.cpp">
-      <Filter>Player\Attack\PodAttack</Filter>
+      <Filter>Player\Pod\PodAttack</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\Drop\DropItemA.cpp">
       <Filter>Enemy\Drop</Filter>
@@ -603,9 +603,6 @@
     <Filter Include="Player\Attack\ExplosivePreset">
       <UniqueIdentifier>{a23c6be4-4eeb-4eb2-bc23-a645ea219744}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Attack\PodAttack">
-      <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player\Pod">
       <UniqueIdentifier>{9287834e-716b-481d-8387-06eb1a4105be}</UniqueIdentifier>
     </Filter>
@@ -662,6 +659,9 @@
     </Filter>
     <Filter Include="HUD">
       <UniqueIdentifier>{684154d6-8c71-4f7c-89cc-c5da64427219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Pod\PodAttack">
+      <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

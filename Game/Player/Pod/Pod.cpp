@@ -129,6 +129,10 @@ void Pod::PostUpdate()
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
+	auto delta = gameTime()->GetDeltaTime();
+
+	//printf("Pod's stamina : %f\n", m_ability.currentStamina);
+
 	if (m_state == PodState::enIdle) {
 
 		if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
@@ -167,6 +171,7 @@ void Pod::PostUpdate()
 				degY = Math::RadToDeg(degY);
 				rotY.SetRotationDeg(up,degY);
 				m_rotation = rotY;
+
 			}
 		}
 		else {
@@ -181,34 +186,68 @@ void Pod::PostUpdate()
 
 		if (mp_player->GetCurrentState() == mp_player->GetState(Player::EnState::enDead)) return;
 
-		auto& preset = mp_player->GetCurrentAttackPreset();
+		if (m_ability.currentStamina == 0.f) {
+			m_overheat = true;
+			m_overheatTimer = 0.f;
+		}
 
+		if (m_overheat) {
+			m_overheatTimer += delta;
+			if (m_overheatTimer >= m_OverheatTime) {
+				m_overheat = false;
+			}
+		}
+
+		auto& preset = mp_player->GetCurrentAttackPreset();
+		bool isShooting = false;
+
+		//long range
 		if (preset == Player::EnAttackPreset::enDefault) {
 			m_longRangeAttack.UpdateEffectPos();
-			if (g_pad[0]->IsPress(EnButton::enButtonRB1)) {
+			if (g_pad[0]->IsPress(EnButton::enButtonRB1) and !m_overheat) {
 				m_longRangeAttack.Execute(mp_player);
+				UseStamina(skillCosts.ProjectileCost * delta);
+				isShooting = true;
 			}
 		}
 
+		//Laser
 		if (preset == Player::EnAttackPreset::enRemoteAttackPreset) {
-			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)) {
-				ShotLaserBeam();
+			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
+				if (m_ability.currentStamina >= skillCosts.LaserCost) {
+					ShotLaserBeam();
+					UseStamina(skillCosts.LaserCost);
+				}
 			}
 		}
 
+		//Rampage
 		if (preset == Player::EnAttackPreset::enMeleePreset) {
-			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)) {
-				m_timer = 0.f;
-				m_state = PodState::enRampage;
+			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
+				if (m_ability.currentStamina >= skillCosts.RampageCost) {
+					m_timer = 0.f;
+					m_state = PodState::enRampage;
+					UseStamina(skillCosts.RampageCost);
+				}
 			}
 		}
 
+		//Kamikaze
 		if (preset == Player::EnAttackPreset::enExposivePreset) {
-			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1)) {
-				m_timer = 0.f;
-				m_state = PodState::enKamikaze;
+			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
+				if (m_ability.currentStamina >= skillCosts.KamikazeCost) {
+					m_timer = 0.f;
+					m_state = PodState::enKamikaze;
+					UseStamina(skillCosts.KamikazeCost);
+				}
 			}
 		}
+
+
+		if (!isShooting) {
+			ChargeStamina(m_ability.StaminaChargeSpeed * delta);
+		}
+
 	}
 	else {
 		if (m_velocity.x != 0.f or m_velocity.z != 0.f) {

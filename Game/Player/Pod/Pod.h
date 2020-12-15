@@ -12,6 +12,13 @@ public:
 	Pod();
 	virtual ~Pod();
 
+	struct PodAbility {
+		const float STAMINA_MAX = 100.f;
+		float currentStamina = STAMINA_MAX;
+		const float StaminaChargeSpeed = 5.f;
+	};
+
+
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
 	/// </summary>
@@ -116,6 +123,14 @@ private:
 	void Kamikaze();
 	void BackToIdlePos();
 
+	void UseStamina(const float amount) {
+		m_ability.currentStamina = max(0.f, m_ability.currentStamina - amount);
+	}
+
+	void ChargeStamina(const float amount) {
+		m_ability.currentStamina = min(m_ability.STAMINA_MAX, m_ability.currentStamina + amount);
+	}
+
 	//model
 	ModelRender* m_model = nullptr;
 
@@ -168,4 +183,17 @@ private:
 
 	std::vector<Bone*> m_podBones;
 	std::vector<JetEffect*> m_jetEffects;
+
+	struct SkillCosts {
+		const float ProjectileCost = 100.f / 5.f;
+		const float LaserCost = 30.f;
+		const float RampageCost = 30.f;
+		const float KamikazeCost = 30.f;
+	} skillCosts;
+
+	PodAbility m_ability;
+
+	bool m_overheat = false;
+	float m_overheatTimer = 0.f;
+	const float m_OverheatTime = 3.f;
 };
