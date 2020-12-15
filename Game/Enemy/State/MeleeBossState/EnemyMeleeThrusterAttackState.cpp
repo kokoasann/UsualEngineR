@@ -50,13 +50,14 @@ IEnemyState* EnemyMeleeThrusterAttackState::Update(IEnemy* e) {
 	auto player = GameManager::GetInstance().GetPlayer();
 
 	auto dist = (player->GetPosition() - e->GetPosition()).Length();
+	auto delta = gameTime()->GetDeltaTime();
 
 	if (dist < m_range) {
 		const float knockBackParam = 200.f;
 		auto vecToPlayer = player->GetPosition() - e->GetPosition();
 		vecToPlayer.Normalize();
 		vecToPlayer *= knockBackParam;
-		player->ApplyDamage(m_damage, true, vecToPlayer);
+		player->ApplyDamage(m_damage * delta, true, vecToPlayer);
 	}
 
 	if (m_fireTimer > m_fireTime) {
