@@ -111,7 +111,7 @@ private:
 	std::vector<IEnemy*> m_enemies;
 	IEnemy* m_targetEnemy = nullptr;
 
-	const float BOSS_A_HP = 500.f;
+	const float BOSS_A_HP = 1500.f;
 	const float BOSS_A_STAMINA = 100.f;
 };
 
