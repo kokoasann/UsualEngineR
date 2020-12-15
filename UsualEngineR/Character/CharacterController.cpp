@@ -825,6 +825,9 @@ namespace UER
 	*/
 	void CharacterController::RemoveRigidBoby()
 	{
+		if (m_isRemoveRigidBody)
+			return;
 		Physics().RemoveRigidBody(m_rigidBody);
+		m_isRemoveRigidBody = true;
 	}
 }
