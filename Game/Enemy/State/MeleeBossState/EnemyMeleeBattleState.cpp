@@ -7,6 +7,7 @@
 #include "../../../Effect/JetEffect.h"
 #include "GameManager.h"
 #include "../../../Game.h"
+#include "Camera/GameCamera.h"
 
 EnemyMeleeBattleState::EnemyMeleeBattleState() {
 
@@ -43,8 +44,11 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 
 	if (hp >= minPhase2 and hp < minPhase1) {
 		//phase2
-		m_battlePhase = EnBattlePhase::Mad;
-		//printf("phase 2\n");
+		if (m_battlePhase != EnBattlePhase::Mad) {
+			DebugPrint_WATA("phase 2\n");
+			m_battlePhase = EnBattlePhase::Mad;
+			m_shouldDoMadPerformance = true;
+		}
 	}
 
 	if (hp >= minPhase1) {
@@ -62,6 +66,26 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 }
 
 IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
+
+	if (m_shouldDoMadPerformance) {
+		auto cam = GameManager::GetInstance().m_camera;
+		auto tar = e->GetPosition();
+		tar.y += 20.f;
+
+		auto eneForward = e->GetForward();
+		auto camEndPos = e->GetPosition() + eneForward * 45.f;
+		camEndPos.y += 15.f;
+		auto sec = 1.f;
+		auto interval = 1.7f;
+
+		cam->Perform(
+			camEndPos, camEndPos,
+			tar, tar, sec, interval
+		);
+
+		m_shouldDoMadPerformance = false;
+
+	}
 
 	auto delta = gameTime()->GetDeltaTime();
 

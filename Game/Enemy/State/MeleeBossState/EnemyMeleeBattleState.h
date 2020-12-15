@@ -23,6 +23,8 @@ private:
 		NumPhase
 	};
 
+	bool m_shouldDoMadPerformance = false;
+
 	EnBattlePhase m_battlePhase = EnBattlePhase::Calm;
 
 };
