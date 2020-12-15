@@ -76,6 +76,7 @@ public:
 	/// </summary>
 	void ShowHealthBar() {
 		m_spHp->SetActive(true);
+		m_spHp_Back->SetActive(true);
 		m_shouldBeDrawn = true;
 		m_drawTimer = 0.f;
 	}
@@ -84,8 +85,11 @@ private:
 	bool m_shouldBeDrawn = false;
 	float m_drawTimer = 0.f;
 	const float m_drawSec = 1.5f;
+	const Vector4 m_BACK_COLOR = { 0.1,0.1 ,0.1 ,0.7 };
 	Vector3 m_parentPos = Vector3::Zero;
 	SpriteRender* m_spHp = nullptr;
+	SpriteRender* m_spHp_Back = nullptr;
+
 	const float m_flSpHpHeight = 16;
 	const float m_flSpHpWidth = 16;
 	const Vector3 m_hpScale = { 1.f / 160.f , 1.f / 860.f,1 };

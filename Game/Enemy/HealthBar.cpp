@@ -17,6 +17,7 @@ HealthBar::~HealthBar()
 void HealthBar::Release()
 {
 	DeleteGO(m_spHp);
+	DeleteGO(m_spHp_Back);
 }
 
 void HealthBar::OnDestroy()
@@ -33,7 +34,7 @@ void HealthBar::Awake()
 bool HealthBar::Start()
 {
 	SpriteInitData sd;
-	m_spHp = NewGO<SpriteRender>(0);
+	m_spHp = NewGO<SpriteRender>(1);
 	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
 	sd.m_height = m_flSpHpHeight;
 	sd.m_width = m_flSpHpWidth;
@@ -44,6 +45,19 @@ bool HealthBar::Start()
 	m_spHp->Mode_BillBord();
 	m_spHp->CameraScaleLock();
 	m_spHp->SetActive(false);
+
+	m_spHp_Back = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/whiteFade_TB.dds";
+	sd.m_height = m_flSpHpHeight;
+	sd.m_width = m_flSpHpWidth;
+	m_spHp_Back->Init(sd);
+	m_spHp_Back->SetSca(m_currentHpScale);
+	m_spHp_Back->SetPivot(m_SPRITE_PIVOT);
+	m_spHp_Back->MainCameraView();
+	m_spHp_Back->Mode_BillBord();
+	m_spHp_Back->CameraScaleLock();
+	m_spHp_Back->SetActive(false);
+	m_spHp_Back->SetMulColor(m_BACK_COLOR);
 
 	return true;
 }
@@ -67,6 +81,7 @@ void HealthBar::Update()
 	auto hpPos = m_parentPos + m_hpPosOffset;// +right * m_flSpHpWidth / 2.f;
 
 	m_spHp->SetPos(hpPos);
+	m_spHp_Back->SetPos(hpPos);
 	m_spHp->SetSca(m_currentHpScale);
 
 	m_drawTimer += gameTime()->GetDeltaTime();
@@ -74,6 +89,7 @@ void HealthBar::Update()
 	if (m_drawTimer >= m_drawSec) {
 		m_shouldBeDrawn = false;
 		m_spHp->SetActive(false);
+		m_spHp_Back->SetActive(false);
 	}
 
 }
