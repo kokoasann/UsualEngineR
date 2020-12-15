@@ -93,7 +93,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 	auto vecToPlayer = ppos - epos;
 	const float distLimit = 20.f;
 	const float PunchAttackRange = e->GetCharaRadius() + player->GetCharaRadius() + 5.f;
-	const float ThrusterAttackRange = e->GetCharaRadius() + player->GetCharaRadius() + 25.f;
+	const float ThrusterAttackRange = e->GetCharaRadius() + player->GetCharaRadius() +45.f;
 
 	const float flyDist = 0.f;
 	const auto rnd = GRandom().Rand();
@@ -138,7 +138,7 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 		}
 	}
 	else if (m_battlePhase == EnBattlePhase::Mad) {
-		const float teleportationDist = 70.f;
+		const float teleportationDist = 50.f;
 		const float tpIntervalSec = 1.5f;
 		const float tpChance = 0.7; // 70% chance
 
