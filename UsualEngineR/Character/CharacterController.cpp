@@ -61,7 +61,10 @@ namespace UER
 					dist = distTmp;
 				}
 			}
-			if(angle >= Math::PI * RAD_GROUND)
+			if(angle >= Math::PI * RAD_GROUND
+				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
+				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
+				)
 			{
 				//return 0.f;
 				isHitWall = true;
@@ -133,7 +136,8 @@ namespace UER
 				}
 			}
 
-			if(angle <= Math::PI * RAD_GROUND)
+			if(angle <= Math::PI * RAD_GROUND
+				)
 			{
 				isHitFloor = true;
 
@@ -519,7 +523,7 @@ namespace UER
 			if (!isHitFloor)
 				posTmp.y += m_height * 0.5f + m_radius;// +0.1f;
 			else
-				posTmp.y = Ypos + m_height * 0.5f + m_radius;// +0.1f;
+				posTmp.y += Ypos + m_height * 0.5f + m_radius;// +0.1f;
 
 			//posTmp.y += m_height + m_radius + m_height * 0.1f;
 			//レイを作成。
@@ -538,8 +542,12 @@ namespace UER
 			//衝突検出。
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
+			float f2wR = acosf(callback.floorNormal.Dot(callback.hitNormal));
+
 			bool isNearHitWall = callback.dist < callback.floorDist;
-			if (!isNearHitWall && callback.isHitFloor && 1)
+			isNearHitWall |= f2wR > Math::PI * 0.05f;
+			//if (!isNearHitWall && callback.isHitFloor && 1)
+			if (!isNearHitWall && callback.isHitFloor)
 			{
 #if 0
 				isHitFloor = true;
@@ -613,7 +621,9 @@ namespace UER
 				Vector3 vOffset;
 				vOffset = hitNormalXZ;
 				vOffset *= -fT0 + m_radius;
-				nextPos += vOffset;
+				//nextPos += vOffset;
+				Ypos = vOffset.y;
+				isHitFloor = true;
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
@@ -627,7 +637,9 @@ namespace UER
 				
 			}
 
-			if (isNearHitWall && callback.isHit) {
+			if (isNearHitWall && callback.isHit)
+			//if (callback.isHit)
+			{
 				//当たった。
 				//壁。
 				Vector3 vT0, vT1;
