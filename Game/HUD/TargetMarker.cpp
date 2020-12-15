@@ -21,7 +21,7 @@ void TargetMarker::Release()
 
 void TargetMarker::OnDestroy()
 {
-
+	Release();
 }
 
 

@@ -14,4 +14,17 @@ private:
 	bool m_isPerformed = false;
 	float m_tpTimer = 0.f;
 	float m_thrustTimer = 0.f;
+
+	enum class EnBattlePhase
+	{
+		Calm,
+		Normal,
+		Mad,
+		NumPhase
+	};
+
+	bool m_shouldDoMadPerformance = false;
+
+	EnBattlePhase m_battlePhase = EnBattlePhase::Calm;
+
 };
