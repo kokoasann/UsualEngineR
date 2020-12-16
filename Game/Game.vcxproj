@@ -184,6 +184,7 @@
     <ClInclude Include="Effect\ExplosionEffect.h" />
     <ClInclude Include="Effect\JetEffect.h" />
     <ClInclude Include="Effect\MuzzleFlash.h" />
+    <ClInclude Include="Effect\SmokeEffect.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\Boss\Boss_Fatman.h" />
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="Effect\ExplosionEffect.cpp" />
     <ClCompile Include="Effect\JetEffect.cpp" />
     <ClCompile Include="Effect\MuzzleFlash.cpp" />
+    <ClCompile Include="Effect\SmokeEffect.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_Fatman.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
@@ -447,6 +449,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\Image\targetMarker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

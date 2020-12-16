@@ -271,6 +271,9 @@
     <ClInclude Include="Effect\Beam.h">
       <Filter>Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Effect\SmokeEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -544,6 +547,9 @@
     <ClCompile Include="Effect\Beam.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\SmokeEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -663,6 +669,9 @@
     <Filter Include="Player\Pod\PodAttack">
       <UniqueIdentifier>{99e4b83e-7353-4940-ad7a-c58de81cff1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\boss\lf">
+      <UniqueIdentifier>{cbc0d4df-3225-4106-b5cc-748cbdad42aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -701,6 +710,9 @@
     <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
     <ImageContentTask Include="Assets\Image\targetMarker.png">
       <Filter>Assets\image</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png">
+      <Filter>Assets\modelData\boss\lf</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

@@ -768,6 +768,7 @@ namespace UER
 		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) {
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 			bool isNearFloor = callback.dist < callback.wallDist;
+			isNearFloor = true;
 			if (isNearFloor && callback.isHit) {
 				//当たった。
 				//moveSpeed.y = 0.0f;
