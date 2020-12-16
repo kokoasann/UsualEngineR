@@ -316,6 +316,9 @@
     <ClInclude Include="Physics\GhostObject.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\PostEffect\FocusBlur.h">
+      <Filter>Graphics\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -597,6 +600,9 @@
     </ClCompile>
     <ClCompile Include="Physics\GhostObject.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PostEffect\FocusBlur.cpp">
+      <Filter>Graphics\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
