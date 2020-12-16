@@ -2,6 +2,8 @@
 #include "Enemy/State/IEnemyState.h"
 #include "Player/Player.h"
 
+class Beam;
+
 class Boss_FatmanBeamState final : public IEnemyState
 {
 public:
@@ -10,6 +12,10 @@ public:
 	void Enter(IEnemy* e) override;
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
+	/// <summary>
+	/// エフェクトの初期化。
+	/// </summary>
+	void EffectInit();
 private:
 	/// <summary>
 	/// 回転の更新。
@@ -34,4 +40,8 @@ private:
 	float			m_countRot = 0.f;
 
 	bool			m_isState = false;
+
+	Beam*			m_beam = nullptr;
+	Vector3			m_beamPositiion = Vector3::Zero;
+	Quaternion		m_beamRotation = Quaternion::Identity;
 };
