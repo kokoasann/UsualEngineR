@@ -39,6 +39,8 @@ void BossA::Init() {
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackA), "Assets/modelData/boss/sp/anim/sp_punch.tka", false);
 	//AttackB
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackB), "Assets/modelData/boss/sp/anim/sp_punch_strong.tka", false);
+	//Angry
+	SetAnimation(TO_INT(EnAnimEx::enAngry), "Assets/modelData/boss/sp/anim/sp_angry.tka", false);
 
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 

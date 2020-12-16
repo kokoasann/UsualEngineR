@@ -68,13 +68,14 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 
 	if (m_shouldDoMadPerformance) {
+		e->PlayAnimation(TO_INT(BossA::EnAnimEx::enAngry));
 		auto cam = GameManager::GetInstance().m_camera;
 		auto tar = e->GetPosition();
 		tar.y += 20.f;
 
 		auto eneForward = e->GetForward();
-		auto camEndPos = e->GetPosition() + eneForward * 45.f;
-		camEndPos.y += 15.f;
+		auto camEndPos = e->GetPosition() + eneForward * 35.f;
+		camEndPos.y += 35.f;
 		auto sec = 1.f;
 		auto interval = 1.7f;
 

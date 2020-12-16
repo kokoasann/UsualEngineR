@@ -36,6 +36,13 @@ public:
 		enNumState
 	};
 
+	enum class EnAnimEx
+	{
+		enAngry = TO_INT(IEnemy::EnAnimation::enNumAnim),
+
+		enNum
+	};
+
 	//Effect
 	enum class EnJetBone {
 		ElbowR,
