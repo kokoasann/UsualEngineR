@@ -39,6 +39,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 	if (hp < minPhase2) {
 		//phase3
 		m_battlePhase = EnBattlePhase::Normal;
+		e->SetSmokeFlag(false);
 		//printf("phase 3\n");
 	}
 
@@ -54,6 +55,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 	if (hp >= minPhase1) {
 		//phase 1
 		m_battlePhase = EnBattlePhase::Calm;
+		e->SetSmokeFlag(false);
 		//printf("phase 1\n");
 	}
 
@@ -83,6 +85,8 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 			camEndPos, camEndPos,
 			tar, tar, sec, interval
 		);
+
+		e->SetSmokeFlag(true);
 
 		m_shouldDoMadPerformance = false;
 

@@ -2,9 +2,11 @@
 class IEnemyState;
 class HealthBar;
 class ExplosionEffect;
+class SmokeEffect;
 
 #include "../../UsualEngineR/Character/CharacterController.h"
 #include "../Player/Player.h"
+#include "Effect/SmokeEffect.h"
 
 class IEnemy : public GameObject
 {
@@ -234,6 +236,19 @@ public:
 
 	virtual void Explode() {};
 
+	virtual void SetSmokeFlag(const bool flag) {
+
+		if (flag) {
+			m_smokeEffect->SetPos(m_position);
+			m_smokeEffect->SetSca(Vector3::One * 0.5f);
+			m_smokeEffect->Play();
+		}
+		else {
+			m_smokeEffect->Stop();
+		}
+
+	}
+
 	void SetExternalVelocity(const Vector3& velocity) {
 		m_externalVelocity = velocity;
 	}
@@ -279,6 +294,7 @@ protected:
 	std::vector<Bone*> m_bones;
 	std::vector<JetEffect*> m_jetEffects;
 	ExplosionEffect* m_explodeEffect = nullptr;
+	SmokeEffect* m_smokeEffect = nullptr;
 
 	//Physics
 	CharacterController m_charaCon;

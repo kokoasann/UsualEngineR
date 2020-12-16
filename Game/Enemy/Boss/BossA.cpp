@@ -178,11 +178,9 @@ void BossA::Execute() {
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 
-	if (g_pad[0]->IsTrigger(enButtonSelect)) {
-		Explode();
-	}
-
 	//Effect
+	m_smokeEffect->SetPos(m_position);
+
 	//Elbow
 	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->SetPosition(m_bones.at(TO_INT(EnJetBone::ElbowR))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[TO_INT(EnJetBone::ElbowR)]->SetRotation(m_bones.at(TO_INT(EnJetBone::ElbowR))->GetWorldMatrix().GetRotate());

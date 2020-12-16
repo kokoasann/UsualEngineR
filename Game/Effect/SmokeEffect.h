@@ -1,4 +1,5 @@
 #pragma once
+#include "Effect/ParticleEffect.h"
 
 /// <summary>
 /// 
@@ -45,7 +46,27 @@ public:
 	/// </summary>
 	void PostUpdate() override;
 
+	void Init();
+
+	void SetPos(const Vector3& v)
+	{
+		m_effect->SetPos(v);
+	}
+	void SetSca(const Vector3& v)
+	{
+		m_effect->SetSca(v);
+	}
+
+	void Play()
+	{
+		m_effect->SetGenerateFlag(true);
+	}
+	void Stop()
+	{
+		m_effect->SetGenerateFlag(false);
+	}
 
 private:
-
+	PlaneParticleEffectRender* m_effect = nullptr;
+	float m_particleTimer = 0.f;
 };

@@ -10,6 +10,7 @@
 #include "State/EnemyDeadState.h"
 #include "State/EnemyStunState.h"
 #include "Effect/ExplosionEffect.h"
+#include "Effect/SmokeEffect.h"
 
 void IEnemy::Awake() {
 }
@@ -33,6 +34,9 @@ bool IEnemy::Start() {
 
 	m_explodeEffect = NewGO<ExplosionEffect>(0);
 	m_explodeEffect->Init();
+
+	m_smokeEffect = NewGO<SmokeEffect>(0);
+	m_smokeEffect->Init();
 
 	return true;
 }
