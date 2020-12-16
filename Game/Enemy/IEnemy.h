@@ -176,6 +176,10 @@ public:
 		m_velocity = velocity;
 	}
 
+	Vector3& GetVelocity() {
+		return m_velocity;
+	}
+
 	const Vector3& GetKnockBackImpulse() {
 		return m_impulse;
 	}
