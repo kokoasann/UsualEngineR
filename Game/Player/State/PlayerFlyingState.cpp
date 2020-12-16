@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "PlayerFlyingState.h"
 #include "../Player.h"
+#include "GameManager.h"
+#include "Camera/GameCamera.h"
+#include "Enemy/EnemyManager.h"
 
 PlayerFlyingState::PlayerFlyingState()
 {
@@ -104,6 +107,28 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	m_velocity.y = Approach(m_velocityGoal.y, m_velocity.y, delta * m_QUICKNESS);
 
 	auto vel = forward * m_velocity.z + right * -m_velocity.x + up * m_velocity.y;
+
+	//距離チェック.
+	const float Input_Ignore_Dist = 10.f;
+	auto gc = GameManager::GetInstance().GetGameCamera();
+	const bool isTargettingEnemy = gc->IsTargettingEnemy();
+	if (isTargettingEnemy) {
+		const auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+
+		Vector3 nextPos = p->GetPosition() + vel;
+		nextPos.y = 0.f;
+		auto tar = target->GetPosition() + target->GetVelocity();
+		tar.y = 0.f;
+
+		const float nexLen = (nextPos - tar).Length();
+		const float currentLen = (p->GetPosition() - tar).Length();
+
+		if (nexLen <= Input_Ignore_Dist and nexLen < currentLen) {
+			vel = Vector3::Zero;
+			m_velocity = Vector3::Zero;
+		}
+
+	}
 
 	vel *= p->GetSpeed();
 	p->SetVelocity(vel);
