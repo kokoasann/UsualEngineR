@@ -1,4 +1,6 @@
 #include "G_Sampler.fxh"
+#include "PerlinNoise.fxh"
+#include "FBM.fxh"
 
 cbuffer BlurData:register(b0)
 {
@@ -6,6 +8,7 @@ cbuffer BlurData:register(b0)
     float bd_samplingLen;
     float2 bd_center;
     float bd_decay;
+    float bd_time;
 }
 Texture2D<float3> g_tex:register(t0);
 
@@ -29,18 +32,26 @@ PSInput VSMain(VSInput IN)
     return OUT;
 }
 
-float3 PSMain(PSInput IN):SV_Target0
+float Random3D(in float3 v)
+{
+    return frac(sin(dot(v,float3(0.702,0.133,0.881)))*43758.5453123);
+}
+float4 PSMain(PSInput IN):SV_Target0
 {
     float3 res = 0.f;
 
     float centerLen = length(IN.toCenter);
     float2 toCenterVec = IN.toCenter*rcp(centerLen);
 
+    
+    float samplingLen = bd_samplingLen * FBM3D_x3(float3(toCenterVec,bd_time*10.f)*10.f);
     for(int i=0;i<bd_samplingNum;i++)
     {
-        res += g_tex.Sample(g_sampler,IN.uv+toCenterVec*(bd_samplingLen*i));
+        res += g_tex.Sample(g_sampler,IN.uv+toCenterVec*(samplingLen*i));
     }
 
     res *= rcp((float)bd_samplingNum);
-    return res;
+    float uvLen = length(IN.uv) / 0.707107;
+    float a = saturate(length(abs(IN.uv - 0.5)*2.f));
+    return float4(res,a);
 }
