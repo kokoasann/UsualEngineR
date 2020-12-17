@@ -63,6 +63,7 @@ public:
 	{
 		//m_isPlay = true;
 		m_effect->SetGenerateFlag(true);
+		m_particleTimer = 0.f;
 		//m_isTimeStop = false;
 	}
 	void Stop()

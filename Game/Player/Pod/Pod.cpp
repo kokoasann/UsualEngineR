@@ -7,6 +7,7 @@
 #include "../../Camera/GameCamera.h"
 #include "../../Effect/JetEffect.h"
 #include "../Attack/Projectile.h"
+#include "Effect/ExplosionEffect.h"
 
 Pod::Pod()
 {
@@ -66,6 +67,14 @@ bool Pod::Start()
 	m_jetEffects.push_back(jetEffect);
 	m_jetEffects.push_back(jetEffect1);
 
+	//m_smokeEffect = NewGO<SmokeEffect>(0);
+
+	m_explosionEffect = NewGO<ExplosionEffect>(0);
+	m_explosionEffect->Init();
+	//m_smokeEffect->Init(Color::Black, Color::Black);
+	//Color smokeCol = Color(0.1, 0.1, 0.1, 1.0);
+	//m_smokeEffect->Init(m_smokeCol, m_smokeCol);
+	//m_smokeEffect->Play();
 
 	//Bone
 	m_podBones.resize(TO_INT(EnPodBone::enNumBoneType));
@@ -110,6 +119,19 @@ void Pod::PreUpdate()
 
 void Pod::Update()
 {
+	const auto red = 1.f - (m_ability.currentStamina / m_ability.STAMINA_MAX);
+	m_mulCol = Color(red * 3.f, 1.f - red, 1.f - red, 1.f);
+	m_model->SetMulColor(m_mulCol);
+
+
+	m_explosionEffect->SetPos(m_pos);
+	m_explosionEffect->SetSca(Vector3::One * 0.1f);
+
+	m_model->SetPosition(m_pos);
+	m_model->SetRotation(m_rotation);
+
+	//const float smokeSizeParam = 0.15f;
+	//m_smokeEffect->SetSca(Vector3::One * smokeSizeParam * red);
 }
 
 void Pod::PostUpdate()
@@ -122,10 +144,6 @@ void Pod::PostUpdate()
 	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
 
 	//m_rotation = mp_player->GetRotation();
-
-	m_model->SetPosition(m_pos);
-	m_model->SetRotation(m_rotation);
-
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
@@ -188,6 +206,7 @@ void Pod::PostUpdate()
 
 		if (m_ability.currentStamina == 0.f) {
 			m_overheat = true;
+			m_explosionEffect->Play();
 			m_overheatTimer = 0.f;
 		}
 
@@ -274,11 +293,6 @@ void Pod::PostUpdate()
 	if (m_state == PodState::enBack) {
 		BackToIdlePos();
 	}
-
-	const auto red =  1.f - (m_ability.currentStamina / m_ability.STAMINA_MAX);
-	m_mulCol = Color(red * 3.f, 1.f - red,  1.f - red, 1.f);
-
-	m_model->SetMulColor(m_mulCol);
 
 }
 

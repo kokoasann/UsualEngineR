@@ -295,6 +295,7 @@ protected:
 	std::vector<JetEffect*> m_jetEffects;
 	ExplosionEffect* m_explodeEffect = nullptr;
 	SmokeEffect* m_smokeEffect = nullptr;
+	Vector4 m_smokeColor = { 1.f,1.f,1.f,0.1f };
 
 	//Physics
 	CharacterController m_charaCon;

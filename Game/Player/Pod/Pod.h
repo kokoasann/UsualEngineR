@@ -3,6 +3,8 @@
 
 class Player;
 class JetEffect;
+class ExplosionEffect;
+
 /// <summary>
 /// 
 /// </summary>
@@ -183,6 +185,7 @@ private:
 
 	std::vector<Bone*> m_podBones;
 	std::vector<JetEffect*> m_jetEffects;
+	//SmokeEffect* m_smokeEffect;
 
 	struct SkillCosts {
 		const float ProjectileCost = 100.f / 5.f;
@@ -199,5 +202,7 @@ private:
 
 	typedef Vector4 Color;
 	Color m_mulCol = Color::White;
+	//Color m_smokeCol = { 0.3,0.3,0.3,0.5f };
+	ExplosionEffect* m_explosionEffect = nullptr;
 
 };

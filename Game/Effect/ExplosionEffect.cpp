@@ -104,7 +104,7 @@ void ExplosionEffect::Init()
 					pd.lifeTime = GRandom().Rand() * 1.5;
 					pd.kind = ParticleKind::Rise;
 					pd.dir.x = GRandom().Rand() * 80.;
-					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 3.), g_quatIdentity, col, pd.lifeTime, pd, false);
+					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 3.), g_quatIdentity, col, pd.lifeTime, pd, true);
 				}
 			}
 
@@ -123,7 +123,7 @@ void ExplosionEffect::Init()
 					pd.lifeTime = GRandom().Rand() * 1.;
 					pd.kind = ParticleKind::Gass;
 					pd.dir.x = GRandom().Rand() * 80.;
-					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, false);
+					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, true);
 				}
 			}
 			//m_isPlay = false;
