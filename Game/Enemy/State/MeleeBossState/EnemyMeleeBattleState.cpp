@@ -40,6 +40,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 		//phase3
 		m_battlePhase = EnBattlePhase::Normal;
 		e->SetSmokeFlag(false);
+		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(false);
 		//printf("phase 3\n");
 	}
 
@@ -56,6 +57,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 		//phase 1
 		m_battlePhase = EnBattlePhase::Calm;
 		e->SetSmokeFlag(false);
+		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(false);
 		//printf("phase 1\n");
 	}
 
@@ -85,6 +87,8 @@ IEnemyState* EnemyMeleeBattleState::Update(IEnemy* e) {
 			camEndPos, camEndPos,
 			tar, tar, sec, interval
 		);
+
+		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);
 
 		e->SetSmokeFlag(true);
 
