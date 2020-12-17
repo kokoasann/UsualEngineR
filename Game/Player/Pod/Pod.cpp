@@ -275,6 +275,11 @@ void Pod::PostUpdate()
 		BackToIdlePos();
 	}
 
+	const auto red =  1.f - (m_ability.currentStamina / m_ability.STAMINA_MAX);
+	m_mulCol = Color(red * 3.f, 1.f - red,  1.f - red, 1.f);
+
+	m_model->SetMulColor(m_mulCol);
+
 }
 
 

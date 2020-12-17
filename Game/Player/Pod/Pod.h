@@ -196,4 +196,8 @@ private:
 	bool m_overheat = false;
 	float m_overheatTimer = 0.f;
 	const float m_OverheatTime = 3.f;
+
+	typedef Vector4 Color;
+	Color m_mulCol = Color::White;
+
 };
