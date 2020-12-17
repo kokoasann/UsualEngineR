@@ -47,6 +47,9 @@ void IEnemy::Release() {
 		delete state.second;
 	}
 
+	DeleteGO(m_smokeEffect);
+	DeleteGO(m_explodeEffect);
+
 	Terminate();
 
 	if (m_healthBar != nullptr)
