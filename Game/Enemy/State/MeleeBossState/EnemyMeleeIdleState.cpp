@@ -15,6 +15,8 @@ EnemyMeleeIdleState::~EnemyMeleeIdleState() {
 
 void EnemyMeleeIdleState::Enter(IEnemy* e) {
 
+	g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(false);
+
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
 	e->SetVelocity(Vector3::Zero);
