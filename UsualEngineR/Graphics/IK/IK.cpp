@@ -647,7 +647,9 @@ namespace UER
 		bend.setOrigin(btVector3(newpos.x, newpos.y, newpos.z));
 		bool isHit = false;
 		Vector3 tarbuf = newpos;
-		while (true)
+
+		//ループは5回まで!!
+		for(int i = 0;i<5;i++)
 		{
 
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), bstart, bend, sr);
