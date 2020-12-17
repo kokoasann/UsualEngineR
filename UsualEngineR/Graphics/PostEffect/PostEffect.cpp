@@ -54,10 +54,13 @@ namespace UER
 		m_rc4Bloom.Init(comList);*/
 
 		m_bloom.Init(this);
+		m_focusBlur.Init();
 	}
 	void PostEffect::Render()
 	{
 		auto& rc = g_graphicsEngine->GetRenderContext();
+		if(m_isUseFocusBlur)
+			m_focusBlur.Render(rc,m_primitive);
 		m_bloom.Render(rc);
 		m_bloom.CombineRender(rc, g_graphicsEngine->GetCurrentRenderTarget());
 	}

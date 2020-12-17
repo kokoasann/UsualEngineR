@@ -240,7 +240,10 @@ namespace UER
 		{
 			return m_lightManager;
 		}
-
+		PostEffect& GetPostEffect()
+		{
+			return m_postEffect;
+		}
 		PreRender& GetPreRender()
 		{
 			return m_preRender;

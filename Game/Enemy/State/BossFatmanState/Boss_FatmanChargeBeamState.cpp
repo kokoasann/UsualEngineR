@@ -3,13 +3,19 @@
 #include "Enemy/IEnemy.h"
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Boss/Boss_Fatman.h"
+#include "Effect/Beam.h"
 
 Boss_FatmanChargeBeamState::Boss_FatmanChargeBeamState()
 {
+	m_beam = NewGO<Beam>(0);
+	BeamEffectInitData bid;
+	m_beam->Init(bid);
+	m_beam->SetSca(Vector3::One * 0.3);
 }
 
 Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
 {
+	DeleteGO(m_beam);
 }
 
 void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
@@ -34,7 +40,8 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 		m_endBeamTimer += gameTime()->GetDeltaTime();
 		const float endTime = 2.f;
 		if (m_endBeamTimer < endTime) {
-			if (Beam(e)) {
+			
+			if (BeamJudge(e)) {
 				//プレイヤーが飛んでいたら撃ち落とす。
 				const float flyRange = 5.f;
 				auto epos = e->GetPosition();
@@ -69,7 +76,7 @@ bool Boss_FatmanChargeBeamState::Charge()
 	return false;
 }
 
-bool Boss_FatmanChargeBeamState::Beam(IEnemy* e)
+bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e)
 {
 	//ビームの幅の判定。
 	auto& epos = e->GetPosition();
@@ -77,6 +84,7 @@ bool Boss_FatmanChargeBeamState::Beam(IEnemy* e)
 	//敵からプレイヤーに向かうベクトル。
 	//m_positionは最初にロックオンしたときのプレイヤーの位置。
 	Vector3 vecEtoP = m_position - epos;
+	m_beam->SetDir(vecEtoP);
 
 	//外積。横方向に伸びた、VecPtoEに直行するベクトル。
 	Vector3 EWidth;
@@ -102,6 +110,10 @@ bool Boss_FatmanChargeBeamState::Beam(IEnemy* e)
 	//正面にいるかどうか判定するための内積。
 	//マイナスだったら後ろ。
 	float front = vecEtoP.Dot(vecEtoCurrentP);
+
+	m_beam->Play();
+	m_beam->SetPos(epos);
+	//m_beam->SetRot(m_beamRotation);
 
 	const float beamWidth = 15.0f;		//ビームの幅。
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {

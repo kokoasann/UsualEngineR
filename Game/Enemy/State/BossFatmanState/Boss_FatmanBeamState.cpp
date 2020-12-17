@@ -3,13 +3,18 @@
 #include "Enemy/IEnemy.h"
 #include "GameManager.h"
 #include "Enemy/Boss/Boss_Fatman.h"
+#include "Effect/Beam.h"
 
 Boss_FatmanBeamState::Boss_FatmanBeamState()
 {
+	m_beam = NewGO<Beam>(0);
+	BeamEffectInitData bid;
+	m_beam->Init(bid);
 }
 
 Boss_FatmanBeamState::~Boss_FatmanBeamState()
 {
+	DeleteGO(m_beam);
 }
 
 //モデルに回転の反映はさせないかもしれない。
@@ -59,11 +64,22 @@ IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 		}
 	}
 
+	Vector3 pos = e->GetPosition();
+	//if (m_beam != nullptr) {
+		m_beam->Play();
+		m_beam->SetPos(pos);
+		m_beam->SetRot(m_beamRotation);
+	//}
 	return this;
 }
 
 void Boss_FatmanBeamState::Exit(IEnemy* e)
 {
+}
+
+void Boss_FatmanBeamState::EffectInit()
+{
+	
 }
 
 void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
@@ -83,6 +99,7 @@ void Boss_FatmanBeamState::UpdateRotation(IEnemy* e)
 		Quaternion rot = m_rotation;
 		rot.Multiply(m_startRot);
 		e->GetModel()->SetRotation(rot);
+		m_beamRotation = rot;
 	}
 	else {
 		m_isState = true;
@@ -113,6 +130,7 @@ bool Boss_FatmanBeamState::Judge(IEnemy* e)
 	auto& p = GameManager::GetInstance().m_player;
 	auto& ppos = p->GetPosition();
 	Vector3 vecEtoCurrentP = ppos - epos;
+	m_beam->SetDir(vecEtoCurrentP);
 
 	//プレイヤーと敵を横に並べたと仮定したときの距離。
 	float dirW = EWidth.Dot(vecEtoCurrentP);
