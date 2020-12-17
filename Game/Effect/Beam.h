@@ -3,15 +3,10 @@
 
 struct BeamEffectInitData
 {
-	float particleLifeTime = 0.07f;
+	float particleLifeTime = 0.35f;
 	float particleScale = 1.f;
-	Vector4 particleColor = { 2.f,3.f,5.f,1.f };
-	//Vector4 particleEndColor = { 0.5f,0.25f,0.05f,0.f };
-
-	int circleNum = 4;					//円のパーティクルの数.
-	int circleStrokeNum = 10;			//縦の伸びのパーティクルの数。多ければ多いほど長く伸びる.
-	float circleSize = 0.1f;			//円の大きさ.
-	Vector3 velocity = { 1.f,5.f,0.f };	//xがへの広がり、yが縦へ.
+	Vector4 chargeColor = { 1.f,2.f,5.f,1.f };
+	Vector4 beamColor = { 2.f,3.f,5.f,1.f };
 };
 /// <summary>
 /// 
@@ -66,7 +61,8 @@ public:
 
 	void SetPos(Vector3 pos)
 	{
-		pos.y += 4.f;
+		const float yUp = 4.f;
+		pos.y += yUp;
 		m_position = pos;
 		m_effect->SetPos(pos);
 	}
@@ -78,18 +74,30 @@ public:
 	{
 		m_effect->SetSca(sca);
 	}
-	void SetDir(const Vector3& dir)
+	void SetToPlayerDir(const Vector3& dir)
 	{
 		m_direction = dir;
 		m_direction.Normalize();
+	}
+	void SetHolizontalDir(const Vector3& hdir)
+	{
+		m_holizontalDir = hdir;
+		m_holizontalDir.Normalize();
+	}
+	void SetChange(const bool isChange) 
+	{
+		m_isCharge = isChange;
 	}
 private:
 	PlaneParticleEffectRender*	m_effect;
 	Vector3						m_position = Vector3::Zero;
 	Vector3						m_direction = Vector3::Zero;
+	Vector3						m_holizontalDir = Vector3::Zero;
 	float						m_particleScale = 1.f;
-	Vector4						m_particleColor = { 0.f,0.f,5.f,1.f };
-	float						m_particleLifeTime = 5.f;
+	Vector4						m_chargeColor = { 0.f,0.f,5.f,1.f };
+	Vector4						m_beamColor = { 0.f,0.f,5.f,1.f };
+	float						m_particleLifeTime = 0.f;
 
 	bool						m_isPlay = false;
+	bool						m_isCharge = false;
 };
