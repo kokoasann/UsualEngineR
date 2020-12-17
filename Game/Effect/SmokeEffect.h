@@ -46,7 +46,7 @@ public:
 	/// </summary>
 	void PostUpdate() override;
 
-	void Init();
+	void Init(const Vector4& col, const Vector4& colE);
 
 	void SetPos(const Vector3& v)
 	{
