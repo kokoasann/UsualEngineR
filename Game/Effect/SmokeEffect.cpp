@@ -12,16 +12,14 @@ SmokeEffect::~SmokeEffect()
 
 }
 
-
-
 void SmokeEffect::Release()
 {
-
+	DeleteGO(m_effect);
 }
 
 void SmokeEffect::OnDestroy()
 {
-
+	Release();
 }
 
 
