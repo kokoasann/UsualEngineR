@@ -114,20 +114,20 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 	const bool isTargettingEnemy = gc->IsTargettingEnemy();
 	if (isTargettingEnemy) {
 		const auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+		if (target != nullptr) {
+			Vector3 nextPos = p->GetPosition() + vel;
+			nextPos.y = 0.f;
+			auto tar = target->GetPosition() + target->GetVelocity();
+			tar.y = 0.f;
 
-		Vector3 nextPos = p->GetPosition() + vel;
-		nextPos.y = 0.f;
-		auto tar = target->GetPosition() + target->GetVelocity();
-		tar.y = 0.f;
+			const float nexLen = (nextPos - tar).Length();
+			const float currentLen = (p->GetPosition() - tar).Length();
 
-		const float nexLen = (nextPos - tar).Length();
-		const float currentLen = (p->GetPosition() - tar).Length();
-
-		if (nexLen <= Input_Ignore_Dist and nexLen < currentLen) {
-			vel = Vector3::Zero;
-			m_velocity = Vector3::Zero;
+			if (nexLen <= Input_Ignore_Dist and nexLen < currentLen) {
+				vel = Vector3::Zero;
+				m_velocity = Vector3::Zero;
+			}
 		}
-
 	}
 
 	vel *= p->GetSpeed();
