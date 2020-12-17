@@ -34,6 +34,7 @@ IEnemyState* EnemyIdleState::Update(IEnemy* e) {
 	vel.y -= 10.f;
 	//e->SetVelocity(vel);
 
+	e->SetVelocity({ 0,-30,0 });
 
 	auto player = GameManager::GetInstance().m_player;
 	auto& epos = e->GetPosition();

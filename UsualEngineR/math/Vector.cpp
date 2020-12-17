@@ -65,7 +65,7 @@ namespace UER
 			rotAxis = Cross(from, to);
 		}
 		rotAxis.Normalize();
-		SetRotation(rotAxis, acosf(t));
+		SetRotation(rotAxis, max(min(acosf(t),1.f),-1.f));
 	}
 
 
