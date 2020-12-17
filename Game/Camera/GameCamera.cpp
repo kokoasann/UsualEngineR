@@ -457,6 +457,9 @@ void GameCamera::CalcLerpPerformanceCamera() {
 			ChangePlayerCam();
 		}
 		GameManager::GetInstance().m_menu->ResumeGame();
+
+		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(false);
+
 	}
 
 	m_pfrmTimer = m_pfrmTimer + gameTime()->GetDeltaTime();

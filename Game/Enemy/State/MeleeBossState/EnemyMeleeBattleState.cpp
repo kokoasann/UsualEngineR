@@ -60,12 +60,13 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 			auto sec = 1.f;
 			auto interval = 1.7f;
 
+			g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);
+
 			cam->Perform(
 				camEndPos, camEndPos,
 				tar, tar, sec, interval, GameCamera::State::enEnemyCamera
 			);
 
-			g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);
 
 			e->SetSmokeFlag(true);
 
