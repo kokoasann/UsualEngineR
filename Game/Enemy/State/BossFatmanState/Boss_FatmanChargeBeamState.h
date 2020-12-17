@@ -15,7 +15,7 @@ private:
 	/// チャージする。
 	/// </summary>
 	/// <returns>チャージできたかどうか。</returns>
-	bool Charge();
+	bool Charge(IEnemy* e);
 	/// <summary>
 	/// ビームの当たり判定。
 	/// </summary>
@@ -28,5 +28,5 @@ private:
 	float			m_chargeTimer = 0.f;
 	float			m_endBeamTimer = 0.f;
 	Beam*			m_beam = nullptr;
-
+	const float		m_chargeTime = 4.0f;
 };
