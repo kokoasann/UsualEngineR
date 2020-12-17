@@ -62,7 +62,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 
 			cam->Perform(
 				camEndPos, camEndPos,
-				tar, tar, sec, interval
+				tar, tar, sec, interval, GameCamera::State::enEnemyCamera
 			);
 
 			g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);

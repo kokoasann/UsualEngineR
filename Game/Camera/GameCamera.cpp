@@ -450,7 +450,12 @@ void GameCamera::CalcLerpPerformanceCamera() {
 
 
 	if (m_pfrmTimer >= m_pfrmTimeSec + m_pfrmGameResumeInterval) {
-		ChangePlayerCam();
+		if (m_afterPerformState == State::enEnemyCamera) {
+			ChangeStateToEnemyCam();
+		}
+		else {
+			ChangePlayerCam();
+		}
 		GameManager::GetInstance().m_menu->ResumeGame();
 	}
 
@@ -570,7 +575,7 @@ std::tuple<int, int, int> GameCamera::GetTargetEnemyIndexes() {
 //}
 
 void GameCamera::Perform(
-	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec, const float resumeInterval)
+	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec, const float resumeInterval, const State stateAfterPerform)
 {
 	GameManager::GetInstance().m_menu->PauseGame();
 	m_pfrmTimer = 0.f;
@@ -582,5 +587,6 @@ void GameCamera::Perform(
 	m_pfrmTarBeginPos = targetBeginPos;
 	m_pfrmTarEndPos = targetEndPos;
 	m_pfrmGameResumeInterval = resumeInterval;
+	m_afterPerformState = stateAfterPerform;
 }
 

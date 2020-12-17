@@ -13,6 +13,15 @@ class PositionChecker;
 class GameCamera :public GameObject
 {
 public:
+
+	enum class State {
+		enEnemyCamera,
+		enPlayerCamera,
+		enSlerpPerformanceCamera,
+		enLerpPerformanceCamera,
+		enNumState
+	};
+
 	GameCamera();
 	virtual ~GameCamera();
 
@@ -83,7 +92,7 @@ public:
 	/// <param name="targetBeginPos"></param>
 	/// <param name="targetEndPos"></param>
 	/// <param name="sec"></param>
-	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos,const float sec, const float resumeInterval = 0.f);
+	void Perform(const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos,const float sec, const float resumeInterval = 0.f, const State stateAfterPerform = State::enPlayerCamera);
 
 	void ChangePlayerCam()
 	{
@@ -95,15 +104,8 @@ public:
 		m_state = State::enEnemyCamera;
 		m_cameraChangeRatio = 0.f;
 	}
-private:
 
-	enum class State{
-		enEnemyCamera,
-		enPlayerCamera,
-		enSlerpPerformanceCamera,
-		enLerpPerformanceCamera,
-		enNumState
-	};
+private:
 	
 	State m_state = State::enPlayerCamera;
 
@@ -150,6 +152,7 @@ private:
 	Vector3 m_pfrmCamEndPos = Vector3::Zero;
 	Vector3 m_pfrmTarBeginPos = Vector3::Zero;
 	Vector3 m_pfrmTarEndPos = Vector3::Zero;
+	State m_afterPerformState = State::enPlayerCamera;
 
 
 	//test
