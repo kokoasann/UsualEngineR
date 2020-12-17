@@ -130,7 +130,7 @@ bool Boss_FatmanBeamState::Judge(IEnemy* e)
 	auto& p = GameManager::GetInstance().m_player;
 	auto& ppos = p->GetPosition();
 	Vector3 vecEtoCurrentP = ppos - epos;
-	m_beam->SetDir(vecEtoCurrentP);
+	m_beam->SetToPlayerDir(vecEtoCurrentP);
 
 	//プレイヤーと敵を横に並べたと仮定したときの距離。
 	float dirW = EWidth.Dot(vecEtoCurrentP);

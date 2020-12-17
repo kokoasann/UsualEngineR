@@ -54,7 +54,8 @@ void Beam::PostUpdate()
 void Beam::Init(const BeamEffectInitData& bid)
 {
 	m_particleScale = bid.particleScale;
-	m_particleColor = bid.particleColor;
+	m_chargeColor = bid.chargeColor;
+	m_beamColor = bid.beamColor;
 	m_particleLifeTime = bid.particleLifeTime;
 
 	PlaneParticleEffectInitData pid;
@@ -68,20 +69,52 @@ void Beam::Init(const BeamEffectInitData& bid)
 	{
 		Vector3 pos = { 0.f,0.f,0.f };
 		Vector3 moveSpeed = Vector3::Zero;
-		const float speed = 5.f;
-		moveSpeed = m_direction * speed;
-		
-		for (int i = 0; i < 100; i++) {
-			pos += moveSpeed;
-			pThis->AddParticle(pos, g_vec3One * m_particleScale, g_quatIdentity, m_particleColor, m_particleLifeTime, nullptr, false);
+
+		if (m_isCharge) {
+			//チャージ。
+			for (int i = 0; i < 10; i++) {
+				//プレイヤーの横方向に200.f分ずらす。
+				pos = m_holizontalDir * 300.f;
+				//横の移動量の決定。
+				const float maxMoveY = 20.f;
+				auto rand = GRandom().Rand();
+				float add = maxMoveY * rand;
+				Vector3 moveAdd = m_holizontalDir * add;
+				pos += moveAdd;
+
+				const float maxAngle = 360.f;
+				auto rand2 = GRandom().Rand();
+				Quaternion rot;
+				rot.SetRotationDeg(m_direction, maxAngle * rand2);
+				rot.Apply(pos);
+
+				pThis->AddParticle(pos, g_vec3One * m_particleScale, g_quatIdentity, m_chargeColor, m_particleLifeTime, nullptr, false);
+			}
 		}
-		
+		else {
+			//ビーム。
+			const float beamSpeed = 5.f;
+			moveSpeed = m_direction * beamSpeed;
+			for (int i = 0; i < 10000; i++) {
+				pos += moveSpeed;
+				pThis->AddParticle(pos, g_vec3One * m_particleScale, g_quatIdentity, m_beamColor, m_particleLifeTime, nullptr, false);
+			}
+		}
 		m_isPlay = false;
 		pThis->SetGenerateFlag(false);
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData) {
-		
-		//data.particleData.mulColor.Lerp(data.lifeTime/m_particleLifeTime, m_particleColor, m_particleColor);
+		if (m_isCharge) {
+			//向きを反対にする。
+			Vector3 dir = data.particleData.pos * -1;			
+			//正規化。
+			dir.Normalize();
+			//動きを反映。
+			Vector3 moveSpeed = Vector3::Zero;
+			float chargeDistance = 30.f;
+			moveSpeed = dir * chargeDistance;
+			data.particleData.pos += moveSpeed;
+		}
 	});
 	pid.m_updater = &m_effctUpdater;
 	m_effect = NewGO<PlaneParticleEffectRender>(0);

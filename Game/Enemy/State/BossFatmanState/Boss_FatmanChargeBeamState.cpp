@@ -10,7 +10,8 @@ Boss_FatmanChargeBeamState::Boss_FatmanChargeBeamState()
 	m_beam = NewGO<Beam>(0);
 	BeamEffectInitData bid;
 	m_beam->Init(bid);
-	m_beam->SetSca(Vector3::One * 0.3);
+	//m_beam->SetSca(Vector3::One * 0.3);
+	m_beam->SetSca(Vector3::One * 0.03);	
 }
 
 Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
@@ -36,11 +37,10 @@ void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 {
-	if (Charge()) {
+	if (Charge(e)) {
 		m_endBeamTimer += gameTime()->GetDeltaTime();
-		const float endTime = 2.f;
+		const float endTime = 2.f;		//撃っている時間。
 		if (m_endBeamTimer < endTime) {
-			
 			if (BeamJudge(e)) {
 				//プレイヤーが飛んでいたら撃ち落とす。
 				const float flyRange = 5.f;
@@ -66,9 +66,21 @@ void Boss_FatmanChargeBeamState::Exit(IEnemy* e)
 {
 }
 
-bool Boss_FatmanChargeBeamState::Charge()
+bool Boss_FatmanChargeBeamState::Charge(IEnemy* e)
 {
-	const float chargeTime = 3.f;
+	m_beam->SetChange(true);
+	m_beam->SetSca(Vector3::One * 0.03);
+	auto& epos = e->GetPosition();
+	Vector3 vecEtoP = m_position - epos;
+	m_beam->SetToPlayerDir(vecEtoP);
+	Vector3 EHeight;
+	EHeight.Cross(vecEtoP, Vector3::Right);
+	EHeight.Normalize();
+	m_beam->SetHolizontalDir(EHeight);
+	m_beam->Play();
+	m_beam->SetPos(epos);
+
+	const float chargeTime = 5.f;		//溜めている時間。
 	m_chargeTimer += gameTime()->GetDeltaTime();
 	if (m_chargeTimer > chargeTime) {
 		return true;
@@ -78,13 +90,14 @@ bool Boss_FatmanChargeBeamState::Charge()
 
 bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e)
 {
+	m_beam->SetChange(false);
+	m_beam->SetSca(Vector3::One * 0.3);
 	//ビームの幅の判定。
-	auto& epos = e->GetPosition();
-
 	//敵からプレイヤーに向かうベクトル。
 	//m_positionは最初にロックオンしたときのプレイヤーの位置。
+	auto& epos = e->GetPosition();
 	Vector3 vecEtoP = m_position - epos;
-	m_beam->SetDir(vecEtoP);
+	m_beam->SetToPlayerDir(vecEtoP);
 
 	//外積。横方向に伸びた、VecPtoEに直行するベクトル。
 	Vector3 EWidth;
