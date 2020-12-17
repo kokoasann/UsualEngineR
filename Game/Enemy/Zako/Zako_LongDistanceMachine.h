@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
+#include "physics/BoxCollider.h"
 /// <summary>
 /// 
 /// </summary>
@@ -39,8 +40,33 @@ public:
 		Fire = TO_INT(IEnemy::EnAnimation::enAttackA),
 		Num,
 	};
+
+	enum class EIK :StateEnumType
+	{
+		Foot1 = TO_INT(EnIK::enNumIK),
+		Foot2,
+		Foot3,
+		Foot4,
+
+		Num
+	};
+
+	RigidBody& GetRigidBody()
+	{
+		return m_rigidBody;
+	}
+
+	void SetKinematicFrag(bool b)
+	{
+		m_isKinematic = b;
+	}
+
+	btDefaultMotionState& GetMotionState()
+	{
+		return m_motionState;
+	}
 private:
-	
+	btDefaultMotionState m_motionState;
 	//Model
 	//ModelRender* m_model = nullptr;
 	/*CAnimationClip m_animClip[1];
@@ -54,6 +80,11 @@ private:
 	Quaternion m_rot = Quaternion::Identity;
 
 	float m_bulletSpeed = 2000.f;
+
+	BoxCollider m_box;
+	RigidBody m_rigidBody;
+
+	bool m_isKinematic = false;
 
 	//const static StateEnumType STATE_NUM = TO_UINT(EStateEX::Num);
 	//std::array<IEnemyState*, STATE_NUM> m_stateListEX;

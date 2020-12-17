@@ -6,6 +6,7 @@
 #include "Enemy/State/EnemyLongDistanceAttackState.h"
 #include "Enemy/State/EnemyLongDistanceTargetingState.h"
 #include "Enemy/State/EnemyShortRangeStunState.h"
+#include "Enemy/State/EnemyLongDistanceBlownState.h"
 
 Zako_LongDistanceMachine::Zako_LongDistanceMachine()
 {
@@ -68,6 +69,20 @@ void Zako_LongDistanceMachine::Init()
 	//SetState(m_stateMap[TO_UINT(EStateEX::LongDistanceTargeting)]);
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
+
+	m_box.Create({ 4,4,4 });
+	RigidBodyInfo rbinfo;
+	rbinfo.collider = &m_box;
+	rbinfo.mass = 10;
+	
+	m_rigidBody.Create(rbinfo);
+	auto b = m_rigidBody.GetBody();
+	b->setUserIndex(enCollisionAttr_Character);
+	b->setMotionState(&m_motionState);
+	//btDefaultMotionState
+	//b->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+	b->setGravity({ 0,-270,0 });
+	//Physics().AddRigidBody(m_rigidBody);
 }
 
 void Zako_LongDistanceMachine::InitState()
@@ -78,7 +93,9 @@ void Zako_LongDistanceMachine::InitState()
 	m_stateList[TO_UINT(EStateEX::LongDistanceTargeting)] = new EnemyLongDistanceTargetingState();*/
 
 	{
-		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyDeadState());
+		/*auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyDeadState());
+		m_stateMap.insert(p);*/
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyLongDistanceBlownState());
 		m_stateMap.insert(p);
 	}
 	{
@@ -99,17 +116,67 @@ void Zako_LongDistanceMachine::InitIK()
 {
 	auto ske = m_model->GetModel().GetSkelton();
 	{
-		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone")), 1, 1);
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.003")), 1, 0.5);
+		ik->SetIKMode(IK::enMode_NoneHit);
+		SetIK(TO_INT(EnIK::enHead), ik);
+		reinterpret_cast<EnemyLongDistanceTargetingState*>(m_stateMap[TO_UINT(EStateEX::LongDistanceTargeting)])->Init(ik, m_rot, m_bulletSpeed);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone")), 1, 3);
+		//IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 1, 3);
 		ik->SetIKMode(IK::enMode_NoneHit);
 
 		SetIK(TO_INT(EnIK::enChest), ik);
+	}
+
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_L.008")), 2, 1);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EIK::Foot1), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_L.009")), 2, 1);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EIK::Foot2), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_R.008")), 2, 1);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EIK::Foot3), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_R.009")), 2, 1);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EIK::Foot4), ik);
 	}
 }
 
 void Zako_LongDistanceMachine::Execute()
 {
-	m_model->SetPosition(m_position);
-	m_model->SetRotation(m_rot);
+	if (!m_isKinematic)
+	{
+		m_model->SetPosition(m_position);
+		m_model->SetRotation(m_rot);
+
+		/*auto b = m_rigidBody.GetBody();
+		auto& t = b->getWorldTransform();
+		t.setOrigin({ m_position.x,m_position.y,m_position.z });*/
+		/*btTransform tra;
+		m_motionState.getWorldTransform(tra);
+		tra.setOrigin({ m_position.x,m_position.y ,m_position.z });
+		m_motionState.setWorldTransform(tra);*/
+	}
+	else
+	{
+		auto b = m_rigidBody.GetBody();
+		m_model->SetPosition(b->getWorldTransform().getOrigin());
+		m_model->SetRotation(b->getWorldTransform().getRotation());
+		
+	}
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {

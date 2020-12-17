@@ -274,6 +274,9 @@
     <ClInclude Include="Effect\SmokeEffect.h">
       <Filter>Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\EnemyLongDistanceBlownState.h">
+      <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -549,6 +552,9 @@
     </ClCompile>
     <ClCompile Include="Effect\SmokeEffect.cpp">
       <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\EnemyLongDistanceBlownState.cpp">
+      <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

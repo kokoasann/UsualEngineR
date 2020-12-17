@@ -727,6 +727,7 @@ namespace UER
 			auto effmat = GetBoneWorldMatrix(m_skeleton, m_effectorBone, worldMat);
 			auto effpos = effmat.GetTransrate();
 			auto currentBone = m_skeleton->GetBone(m_effectorBone->GetParentBoneNo());						//作業中のボーン
+			//auto currentBone = m_effectorBone;						//作業中のボーン
 			while (true)
 			{
 				auto currentmat = GetBoneWorldMatrix(m_skeleton, currentBone, worldMat);//作業ボーンの世界行列。

@@ -205,6 +205,7 @@
     <ClInclude Include="Enemy\State\EnemyExplosionKamikazeState.h" />
     <ClInclude Include="Enemy\State\EnemyIdleState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
+    <ClInclude Include="Enemy\State\EnemyLongDistanceBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="Enemy\State\EnemyExplosionKamikazeState.cpp" />
     <ClCompile Include="Enemy\State\EnemyIdleState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyLongDistanceBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp" />
