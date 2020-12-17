@@ -36,7 +36,7 @@ namespace UER
 		}
 		void SetUseFocusBlurFrag(bool b)
 		{
-			m_isUseFocusBlur = true;
+			m_isUseFocusBlur = b;
 		}
 	private:
 		Primitive m_primitive;
