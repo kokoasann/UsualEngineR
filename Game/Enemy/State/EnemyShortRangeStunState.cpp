@@ -13,7 +13,7 @@ EnemyShortRangeStunState::~EnemyShortRangeStunState()
 
 void EnemyShortRangeStunState::Enter(IEnemy* e)
 {
-	e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enIdle));
+	//e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enIdle));
 
 	if (m_ik == nullptr)
 		m_ik = e->GetIK(TO_INT(IEnemy::EnIK::enChest));
