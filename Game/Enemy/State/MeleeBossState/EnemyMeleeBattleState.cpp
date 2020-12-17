@@ -56,7 +56,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 
 			auto eneForward = e->GetForward();
 			auto camEndPos = e->GetPosition() + eneForward * 35.f;
-			camEndPos.y += 35.f;
+			camEndPos.y += 20.f;
 			auto sec = 1.f;
 			auto interval = 1.7f;
 
@@ -68,6 +68,37 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 			g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);
 
 			e->SetSmokeFlag(true);
+
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowL))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowR))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::BackL))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::BackR))->SetGenerateFlag(true);
+
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetScale(0.5);
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetScale(0.5);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowL))->SetScale(0.2);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowR))->SetScale(0.2);
+			effects.at(TO_INT(BossA::EnJetBone::BackL))->SetScale(0.3);
+			effects.at(TO_INT(BossA::EnJetBone::BackR))->SetScale(0.3);
+
+		}
+		else
+		{
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetGenerateFlag(false);
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetGenerateFlag(false);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowL))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowR))->SetGenerateFlag(true);
+			effects.at(TO_INT(BossA::EnJetBone::BackL))->SetGenerateFlag(false);
+			effects.at(TO_INT(BossA::EnJetBone::BackR))->SetGenerateFlag(false);
+
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterL))->SetScale(0.1);
+			effects.at(TO_INT(BossA::EnJetBone::ThrusterR))->SetScale(0.1);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowL))->SetScale(0.1);
+			effects.at(TO_INT(BossA::EnJetBone::ElbowR))->SetScale(0.1);
+			effects.at(TO_INT(BossA::EnJetBone::BackL))->SetScale(0.1);
+			effects.at(TO_INT(BossA::EnJetBone::BackR))->SetScale(0.1);
 		}
 	}
 
