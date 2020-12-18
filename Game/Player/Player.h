@@ -378,7 +378,8 @@ private:
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
-	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
+	//bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, 0, 0, 0};
 
 	//State
 	IPlayerState* m_nextState = nullptr;
@@ -392,7 +393,8 @@ private:
 	//std::vector<CAnimationClipPtr> m_animlist;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
 
-	const Vector3 m_SpawnPos = { 0,15,-100 };
+	//const Vector3 m_SpawnPos = { 0,15,-100 };
+	const Vector3 m_SpawnPos = { 750,15,-680 };
 	Vector3 m_position = m_SpawnPos;
 	Vector3 m_forward = { 0,0,1 };
 	Quaternion m_SpawnRot = Quaternion::Identity;

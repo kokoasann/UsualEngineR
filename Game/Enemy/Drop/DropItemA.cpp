@@ -35,7 +35,6 @@ void DropItemA::Awake()
 
 bool DropItemA::Start()
 {
-
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";

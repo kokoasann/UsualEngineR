@@ -63,7 +63,7 @@ public:
 private:
 
 	//const
-	const float m_GRASP_RANGE = 20.f;
+	const float m_GRASP_RANGE = 5.f;
 	const Player::EnAttackType m_typeId = Player::EnAttackType::enRemoteAttackPreset;
 
 	//Model

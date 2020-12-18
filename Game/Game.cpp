@@ -44,7 +44,7 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 
 	auto vecTargetToCenter = center - tar;
 	auto camBeginPos = center + vecTargetToCenter;
-	camBeginPos.y += 10.f;
+	camBeginPos.y += 30.f;
 	Quaternion rot = Quaternion::Identity;
 	rot.SetRotationDegY(10.f);
 	auto camEndPos = enemy->GetPosition();
@@ -102,7 +102,8 @@ void Game::OnItemUnlocked() {
 	auto plForward = player->GetForward();
 	auto camBeginPos = player->GetPosition() + plForward * 45.f;
 	auto camEndPos = player->GetPosition() + plForward * 25.f;
-	camBeginPos.y += 5.f;
+	camBeginPos.y += 20.f;
+	camEndPos.y += 20.f;
 	auto sec = 1.5f;
 	auto interval = 0.f;
 
