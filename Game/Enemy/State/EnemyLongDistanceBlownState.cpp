@@ -20,11 +20,11 @@ void EnemyLongDistanceBlownState::Enter(IEnemy* e)
 {
 	auto ene = reinterpret_cast<Zako_LongDistanceMachine*>(e);
 	m_body = &ene->GetRigidBody();
-	//ene->SetKinematicFrag(true);
+	ene->SetKinematicFrag(true);
 	if (m_ik[0] == nullptr)
 	{
 		int i = 0;
-		m_ik[i++] = e->GetIK(TO_INT(IEnemy::EnIK::enChest));
+		//m_ik[i++] = e->GetIK(TO_INT(IEnemy::EnIK::enChest));
 		m_ik[i++] = e->GetIK(TO_INT(IEnemy::EnIK::enHead));
 		m_ik[i++] = e->GetIK(TO_INT(Zako_LongDistanceMachine::EIK::Foot1));
 		m_ik[i++] = e->GetIK(TO_INT(Zako_LongDistanceMachine::EIK::Foot2));
@@ -32,6 +32,8 @@ void EnemyLongDistanceBlownState::Enter(IEnemy* e)
 		m_ik[i++] = e->GetIK(TO_INT(Zako_LongDistanceMachine::EIK::Foot4));
 		for (auto ik : m_ik)
 		{
+			if (ik == nullptr)
+				continue;
 			ik->SetIKMode(IK::enMode_NoAnimHit);
 		}
 	}
@@ -69,16 +71,21 @@ void EnemyLongDistanceBlownState::Enter(IEnemy* e)
 	//b->getWorldTransform().setOrigin({ epos.x,epos.y+5.f ,epos.z });
 	btTransform tra;
 	ene->GetMotionState().getWorldTransform(tra);
-	tra.setOrigin({ epos.x,epos.y + 5.f ,epos.z });
-	ene->GetMotionState().setWorldTransform(tra);
+	//tra.setOrigin({ epos.x,epos.y + 10.f ,epos.z });
+	//ene->GetMotionState().setWorldTransform(tra);
 	
-	float poww = 3;
+	float poww = 1;
 	//b->setAngularVelocity({ m_velocityXZ.x, m_velocityY , m_velocityXZ.z});
 	
-	b->setAngularFactor(3);
-	//b->applyCentralImpulse({ m_velocityXZ.x * poww, m_velocityY * poww, m_velocityXZ.z * poww });
+	
+	//b->setAngularFactor(3);
+	b->applyCentralImpulse({ m_velocityXZ.x * poww, m_velocityY * poww, m_velocityXZ.z * poww });
+	//b->applyCentralForce({ m_velocityXZ.x * poww, m_velocityY * poww, m_velocityXZ.z * poww });
+	b->setGravity({ 0,-160,0 });
+	
+	
 	auto ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
-	b->applyImpulse({ m_velocityXZ.x, m_velocityY, m_velocityXZ.z }, { ppos.x,ppos.y ,ppos.z });
+	//b->applyImpulse({ m_velocityXZ.x, m_velocityY, m_velocityXZ.z }, { ppos.x,ppos.y ,ppos.z });
 	
 	//b.
 }
@@ -98,14 +105,21 @@ IEnemyState* EnemyLongDistanceBlownState::Update(IEnemy* e)
 
 	
 	{
-		m_ik[0]->SetVelocity(ve);
-		m_ik[1]->SetVelocity(ve);
+		//m_ik[0]->SetVelocity(ve);
+		//m_ik[1]->SetVelocity(ve);
+		for (auto ik : m_ik)
+		{
+			if (ik == nullptr)
+				continue;
+			ik->SetVelocity(ve);
+		}
 	}
 
 
 	auto b = m_body->GetBody();
+	DebugPrintVector3(EDebugConsoloUser::NOMOTO, b->getGravity());
 	//b->applyDamping(dtime);
-	b->applyGravity();
+	//b->applyGravity();
 	auto epos = e->GetPosition();
 	//b->applyImpulse({ m_velocityXZ.x, m_velocityY, m_velocityXZ.z }, { epos.x,epos.y ,epos.z });
 

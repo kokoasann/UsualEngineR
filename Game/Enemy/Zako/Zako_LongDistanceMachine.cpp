@@ -16,6 +16,7 @@ Zako_LongDistanceMachine::Zako_LongDistanceMachine()
 Zako_LongDistanceMachine::~Zako_LongDistanceMachine()
 {
 	//delete m_stateList[TO_UINT(EStateEX::LongDistanceAttack)];
+	Physics().RemoveRigidBody(m_rigidBody);
 }
 
 void Zako_LongDistanceMachine::Init()
@@ -73,16 +74,21 @@ void Zako_LongDistanceMachine::Init()
 	m_box.Create({ 4,4,4 });
 	RigidBodyInfo rbinfo;
 	rbinfo.collider = &m_box;
-	rbinfo.mass = 10;
-	
+	rbinfo.mass = 1;
+	//static int i = 1;
+	//rbinfo.pos = { 0,(float)(i*15),0 };
+	//i++;
 	m_rigidBody.Create(rbinfo);
 	auto b = m_rigidBody.GetBody();
-	b->setUserIndex(enCollisionAttr_Character);
-	b->setMotionState(&m_motionState);
+	b->setUserIndex(enCollisionAttr_Character | enCollisionAttr_NonHit);
+	
+	m_motionState = b->getMotionState();
 	//btDefaultMotionState
-	//b->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
-	b->setGravity({ 0,-270,0 });
-	//Physics().AddRigidBody(m_rigidBody);
+	b->activate(false);
+	
+	//b->setCollisionFlags(btCollisionObject::CF_DISABLE_SPU_COLLISION_PROCESSING);
+	b->setGravity({ 0,0,0 });
+	Physics().AddRigidBody(m_rigidBody);
 }
 
 void Zako_LongDistanceMachine::InitState()
@@ -162,20 +168,29 @@ void Zako_LongDistanceMachine::Execute()
 		m_model->SetPosition(m_position);
 		m_model->SetRotation(m_rot);
 
-		/*auto b = m_rigidBody.GetBody();
+		auto b = m_rigidBody.GetBody();
 		auto& t = b->getWorldTransform();
-		t.setOrigin({ m_position.x,m_position.y,m_position.z });*/
+		t.setOrigin({ m_position.x,m_position.y+5.f,m_position.z });
+		t.setRotation({ m_rot.x,m_rot.y,m_rot.z,m_rot.w });
+
 		/*btTransform tra;
-		m_motionState.getWorldTransform(tra);
-		tra.setOrigin({ m_position.x,m_position.y ,m_position.z });
-		m_motionState.setWorldTransform(tra);*/
+		m_motionState->getWorldTransform(tra);
+		tra.setOrigin({ m_position.x,m_position.y+5.f ,m_position.z });
+		m_motionState->setWorldTransform(tra);*/
 	}
 	else
 	{
 		auto b = m_rigidBody.GetBody();
-		m_model->SetPosition(b->getWorldTransform().getOrigin());
-		m_model->SetRotation(b->getWorldTransform().getRotation());
 		
+		m_model->SetRotation(b->getWorldTransform().getRotation());
+		m_rot = b->getWorldTransform().getRotation();
+
+		auto up = Vector3::Up;
+		m_rot.Apply(up);
+		Vector3 pos = b->getWorldTransform().getOrigin();
+		pos += up*-3;
+		m_model->SetPosition(pos);
+		m_position = pos;
 	}
 
 	//体力がなくなったら死亡ステートへ遷移
