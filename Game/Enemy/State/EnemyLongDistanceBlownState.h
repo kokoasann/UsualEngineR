@@ -21,7 +21,7 @@ private:
 	float m_grav = 150.f;
 
 	float m_timer = 0.;
-	float m_timeLimit = 5.f;
+	float m_timeLimit = 2.f;
 
 	bool m_isTakeOff = false;
 	bool m_isTakeOn = false;

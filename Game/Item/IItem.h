@@ -27,6 +27,6 @@ public:
 
 protected:
 	Vector3 m_position = Vector3::Zero;
-	float m_range = 20.f;
+	float m_range = 5.f;
 };
 

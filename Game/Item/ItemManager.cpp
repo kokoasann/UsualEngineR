@@ -41,9 +41,10 @@ bool ItemManager::Start()
 
 	auto item = new RedPotion();
 	m_items.push_back(item);
+	item->SetPosition({ 0,10,0. });
 
 	auto energy = new EnergyPotion();
-	energy->SetPosition({ 150,0,0. });
+	energy->SetPosition({ 150,10,0. });
 	m_items.push_back(energy);
 
 	return true;
