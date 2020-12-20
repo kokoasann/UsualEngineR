@@ -37,7 +37,6 @@ void EnemyLongDistanceBlownState::Enter(IEnemy* e)
 			ik->SetIKMode(IK::enMode_NoAnimHit);
 		}
 	}
-
 	m_velocityXZ = e->GetKnockBackImpulse();
 	m_velocityY = 0.f;
 	m_isNoBlown = false;
@@ -67,6 +66,7 @@ void EnemyLongDistanceBlownState::Enter(IEnemy* e)
 	e->RemoveRigidBody();
 
 	auto epos = e->GetPosition();
+	
 	auto b = m_body->GetBody();
 	//b->getWorldTransform().setOrigin({ epos.x,epos.y+5.f ,epos.z });
 	btTransform tra;
@@ -121,6 +121,7 @@ IEnemyState* EnemyLongDistanceBlownState::Update(IEnemy* e)
 	//b->applyDamping(dtime);
 	//b->applyGravity();
 	auto epos = e->GetPosition();
+	m_effect->SetPos(epos);
 	//b->applyImpulse({ m_velocityXZ.x, m_velocityY, m_velocityXZ.z }, { epos.x,epos.y ,epos.z });
 
 

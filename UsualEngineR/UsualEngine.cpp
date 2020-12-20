@@ -19,6 +19,8 @@ namespace UER
 		if (m_graphicsEngine) {
 			delete m_graphicsEngine;
 		}
+
+		m_soundEngine.Release();
 		
 	}
 	void UsualEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
@@ -35,6 +37,8 @@ namespace UER
 
 		m_physicsWorld = new PhysicsWorld();
 		m_physicsWorld->Init();
+
+		m_soundEngine.Init();
 
 #if DEBUG_FUNC
 		Debug::Instance().InitDebugSwitch();
@@ -58,6 +62,7 @@ namespace UER
 			
 
 			m_physicsWorld->Update();
+			m_soundEngine.Update();
 
 			//レンダリング開始。
 			g_engine->BeginFrame();

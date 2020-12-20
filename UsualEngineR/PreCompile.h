@@ -34,7 +34,9 @@
 #include <dxcapi.h>
 #include <atlbase.h>
 #include <mutex>
-
+#include <xaudio2.h>
+#include <xaudio2fx.h>
+#include <x3daudio.h>
 
 
 #include "btBulletDynamicsCommon.h"
@@ -47,6 +49,8 @@
 
 #include "math/Random.h"
 #include "math/PerlinNoise.h"
+
+
 
 #include "BufferEnum.h"
 #include "RenderingSituation.h"
@@ -73,8 +77,16 @@
 
 #include "RenderContext_inline.h"
 #include "DescriptorHeap_inline.h"
+#include "Font.h"
+#include "Sound/SoundSource.h"
 
 
+#if DEBUG_FUNC
+#include "Debug/DebugPopup.h"
+#include "Debug/Debug.h"
+#include "Debug/DebugSwitch.h"
+
+#endif
 
 
 #include "system/system.h"
@@ -92,7 +104,7 @@
 #include "IK/IK.h"
 
 #include "HID/GamePad.h"
-#include "Font.h"
+
 
 #include "util/Util.h"
 #include "util/GameTime.h"
@@ -114,12 +126,6 @@
 #include "Light/LightPoint.h"
 	
 
-#if DEBUG_FUNC
-//#include "Debug/DebugPopup.h"
-#include "Debug/Debug.h"
-#include "Debug/DebugSwitch.h"
-
-#endif
 #include "Debug/DebugConsole.h"
 
 namespace UER

@@ -2,7 +2,7 @@
 
 #include "HID/GamePad.h"
 #include "GameObject/GameObjectManager.h"
-
+#include "Sound/SoundEngine.h"
 
 namespace UER
 {
@@ -35,11 +35,17 @@ namespace UER
 		{
 			return *m_physicsWorld;
 		}
+
+		CSoundEngine& GetSoundEngine()
+		{
+			return m_soundEngine;
+		}
 	private:
 		GraphicsEngine* m_graphicsEngine = nullptr;		//グラフィックエンジン。
 		GamePad m_pad[GamePad::CONNECT_PAD_MAX];		//ゲームパッド。
 		GameObjectManager* m_pGameObjectManeger = nullptr;			//ゲームオブジェクトマネージャー
 		PhysicsWorld* m_physicsWorld;
+		CSoundEngine m_soundEngine;
 	};
 	
 	
@@ -49,5 +55,9 @@ namespace UER
 	inline PhysicsWorld& Physics()
 	{
 		return g_engine->GetPhysics();
+	}
+	inline CSoundEngine& SoundEngine()
+	{
+		return g_engine->GetSoundEngine();
 	}
 }

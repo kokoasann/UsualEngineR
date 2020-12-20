@@ -17,11 +17,14 @@ void Test::OnDestroy()
 
 void Test::Awake()
 {
+	CSoundSource* se = NewGO<CSoundSource>(0);
+	se->Init(L"Assets/sound/kick-low1.wav");
 	{
 		auto cam = g_lockCamera3D.Get();
 		cam->SetPosition({ 0,20,10 });
 		cam->SetTarget({ 0,0,0 });
 	}
+	se->Play(true);
 
 	/*m_threadObj.Execute([&]()
 		{
