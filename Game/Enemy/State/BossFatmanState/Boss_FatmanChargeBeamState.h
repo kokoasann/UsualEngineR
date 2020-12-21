@@ -29,4 +29,6 @@ private:
 	float			m_endBeamTimer = 0.f;
 	Beam*			m_beam = nullptr;
 	const float		m_chargeTime = 4.0f;
+
+	bool			m_isSetPos = false;			//ビームを撃つ方向を設定。固定だから一度だけ設定する。
 };

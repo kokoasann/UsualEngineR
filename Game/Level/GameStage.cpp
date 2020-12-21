@@ -127,23 +127,23 @@ bool GameStage::Start()
 		DebugPrint_WATA("Level meash has been created");
 		});
 
-	m_sandSmoke = NewGO<VolumetricEffectRender>(0);
-	m_sandSmoke->Init("Assets/modelData/test/block.tkm");
-	m_sandSmoke->SetPos({ 0,200,0 });
-	m_sandSmoke->SetSca({ 850,200,850 });
-	{
-		auto& fd = m_sandSmoke->GetFogData();
-		fd.rayCount = 30;
-		fd.rayLen = 16.f;
-		fd.concentration = 0.015*8./3.;
-		fd.decayCenterToXZ = 0.0f;
-		fd.decayCenterToY = 0.0f;
-		fd.ratioParlinWorley = 0.f;
-		fd.ratioParlin = 1.f;
-		fd.perlinScale = 0.05f;
-		fd.color = { .7,.65,.55 };
-		//fd.ratioParlin = 
-	}
+	//m_sandSmoke = NewGO<VolumetricEffectRender>(0);
+	//m_sandSmoke->Init("Assets/modelData/test/block.tkm");
+	//m_sandSmoke->SetPos({ 0,200,0 });
+	//m_sandSmoke->SetSca({ 850,200,850 });
+	//{
+	//	auto& fd = m_sandSmoke->GetFogData();
+	//	fd.rayCount = 30;
+	//	fd.rayLen = 16.f;
+	//	fd.concentration = 0.015*8./3.;
+	//	fd.decayCenterToXZ = 0.0f;
+	//	fd.decayCenterToY = 0.0f;
+	//	fd.ratioParlinWorley = 0.f;
+	//	fd.ratioParlin = 1.f;
+	//	fd.perlinScale = 0.05f;
+	//	fd.color = { .7,.65,.55 };
+	//	//fd.ratioParlin = 
+	//}
 
 	return true;
 }
@@ -156,10 +156,10 @@ void GameStage::PreUpdate()
 
 void GameStage::Update()
 {
-	{
+	/*{
 		auto& fd = m_sandSmoke->GetFogData();
 		fd.offset.y -= 3.f * gameTime()->GetDeltaTime();
-	}
+	}*/
 
 	//メンバにスタックしたrigidBodyを一気にBulletに詰め込んでゆくゾ。
 	if (m_threadForCreatingMeshCol.IsEnd() && !m_isRegistRigidBody)
