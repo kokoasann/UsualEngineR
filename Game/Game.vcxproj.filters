@@ -277,6 +277,10 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceBlownState.h">
       <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
     </ClInclude>
+    <ClInclude Include="Church.h" />
+    <ClInclude Include="Player\State\PlayerChurchState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -555,6 +559,10 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\EnemyLongDistanceBlownState.cpp">
       <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
+    </ClCompile>
+    <ClCompile Include="Church.cpp" />
+    <ClCompile Include="Player\State\PlayerChurchState.cpp">
+      <Filter>Player\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
