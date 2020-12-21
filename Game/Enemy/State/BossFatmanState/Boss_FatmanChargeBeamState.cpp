@@ -7,16 +7,22 @@
 
 Boss_FatmanChargeBeamState::Boss_FatmanChargeBeamState()
 {
-	m_beam = NewGO<Beam>(0);
-	BeamEffectInitData bid;
-	m_beam->Init(bid);
-	//m_beam->SetSca(Vector3::One * 0.3);
-	m_beam->SetSca(Vector3::One * 0.03);	
+	//骨の数だけビームを生成する。
+	for (int i = 0; i < BoneNum; i++) {
+		Beam* beam = NewGO<Beam>(0);
+		BeamEffectInitData bid;
+		beam->Init(bid);
+		beam->SetSca(Vector3::One * 0.03);
+		m_beams.push_back(beam);
+	}
 }
 
 Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
 {
-	DeleteGO(m_beam);
+	//生成した数だけ削除。
+	for (int i = 0; i < m_beams.size(), i++;) {
+		DeleteGO(m_beams.at(i));
+	}
 }
 
 void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
@@ -32,6 +38,11 @@ void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 	m_endBeamTimer = 0.f;
 
 	m_isSetPos = false;
+
+	//骨情報。
+	auto ske = e->GetModel()->GetModel().GetSkelton();
+	m_bone[Right] = ske->GetBone(ske->FindBoneID(L"Beam_IK_R"));
+	m_bone[Left] = ske->GetBone(ske->FindBoneID(L"Beam_IK_L"));
 }
 
 IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
@@ -46,17 +57,21 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 				m_position = p->GetPosition();
 				m_isSetPos = true;
 			}
-			if (BeamJudge(e)) {
-				//プレイヤーが飛んでいたら撃ち落とす。
-				const float flyRange = 5.f;
-				auto epos = e->GetPosition();
-				auto& p = GameManager::GetInstance().m_player;
-				auto ppos = p->GetPosition();
-				if (std::abs(ppos.y - epos.y) > flyRange) {
-					p->ApplyDamage(m_damage, true, Vector3::Zero);
-				}
-				else {
-					p->ApplyDamage(m_damage);
+			//ビームは2本あるので2回判定を行う。
+			for (int i = 0; i < BoneNum; i++) {
+				//攻撃判定。
+				if (BeamJudge(e,i)) {
+					//プレイヤーが飛んでいたら撃ち落とす。
+					const float flyRange = 5.f;
+					auto epos = e->GetPosition();
+					auto& p = GameManager::GetInstance().m_player;
+					auto ppos = p->GetPosition();
+					if (std::abs(ppos.y - epos.y) > flyRange) {
+						p->ApplyDamage(m_damage, true, Vector3::Zero);
+					}
+					else {
+						p->ApplyDamage(m_damage);
+					}
 				}
 			}
 		}
@@ -79,39 +94,53 @@ bool Boss_FatmanChargeBeamState::Charge(IEnemy* e)
 		return true;
 	}
 
-	//エフェクトを溜め状態に設定。
-	m_beam->SetChange(true);
-	//大きさを小さめに設定。
-	m_beam->SetSca(Vector3::One * 0.03);
+	for (int i = 0; i < BoneNum; i++) {
+		//エフェクトの設定。
+		//エフェクトを溜め状態に設定。
+		m_beams[i]->SetChange(true);
 
-	auto& epos = e->GetPosition();
-	Vector3 vecEtoP = m_position - epos;
-	m_beam->SetToPlayerDir(vecEtoP);
-	Vector3 EHeight;
-	EHeight.Cross(vecEtoP, Vector3::Right);
-	EHeight.Normalize();
+		//大きさを小さめに設定。
+		m_beams[i]->SetSca(Vector3::One * 0.03);
 
-	m_beam->SetHolizontalDir(EHeight);
-	m_beam->Play();
-	m_beam->SetPos(epos);
+		//骨の座標の取得。
+		const auto epos = m_bone[i]->GetWorldMatrix().GetTransrate();
+		m_beams[i]->SetPos(epos);
 
+		//モデルからプレイヤーまでの方向を設定。
+		auto& p = GameManager::GetInstance().m_player;
+		const auto& ppos = p->GetPosition();
+		Vector3 vecEtoP = ppos - epos;
+		m_beams[i]->SetToPlayerDir(vecEtoP);
+
+		//外積。直行した縦のベクトル。
+		Vector3 EHeight;
+		EHeight.Cross(vecEtoP, Vector3::Right);
+		EHeight.Normalize();
+		m_beams[i]->SetHolizontalDir(EHeight);
+
+		//エフェクトの再生。
+		m_beams[i]->Play();
+	}
+	
+	//モデルがプレイヤーの方向を向くように設定。
 	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));	
 	return false;
 }
 
-bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e)
+bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e, int boneNo)
 {
 	//エフェクトの溜め状態を解除。
-	m_beam->SetChange(false);
+	m_beams[boneNo]->SetChange(false);
 	//大きさを大きめに設定。
-	m_beam->SetSca(Vector3::One * 0.3);
+	m_beams[boneNo]->SetSca(Vector3::One * 0.3);
 
 	//ビームの幅の判定。
 	//敵からプレイヤーに向かうベクトル。
 	//m_positionは最初にロックオンしたときのプレイヤーの位置。
-	auto& epos = e->GetPosition();
+	auto epos = m_bone[boneNo]->GetWorldMatrix().GetTransrate();
+
 	Vector3 vecEtoP = m_position - epos;
-	m_beam->SetToPlayerDir(vecEtoP);
+	m_beams[boneNo]->SetToPlayerDir(vecEtoP);
 
 	//外積。横方向に伸びた、VecPtoEに直行するベクトル。
 	Vector3 EWidth;
@@ -138,9 +167,8 @@ bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e)
 	//マイナスだったら後ろ。
 	float front = vecEtoP.Dot(vecEtoCurrentP);
 
-	m_beam->Play();
-	m_beam->SetPos(epos);
-	//m_beam->SetRot(m_beamRotation);
+	m_beams[boneNo]->Play();
+	m_beams[boneNo]->SetPos(epos);
 
 	const float beamWidth = 15.0f;		//ビームの幅。
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {
