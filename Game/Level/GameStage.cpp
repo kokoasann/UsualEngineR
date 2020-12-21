@@ -71,7 +71,7 @@ bool GameStage::Start()
 		mid.m_vsEntryPointFunc = "VSMain";
 		mid.m_psEntryPointFunc = "PSMain";
 		//m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
-		m_level.Init("Assets/level/map_commit_obj_level2.tkl", [&](LevelObjectData& objData)->bool
+		m_footholdLevel.Init("Assets/level/map_commit_obj_level2.tkl", [&](LevelObjectData& objData)->bool
 			{
 				std::string name(objData.name.begin(), objData.name.end());
 				char filePath[256];
@@ -106,7 +106,7 @@ bool GameStage::Start()
 		mid.m_vsEntryPointFunc = "VSMain";
 		mid.m_psEntryPointFunc = "PSMain";
 
-		m_level.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
+		m_phyLevel.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
 			{
 				std::string name(objData.name.begin(), objData.name.end());
 				char filePath[256];
@@ -125,6 +125,11 @@ bool GameStage::Start()
 			});
 		m_isLoaded = true;
 		DebugPrint_WATA("Level meash has been created");
+		});
+
+	m_decoLevel.Init("Assets/level/map_MBG_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			return true;
 		});
 
 	//m_sandSmoke = NewGO<VolumetricEffectRender>(0);

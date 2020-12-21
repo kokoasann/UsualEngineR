@@ -483,6 +483,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
