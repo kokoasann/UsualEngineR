@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Zako_LongBig.h"
+#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/EnemyDeadState.h"
 
 
 Zako_LongBig::Zako_LongBig()
@@ -33,6 +35,8 @@ void Zako_LongBig::Init()
 }
 void Zako_LongBig::InitState()
 {
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyIdleState()));
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemyDeadState()));
 
 }
 void Zako_LongBig::InitIK()
