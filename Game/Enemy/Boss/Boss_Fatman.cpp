@@ -24,8 +24,8 @@ void Boss_Fatman::Init()
 {
 	//Model
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/enemy/ShortRangeMonster/srm.tkm";
-	mid.m_tksFilePath = "Assets/modelData/enemy/ShortRangeMonster/srm.tks";
+	mid.m_tkmFilePath = "Assets/modelData/boss/lf/lf.tkm";
+	mid.m_tksFilePath = "Assets/modelData/boss/lf/lf.tks";
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
 	mid.m_psEntryPointFunc = "PSMain";

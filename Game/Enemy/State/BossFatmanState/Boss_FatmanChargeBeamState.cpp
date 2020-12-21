@@ -21,9 +21,6 @@ Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
 
 void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 {
-	auto& p = GameManager::GetInstance().m_player;
-	m_position = p->GetPosition();
-
 	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
 
 	//ダメージ数を計算。
@@ -33,6 +30,8 @@ void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 	//タイマーのリセット。
 	m_chargeTimer = 0.f;
 	m_endBeamTimer = 0.f;
+
+	m_isSetPos = false;
 }
 
 IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
@@ -41,6 +40,12 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 		m_endBeamTimer += gameTime()->GetDeltaTime();
 		const float endTime = 2.f;		//撃っている時間。
 		if (m_endBeamTimer < endTime) {
+			//ビームを撃つ方向を設定。
+			if (!m_isSetPos) {
+				auto& p = GameManager::GetInstance().m_player;
+				m_position = p->GetPosition();
+				m_isSetPos = true;
+			}
 			if (BeamJudge(e)) {
 				//プレイヤーが飛んでいたら撃ち落とす。
 				const float flyRange = 5.f;
@@ -68,30 +73,39 @@ void Boss_FatmanChargeBeamState::Exit(IEnemy* e)
 
 bool Boss_FatmanChargeBeamState::Charge(IEnemy* e)
 {
+	const float chargeTime = 5.f;		//溜めている時間。
+	m_chargeTimer += gameTime()->GetDeltaTime();
+	if (m_chargeTimer > chargeTime) {
+		return true;
+	}
+
+	//エフェクトを溜め状態に設定。
 	m_beam->SetChange(true);
+	//大きさを小さめに設定。
 	m_beam->SetSca(Vector3::One * 0.03);
+
 	auto& epos = e->GetPosition();
 	Vector3 vecEtoP = m_position - epos;
 	m_beam->SetToPlayerDir(vecEtoP);
 	Vector3 EHeight;
 	EHeight.Cross(vecEtoP, Vector3::Right);
 	EHeight.Normalize();
+
 	m_beam->SetHolizontalDir(EHeight);
 	m_beam->Play();
 	m_beam->SetPos(epos);
 
-	const float chargeTime = 5.f;		//溜めている時間。
-	m_chargeTimer += gameTime()->GetDeltaTime();
-	if (m_chargeTimer > chargeTime) {
-		return true;
-	}
+	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));	
 	return false;
 }
 
 bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e)
 {
+	//エフェクトの溜め状態を解除。
 	m_beam->SetChange(false);
+	//大きさを大きめに設定。
 	m_beam->SetSca(Vector3::One * 0.3);
+
 	//ビームの幅の判定。
 	//敵からプレイヤーに向かうベクトル。
 	//m_positionは最初にロックオンしたときのプレイヤーの位置。

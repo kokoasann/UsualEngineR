@@ -58,15 +58,17 @@ public:
 
 	void SetKinematicFrag(bool b)
 	{
+		//m_rigidBody.GetBody()->setCollisionFlags(0);
+		m_rigidBody.GetBody()->activate(true);
 		m_isKinematic = b;
 	}
 
-	btDefaultMotionState& GetMotionState()
+	btMotionState& GetMotionState()
 	{
-		return m_motionState;
+		return *m_motionState;
 	}
 private:
-	btDefaultMotionState m_motionState;
+	btMotionState* m_motionState;
 	//Model
 	//ModelRender* m_model = nullptr;
 	/*CAnimationClip m_animClip[1];

@@ -319,6 +319,18 @@
     <ClInclude Include="Graphics\PostEffect\FocusBlur.h">
       <Filter>Graphics\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Sound\SoundSource.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\WaveFile.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\WaveFileBank.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundEngine.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UsualEngine.cpp" />
@@ -604,6 +616,18 @@
     <ClCompile Include="Graphics\PostEffect\FocusBlur.cpp">
       <Filter>Graphics\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="Sound\WaveFile.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\WaveFileBank.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundEngine.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundSource.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -686,6 +710,9 @@
     </Filter>
     <Filter Include="Graphics\Effect">
       <UniqueIdentifier>{472f3818-ab56-4b19-93bd-e5843d9da79e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{64e112c8-a475-4bb9-b667-e2708fc5aeef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
