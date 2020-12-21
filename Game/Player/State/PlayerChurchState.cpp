@@ -113,6 +113,7 @@ IPlayerState* PlayerChurchState::Update(Player* p) {
 		if(GameManager::GetInstance().GetChurch()->IsPossibleToHeal()){
 			p->ChargeEndurance(p->GetMaxEndurance());
 			p->ChargeBoost(p->GetMaxBoost());
+			p->Heal(p->GetMaxHP());
 		}
 	}
 
