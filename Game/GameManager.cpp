@@ -10,6 +10,7 @@
 #include "Item/ItemManager.h"
 #include "GameSceneMenu.h"
 #include "Goal.h"
+#include "Church.h"
 
 void GameManager::InitGameWorld() {
 
@@ -19,6 +20,8 @@ void GameManager::InitGameWorld() {
 	m_gameHUD = NewGO<GameHUD>(0);
 	m_itemManager = NewGO<ItemManager>(0);
 	m_menu = NewGO<GameSceneMenu>(0);
+	m_church = NewGO<Church>(0);
+
 	//m_goal = NewGO<Goal>(0);
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);
@@ -40,4 +43,6 @@ void GameManager::Release() {
 	m_menu = nullptr;
 	DeleteGO(m_goal);
 	m_goal = nullptr;
+	DeleteGO(m_church);
+	m_church = nullptr;
 }

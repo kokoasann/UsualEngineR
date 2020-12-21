@@ -40,12 +40,22 @@ void PlayerAttackHipShot::Execute(Player* player) {
 	if (g_pad[0]->IsPress(EnButton::enButtonB)) {
 		m_shotIntervalTimer += gameTime()->GetDeltaTime();
 		if (m_shotIntervalTimer >= m_shotInterval) {
-			DebugPrint_WATA("hip shot\n");
-			auto projectile = NewGO<Projectile>(0);
+
+			auto projectile = NewGO<Projectile>(0, true);
 			auto vel = player->GetForward();
 			vel.y = g_camera3D->GetForward().y;
-			projectile->Init(player->GetPosition(), vel);
+
+			//
+			const float defSpeed = 400.f;
+			const float lifeSpan = 10.f;
+			const float range = 10.f;
+			const float scale = 1.f;
+
+			projectile->Init(player->GetPosition(), scale, vel, defSpeed, lifeSpan, range);
+
+			//projectile->Init(player->GetPosition(), vel);
 			m_shotIntervalTimer = 0.f;
+
 		}
 	}
 	else {

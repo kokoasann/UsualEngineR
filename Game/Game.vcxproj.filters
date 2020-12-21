@@ -277,6 +277,46 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceBlownState.h">
       <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
     </ClInclude>
+    <ClInclude Include="Church.h" />
+    <ClInclude Include="Player\State\PlayerChurchState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\LongBigState\EnemyLongBigAttackState.h">
+      <Filter>Enemy\State\Zako\LongBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\LongBigState\EnemyLongBigBlownState.h">
+      <Filter>Enemy\State\Zako\LongBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\LongBigState\EnemyLongBigTargetingState.h">
+      <Filter>Enemy\State\Zako\LongBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Zako\Zako_LongBig.h">
+      <Filter>Enemy\Zako</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigComing.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigDance.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigIdle.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigPunch.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigStrongPunch.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigStun.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigBlown.h">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Zako\Zako_ShortBig.h">
+      <Filter>Enemy\Zako</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -556,6 +596,46 @@
     <ClCompile Include="Enemy\State\EnemyLongDistanceBlownState.cpp">
       <Filter>Enemy\State\Zako\LongDistanceMachineState</Filter>
     </ClCompile>
+    <ClCompile Include="Church.cpp" />
+    <ClCompile Include="Player\State\PlayerChurchState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\LongBigState\EnemyLongBigAttackState.cpp">
+      <Filter>Enemy\State\Zako\LongBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\LongBigState\EnemyLongBigBlownState.cpp">
+      <Filter>Enemy\State\Zako\LongBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\LongBigState\EnemyLongBigTargetingState.cpp">
+      <Filter>Enemy\State\Zako\LongBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Zako\Zako_LongBig.cpp">
+      <Filter>Enemy\Zako</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigDance.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigIdle.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigPunch.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigStrongPunch.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigStun.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigBlown.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigComing.cpp">
+      <Filter>Enemy\State\Zako\ShortBigState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Zako\Zako_ShortBig.cpp">
+      <Filter>Enemy\Zako</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -678,6 +758,15 @@
     <Filter Include="Assets\modelData\boss\lf">
       <UniqueIdentifier>{cbc0d4df-3225-4106-b5cc-748cbdad42aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy\State\Zako\LongBigState">
+      <UniqueIdentifier>{a3af3d6f-617c-4edf-9d0a-b3a93d1e4e60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\Zako\ShortBigState">
+      <UniqueIdentifier>{57128583-f6b0-4d87-8fd1-ebe5557e8f50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\m_BG">
+      <UniqueIdentifier>{8cbb456a-698b-4510-8c4b-a1814be384ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -719,6 +808,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png">
       <Filter>Assets\modelData\boss\lf</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png">
+      <Filter>Assets\modelData\m_BG</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

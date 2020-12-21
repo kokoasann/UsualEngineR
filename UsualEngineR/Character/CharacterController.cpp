@@ -630,7 +630,7 @@ namespace UER
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
 
 				/*DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WALL FLOOR HIT !!!!");
@@ -678,7 +678,7 @@ namespace UER
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
 
 				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
@@ -784,7 +784,7 @@ namespace UER
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
 				//printf("HIT FLOOR\n");
 			}
@@ -820,7 +820,7 @@ namespace UER
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
 
 				//m_position = nextPosition;

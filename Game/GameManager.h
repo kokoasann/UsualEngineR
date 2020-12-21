@@ -8,6 +8,7 @@ class ItemManager;
 class GameSceneMenu;
 class Game;
 class Goal;
+class Church;
 
 class GameManager
 {
@@ -48,4 +49,8 @@ public:
 
 	//Goal
 	Goal* m_goal = nullptr;
+
+private:
+	Church* m_church = nullptr;
+
 };
