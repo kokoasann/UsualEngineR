@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Zako_ShortBig.h"
-
+#include "Enemy/State/IEnemyState.h"
+#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/EnemyDeadState.h"
 
 Zako_ShortBig::Zako_ShortBig()
 {
@@ -33,7 +35,12 @@ void Zako_ShortBig::Init()
 }
 void Zako_ShortBig::InitState()
 {
-
+	m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyIdleState()));
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enBattleState), new EnemyBattleState()));
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackA), new EnemySlashState()));
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enStunState), new EnemyStunState()));
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackB), new EnemySlashState()));
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemySlashState()));
 }
 void Zako_ShortBig::InitIK()
 {
