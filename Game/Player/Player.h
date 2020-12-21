@@ -25,6 +25,7 @@ public:
 		enGuard,
 		enStun,
 		enDead,
+		enChurch,
 		enNumState
 	};
 
@@ -284,7 +285,7 @@ public:
 	}
 
 	void UseBoost(const float amount) {
-		m_boost = max(0.f, m_boost - amount);
+		//m_boost = max(0.f, m_boost - amount);
 	}
 
 	void ChargeBoost(const float amount) {
@@ -353,6 +354,23 @@ public:
 		m_externalVelocity = velocity;
 	}
 
+	void SetState(IPlayerState* s) {
+
+		if (m_currentState == nullptr) {
+			m_previousState = m_currentState = s;
+			m_currentState->Enter(this);
+			return;
+		}
+
+		if (s == m_currentState) return;
+		m_nextState = s;
+
+	}
+
+	void SetChruchFlag(const bool isInChurch) {
+		m_isInChurch = isInChurch;
+	}
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -378,8 +396,8 @@ private:
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
-	//bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
-	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, 0, 0, 0};
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
+	//bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, false, false, false};
 
 	//State
 	IPlayerState* m_nextState = nullptr;
@@ -416,6 +434,8 @@ private:
 	//Attachments
 	std::vector<Bone*> m_playerBones;
 	JetPack* m_jetPack = nullptr;
+
+	bool m_isInChurch = true;
 
 
 	//Ability

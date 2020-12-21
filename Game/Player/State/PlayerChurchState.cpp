@@ -2,6 +2,7 @@
 #include "PlayerChurchState.h"
 #include "../Player.h"
 #include "../../GameManager.h"
+#include "Church.h"
 
 PlayerChurchState::PlayerChurchState()
 {
@@ -15,7 +16,7 @@ PlayerChurchState::~PlayerChurchState()
 
 void PlayerChurchState::Enter(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	DebugPrint_WATA("Player : Enter Church\n");
+	DebugPrint_WATA("Player : Enter Church State\n");
 #endif
 
 	p->StopThrusters();
@@ -108,12 +109,19 @@ IPlayerState* PlayerChurchState::Update(Player* p) {
 
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT* gameTime()->GetDeltaTime());
 
+	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
+		if(GameManager::GetInstance().GetChurch()->IsPossibleToHeal()){
+			p->ChargeEndurance(p->GetMaxEndurance());
+			p->ChargeBoost(p->GetMaxBoost());
+		}
+	}
+
 	return this;
 }
 
 void PlayerChurchState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
-	DebugPrint_WATA("Player : Exit Church\n");
+	DebugPrint_WATA("Player : Exit Church State\n");
 #endif
 
 	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
