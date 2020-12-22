@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "GameSceneMenu.h"
 #include "Title.h"
+#include "Fade.h"
 
 void Game::Release()
 {
@@ -135,6 +136,8 @@ void Game::Update()
 
 		//ついでにプレイヤーもここで生成・・・.
 		GameManager::GetInstance().SpawnPlayer();
+
+		GameManager::GetInstance().GetFade()->FadeIn();
 
 	}
 

@@ -1,16 +1,13 @@
 #pragma once
-#include "Physics/BoxCollider.h"
-
-class PowaPowa;
 
 /// <summary>
 /// 
 /// </summary>
-class Church :public GameObject
+class Fade :public GameObject
 {
 public:
-	Church();
-	virtual ~Church();
+	Fade();
+	virtual ~Fade();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -58,17 +55,39 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	const bool IsPossibleToHeal();
+	void FadeIn() {
+		m_state = State::enFadeIn;
+		m_alpha = 1.f;
+		m_isFaded = false;
+	}
 
-	void DoHeal();
+	void FadeOut() {
+		m_state = State::enFadeOut;
+		m_alpha = 0.f;
+		m_isFaded = false;
+	}
+
+	const bool IsFaded() {
+		return m_isFaded;
+	}
 
 private:
-	Vector3 m_pos = { 750, 0.f,-680 };
-	const float m_Range = 30.f;
+	enum class State {
+		enFadeIn,
+		enFadeOut,
+		enIdle,
+	};
 
-	PowaPowa* m_powa = nullptr;
+	State m_state = State::enIdle;
 
-	bool m_doHealPlayer = false;
-	bool m_isFadingIn = false;
+	SpriteRender* m_panel = nullptr;
+	const Vector3 m_panelScale = { 100,100,100 };
+	const float m_panelHeight = 15;
+	const float m_panelWidth = 300;
+
+	float m_alpha = 1.f;
+	float m_fadeSpeed = 1.f;
+
+	bool m_isFaded = false;
 
 };
