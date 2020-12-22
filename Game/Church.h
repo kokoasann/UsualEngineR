@@ -60,11 +60,15 @@ public:
 
 	const bool IsPossibleToHeal();
 
+	void DoHeal();
+
 private:
 	Vector3 m_pos = { 750, 0.f,-680 };
 	const float m_Range = 30.f;
 
 	PowaPowa* m_powa = nullptr;
 
+	bool m_doHealPlayer = false;
+	bool m_isFadingIn = false;
 
 };

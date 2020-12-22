@@ -37,6 +37,14 @@ public:
 		return m_church;
 	}
 
+	Fade* GetFade() const {
+		return m_fade;
+	}
+
+	GameSceneMenu* GetMenu() const {
+		return m_menu;
+	}
+
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
 
