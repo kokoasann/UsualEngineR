@@ -234,8 +234,6 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
-	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
-
 	//Attachments
 	//Jetpack
 	if (m_currentAttackPreset == EnAttackPreset::enMeleePreset) {
@@ -248,6 +246,7 @@ void Player::Update()
 		m_jetPack->SetUsingState(false);
 	}
 
+	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	SearchTarget();
 	UpdateAttackType();

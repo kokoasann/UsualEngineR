@@ -3,6 +3,8 @@
 #include "GameManager.h"
 #include "Player/Player.h"
 #include "PowaPowa.h"
+#include "Fade.h"
+#include "GameSceneMenu.h";
 
 Church::Church()
 {
@@ -59,6 +61,25 @@ void Church::Update()
 		player->SetChruchFlag(false);
 		//printf("player is not in chruch\n");
 	}
+
+	auto fade = GameManager::GetInstance().GetFade();
+	auto menu = GameManager::GetInstance().GetMenu();
+
+	if (fade->IsFaded() and m_doHealPlayer) {
+		player->ChargeEndurance(player->GetMaxEndurance());
+		player->ChargeBoost(player->GetMaxBoost());
+		player->Heal(player->GetMaxHP());
+		m_doHealPlayer = false;
+		fade->FadeIn();
+		m_isFadingIn = true;
+	}
+
+	if (m_isFadingIn) {
+		if (fade->IsFaded()) {
+			m_isFadingIn = false;
+			menu->ResumeGame();
+		}
+	}
 }
 
 void Church::PostUpdate()
@@ -84,5 +105,16 @@ const bool Church::IsPossibleToHeal() {
 	auto len = (player->GetPosition() - m_powa->GetPosition()).Length();
 
 	return len < m_powa->GetRange();
+
+}
+
+void Church::DoHeal() {
+
+	auto fade = GameManager::GetInstance().GetFade();
+	auto menu = GameManager::GetInstance().GetMenu();
+
+	fade->FadeOut();
+	m_doHealPlayer = true;
+	menu->PauseGame();
 
 }

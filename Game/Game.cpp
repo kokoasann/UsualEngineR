@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "GameSceneMenu.h"
 #include "Title.h"
+#include "Fade.h"
 
 void Game::Release()
 {
@@ -40,6 +41,16 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	auto tar = enemy->GetPosition();
 	auto center = GameManager::GetInstance().m_player->GetPosition();
 
+	//Rotate.
+	auto vecToPlayer = GameManager::GetInstance().GetPlayer()->GetPosition() - enemy->GetPosition();
+	vecToPlayer.Normalize();
+	Quaternion eneRot = Quaternion::Identity;
+	auto theta = atan2(vecToPlayer.x, vecToPlayer.z);
+	theta = theta * (180.f / Math::PI);
+	eneRot.SetRotationDegY(theta);
+	enemy->SetRotation(eneRot);
+	enemy->GetModel()->SetRotation(eneRot);
+
 	tar.y += 20.f;
 
 	auto vecTargetToCenter = center - tar;
@@ -47,9 +58,12 @@ void Game::OnEnterBattle(IEnemy* enemy) {
 	camBeginPos.y += 30.f;
 	Quaternion rot = Quaternion::Identity;
 	rot.SetRotationDegY(10.f);
+
 	auto camEndPos = enemy->GetPosition();
-	camEndPos.y += 15.f;
-	camEndPos.z += 10.f;
+	Vector3 vecToCamEndPos = { 0.f,15.f,10.f };
+	eneRot.Apply(vecToCamEndPos);
+	camEndPos = enemy->GetPosition() + vecToCamEndPos;
+
 	//rot.Apply(camEndPos);
 	auto sec = 2.5f;
 	auto interval = 1.7f;
@@ -135,6 +149,8 @@ void Game::Update()
 
 		//ついでにプレイヤーもここで生成・・・.
 		GameManager::GetInstance().SpawnPlayer();
+
+		GameManager::GetInstance().GetFade()->FadeIn();
 
 	}
 
