@@ -9,6 +9,7 @@ class GameSceneMenu;
 class Game;
 class Goal;
 class Church;
+class Fade;
 
 class GameManager
 {
@@ -58,5 +59,5 @@ public:
 
 private:
 	Church* m_church = nullptr;
-
+	Fade* m_fade = nullptr;
 };
