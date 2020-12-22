@@ -132,6 +132,10 @@ void Game::Update()
 		auto& eM = EnemyManager::GetEnemyManager();
 		eM.SpawnEnemies();
 		m_isCreateEnemyManager = true;
+
+		//ついでにプレイヤーもここで生成・・・.
+		GameManager::GetInstance().SpawnPlayer();
+
 	}
 
 	if (m_boss != nullptr && !m_isBossCamPerform)

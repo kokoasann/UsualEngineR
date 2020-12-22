@@ -47,6 +47,8 @@ void Church::PreUpdate()
 void Church::Update()
 {
 	auto player = GameManager::GetInstance().GetPlayer();
+	if (player == nullptr) return;
+
 	auto len = (player->GetPosition() - m_pos).Length();
 
 	if (len < m_Range) {

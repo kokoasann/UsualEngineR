@@ -22,6 +22,8 @@ public:
 	void InitGameWorld();
 	void Release();
 
+	void SpawnPlayer();
+
 	Player* GetPlayer() const{
 		return m_player;
 	}
