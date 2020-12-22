@@ -18,9 +18,9 @@ namespace UER
 			DebugPrint(L"フィジクスドローOFF");
 		};
 		DebugSwitchAddCheck(DebugSwitchNewSwitch(VK_F1, 0, on, off));
+		
 
-
-#if 1
+#if 0
 		DebugSwitchNewRadioBox("GBufferDraw");
 		on = [&]()
 		{

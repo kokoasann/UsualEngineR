@@ -284,6 +284,7 @@
     <ClInclude Include="Player\State\PlayerGuardState.h" />
     <ClInclude Include="Player\State\PlayerStunState.h" />
     <ClInclude Include="PositionChecker.h" />
+    <ClInclude Include="PowaPowa.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Test\Test.h" />
     <ClInclude Include="Test\ThreadTest.h" />
@@ -399,6 +400,7 @@
     <ClCompile Include="Player\State\PlayerGuardState.cpp" />
     <ClCompile Include="Player\State\PlayerStunState.cpp" />
     <ClCompile Include="PositionChecker.cpp" />
+    <ClCompile Include="PowaPowa.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -482,6 +484,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

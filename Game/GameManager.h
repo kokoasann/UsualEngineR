@@ -30,6 +30,10 @@ public:
 		return m_camera;
 	}
 
+	Church* GetChurch()const {
+		return m_church;
+	}
+
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
 

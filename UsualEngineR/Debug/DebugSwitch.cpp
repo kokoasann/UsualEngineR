@@ -108,6 +108,23 @@ namespace UER
 			}
 		}
 
+		for (auto s : m_button)
+		{
+			s->oldFrameIsPushed = s->isPushed;
+			if (GetAsyncKeyState(s->key1) & 0x8000 && (s->key2 == 0 || (GetAsyncKeyState(s->key2) & 0x8000)))
+			{
+				if (!s->oldFrameIsPushed)
+				{
+					s->triggerOnFunc();
+				}
+				s->isPushed = true;
+			}
+			else
+			{
+				s->isPushed = false;
+			}
+		}
+
 		for (auto s : m_checkButton)
 		{
 			if (s->isPushed)
