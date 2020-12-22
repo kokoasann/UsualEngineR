@@ -34,6 +34,11 @@ public:
 	};
 
 private:
+	/// <summary>
+	/// アニメーションの初期設定
+	/// </summary>
+	void InitAnimation();
+private:
 	//Model
 	//ModelRender* m_model = nullptr;
 	float m_scale = 1.f;
