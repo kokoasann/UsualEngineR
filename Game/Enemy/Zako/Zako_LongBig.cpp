@@ -3,7 +3,6 @@
 #include "Enemy/State/EnemyIdleState.h"
 #include "Enemy/State/EnemyDeadState.h"
 
-
 Zako_LongBig::Zako_LongBig()
 {
 
