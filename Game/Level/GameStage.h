@@ -56,6 +56,7 @@ private:
 	Level m_phyLevel;
 	Level m_footholdLevel;
 	Level m_decoLevel;
+	
 	const float m_levelScale = 100;
 	std::vector<ModelRender*> m_mapmodel;
 	std::vector<std::string> m_tkms;
@@ -72,6 +73,8 @@ private:
 	std::vector<RigidBody*> m_rigidBodys;		//剛体達。
 
 	bool m_isLoaded = false;
+
+	std::vector<ModelRender*> m_mbgs;
 
 
 	VolumetricEffectRender* m_sandSmoke = nullptr;
