@@ -162,7 +162,23 @@ void Pod::PostUpdate()
 			rot.SetRotationDegY(theta);
 			m_rotation = rot;
 
-			auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+			IEnemy* target = nullptr;
+
+			//Targetting mode's enemy
+			if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
+				target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+			}
+			else {
+				target = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos);
+				const float AUTO_TARGET_RANGE = 150.f;
+				if ((target->GetPosition() - m_pos).Length() <= AUTO_TARGET_RANGE) {
+				}
+				else {
+					target = nullptr;
+				}
+				EnemyManager::GetEnemyManager().SetTargetEnemy(target);
+			}
+
 			if (target != nullptr) {
 
 				Vector3 forward, right, up;
