@@ -1,4 +1,7 @@
 #pragma once
+#include "Physics/BoxCollider.h"
+
+class PowaPowa;
 
 /// <summary>
 /// 
@@ -54,13 +57,14 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
+
+	const bool IsPossibleToHeal();
+
 private:
-
-	//model
-	ModelRender* m_model = nullptr;
-
 	Vector3 m_pos = { 750, 0.f,-680 };
-	Quaternion m_rotation = Quaternion::Identity;
-	const Vector3 m_scale = { 40.5f,40.5f,40.5f };
+	const float m_Range = 30.f;
+
+	PowaPowa* m_powa = nullptr;
+
 
 };

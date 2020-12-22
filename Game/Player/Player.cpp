@@ -9,6 +9,7 @@
 #include "State/PlayerGuardState.h"
 #include "State/PlayerDeadState.h"
 #include "State/PlayerStunState.h"
+#include "State/PlayerChurchState.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/IEnemy.h"
 #include "Pod/Pod.h"
@@ -165,6 +166,7 @@ bool Player::Start()
 	m_stateList[static_cast<int>(EnState::enDead)] = new PlayerDeadState();
 	m_stateList[static_cast<int>(EnState::enStun)] = new PlayerStunState();
 	m_stateList[static_cast<int>(EnState::enGuard)] = new PlayerGuardState();
+	m_stateList[static_cast<int>(EnState::enChurch)] = new PlayerChurchState();
 
 	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
 	m_nextState->Enter(this);
@@ -261,6 +263,13 @@ void Player::Update()
 
 	if (m_hp <= 0) {
 		m_nextState = m_stateList[static_cast<int>(EnState::enDead)];
+	}
+
+	if (m_isInChurch) {
+		m_nextState = m_stateList[static_cast<int>(EnState::enChurch)];
+	}
+	else if(m_currentState == m_stateList[static_cast<int>(EnState::enChurch)]){
+		m_nextState = m_stateList[static_cast<int>(EnState::enGround)];
 	}
 
 	if (m_nextState != m_currentState) {

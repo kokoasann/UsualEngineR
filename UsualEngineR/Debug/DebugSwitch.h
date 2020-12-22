@@ -36,13 +36,18 @@ namespace UER
 		/// </summary>
 		struct SSwitch
 		{
+			SSwitch(char k1, char k2)
+			{
+				key1 = k1;
+				key2 = k2;
+			}
 			/// <summary>
 			/// 
 			/// </summary>
 			/// <param name="k1">key1</param>
 			/// <param name="k2">key2</param>
 			/// <param name="update">有効になっている間呼ばれる関数</param>
-			SSwitch(char k1, char k2, std::function<void()>& update)
+			SSwitch(char k1, char k2, const std::function<void()>& update)
 			{
 				key1 = k1;
 				key2 = k2;
@@ -56,7 +61,7 @@ namespace UER
 			/// <param name="k2">key2</param>
 			/// <param name="on">有効になった瞬間呼ばれる関数</param>
 			/// <param name="off">無効になった瞬間呼ばれる関数</param>
-			SSwitch(char k1, char k2, std::function<void()>& on, std::function<void()>& off)
+			SSwitch(char k1, char k2, const std::function<void()>& on, const std::function<void()>& off)
 			{
 				key1 = k1;
 				key2 = k2;
@@ -72,7 +77,7 @@ namespace UER
 			/// <param name="update">有効になっている間呼ばれる関数</param>
 			/// <param name="on">有効になった瞬間呼ばれる関数</param>
 			/// <param name="off">無効になった瞬間呼ばれる関数</param>
-			SSwitch(char k1, char k2, std::function<void()>& update, std::function<void()>& on, std::function<void()>& off)
+			SSwitch(char k1, char k2, const std::function<void()>& update, const std::function<void()>& on, const std::function<void()>& off)
 			{
 				key1 = k1;
 				key2 = k2;
@@ -135,10 +140,16 @@ namespace UER
 			auto it = m_radioBoxs.find(name);
 			it->second->box.push_back(s);
 		}
+
+		void AddButton(SSwitch* s)
+		{
+			m_button.push_back(s);
+		}
 	private:
 		std::vector<SSwitch*> m_radioButton;			//ラジオボタンたち
 		std::vector<SSwitch*> m_checkButton;			//チェックボタンたち
 		std::map<std::string, SRadioBox*> m_radioBoxs;	//ラジオボックスたち
+		std::vector<SSwitch*> m_button;
 	};
 #endif
 	/// <summary>
@@ -158,7 +169,7 @@ namespace UER
 	/// <param name="k2">key2</param>
 	/// <param name="update">ONの時毎フレーム呼ばれる関数</param>
 	/// <returns></returns>
-	static void* DebugSwitchNewSwitch(char k1, char k2, std::function<void()>& update)
+	static void* DebugSwitchNewSwitch(char k1, char k2, const std::function<void()>& update)
 	{
 #if DEBUG_FUNC
 		return new DebugSwitch::SSwitch(k1, k2, update);
@@ -175,7 +186,9 @@ namespace UER
 	/// <param name="on">ONになった瞬間呼ばれる関数</param>
 	/// <param name="off">OFFになった瞬間呼ばれる関数</param>
 	/// <returns></returns>
-	static void* DebugSwitchNewSwitch(char k1, char k2, std::function<void()>& on, std::function<void()>& off)
+	static void* DebugSwitchNewSwitch(char k1, char k2,
+		const std::function<void()>& on,
+		const std::function<void()>& off)
 	{
 #if DEBUG_FUNC
 		return new DebugSwitch::SSwitch(k1, k2, on,off);
@@ -193,10 +206,24 @@ namespace UER
 	/// /// <param name="on">ONになった瞬間呼ばれる関数</param>
 	/// <param name="off">OFFになった瞬間呼ばれる関数</param>
 	/// <returns></returns>
-	static void* DebugSwitchNewSwitch(char k1, char k2, std::function<void()>& update, std::function<void()>& on, std::function<void()>& off)
+	static void* DebugSwitchNewSwitch(char k1, char k2,
+		const std::function<void()>& update,
+		const std::function<void()>& on,
+		const std::function<void()>& off)
 	{
 #if DEBUG_FUNC
 		return new DebugSwitch::SSwitch(k1, k2, update, on, off);
+#else
+		return nullptr;
+#endif
+	}
+
+	static void* DebugSwitchNewSwitch_Button(char k1, char k2, const std::function<void()>& on)
+	{
+#if DEBUG_FUNC
+		auto s = new DebugSwitch::SSwitch(k1, k2);
+		s->triggerOnFunc = on;
+		return s;
 #else
 		return nullptr;
 #endif
@@ -222,6 +249,13 @@ namespace UER
 	{
 #if DEBUG_FUNC
 		DebugSwitch::Instance()->AddRadioButton(reinterpret_cast<DebugSwitch::SSwitch*>(s));
+#endif
+	}
+
+	static void DebugSwitchAddButton(void* s)
+	{
+#if DEBUG_FUNC
+		DebugSwitch::Instance()->AddButton(reinterpret_cast<DebugSwitch::SSwitch*>(s));
 #endif
 	}
 

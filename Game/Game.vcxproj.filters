@@ -317,6 +317,7 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortBig.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
+    <ClInclude Include="PowaPowa.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -636,6 +637,7 @@
     <ClCompile Include="Enemy\Zako\Zako_ShortBig.cpp">
       <Filter>Enemy\Zako</Filter>
     </ClCompile>
+    <ClCompile Include="PowaPowa.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -764,6 +766,9 @@
     <Filter Include="Enemy\State\Zako\ShortBigState">
       <UniqueIdentifier>{57128583-f6b0-4d87-8fd1-ebe5557e8f50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\m_BG">
+      <UniqueIdentifier>{8cbb456a-698b-4510-8c4b-a1814be384ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\test\test.png">
@@ -805,6 +810,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png">
       <Filter>Assets\modelData\boss\lf</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png">
+      <Filter>Assets\modelData\m_BG</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
