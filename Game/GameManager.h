@@ -22,12 +22,18 @@ public:
 	void InitGameWorld();
 	void Release();
 
+	void SpawnPlayer();
+
 	Player* GetPlayer() const{
 		return m_player;
 	}
 
 	GameCamera* GetGameCamera() const {
 		return m_camera;
+	}
+
+	Church* GetChurch()const {
+		return m_church;
 	}
 
 	GameCamera* m_camera = nullptr;

@@ -132,23 +132,43 @@ bool GameStage::Start()
 			return true;
 		});
 
-	//m_sandSmoke = NewGO<VolumetricEffectRender>(0);
-	//m_sandSmoke->Init("Assets/modelData/test/block.tkm");
-	//m_sandSmoke->SetPos({ 0,200,0 });
-	//m_sandSmoke->SetSca({ 850,200,850 });
-	//{
-	//	auto& fd = m_sandSmoke->GetFogData();
-	//	fd.rayCount = 30;
-	//	fd.rayLen = 16.f;
-	//	fd.concentration = 0.015*8./3.;
-	//	fd.decayCenterToXZ = 0.0f;
-	//	fd.decayCenterToY = 0.0f;
-	//	fd.ratioParlinWorley = 0.f;
-	//	fd.ratioParlin = 1.f;
-	//	fd.perlinScale = 0.05f;
-	//	fd.color = { .7,.65,.55 };
-	//	//fd.ratioParlin = 
-	//}
+	m_sandSmoke = NewGO<VolumetricEffectRender>(0);
+	m_sandSmoke->Init("Assets/modelData/test/block.tkm");
+	m_sandSmoke->SetPos({ 0,200,0 });
+	m_sandSmoke->SetSca({ 850,200,850 });
+	{
+		auto& fd = m_sandSmoke->GetFogData();
+		fd.rayCount = 30;
+		fd.rayLen = 16.f;
+		fd.concentration = 0.015*8./3.;
+		fd.decayCenterToXZ = 0.0f;
+		fd.decayCenterToY = 0.0f;
+		fd.ratioParlinWorley = 0.f;
+		fd.ratioParlin = 1.f;
+		fd.perlinScale = 0.05f;
+		fd.color = { .7,.65,.55 };
+		//fd.ratioParlin = 
+	}
+
+	static float i = 1;
+	DebugSwitchAddButton(DebugSwitchNewSwitch_Button('Z', VK_LEFT, [&]()
+		{
+			i*=0.5f;
+			auto& fd = m_sandSmoke->GetFogData();
+			fd.rayCount = 30.f * i;
+			fd.rayLen = 16.f / i;
+			fd.concentration = 0.015 * 8. / 3. / i;
+		}));
+	DebugSwitchAddButton(DebugSwitchNewSwitch_Button('Z', VK_RIGHT, [&]()
+		{
+			i *= 2;
+			if (i > 1.f)
+				i = 1.f;
+			auto& fd = m_sandSmoke->GetFogData();
+			fd.rayCount = 30 * i;
+			fd.rayLen = 16.f / i;
+			fd.concentration = 0.015 * 8. / 3. / i;
+		}));
 
 	return true;
 }
@@ -161,10 +181,11 @@ void GameStage::PreUpdate()
 
 void GameStage::Update()
 {
-	/*{
+	{
 		auto& fd = m_sandSmoke->GetFogData();
 		fd.offset.y -= 3.f * gameTime()->GetDeltaTime();
-	}*/
+	}
+
 
 	//メンバにスタックしたrigidBodyを一気にBulletに詰め込んでゆくゾ。
 	if (m_threadForCreatingMeshCol.IsEnd() && !m_isRegistRigidBody)

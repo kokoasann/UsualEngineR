@@ -1,16 +1,13 @@
 #pragma once
-#include "Physics/BoxCollider.h"
-
-class PowaPowa;
 
 /// <summary>
 /// 
 /// </summary>
-class Church :public GameObject
+class PowaPowa :public GameObject
 {
 public:
-	Church();
-	virtual ~Church();
+	PowaPowa();
+	virtual ~PowaPowa();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -58,13 +55,19 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	const bool IsPossibleToHeal();
+	const Vector3& GetPosition() {
+		return m_pos;
+	}
+
+	const float GetRange() {
+		return m_range;
+	}
 
 private:
+
+	ModelRender* m_model = nullptr;
+	Quaternion m_rotation = Quaternion::Identity;
+	const Vector3 m_scale = { 10.5f,10.5f,10.5f };
 	Vector3 m_pos = { 750, 0.f,-680 };
-	const float m_Range = 30.f;
-
-	PowaPowa* m_powa = nullptr;
-
-
+	const float m_range = 10.f;
 };

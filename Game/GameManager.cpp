@@ -14,7 +14,7 @@
 
 void GameManager::InitGameWorld() {
 
-	m_player = NewGO<Player>(0, "Player");
+	//m_player = NewGO<Player>(0, "Player");
 	m_camera = NewGO<GameCamera>(0);
 	m_stage = NewGO<GameStage>(0);
 	m_gameHUD = NewGO<GameHUD>(0);
@@ -45,4 +45,9 @@ void GameManager::Release() {
 	m_goal = nullptr;
 	DeleteGO(m_church);
 	m_church = nullptr;
+}
+
+void GameManager::SpawnPlayer() {
+	if(m_player == nullptr)
+		m_player = NewGO<Player>(0);
 }

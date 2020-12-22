@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Church.h"
-
+#include "GameManager.h"
+#include "Player/Player.h"
+#include "PowaPowa.h"
 
 Church::Church()
 {
@@ -13,10 +15,9 @@ Church::~Church()
 }
 
 
-
 void Church::Release()
 {
-	DeleteGO(m_model);
+	DeleteGO(m_powa);
 }
 
 void Church::OnDestroy()
@@ -33,17 +34,7 @@ void Church::Awake()
 bool Church::Start()
 {
 
-	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
-	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
-	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
-	m_model = NewGO<ModelRender>(0);
-	m_model->Init(mid);
-	m_model->SetScale(m_scale);
-	m_model->SetPosition(m_pos);
-	m_model->SetRotation(m_rotation);
-
+	m_powa = NewGO<PowaPowa>(0);
 	return true;
 }
 
@@ -55,7 +46,19 @@ void Church::PreUpdate()
 
 void Church::Update()
 {
+	auto player = GameManager::GetInstance().GetPlayer();
+	if (player == nullptr) return;
 
+	auto len = (player->GetPosition() - m_pos).Length();
+
+	if (len < m_Range) {
+		//printf("player is in chruch\n");
+		player->SetChruchFlag(true);
+	}
+	else {
+		player->SetChruchFlag(false);
+		//printf("player is not in chruch\n");
+	}
 }
 
 void Church::PostUpdate()
@@ -71,5 +74,15 @@ void Church::Render()
 
 void Church::PostRender()
 {
+
+}
+
+
+const bool Church::IsPossibleToHeal() {
+
+	auto player = GameManager::GetInstance().GetPlayer();
+	auto len = (player->GetPosition() - m_powa->GetPosition()).Length();
+
+	return len < m_powa->GetRange();
 
 }

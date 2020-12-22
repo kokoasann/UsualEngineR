@@ -317,6 +317,7 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortBig.h">
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
+    <ClInclude Include="PowaPowa.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -636,6 +637,7 @@
     <ClCompile Include="Enemy\Zako\Zako_ShortBig.cpp">
       <Filter>Enemy\Zako</Filter>
     </ClCompile>
+    <ClCompile Include="PowaPowa.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

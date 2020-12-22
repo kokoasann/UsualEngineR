@@ -153,7 +153,7 @@ void Pod::PostUpdate()
 
 	if (m_state == PodState::enIdle) {
 
-		if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
+		//if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
 			//m_rotation = EnemyManager::GetEnemyManager().GetTargettingEnemy()
 			auto cf = g_camera3D->GetForward();
 			Quaternion rot = Quaternion::Identity;
@@ -189,12 +189,15 @@ void Pod::PostUpdate()
 				degY = Math::RadToDeg(degY);
 				rotY.SetRotationDeg(up,degY);
 				m_rotation = rotY;
-
 			}
-		}
-		else {
-			m_rotation = mp_player->GetRotation();
-		}
+			else {
+				m_rotation = mp_player->GetRotation();
+			}
+
+		//}
+		//else {
+			//m_rotation = mp_player->GetRotation();
+		//}
 
 		//auto p = mp_player->GetPosition() + m_distanceFromPlayer;
 		auto addPos = m_distanceFromPlayer;
