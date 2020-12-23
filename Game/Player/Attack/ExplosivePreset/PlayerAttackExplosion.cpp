@@ -19,7 +19,7 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
-	player->PlayAnimation(Player::EnAnimation::enAttack);
+	player->PlayAnimation(Player::EnAnimation::enTackle);
 
 	player->UseStamina(m_StaminaCost);
 	player->UseBoost(m_BoostCost);

@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Title.h"
 #include "Test/Test.h"
+#include "GameDebugger.h"
 
 
 const int NUM_DIRECTIONAL_LIGHT = 4;	//ディレクションライトの数。
@@ -69,7 +70,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	//NewGO<Title>(0);
 	NewGO<Game>(0);
-
+	NewGO<GameDebugger>(0);
 	//Ghost Object test
 	/*BoxCollider bc;
 	bc.Create({ 50,50,50 });

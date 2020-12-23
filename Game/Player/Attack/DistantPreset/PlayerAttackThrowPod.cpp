@@ -32,7 +32,7 @@ void PlayerAttackThrowPod::Init(Player* player, int combo) {
 	//player->GetPod()->SetPosition();
 	m_isDone = false;
 	m_timer = 0.f;
-	player->PlayAnimation(Player::EnAnimation::enAttack);
+	player->PlayAnimation(Player::EnAnimation::enThrow);
 
 	player->UseStamina(m_StaminaCost);
 	player->UseBoost(m_BoostCost);

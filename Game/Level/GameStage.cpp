@@ -156,7 +156,7 @@ bool GameStage::Start()
 		fd.decayCenterToY = 0.0f;
 		fd.ratioParlinWorley = 0.f;
 		fd.ratioParlin = 1.f;
-		fd.perlinScale = 0.05f;
+		fd.perlinScale = 0.02f;
 		fd.color = { .7,.65,.55 };
 		//fd.ratioParlin = 
 	}

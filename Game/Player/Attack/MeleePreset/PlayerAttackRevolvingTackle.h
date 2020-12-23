@@ -26,9 +26,10 @@ private:
 	bool m_isContinuAttack = false;
 	const float m_interval = 0.3f;
 	float m_timer = 0.f;
+	float m_REVOLVE_TIME = 1.f;
 
-	const float m_tacklePower = 500.f;
-	float m_range = 30.f;
+	const float m_tacklePower = 150.f;
+	float m_range = 15.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 7.f;
 
 	const float m_StaminaCost = 30.f;

@@ -247,6 +247,7 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCollisionAttribute.h" />
+    <ClInclude Include="GameDebugger.h" />
     <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSceneMenu.h" />
@@ -363,6 +364,7 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCollisionAttribute.cpp" />
+    <ClCompile Include="GameDebugger.cpp" />
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSceneMenu.cpp" />
