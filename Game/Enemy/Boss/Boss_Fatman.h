@@ -97,6 +97,21 @@ public:
 		damage = hp / time / frame;
 		return damage;
 	}
+
+	//デフォルトのアニメーションステート用。
+	void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) override {
+		m_model->Play(static_cast<int>(anim), interpolate);
+	}
+
+	//拡張されたアニメーションステート用。
+	void PlayAnimation(const int animNo, const float interpolate = 0.2f) override {
+		m_model->Play(animNo, interpolate);
+	}
+private:
+	/// <summary>
+	/// アニメーションの初期化。
+	/// </summary>
+	void InitAnimation();
 private:
 	float m_scale = 1.f;
 
