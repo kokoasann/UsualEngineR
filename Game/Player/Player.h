@@ -285,7 +285,7 @@ public:
 	}
 
 	void UseBoost(const float amount) {
-		//m_boost = max(0.f, m_boost - amount);
+		m_boost = max(0.f, m_boost - amount);
 	}
 
 	void ChargeBoost(const float amount) {
