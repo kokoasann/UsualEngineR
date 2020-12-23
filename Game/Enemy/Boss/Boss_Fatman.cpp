@@ -77,6 +77,24 @@ void Boss_Fatman::InitState()
 	}
 }
 
+void Boss_Fatman::InitIK()
+{
+	const float radius = 0.5f;
+	auto ske = m_model->GetModel().GetSkelton();
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Beam_IK_R")), 1, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enArm_R), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Beam_IK_L")), 1, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enArm_L), ik);
+	}
+}
+
 void Boss_Fatman::Execute()
 {
 	m_model->SetPosition(m_position);

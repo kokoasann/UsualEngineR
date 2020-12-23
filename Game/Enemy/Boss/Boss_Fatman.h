@@ -13,6 +13,7 @@ public:
 
 	void Init() override;
 	void InitState() override;
+	void InitIK() override;
 	void Execute() override;
 	void Terminate() override;
 	Player::EnAttackType GetDropID() override
@@ -60,6 +61,9 @@ public:
 			vecToPlayer.Normalize();
 			vecToPlayerXZ.Normalize();
 			float dot = vecToPlayer.Dot(vecToPlayerXZ);
+			//”ÍˆÍ‚ğ§ŒÀ‚·‚éB
+			dot = min(dot, -1);
+			dot = max(dot, 1);
 			float angleH = acos(dot);
 
 			//‰ñ“]²B

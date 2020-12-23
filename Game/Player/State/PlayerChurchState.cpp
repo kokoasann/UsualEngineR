@@ -3,6 +3,7 @@
 #include "../Player.h"
 #include "../../GameManager.h"
 #include "Church.h"
+#include "GameSceneMenu.h";
 
 PlayerChurchState::PlayerChurchState()
 {
@@ -110,13 +111,12 @@ IPlayerState* PlayerChurchState::Update(Player* p) {
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT* gameTime()->GetDeltaTime());
 
 	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
-		if(GameManager::GetInstance().GetChurch()->IsPossibleToHeal()){
-			p->ChargeEndurance(p->GetMaxEndurance());
-			p->ChargeBoost(p->GetMaxBoost());
-			p->Heal(p->GetMaxHP());
+		auto church = GameManager::GetInstance().GetChurch();
+		if(church->IsPossibleToHeal()){
+			church->DoHeal();
+			p->PlayAnimation(Player::EnAnimation::enIdle, m_AnimInterpolate);
 		}
 	}
-
 	return this;
 }
 

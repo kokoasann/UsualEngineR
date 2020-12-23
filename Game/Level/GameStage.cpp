@@ -63,8 +63,6 @@ bool GameStage::Start()
 		});
 
 	{
-		Stopwatch sw;
-		sw.Start();
 		ModelInitData mid;
 		mid.m_upAxis = EUpAxis::enUpAxisY;
 		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
@@ -129,6 +127,19 @@ bool GameStage::Start()
 
 	m_decoLevel.Init("Assets/level/map_MBG_level.tkl", [&](LevelObjectData& objData)->bool
 		{
+			ModelInitData mid;
+			mid.m_upAxis = EUpAxis::enUpAxisY;
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsEntryPointFunc = "VSMain";
+			mid.m_psEntryPointFunc = "PSMain";
+			mid.m_tkmFilePath = "Assets/modelData/m_BG/m_BG1.tkm";
+			ModelRender* m = NewGO<ModelRender>(0);
+			m->Init(mid);
+			m->SetPosition(objData.position * m_levelScale);
+			m->SetRotation(objData.rotation);
+			m->SetScale(objData.scale* m_levelScale);
+			m->SetMulColor({ 1,0.8,0.4,1. });
+			m_mbgs.push_back(m);
 			return true;
 		});
 
@@ -145,7 +156,7 @@ bool GameStage::Start()
 		fd.decayCenterToY = 0.0f;
 		fd.ratioParlinWorley = 0.f;
 		fd.ratioParlin = 1.f;
-		fd.perlinScale = 0.05f;
+		fd.perlinScale = 0.02f;
 		fd.color = { .7,.65,.55 };
 		//fd.ratioParlin = 
 	}
@@ -169,6 +180,9 @@ bool GameStage::Start()
 			fd.rayLen = 16.f / i;
 			fd.concentration = 0.015 * 8. / 3. / i;
 		}));
+
+
+	
 
 	return true;
 }

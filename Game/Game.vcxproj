@@ -244,8 +244,10 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortBig.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h" />
+    <ClInclude Include="Fade.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCollisionAttribute.h" />
+    <ClInclude Include="GameDebugger.h" />
     <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSceneMenu.h" />
@@ -359,8 +361,10 @@
     <ClCompile Include="Enemy\Zako\Zako_ShortBig.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp" />
+    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCollisionAttribute.cpp" />
+    <ClCompile Include="GameDebugger.cpp" />
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSceneMenu.cpp" />
