@@ -10,8 +10,8 @@
 
 namespace UER
 {
-	const float RAD_GROUND = 0.25f;
-	const float RAD_WALL = 0.2;
+	const float RAD_GROUND = 0.41f;
+	const float RAD_WALL = 0.4;
 	//衝突したときに呼ばれる関数オブジェクト(地面用)
 	struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 	{
@@ -62,7 +62,7 @@ namespace UER
 					dist = distTmp;
 				}
 			}
-			if(angle >= Math::PI * RAD_GROUND
+			else if(angle >= Math::PI * RAD_GROUND
 				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				)
@@ -119,7 +119,7 @@ namespace UER
 			//if (angle >= Math::PI * RAD_WALL && 1 		//地面の傾斜が54度以上なので壁とみなす。
 			if (angle >= Math::PI * RAD_WALL 		//地面の傾斜が54度以上なので壁とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
-				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground
+				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground
 				)
 			{
 				isHit = true;
@@ -138,8 +138,7 @@ namespace UER
 					hitNormal = hitNormalTmp;
 				}
 			}
-
-			if(angle <= Math::PI * RAD_GROUND
+			else if(angle <= Math::PI * RAD_GROUND
 				)
 			{
 				isHitFloor = true;
@@ -548,7 +547,8 @@ namespace UER
 			float f2wR = acosf(callback.floorNormal.Dot(callback.hitNormal));
 
 			bool isNearHitWall = callback.dist < callback.floorDist;
-			isNearHitWall |= f2wR > Math::PI * 0.05f;
+			isNearHitWall = true;
+			//isNearHitWall |= f2wR > Math::PI * 0.05f;
 			//if (!isNearHitWall && callback.isHitFloor && 1)
 			if (!isNearHitWall && callback.isHitFloor)
 			{
@@ -692,7 +692,8 @@ namespace UER
 					break;
 				}
 			}
-			if(!(callback.isHit || callback.isHitFloor))
+			//if(!(callback.isHit || callback.isHitFloor))
+			if(!callback.isHit)
 			{
 				//どことも当たらないので終わり。
 				break;
@@ -771,7 +772,7 @@ namespace UER
 		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) {
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 			bool isNearFloor = callback.dist < callback.wallDist;
-			isNearFloor = true;
+			//isNearFloor = true;
 			if (isNearFloor && callback.isHit) {
 				//当たった。
 				//moveSpeed.y = 0.0f;
