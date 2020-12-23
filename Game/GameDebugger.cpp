@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "GameDebugger.h"
+#include "GameManager.h"
+#include "Player/Player.h"
 
 
 GameDebugger::GameDebugger()
@@ -32,6 +34,18 @@ void GameDebugger::Awake()
 
 bool GameDebugger::Start()
 {
+	DebugSwitchAddCheck(DebugSwitchNewSwitch('X', 0, [&]()
+		{
+			GameManager::GetInstance().GetPlayer()->Heal(100);
+		}));
+	DebugSwitchAddCheck(DebugSwitchNewSwitch('X', VK_SHIFT, [&]()
+		{
+			GameManager::GetInstance().GetPlayer()->ChargeBoost(100);
+		}));
+	DebugSwitchAddCheck(DebugSwitchNewSwitch('X', VK_CONTROL, [&]()
+		{
+			GameManager::GetInstance().GetPlayer()->ChargeEndurance(100);
+		}));
 	return true;
 }
 
