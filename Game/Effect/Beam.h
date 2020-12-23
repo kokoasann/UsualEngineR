@@ -61,8 +61,8 @@ public:
 
 	void SetPos(Vector3 pos)
 	{
-		const float yUp = 4.f;
-		pos.y += yUp;
+		/*const float yUp = 4.f;
+		pos.y += yUp;*/
 		m_position = pos;
 		m_effect->SetPos(pos);
 	}
@@ -88,11 +88,12 @@ public:
 	{
 		m_isCharge = isChange;
 	}
+	
 private:
 	PlaneParticleEffectRender*	m_effect;
 	Vector3						m_position = Vector3::Zero;
-	Vector3						m_direction = Vector3::Zero;
-	Vector3						m_holizontalDir = Vector3::Zero;
+	Vector3						m_holizontalDir = Vector3::AxisX;
+	Vector3						m_direction = Vector3::AxisY;
 	float						m_particleScale = 1.f;
 	Vector4						m_chargeColor = { 0.f,0.f,5.f,1.f };
 	Vector4						m_beamColor = { 0.f,0.f,5.f,1.f };

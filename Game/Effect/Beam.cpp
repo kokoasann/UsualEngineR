@@ -73,7 +73,7 @@ void Beam::Init(const BeamEffectInitData& bid)
 		if (m_isCharge) {
 			//チャージ。
 			for (int i = 0; i < 10; i++) {
-				//プレイヤーの横方向に200.f分ずらす。
+				//プレイヤーの横方向に300.f分ずらす。
 				pos = m_holizontalDir * 300.f;
 				//横の移動量の決定。
 				const float maxMoveY = 20.f;
