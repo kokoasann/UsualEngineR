@@ -178,7 +178,6 @@ bool Player::Start()
 
 	//Pod
 	m_pod = NewGO<Pod>(0);
-	m_pod->SetPlayer(this);
 
 	//Attachment
 	m_playerBones.resize(TO_INT(EnPlayerBone::enNumBoneType));
@@ -215,9 +214,41 @@ bool Player::Start()
 	m_jetEffects.push_back(jetEffect);
 	m_jetEffects.push_back(jetEffect1);
 
+	InitIK();
+
 	return true;
 }
 
+
+void Player::InitIK() {
+	float radius = 0.5f;
+	auto ske = m_model->GetModel().GetSkelton();
+	{
+		IK* ikHandL = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Hand_L")), 1, radius);
+		ikHandL->SetIKMode(IK::enMode_NoneHit);
+		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enHand_L), ikHandL));
+	}
+	{
+		IK* ikHandR = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Hand_R")), 1, radius);
+		ikHandR->SetIKMode(IK::enMode_NoneHit);
+		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enHand_R), ikHandR));
+	}
+	{
+		IK* Sole_R = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Sole_R")), 1, radius);
+		Sole_R->SetIKMode(IK::enMode_NoneHit);
+		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enSOLE_R), Sole_R));
+	}
+	{
+		IK* Sole_L = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Sole_L")), 1, radius);
+		Sole_L->SetIKMode(IK::enMode_NoneHit);
+		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enSOLE_L), Sole_L));
+	}
+	{
+		IK* bone004 = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.004")), 1, radius);
+		bone004->SetIKMode(IK::enMode_NoneHit);
+		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enBack), bone004));
+	}
+}
 
 void Player::PreUpdate()
 {

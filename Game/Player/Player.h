@@ -285,7 +285,7 @@ public:
 	}
 
 	void UseBoost(const float amount) {
-		m_boost = max(0.f, m_boost - amount);
+		//m_boost = max(0.f, m_boost - amount);
 	}
 
 	void ChargeBoost(const float amount) {
@@ -371,6 +371,26 @@ public:
 		m_isInChurch = isInChurch;
 	}
 
+	/// <summary>
+	/// IKをゲット
+	/// ない場合はnullptrを返す
+	/// </summary>
+	/// <param name="ikKind">EnIKとか</param>
+	/// <returns></returns>
+	IK* GetIK(const int ikKind) const
+	{
+		if (m_ikMap.size() == 0) return nullptr;
+
+		auto it = m_ikMap.find(ikKind);
+
+		if (it == m_ikMap.end()) {
+			return nullptr;
+		}
+
+		return it->second;
+	}
+
+
 	//TODO : protect these member
 	Vector3 m_velocity = Vector3::Zero;
 	Vector3 m_localVelocity = Vector3::Zero;
@@ -380,6 +400,8 @@ public:
 private:
 	//func
 	void SearchTarget();
+
+	void InitIK();
 
 	/// <summary>
 	/// 攻撃の種類を選択
@@ -410,6 +432,9 @@ private:
 	CAnimationClip m_animClip[1];
 	//std::vector<CAnimationClipPtr> m_animlist;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
+
+	//IK
+	std::map<int, IK*> m_ikMap;
 
 	//const Vector3 m_SpawnPos = { 0,15,-100 };
 	const Vector3 m_SpawnPos = { 750,15,-680 };
