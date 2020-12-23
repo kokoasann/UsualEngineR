@@ -1,8 +1,14 @@
 #include "stdafx.h"
 #include "Zako_ShortBig.h"
 #include "Enemy/State/IEnemyState.h"
-#include "Enemy/State/EnemyIdleState.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigIdle.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigStun.h"
 #include "Enemy/State/EnemyDeadState.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigBlown.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigComing.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigDance.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigPunch.h"
+#include "Enemy/State/ShortBigState/EnemyShortBigStrongPunch.h"
 
 Zako_ShortBig::Zako_ShortBig()
 {
@@ -40,12 +46,56 @@ void Zako_ShortBig::Init()
 
 void Zako_ShortBig::InitAnimation()
 {
-	
+	//ひとまず、近距離雑魚のアニメーションを流用
+	//Idle
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_idle.tka", true);
+	//Walk
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enWalk), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_walk.tka", true);
+	//run
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enRun), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_run.tka", true);
+	//Punch
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackA), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_punch.tka", false);
+	//StrongPunch
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enAttackB), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_strong_punch.tka", false);
+	//Dance
+	SetAnimation(TO_INT(EnAnimEX::enDance), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_dance.tka", false);
+	//Down
+	SetAnimation(TO_INT(EnAnimEX::enDown), "Assets/modelData/enemy/ShortRangeMonster/anim/srm_down.tka", false);
+
+	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 }
 void Zako_ShortBig::InitState()
 {
-	m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyIdleState()));
-	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemyDeadState()));
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new EnemyShortBigIdle());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyShortBigBlown());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enComing), new EnemyShortBigComing());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enAttackA), new EnemyShortBigPunch());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enAttackB), new EnemyShortBigStrongPunch());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enDance), new EnemyShortBigDance());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnState::enStunState), new EnemyShortBigStun());
+		m_stateMap.insert(p);
+	}
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyShortBigIdle()));
+	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemyDeadState()));
 }
 void Zako_ShortBig::InitIK()
 {
