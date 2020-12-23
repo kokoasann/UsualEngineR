@@ -19,13 +19,14 @@ void PlayerAttackRevolvingTackle::Init(Player* player, int combo) {
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
-	player->PlayAnimation(Player::EnAnimation::enAttack);
+	player->PlayAnimation(Player::EnAnimation::enRevolvingTackle);
 
 	player->FireThrusters();
 
 	player->UseStamina(m_StaminaCost);
 	player->UseBoost(m_BoostCost);
 
+	m_attackedEnemyMap.clear();
 
 	//auto& enemyManager = EnemyManager::GetEnemyManager();
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
@@ -40,18 +41,20 @@ void PlayerAttackRevolvingTackle::Execute(Player* player) {
 	player->SetVelocity(vel);
 
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
-		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+		auto enemy = EnemyManager::GetEnemyManager().GetEnemies().at(i);
+		auto& epos = enemy->GetPosition();
 		if ((player->GetPosition() - epos).Length() < m_range) {
-			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
-			m_isDone = true;
+			if (m_attackedEnemyMap.find(enemy) == m_attackedEnemyMap.end()) {
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
+				m_attackedEnemyMap.insert(std::make_pair(enemy, true));
+			}
+			//m_isDone = true;
 		}
 	}
 
-	if (!player->IsPlayingAnimation()) {
-		m_timer += gameTime()->GetDeltaTime();
-	}
+	m_timer += gameTime()->GetDeltaTime();
 
-	if (m_timer > m_interval)
+	if (m_timer > m_REVOLVE_TIME)
 		m_isDone = true;
 
 }

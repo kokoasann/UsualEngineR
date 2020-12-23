@@ -67,10 +67,6 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	void SetPlayer(Player* player) {
-		mp_player = player;
-	}
-
 	void SetPosition(const Vector3& pos) {
 		m_pos = pos;
 	}
@@ -125,6 +121,9 @@ private:
 	void Kamikaze();
 	void BackToIdlePos();
 
+	void IdleRotation();
+	void CalcIdlePosition();
+
 	void UseStamina(const float amount) {
 		m_ability.currentStamina = max(0.f, m_ability.currentStamina - amount);
 	}
@@ -137,19 +136,18 @@ private:
 	ModelRender* m_model = nullptr;
 
 	//transform
-	Player* mp_player = nullptr;
 	Vector3 m_pos = Vector3::Zero;
 	Vector3 m_distanceFromPlayer = { 5.f,10.f,-5.f };
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 1.5f,1.5f,1.5f };
-
 	float m_timer = 0.f;
+
+	Vector3 m_velocity = Vector3::Zero;
 
 	//laser
 	const float m_LaserDamageAmount = 10.f * 1.f / 2.f;
 
 	//Thrown
-	Vector3 m_velocity = Vector3::Zero;
 	float m_thrownTime = 1.f;
 	const float m_thrownAttackDamageAmount = 20.f;
 	const float m_thrownAttackRange = 30.f;

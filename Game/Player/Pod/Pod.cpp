@@ -148,80 +148,16 @@ void Pod::PostUpdate()
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	auto delta = gameTime()->GetDeltaTime();
+	auto player = GameManager::GetInstance().GetPlayer();
 
 	//printf("Pod's stamina : %f\n", m_ability.currentStamina);
 
 	if (m_state == PodState::enIdle) {
 
-		//if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
-			//m_rotation = EnemyManager::GetEnemyManager().GetTargettingEnemy()
-			auto cf = g_camera3D->GetForward();
-			Quaternion rot = Quaternion::Identity;
-			auto theta = atan2(cf.x, cf.z);
-			theta = theta * (180.f / Math::PI);
-			rot.SetRotationDegY(theta);
-			m_rotation = rot;
+		IdleRotation();
+		CalcIdlePosition();
 
-			IEnemy* target = nullptr;
-
-			//Targetting mode's enemy
-			if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
-				target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
-			}
-			else {
-				target = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos);
-				const float AUTO_TARGET_RANGE = 150.f;
-				if ((target->GetPosition() - m_pos).Length() <= AUTO_TARGET_RANGE) {
-				}
-				else {
-					target = nullptr;
-				}
-				EnemyManager::GetEnemyManager().SetTargetEnemy(target);
-			}
-
-			if (target != nullptr) {
-
-				Vector3 forward, right, up;
-				auto& world = m_model->GetModel().GetWorldMatrix();
-				forward.x = world.mat._31;
-				forward.y = world.mat._32;
-				forward.z = world.mat._33;
-				forward.Normalize();
-
-				right.x = world.mat._11;
-				right.y = world.mat._12;
-				right.z = world.mat._13;
-				right.Normalize();
-
-				up.x = world.mat._21;
-				up.y = world.mat._22;
-				up.z = world.mat._23;
-				up.Normalize();
-				
-				Quaternion rotY;
-				auto vecPodToTarget = target->GetPosition() - m_pos;
-				vecPodToTarget.Normalize();
-				auto degY = atan2(vecPodToTarget.x, vecPodToTarget.z);
-				degY = Math::RadToDeg(degY);
-				rotY.SetRotationDeg(up,degY);
-				m_rotation = rotY;
-			}
-			else {
-				m_rotation = mp_player->GetRotation();
-			}
-
-		//}
-		//else {
-			//m_rotation = mp_player->GetRotation();
-		//}
-
-		//auto p = mp_player->GetPosition() + m_distanceFromPlayer;
-		auto addPos = m_distanceFromPlayer;
-		mp_player->GetRotation().Apply(addPos);
-		auto p = mp_player->GetPosition() + addPos;
-		m_pos = p;
-
-		if (mp_player->GetCurrentState() == mp_player->GetState(Player::EnState::enDead)) return;
+		if (player->GetCurrentState() == player->GetState(Player::EnState::enDead)) return;
 
 		if (m_ability.currentStamina == 0.f) {
 			m_overheat = true;
@@ -236,14 +172,14 @@ void Pod::PostUpdate()
 			}
 		}
 
-		auto& preset = mp_player->GetCurrentAttackPreset();
+		auto& preset = player->GetCurrentAttackPreset();
 		bool isShooting = false;
 
 		//long range
 		if (preset == Player::EnAttackPreset::enDefault) {
 			m_longRangeAttack.UpdateEffectPos();
 			if (g_pad[0]->IsPress(EnButton::enButtonRB1) and !m_overheat) {
-				m_longRangeAttack.Execute(mp_player);
+				m_longRangeAttack.Execute(player);
 				UseStamina(skillCosts.ProjectileCost * delta);
 				isShooting = true;
 			}
@@ -332,12 +268,13 @@ void Pod::ShotLaserBeam() {
 
 	//laser
 	const float laserRange = 30.f;
-	const auto& podPos = mp_player->GetPod()->GetPosition();
+	auto player = GameManager::GetInstance().GetPlayer();
+	const auto& podPos = player->GetPod()->GetPosition();
 
-	auto vecLaserDir = mp_player->GetForward();
+	auto vecLaserDir = player->GetForward();
 	const auto targettingEnemy = EnemyManager::GetEnemyManager().GetTargettingEnemy();
 	if (targettingEnemy != nullptr)
-		vecLaserDir = targettingEnemy->GetPosition() - mp_player->GetPosition();
+		vecLaserDir = targettingEnemy->GetPosition() - player->GetPosition();
 
 	//auto target = GameManager::GetInstance().m_camera->GetTarget();
 	//if (target != nullptr) {
@@ -437,14 +374,15 @@ void Pod::Kamikaze() {
 }
 
 void Pod::BackToIdlePos() {
+	auto player = GameManager::GetInstance().GetPlayer();
 
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
 
 	auto addPos = m_distanceFromPlayer;
-	mp_player->GetRotation().Apply(addPos);
-	auto idlePos = mp_player->GetPosition() + addPos;
+	player->GetRotation().Apply(addPos);
+	auto idlePos = player->GetPosition() + addPos;
 	//auto vecToIdlePos = (mp_player->GetPosition() + mp_player->GetForward() + m_distanceFromPlayer;
 	auto vecToIdlePos = idlePos - m_pos;
 
@@ -460,4 +398,98 @@ void Pod::BackToIdlePos() {
 	else {
 		m_pos += vel;
 	}
+}
+
+void Pod::IdleRotation() {
+
+	IEnemy* target = nullptr;
+
+	//Targetting mode's enemy
+	if (GameManager::GetInstance().m_camera->IsTargettingEnemy()) {
+		target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+	}
+	else {
+		target = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos);
+		const float AUTO_TARGET_RANGE = 150.f;
+		if ((target->GetPosition() - m_pos).Length() <= AUTO_TARGET_RANGE) {
+		}
+		else {
+			target = nullptr;
+		}
+		EnemyManager::GetEnemyManager().SetTargetEnemy(target);
+	}
+
+	Vector3 forward, right, up;
+	auto& world = m_model->GetModel().GetWorldMatrix();
+	forward.x = world.mat._31;
+	forward.y = world.mat._32;
+	forward.z = world.mat._33;
+	forward.Normalize();
+
+	right.x = world.mat._11;
+	right.y = world.mat._12;
+	right.z = world.mat._13;
+	right.Normalize();
+
+	up.x = world.mat._21;
+	up.y = world.mat._22;
+	up.z = world.mat._23;
+	up.Normalize();
+
+	Vector3 vecGoalForward = Vector3::One;
+
+	if (target != nullptr) {
+		vecGoalForward = target->GetPosition() - m_pos;
+		vecGoalForward.Normalize();
+	}
+	else {
+		auto player = GameManager::GetInstance().GetPlayer();
+		vecGoalForward = player->GetForward();
+		vecGoalForward.Normalize();
+	}
+
+	auto degToTar = atan2(vecGoalForward.x, vecGoalForward.z);
+	auto degToForward = atan2(forward.x, forward.z);
+	const float diff = degToTar - degToForward;
+	const float ROT_SPEED = 350.f;
+	const float delta = gameTime()->GetDeltaTime();
+
+	auto fct = forward;
+	fct.Cross(vecGoalForward);
+
+	Quaternion rot = Quaternion::Identity;
+
+	const float deadVal = 0.05;
+	if (fct.y > deadVal) {
+		rot.SetRotationDegY(ROT_SPEED * delta);
+		m_rotation.Multiply(rot);
+	}
+	else if (fct.y < -deadVal) {
+		rot.SetRotationDegY(-ROT_SPEED * delta);
+		m_rotation.Multiply(rot);
+	}
+	else {
+		Quaternion rotY;
+		auto degY = atan2(vecGoalForward.x, vecGoalForward.z);
+		degY = Math::RadToDeg(degY);
+		rotY.SetRotationDeg(up, degY);
+		m_rotation = rotY;
+	}
+}
+
+void Pod::CalcIdlePosition() {
+
+	auto player = GameManager::GetInstance().GetPlayer();
+	auto addPos = m_distanceFromPlayer;
+
+	if (GameManager::GetInstance().GetGameCamera()->IsTargettingEnemy()) {
+		g_camera3D->GetCameraRotation().Apply(addPos);
+	}
+	else {
+		player->GetRotation().Apply(addPos);
+	}
+
+	auto idlePos = player->GetPosition() + addPos;
+	m_pos = idlePos;
+
 }
