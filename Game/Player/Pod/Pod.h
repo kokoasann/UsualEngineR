@@ -122,6 +122,7 @@ private:
 	void BackToIdlePos();
 
 	void IdleRotation();
+	void CalcIdlePosition();
 
 	void UseStamina(const float amount) {
 		m_ability.currentStamina = max(0.f, m_ability.currentStamina - amount);
@@ -141,11 +142,12 @@ private:
 	const Vector3 m_scale = { 1.5f,1.5f,1.5f };
 	float m_timer = 0.f;
 
+	Vector3 m_velocity = Vector3::Zero;
+
 	//laser
 	const float m_LaserDamageAmount = 10.f * 1.f / 2.f;
 
 	//Thrown
-	Vector3 m_velocity = Vector3::Zero;
 	float m_thrownTime = 1.f;
 	const float m_thrownAttackDamageAmount = 20.f;
 	const float m_thrownAttackRange = 30.f;

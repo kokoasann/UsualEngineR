@@ -155,11 +155,7 @@ void Pod::PostUpdate()
 	if (m_state == PodState::enIdle) {
 
 		IdleRotation();
-
-		auto addPos = m_distanceFromPlayer;
-		player->GetRotation().Apply(addPos);
-		auto p = player->GetPosition() + addPos;
-		m_pos = p;
+		CalcIdlePosition();
 
 		if (player->GetCurrentState() == player->GetState(Player::EnState::enDead)) return;
 
@@ -479,4 +475,21 @@ void Pod::IdleRotation() {
 		rotY.SetRotationDeg(up, degY);
 		m_rotation = rotY;
 	}
+}
+
+void Pod::CalcIdlePosition() {
+
+	auto player = GameManager::GetInstance().GetPlayer();
+	auto addPos = m_distanceFromPlayer;
+
+	if (GameManager::GetInstance().GetGameCamera()->IsTargettingEnemy()) {
+		g_camera3D->GetCameraRotation().Apply(addPos);
+	}
+	else {
+		player->GetRotation().Apply(addPos);
+	}
+
+	auto idlePos = player->GetPosition() + addPos;
+	m_pos = idlePos;
+
 }
