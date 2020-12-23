@@ -145,7 +145,13 @@ void Player::Awake()
 	SetAnimation(TO_INT(EnAnimation::enPunch3), "Assets/modelData/m/anim/m_punch_3.tka", false);
 	//Kick
 	SetAnimation(TO_INT(EnAnimation::enKick), "Assets/modelData/m/anim/m_rolling_kick.tka", false);
-	//TODO : load dead anim
+	//Throw
+	SetAnimation(TO_INT(EnAnimation::enThrow), "Assets/modelData/m/anim/m_srow.tka", false);
+	//Tackle
+	SetAnimation(TO_INT(EnAnimation::enTackle), "Assets/modelData/m/anim/m_tackle_olt.tka", false);
+	//RevolvingTackle
+	SetAnimation(TO_INT(EnAnimation::enRevolvingTackle), "Assets/modelData/m/anim/m_rolling_attack.tka", true);
+
 	//Dead
 	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_idle.tka", true);
 

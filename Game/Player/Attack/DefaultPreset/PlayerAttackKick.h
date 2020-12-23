@@ -1,6 +1,5 @@
 #pragma once
 #include "../IPlayerAttack.h"
-class IEnemy;
 
 class PlayerAttackKick : public IPlayerAttack
 {
@@ -35,8 +34,6 @@ private:
 	int m_combo = 0;
 	bool m_hasAlreadyAttacked = false;
 	bool m_canDoAttack = true;
-
-	std::map<IEnemy*, bool> m_attackedEnemyMap;
 
 	const float m_knockBack = 230.f;
 };

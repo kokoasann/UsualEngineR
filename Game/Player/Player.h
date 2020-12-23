@@ -45,6 +45,9 @@ public:
 		enPunch2,
 		enPunch3,
 		enKick,
+		enThrow,
+		enTackle,
+		enRevolvingTackle,
 		enDead,
 		enNumAnim
 	};
