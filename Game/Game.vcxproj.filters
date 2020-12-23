@@ -318,6 +318,8 @@
       <Filter>Enemy\Zako</Filter>
     </ClInclude>
     <ClInclude Include="PowaPowa.h" />
+    <ClInclude Include="Fade.h" />
+    <ClInclude Include="GameDebugger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -638,6 +640,8 @@
       <Filter>Enemy\Zako</Filter>
     </ClCompile>
     <ClCompile Include="PowaPowa.cpp" />
+    <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="GameDebugger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

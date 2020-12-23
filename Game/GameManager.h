@@ -9,6 +9,7 @@ class GameSceneMenu;
 class Game;
 class Goal;
 class Church;
+class Fade;
 
 class GameManager
 {
@@ -22,6 +23,8 @@ public:
 	void InitGameWorld();
 	void Release();
 
+	void SpawnPlayer();
+
 	Player* GetPlayer() const{
 		return m_player;
 	}
@@ -32,6 +35,14 @@ public:
 
 	Church* GetChurch()const {
 		return m_church;
+	}
+
+	Fade* GetFade() const {
+		return m_fade;
+	}
+
+	GameSceneMenu* GetMenu() const {
+		return m_menu;
 	}
 
 	GameCamera* m_camera = nullptr;
@@ -56,5 +67,5 @@ public:
 
 private:
 	Church* m_church = nullptr;
-
+	Fade* m_fade = nullptr;
 };

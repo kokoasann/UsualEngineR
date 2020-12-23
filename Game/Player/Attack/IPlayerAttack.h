@@ -1,5 +1,7 @@
 #pragma once
 class Player;
+class IEnemy;
+
 class IPlayerAttack
 {
 public :
@@ -13,5 +15,6 @@ public :
 
 protected:
 	const float m_DEFAULT_ATTACK_DAMAGE = 10.f;
+	std::map<IEnemy*, bool> m_attackedEnemyMap;
 };
 

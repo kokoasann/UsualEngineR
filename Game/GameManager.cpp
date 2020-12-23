@@ -11,16 +11,18 @@
 #include "GameSceneMenu.h"
 #include "Goal.h"
 #include "Church.h"
+#include "Fade.h"
 
 void GameManager::InitGameWorld() {
 
-	m_player = NewGO<Player>(0, "Player");
+	//m_player = NewGO<Player>(0, "Player");
 	m_camera = NewGO<GameCamera>(0);
 	m_stage = NewGO<GameStage>(0);
 	m_gameHUD = NewGO<GameHUD>(0);
 	m_itemManager = NewGO<ItemManager>(0);
 	m_menu = NewGO<GameSceneMenu>(0);
 	m_church = NewGO<Church>(0);
+	m_fade = NewGO<Fade>(0);
 
 	//m_goal = NewGO<Goal>(0);
 	//m_gameHUD->SetPlayer(m_player);
@@ -45,4 +47,11 @@ void GameManager::Release() {
 	m_goal = nullptr;
 	DeleteGO(m_church);
 	m_church = nullptr;
+	DeleteGO(m_fade);
+	m_fade = nullptr;
+}
+
+void GameManager::SpawnPlayer() {
+	if(m_player == nullptr)
+		m_player = NewGO<Player>(0);
 }
