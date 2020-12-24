@@ -2,11 +2,16 @@
 #include "EnemyManager.h"
 #include "Enemy/EnemyTest.h"
 #include "Enemy/Boss/BossA.h"
+#include "Enemy/Boss/Boss_FatMan.h"
 #include "EnemyTest.h"
 #include <random>
 
 #include "Zako/Zako_ShortRangeMonster.h"
 #include "Zako/Zako_LongDistanceMachine.h"
+#include "Zako/Zako_ExplosionMonster.h"
+#include "Zako/Zako_LongBig.h"
+#include "Zako/Zako_ShortBig.h"
+
 #include "Equipment/Enemy_Bullet.h"
 
 #include "level/Level.h"
@@ -65,6 +70,16 @@ void EnemyManager::SpawnEnemies() {
 			}
 			else if (objData.name == L"MeleeBoss") {
 				auto bene = NewGO<BossA>(0);
+				ab.InitHP(BOSS_A_HP);
+				ab.InitStamina(BOSS_A_STAMINA);
+				bene->SetAbility(ab);
+				bene->SetPosition(objData.position * 100.f);
+				bene->SetRotation(objData.rotation);
+				m_enemies.push_back(bene);
+			}
+			else if (objData.name == L"LongFatBoss")
+			{
+				auto bene = NewGO<Boss_Fatman>(0);
 				ab.InitHP(BOSS_A_HP);
 				ab.InitStamina(BOSS_A_STAMINA);
 				bene->SetAbility(ab);
