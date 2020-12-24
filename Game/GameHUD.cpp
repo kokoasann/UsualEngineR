@@ -41,7 +41,11 @@ void GameHUD::Release()
 	DeleteGO(m_spEnemyHP_Deco[0]);
 	DeleteGO(m_spEnemyHP_Deco[1]);
 
-	DeleteGO(m_presetSp);
+	DeleteGO(m_presetBack);
+	for (auto sp : m_presetSp)
+	{
+		DeleteGO(sp);
+	}
 
 	DeleteGO(m_targetMarker);
 }
@@ -264,14 +268,65 @@ bool GameHUD::Start()
 	}
 
 	//Player Weapon
-	m_presetSp = NewGO<SpriteRender>(0);
-	sd.m_ddsFilePath[0] = "Assets/Image/hp.dds";
-	sd.m_height = m_presetSpHeight;
-	sd.m_width = m_presetSpWidth;
-	m_presetSp->Init(sd);
-	m_presetSp->SetPos(m_presetSpPos);
-	m_presetSp->SetSca(m_playerHpScale);
-	m_presetSp->SetPivot(m_SPRITE_PIVOT);
+	m_presetBack = NewGO<SpriteRender>(0);
+	sd.m_ddsFilePath[0] = "Assets/Image/attachmentFrame.dds";
+	sd.m_height = m_presetBackHeight;
+	sd.m_width = m_presetBackWidth;
+	m_presetBack->Init(sd);
+	m_presetBack->SetPos(m_presetPos);
+	m_presetBack->SetSca(Vector3::One);
+	m_presetBack->SetPivot(m_PRESET_PIVOT);
+	{
+		//mulColor ÇÕâºÅB
+		{
+			m_presetSp[TO_INT(Player::EnAttackPreset::enDefault)] = NewGO<SpriteRender>(0);
+			auto presetSp = m_presetSp[TO_INT(Player::EnAttackPreset::enDefault)];
+			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+			sd.m_height = m_presetHeight;
+			sd.m_width = m_presetWidth;
+			presetSp->Init(sd);
+			presetSp->SetPos(m_presetPos + m_presetOffset[TO_INT(Player::EnAttackPreset::enDefault)]);
+			presetSp->SetSca(Vector3::One * m_weaponScale);
+			presetSp->SetPivot(m_PRESET_PIVOT);
+			presetSp->SetMulColor({ 0.5,0.5 ,0.5,1.f });
+		}
+		{
+			m_presetSp[TO_INT(Player::EnAttackPreset::enRemoteAttackPreset)] = NewGO<SpriteRender>(0);
+			auto presetSp = m_presetSp[TO_INT(Player::EnAttackPreset::enRemoteAttackPreset)];
+			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+			sd.m_height = m_presetHeight;
+			sd.m_width = m_presetWidth;
+			presetSp->Init(sd);
+			presetSp->SetPos(m_presetPos + m_presetOffset[TO_INT(Player::EnAttackPreset::enRemoteAttackPreset)]);
+			presetSp->SetSca(Vector3::One * m_weaponScale);
+			presetSp->SetPivot(m_PRESET_PIVOT);
+			presetSp->SetMulColor({ 0.8,0. ,0.,1.f });
+		}
+		{
+			m_presetSp[TO_INT(Player::EnAttackPreset::enMeleePreset)] = NewGO<SpriteRender>(0);
+			auto presetSp = m_presetSp[TO_INT(Player::EnAttackPreset::enMeleePreset)];
+			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+			sd.m_height = m_presetHeight;
+			sd.m_width = m_presetWidth;
+			presetSp->Init(sd);
+			presetSp->SetPos(m_presetPos + m_presetOffset[TO_INT(Player::EnAttackPreset::enMeleePreset)]);
+			presetSp->SetSca(Vector3::One * m_weaponScale);
+			presetSp->SetPivot(m_PRESET_PIVOT);
+			presetSp->SetMulColor({ 0.,0.8 ,0.,1.f });
+		}
+		{
+			m_presetSp[TO_INT(Player::EnAttackPreset::enExposivePreset)] = NewGO<SpriteRender>(0);
+			auto presetSp = m_presetSp[TO_INT(Player::EnAttackPreset::enExposivePreset)];
+			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+			sd.m_height = m_presetHeight;
+			sd.m_width = m_presetWidth;
+			presetSp->Init(sd);
+			presetSp->SetPos(m_presetPos + m_presetOffset[TO_INT(Player::EnAttackPreset::enExposivePreset)]);
+			presetSp->SetSca(Vector3::One * m_weaponScale);
+			presetSp->SetPivot(m_PRESET_PIVOT);
+			presetSp->SetMulColor({ 0.,0. ,0.8,1.f });
+		}
+	}
 
 	return true;
 }
@@ -321,20 +376,30 @@ void GameHUD::Update()
 	//Player Weapon
 	auto preset = player->GetCurrentAttackPreset();
 
-	if (preset == Player::EnAttackPreset::enDefault) {
-		m_presetSp->SetMulColor({ 0,0,0,1 });
-	}
+	
+	if (m_lateFramePreset != preset)
+	{
+		if (m_lateFramePreset != Player::EnAttackPreset::enNumPreset)
+		{
+			m_presetSp[TO_INT(m_lateFramePreset)]->SetPos(m_presetPos + m_presetOffset[TO_INT(m_lateFramePreset)]);
+			m_presetSp[TO_INT(m_lateFramePreset)]->SetSca(Vector3::One * m_weaponScale);
+		}
 
-	if (preset == Player::EnAttackPreset::enRemoteAttackPreset) {
-		m_presetSp->SetMulColor({ 1,0,0,1 });
-	}
-
-	if (preset == Player::EnAttackPreset::enMeleePreset) {
-		m_presetSp->SetMulColor({ 0,1,0,1 });
-	}
-
-	if (preset == Player::EnAttackPreset::enExposivePreset) {
-		m_presetSp->SetMulColor({ 0,0,1,1 });
+		m_presetSp[TO_INT(preset)]->SetPos(m_presetPos);
+		m_presetSp[TO_INT(preset)]->SetSca(Vector3::One * m_weaponSelectScale);
+		m_lateFramePreset = preset;
+		//if (preset == Player::EnAttackPreset::enDefault) {
+		//	//m_presetSp->SetMulColor({ 0,0,0,1 });
+		//}
+		//else if (preset == Player::EnAttackPreset::enRemoteAttackPreset) {
+		//	//m_presetSp->SetMulColor({ 1,0,0,1 });
+		//}
+		//else if (preset == Player::EnAttackPreset::enMeleePreset) {
+		//	//m_presetSp->SetMulColor({ 0,1,0,1 });
+		//}
+		//else if (preset == Player::EnAttackPreset::enExposivePreset) {
+		//	//m_presetSp->SetMulColor({ 0,0,1,1 });
+		//}
 	}
 
 

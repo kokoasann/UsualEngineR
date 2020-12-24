@@ -1,6 +1,7 @@
 #pragma once
 #include "../UsualEngineR/Graphics/SpriteRender.h"
-class Player;
+#include "Player/Player.h"
+//class Player;
 class IEnemy;
 class TargetMarker;
 
@@ -175,17 +176,66 @@ private:
 	};
 
 	//Player Weapon
+	Vector2 m_PRESET_PIVOT = { 0.5,0.5 };
+	SpriteRender* m_presetBack = nullptr;
+	const float m_presetBackHeight = 128.f;
+	const float m_presetBackWidth = 128.f;
 
-	SpriteRender* m_presetSp = nullptr;
-	const float m_presetSpHeight = 50.f;
-	const float m_presetSpWidth = 50.f;
-	//Vector3 m_enemyHpScale = Vector3::One;
-
-	Vector3 m_presetSpPos = {
-		ANCHOR_BOTTOM_LEFT.x + 1100.f,
-		ANCHOR_BOTTOM_LEFT.y + 50.f,
+	Vector3 m_presetPos = {
+		-ANCHOR_BOTTOM_LEFT.x - 72.f,
+		ANCHOR_BOTTOM_LEFT.y + 72.f,
 		0.f
 	};
+
+	const float m_weaponSelectScale = 1.f;
+	const float m_weaponScale = 0.5f;
+
+	const float m_presetHeight = 50.f;
+	const float m_presetWidth = 50.f;
+
+	float m_presetOffsetSize = 40.f;
+	SpriteRender* m_presetSp[TO_INT(Player::EnAttackPreset::enNumPreset)] = { nullptr };
+	Vector3 m_presetOffset[TO_INT(Player::EnAttackPreset::enNumPreset)] =
+	{
+		{0.f,-m_presetOffsetSize,0.f},	//default
+		{-m_presetOffsetSize,0.f,0.f},	//remote
+		{0.f,m_presetOffsetSize,0.f},	//melee
+		{m_presetOffsetSize,0.f,0.f}	//bomb
+	};
+
+	Player::EnAttackPreset m_lateFramePreset = Player::EnAttackPreset::enNumPreset;
+
+	//preset default
+	//SpriteRender* m_presetDefault = nullptr;
+	//Vector3 m_presetDefaultOffset = {
+	//	0.f,
+	//	-50.f,
+	//	0.f
+	//};
+
+	////preset melee
+	//SpriteRender* m_presetMelee = nullptr;
+	//Vector3 m_presetMeleeOffset = {
+	//	-50.f,
+	//	0.f,
+	//	0.f
+	//};
+
+	////preset long
+	//SpriteRender* m_presetLong = nullptr;
+	//Vector3 m_presetLongOffset = {
+	//	0.f,
+	//	50.f,
+	//	0.f
+	//};
+
+	////preset long
+	//SpriteRender* m_presetBomb = nullptr;
+	//Vector3 m_presetBombOffset = {
+	//	50.f,
+	//	0.f,
+	//	0.f
+	//};
 
 	//Marker
 	TargetMarker* m_targetMarker = nullptr;

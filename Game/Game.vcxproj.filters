@@ -822,4 +822,9 @@
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Image\attachmentFrame.png">
+      <Filter>Assets\image</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
