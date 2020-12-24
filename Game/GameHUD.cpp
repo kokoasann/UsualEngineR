@@ -388,18 +388,6 @@ void GameHUD::Update()
 		m_presetSp[TO_INT(preset)]->SetPos(m_presetPos);
 		m_presetSp[TO_INT(preset)]->SetSca(Vector3::One * m_weaponSelectScale);
 		m_lateFramePreset = preset;
-		//if (preset == Player::EnAttackPreset::enDefault) {
-		//	//m_presetSp->SetMulColor({ 0,0,0,1 });
-		//}
-		//else if (preset == Player::EnAttackPreset::enRemoteAttackPreset) {
-		//	//m_presetSp->SetMulColor({ 1,0,0,1 });
-		//}
-		//else if (preset == Player::EnAttackPreset::enMeleePreset) {
-		//	//m_presetSp->SetMulColor({ 0,1,0,1 });
-		//}
-		//else if (preset == Player::EnAttackPreset::enExposivePreset) {
-		//	//m_presetSp->SetMulColor({ 0,0,1,1 });
-		//}
 	}
 
 

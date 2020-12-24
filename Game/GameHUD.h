@@ -205,38 +205,6 @@ private:
 
 	Player::EnAttackPreset m_lateFramePreset = Player::EnAttackPreset::enNumPreset;
 
-	//preset default
-	//SpriteRender* m_presetDefault = nullptr;
-	//Vector3 m_presetDefaultOffset = {
-	//	0.f,
-	//	-50.f,
-	//	0.f
-	//};
-
-	////preset melee
-	//SpriteRender* m_presetMelee = nullptr;
-	//Vector3 m_presetMeleeOffset = {
-	//	-50.f,
-	//	0.f,
-	//	0.f
-	//};
-
-	////preset long
-	//SpriteRender* m_presetLong = nullptr;
-	//Vector3 m_presetLongOffset = {
-	//	0.f,
-	//	50.f,
-	//	0.f
-	//};
-
-	////preset long
-	//SpriteRender* m_presetBomb = nullptr;
-	//Vector3 m_presetBombOffset = {
-	//	50.f,
-	//	0.f,
-	//	0.f
-	//};
-
 	//Marker
 	TargetMarker* m_targetMarker = nullptr;
 };
