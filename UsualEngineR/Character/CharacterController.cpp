@@ -10,7 +10,7 @@
 
 namespace UER
 {
-	const float RAD_GROUND = 0.41f;
+	const float RAD_GROUND = 0.45f;
 	const float RAD_WALL = 0.4;
 	//衝突したときに呼ばれる関数オブジェクト(地面用)
 	struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
@@ -772,14 +772,14 @@ namespace UER
 		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) {
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 			bool isNearFloor = callback.dist < callback.wallDist;
-			//isNearFloor = true;
+			isNearFloor = true;
 			if (isNearFloor && callback.isHit) {
 				//当たった。
 				//moveSpeed.y = 0.0f;
 				m_isJump = false;
 				m_isOnGround = true;
 				nextPos.y = callback.hitPos.y + m_offsetY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
-				//nextPosition = callback.hitPos;
+				nextPos = callback.hitPos;
 				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
 				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 

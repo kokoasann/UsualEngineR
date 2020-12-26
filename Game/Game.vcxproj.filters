@@ -818,13 +818,9 @@
     <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png">
       <Filter>Assets\modelData\m_BG</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\Image\attachmentFrame.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\Image\attachmentFrame.png">
-      <Filter>Assets\image</Filter>
-    </Image>
   </ItemGroup>
 </Project>

@@ -416,84 +416,106 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\test\test.png">
+    <None Include="Assets\modelData\test\test.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(RelativeDir)%(Filename).dds</ContentOutput>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
+    <None Include="Assets\modelData\map\HeightMap.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\hp.png">
+    <None Include="Assets\Image\hp.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\illumination.png">
+    <None Include="Assets\Image\illumination.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m\mTex.png">
+    <None Include="Assets\modelData\m\mTex.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m\mNor.png">
+    <None Include="Assets\modelData\m\mNor.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png">
+    <None Include="Assets\modelData\map\commit\mapNormal.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\AssistantMachine\am_tex.png">
+    <None Include="Assets\modelData\map_obj\hgb_tex.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
+    <None Include="Assets\modelData\boss\sp\sp_tex.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
+    <None Include="Assets\modelData\m\Backpack\Backpack_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\white.png" />
+    <None Include="Assets\modelData\AssistantMachine\am_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
+    <None Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
+    <None Include="Assets\modelData\boss\sp\sp_emi.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\targetMarker.png" />
+    <None Include="Assets\Image\white.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png" />
+    <None Include="Assets\Image\whiteFade_TB.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png" />
+    <None Include="Assets\Image\whiteGrad_B.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\attachmentFrame.png" />
+    <None Include="Assets\Image\targetMarker.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\boss\lf\lf_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\m_BG\m_BGTex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Image\attachmentFrame.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
