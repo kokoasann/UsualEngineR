@@ -48,7 +48,7 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 	}
 
 	const float moveRange = 10.f;
-	const float attackRange = 10.f;
+	const float attackRange = 30.f;
 	const float idleRange = 200.f;
 
 	const float vec2PlayerLen = vecToPlayer.Length();
