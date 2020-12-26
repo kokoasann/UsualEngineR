@@ -91,7 +91,7 @@ void Zako_ShortBig::InitState()
 		m_stateMap.insert(p);
 	}
 	{
-		auto p = std::make_pair(TO_INT(EnState::enStunState), new EnemyShortBigStun());
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enStunState), new EnemyShortBigStun());
 		m_stateMap.insert(p);
 	}
 	//m_stateMap.insert(std::make_pair(TO_INT(EnState::enIdleState), new EnemyShortBigIdle()));
@@ -99,7 +99,44 @@ void Zako_ShortBig::InitState()
 }
 void Zako_ShortBig::InitIK()
 {
+	float radius = 0.5f;
+	auto ske = m_model->GetModel().GetSkelton();
+	{
+		IK* headik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, radius);
+		headik->SetIKMode(IK::enMode_NoneHit);
 
+		SetIK(TO_INT(EnIK::enHead), headik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.002")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enChest), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Arm_L_IK")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enArm_L), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Arm_R_IK")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enArm_R), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_L.003")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enFoot_L), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone_R.003")), 2, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enFoot_R), ik);
+	}
 }
 
 void Zako_ShortBig::Execute()

@@ -53,7 +53,7 @@ private:
 private:
 	//Model
 	//ModelRender* m_model = nullptr;
-	float m_scale = 1.f;
+	float m_scale = 3.f;
 
 	//Physics
 	const float m_radius = 1.f;
