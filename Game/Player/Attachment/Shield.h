@@ -56,4 +56,12 @@ public:
 	void PostRender() override;
 private:
 
+	//Model
+	ModelRender* m_model = nullptr;
+	Vector3 m_position = { 0,15,-20 };
+	Quaternion m_rotation = Quaternion::Identity;
+	const Vector3 m_scale = { 0.5f,0.5f,0.5f };
+
+	bool m_isUsed = true;
+
 };
