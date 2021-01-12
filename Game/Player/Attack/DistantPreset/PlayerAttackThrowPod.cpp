@@ -28,14 +28,11 @@ void PlayerAttackThrowPod::Init(Player* player, int combo) {
 		m_canDoAttack = true;
 	}
 
+	threwFlag = false;
 #ifdef _PRINT_PLAYER_ATTACK
 	std::string s = "attack throw-pod combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
-
-	player->GetPod()->SetPosition(player->GetPosition());
-	auto vel = player->GetForward() * m_throwPower;
-	player->GetPod()->Thrown(vel);
 
 	//player->GetPod()->SetPosition();
 	m_isDone = false;
@@ -54,6 +51,25 @@ void PlayerAttackThrowPod::Execute(Player* player) {
 	if (!m_canDoAttack) {
 		m_isDone = true;
 		return;
+	}
+
+	const int numEvent = player->GetAnimationMap().at(TO_INT(Player::EnAnimation::enThrow))->GetNumAnimationEvent();
+	const auto& animationEvent = player->GetAnimationMap().at(TO_INT(Player::EnAnimation::enThrow))->GetAnimationEvent();
+
+	if (!threwFlag) {
+		auto handPos = player->GetBone(Player::EnPlayerBone::enHand_L)->GetWorldMatrix().GetTransrate();
+		player->GetPod()->SetPosition(handPos);
+	}
+
+	for (int i = 0; i < numEvent; i++) {
+		if (!threwFlag and animationEvent[i].IsInvoked()) {
+			auto name = animationEvent[i].GetEventName();
+			if (wcscmp(name, L"throw") == 0) {
+				auto vel = player->GetForward() * m_throwPower;
+				player->GetPod()->Thrown(vel);
+				threwFlag = true;
+			}
+		}
 	}
 
 	if (!player->IsPlayingAnimation()) {
