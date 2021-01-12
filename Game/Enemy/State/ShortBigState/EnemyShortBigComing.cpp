@@ -116,7 +116,7 @@ void EnemyShortBigComing::Move(IEnemy* e)
 	vecToPlayer.Normalize();
 
 	//普通のゴブリンの速度の1/2　マジックナンバーは変更予定
-	const float walkSpeed = 30.0f;
+	const float walkSpeed = 55.0f;
 	Vector3 moveSpeed = vecToPlayer * walkSpeed;
 
 	//重力。

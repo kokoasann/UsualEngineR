@@ -775,52 +775,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\test\test.png">
-      <Filter>Assets\modelData\test</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
-      <Filter>Assets\modelData</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\hp.png">
-      <Filter>Assets\image</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\illumination.png">
-      <Filter>Assets\image</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\mTex.png">
-      <Filter>Assets\modelData\m</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\mNor.png">
-      <Filter>Assets\modelData\m</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png" />
-    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png">
-      <Filter>Assets\modelData\boss\sp</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
-    <ImageContentTask Include="Assets\modelData\AssistantMachine\am_tex.png">
-      <Filter>Assets\modelData\am</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
-      <Filter>Assets\modelData\boss\sp</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\white.png" />
-    <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
-    <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
-    <ImageContentTask Include="Assets\Image\targetMarker.png">
-      <Filter>Assets\image</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png">
-      <Filter>Assets\modelData\boss\lf</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png">
-      <Filter>Assets\modelData\m_BG</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\attachmentFrame.png" />
+    <Text Include="Enemy\Zako\Ene_zako.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Enemy\Zako\Ene_zako.txt" />
+    <None Include="Assets\modelData\test\test.png" />
+    <None Include="Assets\modelData\map\HeightMap.png" />
+    <None Include="Assets\Image\hp.png" />
+    <None Include="Assets\Image\illumination.png" />
+    <None Include="Assets\modelData\m\mTex.png" />
+    <None Include="Assets\modelData\m\mNor.png" />
+    <None Include="Assets\modelData\map\commit\mapNormal.png" />
+    <None Include="Assets\modelData\map_obj\hgb_tex.png" />
+    <None Include="Assets\modelData\boss\sp\sp_tex.png" />
+    <None Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
+    <None Include="Assets\modelData\AssistantMachine\am_tex.png" />
+    <None Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
+    <None Include="Assets\modelData\boss\sp\sp_emi.png" />
+    <None Include="Assets\Image\white.png" />
+    <None Include="Assets\Image\whiteFade_TB.png" />
+    <None Include="Assets\Image\whiteGrad_B.png" />
+    <None Include="Assets\Image\targetMarker.png" />
+    <None Include="Assets\modelData\boss\lf\lf_tex.png" />
+    <None Include="Assets\modelData\m_BG\m_BGTex.png" />
+    <None Include="Assets\Image\attachmentFrame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\m\Gun\Gun_tex.png">
+      <Filter>Assets\modelData\m</Filter>
+    </Image>
+    <Image Include="Assets\modelData\m\Shield\Shield_tex.png">
+      <Filter>Assets\modelData\m</Filter>
+    </Image>
   </ItemGroup>
 </Project>
