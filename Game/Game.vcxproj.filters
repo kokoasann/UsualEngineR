@@ -320,6 +320,12 @@
     <ClInclude Include="PowaPowa.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="GameDebugger.h" />
+    <ClInclude Include="Player\Attachment\Gun.h">
+      <Filter>Player\Attachment</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attachment\Shield.h">
+      <Filter>Player\Attachment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -642,6 +648,12 @@
     <ClCompile Include="PowaPowa.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameDebugger.cpp" />
+    <ClCompile Include="Player\Attachment\Gun.cpp">
+      <Filter>Player\Attachment</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attachment\Shield.cpp">
+      <Filter>Player\Attachment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -803,17 +815,9 @@
     <None Include="Assets\Image\attachmentFrame.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\modelData\m\Gun\Gun_tex.png">
-      <Filter>Assets\modelData\m</Filter>
-    </Image>
-    <Image Include="Assets\modelData\m\Shield\Shield_tex.png">
-      <Filter>Assets\modelData\m</Filter>
-    </Image>
-    <Image Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png">
-      <Filter>Assets\modelData\boss\mb</Filter>
-    </Image>
-    <Image Include="Assets\SAGYO\boss\mb\mb_tex.png">
-      <Filter>Assets\modelData\boss\mb</Filter>
-    </Image>
+    <ImageContentTask Include="Assets\modelData\m\Gun\Gun_tex.png" />
+    <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
   </ItemGroup>
 </Project>
