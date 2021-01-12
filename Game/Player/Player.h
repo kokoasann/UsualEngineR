@@ -399,6 +399,10 @@ public:
 	Vector3 m_localVelocity = Vector3::Zero;
 	Vector3 m_knockBackImpulse = Vector3::Zero;
 	//Vector3 m_velocityGoal = Vector3::Zero;
+
+	std::map<int, std::unique_ptr<CAnimationClip>>& GetAnimationMap() {
+		return m_animationMap;
+	}
 	
 private:
 	//func
@@ -417,6 +421,7 @@ private:
 		m_animationMap.at(no)->Load(path);
 		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
 		m_animationMap.at(no)->SetLoopFlag(loopFlag);
+		//auto& animEvent = m_animationMap.at(no)->GetAnimationEvent();
 	}
 
 	//Current Attack Type
