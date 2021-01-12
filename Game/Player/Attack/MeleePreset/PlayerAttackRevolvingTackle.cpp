@@ -16,6 +16,15 @@ void PlayerAttackRevolvingTackle::Init(Player* player, int combo) {
 	std::string s = "attack revolving tackle combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+
+	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
+		m_canDoAttack = false;
+		return;
+	}
+	else {
+		m_canDoAttack = true;
+	}
+
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
@@ -33,6 +42,12 @@ void PlayerAttackRevolvingTackle::Init(Player* player, int combo) {
 }
 
 void PlayerAttackRevolvingTackle::Execute(Player* player) {
+
+	if (!m_canDoAttack) {
+		m_isDone = true;
+		return;
+	}
+
 	auto delta = gameTime()->GetDeltaTime();
 	//m_timer += delta;
 
@@ -45,7 +60,15 @@ void PlayerAttackRevolvingTackle::Execute(Player* player) {
 		auto& epos = enemy->GetPosition();
 		if ((player->GetPosition() - epos).Length() < m_range) {
 			if (m_attackedEnemyMap.find(enemy) == m_attackedEnemyMap.end()) {
-				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
+
+				auto vecKb = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition() - player->GetPosition();
+				vecKb.y = 0;
+				vecKb.Normalize();
+				vecKb.y = 2.f;
+				vecKb.Normalize();
+				vecKb *= m_knockBackPower;
+
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount, true, vecKb);
 				m_attackedEnemyMap.insert(std::make_pair(enemy, true));
 			}
 			//m_isDone = true;

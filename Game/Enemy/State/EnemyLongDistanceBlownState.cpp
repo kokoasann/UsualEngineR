@@ -117,7 +117,7 @@ IEnemyState* EnemyLongDistanceBlownState::Update(IEnemy* e)
 
 
 	auto b = m_body->GetBody();
-	DebugPrintVector3(EDebugConsoloUser::NOMOTO, b->getGravity());
+	//DebugPrintVector3(EDebugConsoloUser::NOMOTO, b->getGravity());
 	//b->applyDamping(dtime);
 	//b->applyGravity();
 	auto epos = e->GetPosition();

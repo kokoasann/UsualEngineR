@@ -31,6 +31,7 @@ private:
 	const float m_StaminaCost = 30.f;
 	const float m_BoostCost = 30.f;
 
+	bool m_canDoAttack = true;
 
 	float m_range = 50.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 8.f;

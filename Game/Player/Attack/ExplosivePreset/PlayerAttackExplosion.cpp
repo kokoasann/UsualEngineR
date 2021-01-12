@@ -16,6 +16,15 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 	std::string s = "attack explosion combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+
+	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
+		m_canDoAttack = false;
+		return;
+	}
+	else {
+		m_canDoAttack = true;
+	}
+
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
@@ -32,6 +41,12 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 }
 
 void PlayerAttackExplosion::Execute(Player* player) {
+
+	if (!m_canDoAttack) {
+		m_isDone = true;
+		return;
+	}
+
 	auto delta = gameTime()->GetDeltaTime();
 
 	//m_timer += delta;
@@ -44,6 +59,7 @@ void PlayerAttackExplosion::Execute(Player* player) {
 
 	player->SetVelocity(vel);
 
+	/*
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 		if ((player->GetPosition() - epos).Length() < m_range) {
@@ -51,12 +67,20 @@ void PlayerAttackExplosion::Execute(Player* player) {
 			break;
 		}
 	}
+	*/
 
-	if (m_isBombed) {
+	if (!m_isBombed and (player->GetPosition() - EnemyManager::GetEnemyManager().GetNearestEnemy(player->GetPosition())->GetPosition()).Length() < m_range){
+		m_isBombed = true;
 		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 			if ((player->GetPosition() - epos).Length() < m_ExplodeDamageRange) {
-				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage);
+				auto vecKb = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition() - player->GetPosition();
+				vecKb.y = 0;
+				vecKb.Normalize();
+				vecKb.y = 2.f;
+				vecKb.Normalize();
+				vecKb *= m_knockBackPower;
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage,true, vecKb);
 			}
 		}
 	}
