@@ -20,6 +20,14 @@ void PlayerAttackThrowPod::Init(Player* player, int combo) {
 		return;
 	}
 
+	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
+		m_canDoAttack = false;
+		return;
+}
+	else {
+		m_canDoAttack = true;
+	}
+
 #ifdef _PRINT_PLAYER_ATTACK
 	std::string s = "attack throw-pod combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
@@ -42,6 +50,11 @@ void PlayerAttackThrowPod::Init(Player* player, int combo) {
 }
 
 void PlayerAttackThrowPod::Execute(Player* player) {
+
+	if (!m_canDoAttack) {
+		m_isDone = true;
+		return;
+	}
 
 	if (!player->IsPlayingAnimation()) {
 		m_timer += gameTime()->GetDeltaTime();

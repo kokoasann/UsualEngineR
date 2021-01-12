@@ -16,6 +16,15 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 	std::string s = "attack explosion combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+
+	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
+		m_canDoAttack = false;
+		return;
+	}
+	else {
+		m_canDoAttack = true;
+	}
+
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
@@ -32,6 +41,12 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 }
 
 void PlayerAttackExplosion::Execute(Player* player) {
+
+	if (!m_canDoAttack) {
+		m_isDone = true;
+		return;
+	}
+
 	auto delta = gameTime()->GetDeltaTime();
 
 	//m_timer += delta;
