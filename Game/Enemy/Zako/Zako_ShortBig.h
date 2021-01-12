@@ -23,6 +23,8 @@ public:
 	//デフォルトのアニメーションステート用。
 	void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) override {
 		m_model->Play(static_cast<int>(anim), interpolate);
+		//0.75倍速。デカいのでアニメーションの動きが遅い
+		m_model->SetAnimPlaySpeed(m_animBigPlayState);
 	}
 
 	//拡張されたアニメーションステート用。
@@ -58,4 +60,5 @@ private:
 	//Physics
 	const float m_radius = 3.f;
 	const float m_height = 3.f;
+	const float m_animBigPlayState = 0.75f;
 };

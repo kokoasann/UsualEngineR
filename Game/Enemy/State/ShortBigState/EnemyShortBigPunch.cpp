@@ -24,8 +24,12 @@ void EnemyShortBigPunch::Enter(IEnemy* e)
 	auto f = e->GetForward();
 
 	auto t = acosf(v.Dot(f));
-	if (vlen < 5.f && t < Math::PI * 0.5f)
-		p->ApplyDamage(m_damage, true, f);
+
+	const float BigShortVector = 1.25f;
+
+	Vector3 hukitobiVec = e->GetPosition();
+	if (vlen < 7.f && t < Math::PI * 0.5f)
+		p->ApplyDamage(m_damage, true, hukitobiVec * BigShortVector);
 }
 
 IEnemyState* EnemyShortBigPunch::Update(IEnemy* e)
