@@ -68,8 +68,8 @@ private:
 	const float m_lifeSpanSec = 10.f;
 	const float m_speed = 100.f;
 	const float m_igniteRange = 30.f;
-	const float m_ExplodeDamageRange = 300.f;
-	const float m_damage = 50.f;
+	const float m_ExplodeDamageRange = 100.f;
+	const float m_damage = 10.f;// 50.f;
 
 	float m_lifeTimerSec = 0.0f;
 
@@ -79,4 +79,7 @@ private:
 	Vector3 m_velocity = { 0,0,0 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 1.f;
+
+	const float m_knockBackPower = 230.f;
+
 };

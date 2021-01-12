@@ -44,6 +44,7 @@ void PlayerAttackExplosion::Execute(Player* player) {
 
 	player->SetVelocity(vel);
 
+	/*
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 		if ((player->GetPosition() - epos).Length() < m_range) {
@@ -51,12 +52,20 @@ void PlayerAttackExplosion::Execute(Player* player) {
 			break;
 		}
 	}
+	*/
 
-	if (m_isBombed) {
+	if (!m_isBombed and (player->GetPosition() - EnemyManager::GetEnemyManager().GetNearestEnemy(player->GetPosition())->GetPosition()).Length() < m_range){
+		m_isBombed = true;
 		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 			if ((player->GetPosition() - epos).Length() < m_ExplodeDamageRange) {
-				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage);
+				auto vecKb = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition() - player->GetPosition();
+				vecKb.y = 0;
+				vecKb.Normalize();
+				vecKb.y = 2.f;
+				vecKb.Normalize();
+				vecKb *= m_knockBackPower;
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage,true, vecKb);
 			}
 		}
 	}

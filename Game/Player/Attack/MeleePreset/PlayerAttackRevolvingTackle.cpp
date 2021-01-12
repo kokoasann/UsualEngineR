@@ -45,7 +45,15 @@ void PlayerAttackRevolvingTackle::Execute(Player* player) {
 		auto& epos = enemy->GetPosition();
 		if ((player->GetPosition() - epos).Length() < m_range) {
 			if (m_attackedEnemyMap.find(enemy) == m_attackedEnemyMap.end()) {
-				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
+
+				auto vecKb = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition() - player->GetPosition();
+				vecKb.y = 0;
+				vecKb.Normalize();
+				vecKb.y = 2.f;
+				vecKb.Normalize();
+				vecKb *= m_knockBackPower;
+
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount, true, vecKb);
 				m_attackedEnemyMap.insert(std::make_pair(enemy, true));
 			}
 			//m_isDone = true;

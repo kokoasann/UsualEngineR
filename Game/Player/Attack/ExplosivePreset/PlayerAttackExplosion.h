@@ -32,10 +32,12 @@ private:
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 6.f;
 	const float m_tacklePower = 500.f;
 	const float m_ExplodeDamageRange = 100.f;
-	const float m_explodeDamage = 10.f * 6.f;
+	const float m_explodeDamage = 10.f;// *6.f;
 
 	const float m_StaminaCost = 30.f;
 	const float m_BoostCost = 30.f;
+
+	const float m_knockBackPower = 230.f;
 };
 
 

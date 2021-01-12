@@ -34,6 +34,9 @@ private:
 
 	const float m_StaminaCost = 30.f;
 	const float m_BoostCost = 30.f;
+
+	const float m_knockBackPower = 230.f;
+
 };
 
 
