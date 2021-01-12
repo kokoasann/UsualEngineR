@@ -773,6 +773,9 @@
     <Filter Include="Assets\modelData\m_BG">
       <UniqueIdentifier>{8cbb456a-698b-4510-8c4b-a1814be384ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\boss\mb">
+      <UniqueIdentifier>{e19ffaae-630d-4ea6-b5b8-51988f2939bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
@@ -805,6 +808,12 @@
     </Image>
     <Image Include="Assets\modelData\m\Shield\Shield_tex.png">
       <Filter>Assets\modelData\m</Filter>
+    </Image>
+    <Image Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png">
+      <Filter>Assets\modelData\boss\mb</Filter>
+    </Image>
+    <Image Include="Assets\SAGYO\boss\mb\mb_tex.png">
+      <Filter>Assets\modelData\boss\mb</Filter>
     </Image>
   </ItemGroup>
 </Project>
