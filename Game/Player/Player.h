@@ -8,6 +8,8 @@ class GameCamera;
 class Pod;
 class JetPack;
 class JetEffect;
+class Gun;
+class Shield;
 
 /// <summary>
 /// 
@@ -64,7 +66,7 @@ public:
 		enDefault,
 		enRemoteAttackPreset,
 		enMeleePreset,
-		enExposivePreset,
+		enExplosivePreset,
 		enNumPreset
 	};
 
@@ -335,6 +337,14 @@ public:
 		return m_playerBones.at(TO_INT(boneType));
 	}
 
+	Gun* const GetGun() {
+		return m_gun;
+	}
+
+	Shield* const GetShield() {
+		return m_shield;
+	}
+
 	void FireThrusters() {
 		m_isUsingThrusters = true;
 	}
@@ -467,6 +477,8 @@ private:
 	//Attachments
 	std::vector<Bone*> m_playerBones;
 	JetPack* m_jetPack = nullptr;
+	Gun* m_gun = nullptr;
+	Shield* m_shield = nullptr;
 
 	bool m_isInChurch = true;
 

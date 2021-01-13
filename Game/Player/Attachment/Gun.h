@@ -54,6 +54,28 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
+
+	void SetPosition(const Vector3& pos) {
+		m_position = pos;
+	}
+
+	void SetRotation(const Quaternion& rot) {
+		m_rotation = rot;
+	}
+
+	void SetUsingState(const bool flag) {
+		m_isUsed = flag;
+	}
+
+	enum class GunBone {
+		Right,
+		Left
+	};
+
+	Bone* const GetGunModelBone(const GunBone& type) {
+		return m_gunBones[TO_INT(type)];
+	}
+
 private:
 
 	//Model
@@ -64,4 +86,5 @@ private:
 
 	bool m_isUsed = true;
 
+	Bone* m_gunBones[6] = { nullptr };
 };

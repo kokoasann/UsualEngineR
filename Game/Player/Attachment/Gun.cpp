@@ -39,6 +39,9 @@ bool Gun::Start()
 	//mid.m_upAxis = enUpAxisZ;
 	m_model->Init(mid);
 
+	m_gunBones[TO_INT(GunBone::Left)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Left"));
+	m_gunBones[TO_INT(GunBone::Right)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Right"));
+
 	return true;
 }
 

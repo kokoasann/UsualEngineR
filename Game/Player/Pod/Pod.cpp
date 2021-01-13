@@ -207,7 +207,7 @@ void Pod::PostUpdate()
 		}
 
 		//Kamikaze
-		if (preset == Player::EnAttackPreset::enExposivePreset) {
+		if (preset == Player::EnAttackPreset::enExplosivePreset) {
 			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
 				if (m_ability.currentStamina >= skillCosts.KamikazeCost) {
 					m_timer = 0.f;

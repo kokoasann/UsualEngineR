@@ -315,13 +315,13 @@ bool GameHUD::Start()
 			presetSp->SetMulColor({ 0.,0.8 ,0.,1.f });
 		}
 		{
-			m_presetSp[TO_INT(Player::EnAttackPreset::enExposivePreset)] = NewGO<SpriteRender>(0);
-			auto presetSp = m_presetSp[TO_INT(Player::EnAttackPreset::enExposivePreset)];
+			m_presetSp[TO_INT(Player::EnAttackPreset::enExplosivePreset)] = NewGO<SpriteRender>(0);
+			auto presetSp = m_presetSp[TO_INT(Player::EnAttackPreset::enExplosivePreset)];
 			sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
 			sd.m_height = m_presetHeight;
 			sd.m_width = m_presetWidth;
 			presetSp->Init(sd);
-			presetSp->SetPos(m_presetPos + m_presetOffset[TO_INT(Player::EnAttackPreset::enExposivePreset)]);
+			presetSp->SetPos(m_presetPos + m_presetOffset[TO_INT(Player::EnAttackPreset::enExplosivePreset)]);
 			presetSp->SetSca(Vector3::One * m_weaponScale);
 			presetSp->SetPivot(m_PRESET_PIVOT);
 			presetSp->SetMulColor({ 0.,0. ,0.8,1.f });

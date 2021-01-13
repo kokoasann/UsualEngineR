@@ -16,6 +16,8 @@
 #include "../GameManager.h"
 #include "../GameSceneMenu.h"
 #include "Attachment/JetPack.h"
+#include "Attachment/Gun.h"
+#include "Attachment/Shield.h"
 #include "../Effect/JetEffect.h"
 #include "../Camera/GameCamera.h"
 
@@ -73,6 +75,8 @@ void Player::Release()
 	DeleteGO(m_model);
 	DeleteGO(m_pod);
 	DeleteGO(m_jetPack);
+	DeleteGO(m_gun);
+	DeleteGO(m_shield);
 
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
@@ -191,6 +195,12 @@ bool Player::Start()
 	m_jetPack = NewGO<JetPack>(0);
 	m_jetPack->SetUsingState(false);
 
+	m_gun = NewGO<Gun>(0);
+	m_gun->SetUsingState(false);
+
+	m_shield = NewGO<Shield>(0);
+	m_shield->SetUsingState(false);
+
 	auto bone = this->GetModel().GetSkelton()->GetBone(this->GetModel().GetSkelton()->FindBoneID(L"Bone.005"));
 	m_playerBones.at(TO_INT(EnPlayerBone::enBack)) = bone;
 
@@ -282,6 +292,29 @@ void Player::Update()
 	else {
 		m_jetPack->SetUsingState(false);
 	}
+
+	//Gun
+	if (m_currentAttackPreset == EnAttackPreset::enRemoteAttackPreset) {
+		m_gun->SetUsingState(true);
+		const auto& mat = m_playerBones.at(TO_INT(EnPlayerBone::enBack))->GetWorldMatrix();
+		m_gun->SetPosition(mat.GetTransrate());
+		m_gun->SetRotation(mat.GetRotate());
+	}
+	else {
+		m_gun->SetUsingState(false);
+	}
+
+	//Shield
+	if (m_currentAttackPreset == EnAttackPreset::enExplosivePreset) {
+		m_shield->SetUsingState(true);
+		const auto& mat = m_playerBones.at(TO_INT(EnPlayerBone::enBack))->GetWorldMatrix();
+		m_shield->SetPosition(mat.GetTransrate());
+		m_shield->SetRotation(mat.GetRotate());
+	}
+	else {
+		m_shield->SetUsingState(false);
+	}
+
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
@@ -426,8 +459,8 @@ void Player::UpdateAttackType() {
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonRight)) {
-		if (m_canUsePreset[TO_INT(EnAttackPreset::enExposivePreset)])
-			m_currentAttackPreset = EnAttackPreset::enExposivePreset;
+		if (m_canUsePreset[TO_INT(EnAttackPreset::enExplosivePreset)])
+			m_currentAttackPreset = EnAttackPreset::enExplosivePreset;
 	}
 
 	if (g_pad[0]->IsTrigger(enButtonDown)) {
