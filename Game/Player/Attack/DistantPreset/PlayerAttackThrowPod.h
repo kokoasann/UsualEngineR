@@ -35,5 +35,7 @@ private:
 
 	float m_range = 50.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 8.f;
+
+	bool threwFlag = false;
 };
 

@@ -3,6 +3,7 @@
 #include "../../Player.h"
 #include "../../../Enemy/EnemyManager.h"
 #include "../Projectile.h"
+#include "Player/Attachment/Gun.h"
 
 PlayerAttackHipShot::PlayerAttackHipShot() {
 
@@ -41,7 +42,9 @@ void PlayerAttackHipShot::Execute(Player* player) {
 		m_shotIntervalTimer += gameTime()->GetDeltaTime();
 		if (m_shotIntervalTimer >= m_shotInterval) {
 
-			auto projectile = NewGO<Projectile>(0, true);
+			auto projectileL = NewGO<Projectile>(0, true);
+			auto projectileR = NewGO<Projectile>(0, true);
+
 			auto vel = player->GetForward();
 			vel.y = g_camera3D->GetForward().y;
 
@@ -51,7 +54,11 @@ void PlayerAttackHipShot::Execute(Player* player) {
 			const float range = 10.f;
 			const float scale = 1.f;
 
-			projectile->Init(player->GetPosition(), scale, vel, defSpeed, lifeSpan, range);
+			auto posLeft = player->GetGun()->GetGunModelBone(Gun::GunBone::Left)->GetWorldMatrix().GetTransrate();
+			auto posRight = player->GetGun()->GetGunModelBone(Gun::GunBone::Right)->GetWorldMatrix().GetTransrate();
+
+			projectileL->Init(posLeft, scale, vel, defSpeed, lifeSpan, range);
+			projectileR->Init(posRight, scale, vel, defSpeed, lifeSpan, range);
 
 			//projectile->Init(player->GetPosition(), vel);
 			m_shotIntervalTimer = 0.f;

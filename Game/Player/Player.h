@@ -8,6 +8,8 @@ class GameCamera;
 class Pod;
 class JetPack;
 class JetEffect;
+class Gun;
+class Shield;
 
 /// <summary>
 /// 
@@ -64,7 +66,7 @@ public:
 		enDefault,
 		enRemoteAttackPreset,
 		enMeleePreset,
-		enExposivePreset,
+		enExplosivePreset,
 		enNumPreset
 	};
 
@@ -335,6 +337,14 @@ public:
 		return m_playerBones.at(TO_INT(boneType));
 	}
 
+	Gun* const GetGun() {
+		return m_gun;
+	}
+
+	Shield* const GetShield() {
+		return m_shield;
+	}
+
 	void FireThrusters() {
 		m_isUsingThrusters = true;
 	}
@@ -399,6 +409,10 @@ public:
 	Vector3 m_localVelocity = Vector3::Zero;
 	Vector3 m_knockBackImpulse = Vector3::Zero;
 	//Vector3 m_velocityGoal = Vector3::Zero;
+
+	std::map<int, std::unique_ptr<CAnimationClip>>& GetAnimationMap() {
+		return m_animationMap;
+	}
 	
 private:
 	//func
@@ -417,6 +431,7 @@ private:
 		m_animationMap.at(no)->Load(path);
 		m_animationMap.at(no)->BuildKeyFramesAndAnimationEvents();
 		m_animationMap.at(no)->SetLoopFlag(loopFlag);
+		//auto& animEvent = m_animationMap.at(no)->GetAnimationEvent();
 	}
 
 	//Current Attack Type
@@ -462,6 +477,8 @@ private:
 	//Attachments
 	std::vector<Bone*> m_playerBones;
 	JetPack* m_jetPack = nullptr;
+	Gun* m_gun = nullptr;
+	Shield* m_shield = nullptr;
 
 	bool m_isInChurch = true;
 
