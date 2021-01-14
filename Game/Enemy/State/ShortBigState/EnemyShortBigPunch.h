@@ -13,4 +13,7 @@ public:
 private:
 	//プレイヤーの体力を10発で0にする。
 	const float		m_damage = Player::GetMaxHP() / 10.0f;
+	float m_fowardMove = 100.f;
+
+	Vector3 m_forward = Vector3::Zero;
 };

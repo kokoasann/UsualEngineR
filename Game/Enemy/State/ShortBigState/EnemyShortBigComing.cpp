@@ -45,8 +45,8 @@ IEnemyState* EnemyShortBigComing::Update(IEnemy* e)
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 
-	const float moveRange = 10.f;
-	const float attackRange = 10.f;
+	//const float moveRange = 10.f;
+	const float attackRange = 8.f;
 	const float idleRange = 150.f;
 
 	const float vec2PlayerLen = vecToPlayer.Length();
