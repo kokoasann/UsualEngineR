@@ -1,4 +1,5 @@
 #pragma once
+class MuzzleFlash;
 
 /// <summary>
 /// 
@@ -76,6 +77,8 @@ public:
 		return m_gunBones[TO_INT(type)];
 	}
 
+	void PlayFireEffects();
+
 private:
 
 	//Model
@@ -87,4 +90,20 @@ private:
 	bool m_isUsed = true;
 
 	Bone* m_gunBones[6] = { nullptr };
+
+	//Effect
+	enum class EnMuzzles {
+		Left,
+		Right,
+		NumMuzzles
+	};
+
+	struct EffectsTransform {
+		Vector3 m_posList[4];
+		Quaternion m_rotList[4];
+	};
+
+	EffectsTransform m_effectTransforms;
+
+	std::vector<MuzzleFlash*> m_muzzleFlashes;
 };

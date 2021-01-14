@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Gun.h"
+#include "Effect/MuzzleFlash.h"
 
 
 Gun::Gun()
@@ -17,6 +18,9 @@ Gun::~Gun()
 void Gun::Release()
 {
 	DeleteGO(m_model);
+	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
+		DeleteGO(m_muzzleFlashes.at(i));
+	}
 }
 
 void Gun::OnDestroy()
@@ -42,6 +46,15 @@ bool Gun::Start()
 	m_gunBones[TO_INT(GunBone::Left)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Left"));
 	m_gunBones[TO_INT(GunBone::Right)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Right"));
 
+	//Effec
+	MuzzleFlashEffectInitData mfid;
+	for (int i = 0; i < TO_INT(EnMuzzles::NumMuzzles); i++) {
+		auto muzzleFlash = NewGO<MuzzleFlash>(0);
+		muzzleFlash->Init(mfid);
+		muzzleFlash->SetSca(Vector3::One * 0.2);
+		m_muzzleFlashes.push_back(muzzleFlash);
+	}
+
 	return true;
 }
 
@@ -56,6 +69,11 @@ void Gun::Update()
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 	m_model->SetScale(m_scale);
+
+	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
+		m_muzzleFlashes[i]->SetPos(m_gunBones[i]->GetWorldMatrix().GetTransrate());
+		m_muzzleFlashes[i]->SetRot(m_gunBones[i]->GetWorldMatrix().GetRotate());
+	}
 
 	if (!m_isUsed) {
 		m_model->SetActive(false);
@@ -79,4 +97,10 @@ void Gun::Render()
 void Gun::PostRender()
 {
 
+}
+
+void Gun::PlayFireEffects() {
+	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
+		m_muzzleFlashes[i]->Play();
+	}
 }
