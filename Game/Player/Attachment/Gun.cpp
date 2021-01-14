@@ -46,12 +46,12 @@ bool Gun::Start()
 	m_gunBones[TO_INT(GunBone::Left)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Left"));
 	m_gunBones[TO_INT(GunBone::Right)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Right"));
 
-	//Effec
+	//Effect
 	MuzzleFlashEffectInitData mfid;
 	for (int i = 0; i < TO_INT(EnMuzzles::NumMuzzles); i++) {
 		auto muzzleFlash = NewGO<MuzzleFlash>(0);
 		muzzleFlash->Init(mfid);
-		muzzleFlash->SetSca(Vector3::One * 0.2);
+		muzzleFlash->SetSca(Vector3::One *0.1);
 		m_muzzleFlashes.push_back(muzzleFlash);
 	}
 
