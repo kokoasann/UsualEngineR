@@ -22,8 +22,8 @@ private:
 	float m_timer = 0.;
 	float m_timeLimit = 10.f;
 
-	//デカい敵の攻撃なので、吹き飛ばし量に補正をかける
-	float m_bigPush = 3.0f;
+	//デカい敵なので、吹き飛ばし量に補正をかける
+	float m_bigPush = 0.5f;
 
 	bool m_isTakeOff = false;
 	bool m_isTakeOn = false;
