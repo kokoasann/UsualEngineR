@@ -188,6 +188,7 @@
     <ClInclude Include="Effect\SmokeEffect.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\Boss\Boss_Fatman.h" />
+    <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h" />
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
@@ -231,6 +232,15 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombBashState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombBattleState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombDeadState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombGuardState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombIdleState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombJumpState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombLaunchState.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigBlown.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigComing.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigDance.h" />
@@ -307,6 +317,7 @@
     <ClCompile Include="Effect\SmokeEffect.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_Fatman.cpp" />
+    <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
@@ -350,6 +361,15 @@
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombBashState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombBattleState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombDeadState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombGuardState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombIdleState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombJumpState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombLaunchState.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigBlown.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigComing.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigDance.cpp" />

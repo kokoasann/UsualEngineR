@@ -1,4 +1,5 @@
 #pragma once
+class SmokeEffect;
 
 /// <summary>
 /// 
@@ -77,4 +78,16 @@ private:
 
 	bool m_isUsed = true;
 
+	std::vector<SmokeEffect*> m_worldSmokeEffects;
+	//std::vector<SmokeEffect*> m_localSmokeEffects;
+
+	enum class ShieldBone {
+		Top,
+		Left,
+		Right
+	};
+
+	Bone* m_shieldBones[3] = { nullptr };
+
+	Vector3 m_smokeEffectScale = Vector3::One * 0.02;
 };

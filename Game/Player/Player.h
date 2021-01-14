@@ -238,8 +238,8 @@ public:
 			m_previousState = m_currentState;
 			m_currentState->Exit(this);
 			m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enStun)];
-			m_currentState->Enter(this);
 			m_knockBackImpulse = vel;
+			m_currentState->Enter(this);
 		}
 	}
 

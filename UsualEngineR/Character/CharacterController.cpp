@@ -10,8 +10,8 @@
 
 namespace UER
 {
-	const float RAD_GROUND = 0.4f;
-	const float RAD_WALL = 0.3;
+	const float RAD_GROUND = 0.42f;
+	const float RAD_WALL = 0.4;
 	//衝突したときに呼ばれる関数オブジェクト(地面用)
 	struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 	{
@@ -138,7 +138,7 @@ namespace UER
 					hitNormal = hitNormalTmp;
 				}
 			}
-			else if(angle <= Math::PI * RAD_GROUND
+			if(angle <= Math::PI * RAD_GROUND
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground
 				)
 			{
@@ -189,8 +189,10 @@ namespace UER
 		}
 		m_isUseRigidBody = isUseRigidBody;
 	}
+	static bool isDebugPrinted = true;
 	const Vector3& CharacterController::Execute(float deltaTime, const Vector3& moveSpeed)
 	{
+		isDebugPrinted = false;
 		if (std::isnan(moveSpeed.x) || std::isnan(moveSpeed.y) || std::isnan(moveSpeed.z) || std::isinf(moveSpeed.x))
 		{
 			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
@@ -485,6 +487,14 @@ namespace UER
 		{
 			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 		}
+
+#if DEBUG_FUNC
+		//auto v = m_position - nextPosition;
+		if (isDebugPrinted)
+			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "END EXECUTE\n");
+
+#endif
+
 		//移動確定。
 		m_position = nextPosition;
 		//m_position.y += 0.1f;
@@ -498,6 +508,7 @@ namespace UER
 			trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 			//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 		}
+
 		return m_position;
 	}
 	void CharacterController::ExecuteWall(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos)
@@ -547,9 +558,10 @@ namespace UER
 
 			float f2wR = acosf(callback.floorNormal.Dot(callback.hitNormal));
 
-			bool isNearHitWall = callback.dist < callback.floorDist;
-			isNearHitWall |= f2wR < Math::PI * 0.05f;
-			isNearHitWall = true;
+			bool isNearHitWall = callback.dist <= callback.floorDist;
+			//isNearHitWall |= f2wR < Math::PI * 0.05f;
+			//isNearHitWall = true;
+			isNearHitWall = callback.isHit;
 			//if (!isNearHitWall && callback.isHitFloor && 1)
 			if (!isNearHitWall && callback.isHitFloor)
 			{
@@ -628,9 +640,15 @@ namespace UER
 				//nextPos += vOffset;
 				Ypos = vOffset.y;
 				Ypos = callback.floorHitPos.y;
-				nowPos.y = Ypos;
-				isHitFloor = true;
-
+				if (0.f < callback.floorHitPos.y - nowPos.y)
+				{
+					//nowPos.y = Ypos;
+					isHitFloor = true;
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR IN WALL !!!!");
+					//DebugPrintValue(TO_INT(EDebugConsoleKind::master), "Ypos", Ypos);
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
+					isDebugPrinted = true;
+				}
 				//DebugPrintVector3(EDebugConsoleKind::master, callback.hitNormal);
 				//DebugPrintVector3(EDebugConsoleKind::master, callback.floorNormal);
 
@@ -638,7 +656,7 @@ namespace UER
 				{
 					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WALL IN FLOOR HIT !!!!");
+				
 				/*
 				DebugPrintValue(EDebugConsoleKind::master, "fT0", fT0);
 				DebugPrintValue(EDebugConsoleKind::master, "m_radius", m_radius);
@@ -690,6 +708,7 @@ namespace UER
 				}
 
 				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
+				isDebugPrinted = true;
 				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 				if (currentDir.Dot(originalXZDir) < 0.0f) {
 					//角に入った時のキャラクタの振動を防止するために、
@@ -697,10 +716,13 @@ namespace UER
 					nextPos.x = nowPos.x;
 					nextPos.z = nowPos.z;
 
+					if (isHitFloor)
+						nowPos.y = Ypos;
+
 					break;
 				}
 			}
-#if 1
+#if 0
 			if (!callback.isHit && callback.isHitFloor && 1)
 			{
 				float dt = 1. - (max(-1., min(1., Dot(g_vec3Up, callback.floorNormal))) + 1.f) * 0.5f;
@@ -720,19 +742,21 @@ namespace UER
 			}
 #endif
 			//if(!(callback.isHit || callback.isHitFloor))
-			if(!callback.isHit)
-			{
-				//どことも当たらないので終わり。
-				break;
-			}
+			//if(!callback.isHit)
+			//{
+			//	//どことも当たらないので終わり。
+			//	break;
+			//}
 			/*float len = (oldnextPos - nextPosition).Length();
 			if (len < 0.0001)
 				break;
 			oldnextPos = nextPosition;*/
 
 			loopCount++;
-			if (loopCount >= 5) {
-
+			if (loopCount >= 5 || !callback.isHit) 
+			{
+				if (isHitFloor)
+					nowPos.y = Ypos;
 				break;
 			}
 		}
@@ -742,8 +766,9 @@ namespace UER
 		//const float OFFSETXZ = m_radius;
 		//const float OFFSETY = m_radius;
 
-		Vector3 addPos;
-		addPos.Subtract(nextPos, nowPos);
+		//Vector3 addPos;
+		//addPos.Subtract(nextPos, nowPos);
+		float addPosY = nextPos.y - nowPos.y;
 
 		//移動の仮確定。
 		//m_position.x = nextPosition.x;	
@@ -767,21 +792,22 @@ namespace UER
 		//endPos.Set(start.getOrigin());
 		endPos.Set(nextPos);
 		if (m_isOnGround == false) {
-			if (addPos.y > 0.0f) {
+			if (addPosY > 0.0f) {
 				//ジャンプ中とかで上昇中。
 				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
 				//endPos.y -= addPos.y * 0.005f;
-				endPos.y -= 0.01f;
+				//endPos.y -= 0.01f;
+				endPos.y = start.getOrigin().y() - 0.001;
 			}
-			else if (addPos.y < 0.f)
+			else if (addPosY < 0.f)
 			{
 				//落下している場合はそのまま下を調べる。
 				isFall = true;
-				endPos.y += addPos.y;
+				endPos.y += addPosY;
 			}
 			else
 			{
-				endPos.y -= 0.05f;
+				endPos.y -= 0.01f;
 			}
 		}
 		else {
@@ -815,6 +841,7 @@ namespace UER
 				DebugPrintVector3(EDebugConsoleKind::master, nextPos-callback.hitPos);
 				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
 				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
+				isDebugPrinted = true;
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
@@ -822,7 +849,7 @@ namespace UER
 				}
 			}
 			//if (!isNearFloor && callback.isHitWall && isFall && 1)
-			if (callback.isHitWall /*&& isFall*/ && 1)
+			if (callback.isHitWall /*&& isFall*/ && 0)
 			{
 				m_isJump = false;
 				m_isOnGround = true;
@@ -850,6 +877,7 @@ namespace UER
 				//nextPos.y = callback.wallHitPos.y;
 
 				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
+				isDebugPrinted = true;
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
 				{
@@ -861,8 +889,8 @@ namespace UER
 				//ExecuteWall(newpos, nextPos, originalXZDir, Ypos);
 			}
 			//nextPos.y += m_height * 0.5f + m_radius;
-			if (!(callback.isHit || callback.isHitWall))
-			//if (!callback.isHit)
+			//if (!(callback.isHit || callback.isHitWall))
+			if (!callback.isHit)
 			{
 				//地面上にいない。
 				m_isOnGround = false;
@@ -872,10 +900,11 @@ namespace UER
 		else
 		{
 			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WTF!!!??? KONNA NO ARIE NAI");
-			DebugPrintValue(TO_INT(EDebugConsoleKind::master), "ADD Y", addPos.y);
+			DebugPrintValue(TO_INT(EDebugConsoleKind::master), "ADD Y", addPosY);
 			DebugPrintValue(TO_INT(EDebugConsoleKind::master), "DIFF s2e", fabsf(end.getOrigin().y() - start.getOrigin().y()));
 			
 			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
+			isDebugPrinted = true;
 		}
 	}
 	/*!

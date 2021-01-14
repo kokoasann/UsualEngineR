@@ -51,7 +51,7 @@ void SmokeEffect::PostUpdate()
 
 
 
-void SmokeEffect::Init(const Vector4& col, const Vector4& colE)
+void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const bool isWorld)
 {
 	struct ParticleData
 	{
@@ -66,17 +66,30 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE)
 	pid.m_width = 10;
 	pid.m_extendDataSize = sizeof(ParticleData);
 	pid.m_isBillboard = true;
+	m_isWorld = isWorld;
+
 
 	PlaneParticleUpdater m_effctUpdater(
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
 	{
 		{
 			{
+
+				Vector3 posv = m_oldPos - pThis->GetWorldMatrix().GetTransrate();
+				Quaternion rot = pThis->GetWorldMatrix().GetRotate();
+				rot.Inverse(rot);
+
 				for (int i = 0; i < 7; i++)
 				{
 					Vector3 pos(GRandom().Rand() - 0.5, GRandom().Rand() - 0.5, GRandom().Rand() - 0.5);
-					pos *= 15.f * 2.f;
-					pos.y += GRandom().Rand() * 45.;
+
+					pos = posv * ((float)i / 6.f * m_effectScaleInverse);
+					pos.y += (float)i / 6.f * 50.f * deltaTime;
+					rot.Apply(pos);
+
+					//pos *= 15.f * 2.f;
+					//pos.y += GRandom().Rand() * 45.;
+
 					ParticleData pd;
 					pd.pos = pos;
 					pd.dir = pos;
@@ -84,10 +97,11 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE)
 					pd.dir.Normalize();
 					pd.lifeTime = GRandom().Rand() * 1.;
 					pd.dir.x = GRandom().Rand() * 80.;
-					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, true);
+					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, m_isWorld);
 				}
 			}
 		}
+		m_oldPos = pThis->GetWorldMatrix().GetTransrate();
 		m_particleTimer += deltaTime;
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
