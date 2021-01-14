@@ -47,39 +47,39 @@ void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 {
-	//if (Charge(e)) {
+	if (Charge(e)) {
 		m_endBeamTimer += gameTime()->GetDeltaTime();
 		const float endTime = 2.f;		//撃っている時間。
-		//if (m_endBeamTimer < endTime) {
-		//	//ビームを撃つ方向を設定。
-		//	if (!m_isSetPos) {
-		//		auto& p = GameManager::GetInstance().m_player;
-		//		m_position = p->GetPosition();
-		//		m_isSetPos = true;
-		//		m_position.y += 4.f;
-		//	}
+		if (m_endBeamTimer < endTime) {
+			//ビームを撃つ方向を設定。
+			if (!m_isSetPos) {
+				auto& p = GameManager::GetInstance().m_player;
+				m_position = p->GetPosition();
+				m_isSetPos = true;
+				m_position.y += 4.f;
+			}
 			//ビームは2本あるので2回判定を行う。
 			for (int i = 0; i < IKNum; i++) {
 				//攻撃判定。
 				if (BeamJudge(e,i)) {
-					////プレイヤーが飛んでいたら撃ち落とす。
-					//const float flyRange = 5.f;
-					//auto epos = e->GetPosition();
-					//auto& p = GameManager::GetInstance().m_player;
-					//auto ppos = p->GetPosition();
-					//if (std::abs(ppos.y - epos.y) > flyRange) {
-					//	p->ApplyDamage(m_damage, true, Vector3::Zero);
-					//}
-					//else {
-					//	p->ApplyDamage(m_damage);
-					//}
+					//プレイヤーが飛んでいたら撃ち落とす。
+					const float flyRange = 5.f;
+					auto epos = e->GetPosition();
+					auto& p = GameManager::GetInstance().m_player;
+					auto ppos = p->GetPosition();
+					if (std::abs(ppos.y - epos.y) > flyRange) {
+						p->ApplyDamage(m_damage, true, Vector3::Zero);
+					}
+					else {
+						p->ApplyDamage(m_damage);
+					}
 					m_endBeamTimer = 0.f;
 				}
-			//}
-		//}
-		/*else {
+			}
+		}
+		else {
 			return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
-		}*/
+		}
 	}
 	return this;
 }
@@ -113,11 +113,11 @@ bool Boss_FatmanChargeBeamState::Charge(IEnemy* e)
 		auto ppos = p->GetPosition();
 		
 		//狙いを少し上にする。
-		/*const float yUp = 4.f;
-		ppos.y += yUp;*/
+		const float yUp = 4.f;
+		ppos.y += yUp;
 
-		/*Vector3 vecEtoP = ppos - epos;
-		m_beams[i]->SetToPlayerDir(vecEtoP);*/
+		//Vector3 vecEtoP = ppos - epos;
+		//m_beams[i]->SetToPlayerDir(vecEtoP);
 
 		////外積。直行した縦のベクトル。
 		//Vector3 EHeight;
@@ -180,7 +180,7 @@ bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e, int ikNo)
 	//IKで砲身を動かす。
 	/*const float yUp = 4.f;
 	m_position.y += yUp;*/
-	m_ik[ikNo]->SetNextTarget(ppos);
+	m_ik[ikNo]->SetNextTarget(m_position);
 	
 	m_beams[ikNo]->SetPos(epos);
 	m_beams[ikNo]->SetRot(m_ik[ikNo]->GetEffectorBone()->GetWorldMatrix().GetRotate());
