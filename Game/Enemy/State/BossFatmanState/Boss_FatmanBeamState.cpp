@@ -156,11 +156,8 @@ void Boss_FatmanBeamState::Judge(IEnemy* e)
 		const float beamWidth = 15.0f;		//ビームの幅。
 		if (std::abs(distance) < beamWidth and front > 0) {
 			//プレイヤーが飛んでいたら撃ち落とす。
-			const float flyRange = 5.f;
-			auto epos = e->GetPosition();
 			auto& p = GameManager::GetInstance().m_player;
-			auto ppos = p->GetPosition();
-			if (std::abs(ppos.y - epos.y) > flyRange) {
+			if (!p->IsOnGround()) {
 				p->ApplyDamage(m_damage, true, Vector3::Zero);
 			}
 			else {
