@@ -33,10 +33,12 @@ void EnemyShortBigBlown::Enter(IEnemy* e)
 	}
 
 	m_velocityXZ = e->GetKnockBackImpulse();
+	//ÉfÉJÇ¢ìGÇ»ÇÃÇ≈èdÇ≠
+	m_velocityXZ *= 0.5f;
 	m_velocityY = 0.f;
 	m_isNoBlown = false;
 	if (m_velocityXZ.y != 0.f)
-		m_velocityY = max(m_velocityXZ.y / 5.f, 120.f);
+		m_velocityY = max(m_velocityXZ.y / 5.f, 60.f);
 	else
 	{
 		m_grav = 5.f;

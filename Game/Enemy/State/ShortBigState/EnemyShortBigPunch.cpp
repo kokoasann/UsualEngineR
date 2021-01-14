@@ -25,7 +25,7 @@ void EnemyShortBigPunch::Enter(IEnemy* e)
 
 	auto t = acosf(v.Dot(f));
 
-	const float BigShortVector = 125.f;
+	const float BigShortVector = 100.f;
 
 	if (vlen < 25.f && t < Math::PI * 0.5f) {
 		p->ApplyDamage(m_damage, true, f * BigShortVector);
