@@ -20,9 +20,9 @@ void Shield::Release()
 	for (int i = 0; i < m_worldSmokeEffects.size(); i++) {
 		DeleteGO(m_worldSmokeEffects.at(i));
 	}
-	for (int i = 0; i < m_localSmokeEffects.size(); i++) {
-		DeleteGO(m_localSmokeEffects.at(i));
-	}
+	//for (int i = 0; i < m_localSmokeEffects.size(); i++) {
+		//DeleteGO(m_localSmokeEffects.at(i));
+	//}
 }
 
 void Shield::OnDestroy()
@@ -54,12 +54,12 @@ bool Shield::Start()
 		m_worldSmokeEffects.push_back(ef);
 	}
 
-	for (int i = 0; i < numEffect; i++) {
-		auto ef = NewGO<SmokeEffect>(0);
-		ef->Init(Vector4::White, Vector4::White, false);
-		ef->SetSca(m_smokeEffectScale);
-		m_localSmokeEffects.push_back(ef);
-	}
+	//for (int i = 0; i < numEffect; i++) {
+	//	auto ef = NewGO<SmokeEffect>(0);
+	//	ef->Init(Vector4::White, Vector4::White, false);
+	//	ef->SetSca(m_smokeEffectScale);
+	//	m_localSmokeEffects.push_back(ef);
+	//}
 
 	m_shieldBones[TO_INT(ShieldBone::Top)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Top"));
 	m_shieldBones[TO_INT(ShieldBone::Left)] = m_model->GetModel().GetSkelton()->GetBone(m_model->GetModel().GetSkelton()->FindBoneID(L"Left"));
@@ -87,7 +87,7 @@ void Shield::PostUpdate()
 		m_model->SetActive(false);
 		for (int i = 0; i < m_worldSmokeEffects.size(); i++) {
 			m_worldSmokeEffects[i]->Stop();
-			m_localSmokeEffects[i]->Stop();
+			//m_localSmokeEffects[i]->Stop();
 		}
 	}
 	else {
@@ -96,9 +96,9 @@ void Shield::PostUpdate()
 			m_worldSmokeEffects[i]->Play();
 			m_worldSmokeEffects[i]->SetPos(m_shieldBones[i]->GetWorldMatrix().GetTransrate());
 			m_worldSmokeEffects[i]->SetRot(m_shieldBones[i]->GetWorldMatrix().GetRotate());
-			m_localSmokeEffects[i]->Play();
-			m_localSmokeEffects[i]->SetPos(m_shieldBones[i]->GetWorldMatrix().GetTransrate());
-			m_localSmokeEffects[i]->SetRot(m_shieldBones[i]->GetWorldMatrix().GetRotate());
+			//m_localSmokeEffects[i]->Play();
+			//m_localSmokeEffects[i]->SetPos(m_shieldBones[i]->GetWorldMatrix().GetTransrate());
+			//m_localSmokeEffects[i]->SetRot(m_shieldBones[i]->GetWorldMatrix().GetRotate());
 		}
 	}
 }
