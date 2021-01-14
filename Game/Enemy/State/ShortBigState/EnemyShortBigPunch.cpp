@@ -27,12 +27,6 @@ void EnemyShortBigPunch::Enter(IEnemy* e)
 
 	const float BigShortVector = 125.f;
 
-	//現在起きている問題
-	//ダメージを与えられたとき、
-	//直前にダメージ与えられた時のベクトルを参照して吹き飛んでいる
-	//なので、1回目の時は飛ばずに
-	//2回目の時に殴られると、一回目になぐられたベクトルの方向に飛ぶ
-	//？？
 	if (vlen < 25.f && t < Math::PI * 0.5f) {
 		p->ApplyDamage(m_damage, true, f * BigShortVector);
 	}
