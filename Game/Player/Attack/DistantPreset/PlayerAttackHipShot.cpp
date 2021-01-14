@@ -61,6 +61,10 @@ void PlayerAttackHipShot::Execute(Player* player) {
 			projectileR->Init(posRight, scale, vel, defSpeed, lifeSpan, range);
 
 			//projectile->Init(player->GetPosition(), vel);
+
+			//Effect
+			player->GetGun()->PlayFireEffects();
+
 			m_shotIntervalTimer = 0.f;
 
 		}

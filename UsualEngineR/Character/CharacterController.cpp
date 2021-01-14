@@ -10,8 +10,8 @@
 
 namespace UER
 {
-	const float RAD_GROUND = 0.35f;
-	const float RAD_WALL = 0.3;
+	const float RAD_GROUND = 0.42f;
+	const float RAD_WALL = 0.4;
 	//衝突したときに呼ばれる関数オブジェクト(地面用)
 	struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 	{
