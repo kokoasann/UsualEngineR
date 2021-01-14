@@ -51,7 +51,7 @@ void SmokeEffect::PostUpdate()
 
 
 
-void SmokeEffect::Init(const Vector4& col, const Vector4& colE)
+void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const bool isWorld)
 {
 	struct ParticleData
 	{
@@ -66,6 +66,7 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE)
 	pid.m_width = 10;
 	pid.m_extendDataSize = sizeof(ParticleData);
 	pid.m_isBillboard = true;
+	m_isWorld = isWorld;
 
 	PlaneParticleUpdater m_effctUpdater(
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
@@ -84,7 +85,7 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE)
 					pd.dir.Normalize();
 					pd.lifeTime = GRandom().Rand() * 1.;
 					pd.dir.x = GRandom().Rand() * 80.;
-					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, true);
+					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, col, pd.lifeTime, pd, m_isWorld);
 				}
 			}
 		}

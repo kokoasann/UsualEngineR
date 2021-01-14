@@ -27,16 +27,14 @@ void EnemyShortBigStrongPunch::Enter(IEnemy* e)
 	float vlen = v.Length();
 	v /= vlen;
 
-	const float BigShortVector = 1.5f;
+	const float BigShortVector = 125.0f;
 
 	auto f = e->GetForward();
 	auto t = acosf(v.Dot(f));
-	Vector3 hukitobiVec = e->GetPosition();
-	hukitobiVec.Normalize();
 
-	if (vlen < 7.f && t < Math::PI * 0.5f) {
-		hukitobiVec = m_forward;
-		p->ApplyDamage(m_damage, true, hukitobiVec * BigShortVector);
+	if (vlen < 25.f && t < Math::PI * 0.5f) {
+		//hukitobiVec = m_forward;
+		p->ApplyDamage(m_damage, true, f * BigShortVector);
 	}
 }
 
