@@ -18,4 +18,10 @@ private:
 	float		m_shotTimer = 0.f;
 	float		m_stateTimer = 0.f;
 	float		m_damage = 0.f;
+	IK* m_ik[2];					//IKB¶‰E‚ÌIK‚Ìî•ñ‚ªŠi”[‚³‚ê‚Ä‚¢‚éB
+	enum IK {
+		Right,
+		Left,
+		IKNum
+	};
 };
