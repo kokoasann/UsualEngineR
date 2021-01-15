@@ -32,11 +32,17 @@ public:
 		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
 		Num,
 	};
-
+private:
+	void InitAnim();
 private:
 	//Model
-	//ModelRender* m_model = nullptr;
-	float m_scale = 1.f;
+	ModelRender* m_ShieldModel = nullptr;
+	const float m_scale = 1.f;
+
+	RigidBody m_rigidBody;
+	MeshCollider m_meshColl;
+
+	Bone* m_shieldBone = nullptr;
 
 	//Physics
 	const float m_radius = 1.f;
