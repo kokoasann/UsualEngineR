@@ -356,6 +356,9 @@
     <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.h">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -713,6 +716,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp">
       <Filter>Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.cpp">
+      <Filter>Player\Attack\DistantPreset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

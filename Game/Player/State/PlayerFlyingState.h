@@ -1,5 +1,6 @@
 #pragma once
 #include "IPlayerSstate.h"
+#include "Player/Attack/DistantPreset/PlayerAttackHipShot2.h"
 class Player;
 
 /// <summary>
@@ -38,4 +39,7 @@ private:
 	//const float m_BOOST_RUN_EFFICIENCY = 0.f;
 	const float m_RISE_BOOST_EFFICIENCY = 300.f / 1.5f;
 	//const float m_RISE_BOOST_EFFICIENCY = 0.f;
+
+	PlayerAttackHipShot2 m_hipShot;
+
 };
