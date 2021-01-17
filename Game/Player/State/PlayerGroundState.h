@@ -1,6 +1,7 @@
 #pragma once
 #include"IPlayerSstate.h"
 #include "../Player.h"
+#include "Player/Attack/DistantPreset/PlayerAttackHipShot2.h"
 
 class Player;
 /// <summary>
@@ -36,4 +37,6 @@ private:
 	Vector3 m_vecVelocityGoal = Vector3::Zero;
 
 	bool m_hasEnoughStaminaToRun = true;
+
+	PlayerAttackHipShot2 m_hipShot;
 };
