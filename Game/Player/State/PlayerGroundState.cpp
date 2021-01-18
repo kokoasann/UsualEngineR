@@ -35,9 +35,15 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	}
 	
 	//State
-	if (g_pad[0]->IsTrigger(EnButton::enButtonB) or g_pad[0]->IsTrigger(EnButton::enButtonY)) {
-		auto nextState = p->GetState(Player::EnState::enAttack);
-		return nextState;
+	auto& preset = p->GetCurrentAttackPreset();
+	if (preset == Player::EnAttackPreset::enRemoteAttackPreset and g_pad[0]->IsPress(EnButton::enButtonB)) {
+		m_hipShot.GenerateProjectiles(p);
+	}
+	else {
+		if (g_pad[0]->IsTrigger(EnButton::enButtonB) or g_pad[0]->IsTrigger(EnButton::enButtonY)) {
+			auto nextState = p->GetState(Player::EnState::enAttack);
+			return nextState;
+		}
 	}
 
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {

@@ -73,4 +73,9 @@ private:
 	Bone* m_backpackBone[6] = {nullptr};
 
 	ModelRender* m_playModel;
+
+	RigidBody m_rigid_Test1;
+	RigidBody m_rigid_Test2;
+	BoxCollider m_boxTest1;
+	BoxCollider m_boxText2;
 };

@@ -118,7 +118,7 @@ namespace UER
 		bool				m_isUseRigidBody = true;		//リジッドボデューを使う？
 		bool				m_isRemoveRigidBody = false;
 
-		float				m_offsetXZ = 0.01f;
+		float				m_offsetXZ = 0.0f;
 		float				m_offsetY = 0.0f;
 	};
 }

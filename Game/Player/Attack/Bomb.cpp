@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Bomb.h"
-#include "../../Enemy/EnemyManager.h"
+//#include "../../Enemy/EnemyManager.h"
+#include "Enemy/EnemyManager.h"
 
 Bomb::Bomb()
 {
@@ -60,25 +61,41 @@ void Bomb::Update()
 	m_lifeTimerSec += delta;
 	m_position += m_velocity * m_speed * delta;
 	m_model->SetPosition(m_position);
-
 	bool isBombed = false;
-	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
-		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
-		if ((m_position - epos).Length() < m_igniteRange) {
-			//Bomb!!!
-			isBombed = true;
-			break;
-		}
-	}
 
-	if (isBombed) {
+	if ((m_position - EnemyManager::GetEnemyManager().GetNearestEnemy(m_position)->GetPosition()).Length() < m_igniteRange) {
+		isBombed = true;
 		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 			if ((m_position - epos).Length() < m_ExplodeDamageRange) {
-				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damage);
+				auto vecKb = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition() - m_position;
+				vecKb.y = 0;
+				vecKb.Normalize();
+				vecKb.y = 2.f;
+				vecKb.Normalize();
+				vecKb *= m_knockBackPower;
+				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damage, true, vecKb);
 			}
 		}
 	}
+
+	//for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
+	//	auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+	//	if ((m_position - epos).Length() < m_igniteRange) {
+	//		//Bomb!!!
+	//		isBombed = true;
+	//		break;
+	//	}
+	//}
+
+	//if (isBombed) {
+	//	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
+	//		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
+	//		if ((m_position - epos).Length() < m_ExplodeDamageRange) {
+	//			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damage);
+	//		}
+	//	}
+	//}
 
 	if (m_lifeTimerSec >= m_lifeSpanSec or isBombed) {
 		auto obj = reinterpret_cast<GameObject*>(this);

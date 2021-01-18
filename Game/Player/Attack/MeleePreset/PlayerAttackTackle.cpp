@@ -38,7 +38,16 @@ void PlayerAttackTackle::Execute(Player* player) {
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 		if ((player->GetPosition() - epos).Length() < m_range) {
-			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount);
+
+			auto vecKb = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition() - player->GetPosition();
+			vecKb.y = 0;
+			vecKb.Normalize();
+			vecKb.y = 2.f;
+			vecKb.Normalize();
+			vecKb *= m_knockBackPower;
+
+			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount, true, vecKb);
+
 			m_isDone = true;
 		}
 	}

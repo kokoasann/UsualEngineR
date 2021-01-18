@@ -27,13 +27,13 @@ private:
 	/// </summary>
 	/// <param name="e">IEnemyを継承した敵の情報。</param>
 	/// <returns>ビームに当たっているかどうか。</returns>
-	bool Judge(IEnemy* e);
+	void Judge(IEnemy* e);
 private:
 	Vector3			m_position = Vector3::Zero;
 	float			m_damage = 0.f;
 	const float		m_rotTime = 2.f;
-	const float		m_rotStartAngle = -90.f;
-	const float		m_rotAngle = 180.f;
+	const float		m_rotStartAngle = -45.0f / 2.0f;
+	float			m_rotAngle = 45.0f;
 
 	Quaternion		m_startRot = Quaternion::Identity;
 	Quaternion		m_rotation = Quaternion::Identity;
@@ -41,7 +41,16 @@ private:
 
 	bool			m_isState = false;
 
-	Beam*			m_beam = nullptr;
+	std::vector< Beam*> m_beams;
 	Vector3			m_beamPositiion = Vector3::Zero;
 	Quaternion		m_beamRotation = Quaternion::Identity;
+
+	float			m_maxSenkei = 0.0f;
+
+	IK* m_ik[2];					//IK。左右のIKの情報が格納されている。
+	enum IK {
+		Right,
+		Left,
+		IKNum
+	};
 };

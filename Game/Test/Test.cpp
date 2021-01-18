@@ -6,6 +6,46 @@
 #include "Effect/ExplosionEffect.h"
 
 
+struct SweepResult : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit = false;
+	Vector3 hitPos = Vector3::Zero;
+	const Vector3& startPos;
+	float dist = FLT_MAX;
+	int collAttr = enCollisionAttr_None;
+	btCollisionObject* hitColl = nullptr;
+
+	SweepResult(const Vector3& v) :
+		startPos(v)
+	{
+
+	}
+
+	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		int index = convexResult.m_hitCollisionObject->getUserIndex();
+		//キャラコンでもグラウンドでもない場合早期出社。
+		if (!(index & enCollisionAttr_Character
+			|| index & enCollisionAttr_Ground))
+		{
+			//return 0.f;
+		}
+
+		isHit = true;
+		Vector3 hitp = *(Vector3*)&convexResult.m_hitPointLocal;
+		Vector3 div = startPos - hitp;
+		float dis = div.Length();
+		if (dis < dist)
+		{
+			hitPos = *(Vector3*)&convexResult.m_hitPointLocal;
+			dist = dis;
+			collAttr = index;
+			hitColl = (btCollisionObject*)convexResult.m_hitCollisionObject;
+		}
+		return 0.0f;
+	}
+};
+
 void Test::Release()
 {
 	Physics().RemoveRigidBody(m_rb);
@@ -24,7 +64,19 @@ void Test::Awake()
 		cam->SetPosition({ 0,20,10 });
 		cam->SetTarget({ 0,0,0 });
 	}
-	se->Play(true);
+	//se->Play(true);
+
+	m_boxTest1.Create({ 10,10,10 });
+	m_boxText2.Create({ 1,2.5,1 });
+	RigidBodyInfo rbinfo;
+	rbinfo.collider = &m_boxTest1;
+	rbinfo.pos = { 0,30,0 };
+	m_rigid_Test1.Create(rbinfo);
+	Physics().AddRigidBody(m_rigid_Test1);
+	rbinfo.collider = &m_boxText2;
+	rbinfo.pos = { 0,60,0 };
+	m_rigid_Test2.Create(rbinfo);
+	Physics().AddRigidBody(m_rigid_Test2);
 
 	/*m_threadObj.Execute([&]()
 		{
@@ -252,6 +304,17 @@ void Test::Awake()
 void Test::Update()
 {
 	//m_chara->SetPosition(m_characon.Execute(gameTime()->GetDeltaTime(), (Vector3&)(g_vec3AxisY * -10.f)));
+	btTransform from, to;
+	from.setIdentity();
+	to.setIdentity();
+	from.setOrigin({ 0,60,0 });
+	to.setOrigin({ 0,11,0 });
+	SweepResult sr({0,60,0});
+	Physics().ConvexSweepTest((const btConvexShape*)m_boxText2.GetBody(), from, to, sr);
+	if (sr.isHit)
+	{
+		//printf("aa");
+	}
 
 	auto& trans = m_rb.GetBody()->getWorldTransform();
 	m_pModel->SetPosition(trans.getOrigin());

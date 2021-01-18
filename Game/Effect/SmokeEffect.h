@@ -46,7 +46,7 @@ public:
 	/// </summary>
 	void PostUpdate() override;
 
-	void Init(const Vector4& col, const Vector4& colE);
+	void Init(const Vector4& col, const Vector4& colE, const bool isWorld);
 
 	void SetPos(const Vector3& v)
 	{
@@ -55,6 +55,11 @@ public:
 	void SetSca(const Vector3& v)
 	{
 		m_effect->SetSca(v);
+		m_effectScaleInverse = 1.f / v.x;
+	}
+
+	void SetRot(const Quaternion& rot) {
+		m_effect->SetRot(rot);
 	}
 
 	void Play()
@@ -69,4 +74,7 @@ public:
 private:
 	PlaneParticleEffectRender* m_effect = nullptr;
 	float m_particleTimer = 0.f;
+	bool m_isWorld = true;
+	Vector3 m_oldPos = Vector3::Zero;
+	float m_effectScaleInverse = 1.f;
 };

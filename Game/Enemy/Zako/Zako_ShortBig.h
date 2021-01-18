@@ -20,25 +20,45 @@ public:
 		return Player::EnAttackType::enNone;
 	}
 
+	//デフォルトのアニメーションステート用。
+	void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) override {
+		m_model->Play(static_cast<int>(anim), interpolate);
+		//0.75倍速。デカいのでアニメーションの動きが遅い
+		m_model->SetAnimPlaySpeed(m_animBigPlayState);
+	}
+
+	//拡張されたアニメーションステート用。
+	void PlayAnimation(const int animNo, const float interpolate = 0.2f) override {
+		m_model->Play(animNo, interpolate);
+	}
 	
 	enum class EnStateEX :int
 	{
-		Expand = TO_INT(IEnemy::EnState::enNumState),
+		enComing = TO_INT(IEnemy::EnState::enBattleState),
+		enDance = TO_INT(IEnemy::EnState::enNumState),
+		//肥満体モデルらしいのでジャンプアタックは現在ないです。
 		Num,
 	};
 
 	enum class EnAnimEX :int
 	{
-		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		enDance = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		enDown,
 		Num,
 	};
 
 private:
+	/// <summary>
+	/// アニメーションの初期設定
+	/// </summary>
+	void InitAnimation();
+private:
 	//Model
 	//ModelRender* m_model = nullptr;
-	float m_scale = 1.f;
+	float m_scale = 3.f;
 
 	//Physics
-	const float m_radius = 1.f;
+	const float m_radius = 3.f;
 	const float m_height = 3.f;
+	const float m_animBigPlayState = 0.75f;
 };

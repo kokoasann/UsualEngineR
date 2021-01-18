@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="attachmentFrame.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="379.93617"
+     inkscape:cy="361.74347"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="837"
+     inkscape:window-x="1912"
+     inkscape:window-y="100"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="レイヤー 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 44,63.032738 H 78 V 92 h 12 v 10 h 25 v 35 H 90 v 10 H 78 v 25 H 44 V 147 H 32 V 137 H 7 V 102 H 32 V 92 h 12 z"
+       id="path815"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.09650517;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect817"
+       width="48.903496"
+       height="118.9035"
+       x="120.54826"
+       y="167.54825"
+       inkscape:export-filename="G:\Programing\C++\UsualEngineR\Game\Assets\SAGYO\image\attachmentFrame.png"
+       inkscape:export-xdpi="108.37333"
+       inkscape:export-ydpi="108.37333" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.09650517;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect817-0"
+       width="48.903496"
+       height="118.9035"
+       x="202.54825"
+       y="-204.45175"
+       transform="rotate(90)"
+       inkscape:export-filename="G:\Programing\C++\UsualEngineR\Game\Assets\SAGYO\image\attachmentFrame.png"
+       inkscape:export-xdpi="108.37333"
+       inkscape:export-ydpi="108.37333" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.17647064;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect834"
+       width="58.823532"
+       height="58.823528"
+       x="115.58823"
+       y="197.58824"
+       inkscape:export-filename="G:\Programing\C++\UsualEngineR\Game\Assets\SAGYO\image\attachmentFrame.png"
+       inkscape:export-xdpi="108.37333"
+       inkscape:export-ydpi="108.37333" />
+    <path
+       sodipodi:type="star"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path836"
+       sodipodi:sides="3"
+       sodipodi:cx="84.477676"
+       sodipodi:cy="175.85863"
+       sodipodi:r1="15.8051"
+       sodipodi:r2="7.9025502"
+       sodipodi:arg1="2.6179939"
+       sodipodi:arg2="3.6651914"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 70.790058,183.76118 13.687619,-23.70765 13.687618,23.70765 z"
+       inkscape:transform-center-x="5.0747895e-06"
+       inkscape:transform-center-y="-1.0583157"
+       transform="matrix(1.0206389,0,0,0.26784211,59.488612,108.37651)"
+       inkscape:export-filename="G:\Programing\C++\UsualEngineR\Game\Assets\SAGYO\image\attachmentFrameArrow.png"
+       inkscape:export-xdpi="108.37333"
+       inkscape:export-ydpi="108.37333" />
+  </g>
+</svg>

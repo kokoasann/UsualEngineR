@@ -98,12 +98,11 @@ void Boss_FatmanShootingState::BulletGenerate(IEnemy* e)
 	//弾の初期化。
 	eb->Init(epos, 0.6f, dir, 400.f, 5.f, 2.f);
 	//プレイヤーが飛んでいたら撃ち落とす。
-	const float flyRange = 5.f;
 	Vector3 knockVector = ppos - epos;
 	knockVector.Normalize();
 	const float knockParam = 200.f;
 	knockVector *= knockParam;
-	if (std::abs(ppos.y - epos.y) > flyRange) {
+	if (!p->IsOnGround()) {
 		eb->SetDamage(m_damage, true, knockVector);
 	}
 	else {

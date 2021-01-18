@@ -141,7 +141,7 @@ void PlayerAttackState::Enter(Player* p) {
 	}
 
 	//Preset C
-	if (preset == Player::EnAttackPreset::enExposivePreset) {
+	if (preset == Player::EnAttackPreset::enExplosivePreset) {
 
 		auto& CSkills = m_skills.at(EnPreset::enPresetExplosion);
 

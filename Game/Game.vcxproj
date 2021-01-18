@@ -188,6 +188,7 @@
     <ClInclude Include="Effect\SmokeEffect.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\Boss\Boss_Fatman.h" />
+    <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h" />
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
@@ -231,6 +232,15 @@
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.h" />
     <ClInclude Include="Enemy\State\MeleeBossState\EnemyTeleportationState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombBashState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombBattleState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombDeadState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombGuardState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombIdleState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombJumpState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombLaunchState.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigBlown.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigComing.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigDance.h" />
@@ -258,11 +268,14 @@
     <ClInclude Include="Item\ItemManager.h" />
     <ClInclude Include="Item\RedPotion.h" />
     <ClInclude Include="Level\GameStage.h" />
+    <ClInclude Include="Player\Attachment\Gun.h" />
     <ClInclude Include="Player\Attachment\JetPack.h" />
+    <ClInclude Include="Player\Attachment\Shield.h" />
     <ClInclude Include="Player\Attack\Bomb.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackKick.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackPunch.h" />
     <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot.h" />
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.h" />
     <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.h" />
     <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.h" />
     <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.h" />
@@ -305,6 +318,7 @@
     <ClCompile Include="Effect\SmokeEffect.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_Fatman.cpp" />
+    <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
@@ -348,6 +362,15 @@
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleePunchState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyMeleeThrusterAttackState.cpp" />
     <ClCompile Include="Enemy\State\MeleeBossState\EnemyTeleportationState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombBashState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombBattleState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombDeadState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombGuardState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombIdleState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombJumpState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombLaunchState.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigBlown.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigComing.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigDance.cpp" />
@@ -376,11 +399,14 @@
     <ClCompile Include="Item\RedPotion.cpp" />
     <ClCompile Include="Level\GameStage.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player\Attachment\Gun.cpp" />
     <ClCompile Include="Player\Attachment\JetPack.cpp" />
+    <ClCompile Include="Player\Attachment\Shield.cpp" />
     <ClCompile Include="Player\Attack\Bomb.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackKick.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackPunch.cpp" />
     <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot.cpp" />
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.cpp" />
     <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.cpp" />
     <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.cpp" />
     <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.cpp" />
@@ -416,81 +442,116 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\test\test.png">
+    <None Include="Assets\modelData\test\test.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(RelativeDir)%(Filename).dds</ContentOutput>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
+    <None Include="Assets\modelData\map\HeightMap.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\hp.png">
+    <None Include="Assets\Image\hp.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\illumination.png">
+    <None Include="Assets\Image\illumination.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m\mTex.png">
+    <None Include="Assets\modelData\m\mTex.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m\mNor.png">
+    <None Include="Assets\modelData\m\mNor.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png">
+    <None Include="Assets\modelData\map\commit\mapNormal.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\AssistantMachine\am_tex.png">
+    <None Include="Assets\modelData\map_obj\hgb_tex.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
+    <None Include="Assets\modelData\boss\sp\sp_tex.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
+    </None>
+    <None Include="Assets\modelData\m\Backpack\Backpack_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\white.png" />
+    <None Include="Assets\modelData\AssistantMachine\am_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
+    <None Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
+    <None Include="Assets\modelData\boss\sp\sp_emi.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\targetMarker.png" />
+    <None Include="Assets\Image\white.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png" />
+    <None Include="Assets\Image\whiteFade_TB.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png" />
+    <None Include="Assets\Image\whiteGrad_B.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Image\targetMarker.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\boss\lf\lf_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\m_BG\m_BGTex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Image\attachmentFrame.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\m\Gun\Gun_tex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

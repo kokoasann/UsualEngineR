@@ -92,6 +92,10 @@ public:
 		m_targetEnemy = targetEnemy;
 	}
 
+	void AddEnemy(IEnemy* e)
+	{
+		m_enemies.push_back(e);
+	}
 private:
 
 	static const int m_numNormalEnemy = 2;

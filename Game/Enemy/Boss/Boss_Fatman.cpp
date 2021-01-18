@@ -35,12 +35,22 @@ void Boss_Fatman::Init()
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
 
+	InitAnimation();
+
 	//State
 	SetState(m_stateMap[TO_INT(IEnemy::EnState::enIdleState)]);
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
 }
+
+void Boss_Fatman::InitAnimation()
+{
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/lf//anim/lf_idle.tka", true);
+
+	m_model->InitAnimation(m_animationMap, m_animationMap.size());
+}
+
 void Boss_Fatman::InitState()
 {
 	{

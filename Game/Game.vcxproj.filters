@@ -320,6 +320,45 @@
     <ClInclude Include="PowaPowa.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="GameDebugger.h" />
+    <ClInclude Include="Player\Attachment\Gun.h">
+      <Filter>Player\Attachment</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attachment\Shield.h">
+      <Filter>Player\Attachment</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombBattleState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombDeadState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombGuardState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombIdleState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombJumpState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombLaunchState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombBashState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h">
+      <Filter>Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.h">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -642,6 +681,45 @@
     <ClCompile Include="PowaPowa.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameDebugger.cpp" />
+    <ClCompile Include="Player\Attachment\Gun.cpp">
+      <Filter>Player\Attachment</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attachment\Shield.cpp">
+      <Filter>Player\Attachment</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombDeadState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombGuardState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombIdleState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombJumpState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombLaunchState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombBashState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombBattleState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp">
+      <Filter>Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.cpp">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -773,53 +851,42 @@
     <Filter Include="Assets\modelData\m_BG">
       <UniqueIdentifier>{8cbb456a-698b-4510-8c4b-a1814be384ac}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\test\test.png">
-      <Filter>Assets\modelData\test</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\map\HeightMap.png">
-      <Filter>Assets\modelData</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\hp.png">
-      <Filter>Assets\image</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\illumination.png">
-      <Filter>Assets\image</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\mTex.png">
-      <Filter>Assets\modelData\m</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\mNor.png">
-      <Filter>Assets\modelData\m</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\map\commit\mapNormal.png" />
-    <ImageContentTask Include="Assets\modelData\map_obj\hgb_tex.png" />
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_tex.png">
-      <Filter>Assets\modelData\boss\sp</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
-    <ImageContentTask Include="Assets\modelData\AssistantMachine\am_tex.png">
-      <Filter>Assets\modelData\am</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
-    <ImageContentTask Include="Assets\modelData\boss\sp\sp_emi.png">
-      <Filter>Assets\modelData\boss\sp</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\Image\white.png" />
-    <ImageContentTask Include="Assets\Image\whiteFade_TB.png" />
-    <ImageContentTask Include="Assets\Image\whiteGrad_B.png" />
-    <ImageContentTask Include="Assets\Image\targetMarker.png">
-      <Filter>Assets\image</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\boss\lf\lf_tex.png">
-      <Filter>Assets\modelData\boss\lf</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\modelData\m_BG\m_BGTex.png">
-      <Filter>Assets\modelData\m_BG</Filter>
-    </ImageContentTask>
+    <Filter Include="Assets\modelData\boss\mb">
+      <UniqueIdentifier>{e19ffaae-630d-4ea6-b5b8-51988f2939bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\State\BombBoss">
+      <UniqueIdentifier>{e1d361dc-842f-47e0-866e-533f59df503d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\test\test.png" />
+    <None Include="Assets\modelData\map\HeightMap.png" />
+    <None Include="Assets\Image\hp.png" />
+    <None Include="Assets\Image\illumination.png" />
+    <None Include="Assets\modelData\m\mTex.png" />
+    <None Include="Assets\modelData\m\mNor.png" />
+    <None Include="Assets\modelData\map\commit\mapNormal.png" />
+    <None Include="Assets\modelData\map_obj\hgb_tex.png" />
+    <None Include="Assets\modelData\boss\sp\sp_tex.png" />
+    <None Include="Assets\modelData\m\Backpack\Backpack_tex.png" />
+    <None Include="Assets\modelData\AssistantMachine\am_tex.png" />
+    <None Include="Assets\modelData\enemy\ShortRangeMonster\srm_tex.png" />
+    <None Include="Assets\modelData\boss\sp\sp_emi.png" />
+    <None Include="Assets\Image\white.png" />
+    <None Include="Assets\Image\whiteFade_TB.png" />
+    <None Include="Assets\Image\whiteGrad_B.png" />
+    <None Include="Assets\Image\targetMarker.png" />
+    <None Include="Assets\modelData\boss\lf\lf_tex.png" />
+    <None Include="Assets\modelData\m_BG\m_BGTex.png" />
+    <None Include="Assets\Image\attachmentFrame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\m\Gun\Gun_tex.png" />
+    <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
   </ItemGroup>
 </Project>
