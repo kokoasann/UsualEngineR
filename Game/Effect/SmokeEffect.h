@@ -55,6 +55,7 @@ public:
 	void SetSca(const Vector3& v)
 	{
 		m_effect->SetSca(v);
+		m_effectScaleInverse = 1.f / v.x;
 	}
 
 	void SetRot(const Quaternion& rot) {
@@ -74,4 +75,6 @@ private:
 	PlaneParticleEffectRender* m_effect = nullptr;
 	float m_particleTimer = 0.f;
 	bool m_isWorld = true;
+	Vector3 m_oldPos = Vector3::Zero;
+	float m_effectScaleInverse = 1.f;
 };

@@ -68,16 +68,28 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const bool isWor
 	pid.m_isBillboard = true;
 	m_isWorld = isWorld;
 
+
 	PlaneParticleUpdater m_effctUpdater(
 		[&]PLANE_PARTICLE_GENERATE_FUNC(pThis, deltaTime)
 	{
 		{
 			{
+
+				Vector3 posv = m_oldPos - pThis->GetWorldMatrix().GetTransrate();
+				Quaternion rot = pThis->GetWorldMatrix().GetRotate();
+				rot.Inverse(rot);
+
 				for (int i = 0; i < 7; i++)
 				{
 					Vector3 pos(GRandom().Rand() - 0.5, GRandom().Rand() - 0.5, GRandom().Rand() - 0.5);
-					pos *= 15.f * 2.f;
-					pos.y += GRandom().Rand() * 45.;
+
+					pos = posv * ((float)i / 6.f * m_effectScaleInverse);
+					pos.y += (float)i / 6.f * 50.f * deltaTime;
+					rot.Apply(pos);
+
+					//pos *= 15.f * 2.f;
+					//pos.y += GRandom().Rand() * 45.;
+
 					ParticleData pd;
 					pd.pos = pos;
 					pd.dir = pos;
@@ -89,6 +101,7 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const bool isWor
 				}
 			}
 		}
+		m_oldPos = pThis->GetWorldMatrix().GetTransrate();
 		m_particleTimer += deltaTime;
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)

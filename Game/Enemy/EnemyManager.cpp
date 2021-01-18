@@ -3,6 +3,7 @@
 #include "Enemy/EnemyTest.h"
 #include "Enemy/Boss/BossA.h"
 #include "Enemy/Boss/Boss_FatMan.h"
+#include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "EnemyTest.h"
 #include <random>
 
@@ -30,14 +31,20 @@ void EnemyManager::SpawnEnemies() {
 	m_enemies.push_back(bene);
 	*/
 
-	ab.InitHP(BOSS_A_HP);
-	ab.InitStamina(BOSS_A_STAMINA);
 
 	auto e = NewGO<Zako_LongDistanceMachine>(0);
 	//e->Init();
+	ab.InitHP(50000);
 	e->SetAbility(ab);
 	e->SetPosition({ -50,10,-50 });
 	m_enemies.push_back(e);
+
+	/*ab.InitHP(BOSS_A_HP);
+	ab.InitStamina(BOSS_A_STAMINA);
+	Boss_MiddleBomb* boss = NewGO<Boss_MiddleBomb>(0);
+	boss->SetAbility(ab);
+	boss->SetPosition({ -300,50,50 });
+	m_enemies.push_back(boss);*/
 
 	static bool isCreatedEnemyBulletManager = false;
 	if (!isCreatedEnemyBulletManager)
@@ -68,6 +75,15 @@ void EnemyManager::SpawnEnemies() {
 				e->SetRotation(objData.rotation);
 				m_enemies.push_back(e);
 			}
+			else if (objData.name == L"BigShort")
+			{
+				auto e = NewGO<Zako_ShortBig>(0);
+				ab.InitHP(60);
+				e->SetAbility(ab);
+				e->SetPosition(objData.position * 100.f);
+				e->SetRotation(objData.rotation);
+				m_enemies.push_back(e);
+			}
 			else if (objData.name == L"MeleeBoss") {
 				auto bene = NewGO<BossA>(0);
 				ab.InitHP(BOSS_A_HP);
@@ -80,6 +96,16 @@ void EnemyManager::SpawnEnemies() {
 			else if (objData.name == L"LongFatBoss")
 			{
 				auto bene = NewGO<Boss_Fatman>(0);
+				ab.InitHP(BOSS_A_HP);
+				ab.InitStamina(BOSS_A_STAMINA);
+				bene->SetAbility(ab);
+				bene->SetPosition(objData.position * 100.f);
+				bene->SetRotation(objData.rotation);
+				m_enemies.push_back(bene);
+			}
+			else if (objData.name == L"BombBoss")
+			{
+				auto bene = NewGO<Boss_MiddleBomb>(0);
 				ab.InitHP(BOSS_A_HP);
 				ab.InitStamina(BOSS_A_STAMINA);
 				bene->SetAbility(ab);

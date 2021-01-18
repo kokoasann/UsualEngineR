@@ -79,7 +79,7 @@ private:
 	bool m_isUsed = true;
 
 	std::vector<SmokeEffect*> m_worldSmokeEffects;
-	std::vector<SmokeEffect*> m_localSmokeEffects;
+	//std::vector<SmokeEffect*> m_localSmokeEffects;
 
 	enum class ShieldBone {
 		Top,
