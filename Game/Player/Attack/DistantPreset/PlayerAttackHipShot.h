@@ -1,5 +1,6 @@
 #pragma once
 #include "../IPlayerAttack.h"
+//Note : This class is no longer used in this project.
 
 class PlayerAttackHipShot : public IPlayerAttack
 {
@@ -23,6 +24,9 @@ public:
 	}
 
 private:
+	void GenerateProjectiles(Player* player);
+	void Move(Player* player);
+
 	//attack
 	bool m_isDone = false;
 	const float m_interval = 0.5f;

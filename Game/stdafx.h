@@ -19,6 +19,7 @@ enum class EDebugConsoloUser :int
 	WATA = TO_INT(EDebugConsoleKind::num),
 	YOSI = TO_INT(EDebugConsoleKind::num) + 2,
 	INAM = TO_INT(EDebugConsoleKind::num) + 4,
+	HIRO = TO_INT(EDebugConsoleKind::num) + 8,
 };
 
 static INT operator|(EDebugConsoloUser x, EDebugConsoloUser y)
@@ -70,3 +71,7 @@ static void DebugPrint_INAM(const char* str)
 	DebugPrintLine(EDebugConsoloUser::INAM, str);
 }
 
+static void DebugPrint_HIRO(const char* str)
+{
+	DebugPrintLine(EDebugConsoloUser::HIRO, str);
+}

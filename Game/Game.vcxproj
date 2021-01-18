@@ -275,6 +275,7 @@
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackKick.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackPunch.h" />
     <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot.h" />
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.h" />
     <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.h" />
     <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.h" />
     <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.h" />
@@ -405,6 +406,7 @@
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackKick.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackPunch.cpp" />
     <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot.cpp" />
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.cpp" />
     <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.cpp" />
     <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.cpp" />
     <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.cpp" />
