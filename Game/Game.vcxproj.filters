@@ -371,9 +371,6 @@
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombFlyingState.h">
       <Filter>Enemy\State\BombBoss</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.h">
-      <Filter>Enemy\State\BossFatman</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -746,9 +743,6 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombFlyingBattleState.cpp">
       <Filter>Enemy\State\BombBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.cpp">
-      <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
