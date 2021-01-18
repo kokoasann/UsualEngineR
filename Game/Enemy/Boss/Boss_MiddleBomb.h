@@ -20,16 +20,30 @@ public:
 		return Player::EnAttackType::enNone;
 	}
 
+	void PlayAnimation(const int animNo, const float interpolate = 0.2f)
+	{
+		m_model->Play(animNo, interpolate);
+	}
 	
 	enum class EnStateEX :int
 	{
-		Expand = TO_INT(IEnemy::EnState::enNumState),
+		Luanch = TO_INT(IEnemy::EnState::enAttackA),
+		Corocoro,
+		FullFrontal = TO_INT(IEnemy::EnState::enNumState),
+		Bash,
+		Guard,
+		Jump,
 		Num,
 	};
 
 	enum class EnAnimEX :int
 	{
-		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		Firing = TO_INT(IEnemy::EnAnimation::enAttackA),
+		FiringUp,
+		FullFrontal = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		Bash,
+		Guard,
+		Jump,
 		Num,
 	};
 private:

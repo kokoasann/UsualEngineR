@@ -15,6 +15,7 @@ namespace UER
 		enCollisionAttr_NonHitIK = 4,
 		enCOllisionAttr_IK = 8,
 		enCollisionAttr_NonHit = 16,
-		enCollisionAttr_User = 32
+		enCollisionAttr_Wall = 32,
+		enCollisionAttr_User = 64
 	};
 }
