@@ -64,4 +64,9 @@ IEnemyState* EnemyShortBigStun::Update(IEnemy* e)
 void EnemyShortBigStun::Exit(IEnemy* e)
 {
 	e->SetExternalVelocity(Vector3::Zero);
+	//テストコード。倒れる
+	//CSoundSource* se1 = NewGO<CSoundSource>(0, "NK");
+	//se1->Init(L"Assets/sound/NockDown.wav");
+	//se1->Play(false);
+	//se1->SetVolume(1.0f);
 }

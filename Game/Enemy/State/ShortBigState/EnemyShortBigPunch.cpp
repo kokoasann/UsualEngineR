@@ -27,6 +27,12 @@ void EnemyShortBigPunch::Enter(IEnemy* e)
 
 	const float BigShortVector = 100.f;
 
+	//テストコード。殴打音
+	CSoundSource* se = NewGO<CSoundSource>(0,"Punch");
+	se->Init(L"Assets/sound/Goblin_Punch1.wav");
+	se->Play(false);
+	se->SetVolume(1.0f);
+
 	if (vlen < 25.f && t < Math::PI * 0.5f) {
 		p->ApplyDamage(m_damage, true, f * BigShortVector);
 	}
