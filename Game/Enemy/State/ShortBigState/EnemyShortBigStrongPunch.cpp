@@ -34,6 +34,12 @@ void EnemyShortBigStrongPunch::Enter(IEnemy* e)
 
 	if (vlen < 25.f && t < Math::PI * 0.5f) {
 		//hukitobiVec = m_forward;
+		//殴打音。
+		CSoundSource* se = NewGO<CSoundSource>(0,"StrongPunch");
+		se->Init(L"Assets/sound/Goblin_StrongPunch1.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
+		//ダメージとnkの適応
 		p->ApplyDamage(m_damage, true, f * BigShortVector);
 	}
 }

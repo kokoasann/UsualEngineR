@@ -32,6 +32,12 @@ void EnemyShortBigBlown::Enter(IEnemy* e)
 		}
 	}
 
+	//テストコード。被弾ボイス
+	CSoundSource* se = NewGO<CSoundSource>(0, "Voice");
+	se->Init(L"Assets/sound/Goblin_Voice1.wav");
+	se->Play(false);
+	se->SetVolume(1.0f);
+
 	m_velocityXZ = e->GetKnockBackImpulse();
 	//デカい敵なので重く
 	m_velocityXZ *= 0.5f;
