@@ -46,7 +46,7 @@ public:
 	/// </summary>
 	void PostUpdate() override;
 
-	void Init(const Vector4& col, const Vector4& colE, const bool isWorld);
+	void Init(const Vector4& col, const Vector4& colE, const float lifeSpanParam, const int density, const bool isWorld);
 
 	void SetPos(const Vector3& v)
 	{
@@ -77,4 +77,10 @@ private:
 	bool m_isWorld = true;
 	Vector3 m_oldPos = Vector3::Zero;
 	float m_effectScaleInverse = 1.f;
+
+	int m_density = 10;
+	float m_lifeSpanParam = 1.f;
+	Vector4 m_colS = Vector4::White;
+	Vector4 m_colE = Vector4::White;
+
 };
