@@ -38,6 +38,7 @@ private:
 	const float m_knockBackPower = 230.f;
 
 	bool m_canDoAttack = true;
+	CSoundSource* m_se = nullptr;
 
 };
 

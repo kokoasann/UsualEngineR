@@ -82,4 +82,5 @@ private:
 
 	const float m_knockBackPower = 230.f;
 
+	CSoundSource* m_se = nullptr;
 };

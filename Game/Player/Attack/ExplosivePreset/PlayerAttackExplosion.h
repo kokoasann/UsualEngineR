@@ -41,6 +41,8 @@ private:
 
 	bool m_canDoAttack = true;
 
+	CSoundSource* m_se = nullptr;
+
 };
 
 

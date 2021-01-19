@@ -16,6 +16,8 @@ void PlayerAttackKick::Init(Player* player, int combo) {
 	std::string s = "attack Kick combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+	m_kickSE = NewGO< CSoundSource>(0);
+	m_kickSE->Init(L"Assets/sound/chara/punch1.wav", true);
 	
 	if (player->GetCurrentEndurance() < m_StaminaCost or player->GetCurrentBoost() < m_BoostCost) {
 		m_canDoAttack = false;
@@ -64,6 +66,7 @@ void PlayerAttackKick::Execute(Player* player) {
 				v *= m_knockBack;
 
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, true, v);
+				m_kickSE->Play(false);
 				m_attackedEnemyMap.insert(std::make_pair(nearestEnemy, true));
 			}
 			//m_hasAlreadyAttacked = true;

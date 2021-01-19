@@ -34,6 +34,9 @@ void Bomb::Awake()
 bool Bomb::Start()
 {
 
+	m_se = NewGO< CSoundSource>(0);
+	m_se->Init(L"Assets/sound/chara/explosion.wav", true);
+
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
@@ -75,6 +78,7 @@ void Bomb::Update()
 				vecKb.Normalize();
 				vecKb *= m_knockBackPower;
 				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damage, true, vecKb);
+				m_se->Play(false);
 			}
 		}
 	}
