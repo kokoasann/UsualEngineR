@@ -116,6 +116,10 @@ public:
 		m_model->Play(animNo, interpolate);
 	}
 
+	static void SetBattlePhase(EnBattlePhase en) {
+		m_battlePhase = en;
+	}
+
 	static EnBattlePhase GetCurrentBattlePhase() {
 		return m_battlePhase;
 	}
@@ -124,11 +128,6 @@ private:
 	/// アニメーションの初期化。
 	/// </summary>
 	void InitAnimation();
-	/// <summary>
-	/// バトルフェーズの遷移。
-	/// </summary>
-	/// <param name="e"></param>
-	void ChangeBattleState(IEnemy* e);
 private:
 	float m_scale = 1.f;
 
