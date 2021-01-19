@@ -347,10 +347,14 @@ public:
 
 	void FireThrusters() {
 		m_isUsingThrusters = true;
+		m_jetSE = NewGO< CSoundSource>(0);
+		m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
+		m_jetSE->Play(true);
 	}
 
 	void StopThrusters() {
 		m_isUsingThrusters = false;
+		m_jetSE->Stop();
 	}
 
 	const bool IsUsingThrusters() {
@@ -514,6 +518,8 @@ private:
 	//PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
 	std::vector<JetEffect*> m_jetEffects;
 
+	//SE
+	CSoundSource* m_jetSE = nullptr;
 
 	//Hands
 	SphereCollider		m_sphereCollider;

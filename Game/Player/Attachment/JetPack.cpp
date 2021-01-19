@@ -37,8 +37,6 @@ void JetPack::Awake()
 
 bool JetPack::Start()
 {
-	m_jetSE = NewGO< CSoundSource>(0);
-	m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
 
 	ModelInitData mid;
 	m_model = NewGO<ModelRender>(0);
@@ -145,7 +143,6 @@ void JetPack::Update()
 		m_model->SetActive(false);
 		for (int i = 0; i < m_jetEffects.size(); i++) {
 			m_jetEffects[i]->SetGenerateFlag(false);
-			m_jetSE->Stop();
 		}
 	}
 	else {
@@ -162,14 +159,12 @@ void JetPack::PostUpdate()
 	if (!m_isUsingThrusters) {
 		for (int i = 0; i < m_jetEffects.size(); i++) {
 			m_jetEffects[i]->SetGenerateFlag(false);
-			m_jetSE->Stop();
 		}
 		return;
 	}
 
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		m_jetEffects[i]->SetGenerateFlag(true);
-		m_jetSE->Play(true);
 		const auto& mat = m_backpackBone[i]->GetWorldMatrix();
 		m_jetEffects[i]->SetPosition(mat.GetTransrate());
 		m_jetEffects[i]->SetRotation(mat.GetRotate());
