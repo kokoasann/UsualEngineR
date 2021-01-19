@@ -4,7 +4,6 @@
 class Player;
 class JetEffect;
 class ExplosionEffect;
-
 /// <summary>
 /// 
 /// </summary>

@@ -25,6 +25,9 @@ void Pod::Release()
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
+
+	m_explosionEffect->Stop();
+	DeleteGO(m_explosionEffect);
 }
 
 void Pod::OnDestroy()
@@ -105,6 +108,9 @@ bool Pod::Start()
 	//bullets
 	auto pbm = NewGO<PlayerBulletManager>(0);
 	pbm->Allocate(70);
+
+	m_explosionEffect = NewGO<ExplosionEffect>(0);
+	m_explosionEffect->Init();
 
 	return true;
 }
@@ -365,6 +371,8 @@ void Pod::Kamikaze() {
 		m_se = NewGO<CSoundSource>(0);
 		m_se->Init(L"Assets/sound/chara/explosion.wav", true);
 		m_se->Play(false);
+		m_explosionEffect->SetPos(m_pos);
+		m_explosionEffect->Play();
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
 		m_state = PodState::enBack;
 	}

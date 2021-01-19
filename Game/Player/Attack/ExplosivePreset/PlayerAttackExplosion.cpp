@@ -85,6 +85,7 @@ void PlayerAttackExplosion::Execute(Player* player) {
 				vecKb *= m_knockBackPower;
 				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage,true, vecKb);
 				m_se->Play(false);
+				player->Explode();
 			}
 		}
 	}
