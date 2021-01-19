@@ -94,3 +94,15 @@ IEnemyState* Boss_FatmanMainState::LongRangeAttack(IEnemy* e)
 		return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enAttackC));
 	}
 }
+
+void Boss_FatmanMainState::ChangeBattleState(IEnemy* e)
+{
+	const float percentage_Tired = 2.0f / 5.0f;
+	const float percentage_Mad = 2.0f / 3.0f;
+	if (e->GetCurrentHP() < e->GetMaxHP() * percentage_Tired) {
+		Boss_Fatman::SetBattlePhase(EnBattlePhase::Tired);
+	}
+	else if (e->GetCurrentHP() < e->GetMaxHP() * percentage_Mad) {
+		Boss_Fatman::SetBattlePhase(EnBattlePhase::Mad);
+	}
+}
