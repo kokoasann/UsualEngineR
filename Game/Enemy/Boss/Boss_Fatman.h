@@ -2,6 +2,14 @@
 #include "GameManager.h"
 #include "Enemy/IEnemy.h"
 
+enum class EnBattlePhase
+{
+	Normal,
+	Mad,
+	Tired,
+	NumPhase
+};
+
 /// <summary>
 /// ファットマン。
 /// </summary>
@@ -107,15 +115,27 @@ public:
 	void PlayAnimation(const int animNo, const float interpolate = 0.2f) override {
 		m_model->Play(animNo, interpolate);
 	}
+
+	static EnBattlePhase GetCurrentBattlePhase() {
+		return m_battlePhase;
+	}
 private:
 	/// <summary>
 	/// アニメーションの初期化。
 	/// </summary>
 	void InitAnimation();
+	/// <summary>
+	/// バトルフェーズの遷移。
+	/// </summary>
+	/// <param name="e"></param>
+	void ChangeBattleState(IEnemy* e);
 private:
 	float m_scale = 1.f;
 
 	//Physics
 	const float m_radius = 2.f;
 	const float m_height = 3.f;
+
+	//バトルフェーズ。
+	static EnBattlePhase m_battlePhase;
 };
