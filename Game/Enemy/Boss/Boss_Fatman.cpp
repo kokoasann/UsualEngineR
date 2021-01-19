@@ -10,6 +10,8 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanTackleState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 
+EnBattlePhase Boss_Fatman::m_battlePhase = EnBattlePhase::Normal;
+
 Boss_Fatman::Boss_Fatman()
 {
 
@@ -100,8 +102,19 @@ void Boss_Fatman::InitIK()
 	{
 		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Beam_IK_L")), 1, radius);
 		ik->SetIKMode(IK::enMode_NoneHit);
-
 		SetIK(TO_INT(EnIK::enArm_L), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Barrel_IK_L")), 1, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enFoot_L), ik);
+	}
+	{
+		IK* ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Barrel_IK_R")), 1, radius);
+		ik->SetIKMode(IK::enMode_NoneHit);
+
+		SetIK(TO_INT(EnIK::enFoot_R), ik);
 	}
 }
 
