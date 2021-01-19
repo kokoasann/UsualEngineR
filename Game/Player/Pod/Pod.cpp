@@ -19,8 +19,6 @@ Pod::~Pod()
 
 }
 
-
-
 void Pod::Release()
 {
 	DeleteGO(m_model);
@@ -123,12 +121,8 @@ void Pod::Update()
 	m_mulCol = Color(red * 3.f, 1.f - red, 1.f - red, 1.f);
 	m_model->SetMulColor(m_mulCol);
 
-
 	m_explosionEffect->SetPos(m_pos);
 	m_explosionEffect->SetSca(Vector3::One * 0.1f);
-
-	m_model->SetPosition(m_pos);
-	m_model->SetRotation(m_rotation);
 
 	//const float smokeSizeParam = 0.15f;
 	//m_smokeEffect->SetSca(Vector3::One * smokeSizeParam * red);
@@ -249,8 +243,9 @@ void Pod::PostUpdate()
 		BackToIdlePos();
 	}
 
+	m_model->SetPosition(m_pos);
+	m_model->SetRotation(m_rotation);
 }
-
 
 void Pod::Render()
 {
@@ -261,7 +256,6 @@ void Pod::PostRender()
 {
 
 }
-
 
 void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
