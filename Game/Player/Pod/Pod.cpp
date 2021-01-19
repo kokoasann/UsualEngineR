@@ -260,6 +260,10 @@ void Pod::PostRender()
 void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
 
+	m_se = NewGO<CSoundSource>(0);
+	m_se->Init(L"Assets/sound/chara/beam.wav", true);
+	m_se->Play(false);
+
 	//laser
 	const float laserRange = 30.f;
 	auto player = GameManager::GetInstance().GetPlayer();
@@ -358,6 +362,9 @@ void Pod::Kamikaze() {
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
+		m_se = NewGO<CSoundSource>(0);
+		m_se->Init(L"Assets/sound/chara/explosion.wav", true);
+		m_se->Play(false);
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
 		m_state = PodState::enBack;
 	}

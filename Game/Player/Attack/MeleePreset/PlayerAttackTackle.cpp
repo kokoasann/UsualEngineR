@@ -26,7 +26,7 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 	player->FireThrusters();
 
 	m_se = NewGO< CSoundSource>(0);
-	m_se->Init(L"Assets/sound/chara/explosion.wav", true);
+	m_se->Init(L"Assets/sound/chara/punch1.wav", true);
 
 }
 
