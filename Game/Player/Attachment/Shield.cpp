@@ -47,9 +47,10 @@ bool Shield::Start()
 	m_model->Init(mid);
 
 	const int numEffect = 3;
+
 	for (int i = 0; i < numEffect; i++) {
 		auto ef = NewGO<SmokeEffect>(0);
-		ef->Init(Vector4::White,Vector4::White,true);
+		ef->Init(Vector4(1.f,1.f,1.f,1.f),Vector4(1.f,1.f,1.f,0.f), /*lifeSpanParam*/0.5f, /*density*/14, true);
 		ef->SetSca(m_smokeEffectScale);
 		m_worldSmokeEffects.push_back(ef);
 	}

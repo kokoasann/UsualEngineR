@@ -1,5 +1,5 @@
 #pragma once
-
+class ExplosionEffect;
 /// <summary>
 /// 
 /// </summary>
@@ -32,6 +32,8 @@ public:
 	/// <returns>trueを返さない限り、ずっとStartを呼び続ける</returns>
 	bool Start() override;
 
+	void Init(const Vector3& pos,const Vector3& fireVelo,float size);
+
 	/// <summary>
 	/// 更新。の前に呼ばれる更新。
 	/// </summary>
@@ -47,5 +49,9 @@ public:
 
 
 private:
-
+	ModelRender* m_model;
+	SphereCollider m_coll;
+	RigidBody m_rigidBody;
+	Vector3 m_velo = Vector3::Zero;
+	ExplosionEffect* m_effect;
 };

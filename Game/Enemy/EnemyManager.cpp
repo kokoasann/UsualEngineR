@@ -32,12 +32,12 @@ void EnemyManager::SpawnEnemies() {
 	*/
 
 
-	auto e = NewGO<Zako_LongDistanceMachine>(0);
-	//e->Init();
-	ab.InitHP(50000);
-	e->SetAbility(ab);
-	e->SetPosition({ -50,10,-50 });
-	m_enemies.push_back(e);
+	//auto e = NewGO<Zako_LongDistanceMachine>(0);
+	////e->Init();
+	//ab.InitHP(50000);
+	//e->SetAbility(ab);
+	//e->SetPosition({ -50,10,-50 });
+	//m_enemies.push_back(e);
 
 	/*ab.InitHP(BOSS_A_HP);
 	ab.InitStamina(BOSS_A_STAMINA);
@@ -116,7 +116,7 @@ void EnemyManager::SpawnEnemies() {
 			return true;
 		}
 	);
-
+	
 	return;
 	
 

@@ -119,6 +119,7 @@ namespace UER
 			//if (angle >= Math::PI * RAD_WALL && 1 		//地面の傾斜が54度以上なので壁とみなす。
 			if (angle >= Math::PI * RAD_WALL 		//地面の傾斜が54度以上なので壁とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
+				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Wall
 				//|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Ground
 				)
 			{
@@ -490,8 +491,8 @@ namespace UER
 
 #if DEBUG_FUNC
 		//auto v = m_position - nextPosition;
-		if (isDebugPrinted)
-			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "END EXECUTE\n");
+		//if (isDebugPrinted)
+			//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "END EXECUTE\n");
 
 #endif
 
@@ -644,9 +645,9 @@ namespace UER
 				{
 					//nowPos.y = Ypos;
 					isHitFloor = true;
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR IN WALL !!!!");
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR IN WALL !!!!");
 					//DebugPrintValue(TO_INT(EDebugConsoleKind::master), "Ypos", Ypos);
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
 					isDebugPrinted = true;
 				}
 				//DebugPrintVector3(EDebugConsoleKind::master, callback.hitNormal);
@@ -707,7 +708,7 @@ namespace UER
 					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
 				}
 
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL");
 				isDebugPrinted = true;
 				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 				if (currentDir.Dot(originalXZDir) < 0.0f) {
@@ -837,9 +838,9 @@ namespace UER
 				m_isOnGround = true;
 				nextPos.y = callback.hitPos.y + m_offsetY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
 				//nextPos = callback.hitPos;
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
-				DebugPrintVector3(EDebugConsoleKind::master, nextPos-callback.hitPos);
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
+				//DebugPrintVector3(EDebugConsoleKind::master, nextPos-callback.hitPos);
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
 				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
 				isDebugPrinted = true;
 
@@ -876,7 +877,7 @@ namespace UER
 				nextPos += vOffset;
 				//nextPos.y = callback.wallHitPos.y;
 
-				DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
+				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
 				isDebugPrinted = true;
 
 				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
@@ -899,11 +900,11 @@ namespace UER
 		}
 		else
 		{
-			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WTF!!!??? KONNA NO ARIE NAI");
+			/*DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "WTF!!!??? KONNA NO ARIE NAI");
 			DebugPrintValue(TO_INT(EDebugConsoleKind::master), "ADD Y", addPosY);
 			DebugPrintValue(TO_INT(EDebugConsoleKind::master), "DIFF s2e", fabsf(end.getOrigin().y() - start.getOrigin().y()));
 			
-			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
+			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");*/
 			isDebugPrinted = true;
 		}
 	}

@@ -87,7 +87,14 @@ void Boss_FatmanChargeBeamState::Exit(IEnemy* e)
 
 bool Boss_FatmanChargeBeamState::Charge(IEnemy* e)
 {
-	const float chargeTime = 5.f;		//—­‚ß‚Ä‚¢‚éŠÔB
+	float chargeTime = 3.0f;		//—­‚ß‚Ä‚¢‚éŠÔB
+	if (EnBattlePhase::Mad == Boss_Fatman::GetCurrentBattlePhase()) {
+		chargeTime = 1.0f;
+	}
+	else if (EnBattlePhase::Tired == Boss_Fatman::GetCurrentBattlePhase()) {
+		chargeTime = 2.0f;
+	}
+
 	m_chargeTimer += gameTime()->GetDeltaTime();
 	if (m_chargeTimer > chargeTime) {
 		return true;

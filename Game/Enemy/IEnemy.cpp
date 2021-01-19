@@ -36,7 +36,7 @@ bool IEnemy::Start() {
 	m_explodeEffect->Init();
 
 	m_smokeEffect = NewGO<SmokeEffect>(0);
-	m_smokeEffect->Init(m_smokeColor, m_smokeColor,true);
+	m_smokeEffect->Init(m_smokeColor, m_smokeColor, 1.f, 7, true);
 
 	return true;
 }

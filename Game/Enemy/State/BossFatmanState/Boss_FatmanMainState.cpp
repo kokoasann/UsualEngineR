@@ -26,7 +26,16 @@ void Boss_FatmanMainState::Enter(IEnemy* e)
 IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 {
 	m_fatTimer += gameTime()->GetDeltaTime();
-	if (m_fatTimer > 0.3f) {
+
+	float attackSpan = 0.9f;
+	if (EnBattlePhase::Mad == Boss_Fatman::GetCurrentBattlePhase()) {
+		attackSpan = 0.3f;
+	}
+	else if (EnBattlePhase::Tired == Boss_Fatman::GetCurrentBattlePhase()) {
+		attackSpan = 0.6f;
+	}
+
+	if (m_fatTimer > attackSpan) {
 		/*auto& p = GameManager::GetInstance().m_player;
 		const auto& ppos = p->GetPosition();
 		return e->GetState(TO_INT(IEnemy::EnState::enAttackA));*/
