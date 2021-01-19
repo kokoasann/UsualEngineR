@@ -20,6 +20,7 @@
 #include "Attachment/Shield.h"
 #include "../Effect/JetEffect.h"
 #include "../Camera/GameCamera.h"
+#include "Effect/ExplosionEffect.h"
 
 const float Player::m_HP_MAX = 500.f;
 
@@ -78,6 +79,8 @@ void Player::Release()
 	DeleteGO(m_gun);
 	DeleteGO(m_shield);
 
+	DeleteGO(m_explosionEffect);
+
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
@@ -103,6 +106,10 @@ void Player::Awake()
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
 	//m_model->SetMulColor({ 0.5, 0.5, 0.4, 1.f });
+
+
+	m_jetSE = NewGO< CSoundSource>(0);
+	m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
 
 	//
 	/*
@@ -231,6 +238,9 @@ bool Player::Start()
 	m_jetEffects.push_back(jetEffect1);
 
 	InitIK();
+
+	m_explosionEffect = NewGO<ExplosionEffect>(0);
+	m_explosionEffect->Init();
 
 	return true;
 }
@@ -468,6 +478,12 @@ void Player::UpdateAttackType() {
 	}
 }
 
+
+void Player::Explode() {
+	m_explosionEffect->SetPos(m_position);
+	m_explosionEffect->Play();
+}
+
 //void Player::InitThrusterEffect() {
 	//const static float EFFECT_SCALE = 0.01f;
 	//const static float EFFECT_SCALE_INV = 100.f;
@@ -559,3 +575,4 @@ void Player::UpdateAttackType() {
 	//m_thrusterEffects[LEFT]->SetPos({ 0,0,50 });
 	//m_thrusterEffects[LEFT]->SetSca(g_vec3One * EFFECT_SCALE);
 //}
+

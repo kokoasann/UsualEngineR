@@ -10,6 +10,7 @@ class JetPack;
 class JetEffect;
 class Gun;
 class Shield;
+class ExplosionEffect;
 
 /// <summary>
 /// 
@@ -347,8 +348,6 @@ public:
 
 	void FireThrusters() {
 		m_isUsingThrusters = true;
-		m_jetSE = NewGO< CSoundSource>(0);
-		m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
 		m_jetSE->Play(true);
 	}
 
@@ -370,6 +369,8 @@ public:
 	void SetExternalVelocity(const Vector3& velocity) {
 		m_externalVelocity = velocity;
 	}
+
+	void Explode();
 
 	void SetState(IPlayerState* s) {
 
@@ -524,4 +525,8 @@ private:
 	//Hands
 	SphereCollider		m_sphereCollider;
 	const float m_HandRadius = 5.f;
+
+	//Effect
+	
+	ExplosionEffect* m_explosionEffect = nullptr;
 };
