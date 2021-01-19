@@ -69,6 +69,10 @@ void Gun::Update()
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 	m_model->SetScale(m_scale);
+}
+
+void Gun::PostUpdate()
+{
 
 	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
 		m_muzzleFlashes[i]->SetPos(m_gunBones[i]->GetWorldMatrix().GetTransrate());
@@ -81,11 +85,6 @@ void Gun::Update()
 	else {
 		m_model->SetActive(true);
 	}
-}
-
-void Gun::PostUpdate()
-{
-
 }
 
 

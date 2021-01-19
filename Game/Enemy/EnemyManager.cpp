@@ -32,12 +32,12 @@ void EnemyManager::SpawnEnemies() {
 	*/
 
 
-	auto e = NewGO<Zako_LongDistanceMachine>(0);
-	//e->Init();
-	ab.InitHP(50000);
-	e->SetAbility(ab);
-	e->SetPosition({ -50,10,-50 });
-	m_enemies.push_back(e);
+	//auto e = NewGO<Zako_LongDistanceMachine>(0);
+	////e->Init();
+	//ab.InitHP(50000);
+	//e->SetAbility(ab);
+	//e->SetPosition({ -50,10,-50 });
+	//m_enemies.push_back(e);
 
 	/*ab.InitHP(BOSS_A_HP);
 	ab.InitStamina(BOSS_A_STAMINA);
@@ -57,7 +57,7 @@ void EnemyManager::SpawnEnemies() {
 	Level level;
 	level.Init("Assets/level/map_enemy_level.tkl", [&](LevelObjectData& objData)->bool
 		{
-			if (objData.name == L"LongDistanceMachine")
+			/*if (objData.name == L"LongDistanceMachine")
 			{
 				auto e = NewGO<Zako_LongDistanceMachine>(0);
 				ab.InitHP(60);
@@ -112,11 +112,16 @@ void EnemyManager::SpawnEnemies() {
 				bene->SetPosition(objData.position * 100.f);
 				bene->SetRotation(objData.rotation);
 				m_enemies.push_back(bene);
-			}
+			}*/
 			return true;
 		}
 	);
-
+	auto bene = NewGO<Boss_Fatman>(0);
+	ab.InitHP(BOSS_A_HP);
+	ab.InitStamina(BOSS_A_STAMINA);
+	bene->SetAbility(ab);
+	bene->SetPosition({ 750.0f,15.0f,-580.0f });
+	m_enemies.push_back(bene);
 	return;
 	
 

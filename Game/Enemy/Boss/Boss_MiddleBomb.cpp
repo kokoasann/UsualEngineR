@@ -4,6 +4,12 @@
 #include "Enemy/State/MiddleBombState/BossBombIdleState.h"
 #include "Enemy/State/MiddleBombState/BossBombDeadState.h"
 #include "Enemy/State/MiddleBombState/BossBombBattleState.h"
+#include "Enemy/State/MiddleBombState/BossBombLaunchState.h"
+#include "Enemy/State/MiddleBombState/BossBombJumpState.h"
+#include "Enemy/State/MiddleBombState/BossBombGuardState.h"
+#include "Enemy/State/MiddleBombState/BossBombCoroCoroState.h"
+#include "Enemy/State/MiddleBombState/BossBombFullFrontalState.h"
+#include "Enemy/State/MiddleBombState/BossBombBashState.h"
 
 
 Boss_MiddleBomb::Boss_MiddleBomb()
@@ -49,6 +55,7 @@ void Boss_MiddleBomb::Init()
 	info.collider = &m_meshColl;
 	info.mass = 0;
 	m_rigidBody.Create(info);
+	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall);
 	Physics().AddRigidBody(m_rigidBody);
 
 	InitAnim();
@@ -70,7 +77,34 @@ void Boss_MiddleBomb::InitState()
 		auto s = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new BossBombDeadState());
 		m_stateMap.insert(s);
 	}
-
+	{
+		auto s = std::make_pair(TO_INT(EnState::enBattleState), new BossBombBattleState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Luanch), new BossBombLaunchState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Corocoro), new BossBombCoroCoroState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnStateEX::FullFrontal), new BossBombFullFrontalState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Bash), new BossBombBashState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Guard), new BossBombGuardState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Jump), new BossBombJumpState());
+		m_stateMap.insert(s);
+	}
 }
 void Boss_MiddleBomb::InitIK()
 {
@@ -80,8 +114,14 @@ void Boss_MiddleBomb::InitIK()
 void Boss_MiddleBomb::InitAnim()
 {
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/mb/anim/mb_idle.tka", true);
+	SetAnimation(TO_INT(EnAnimEX::Firing), "Assets/modelData/boss/mb/anim/mb_firing.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::FiringUp), "Assets/modelData/boss/mb/anim/mb_firing_up.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::FullFrontal), "Assets/modelData/boss/mb/anim/mb_fullfrontal_firing.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::Bash), "Assets/modelData/boss/mb/anim/mb_bash.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::Guard), "Assets/modelData/boss/mb/anim/mb_guard.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::Jump), "Assets/modelData/boss/mb/anim/mb_jump.tka", false);
 
-	m_model->InitAnimation(m_animationMap, 1);
+	m_model->InitAnimation(m_animationMap, TO_INT(EnAnimEX::Num));
 	m_model->Play(TO_INT(IEnemy::EnAnimation::enIdle));
 }
 

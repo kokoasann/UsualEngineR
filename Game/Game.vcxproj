@@ -193,12 +193,16 @@
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
     <ClInclude Include="Enemy\Equipment\Enemy_Bullet.h" />
+    <ClInclude Include="Enemy\Equipment\Enemy_CorocoroBomb.h" />
+    <ClInclude Include="Enemy\Equipment\Enemy_LaunchBomb.h" />
     <ClInclude Include="Enemy\HealthBar.h" />
     <ClInclude Include="Enemy\IEnemy.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanShootingState.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanTackleState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanTakeDistanceState.h" />
     <ClInclude Include="Enemy\State\EnemyBattleState.h" />
@@ -236,6 +240,8 @@
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombBattleState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombDeadState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFlyingBattleState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFlyingState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombGuardState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombIdleState.h" />
@@ -275,6 +281,7 @@
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackKick.h" />
     <ClInclude Include="Player\Attack\DefaultPreset\PlayerAttackPunch.h" />
     <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot.h" />
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.h" />
     <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.h" />
     <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.h" />
     <ClInclude Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.h" />
@@ -322,12 +329,16 @@
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
     <ClCompile Include="Enemy\Equipment\Enemy_Bullet.cpp" />
+    <ClCompile Include="Enemy\Equipment\Enemy_CorocoroBomb.cpp" />
+    <ClCompile Include="Enemy\Equipment\Enemy_LaunchBomb.cpp" />
     <ClCompile Include="Enemy\HealthBar.cpp" />
     <ClCompile Include="Enemy\IEnemy.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanShootingState.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanTackleState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanTakeDistanceState.cpp" />
     <ClCompile Include="Enemy\State\EnemyBattleState.cpp" />
@@ -365,6 +376,8 @@
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombBattleState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombCoroCoroState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombDeadState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFlyingBattleState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFlyingState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombFullFrontalState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombGuardState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombIdleState.cpp" />
@@ -405,6 +418,7 @@
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackKick.cpp" />
     <ClCompile Include="Player\Attack\DefaultPreset\PlayerAttackPunch.cpp" />
     <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot.cpp" />
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.cpp" />
     <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackThrowPod.cpp" />
     <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackExplosion.cpp" />
     <ClCompile Include="Player\Attack\ExplosivePreset\PlayerAttackThrowBomb.cpp" />

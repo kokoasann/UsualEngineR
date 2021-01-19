@@ -11,4 +11,5 @@ public:
 	void Exit(IEnemy* e) override;
 	void  OnAttacked(IEnemy* e);
 private:
+	bool m_isAttacked = false;
 };

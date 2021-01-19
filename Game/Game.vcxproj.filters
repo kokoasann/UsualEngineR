@@ -356,6 +356,27 @@
     <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.h">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Equipment\Enemy_LaunchBomb.h">
+      <Filter>Enemy\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Equipment\Enemy_CorocoroBomb.h">
+      <Filter>Enemy\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFlyingBattleState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombFlyingState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -713,6 +734,27 @@
     </ClCompile>
     <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp">
       <Filter>Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Attack\DistantPreset\PlayerAttackHipShot2.cpp">
+      <Filter>Player\Attack\DistantPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Equipment\Enemy_CorocoroBomb.cpp">
+      <Filter>Enemy\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Equipment\Enemy_LaunchBomb.cpp">
+      <Filter>Enemy\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFlyingState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombFlyingBattleState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
