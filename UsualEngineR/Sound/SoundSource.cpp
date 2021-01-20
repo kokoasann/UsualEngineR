@@ -15,7 +15,6 @@ namespace UER{
 		}
 		CSoundSource::~CSoundSource()
 		{
-			Release();
 		}
 		void CSoundSource::InitCommon()
 		{
@@ -136,7 +135,7 @@ namespace UER{
 			}
 			Remove3DSound();
 			auto pthis = this;
-			DeleteGO(pthis);
+			//DeleteGO(pthis);
 		}
 		void CSoundSource::OnDestroy()
 		{

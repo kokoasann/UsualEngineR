@@ -4,11 +4,9 @@
 #include "../../../Enemy/EnemyManager.h"
 
 PlayerAttackPunch::PlayerAttackPunch() {
-
 }
 
 PlayerAttackPunch::~PlayerAttackPunch() {
-
 }
 
 void PlayerAttackPunch::Init(Player* player, int combo) {
@@ -16,6 +14,8 @@ void PlayerAttackPunch::Init(Player* player, int combo) {
 	std::string s = "attack punch combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+	m_punchSE = NewGO< CSoundSource>(0);
+
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
@@ -25,12 +25,15 @@ void PlayerAttackPunch::Init(Player* player, int combo) {
 	switch (combo) {
 	case 1:
 		player->PlayAnimation(Player::EnAnimation::enPunch1);
+		m_punchSE->Init(L"Assets/sound/chara/punch1.wav", true);
 		break;
 	case 2:
 		player->PlayAnimation(Player::EnAnimation::enPunch2);
+		m_punchSE->Init(L"Assets/sound/chara/punch2.wav", true);
 		break;
 	case 3:
 		player->PlayAnimation(Player::EnAnimation::enPunch3);
+		m_punchSE->Init(L"Assets/sound/chara/punch3.wav", true);
 		break;
 	}
 
@@ -61,6 +64,7 @@ void PlayerAttackPunch::Execute(Player* player) {
 				vecPlayerToEnemy.Normalize();
 
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, stunFlag, vecPlayerToEnemy * knockbackParam);
+				m_punchSE->Play(false);
 				m_hasAlreadyAttacked = true;
 			}
 		}
@@ -75,6 +79,7 @@ void PlayerAttackPunch::Execute(Player* player) {
 				vecPlayerToEnemy.Normalize();
 
 				nearestEnemy->ApplyDamage(m_damageAmount * m_combo, stunFlag, vecPlayerToEnemy * knockbackParam);
+				m_punchSE->Play(false);
 				m_hasAlreadyAttacked = true;
 			}
 		}

@@ -36,5 +36,7 @@ private:
 	bool m_canDoAttack = true;
 
 	const float m_knockBack = 230.f;
+
+	CSoundSource* m_kickSE = nullptr;
 };
 

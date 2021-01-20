@@ -4,7 +4,6 @@
 class Player;
 class JetEffect;
 class ExplosionEffect;
-
 /// <summary>
 /// 
 /// </summary>
@@ -203,4 +202,5 @@ private:
 	//Color m_smokeCol = { 0.3,0.3,0.3,0.5f };
 	ExplosionEffect* m_explosionEffect = nullptr;
 
+	CSoundSource* m_se = nullptr;
 };

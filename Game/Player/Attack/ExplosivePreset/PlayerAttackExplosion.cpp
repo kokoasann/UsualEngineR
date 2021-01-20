@@ -35,6 +35,9 @@ void PlayerAttackExplosion::Init(Player* player, int combo) {
 
 	m_isBombed = false;
 
+	m_se = NewGO< CSoundSource>(0);
+	m_se->Init(L"Assets/sound/chara/explosion.wav", true);
+
 	//auto& enemyManager = EnemyManager::GetEnemyManager();
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 
@@ -81,6 +84,8 @@ void PlayerAttackExplosion::Execute(Player* player) {
 				vecKb.Normalize();
 				vecKb *= m_knockBackPower;
 				EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_explodeDamage,true, vecKb);
+				m_se->Play(false);
+				player->Explode();
 			}
 		}
 	}

@@ -19,14 +19,15 @@ Pod::~Pod()
 
 }
 
-
-
 void Pod::Release()
 {
 	DeleteGO(m_model);
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
+
+	m_explosionEffect->Stop();
+	DeleteGO(m_explosionEffect);
 }
 
 void Pod::OnDestroy()
@@ -108,6 +109,9 @@ bool Pod::Start()
 	auto pbm = NewGO<PlayerBulletManager>(0);
 	pbm->Allocate(70);
 
+	m_explosionEffect = NewGO<ExplosionEffect>(0);
+	m_explosionEffect->Init();
+
 	return true;
 }
 
@@ -123,12 +127,8 @@ void Pod::Update()
 	m_mulCol = Color(red * 3.f, 1.f - red, 1.f - red, 1.f);
 	m_model->SetMulColor(m_mulCol);
 
-
 	m_explosionEffect->SetPos(m_pos);
 	m_explosionEffect->SetSca(Vector3::One * 0.1f);
-
-	m_model->SetPosition(m_pos);
-	m_model->SetRotation(m_rotation);
 
 	//const float smokeSizeParam = 0.15f;
 	//m_smokeEffect->SetSca(Vector3::One * smokeSizeParam * red);
@@ -249,8 +249,9 @@ void Pod::PostUpdate()
 		BackToIdlePos();
 	}
 
+	m_model->SetPosition(m_pos);
+	m_model->SetRotation(m_rotation);
 }
-
 
 void Pod::Render()
 {
@@ -262,9 +263,12 @@ void Pod::PostRender()
 
 }
 
-
 void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
+
+	m_se = NewGO<CSoundSource>(0);
+	m_se->Init(L"Assets/sound/chara/beam.wav", true);
+	m_se->Play(false);
 
 	//laser
 	const float laserRange = 30.f;
@@ -364,6 +368,11 @@ void Pod::Kamikaze() {
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
+		m_se = NewGO<CSoundSource>(0);
+		m_se->Init(L"Assets/sound/chara/explosion.wav", true);
+		m_se->Play(false);
+		m_explosionEffect->SetPos(m_pos);
+		m_explosionEffect->Play();
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
 		m_state = PodState::enBack;
 	}

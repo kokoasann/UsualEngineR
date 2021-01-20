@@ -30,5 +30,7 @@ private:
 	float m_range = 50.f;
 	bool m_hasAlreadyAttacked = false;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE;
+
+	CSoundSource* m_punchSE = nullptr;
 };
 

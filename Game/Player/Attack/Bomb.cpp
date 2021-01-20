@@ -2,6 +2,7 @@
 #include "Bomb.h"
 //#include "../../Enemy/EnemyManager.h"
 #include "Enemy/EnemyManager.h"
+#include "Effect/ExplosionEffect.h"
 
 Bomb::Bomb()
 {
@@ -13,10 +14,10 @@ Bomb::~Bomb()
 
 }
 
-
-
 void Bomb::Release()
 {
+	m_explosionEffect->Stop();
+	DeleteGO(m_explosionEffect);
 	DeleteGO(m_model);
 }
 
@@ -34,6 +35,9 @@ void Bomb::Awake()
 bool Bomb::Start()
 {
 
+	m_se = NewGO< CSoundSource>(0);
+	m_se->Init(L"Assets/sound/chara/explosion.wav", true);
+
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
@@ -45,6 +49,9 @@ bool Bomb::Start()
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
 	m_model->SetPosition(m_position);
+
+	m_explosionEffect = NewGO<ExplosionEffect>(0);
+	m_explosionEffect->Init();
 
 	return true;
 }
@@ -63,8 +70,13 @@ void Bomb::Update()
 	m_model->SetPosition(m_position);
 	bool isBombed = false;
 
-	if ((m_position - EnemyManager::GetEnemyManager().GetNearestEnemy(m_position)->GetPosition()).Length() < m_igniteRange) {
+	if (isBombed == false and (m_position - EnemyManager::GetEnemyManager().GetNearestEnemy(m_position)->GetPosition()).Length() < m_igniteRange) {
 		isBombed = true;
+		m_explosionEffect->SetPos(m_position);
+		m_explosionEffect->Play();
+		m_isExploded = true;
+		m_se->Play(false);
+
 		for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 			auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 			if ((m_position - epos).Length() < m_ExplodeDamageRange) {
@@ -96,9 +108,17 @@ void Bomb::Update()
 	//		}
 	//	}
 	//}
-
-	if (m_lifeTimerSec >= m_lifeSpanSec or isBombed) {
+	if (m_isExploded) {
+		m_destroyTimer += delta;
+		if (m_destroyTimer >= m_destroyInterval) {
+			auto obj = reinterpret_cast<GameObject*>(this);
+			printf("delete bomb : bomb and  destroy!");
+			DeleteGO(obj);
+		}
+	}
+	else if (m_lifeTimerSec >= m_lifeSpanSec) {
 		auto obj = reinterpret_cast<GameObject*>(this);
+		printf("delete bomb :   timer destroy!");
 		DeleteGO(obj);
 	}
 }

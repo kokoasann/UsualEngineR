@@ -10,6 +10,7 @@ class JetPack;
 class JetEffect;
 class Gun;
 class Shield;
+class ExplosionEffect;
 
 /// <summary>
 /// 
@@ -347,10 +348,12 @@ public:
 
 	void FireThrusters() {
 		m_isUsingThrusters = true;
+		m_jetSE->Play(true);
 	}
 
 	void StopThrusters() {
 		m_isUsingThrusters = false;
+		m_jetSE->Stop();
 	}
 
 	const bool IsUsingThrusters() {
@@ -366,6 +369,8 @@ public:
 	void SetExternalVelocity(const Vector3& velocity) {
 		m_externalVelocity = velocity;
 	}
+
+	void Explode();
 
 	void SetState(IPlayerState* s) {
 
@@ -514,8 +519,14 @@ private:
 	//PlaneParticleEffectRender* m_thrusterEffects[2] = { nullptr };
 	std::vector<JetEffect*> m_jetEffects;
 
+	//SE
+	CSoundSource* m_jetSE = nullptr;
 
 	//Hands
 	SphereCollider		m_sphereCollider;
 	const float m_HandRadius = 5.f;
+
+	//Effect
+	
+	ExplosionEffect* m_explosionEffect = nullptr;
 };
