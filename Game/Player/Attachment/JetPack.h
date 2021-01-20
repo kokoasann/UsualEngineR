@@ -94,6 +94,4 @@ private:
 	//PlaneParticleEffectRender* m_effects[4];
 	Bone* m_backpackBone[6] = { nullptr };
 	std::vector<JetEffect*> m_jetEffects;
-
-	CSoundSource* m_jetSE = nullptr;
 };

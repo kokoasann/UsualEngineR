@@ -41,5 +41,4 @@ private:
 	//const float m_RISE_BOOST_EFFICIENCY = 0.f;
 
 	PlayerAttackHipShot2 m_hipShot;
-
 };

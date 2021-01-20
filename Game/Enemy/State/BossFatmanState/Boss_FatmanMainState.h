@@ -14,6 +14,10 @@ private:
 	/// 遠距離攻撃のステート遷移。
 	/// </summary>
 	IEnemyState* LongRangeAttack(IEnemy* e);
+	/// <summary>
+	/// バトルフェーズの遷移。
+	/// </summary>
+	void ChangeBattleState(IEnemy* e);
 private:
 	float m_fatTimer = 0.f;
 };

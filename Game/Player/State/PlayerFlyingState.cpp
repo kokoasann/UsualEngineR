@@ -38,7 +38,6 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	p->PlayAnimation(Player::EnAnimation::enHovering);
 	p->FireThrusters();
-
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {

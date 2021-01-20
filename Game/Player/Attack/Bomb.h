@@ -1,4 +1,5 @@
 #pragma once
+class ExplosionEffect;
 
 /// <summary>
 /// 
@@ -83,4 +84,10 @@ private:
 	const float m_knockBackPower = 230.f;
 
 	CSoundSource* m_se = nullptr;
+
+	ExplosionEffect* m_explosionEffect = nullptr;
+
+	bool m_isExploded = false;
+	float m_destroyTimer = 0.f;
+	const float m_destroyInterval = 10.f; //sec
 };
