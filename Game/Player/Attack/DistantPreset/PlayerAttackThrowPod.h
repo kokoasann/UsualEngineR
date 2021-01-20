@@ -33,7 +33,7 @@ private:
 
 	bool m_canDoAttack = true;
 
-	float m_range = 50.f;
+	float m_range = 15.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 8.f;
 
 	bool threwFlag = false;

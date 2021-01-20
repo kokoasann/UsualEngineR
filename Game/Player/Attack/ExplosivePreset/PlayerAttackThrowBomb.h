@@ -26,7 +26,6 @@ private:
 	const float m_interval = 0.5f;
 	float m_timer = 0.f;
 
-	float m_range = 50.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 1.5f;
 	const float m_speed = 10.f;
 };

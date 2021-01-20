@@ -28,7 +28,7 @@ private:
 
 	bool m_isBombed = false;
 
-	float m_range = 50.f;
+	float m_range = 7.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 6.f;
 	const float m_tacklePower = 500.f;
 	const float m_ExplodeDamageRange = 100.f;

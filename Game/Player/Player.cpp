@@ -241,6 +241,7 @@ bool Player::Start()
 
 	m_explosionEffect = NewGO<ExplosionEffect>(0);
 	m_explosionEffect->Init();
+	m_explosionEffect->SetSca(Vector3::One * 0.2f);
 
 	return true;
 }

@@ -68,8 +68,8 @@ private:
 	//const
 	const float m_lifeSpanSec = 10.f;
 	const float m_speed = 100.f;
-	const float m_igniteRange = 30.f;
-	const float m_ExplodeDamageRange = 100.f;
+	const float m_igniteRange = 10.f;
+	const float m_ExplodeDamageRange = 50.f;
 	const float m_damage = 10.f;// 50.f;
 
 	float m_lifeTimerSec = 0.0f;
