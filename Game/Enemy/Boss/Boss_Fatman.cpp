@@ -10,6 +10,7 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanTackleState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanStunState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamAndShootingState.h"
 
 EnBattlePhase Boss_Fatman::m_battlePhase = EnBattlePhase::Normal;
 
@@ -90,6 +91,10 @@ void Boss_Fatman::InitState()
 	}
 	{
 		auto p = std::make_pair(TO_INT(EnStateEX::enTakeDistance), new Boss_FatmanTakeDistanceState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enAttackE), new Boss_FatmanChargeBeamAndShootingState());
 		m_stateMap.insert(p);
 	}
 }
