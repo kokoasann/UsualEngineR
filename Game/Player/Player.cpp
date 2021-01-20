@@ -21,6 +21,7 @@
 #include "../Effect/JetEffect.h"
 #include "../Camera/GameCamera.h"
 #include "Effect/ExplosionEffect.h"
+#include "Attack/Bomb.h"
 
 const float Player::m_HP_MAX = 500.f;
 
@@ -68,7 +69,6 @@ struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
 		return 0.0f;
 	}
 };
-
 
 void Player::Release()
 {
@@ -165,6 +165,19 @@ void Player::Awake()
 
 	//Dead
 	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_idle.tka", true);
+
+	//Event
+	//auto& animation = GetModelRender().GetAnimation();
+	//AnimationEventListener ael = [&](const wchar_t* clipName, const wchar_t* eventName) {
+	//	if (wcscmp(eventName, L"throw") == 0) {
+	//		auto bomb = NewGO<Bomb>(0);
+	//		const float bombSpeed = 10.f;
+	//		auto vel = GetForward() * bombSpeed;
+	//		auto handPos = GetBone(Player::EnPlayerBone::enHand_L)->GetWorldMatrix().GetTransrate();
+	//		bomb->Init(handPos, vel);
+	//	}
+	//};
+	//animation.AddAnimationEventListener(ael);
 
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 	m_model->Play(0);

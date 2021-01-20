@@ -28,6 +28,9 @@ private:
 
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 1.5f;
 	const float m_speed = 10.f;
+
+	bool threwFlag = false;
+
 };
 
 

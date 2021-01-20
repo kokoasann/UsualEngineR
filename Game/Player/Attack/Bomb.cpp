@@ -113,13 +113,11 @@ void Bomb::Update()
 		m_destroyTimer += delta;
 		if (m_destroyTimer >= m_destroyInterval) {
 			auto obj = reinterpret_cast<GameObject*>(this);
-			printf("delete bomb : bomb and  destroy!");
 			DeleteGO(obj);
 		}
 	}
 	else if (m_lifeTimerSec >= m_lifeSpanSec) {
 		auto obj = reinterpret_cast<GameObject*>(this);
-		printf("delete bomb :   timer destroy!");
 		DeleteGO(obj);
 	}
 }

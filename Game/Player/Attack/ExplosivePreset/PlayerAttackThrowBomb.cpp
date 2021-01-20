@@ -20,14 +20,13 @@ void PlayerAttackThrowBomb::Init(Player* player, int combo) {
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
-	player->PlayAnimation(Player::EnAnimation::enThrow);
 
+	//NOTE : ここのinterpolateを0.fにしないと、前の投げアニメーションのイベントがいきなり呼ばれる事がある.
+	//連続で爆弾をなげようとボタンを連打した際にバグる.
+	player->PlayAnimation(Player::EnAnimation::enThrow, 0.f);
+	threwFlag = false;
 	//auto& enemyManager = EnemyManager::GetEnemyManager();
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
-
-	auto bomb = NewGO<Bomb>(0);
-	auto vel = player->GetForward() * m_speed;
-	bomb->Init(player->GetPosition(), vel);
 
 }
 
@@ -35,9 +34,22 @@ void PlayerAttackThrowBomb::Execute(Player* player) {
 	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
 	//m_timer += gameTime()->GetDeltaTime();
 
-	if (g_pad[0]->IsTrigger(enButtonB)) {
-		m_isContinuAttack = true;
+	const int numEvent = player->GetAnimationMap().at(TO_INT(Player::EnAnimation::enThrow))->GetNumAnimationEvent();
+	const auto& animationEvent = player->GetAnimationMap().at(TO_INT(Player::EnAnimation::enThrow))->GetAnimationEvent();
+
+	for (int i = 0; i < numEvent; i++) {
+		if (!threwFlag and animationEvent[i].IsInvoked()) {
+			auto name = animationEvent[i].GetEventName();
+			if (wcscmp(name, L"throw") == 0) {
+				printf("throw\n");
+				auto bomb = NewGO<Bomb>(0);
+				auto vel = player->GetForward() * m_speed;
+				bomb->Init(player->GetPosition(), vel);
+				threwFlag = true;
+			}
+		}
 	}
+
 
 	if (!player->IsPlayingAnimation()) {
 		m_timer += gameTime()->GetDeltaTime();
