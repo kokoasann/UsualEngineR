@@ -70,8 +70,6 @@ bool Pod::Start()
 
 	//m_smokeEffect = NewGO<SmokeEffect>(0);
 
-	m_explosionEffect = NewGO<ExplosionEffect>(0);
-	m_explosionEffect->Init();
 	//m_smokeEffect->Init(Color::Black, Color::Black);
 	//Color smokeCol = Color(0.1, 0.1, 0.1, 1.0);
 	//m_smokeEffect->Init(m_smokeCol, m_smokeCol);
@@ -111,6 +109,7 @@ bool Pod::Start()
 
 	m_explosionEffect = NewGO<ExplosionEffect>(0);
 	m_explosionEffect->Init();
+	m_explosionEffect->SetSca(Vector3::One * 0.2f);
 
 	return true;
 }
@@ -126,9 +125,6 @@ void Pod::Update()
 	const auto red = 1.f - (m_ability.currentStamina / m_ability.STAMINA_MAX);
 	m_mulCol = Color(red * 3.f, 1.f - red, 1.f - red, 1.f);
 	m_model->SetMulColor(m_mulCol);
-
-	m_explosionEffect->SetPos(m_pos);
-	m_explosionEffect->SetSca(Vector3::One * 0.1f);
 
 	//const float smokeSizeParam = 0.15f;
 	//m_smokeEffect->SetSca(Vector3::One * smokeSizeParam * red);
