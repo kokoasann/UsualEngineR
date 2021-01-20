@@ -14,6 +14,13 @@ EnemyShortRangeBlownState::~EnemyShortRangeBlownState()
 
 void EnemyShortRangeBlownState::Enter(IEnemy* e)
 {
+
+	//”í’eƒ{ƒCƒX
+	CSoundSource* se = NewGO<CSoundSource>(0, "Voice");
+	se->Init(L"Assets/sound/Goblin_Voice1.wav");
+	se->Play(false);
+	se->SetVolume(1.0f);
+
 	e->PlayAnimation(TO_INT(Zako_ShortRangeMonster::EnAnimEX::enDown));
 	if (m_ikList[0] == nullptr)
 	{

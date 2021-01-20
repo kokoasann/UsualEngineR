@@ -24,8 +24,14 @@ void EnemyShortRangeStrongPunchState::Enter(IEnemy* e)
 
 	auto f = e->GetForward();
 	auto t = acosf(v.Dot(f));
-	if (vlen < 5.f && t < Math::PI * 0.5f)
+	if (vlen < 5.f && t < Math::PI * 0.5f) {
 		p->ApplyDamage(m_damage, true, f);
+		//テストコード。殴打音
+		CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+		se->Init(L"Assets/sound/Goblin_Punch1.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
+	}
 }
 
 IEnemyState* EnemyShortRangeStrongPunchState::Update(IEnemy* e)

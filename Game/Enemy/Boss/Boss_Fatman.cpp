@@ -9,6 +9,8 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanTackleState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanStunState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamAndShootingState.h"
 
 EnBattlePhase Boss_Fatman::m_battlePhase = EnBattlePhase::Normal;
 
@@ -48,7 +50,7 @@ void Boss_Fatman::Init()
 
 void Boss_Fatman::InitAnimation()
 {
-	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/lf//anim/lf_idle.tka", true);
+	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/lf/anim/lf_idle.tka", true);
 
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 }
@@ -57,6 +59,10 @@ void Boss_Fatman::InitState()
 {
 	{
 		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyDeadState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enStunState), new Boss_FatmanStunState());
 		m_stateMap.insert(p);
 	}
 	{
@@ -85,6 +91,10 @@ void Boss_Fatman::InitState()
 	}
 	{
 		auto p = std::make_pair(TO_INT(EnStateEX::enTakeDistance), new Boss_FatmanTakeDistanceState());
+		m_stateMap.insert(p);
+	}
+	{
+		auto p = std::make_pair(TO_INT(EnStateEX::enAttackE), new Boss_FatmanChargeBeamAndShootingState());
 		m_stateMap.insert(p);
 	}
 }

@@ -56,6 +56,12 @@ IEnemyState* EnemyShortRangeLongJampAttackState::Update(IEnemy* e)
 			e2p.Normalize();
 			p->ApplyDamage(m_damage, true, e2p * 150);
 			m_isApplyDamage = true;
+
+			//‰£‘Å‰¹
+			CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+			se->Init(L"Assets/sound/Goblin_Punch1.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
 		}
 	}
 
