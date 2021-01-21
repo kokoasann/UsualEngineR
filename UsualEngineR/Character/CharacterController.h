@@ -94,6 +94,17 @@ namespace UER
 			m_rigidBody.GetBody()->setUserIndex(m_rigidBody.GetBody()->getUserIndex() | static_cast<int>(ca));
 		}
 
+		/// <summary>
+		/// キャラコンにポインターを設定。
+		/// </summary>
+		/// <param name="p"></param>
+		void SetUserPointer(void* p)
+		{
+			if (!m_isUseRigidBody)
+				return;
+			m_rigidBody.GetBody()->setUserPointer(p);
+		}
+
 		/*!
 		* @brief	剛体を物理エンジンから削除。。
 		*/

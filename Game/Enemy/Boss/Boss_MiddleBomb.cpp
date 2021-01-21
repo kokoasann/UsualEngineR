@@ -58,6 +58,8 @@ void Boss_MiddleBomb::Init()
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall);
 	Physics().AddRigidBody(m_rigidBody);
 
+	SetAutoRotateFlag(false);
+
 	InitAnim();
 
 
@@ -110,6 +112,16 @@ void Boss_MiddleBomb::InitIK()
 {
 	auto ske = m_model->GetModel().GetSkelton();
 	m_shieldBone = ske->GetBone(ske->FindBoneID(L"Shield"));
+	{
+		auto ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 0.5f);
+		SetIK(TO_INT(EnIK::enHead), ik);
+		ik->SetIKMode(IK::enMode_NoneHit);
+	}
+	{
+		auto ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Cannon_IK")), 2, 0.5f);
+		SetIK(TO_INT(EnIK::enArm_L), ik);
+		ik->SetIKMode(IK::enMode_NoneHit);
+	}
 }
 void Boss_MiddleBomb::InitAnim()
 {

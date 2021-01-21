@@ -19,9 +19,11 @@ namespace UER
 		btTrans.setOrigin({ pos.x, pos.y, pos.z });
 		btTrans.setRotation({ rot.x, rot.y, rot.z, rot.w });
 		m_ghost.setWorldTransform(btTrans);
+		m_ghost.setCollisionFlags(m_ghost.getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 		//•¨—ƒGƒ“ƒWƒ“‚É“o˜^B
 		Physics().AddCollisionObject(m_ghost);
+		//Physics().GetDynamicWorld()->addCollisionObject(&m_ghost, btBroadphaseProxy::SensorTrigger, btBroadphaseProxy::AllFilter & ~btBroadphaseProxy::SensorTrigger);
 		m_isRegistPhysicsWorld = true;
 	}
 }

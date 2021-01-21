@@ -141,4 +141,5 @@ void IEnemy::InitCharacon(const float radius, const float height, const Vector3&
 	m_radius = radius;
 	m_charaCon.Init(radius, height, pos, /*isUseRigidBody */ true);
 	m_charaCon.AddCollisionAttribute(GameCollisionAttribute::Enemy);
+	m_charaCon.SetUserPointer(this);
 }

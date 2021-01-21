@@ -13,5 +13,12 @@ public:
 private:
 	float m_timer = 0.f;
 	float m_timeLimit = 2.f;
+	float m_timeRotate = 0.5f;
 	bool m_isAngry = false;
+
+	float m_distance = 50.f;
+	float m_distanceBash = 30.f;
+	float m_speed = 50.f;
+
+	Quaternion m_firstRot;
 };
