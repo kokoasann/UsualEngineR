@@ -36,10 +36,10 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	m_timer += dtime;
 
 	float rand = GRandom().Rand();
-	if (m_timer >= m_timeLimit && false)
+	if (m_timer >= m_timeLimit && true)
 	{
 		
-		if (rand < 0.4 || true)
+		if (rand < 0.4)
 		{
 			return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
 		}
@@ -47,7 +47,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 		{
 			return e->GetState(TO_INT(IEnemy::EnState::enAttackB));
 		}
-		else if (rand < 0.9)
+		else if (rand < 0.9 && false)
 		{
 			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::FullFrontal));
 		}
@@ -67,7 +67,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	auto e2pDir = e2p;
 	e2pDir.Normalize();
 
-	if (e2pLen < m_distance-20.f)
+	if (e2pLen < m_distance-5.f)
 	{
 		move += e2p * -m_speed * dtime;
 	}
@@ -77,7 +77,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	}
 
 	Quaternion rot;
-	rot.SetRotationDegY(180.f * dtime);
+	rot.SetRotationDegY(360.f * dtime);
 	auto e2pRot = e2p;
 	rot.Apply(e2pRot);
 	e2pRot -= e2p;
@@ -110,6 +110,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 
 void BossBombBattleState::Exit(IEnemy* e)
 {
+	e->SetVelocity(Vector3::Zero);
 }
 
 void BossBombBattleState::OnAttacked(IEnemy* e)

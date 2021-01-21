@@ -32,6 +32,15 @@ public:
 	/// <returns>trueを返さない限り、ずっとStartを呼び続ける</returns>
 	bool Start() override;
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="fireVelo">出る方向</param>
+	/// <param name="size">弾のサイズの半径</param>
+	/// <param name="fireRange">攻撃判定の半径</param>
+	/// <param name="damage"></param>
+	/// <param name="power">吹っ飛びの強さ</param>
 	void Init(const Vector3& pos,const Vector3& fireVelo,float size,float fireRange,float damage,float power);
 
 	/// <summary>

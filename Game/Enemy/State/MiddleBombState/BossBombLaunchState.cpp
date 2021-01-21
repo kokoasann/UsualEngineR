@@ -27,7 +27,8 @@ void BossBombLaunchState::Enter(IEnemy* e)
 
 	auto ik = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L));
 	auto bone = ik->GetEffectorBone();
-	m_cannonBone = e->GetModel()->GetModel().GetSkelton()->GetBone(bone->GetParentBoneNo());
+	if(!m_cannonBone)
+		m_cannonBone = e->GetModel()->GetModel().GetSkelton()->GetBone(bone->GetParentBoneNo());
 	e->SetAutoRotateFlag(false);
 
 	m_firstRot = e->GetRotation();
@@ -87,6 +88,7 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 
 void BossBombLaunchState::Exit(IEnemy* e)
 {
+	e->SetVelocity(Vector3::Zero);
 }
 
 void BossBombLaunchState::OnAttacked(IEnemy* e)
