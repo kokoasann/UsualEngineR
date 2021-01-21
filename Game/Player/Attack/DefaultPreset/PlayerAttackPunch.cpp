@@ -25,15 +25,15 @@ void PlayerAttackPunch::Init(Player* player, int combo) {
 	switch (combo) {
 	case 1:
 		player->PlayAnimation(Player::EnAnimation::enPunch1);
-		m_punchSE->Init(L"Assets/sound/chara/punch1.wav", true);
+		m_punchSE->Init(L"Assets/sound/chara/punch_2_1.wav", true);
 		break;
 	case 2:
 		player->PlayAnimation(Player::EnAnimation::enPunch2);
-		m_punchSE->Init(L"Assets/sound/chara/punch2.wav", true);
+		m_punchSE->Init(L"Assets/sound/chara/punch_2_2.wav", true);
 		break;
 	case 3:
 		player->PlayAnimation(Player::EnAnimation::enPunch3);
-		m_punchSE->Init(L"Assets/sound/chara/punch3.wav", true);
+		m_punchSE->Init(L"Assets/sound/chara/punch_2_1.wav", true);
 		break;
 	}
 
