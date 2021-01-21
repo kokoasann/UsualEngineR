@@ -58,6 +58,10 @@ void PlayerAttackHipShot2::GenerateProjectiles(Player* player) {
 
 		m_shotIntervalTimer = 0.f;
 
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/shoot.wav", true);
+		se->Play(false);
+
 	}
 }
 

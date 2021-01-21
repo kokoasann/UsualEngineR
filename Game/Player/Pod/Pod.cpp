@@ -111,6 +111,9 @@ bool Pod::Start()
 	m_explosionEffect->Init();
 	m_explosionEffect->SetSca(Vector3::One * 0.2f);
 
+	m_gunSE = NewGO<CSoundSource>(0);
+	m_gunSE->Init(L"Assets/sound/chara/mg.wav", true);
+
 	return true;
 }
 
@@ -178,6 +181,14 @@ void Pod::PostUpdate()
 				m_longRangeAttack.Execute(player);
 				UseStamina(skillCosts.ProjectileCost * delta);
 				isShooting = true;
+				if (!m_gunSE->IsPlaying()) {
+					m_gunSE->Play(true);
+				}
+			}
+			else {
+				if (m_gunSE->IsPlaying()) {
+					m_gunSE->Stop();
+				}
 			}
 		}
 
@@ -198,6 +209,10 @@ void Pod::PostUpdate()
 					m_timer = 0.f;
 					m_state = PodState::enRampage;
 					UseStamina(skillCosts.RampageCost);
+					//SE
+					auto se = NewGO<CSoundSource>(0);
+					se->Init(L"Assets/sound/chara/missile.wav", true);
+					se->Play(false);
 				}
 			}
 		}
@@ -209,6 +224,10 @@ void Pod::PostUpdate()
 					m_timer = 0.f;
 					m_state = PodState::enKamikaze;
 					UseStamina(skillCosts.KamikazeCost);
+					//SE
+					auto se = NewGO<CSoundSource>(0);
+					se->Init(L"Assets/sound/chara/missile.wav", true);
+					se->Play(false);
 				}
 			}
 		}
@@ -262,9 +281,9 @@ void Pod::PostRender()
 void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
 
-	m_se = NewGO<CSoundSource>(0);
-	m_se->Init(L"Assets/sound/chara/beam.wav", true);
-	m_se->Play(false);
+	m_laserSE = NewGO<CSoundSource>(0);
+	m_laserSE->Init(L"Assets/sound/chara/beam.wav", true);
+	m_laserSE->Play(false);
 
 	//laser
 	const float laserRange = 30.f;
@@ -364,9 +383,9 @@ void Pod::Kamikaze() {
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
-		m_se = NewGO<CSoundSource>(0);
-		m_se->Init(L"Assets/sound/chara/explosion.wav", true);
-		m_se->Play(false);
+		m_laserSE = NewGO<CSoundSource>(0);
+		m_laserSE->Init(L"Assets/sound/chara/explosion.wav", true);
+		m_laserSE->Play(false);
 		m_explosionEffect->SetPos(m_pos);
 		m_explosionEffect->Play();
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
