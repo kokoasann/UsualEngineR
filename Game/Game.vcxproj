@@ -247,6 +247,7 @@
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombIdleState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombJumpState.h" />
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombLaunchState.h" />
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombStunState.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigBlown.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigComing.h" />
     <ClInclude Include="Enemy\State\ShortBigState\EnemyShortBigDance.h" />
@@ -383,6 +384,7 @@
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombIdleState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombJumpState.cpp" />
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombLaunchState.cpp" />
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombStunState.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigBlown.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigComing.cpp" />
     <ClCompile Include="Enemy\State\ShortBigState\EnemyShortBigDance.cpp" />
