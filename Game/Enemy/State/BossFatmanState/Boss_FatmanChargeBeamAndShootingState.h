@@ -47,7 +47,9 @@ private:
 	/// </summary>
 	void BulletGenerate(IEnemy* e);
 private:
-	const int				IK_NUM = 2;				//IKの数。
+	const int				IK_NUM = 2;					//IKの数。
+	Quaternion				m_startRot = Quaternion::Identity;	//モデルが最初に向いている角度。
+	float					m_sumLerp = 0.0f;
 	//溜めビーム。
 	Vector3					m_position = Vector3::Zero;
 	float					m_chargeDamage = 0.f;
@@ -58,6 +60,7 @@ private:
 	bool					m_isSetPos = false;			//ビームを撃つ方向を設定。固定だから一度だけ設定する。
 	IK*						m_chargebeamIk[2];			//IK。左右のIKの情報が格納されている。
 	bool					m_isEndChargeBeam = false;	//溜めビームが終わったかどうか。
+	float					m_sumMoveSpeed = 0.0f;
 
 	//乱射。
 	float					m_shotTimer = 0.f;

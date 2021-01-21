@@ -6,7 +6,6 @@
 #include "Player/Attachment/Gun.h"
 
 PlayerAttackHipShot::PlayerAttackHipShot() {
-
 }
 
 PlayerAttackHipShot::~PlayerAttackHipShot() {
@@ -76,7 +75,6 @@ void PlayerAttackHipShot::GenerateProjectiles(Player* player) {
 		player->GetGun()->PlayFireEffects();
 
 		m_shotIntervalTimer = 0.f;
-
 	}
 }
 

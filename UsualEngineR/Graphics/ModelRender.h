@@ -72,6 +72,11 @@ namespace UER
 			return m_rotation;
 		}
 
+		CAnimation& GetAnimation()
+		{
+			return m_animation;
+		}
+
 		void SetIsRender(bool b)
 		{
 			m_isRender = b;

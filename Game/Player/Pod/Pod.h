@@ -202,5 +202,7 @@ private:
 	//Color m_smokeCol = { 0.3,0.3,0.3,0.5f };
 	ExplosionEffect* m_explosionEffect = nullptr;
 
-	CSoundSource* m_se = nullptr;
+	CSoundSource* m_laserSE = nullptr;
+	CSoundSource* m_gunSE = nullptr;
+
 };

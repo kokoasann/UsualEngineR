@@ -70,7 +70,11 @@ void Boss_FatmanShootingState::BulletGenerate(IEnemy* e)
 
 		auto& p = GameManager::GetInstance().m_player;
 		auto ppos = p->GetPosition();
-		ppos.y += 4.f;
+		ppos.y += 6.0f;
+
+		for (int i = 0; i < IKNum; i++) {
+			m_ik[i]->SetNextTarget(ppos);
+		}
 
 		Vector3 dir = ppos - epos;
 		dir.Normalize();

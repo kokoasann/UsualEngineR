@@ -31,7 +31,6 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 }
 
 void PlayerAttackTackle::Execute(Player* player) {
-	//TODO : if(!animation.isPlay()) m_timer += deltaTime(); 
 	auto delta = gameTime()->GetDeltaTime();
 	//m_timer += delta;
 

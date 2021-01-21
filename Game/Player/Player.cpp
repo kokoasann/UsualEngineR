@@ -21,6 +21,7 @@
 #include "../Effect/JetEffect.h"
 #include "../Camera/GameCamera.h"
 #include "Effect/ExplosionEffect.h"
+#include "Attack/Bomb.h"
 
 const float Player::m_HP_MAX = 500.f;
 
@@ -69,7 +70,6 @@ struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
 	}
 };
 
-
 void Player::Release()
 {
 	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
@@ -80,6 +80,8 @@ void Player::Release()
 	DeleteGO(m_shield);
 
 	DeleteGO(m_explosionEffect);
+
+	DeleteGO(m_jetSE);
 
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
@@ -166,6 +168,19 @@ void Player::Awake()
 	//Dead
 	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_idle.tka", true);
 
+	//Event
+	//auto& animation = GetModelRender().GetAnimation();
+	//AnimationEventListener ael = [&](const wchar_t* clipName, const wchar_t* eventName) {
+	//	if (wcscmp(eventName, L"throw") == 0) {
+	//		auto bomb = NewGO<Bomb>(0);
+	//		const float bombSpeed = 10.f;
+	//		auto vel = GetForward() * bombSpeed;
+	//		auto handPos = GetBone(Player::EnPlayerBone::enHand_L)->GetWorldMatrix().GetTransrate();
+	//		bomb->Init(handPos, vel);
+	//	}
+	//};
+	//animation.AddAnimationEventListener(ael);
+
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 	m_model->Play(0);
 }
@@ -241,6 +256,7 @@ bool Player::Start()
 
 	m_explosionEffect = NewGO<ExplosionEffect>(0);
 	m_explosionEffect->Init();
+	m_explosionEffect->SetSca(Vector3::One * 0.2f);
 
 	return true;
 }

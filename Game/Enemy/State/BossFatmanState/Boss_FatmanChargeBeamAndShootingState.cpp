@@ -28,7 +28,9 @@ Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
 
 void Boss_FatmanChargeBeamAndShootingState::Enter(IEnemy* e)
 {
-	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
+	//e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
+	m_startRot = e->GetModel()->GetRotation();
+	m_sumLerp = 0.0f;
 	
 	InitChargeBeam(e);
 
@@ -37,8 +39,13 @@ void Boss_FatmanChargeBeamAndShootingState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanChargeBeamAndShootingState::Update(IEnemy* e)
 {
-
+	//球面線形補完を使ってじわじわプレイヤーに向かって回転させる。
 	Quaternion EtoPRot = Boss_Fatman::EnemyToPlayerRotation(e);
+	Quaternion currentRot = Quaternion::Identity;
+	const float rotTime = 1.0f;
+	m_sumLerp += gameTime()->GetDeltaTime();
+	currentRot.Slerp(min(1.0f, m_sumLerp / rotTime), m_startRot, EtoPRot);
+	e->GetModel()->SetRotation(currentRot);
 
 	ChargeBeam(e);
 
@@ -89,7 +96,7 @@ void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
 				auto& p = GameManager::GetInstance().m_player;
 				m_position = p->GetPosition();
 				m_isSetPos = true;
-				m_position.y += 4.f;
+				m_position.y += 6.f;
 			}
 			//ビームは2本あるので2回判定を行う。
 			for (int i = 0; i < IK_NUM; i++) {
@@ -116,7 +123,7 @@ void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
 
 bool Boss_FatmanChargeBeamAndShootingState::Charge(IEnemy* e)
 {
-	float chargeTime = 3.0f;		//溜めている時間。
+	float chargeTime = 0.0f;		//溜めている時間。
 	if (EnBattlePhase::Mad == Boss_Fatman::GetCurrentBattlePhase()) {
 		chargeTime = 1.0f;
 	}
@@ -155,9 +162,6 @@ bool Boss_FatmanChargeBeamAndShootingState::Charge(IEnemy* e)
 		//IKで砲身を動かす。
 		m_chargebeamIk[i]->SetNextTarget(ppos);
 	}
-
-	//モデルがプレイヤーの方向を向くように設定。
-	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
 	return false;
 }
 
@@ -187,7 +191,8 @@ bool Boss_FatmanChargeBeamAndShootingState::BeamJudge(IEnemy* e, int ikNo)
 
 	//pposは現在のプレイヤーの位置。
 	auto& p = GameManager::GetInstance().m_player;
-	auto& ppos = p->GetPosition();
+	auto ppos = p->GetPosition();
+	ppos.y += 6.0f;
 	Vector3 vecEtoCurrentP = ppos - epos;
 
 	//プレイヤーと敵を横に並べたと仮定したときの距離。
@@ -203,6 +208,12 @@ bool Boss_FatmanChargeBeamAndShootingState::BeamJudge(IEnemy* e, int ikNo)
 	//IKで砲身を動かす。
 	/*const float yUp = 4.f;
 	m_position.y += yUp;*/
+
+	Vector3 movespeed = ppos - m_position;
+	movespeed.Normalize();
+	const float addmovespeed = 10.0f;
+	movespeed *= addmovespeed * gameTime()->GetDeltaTime();
+	m_position += movespeed;
 	m_chargebeamIk[ikNo]->SetNextTarget(m_position);
 
 	m_beams[ikNo]->SetPos(epos);
@@ -267,7 +278,11 @@ void Boss_FatmanChargeBeamAndShootingState::BulletGenerate(IEnemy* e)
 
 		auto& p = GameManager::GetInstance().m_player;
 		auto ppos = p->GetPosition();
-		ppos.y += 4.f;
+		ppos.y += 6.0f;
+		
+		for (int i = 0; i < IK_NUM; i++) {
+			m_shootingIk[i]->SetNextTarget(ppos);
+		}
 
 		Vector3 dir = ppos - epos;
 		dir.Normalize();
