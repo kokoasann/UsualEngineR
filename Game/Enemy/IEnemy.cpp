@@ -28,7 +28,7 @@ bool IEnemy::Start() {
 	InitState();
 	Init();
 	InitIK();
-	if (m_isDrawHpBarAboveMyself) {
+	if (m_isNormalEnemy) {
 		m_healthBar = NewGO<HealthBar>(0);
 	}
 

@@ -48,7 +48,7 @@ void BossA::Init() {
 
 	SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enIdleState)));
 
-	m_isDrawHpBarAboveMyself = false;
+	m_isNormalEnemy = false;
 
 	//Effect
 	JetEffect::JetEffectInitParam smaller;

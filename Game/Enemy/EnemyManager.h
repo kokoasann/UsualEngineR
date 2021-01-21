@@ -18,6 +18,24 @@ public:
 		return m_enemies;
 	}
 
+	const int NumBossEnemies() {
+		if (m_enemies.size() == 0) return 0;
+
+		int ret = 0;
+		for (int i = 0; i < m_enemies.size(); i++) {
+
+			if (m_enemies.at(i)->GetCurrentState() == m_enemies.at(i)->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				continue;
+			}
+
+			if (m_enemies.at(i)->IsBoss()) {
+				ret++;
+			}
+		}
+
+		return ret;
+	}
+
 	void DestroyEnemy(IEnemy* enemy) {
 
 		if (enemy == m_targetEnemy)

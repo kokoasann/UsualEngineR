@@ -171,7 +171,7 @@ public:
 	}
 
 	const bool IsBoss() {
-		return !m_isDrawHpBarAboveMyself;
+		return !m_isNormalEnemy;
 	}
 
 	void SetVelocity(const Vector3& velocity) {
@@ -267,7 +267,7 @@ protected:
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
 
 	void SetState(IEnemyState* s);
-	bool m_isDrawHpBarAboveMyself = true;
+	bool m_isNormalEnemy = true;
 
 	std::map<int, IEnemyState*> m_stateMap;
 	std::map<int, std::unique_ptr<CAnimationClip>> m_animationMap;
