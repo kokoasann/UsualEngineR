@@ -81,6 +81,8 @@ void Player::Release()
 
 	DeleteGO(m_explosionEffect);
 
+	DeleteGO(m_jetSE);
+
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
