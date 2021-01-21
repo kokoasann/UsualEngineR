@@ -32,8 +32,6 @@ private:
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 2.f;
 
 	const float m_knockBackPower = 230.f;
-
-	CSoundSource* m_se = nullptr;
 };
 
 

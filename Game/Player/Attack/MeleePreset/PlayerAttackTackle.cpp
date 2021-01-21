@@ -25,9 +25,6 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 	player->FireThrusters();
 
-	m_se = NewGO< CSoundSource>(0);
-	m_se->Init(L"Assets/sound/chara/punch1.wav", true);
-
 }
 
 void PlayerAttackTackle::Execute(Player* player) {
@@ -50,7 +47,11 @@ void PlayerAttackTackle::Execute(Player* player) {
 			vecKb *= m_knockBackPower;
 
 			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_damageAmount, true, vecKb);
-			m_se->Play(false);
+
+			auto se = NewGO< CSoundSource>(0);
+			se->Init(L"Assets/sound/chara/punch1.wav", true);
+			se->Play(false);
+
 			m_isDone = true;
 		}
 	}
