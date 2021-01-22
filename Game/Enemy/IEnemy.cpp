@@ -11,6 +11,7 @@
 #include "State/EnemyStunState.h"
 #include "Effect/ExplosionEffect.h"
 #include "Effect/SmokeEffect.h"
+#include "Game.h"
 
 void IEnemy::Awake() {
 }
@@ -52,8 +53,9 @@ void IEnemy::Release() {
 
 	Terminate();
 
-	if (m_healthBar != nullptr)
+	if (m_healthBar != nullptr) {
 		DeleteGO(m_healthBar);
+	}
 }
 
 void IEnemy::OnDestroy() {

@@ -116,9 +116,7 @@ void EnemyManager::SpawnEnemies() {
 			return true;
 		}
 	);
-	
 	return;
-	
 
 	//Zako!
 	std::random_device rd;

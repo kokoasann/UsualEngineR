@@ -10,6 +10,7 @@
 #include "GameSceneMenu.h"
 #include "Title.h"
 #include "Fade.h"
+#include "Goal.h"
 
 void Game::Release()
 {
@@ -105,6 +106,16 @@ void Game::OnEnemyDied(IEnemy* enemy) {
 	m_isBossCamPerform = true;
 	m_boss = enemy;
 
+	auto& eM = EnemyManager::GetEnemyManager();
+	if (enemy->IsBoss()) {
+		GameManager::GetInstance().AddDeadBossCount();
+		//TODO : const int NUM_BOSS = 3;
+		const int NUM_BOSS = 1; //debug code
+		if (GameManager::GetInstance().GetDeadBossCount() == NUM_BOSS) {
+			m_isGenerateGoalAfterBossPerformance = true;
+		}
+	}
+
 }
 
 void Game::OnItemUnlocked() {
@@ -137,6 +148,30 @@ bool Game::Start()
 
 void Game::PreUpdate()
 {
+}
+
+void Game::GoalGatePerformance() {
+	DebugPrint_WATA("Gate Open!!\n");
+
+	GameManager::GetInstance().AppearGoal();
+	auto goal = GameManager::GetInstance().m_goal;
+	auto cam = GameManager::GetInstance().m_camera;
+	auto tar = goal->GetPosition();
+	tar.y = 5.f;
+
+	auto plForward = Vector3(0.f, 0.f, 1.f);
+	auto camBeginPos = goal->GetPosition() + plForward * 65.f;
+	auto camEndPos = goal->GetPosition() + plForward * 45.f;
+	camBeginPos.y += 20.f;
+	camEndPos.y += 20.f;
+	auto sec = 1.5f;
+	auto interval = 2.f;
+
+	cam->Perform(
+		camBeginPos, camEndPos,
+		tar, tar, sec, interval
+	);
+
 }
 
 void Game::Update()
@@ -187,6 +222,19 @@ void Game::Update()
 
 		m_timer += gameTime()->GetDeltaTime();
 	}
+
+	if (m_isGenerateGoalAfterBossPerformance) {
+		m_goalAppearTimer += gameTime()->GetDeltaTime();
+		if (m_goalAppearTimer >= m_goalAppearTime) {
+			GoalGatePerformance();
+			m_isGenerateGoalAfterBossPerformance = false;
+		}
+	}
+
+	//if (g_pad[0]->IsTrigger(enButtonSelect)) {
+	//	GoalGatePerformance();
+	//}
+
 }
 
 void Game::PostUpdate()

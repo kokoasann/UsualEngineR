@@ -24,7 +24,6 @@ void GameManager::InitGameWorld() {
 	m_church = NewGO<Church>(0);
 	m_fade = NewGO<Fade>(0);
 
-	//m_goal = NewGO<Goal>(0);
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);
 	//m_player->SetGameCamera(m_camera);
@@ -54,4 +53,8 @@ void GameManager::Release() {
 void GameManager::SpawnPlayer() {
 	if(m_player == nullptr)
 		m_player = NewGO<Player>(0);
+}
+
+void GameManager::AppearGoal() {
+	m_goal = NewGO<Goal>(0);
 }

@@ -65,7 +65,18 @@ public:
 	//Goal
 	Goal* m_goal = nullptr;
 
+	void AddDeadBossCount() {
+		m_deadBossCount++;
+	}
+
+	const int GetDeadBossCount() {
+		return m_deadBossCount;
+	}
+
+	void AppearGoal();
+
 private:
 	Church* m_church = nullptr;
 	Fade* m_fade = nullptr;
+	int m_deadBossCount = 0;
 };

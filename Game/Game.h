@@ -68,10 +68,17 @@ public:
 	}
 
 	void OnGoal();
+
+	void GoalGatePerformance();
+
 private:
 	bool m_isCreateEnemyManager = false;		//EnemyManager‚ğì¬‚µ‚½‚©‚Ç‚¤‚©B
 	bool m_isBossCamPerform = false;
 	IEnemy* m_boss = nullptr;
 	bool m_isCalledExplode = false ;
 	float m_timer = 0.f;
+
+	bool m_isGenerateGoalAfterBossPerformance = false;
+	float m_goalAppearTimer = 0.f;
+	float m_goalAppearTime = 2.8f;
 };
