@@ -87,7 +87,10 @@ IEnemyState* EnemyLongDistanceTargetingState::Update(IEnemy* e)
 				DebugPrintValue(EDebugConsoloUser::NOMOTO, "fn", fn);
 				auto c = Math::RadToDeg(acos(e2p.Dot(pvel)));
 				DebugPrintValue(EDebugConsoloUser::NOMOTO, "deg", c);*/
-
+				CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+				se->Init(L"Assets/sound/LongEnemy_Target.wav");
+				se->Play(false);
+				se->SetVolume(0.1f);
 				tpos = std::move(target);
 				break;
 			}

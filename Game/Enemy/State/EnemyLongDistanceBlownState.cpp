@@ -97,6 +97,11 @@ IEnemyState* EnemyLongDistanceBlownState::Update(IEnemy* e)
 		m_effect->SetPos(e->GetPosition());
 		m_effect->Play();
 		m_isPlayEffect = true;
+		//”š”­
+		CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+		se->Init(L"Assets/sound/mini_Explosion.wav");
+		se->Play(false);
+		se->SetVolume(0.1f);
 	}
 	
 	float dtime = gameTime()->GetDeltaTime();

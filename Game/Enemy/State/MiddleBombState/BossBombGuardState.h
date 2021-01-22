@@ -11,4 +11,6 @@ public:
 	void Exit(IEnemy* e) override;
 	void  OnAttacked(IEnemy* e);
 private:
+	float m_timer = 0.;
+	float m_timeLimit = 2.;
 };

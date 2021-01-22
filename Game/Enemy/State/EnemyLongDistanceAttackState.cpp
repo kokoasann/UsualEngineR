@@ -54,7 +54,12 @@ IEnemyState* EnemyLongDistanceAttackState::Update(IEnemy* e)
 		m_muzzleFlash->SetPos(p);
 		m_muzzleFlash->SetRot(rot);
 		
+		CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+		se->Init(L"Assets/sound/LongEnemy_Fire.wav");
+		se->Play(false);
 		
+		se->SetVolume(0.08f);
+
 		//p.y += 10.;
 		eb->Init(p, 0.25f, m_velocity, m_speed, 5, 1);
 		eb->SetDamage(Player::GetMaxHP() / 60.f / 9.f);

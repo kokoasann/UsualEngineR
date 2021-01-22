@@ -32,7 +32,16 @@ public:
 	/// <returns>trueを返さない限り、ずっとStartを呼び続ける</returns>
 	bool Start() override;
 
-	void Init(const Vector3& pos,const Vector3& fireVelo,float size);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="fireVelo">出る方向</param>
+	/// <param name="size">弾のサイズの半径</param>
+	/// <param name="fireRange">攻撃判定の半径</param>
+	/// <param name="damage"></param>
+	/// <param name="power">吹っ飛びの強さ</param>
+	void Init(const Vector3& pos,const Vector3& fireVelo,float size,float fireRange,float damage,float power);
 
 	/// <summary>
 	/// 更新。の前に呼ばれる更新。
@@ -51,7 +60,17 @@ public:
 private:
 	ModelRender* m_model;
 	SphereCollider m_coll;
+	SphereCollider m_fireColl;
 	RigidBody m_rigidBody;
+	GhostObject m_ghost;
 	Vector3 m_velo = Vector3::Zero;
 	ExplosionEffect* m_effect;
+
+	bool m_isDestroy = false;
+	bool m_isHit = false;
+	Vector3 m_hitPos = Vector3::Zero;
+
+	float m_fireRange = 0.f;
+	float m_damage = 0.f;
+	float m_power = 0.f;
 };

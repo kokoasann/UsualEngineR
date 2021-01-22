@@ -30,7 +30,7 @@ IEnemyState* BossBombIdleState::Update(IEnemy* e)
 	auto p = GameManager::GetInstance().GetPlayer();
 	auto d = e->GetPosition() - p->GetPosition();
 	float len = d.Length();
-	if (len < 500.)
+	if (len < 100.)
 	{
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}

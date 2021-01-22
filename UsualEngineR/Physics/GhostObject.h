@@ -37,9 +37,14 @@ namespace UER
 			btTrans.setRotation(btRot);
 		}
 
-		btCollisionShape* GetBody()const override
+		btCollisionShape* GetBody() const override
 		{
 			return m_collider->GetBody();
+		}
+
+		btGhostObject* GetGhost()
+		{
+			return &m_ghost;
 		}
 	private:
 		ICollider* m_collider = nullptr;

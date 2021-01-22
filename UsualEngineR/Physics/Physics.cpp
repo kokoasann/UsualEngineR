@@ -51,6 +51,7 @@ namespace UER
 
 		m_debugDraw.Init();
 		dynamicWorld->setDebugDrawer(&m_debugDraw);
+		dynamicWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 	}
 	void PhysicsWorld::Update()
 	{
