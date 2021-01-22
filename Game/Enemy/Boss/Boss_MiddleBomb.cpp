@@ -55,7 +55,7 @@ void Boss_MiddleBomb::Init()
 	info.collider = &m_meshColl;
 	info.mass = 0;
 	m_rigidBody.Create(info);
-	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall);
+	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);
 	Physics().AddRigidBody(m_rigidBody);
 
 	SetAutoRotateFlag(false);
@@ -68,6 +68,11 @@ void Boss_MiddleBomb::Init()
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
+	m_charaCon.AddNonHitCollisionAttribute(TO_INT(GameCollisionAttribute::BombShield));
+	m_isNormalEnemy = false;
+
+	BossBombData::GetInstance().meshColl = &m_meshColl;
+	BossBombData::GetInstance().rigidBody = &m_rigidBody;
 }
 void Boss_MiddleBomb::InitState()
 {
@@ -164,5 +169,6 @@ void Boss_MiddleBomb::Execute()
 void Boss_MiddleBomb::Terminate()
 {
 	DeleteGO(m_model);
+	DeleteGO(m_ShieldModel);
 }
 
