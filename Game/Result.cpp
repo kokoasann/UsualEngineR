@@ -16,9 +16,9 @@ Result::~Result()
 
 void Result::Release()
 {
-	for (auto robot : m_robots) {
-		DeleteGO(robot);
-	}
+	//for (auto robot : m_robots) {
+		//DeleteGO(robot);
+	//}
 
 	DeleteGO(m_ground);
 	DeleteGO(m_backSprite);
@@ -38,24 +38,30 @@ void Result::Awake()
 bool Result::Start()
 {
 	//Robots
-	//m_level.Init("Assets/level/resultPOWs_level.tkl", [&](LevelObjectData& objData)->bool
-	//	{
-	//		std::string name(objData.name.begin(), objData.name.end());
-	//		char filePath[256];
-	//		//sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
-	//		sprintf_s(filePath, "Assets/modelData/map/commit/%s.tkm", name.c_str());
-	//		ModelRender* mr = NewGO<ModelRender>(0);
-	//		mr->SetScale(Vector3::One * m_levelScale);
-	//		mid.m_tkmFilePath = filePath;
-	//		mr->Init(mid);
-	//		m_mapmodel.push_back(mr);
-	//		//mr->SetMulColor({ 0.8,0.7,0.3,1 });
-	//		mr->SetMulColor({ 0.4,0.4,0.4,1 });
-	//		return true;
-	//	});
-
-
 	ModelInitData mid;
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+
+	m_level.Init("Assets/level/resultPOWs_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			std::string name(objData.name.begin(), objData.name.end());
+			ModelRender* mr = NewGO<ModelRender>(0);
+			mr->SetScale(Vector3::One * m_levelScale);
+			mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+			mr->Init(mid);
+			mr->SetScale(objData.scale * m_levelScale);
+			mr->SetPosition(objData.position * m_levelScale);
+			mr->SetRotation(objData.rotation);
+			m_robots.push_back(mr);
+			//mr->SetMulColor({ 0.8,0.7,0.3,1 });
+			mr->SetMulColor({ 0.4,0.4,0.4,1 });
+			return true;
+		});
+
+
+	/*ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
 	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
@@ -70,7 +76,7 @@ bool Result::Start()
 		robot->SetPosition(pos);
 		pos.z -= 5.f;
 		m_robots.push_back(robot);
-	}
+	}*/
 
 	//Ground
 	m_ground = NewGO<ModelRender>(0);
@@ -104,7 +110,8 @@ void Result::Update()
 {
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		NewGO<Title>(0);
-		//DeleteGO();
+		auto go = reinterpret_cast<GameObject*>(this);
+		DeleteGO(go);
 	}
 }
 

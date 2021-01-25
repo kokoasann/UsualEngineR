@@ -69,14 +69,15 @@ private:
 
 	ModelRender* m_ground = nullptr;
 
-	const Vector3 m_resultCameraPos = Vector3(0.f,5.f,15.f);
+	const Vector3 m_resultCameraPos = Vector3(0.f,9.f, 8.2f);
 	const Vector3 m_resultCameraTarget = Vector3(0.f,5.f,0.f);
 
 	//Back Sprite
 	SpriteRender* m_backSprite = nullptr;
-	Vector3 m_backSpPos = Vector3(0.f, 160.f, 0.f);
+	Vector3 m_backSpPos = Vector3(0.f, 220.f, 0.f);
 	Vector3 m_backSpScale = Vector3(5.5f, 1.f, 1.f);
 
 	Level m_level;
+	const float m_levelScale = 1.5f;
 
 };
