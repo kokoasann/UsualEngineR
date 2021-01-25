@@ -73,6 +73,17 @@ void Boss_MiddleBomb::Init()
 
 	BossBombData::GetInstance().meshColl = &m_meshColl;
 	BossBombData::GetInstance().rigidBody = &m_rigidBody;
+
+	GetModel()->GetAnimation().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName)
+		{
+			int res = std::wcscmp(eventName, L"jump_start");
+			if (res == 0)
+			{
+				BossBombData::GetInstance().isJumpStart = true;
+			}
+			else
+				BossBombData::GetInstance().isJumpStart = false;
+		});
 }
 void Boss_MiddleBomb::InitState()
 {
