@@ -8,6 +8,7 @@ enum class GameCollisionAttribute : int
 	Player	= UER::enCollisionAttr_User,
 	Enemy	= Player * 2,
 	Boss	= Player * 4,
+	BombShield = Player * 4,
 };
 
 

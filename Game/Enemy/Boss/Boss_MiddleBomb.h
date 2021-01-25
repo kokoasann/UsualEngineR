@@ -62,3 +62,18 @@ private:
 	const float m_radius = 1.f;
 	const float m_height = 3.f;
 };
+
+struct BossBombData
+{
+private:
+	BossBombData() {};
+public:
+	static BossBombData& GetInstance()
+	{
+		static BossBombData data;
+		return data;
+	}
+
+	RigidBody* rigidBody = nullptr;
+	MeshCollider* meshColl = nullptr;
+};
