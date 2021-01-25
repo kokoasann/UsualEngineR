@@ -32,7 +32,7 @@ void Game::OnGoal() {
 	DebugPrint_WATA("goal\n");
 	//NewGO<Title>(0);
 	auto result = NewGO<Result>(0);
-	// result->SetClearTime(m_clearTimer);
+	result->SetClearTime(m_clearTimer);
 
 	auto go = reinterpret_cast<GameObject*>(this);
 	DeleteGO(go);
@@ -147,6 +147,8 @@ bool Game::Start()
 	GameManager::GetInstance().InitGameWorld();
 	GameManager::GetInstance().m_gameScene = this;
 
+	m_clearTimer  = 0.f;
+
 	return true;
 }
 
@@ -238,6 +240,12 @@ void Game::Update()
 	//if (g_pad[0]->IsTrigger(enButtonSelect)) {
 	//	GoalGatePerformance();
 	//}
+
+	if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+		m_clearTimer += gameTime()->GetDeltaTime();
+	}
+
+	//printf("Clear Timer : %f\n", m_clearTimer);
 
 }
 
