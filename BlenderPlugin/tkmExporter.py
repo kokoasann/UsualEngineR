@@ -303,6 +303,63 @@ def build_data(obj,f):
             if (msh.numPolygon*3) % 2 != 0:
                 f.write(struct.pack("H",0))
         
+class Cell:
+    def __init__(self,ind):
+        # this index
+        self.index = ind
+        #indeces
+        self.verts = []
+        #position
+        self.center = None
+        #triangle polygon index
+        self.adjacentCell = []
+        
+    def addCell(self,cellind):
+        self.adjacentCell.append(cellind)
+        
+    def isAdjacentCell(self,cell):
+        cnt = 0
+        for v in cell.verts:
+            if v in self.verts:
+                cnt += 1
+        if cnt == 2:
+            return True
+        return False
+        
+def wrightCell(o,f):
+    print("start cell export")
+    mesh = o.to_mesh()
+    mesh.calc_loop_triangles()
+    cellList = []
+    
+    for tri in mesh.loop_triangles:
+        cell = Cell(tri.index)
+        cell.verts = tri.loops
+        center = tri.center.copy()
+        print(center)
+        y = center.y
+        center.y = center.z
+        center.z = y
+        cell.center = center
+        cellList.append(cell)
+    
+    for cell in cellList:
+        #print("build adjacent")
+        for aCell in cellList:
+            if cell.index == aCell.index:
+                continue
+            if aCell.isAdjacentCell(cell):
+                cell.addCell(aCell.index)
+                
+    for cell in cellList:
+        #print("wright cell")
+        f.write(struct.pack("<I",cell.index))
+        for v in cell.center:
+            f.write(struct.pack("<f",v))
+        for v in cell.adjacentCell:
+            f.write(struct.pack("<I",v))
+        
+    
         
 #アドオンの詳細
 bl_info = {
@@ -361,6 +418,8 @@ class PT_Panel(bpy.types.Panel):
         row = self.layout.row()
         row.prop(context.object.MaterialProps,"texture_spe",text="specular")
         row.operator("tkmexporter.open_specular",icon="FILE_FOLDER")
+        
+        self.layout.operator("tkmexporter.cell_export")
 
 
 class OT_Export(bpy.types.Operator):
@@ -448,6 +507,30 @@ class OT_OpenSpecular(bpy.types.Operator):
         bpy.context.active_object.MaterialProps.texture_spe = self.filepath
         return {"FINISHED"}
     
+class OT_CellExport(bpy.types.Operator):
+    bl_idname = "tkmexporter.cell_export"
+    bl_label = "Export Cell"
+    
+    filename_ext = ".clb"
+    
+    filepath : StringProperty(
+        name="clb_FilePath",
+        description="Filepath used for exporting the file",
+        default = "untitled.clb",
+        maxlen=1024,
+        subtype='FILE_PATH',
+    )
+    
+    def invoke(self,context,event):
+        filepath = "untitle"+self.filename_ext
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}
+
+    def execute(self,context):
+        with open(self.filepath,"wb") as f:
+            obj = bpy.context.active_object
+            wrightCell(obj,f)
+        return {"FINISHED"}
 
 classs = (
     PT_Panel,
@@ -456,6 +539,7 @@ classs = (
     OT_OpenTexture,
     OT_OpenNormal,
     OT_OpenSpecular,
+    OT_CellExport,
     MaterialProps,
     
 )
@@ -473,6 +557,8 @@ def unregister():
     #del bpy.types.Scene.armatures
 
 
+if __name__ == "__main__":
+    register()
 
 
 def test():
@@ -556,3 +642,4 @@ def out_test():
 #out_test()
 #DataTest()
 #test()
+

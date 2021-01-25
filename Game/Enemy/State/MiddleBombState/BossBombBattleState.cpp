@@ -65,15 +65,16 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 		return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Bash));
 
 	auto e2pDir = e2p;
+	e2pDir.y = 0.f;
 	e2pDir.Normalize();
 
 	if (e2pLen < m_distance-5.f)
 	{
-		move += e2p * -m_speed * dtime;
+		move += e2pDir * (-m_speed * dtime * 0.5f);
 	}
 	else if (e2pLen > m_distance)
 	{
-		move += e2p * m_speed * dtime;
+		move += e2pDir * m_speed * dtime;
 	}
 
 	Quaternion rot;
