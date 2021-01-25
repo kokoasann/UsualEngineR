@@ -4,6 +4,9 @@
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "GameManager.h"
+
+#include "Enemy/Equipment/Enemy_LaunchBomb.h"
+
 BossBombBashState::BossBombBashState()
 {
 }
@@ -25,6 +28,9 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 	{
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
+	//Enemy_LaunchBomb* bomb = NewGO<Enemy_LaunchBomb>(0, true);
+	//Vector3 v = e->GetPosition();
+	//bomb->Init(v,v * 100, 1, 20, 1, 25);
 
 	return this;
 }
