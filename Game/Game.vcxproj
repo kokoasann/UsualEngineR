@@ -307,6 +307,7 @@
     <ClInclude Include="Player\State\PlayerStunState.h" />
     <ClInclude Include="PositionChecker.h" />
     <ClInclude Include="PowaPowa.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Test\Test.h" />
     <ClInclude Include="Test\ThreadTest.h" />
@@ -445,6 +446,7 @@
     <ClCompile Include="Player\State\PlayerStunState.cpp" />
     <ClCompile Include="PositionChecker.cpp" />
     <ClCompile Include="PowaPowa.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
