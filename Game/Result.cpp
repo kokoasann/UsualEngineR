@@ -21,7 +21,7 @@ void Result::Release()
 	}
 
 	DeleteGO(m_ground);
-
+	DeleteGO(m_backSprite);
 }
 
 void Result::OnDestroy()
@@ -38,6 +38,23 @@ void Result::Awake()
 bool Result::Start()
 {
 	//Robots
+	//m_level.Init("Assets/level/resultPOWs_level.tkl", [&](LevelObjectData& objData)->bool
+	//	{
+	//		std::string name(objData.name.begin(), objData.name.end());
+	//		char filePath[256];
+	//		//sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
+	//		sprintf_s(filePath, "Assets/modelData/map/commit/%s.tkm", name.c_str());
+	//		ModelRender* mr = NewGO<ModelRender>(0);
+	//		mr->SetScale(Vector3::One * m_levelScale);
+	//		mid.m_tkmFilePath = filePath;
+	//		mr->Init(mid);
+	//		m_mapmodel.push_back(mr);
+	//		//mr->SetMulColor({ 0.8,0.7,0.3,1 });
+	//		mr->SetMulColor({ 0.4,0.4,0.4,1 });
+	//		return true;
+	//	});
+
+
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
 	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
@@ -87,6 +104,7 @@ void Result::Update()
 {
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		NewGO<Title>(0);
+		//DeleteGO();
 	}
 }
 

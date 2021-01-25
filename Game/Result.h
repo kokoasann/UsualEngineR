@@ -1,4 +1,5 @@
 #pragma once
+#include "level/Level.h"
 
 /// <summary>
 /// 
@@ -75,4 +76,7 @@ private:
 	SpriteRender* m_backSprite = nullptr;
 	Vector3 m_backSpPos = Vector3(0.f, 160.f, 0.f);
 	Vector3 m_backSpScale = Vector3(5.5f, 1.f, 1.f);
+
+	Level m_level;
+
 };

@@ -933,4 +933,7 @@
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\map_obj\exit_tex.png" />
+  </ItemGroup>
 </Project>

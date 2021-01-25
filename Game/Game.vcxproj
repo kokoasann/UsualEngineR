@@ -569,6 +569,9 @@
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
