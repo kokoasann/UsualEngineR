@@ -65,14 +65,14 @@ private:
 	ModelRender* m_model = nullptr;
 
 	//transform
-	Vector3 m_position = { 0,-10.f,0 };
+	Vector3 m_position = { 0,-50.f,0 };
 	Quaternion m_rotation = Quaternion::Identity;
-	const Vector3 m_scale = { 10.5f,10.5f,10.5f };
+	const Vector3 m_scale = { 100.f,100.f,100.f };
 
 	const float m_range = 30.f;
 	bool m_isChecked = false;
 
 	float m_appearTimer = 0.f;
-	const float m_appearTime = 1.5f;
+	const float m_appearTime = 3.0f;
 
 };
