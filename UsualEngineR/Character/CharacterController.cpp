@@ -26,6 +26,8 @@ namespace UER
 		Vector3 wallNormal = g_vec3Zero;
 		Vector3 wallHitPos = g_vec3One;
 		float wallDist = FLT_MAX;
+
+		int nonHitCollisionAttr = 0;
 		
 															//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
@@ -33,6 +35,7 @@ namespace UER
 			if (convexResult.m_hitCollisionObject == me
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_Character
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_NonHit
+				|| convexResult.m_hitCollisionObject->getUserIndex() & nonHitCollisionAttr
 				) {
 				//自分に衝突した。or キャラクタ属性のコリジョンと衝突した。
 				return 0.0f;
@@ -98,12 +101,13 @@ namespace UER
 		Vector3 floorNormal = g_vec3Zero;
 		Vector3 floorHitPos = g_vec3One;
 		float floorDist = FLT_MAX;
-
+		int nonHitCollisionAttr = 0;
 												//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 		{
 			if (convexResult.m_hitCollisionObject == me
 				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_NonHit
+				|| convexResult.m_hitCollisionObject->getUserIndex() & nonHitCollisionAttr
 				)
 			{
 				//自分に衝突した。or 地面に衝突した。
@@ -162,6 +166,35 @@ namespace UER
 		}
 	};
 
+	struct ContactTestResult :public btCollisionWorld::ContactResultCallback
+	{
+		bool isHit = false;
+		Vector3 hitNormal = Vector3::Zero;
+		Vector3 hitPos = Vector3::Zero;
+		float dist = 0;
+
+		// ContactResultCallback を介して継承されました
+		virtual btScalar addSingleResult(btManifoldPoint& cp,
+			const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0,
+			const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override
+		{
+			int ind = colObj1Wrap->getCollisionObject()->getUserIndex();
+			if (ind & enCollisionAttr_NonHit)
+				return 0.f;
+
+			
+			if (cp.getDistance() < dist)
+			{
+				isHit = true;
+				hitNormal = cp.m_normalWorldOnB;
+				hitPos = cp.getPositionWorldOnB();
+				dist = cp.getDistance();
+			}
+
+
+			return 0.f;
+		}
+	};
 
 
 	void CharacterController::Init(float radius, float height, const Vector3& position,bool isUseRigidBody)
@@ -210,6 +243,9 @@ namespace UER
 		Vector3 addPos = moveSpeed;
 		addPos *= deltaTime;
 		nextPosition += addPos;
+
+		Vector3 addV = addPos;
+		addV.Normalize();
 
 		//const float OFFSETXZ = Vector3(addPos.x, 0, addPos.z).Length()*0.5f*0+0.1;
 		//const float OFFSETY = fabsf(addPos.y)*0.5f*0 + 0.1;
@@ -482,6 +518,16 @@ namespace UER
 			}
 		}
 #endif
+		{
+			btRigidBody* btBody = m_rigidBody.GetBody();
+			//剛体を動かす。
+			btBody->setActivationState(DISABLE_DEACTIVATION);
+			btTransform& trans = btBody->getWorldTransform();
+			//剛体の位置を更新。
+			trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
+			ExebuteContactTest(addV);
+		}
+
 		ExecuteFloor(m_position, nextPosition, originalXZDir, Ypos);
 
 		if (std::isnan(nextPosition.x) || std::isnan(nextPosition.y) || std::isnan(nextPosition.z) || std::isinf(nextPosition.x))
@@ -509,6 +555,8 @@ namespace UER
 			trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 			//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 		}
+
+		ExebuteContactTest(addV);
 
 		return m_position;
 	}
@@ -554,6 +602,7 @@ namespace UER
 			if (m_isUseRigidBody)
 				callback.me = m_rigidBody.GetBody();
 			callback.startPos = posTmp;
+			callback.nonHitCollisionAttr = m_nonHitCollisionAttr;
 			//衝突検出。
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
@@ -617,29 +666,8 @@ namespace UER
 					DebugPrintVector3(EDebugConsoleKind::master, Z);
 					DebugPrintVector3(EDebugConsoleKind::master, S);
 				}
-#endif
-				Vector3 vT0, vT1;
-				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
-				//vT0.Set(nextPos.x, 0.0f, nextPos.z);
-				//vT1.Set(callback.floorHitPos.x, 0.0f, callback.floorHitPos.z);
-				vT0 = nextPos;
-				vT1 = callback.floorHitPos;
-				//めり込みが発生している移動ベクトルを求める。
-				Vector3 vMerikomi;
-				vMerikomi = vT0 - vT1;
-				//XZ平面での衝突した壁の法線を求める。。
-				Vector3 hitNormalXZ = callback.floorNormal;
-				//hitNormalXZ.y = 0.0f;
-				//hitNormalXZ.Normalize();
-				//めり込みベクトルを壁の法線に射影する。
-				float fT0 = hitNormalXZ.Dot(vMerikomi);
-				//押し戻し返すベクトルを求める。
-				//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
-				Vector3 vOffset;
-				vOffset = hitNormalXZ;
-				vOffset *= -fT0 + m_radius;
-				//nextPos += vOffset;
-				Ypos = vOffset.y;
+#elif 0
+				
 				Ypos = callback.floorHitPos.y;
 				if (0.f < callback.floorHitPos.y - nowPos.y)
 				{
@@ -662,7 +690,29 @@ namespace UER
 				DebugPrintValue(EDebugConsoleKind::master, "fT0", fT0);
 				DebugPrintValue(EDebugConsoleKind::master, "m_radius", m_radius);
 				DebugPrintValue(EDebugConsoleKind::master,"-fT0 + m_radius", -fT0 + m_radius);*/
-				
+#endif
+				Vector3 vT0, vT1;
+				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
+				//vT0.Set(nextPos.x, 0.0f, nextPos.z);
+				//vT1.Set(callback.floorHitPos.x, 0.0f, callback.floorHitPos.z);
+				vT0 = nextPos;
+				vT0.y = nowPos.y+ m_height * 0.5f + m_radius;
+				vT1 = callback.floorHitPos;
+				//めり込みが発生している移動ベクトルを求める。
+				Vector3 vMerikomi;
+				vMerikomi = vT0 - vT1;
+				//XZ平面での衝突した壁の法線を求める。。
+				Vector3 hitNormalXZ = callback.floorNormal;
+				//hitNormalXZ.y = 0.0f;
+				//hitNormalXZ.Normalize();
+				//めり込みベクトルを壁の法線に射影する。
+				float fT0 = hitNormalXZ.Dot(vMerikomi);
+				//押し戻し返すベクトルを求める。
+				//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
+				Vector3 vOffset;
+				vOffset = hitNormalXZ;
+				vOffset *= -fT0 + m_radius;
+				nextPos += vOffset;
 			}
 
 			if (isNearHitWall && callback.isHit)
@@ -716,9 +766,10 @@ namespace UER
 					//移動先が逆向きになったら移動をキャンセルする。
 					nextPos.x = nowPos.x;
 					nextPos.z = nowPos.z;
-
-					if (isHitFloor)
-						nowPos.y = Ypos;
+					//nextPos.y = nowPos.y;
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "KADOKAWA");
+					//if (isHitFloor)
+						//nowPos.y = Ypos;
 
 					break;
 				}
@@ -756,14 +807,15 @@ namespace UER
 			loopCount++;
 			if (loopCount >= 5 || !callback.isHit) 
 			{
-				if (isHitFloor)
-					nowPos.y = Ypos;
+				//if (isHitFloor)
+					//nowPos.y = Ypos;
 				break;
 			}
 		}
 	}
 	void CharacterController::ExecuteFloor(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos)
 	{
+		
 		//const float OFFSETXZ = m_radius;
 		//const float OFFSETY = m_radius;
 
@@ -823,6 +875,7 @@ namespace UER
 		if (m_isUseRigidBody)
 			callback.me = m_rigidBody.GetBody();
 		callback.startPos.Set(start.getOrigin());
+		callback.nonHitCollisionAttr = m_nonHitCollisionAttr;
 		//衝突検出。
 		//if (fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON) {
 		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) {
@@ -906,6 +959,44 @@ namespace UER
 			
 			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");*/
 			isDebugPrinted = true;
+		}
+	}
+	void CharacterController::ExebuteContactTest(const Vector3& addV)
+	{
+		if (m_isUseRigidBody)
+		{
+			
+			btRigidBody* btBody = m_rigidBody.GetBody();
+			//剛体を動かす。
+			btBody->setActivationState(DISABLE_DEACTIVATION);
+			btTransform& trans = btBody->getWorldTransform();
+			
+			for (int i=0;i<5;i++)
+			{
+				ContactTestResult res;
+				Physics().ContactTest(m_rigidBody.GetBody(), res);
+				if (res.isHit)
+				{
+					float t = addV.Dot(res.hitNormal);
+					if (t >= 0)
+					{
+						res.hitNormal *= -1.f;
+					}
+					//Vector3 v = res.hitPos - m_position;
+					
+					m_position += res.hitNormal * -res.dist;
+					//剛体の位置を更新。
+					trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
+
+					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "Contact Test");
+					DebugPrintVector3(TO_INT(EDebugConsoleKind::master), res.hitNormal);
+					DebugPrintValue(EDebugConsoleKind::master, "DIST", res.dist);
+					DebugPrintValue(EDebugConsoleKind::master, "T", t);
+				}
+				else
+					return;
+			}
+			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "Contact Test END");
 		}
 	}
 	/*!

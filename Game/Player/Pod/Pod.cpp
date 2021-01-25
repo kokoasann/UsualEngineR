@@ -266,6 +266,7 @@ void Pod::PostUpdate()
 
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);
+	m_explosionEffect->SetPos(m_pos);
 }
 
 void Pod::Render()

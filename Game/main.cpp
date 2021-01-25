@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Title.h"
 #include "Test/Test.h"
+#include "Result.h"
 #include "GameDebugger.h"
 
 
@@ -70,6 +71,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	NewGO<Title>(0);
 	//NewGO<Game>(0);
+	//NewGO<Result>(0);
 	NewGO<GameDebugger>(0);
 	//Ghost Object test
 	/*BoxCollider bc;

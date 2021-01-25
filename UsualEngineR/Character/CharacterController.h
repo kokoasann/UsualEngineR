@@ -38,6 +38,8 @@ namespace UER
 
 		void ExecuteWall(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
 		void ExecuteFloor(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
+
+		void ExebuteContactTest(const Vector3& addV);
 		/*!
 			* @brief	座標を取得。
 			*/
@@ -94,9 +96,13 @@ namespace UER
 			m_rigidBody.GetBody()->setUserIndex(m_rigidBody.GetBody()->getUserIndex() | static_cast<int>(ca));
 		}
 
+		/// <summary>
+		/// 当てたくないコリジョンの属性を追加。
+		/// </summary>
+		/// <param name="ca"></param>
 		void AddNonHitCollisionAttribute(int ca)
 		{
-			m_nonHitCollisionAttribute |= ca;
+			m_nonHitCollisionAttr |= ca;
 		}
 
 		/// <summary>
@@ -134,7 +140,7 @@ namespace UER
 		bool				m_isUseRigidBody = true;		//リジッドボデューを使う？
 		bool				m_isRemoveRigidBody = false;
 
-		int					m_nonHitCollisionAttribute = 0;
+		int					m_nonHitCollisionAttr = 0;
 
 		float				m_offsetXZ = 0.0f;
 		float				m_offsetY = 0.0f;

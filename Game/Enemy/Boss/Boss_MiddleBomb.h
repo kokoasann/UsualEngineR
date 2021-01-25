@@ -76,4 +76,5 @@ public:
 
 	RigidBody* rigidBody = nullptr;
 	MeshCollider* meshColl = nullptr;
+	bool isJumpStart = false;
 };

@@ -18,7 +18,7 @@ private:
 
 	float m_distance = 50.f;
 	float m_distanceBash = 30.f;
-	float m_speed = 50.f;
+	float m_speed = 500.f;
 
 	Quaternion m_firstRot;
 };
