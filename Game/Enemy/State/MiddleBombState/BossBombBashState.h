@@ -13,4 +13,5 @@ public:
 private:
 	float m_timer = 0.;
 	float m_timeLimit = 2.;
+	SphereCollider m_sphere;
 };
