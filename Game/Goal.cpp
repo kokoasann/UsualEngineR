@@ -36,8 +36,8 @@ bool Goal::Start()
 {
 
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
-	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
+	mid.m_tkmFilePath = "Assets/modelData/map_obj/exit.tkm";
+	mid.m_tksFilePath = "Assets/modelData/map_obj/exit.tks";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 	m_model = NewGO<ModelRender>(0);
