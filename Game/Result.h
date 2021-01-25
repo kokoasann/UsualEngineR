@@ -54,12 +54,17 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
+
+	void SetClearTime(const float clearTime) {
+		m_clearTime = clearTime;
+	}
+
 private:
 
 	float m_clearTime = 0.f;
 	std::vector<ModelRender*> m_robots;
 	const Vector3 m_scale = { 1.5f,1.5f,1.5f };
-	int m_numRobot = 10;
+	int m_numRobot = 50;
 
 	ModelRender* m_ground = nullptr;
 
