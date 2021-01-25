@@ -77,24 +77,20 @@ void Result::Init(const double clearTime) {
 	int robotCount = 0;
 	const int NUM_ROBOT = 100;
 	int displayRoboCount = 0;
-	float clearMin = clearTime / 60.0;
-	printf("clear time : %f(min)\n", clearTime / 60.0);
 
-	if (clearMin <= 30.f) {
-		//Grade : A
+	float clearMin = clearTime / 60.0;
+	//printf("clear time : %f(min)\n", clearTime / 60.0);
+	const float WorstMin = 60.f;
+	const float BestMin = WorstMin / 2.f;
+
+	if (clearMin >= WorstMin) {
+		displayRoboCount = 1;
+	}
+	else if (clearMin <= BestMin) {
 		displayRoboCount = NUM_ROBOT;
 	}
-	else if (clearMin <= 60.f) {
-		//Grade : B
-		displayRoboCount = NUM_ROBOT / 2;
-	}
-	else if (clearMin <= 90.f) {
-		//Grade : C
-		displayRoboCount = NUM_ROBOT / 5;
-	}
 	else {
-		//Grade : D
-		displayRoboCount = NUM_ROBOT / 10;
+		displayRoboCount = NUM_ROBOT - (NUM_ROBOT * (clearMin - BestMin) / BestMin);
 	}
 
 
