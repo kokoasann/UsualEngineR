@@ -94,6 +94,11 @@ namespace UER
 			m_rigidBody.GetBody()->setUserIndex(m_rigidBody.GetBody()->getUserIndex() | static_cast<int>(ca));
 		}
 
+		void AddNonHitCollisionAttribute(int ca)
+		{
+			m_nonHitCollisionAttribute |= ca;
+		}
+
 		/// <summary>
 		/// キャラコンにポインターを設定。
 		/// </summary>
@@ -128,6 +133,8 @@ namespace UER
 		RigidBody			m_rigidBody;					//剛体。
 		bool				m_isUseRigidBody = true;		//リジッドボデューを使う？
 		bool				m_isRemoveRigidBody = false;
+
+		int					m_nonHitCollisionAttribute = 0;
 
 		float				m_offsetXZ = 0.0f;
 		float				m_offsetY = 0.0f;
