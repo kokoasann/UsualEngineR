@@ -81,4 +81,6 @@ private:
 	bool m_isGenerateGoalAfterBossPerformance = false;
 	float m_goalAppearTimer = 0.f;
 	float m_goalAppearTime = 2.8f;
+
+	double m_clearTimer = 0.f;
 };

@@ -11,6 +11,7 @@
 #include "Title.h"
 #include "Fade.h"
 #include "Goal.h"
+#include "Result.h"
 
 void Game::Release()
 {
@@ -29,7 +30,9 @@ void Game::Awake()
 
 void Game::OnGoal() {
 	DebugPrint_WATA("goal\n");
-	NewGO<Title>(0);
+	auto result = NewGO<Result>(0);
+	result->Init(m_clearTimer);
+
 	auto go = reinterpret_cast<GameObject*>(this);
 	DeleteGO(go);
 }
@@ -143,6 +146,8 @@ bool Game::Start()
 	GameManager::GetInstance().InitGameWorld();
 	GameManager::GetInstance().m_gameScene = this;
 
+	m_clearTimer  = 0.f;
+
 	return true;
 }
 
@@ -160,11 +165,11 @@ void Game::GoalGatePerformance() {
 	tar.y = 5.f;
 
 	auto plForward = Vector3(0.f, 0.f, 1.f);
-	auto camBeginPos = goal->GetPosition() + plForward * 65.f;
-	auto camEndPos = goal->GetPosition() + plForward * 45.f;
-	camBeginPos.y += 20.f;
-	camEndPos.y += 20.f;
-	auto sec = 1.5f;
+	auto camBeginPos = goal->GetPosition() + plForward * 105.f;
+	auto camEndPos = goal->GetPosition() + plForward * 65.f;
+	camBeginPos.y = 40.f;
+	camEndPos.y = 40.f;
+	auto sec = 3.0f;
 	auto interval = 2.f;
 
 	cam->Perform(
@@ -176,6 +181,12 @@ void Game::GoalGatePerformance() {
 
 void Game::Update()
 {
+
+	// GOAL DEBUG
+	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
+		//GoalGatePerformance();
+	}
+	//
 
 	if (GameManager::GetInstance().m_stage->HasMapLoadingDone() and m_isCreateEnemyManager == false) {
 		auto& eM = EnemyManager::GetEnemyManager();
@@ -234,6 +245,12 @@ void Game::Update()
 	//if (g_pad[0]->IsTrigger(enButtonSelect)) {
 	//	GoalGatePerformance();
 	//}
+
+	if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+		m_clearTimer += gameTime()->GetDeltaTime();
+	}
+
+	//printf("Clear Timer : %f\n", m_clearTimer);
 
 }
 

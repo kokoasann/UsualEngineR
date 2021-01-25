@@ -118,8 +118,8 @@ private:
 
 	std::vector<Enemy_Bullet*> m_bulletList;
 	int m_bulletNum = 0;
-	int m_nextAllocateActiveNum = 6;
-	int m_allocElementNum = 30;
+	int m_nextAllocateActiveNum = 30;
+	int m_allocElementNum = 60;
 	ThreadObject m_thread;
 
 	bool m_isAllocate = false;

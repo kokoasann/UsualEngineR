@@ -380,6 +380,7 @@
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombStunState.h">
       <Filter>Enemy\State\BombBoss</Filter>
     </ClInclude>
+    <ClInclude Include="Result.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -762,6 +763,7 @@
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombStunState.cpp">
       <Filter>Enemy\State\BombBoss</Filter>
     </ClCompile>
+    <ClCompile Include="Result.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -930,5 +932,8 @@
     <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\map_obj\exit_tex.png" />
   </ItemGroup>
 </Project>
