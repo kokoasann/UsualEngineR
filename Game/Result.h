@@ -56,9 +56,7 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	void SetClearTime(const float clearTime) {
-		m_clearTime = clearTime;
-	}
+	void Init(const double clearTime);
 
 private:
 

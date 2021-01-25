@@ -37,46 +37,11 @@ void Result::Awake()
 
 bool Result::Start()
 {
-	//Robots
 	ModelInitData mid;
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
 	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
-
-	m_level.Init("Assets/level/resultPOWs_level.tkl", [&](LevelObjectData& objData)->bool
-		{
-			std::string name(objData.name.begin(), objData.name.end());
-			ModelRender* mr = NewGO<ModelRender>(0);
-			mr->SetScale(Vector3::One * m_levelScale);
-			mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
-			mr->Init(mid);
-			mr->SetScale(objData.scale * m_levelScale);
-			mr->SetPosition(objData.position * m_levelScale);
-			mr->SetRotation(objData.rotation);
-			m_robots.push_back(mr);
-			//mr->SetMulColor({ 0.8,0.7,0.3,1 });
-			mr->SetMulColor({ 0.4,0.4,0.4,1 });
-			return true;
-		});
-
-
-	/*ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
-	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
-	mid.m_upAxis = EUpAxis::enUpAxisY;
-	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
-
-	Vector3 pos = Vector3::Zero;
-
-	for (int i = 0; i < m_numRobot; i++) {
-		auto robot = NewGO<ModelRender>(0);
-		robot->Init(mid);
-		robot->SetScale(m_scale);
-		robot->SetPosition(pos);
-		pos.z -= 5.f;
-		m_robots.push_back(robot);
-	}*/
 
 	//Ground
 	m_ground = NewGO<ModelRender>(0);
@@ -98,6 +63,59 @@ bool Result::Start()
 	m_backSprite->SetSca(m_backSpScale);
 
 	return true;
+}
+
+
+void Result::Init(const double clearTime) {
+	//Robots
+	ModelInitData mid;
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+	mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
+	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+
+	int robotCount = 0;
+	const int NUM_ROBOT = 100;
+	int displayRoboCount = 0;
+	float clearMin = clearTime / 60.0;
+	printf("clear time : %f(min)\n", clearTime / 60.0);
+
+	if (clearMin <= 30.f) {
+		//Grade : A
+		displayRoboCount = NUM_ROBOT;
+	}
+	else if (clearMin <= 60.f) {
+		//Grade : B
+		displayRoboCount = NUM_ROBOT / 2;
+	}
+	else if (clearMin <= 90.f) {
+		//Grade : C
+		displayRoboCount = NUM_ROBOT / 5;
+	}
+	else {
+		//Grade : D
+		displayRoboCount = NUM_ROBOT / 10;
+	}
+
+
+	m_level.Init("Assets/level/resultPOWs_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			if (robotCount >= displayRoboCount) return true;
+			std::string name(objData.name.begin(), objData.name.end());
+			ModelRender* mr = NewGO<ModelRender>(0);
+			mr->SetScale(Vector3::One * m_levelScale);
+			mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+			mr->Init(mid);
+			mr->SetScale(objData.scale * m_levelScale);
+			mr->SetPosition(objData.position * m_levelScale);
+			mr->SetRotation(objData.rotation);
+			m_robots.push_back(mr);
+			mr->SetMulColor({ 0.4,0.4,0.4,1 });
+			robotCount++;
+			printf("robo count : %d\n", robotCount);
+			return true;
+		});
+
 }
 
 

@@ -32,7 +32,7 @@ void Game::OnGoal() {
 	DebugPrint_WATA("goal\n");
 	//NewGO<Title>(0);
 	auto result = NewGO<Result>(0);
-	result->SetClearTime(m_clearTimer);
+	result->Init(m_clearTimer);
 
 	auto go = reinterpret_cast<GameObject*>(this);
 	DeleteGO(go);
