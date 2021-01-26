@@ -62,6 +62,7 @@ void BossBombBashState::Enter(IEnemy* e)
 
 IEnemyState* BossBombBashState::Update(IEnemy* e)
 {
+	float dtime = gameTime()->GetDeltaTime();
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer > m_timeLimit)
 	{
@@ -73,15 +74,17 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 	//info.pos = e->GetPosition();
 	//info.rot = e->GetRotation();
 	//info.sca = g_vec3One;
-
+	m_dir = e->GetPosition();
+	m_dir.Normalize();
 	//ボム敵データ取得
 	auto BBData = BossBombData::GetInstance();
 	Vector3 oldpos = e->GetModel()->GetPosition();
+	Vector3 newpos = oldpos + m_dir * (m_speed * dtime);
 	btTransform start, end;
 	start.setIdentity();
 	end.setIdentity();
 	start.setOrigin({ oldpos.x, oldpos.y, oldpos.z });
-	end.setOrigin({ oldpos.x + 100.0, oldpos.y+100.0, oldpos.z+100.0 });
+	end.setOrigin({ newpos.x, newpos.y, newpos.z });
 	SweepResult sr(oldpos);
 	Physics().ConvexSweepTest(m_sphere.GetBody(),start, end, sr);
 	//判定をとりだし
