@@ -172,6 +172,11 @@ void Game::GoalGatePerformance() {
 	auto sec = 3.0f;
 	auto interval = 2.f;
 
+	Quaternion rot = Quaternion::Identity;
+	rot.SetRotationDegY(90.f);
+	rot.Apply(camBeginPos);
+	rot.Apply(camEndPos);
+
 	cam->Perform(
 		camBeginPos, camEndPos,
 		tar, tar, sec, interval
@@ -183,8 +188,8 @@ void Game::Update()
 {
 
 	// GOAL DEBUG
-	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
-		//GoalGatePerformance();
+	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
+		GoalGatePerformance();
 	}
 	//
 

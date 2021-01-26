@@ -297,9 +297,7 @@ void Player::PreUpdate()
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
-
 	//DebugPrintVector3(EDebugConsoloUser::WATA, m_velocity);
-
 	m_position = m_charaCon.GetPosition();
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
@@ -498,6 +496,13 @@ void Player::UpdateAttackType() {
 void Player::Explode() {
 	m_explosionEffect->SetPos(m_position);
 	m_explosionEffect->Play();
+}
+
+void Player::MovePerformance(const Vector3 startPos, const Vector3 velocity, const Quaternion rot) {
+	SetPosition(startPos);
+	SetRotation(rot);
+	SetVelocity(velocity);
+	//syncPod'sPos';
 }
 
 //void Player::InitThrusterEffect() {

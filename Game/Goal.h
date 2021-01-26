@@ -59,6 +59,10 @@ public:
 		return m_firstPosition;
 	}
 
+	const Quaternion& GetRotation() const{
+		return m_rotation;
+	}
+
 private:
 
 	//model
@@ -85,4 +89,11 @@ private:
 	float m_appearTimer = 0.f;
 	const float m_appearTime = 3.0f;
 
+	Vector3 m_forward = Vector3::One;
+
+	//performance
+	float m_performanceTimer = 0.f;
+	const float m_sceneTransitionTime = 4.f;
+	//Physics
+	PhysicsStaticObject m_physicsStaticObject;
 };

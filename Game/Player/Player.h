@@ -163,6 +163,7 @@ public:
 	void SetPosition(const Vector3& pos) {
 		m_position = pos;
 		m_charaCon.SetPosition(pos);
+		m_model->SetPosition(pos);
 	}
 
 	void Respawn() {
@@ -276,11 +277,14 @@ public:
 
 	void SetRotation(const Quaternion& rot) {
 		m_rotation = rot;
+		m_model->SetRotation(rot);
 	}
 
 	const float GetSpeed() const {
 		return m_speed;
 	}
+
+	
 
 	const float GetCurrentBoost() {
 		return m_boost;
@@ -418,6 +422,12 @@ public:
 	std::map<int, std::unique_ptr<CAnimationClip>>& GetAnimationMap() {
 		return m_animationMap;
 	}
+
+	CharacterController& GetCharaCon(){
+		return m_charaCon;
+	}
+
+	void MovePerformance(const Vector3 startPos, const Vector3 velocity, const Quaternion rot);
 	
 private:
 	//func
