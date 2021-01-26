@@ -55,5 +55,5 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
-
+	bool m_isTrigeredStart = false;
 };

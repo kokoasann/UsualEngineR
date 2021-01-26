@@ -78,4 +78,5 @@ private:
 	Level m_level;
 	const float m_levelScale = 1.5f;
 
+	bool m_isTriggeredButtonA = false;
 };

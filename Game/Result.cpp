@@ -131,6 +131,11 @@ void Result::Update()
 {
 
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
+		Fade::GetInstance().FadeOut();
+		m_isTriggeredButtonA =  true;
+	}
+
+	if (Fade::GetInstance().IsFaded() and m_isTriggeredButtonA) {
 		NewGO<Title>(0);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
