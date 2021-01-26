@@ -100,8 +100,10 @@ void Beam::Init(const BeamEffectInitData& bid)
 				pThis->AddParticle(pos, g_vec3One * m_particleScale, g_quatIdentity, m_beamColor, m_particleLifeTime, nullptr, false);
 			}
 		}
-		m_isPlay = false;
-		pThis->SetGenerateFlag(false);
+		if (!m_isLoop) {
+			m_isPlay = false;
+			pThis->SetGenerateFlag(false);
+		}
 	},
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData) {
 		if (m_isCharge) {
@@ -120,7 +122,9 @@ void Beam::Init(const BeamEffectInitData& bid)
 	m_effect = NewGO<PlaneParticleEffectRender>(0);
 	m_effect->Init(pid);
 
-	m_effect->SetGenerateFlag(false);
+	if (!m_isLoop) {
+		m_effect->SetGenerateFlag(false);
+	}
 }
 
 void Beam::Play()
