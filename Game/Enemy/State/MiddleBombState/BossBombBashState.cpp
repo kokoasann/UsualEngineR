@@ -58,6 +58,12 @@ void BossBombBashState::Enter(IEnemy* e)
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
 	m_timer = 0.;
 	m_sphere.Create(0.5);
+
+	auto& p = GameManager::GetInstance().m_player;
+	auto f = e->GetForward();
+	f.Normalize();
+
+	p->ApplyDamage(10, true, f * 100);
 }
 
 IEnemyState* BossBombBashState::Update(IEnemy* e)
@@ -87,9 +93,9 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 	end.setOrigin({ newpos.x, newpos.y, newpos.z });
 	SweepResult sr(oldpos);
 	Physics().ConvexSweepTest(m_sphere.GetBody(),start, end, sr);
+
 	//”»’è‚ð‚Æ‚è‚¾‚µ
 	//Physics().ContactTest(BBData.rigidBody->GetBody(),sr);
-
 	//m_rigidBody.Create(info);
 	//m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);
 	//Physics().AddRigidBody(m_rigidBody);
