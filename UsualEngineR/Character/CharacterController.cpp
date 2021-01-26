@@ -173,13 +173,17 @@ namespace UER
 		Vector3 hitPos = Vector3::Zero;
 		float dist = 0;
 
+		int nonHitCollisionAttr = 0;
+
 		// ContactResultCallback を介して継承されました
 		virtual btScalar addSingleResult(btManifoldPoint& cp,
 			const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0,
 			const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override
 		{
 			int ind = colObj1Wrap->getCollisionObject()->getUserIndex();
-			if (ind & enCollisionAttr_NonHit)
+			if (ind & enCollisionAttr_NonHit
+				|| ind & nonHitCollisionAttr
+				)
 				return 0.f;
 
 			
@@ -974,6 +978,7 @@ namespace UER
 			for (int i=0;i<5;i++)
 			{
 				ContactTestResult res;
+				res.nonHitCollisionAttr = m_nonHitCollisionAttr;
 				Physics().ContactTest(m_rigidBody.GetBody(), res);
 				if (res.isHit)
 				{

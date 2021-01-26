@@ -35,9 +35,17 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	float dtime = gameTime()->GetDeltaTime();
 	m_timer += dtime;
 
+	const auto& ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
+	const auto& epos = e->GetPosition();
+
 	float rand = GRandom().Rand();
 	if (m_timer >= m_timeLimit && true)
 	{
+		float dify = ppos.y - epos.y;
+		if (!GameManager::GetInstance().GetPlayer()->IsOnGround()&& dify > 20.f)
+		{
+			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Jump));
+		}
 		
 		if (rand < 0.4)
 		{
@@ -54,9 +62,6 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	}
 
 	Vector3 move = Vector3::Zero;
-	
-	const auto& ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
-	const auto& epos = e->GetPosition();
 
 	auto e2p = ppos - epos;
 	float e2pLen = e2p.Length();

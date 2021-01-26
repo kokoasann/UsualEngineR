@@ -22,14 +22,18 @@ namespace UER
 		srvHeapDesc.NumDescriptors = m_numShaderResource + m_numConstantBuffer + m_numUavResource;
 		srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 		srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	
+
+		static std::mutex mute;
+		mute.lock();
 		for (auto& ds : m_descriptorHeap) {
 			auto hr = d3dDevice->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&ds));
+			
 			if (FAILED(hr)) {
 				MessageBox(nullptr, L"DescriptorHeap::Commit ディスクリプタヒープの作成に失敗しました", L"エラー", MB_OK);
 				std::abort();
 			}
 		}
+		mute.unlock();
 		//定数バッファやシェーダーリソースのディスクリプタをヒープに書き込んでいく。
 		int bufferNo = 0;
 		for (auto& descriptorHeap : m_descriptorHeap) {
