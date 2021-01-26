@@ -50,7 +50,7 @@ void EnemyManager::SpawnEnemies() {
 	if (!isCreatedEnemyBulletManager)
 	{
 		EnemyBulletManager* ebm = NewGO<EnemyBulletManager>(0);
-		ebm->Allocate(120);
+		ebm->Allocate(400);
 		isCreatedEnemyBulletManager = true;
 	}
 	//AllocateGO<Enemy_Bullet>(70, 0);
