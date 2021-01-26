@@ -932,8 +932,7 @@
     <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\modelData\map_obj\exit_tex.png" />
+    <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
+    <ImageContentTask Include="Assets\Image\title.png" />
   </ItemGroup>
 </Project>

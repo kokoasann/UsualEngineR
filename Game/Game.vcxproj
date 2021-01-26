@@ -572,6 +572,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\Image\title.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

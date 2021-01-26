@@ -55,5 +55,8 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
+	//Back Sprite
+	SpriteRender* m_backSprite = nullptr;
+	Vector3 m_backSpPos = Vector3::Zero;
 	bool m_isTrigeredStart = false;
 };
