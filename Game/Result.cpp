@@ -16,9 +16,9 @@ Result::~Result()
 
 void Result::Release()
 {
-	//for (auto robot : m_robots) {
-		//DeleteGO(robot);
-	//}
+	for (auto robot : m_robots) {
+		DeleteGO(robot);
+	}
 
 	DeleteGO(m_ground);
 	DeleteGO(m_backSprite);
