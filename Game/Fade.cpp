@@ -4,35 +4,6 @@
 
 Fade::Fade()
 {
-
-}
-
-Fade::~Fade()
-{
-
-}
-
-
-
-void Fade::Release()
-{
-	DeleteGO(m_panel);
-}
-
-void Fade::OnDestroy()
-{
-
-}
-
-
-void Fade::Awake()
-{
-
-}
-
-bool Fade::Start()
-{
-
 	m_panel = NewGO<SpriteRender>(10);
 	SpriteInitData sd;
 	sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
@@ -41,14 +12,11 @@ bool Fade::Start()
 	m_panel->Init(sd);
 	m_panel->SetSca(m_panelScale);
 	m_panel->SetMulColor(Vector4::Black);
-
-	return true;
 }
 
-
-void Fade::PreUpdate()
+Fade::~Fade()
 {
-
+	DeleteGO(m_panel);
 }
 
 void Fade::Update()
@@ -76,21 +44,5 @@ void Fade::Update()
 	}
 
 	m_panel->SetMulColor({ 0,0,0,m_alpha });
-
-}
-
-void Fade::PostUpdate()
-{
-
-}
-
-
-void Fade::Render()
-{
-
-}
-
-void Fade::PostRender()
-{
 
 }
