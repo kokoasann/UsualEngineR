@@ -29,12 +29,9 @@ void Game::Awake()
 }
 
 void Game::OnGoal() {
+	Fade::GetInstance().FadeOut();
+	m_isCleared = true;
 	DebugPrint_WATA("goal\n");
-	auto result = NewGO<Result>(0);
-	result->Init(m_clearTimer);
-
-	auto go = reinterpret_cast<GameObject*>(this);
-	DeleteGO(go);
 }
 
 void Game::OnEnterBattle(IEnemy* enemy) {
@@ -172,6 +169,11 @@ void Game::GoalGatePerformance() {
 	auto sec = 3.0f;
 	auto interval = 2.f;
 
+	Quaternion rot = Quaternion::Identity;
+	rot.SetRotationDegY(90.f);
+	rot.Apply(camBeginPos);
+	rot.Apply(camEndPos);
+
 	cam->Perform(
 		camBeginPos, camEndPos,
 		tar, tar, sec, interval
@@ -183,8 +185,8 @@ void Game::Update()
 {
 
 	// GOAL DEBUG
-	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
-		//GoalGatePerformance();
+	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
+		GoalGatePerformance();
 	}
 	//
 
@@ -196,7 +198,7 @@ void Game::Update()
 		//ついでにプレイヤーもここで生成・・・.
 		GameManager::GetInstance().SpawnPlayer();
 
-		GameManager::GetInstance().GetFade()->FadeIn();
+		Fade::GetInstance().FadeIn();
 
 	}
 
@@ -252,10 +254,19 @@ void Game::Update()
 
 	//printf("Clear Timer : %f\n", m_clearTimer);
 
+	auto& fade = Fade::GetInstance();
+	if (fade.IsFaded() and m_isCleared) {
+		auto result = NewGO<Result>(0);
+		result->Init(m_clearTimer);
+		auto go = reinterpret_cast<GameObject*>(this);
+		DeleteGO(go);
+	}
 }
 
 void Game::PostUpdate()
 {
+	Fade::GetInstance().Update();
+
 	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
 		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
 			GameManager::GetInstance().m_menu->ResumeGame();

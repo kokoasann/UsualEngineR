@@ -3,11 +3,11 @@
 /// <summary>
 /// 
 /// </summary>
-class Title :public GameObject
+class Boss_FatmanAngryPerform :public GameObject
 {
 public:
-	Title();
-	virtual ~Title();
+	Boss_FatmanAngryPerform();
+	virtual ~Boss_FatmanAngryPerform();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -33,30 +33,11 @@ public:
 	bool Start() override;
 
 	/// <summary>
-	/// 更新。の前に呼ばれる更新。
-	/// </summary>
-	void PreUpdate() override;
-	/// <summary>
 	/// 更新。
 	/// </summary>
 	void Update() override;
-	/// <summary>
-	/// 更新。の後に呼ばれる更新。
-	/// </summary>
-	void PostUpdate() override;
 
-	/// <summary>
-	/// 描画。
-	/// </summary>
-	void Render() override;
 
-	/// <summary>
-	/// 手前に表示するやつの描画。
-	/// </summary>
-	void PostRender() override;
 private:
-	//Back Sprite
-	SpriteRender* m_backSprite = nullptr;
-	Vector3 m_backSpPos = Vector3::Zero;
-	bool m_isTrigeredStart = false;
+
 };
