@@ -435,8 +435,10 @@ void Pod::IdleRotation() {
 	}
 	else {
 		target = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos);
-		const float AUTO_TARGET_RANGE = 150.f;
-		if ((target->GetPosition() - m_pos).Length() <= AUTO_TARGET_RANGE) {
+		if (target != nullptr) {
+			const float AUTO_TARGET_RANGE = 150.f;
+			if ((target->GetPosition() - m_pos).Length() <= AUTO_TARGET_RANGE) {
+			}
 		}
 		else {
 			target = nullptr;

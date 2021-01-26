@@ -68,6 +68,12 @@ public:
 
 	void SetPosition(const Vector3& pos) {
 		m_pos = pos;
+		m_model->SetPosition(m_pos);
+	}
+
+	void SetRotation(const Quaternion& rot) {
+		m_rotation = rot;
+		m_model->SetRotation(rot);
 	}
 
 	const Vector3& GetPosition() const {
@@ -136,7 +142,7 @@ private:
 
 	//transform
 	Vector3 m_pos = Vector3::Zero;
-	Vector3 m_distanceFromPlayer = { 5.f,10.f,-5.f };
+	const Vector3 m_distanceFromPlayer = { 5.f,10.f,-5.f };
 	Quaternion m_rotation = Quaternion::Identity;
 	const Vector3 m_scale = { 1.5f,1.5f,1.5f };
 	float m_timer = 0.f;

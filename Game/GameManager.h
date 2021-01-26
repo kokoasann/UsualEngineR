@@ -37,10 +37,6 @@ public:
 		return m_church;
 	}
 
-	Fade* GetFade() const {
-		return m_fade;
-	}
-
 	GameSceneMenu* GetMenu() const {
 		return m_menu;
 	}
@@ -77,6 +73,5 @@ public:
 
 private:
 	Church* m_church = nullptr;
-	Fade* m_fade = nullptr;
 	int m_deadBossCount = 0;
 };

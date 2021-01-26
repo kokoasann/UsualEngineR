@@ -22,8 +22,6 @@ void GameManager::InitGameWorld() {
 	m_itemManager = NewGO<ItemManager>(0);
 	m_menu = NewGO<GameSceneMenu>(0);
 	m_church = NewGO<Church>(0);
-	m_fade = NewGO<Fade>(0);
-
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);
 	//m_player->SetGameCamera(m_camera);
@@ -46,8 +44,6 @@ void GameManager::Release() {
 	m_goal = nullptr;
 	DeleteGO(m_church);
 	m_church = nullptr;
-	DeleteGO(m_fade);
-	m_fade = nullptr;
 }
 
 void GameManager::SpawnPlayer() {
