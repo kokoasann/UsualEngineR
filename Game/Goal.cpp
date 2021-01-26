@@ -109,7 +109,7 @@ void Goal::Update()
 		auto camEndPos = m_lastPosition + m_forward * 60.f;
 		camEndPos.y += 20.f;
 		auto sec = 2.f;
-		auto interval = 2.f;
+		auto interval = 100.f;
 
 		cam->Perform(
 			camEndPos, camEndPos,
@@ -123,7 +123,7 @@ void Goal::Update()
 		playerPosBegin.y = 9.f;
 		Quaternion rot = Quaternion::Identity;
 		rot.SetRotationDegY(-90.f);
-		const float walkSpeed = 2.5f;
+		const float walkSpeed = 3.f;
 		auto vel = m_forward * -1.f * walkSpeed;
 		vel.y = -1.f;
 

@@ -93,7 +93,7 @@ private:
 
 	//performance
 	float m_performanceTimer = 0.f;
-	const float m_sceneTransitionTime = 4.f;
+	const float m_sceneTransitionTime = 3.5f;
 	//Physics
 	PhysicsStaticObject m_physicsStaticObject;
 };

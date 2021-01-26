@@ -83,4 +83,6 @@ private:
 	float m_goalAppearTime = 2.8f;
 
 	double m_clearTimer = 0.f;
+
+	bool m_isCleared = false;
 };

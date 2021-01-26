@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Result.h"
 #include "Title.h"
+#include "GameManager.h"
+#include "Fade.h"
 
 Result::Result()
 {
@@ -62,11 +64,16 @@ bool Result::Start()
 	m_backSprite->SetPos(m_backSpPos);
 	m_backSprite->SetSca(m_backSpScale);
 
+	Fade::GetInstance().FadeIn();
+
+	printf("fade in\n");
+
 	return true;
 }
 
 
 void Result::Init(const double clearTime) {
+
 	//Robots
 	ModelInitData mid;
 	mid.m_upAxis = EUpAxis::enUpAxisY;
@@ -108,7 +115,7 @@ void Result::Init(const double clearTime) {
 			m_robots.push_back(mr);
 			mr->SetMulColor({ 0.4,0.4,0.4,1 });
 			robotCount++;
-			printf("robo count : %d\n", robotCount);
+			//printf("robo count : %d\n", robotCount);
 			return true;
 		});
 
@@ -122,6 +129,7 @@ void Result::PreUpdate()
 
 void Result::Update()
 {
+
 	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
 		NewGO<Title>(0);
 		auto go = reinterpret_cast<GameObject*>(this);
@@ -131,7 +139,7 @@ void Result::Update()
 
 void Result::PostUpdate()
 {
-
+	Fade::GetInstance().Update();
 }
 
 
