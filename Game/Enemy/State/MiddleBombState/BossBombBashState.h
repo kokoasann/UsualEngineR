@@ -13,4 +13,7 @@ public:
 private:
 	float m_timer = 0.;
 	float m_timeLimit = 2.;
+	SphereCollider m_sphere;
+	Vector3 m_dir;
+	float m_speed = 100.f;
 };
