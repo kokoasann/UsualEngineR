@@ -43,8 +43,32 @@ bool Goal::Start()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
-	m_model->SetPosition(m_position);
+	m_model->SetPosition(m_firstPosition);
 	m_model->SetRotation(m_rotation);
+
+	//closed
+	m_animationMap.insert(std::make_pair(CLOSED, std::make_unique<CAnimationClip>()));
+	m_animationMap.at(CLOSED)->Load("Assets/modelData/map_obj/anim/exit_T.tka");
+	m_animationMap.at(CLOSED)->BuildKeyFramesAndAnimationEvents();
+	m_animationMap.at(CLOSED)->SetLoopFlag(false);
+	//opened
+	m_animationMap.insert(std::make_pair(OPENED, std::make_unique<CAnimationClip>()));
+	m_animationMap.at(OPENED)->Load("Assets/modelData/map_obj/anim/exit_open.tka");
+	m_animationMap.at(OPENED)->BuildKeyFramesAndAnimationEvents();
+	m_animationMap.at(OPENED)->SetLoopFlag(false);
+	m_model->InitAnimation(m_animationMap, m_animationMap.size());
+
+	m_model->Play(CLOSED);
+
+	auto& wmat = m_model->GetModel().GetWorldMatrix();
+
+	Vector3 forward;
+	forward.x = wmat._31;
+	forward.y = wmat._32;
+	forward.z = wmat._33;
+	forward.Normalize();
+	m_openPosition = forward * m_openDoorSensorSensitivity;
+	m_openPosition += m_lastPosition;
 
 	return true;
 }
@@ -62,12 +86,19 @@ void Goal::Update()
 
 	Vector3 pos = Vector3::Zero;
 
+	//DebugPrintVector3(EDebugConsoloUser::WATA, player->GetPosition());
+
 	m_appearTimer = min(m_appearTime, m_appearTimer +gameTime()->GetDeltaTime());
-	pos.Lerp(m_appearTimer / m_appearTime, m_position, Vector3::Zero);
+	pos.Lerp(m_appearTimer / m_appearTime, m_firstPosition, m_lastPosition);
 	m_model->SetPosition(pos);
 
-	float dist = (player->GetPosition() - m_position).Length();
-	if (dist <= m_range and !m_isChecked){
+	if ((player->GetPosition() - m_openPosition).Length() <= m_openRange and !m_isOpened) {
+		m_isOpened = true;
+		m_model->Play(OPENED);
+	}
+
+	float dist = (player->GetPosition() - m_firstPosition).Length();
+	if (dist <= m_range and !m_isChecked and m_isOpened){
 		if (g_pad[0]->IsTrigger(enButtonB)) {
 			GameManager::GetInstance().m_gameScene->OnGoal();
 			m_isChecked = true;
