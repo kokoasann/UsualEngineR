@@ -197,6 +197,7 @@
     <ClInclude Include="Enemy\Equipment\Enemy_LaunchBomb.h" />
     <ClInclude Include="Enemy\HealthBar.h" />
     <ClInclude Include="Enemy\IEnemy.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanAngryPerform.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="Enemy\Equipment\Enemy_LaunchBomb.cpp" />
     <ClCompile Include="Enemy\HealthBar.cpp" />
     <ClCompile Include="Enemy\IEnemy.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanAngryPerform.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.cpp" />
