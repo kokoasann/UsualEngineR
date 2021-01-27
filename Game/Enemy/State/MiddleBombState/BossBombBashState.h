@@ -16,4 +16,5 @@ private:
 	SphereCollider m_sphere;
 	Vector3 m_dir;
 	float m_speed = 100.f;
+	bool m_isBashHit = false;
 };
