@@ -124,6 +124,15 @@ namespace UER
 		{
 			return m_isShadowCaster;
 		}
+
+		void SetInstancingFrag(bool b)
+		{
+			m_isInstancing = b;
+		}
+		void SetInstanceNum(int i)
+		{
+			m_instanceNum = i;
+		}
 	private:
 		Model m_model;				//モデル
 		CAnimation m_animation;		//アニメーション
@@ -139,5 +148,8 @@ namespace UER
 		float m_animPlaySpeed = 1.f;
 
 		bool m_isShadowCaster = true;
+
+		bool m_isInstancing = false;
+		int m_instanceNum = 1;
 	};
 }
