@@ -4,6 +4,7 @@
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "GameManager.h"
+#include "Game.h"
 
 BossBombBattleState::BossBombBattleState()
 {
@@ -28,6 +29,11 @@ void BossBombBattleState::Enter(IEnemy* e)
 	e->SetAutoRotateFlag(false);
 
 	m_firstRot = e->GetRotation();
+
+	if (!m_isPerformed) {
+		GameManager::GetInstance().m_gameScene->OnEnterBattle(e);
+		m_isPerformed = true;
+	}
 }
 
 IEnemyState* BossBombBattleState::Update(IEnemy* e)
