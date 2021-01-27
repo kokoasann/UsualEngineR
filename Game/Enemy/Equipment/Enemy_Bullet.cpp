@@ -6,6 +6,8 @@
 
 #include "Effect/Ballistic.h"
 
+EnemyBulletManager* g_enemyBulletManager;
+
 struct SweepResult : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit = false;
@@ -47,7 +49,7 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 
 Enemy_Bullet::Enemy_Bullet()
 {
-	ModelInitData mid;
+	/*ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
@@ -55,7 +57,7 @@ Enemy_Bullet::Enemy_Bullet()
 	mid.m_psEntryPointFunc = "PSMain";
 
 	m_model = NewGO<ModelRender>(0);
-	m_model->Init(mid);
+	m_model->Init(mid);*/
 
 	/*m_effect = NewGO<Ballistic>(0);
 	m_effect->Init();*/
@@ -75,14 +77,15 @@ Enemy_Bullet::~Enemy_Bullet()
 
 void Enemy_Bullet::Release()
 {
-	DeleteGO(m_model);
+	//DeleteGO(m_model);
 }
 
 void Enemy_Bullet::OnDestroy()
 {
 	//Release();
 	m_sphere.Release();
-	m_model->SetActive(false);
+	//m_model->SetActive(false);
+	g_enemyBulletManager->DeadInstance(m_instanceNum);
 	//m_effect->Stop();
 }
 
@@ -97,10 +100,20 @@ void Enemy_Bullet::Init(const Vector3& pos, float scale, const Vector3& dir, flo
 	Quaternion rot;
 	rot.SetRotation(Vector3::AxisZ * -1.f, m_dir);
 
-	m_model->SetActive(true);
+	auto pair = g_enemyBulletManager->GetInstanceMatrix();
+	m_instanceNum = pair.first;
+	m_worldMatrix = pair.second;
+
+	m_pos = pos;
+	m_sca = Vector3::One * scale;
+	m_rot = rot;
+
+	m_worldMatrix->MakeTransform(m_pos, m_sca, m_rot);
+
+	/*m_model->SetActive(true);
 	m_model->SetPosition(pos);
 	m_model->SetRotation(rot);
-	m_model->SetScale(Vector3::One * m_scale);
+	m_model->SetScale(Vector3::One * m_scale);*/
 
 	m_sphere.Create(scale * 0.5);
 
@@ -126,7 +139,7 @@ bool Enemy_Bullet::Start()
 
 void Enemy_Bullet::PreUpdate()
 {
-
+	
 }
 
 void Enemy_Bullet::Update()
@@ -135,7 +148,8 @@ void Enemy_Bullet::Update()
 
 	m_timer += dtime;
 
-	Vector3 oldpos = m_model->GetPosition();
+	//Vector3 oldpos = m_model->GetPosition();
+	Vector3 oldpos = m_pos;
 	Vector3 newpos = oldpos + m_dir * (m_speed * dtime);
 
 	//m_effect->SetPos(newpos);
@@ -175,9 +189,10 @@ void Enemy_Bullet::Update()
 		return;
 	}
 
-	m_model->SetPosition(newpos);
+	//m_model->SetPosition(newpos);
+	m_pos = newpos;
 
-	
+	m_worldMatrix->SetTranspose(m_pos);
 }
 
 void Enemy_Bullet::PostUpdate()
@@ -199,6 +214,31 @@ void EnemyBulletManager::Release()
 void EnemyBulletManager::OnDestroy()
 {
 	Release();
+}
+
+void EnemyBulletManager::Awake()
+{
+	m_structuredBuff.Init(sizeof(Matrix), 1024,0);
+	ModelInitData mid;
+	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_vsfxFilePath = "Assets/shader/NoAnimInstancingModel.fx";
+	mid.m_vsEntryPointFunc = "VSMain";
+	mid.m_psEntryPointFunc = "PSMain";
+	mid.m_expandShaderResoruceView = &m_structuredBuff;
+
+	m_model = NewGO<ModelRender>(0);
+	m_model->Init(mid);
+
+	m_model->SetInstancingFrag(true);
+	g_enemyBulletManager = this;
+
+	m_instanceMatrix.resize(1024);
+	m_usingMatrix.resize(1024);
+	for (int i=0;i<m_usingMatrix.size();i++)
+	{
+		m_usingMatrix[i] = false;
+	}
 }
 
 void EnemyBulletManager::PostUpdate()
@@ -224,20 +264,78 @@ void EnemyBulletManager::PostUpdate()
 		}
 		m_isAllocate = false;
 	}*/
+
+	std::vector<Matrix> v;
+	
+	int c = 0;
+	for (bool b : m_usingMatrix)
+	{
+		if (b)
+			c++;
+	}
+	v.reserve(1024);
+	for (int i = 0; i < m_instanceMatrix.size(); i++)
+	{
+		if (m_usingMatrix[i])
+		{
+			v.push_back(m_instanceMatrix[i]);
+		}
+	}
+	if (c == 0)
+		v.push_back(Matrix::Identity);
+	
+	m_structuredBuff.Update(&v[0]);
+	m_model->SetInstanceNum(c);
 }
 
 void EnemyBulletManager::Allocate(int num)
 {
-	m_mutex.lock();
-	m_isAllocate = true;
-	m_oldNum = m_bulletList.size();
-	m_thread.Release();
+	//m_mutex.lock();
+	//m_isAllocate = true;
+	//m_oldNum = m_bulletList.size();
+	//m_thread.Release();
 
-	m_thread.Execute([&,num]()
-		{
-			AllocateGO(num, 0, m_bulletList);
-		});
+	//
+	//m_thread.Execute([&,num]()
+	//	{
+	//		//AllocateGO(num, 0, m_bulletList);
+	//		/*m_instanceMatrix.resize(m_instanceMatrix.size()+num);
+	//		int back = m_usingMatrix.size();
+	//		m_usingMatrix.resize(m_usingMatrix.size() + num);
+	//		
+	//		for (int i = back; i < m_usingMatrix.size(); i++)
+	//		{
+	//			m_usingMatrix[i] = false;
+	//		}*/
+	//	});
 
-	m_mutex.unlock();
+	//m_mutex.unlock();
+	//
+}
+
+std::pair<int, Matrix*> EnemyBulletManager::GetInstanceMatrix()
+{
 	
+	for (int i = 0; i < m_instanceMatrix.size(); i++)
+	{
+		if (!m_usingMatrix[i])
+		{
+			m_usingMatrix[i] = true;
+			return std::make_pair(i,&m_instanceMatrix[i]);
+		}
+	}
+	
+	m_usingMatrix.push_back(true);
+	m_instanceMatrix.push_back(Matrix::Identity);
+
+	return std::make_pair(m_instanceMatrix.size()-1, &m_instanceMatrix[m_instanceMatrix.size() - 1]);
+}
+
+void EnemyBulletManager::AddInstance()
+{
+}
+
+void EnemyBulletManager::DeadInstance(int num)
+{
+	m_usingMatrix[num] = false;
 }

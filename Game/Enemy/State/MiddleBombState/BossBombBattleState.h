@@ -21,4 +21,7 @@ private:
 	float m_speed = 500.f;
 
 	Quaternion m_firstRot;
+
+	bool m_isPerformed = false;
+
 };

@@ -19,7 +19,6 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 	SweepResult(const Vector3& v) :
 		startPos(v)
 	{
-
 	}
 
 	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
@@ -45,6 +44,22 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 		return 0.0f;
 	}
 };
+struct ContactTestResult :public btCollisionWorld::ContactResultCallback
+{
+	bool isHit = false;
+
+	// ContactResultCallback を介して継承されました
+	virtual btScalar addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override
+	{
+		int ind = colObj0Wrap->getCollisionObject()->getUserIndex();
+		//player かどうかの判定!
+		if (ind & GameCollisionAttribute::Player)
+			isHit = true;
+		//	return 0.f;
+		
+		return 0.f;
+	}
+};
 BossBombBashState::BossBombBashState()
 {
 }
@@ -57,7 +72,8 @@ void BossBombBashState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
 	m_timer = 0.;
-	m_sphere.Create(0.5);
+	m_sphere.Create(1.0);
+	m_isBashHit = false;
 }
 
 IEnemyState* BossBombBashState::Update(IEnemy* e)
@@ -69,26 +85,19 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	//バッシュ判定を作るために情報を入れる
-	//RigidBodyInfo info;
-	//info.pos = e->GetPosition();
-	//info.rot = e->GetRotation();
-	//info.sca = g_vec3One;
-	m_dir = e->GetPosition();
-	m_dir.Normalize();
 	//ボム敵データ取得
-	auto BBData = BossBombData::GetInstance();
-	Vector3 oldpos = e->GetModel()->GetPosition();
-	Vector3 newpos = oldpos + m_dir * (m_speed * dtime);
-	btTransform start, end;
-	start.setIdentity();
-	end.setIdentity();
-	start.setOrigin({ oldpos.x, oldpos.y, oldpos.z });
-	end.setOrigin({ newpos.x, newpos.y, newpos.z });
-	SweepResult sr(oldpos);
-	Physics().ConvexSweepTest(m_sphere.GetBody(),start, end, sr);
+	auto& BBData = BossBombData::GetInstance();
+
 	//判定をとりだし
-	//Physics().ContactTest(BBData.rigidBody->GetBody(),sr);
+	ContactTestResult ctr;
+	Physics().ContactTest(BBData.rigidBody->GetBody(), ctr);
+	if (ctr.isHit && !m_isBashHit) {
+		auto& p = GameManager::GetInstance().m_player;
+		auto f = e->GetForward();
+		f.Normalize();
+		p->ApplyDamage(10, true, f * 100);
+		m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
+	}
 
 	//m_rigidBody.Create(info);
 	//m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);

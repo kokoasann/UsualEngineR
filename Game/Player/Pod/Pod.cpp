@@ -129,6 +129,7 @@ void Pod::Update()
 	m_mulCol = Color(red * 3.f, 1.f - red, 1.f - red, 1.f);
 	m_model->SetMulColor(m_mulCol);
 
+	m_explosionEffect->SetPos(m_pos);
 	//const float smokeSizeParam = 0.15f;
 	//m_smokeEffect->SetSca(Vector3::One * smokeSizeParam * red);
 }
@@ -266,7 +267,6 @@ void Pod::PostUpdate()
 
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);
-	m_explosionEffect->SetPos(m_pos);
 }
 
 void Pod::Render()
@@ -519,7 +519,7 @@ void Pod::CalcIdlePosition() {
 		player->GetRotation().Apply(addPos);
 	}
 
-	auto idlePos = player->GetPosition() + addPos;
+	auto idlePos = player->GetPosition() + addPos + player->GetVelocity() * gameTime()->GetDeltaTime();
 	m_pos = idlePos;
 
 }
