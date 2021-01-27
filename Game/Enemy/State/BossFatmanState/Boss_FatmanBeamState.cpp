@@ -19,7 +19,7 @@ Boss_FatmanBeamState::Boss_FatmanBeamState()
 
 Boss_FatmanBeamState::~Boss_FatmanBeamState()
 {
-	for (int i = 0; i < m_beams.size(), i++;) {
+	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
 	}
 }

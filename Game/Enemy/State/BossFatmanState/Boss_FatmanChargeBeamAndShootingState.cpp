@@ -21,7 +21,7 @@ Boss_FatmanChargeBeamAndShootingState::Boss_FatmanChargeBeamAndShootingState()
 Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
 {
 	//¶¬‚µ‚½”‚¾‚¯íœB
-	for (int i = 0; i < m_beams.size(), i++;) {
+	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
 	}
 }
