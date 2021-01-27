@@ -50,7 +50,18 @@ namespace UER
 		void End();
 		void Draw(const wchar_t* text, const Vector2& pos, const Vector4& color, float rot, float sca, const Vector2& pivot = { 0.5f,0.5f });
 
+		void DrawFrame(const wchar_t* text, const Vector2& pos, const Vector4& color, float rot, float sca, const Vector2& pivot);
+
 	private:
+		DirectX::SpriteBatch* m_spriteBatch = nullptr;		//スプライトバッチ
+		DirectX::SpriteFont* m_spriteFont = nullptr;		//フォント
+		ID3D12DescriptorHeap* m_heap = nullptr;
+
+		Matrix m_scaleMat = g_matIdentity;
+
 		FontDrawType m_fontDrawType = FT_None;
+
+		Vector4 m_fontEffectColor = Vector4::Vector4(0.0f, 0.0f, 0.0f, 1.0f);	//飾りの色。
+		float m_fontEffectOffset = 1.0f;					//飾りのオフセット
 	};
 }

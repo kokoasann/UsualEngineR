@@ -258,6 +258,35 @@ namespace UER
 
 		g_camera3D->Init();
 
+
+		m_graphicsMemory = std::make_unique<DirectX::GraphicsMemory>(m_d3dDevice);
+
+		DirectX::RenderTargetState rtstate(DXGI_FORMAT_R32G32B32A32_FLOAT, DXGI_FORMAT_D16_UNORM);
+		DirectX::SpriteBatchPipelineStateDescription pd(rtstate);
+		D3D12_DESCRIPTOR_HEAP_DESC ddesc = {};
+		ddesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		ddesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		ddesc.NumDescriptors = 1;
+
+		m_d3dDevice->CreateDescriptorHeap(&ddesc, IID_PPV_ARGS(&m_fontHeep));
+		{
+			DirectX::ResourceUploadBatch re(m_d3dDevice);
+			re.Begin();
+			m_spriteBatch = new DirectX::SpriteBatch(m_d3dDevice, re, pd);
+			auto uploadResourcesFinished = re.End(m_commandQueue);
+
+			uploadResourcesFinished.wait();
+		}
+		{
+			DirectX::ResourceUploadBatch re(m_d3dDevice);
+			re.Begin();
+			m_spriteFont = new DirectX::SpriteFont(m_d3dDevice, re, L"Assets/font/gennokakuH.spritefont", m_fontHeep->GetCPUDescriptorHandleForHeapStart(), m_fontHeep->GetGPUDescriptorHandleForHeapStart());
+			
+			auto uploadResourcesFinished = re.End(m_commandQueue);
+
+			uploadResourcesFinished.wait();
+		}
+
 		
 		return true;
 	}
@@ -585,6 +614,9 @@ namespace UER
 	#endif
 		//描画完了待ち。
 		WaitDraw();
+
+		m_graphicsMemory->RetirePendingPages();
+		
 	}
 
 	void GraphicsEngine::ResetRender()

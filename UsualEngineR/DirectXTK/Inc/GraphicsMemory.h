@@ -151,6 +151,8 @@ namespace DirectX
         // Should only use nullptr for single GPU scenarios; mGPU requires a specific device
         static GraphicsMemory& __cdecl Get(_In_opt_ ID3D12Device* device = nullptr);
 
+        void RetirePendingPages();
+
     private:
         // Private implementation.
         class Impl;

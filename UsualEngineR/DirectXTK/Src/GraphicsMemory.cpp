@@ -162,6 +162,19 @@ namespace
             }
         }
 
+        void RetirePendingPages()
+        {
+            ScopedLock lock(mMutex);
+
+            for (auto& i : mPools)
+            {
+                if (i)
+                {
+                    i->FreeUsedPage();
+                }
+            }
+        }
+
     #if !defined(_XBOX_ONE) || !defined(_TITLE)
         ID3D12Device* GetDevice() const { return mDevice.Get(); }
     #endif
@@ -233,6 +246,11 @@ public:
     void GarbageCollect()
     {
         mDeviceAllocator->GarbageCollect();
+    }
+
+    void RetirePendingPages()
+    {
+        mDeviceAllocator->RetirePendingPages();
     }
 
     GraphicsMemory* mOwner;
@@ -315,7 +333,12 @@ GraphicsMemory& GraphicsMemory::Get(_In_opt_ ID3D12Device*)
 
     return *Impl::s_graphicsMemory->mOwner;
 }
+
 #else
+void DirectX::GraphicsMemory::RetirePendingPages()
+{
+    pImpl->RetirePendingPages();
+}
 GraphicsMemory& GraphicsMemory::Get(_In_opt_ ID3D12Device* device)
 {
     if (Impl::s_graphicsMemory.empty())

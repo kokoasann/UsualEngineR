@@ -9,6 +9,9 @@
 
 #include "DirectXTK/Inc/DDSTextureLoader.h"
 #include "DirectXTK/Inc/ResourceUploadBatch.h"
+#include "DirectXTK/Inc/SpriteBatch.h"
+#include "DirectXTK/Inc/SpriteFont.h"
+#include "DirectXTK/Inc/GraphicsMemory.h"
 
 #include "RenderContext.h"
 #include "RaytracingEngine.h"
@@ -258,6 +261,25 @@ namespace UER
 		{
 			return m_shadowMap;
 		}
+
+		ID3D12GraphicsCommandList* GetCommandList()const
+		{
+			return m_commandList;
+		}
+
+		//font toka no
+		DirectX::SpriteFont* GetSpriteFont() const
+		{
+			return m_spriteFont;
+		}
+		DirectX::SpriteBatch* GetSpriteBatch() const
+		{
+			return m_spriteBatch;
+		}
+		ID3D12DescriptorHeap* GetFontDescriptorHeap() const
+		{
+			return m_fontHeep;
+		}
 	private:
 		/// <summary>
 		/// D3Dデバイスの作成。
@@ -386,6 +408,11 @@ namespace UER
 		Shader m_copyPS;
 
 		bool m_isEnableRaytracing = false;
+
+		std::unique_ptr<DirectX::GraphicsMemory> m_graphicsMemory;
+		ID3D12DescriptorHeap* m_fontHeep = nullptr;
+		DirectX::SpriteBatch* m_spriteBatch = nullptr;
+		DirectX::SpriteFont* m_spriteFont = nullptr;
 	};
 	extern GraphicsEngine* g_graphicsEngine;	//グラフィックスエンジン
 	extern Camera* g_camera2D;					//2Dカメラ。

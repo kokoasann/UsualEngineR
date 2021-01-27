@@ -118,6 +118,7 @@ namespace DirectX
 
         // Throws away all currently unused pages
         void Shrink();
+        void FreeUsedPage();
 
         // Statistics
         size_t CommittedPageCount() const { return m_numPending; }

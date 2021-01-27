@@ -451,6 +451,12 @@ void LinearAllocator::FreePages(LinearAllocatorPage* page)
     }
 }
 
+void DirectX::LinearAllocator::FreeUsedPage()
+{
+    FreePages(m_usedPages);
+    m_usedPages = nullptr;
+}
+
 #if VALIDATE_LISTS
 void LinearAllocator::ValidateList(LinearAllocatorPage* list)
 {
