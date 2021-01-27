@@ -290,27 +290,27 @@ void EnemyBulletManager::PostUpdate()
 
 void EnemyBulletManager::Allocate(int num)
 {
-	m_mutex.lock();
-	m_isAllocate = true;
-	m_oldNum = m_bulletList.size();
-	m_thread.Release();
+	//m_mutex.lock();
+	//m_isAllocate = true;
+	//m_oldNum = m_bulletList.size();
+	//m_thread.Release();
 
-	
-	m_thread.Execute([&,num]()
-		{
-			//AllocateGO(num, 0, m_bulletList);
-			/*m_instanceMatrix.resize(m_instanceMatrix.size()+num);
-			int back = m_usingMatrix.size();
-			m_usingMatrix.resize(m_usingMatrix.size() + num);
-			
-			for (int i = back; i < m_usingMatrix.size(); i++)
-			{
-				m_usingMatrix[i] = false;
-			}*/
-		});
+	//
+	//m_thread.Execute([&,num]()
+	//	{
+	//		//AllocateGO(num, 0, m_bulletList);
+	//		/*m_instanceMatrix.resize(m_instanceMatrix.size()+num);
+	//		int back = m_usingMatrix.size();
+	//		m_usingMatrix.resize(m_usingMatrix.size() + num);
+	//		
+	//		for (int i = back; i < m_usingMatrix.size(); i++)
+	//		{
+	//			m_usingMatrix[i] = false;
+	//		}*/
+	//	});
 
-	m_mutex.unlock();
-	
+	//m_mutex.unlock();
+	//
 }
 
 std::pair<int, Matrix*> EnemyBulletManager::GetInstanceMatrix()

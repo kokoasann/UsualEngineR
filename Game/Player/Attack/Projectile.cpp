@@ -3,6 +3,8 @@
 #include "../../Enemy/EnemyManager.h"
 #include "../../Enemy/Equipment/Enemy_Bullet.h"
 
+PlayerBulletManager* g_playerBulletManager;
+
 struct SweepResult : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit = false;
@@ -42,7 +44,7 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 
 Projectile::Projectile()
 {
-	ModelInitData mid;
+	/*ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
@@ -52,7 +54,7 @@ Projectile::Projectile()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
-	m_model->SetPosition(m_position);
+	m_model->SetPosition(m_position);*/
 }
 
 Projectile::~Projectile()
@@ -64,13 +66,14 @@ Projectile::~Projectile()
 
 void Projectile::Release()
 {
-	DeleteGO(m_model);
+	//DeleteGO(m_model);
 }
 
 void Projectile::OnDestroy()
 {
 	m_sphere.Release();
-	m_model->SetActive(false);
+	//m_model->SetActive(false);
+	g_playerBulletManager->DeadInstance(m_instanceNum);
 }
 
 
@@ -89,10 +92,22 @@ void Projectile::Init(const Vector3& pos, float scale, const Vector3& dir, float
 	Quaternion rot;
 	rot.SetRotation(Vector3::AxisZ * -1.f, m_dir);
 
-	m_model->SetActive(true);
+	{
+		auto pair = g_playerBulletManager->GetInstanceMatrix();
+		m_instanceNum = pair.first;
+		m_worldMatrix = pair.second;
+
+		m_pos = pos;
+		m_sca = Vector3::One * scale;
+		m_rot = rot;
+
+		m_worldMatrix->MakeTransform(m_pos, m_sca, m_rot);
+	}
+
+	/*m_model->SetActive(true);
 	m_model->SetPosition(pos);
 	m_model->SetRotation(rot);
-	m_model->SetScale(Vector3::One * m_scale);
+	m_model->SetScale(Vector3::One * m_scale);*/
 
 	m_sphere.Create(scale * 0.5);
 
@@ -132,7 +147,8 @@ void Projectile::Update()
 
 	//
 
-	Vector3 oldpos = m_model->GetPosition();
+	//Vector3 oldpos = m_model->GetPosition();
+	Vector3 oldpos = m_pos;
 	Vector3 newpos = oldpos + m_dir * (m_speed * delta);
 
 	//m_effect->SetPos(newpos);
@@ -150,7 +166,8 @@ void Projectile::Update()
 		if (cb.collAttr & GameCollisionAttribute::Enemy)
 		{
 			auto& enemyManager = EnemyManager::GetEnemyManager();
-			auto nearestEnemy = enemyManager.GetNearestEnemy(m_model->GetPosition());
+			//auto nearestEnemy = enemyManager.GetNearestEnemy(m_model->GetPosition());
+			auto nearestEnemy = enemyManager.GetNearestEnemy(m_pos);
 			nearestEnemy->ApplyDamage(m_damage);
 		}
 		if (!(cb.collAttr & GameCollisionAttribute::Player)) {
@@ -168,7 +185,10 @@ void Projectile::Update()
 	}
 
 	m_position = newpos;
-	m_model->SetPosition(newpos);
+	m_pos = newpos;
+	//m_model->SetPosition(newpos);
+
+	m_worldMatrix->SetTranspose(m_pos);
 }
 
 void Projectile::PostUpdate()
@@ -191,9 +211,34 @@ void PlayerBulletManager::OnDestroy()
 	Release();
 }
 
+void PlayerBulletManager::Awake()
+{
+	m_structuredBuff.Init(sizeof(Matrix), 1024, 0);
+	ModelInitData mid;
+	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	mid.m_vsfxFilePath = "Assets/shader/NoAnimInstancingModel.fx";
+	mid.m_vsEntryPointFunc = "VSMain";
+	mid.m_psEntryPointFunc = "PSMain";
+	mid.m_expandShaderResoruceView = &m_structuredBuff;
+
+	m_model = NewGO<ModelRender>(0);
+	m_model->Init(mid);
+
+	m_model->SetInstancingFrag(true);
+	g_playerBulletManager = this;
+
+	m_instanceMatrix.resize(1024);
+	m_usingMatrix.resize(1024);
+	for (int i = 0; i < m_usingMatrix.size(); i++)
+	{
+		m_usingMatrix[i] = false;
+	}
+}
+
 void PlayerBulletManager::PostUpdate()
 {
-	int activeNum = 0;
+	/*int activeNum = 0;
 	for (auto b : m_bulletList)
 	{
 		if (!b->IsDead())
@@ -204,21 +249,70 @@ void PlayerBulletManager::PostUpdate()
 	if ((m_bulletList.size() - activeNum) <= m_nextAllocateActiveNum && m_thread.IsEnd())
 	{
 		Allocate(m_allocElementNum);
+	}*/
+
+
+	std::vector<Matrix> v;
+
+	int c = 0;
+	for (bool b : m_usingMatrix)
+	{
+		if (b)
+			c++;
 	}
+	v.reserve(1024);
+	for (int i = 0; i < m_instanceMatrix.size(); i++)
+	{
+		if (m_usingMatrix[i])
+		{
+			v.push_back(m_instanceMatrix[i]);
+		}
+	}
+	if (c == 0)
+		v.push_back(Matrix::Identity);
+
+	m_structuredBuff.Update(&v[0]);
+	m_model->SetInstanceNum(c);
 }
 
 void PlayerBulletManager::Allocate(int num)
 {
-	m_mutex.lock();
-	m_isAllocate = true;
-	m_oldNum = m_bulletList.size();
-	m_thread.Release();
+	//m_mutex.lock();
+	//m_isAllocate = true;
+	//m_oldNum = m_bulletList.size();
+	//m_thread.Release();
 
-	m_thread.Execute([&, num]()
+	//m_thread.Execute([&, num]()
+	//	{
+	//		//AllocateGO(num, 0, m_bulletList);
+	//	});
+
+	//m_mutex.unlock();
+
+}
+
+std::pair<int, Matrix*> PlayerBulletManager::GetInstanceMatrix()
+{
+	for (int i = 0; i < m_instanceMatrix.size(); i++)
+	{
+		if (!m_usingMatrix[i])
 		{
-			AllocateGO(num, 0, m_bulletList);
-		});
+			m_usingMatrix[i] = true;
+			return std::make_pair(i, &m_instanceMatrix[i]);
+		}
+	}
 
-	m_mutex.unlock();
+	m_usingMatrix.push_back(true);
+	m_instanceMatrix.push_back(Matrix::Identity);
 
+	return std::make_pair(m_instanceMatrix.size() - 1, &m_instanceMatrix[m_instanceMatrix.size() - 1]);
+}
+
+void PlayerBulletManager::AddInstance()
+{
+}
+
+void PlayerBulletManager::DeadInstance(int num)
+{
+	m_usingMatrix[num] = false;
 }
