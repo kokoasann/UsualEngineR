@@ -63,6 +63,7 @@ namespace UER
 		/// <param name="mProj">プロジェクション行列</param>
 		/// <param name="light">ライト</param>
 		void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj, const Vector4& mulcolor);
+		void DrawInstanced(RenderContext& rc, int instanceNum, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj, const Vector4& mulcolor);
 
 		void DrawShadow(RenderContext& rc, const Matrix& mWorld);
 		/// <summary>

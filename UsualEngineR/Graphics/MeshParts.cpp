@@ -256,6 +256,55 @@ namespace UER
 		m_isDrawShadow = false;
 	}
 
+	void MeshParts::DrawInstanced(RenderContext& rc,int instanceNum, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj, const Vector4& mulcolor)
+	{
+		//メッシュごとにドロー
+		//プリミティブのトポロジーはトライアングルリストのみ。
+		rc.SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		//定数バッファを更新する。
+		SConstantBuffer cb;
+		cb.mWorld = mWorld;
+		cb.mulcolor = mulcolor;
+		//cb.mView = mView;
+		//cb.mProj = mProj;
+
+		m_commonConstantBuffer.CopyToVRAM(&cb);
+
+		if (!m_isDrawShadow)
+		{
+			if (m_expandData) {
+				m_expandConstantBuffer.CopyToVRAM(m_expandData);
+			}
+			if (m_boneMatricesStructureBuffer.IsInited()) {
+				//ボーン行列を更新する。
+				m_boneMatricesStructureBuffer.Update(m_skeleton->GetBoneMatricesTopAddress());
+			}
+
+		}
+		int descriptorHeapNo = 0;
+		for (auto& mesh : m_meshs) {
+			//頂点バッファを設定。
+			rc.SetVertexBuffer(mesh->m_vertexBuffer);
+			//マテリアルごとにドロー。
+			for (int matNo = 0; matNo < mesh->m_materials.size(); matNo++) {
+				//このマテリアルが貼られているメッシュの描画開始。
+				mesh->m_materials[matNo]->BeginRender(rc, mesh->skinFlags[matNo]);
+				//ディスクリプタヒープを登録。
+				rc.SetDescriptorHeap(m_descriptorHeap.at(descriptorHeapNo));
+				//インデックスバッファを設定。
+				auto& ib = mesh->m_indexBufferArray[matNo];
+				rc.SetIndexBuffer(*ib);
+
+				//ドロー。
+				rc.DrawIndexed(ib->GetCount());
+				rc.DrawIndexedInstanced(ib->GetCount(), instanceNum, 0, 0, 0);
+				descriptorHeapNo++;
+			}
+		}
+		m_isDrawShadow = false;
+	}
+
 	void MeshParts::DrawShadow(RenderContext& rc, const Matrix& mWorld)
 	{
 		//メッシュごとにドロー
