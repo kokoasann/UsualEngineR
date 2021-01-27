@@ -42,7 +42,7 @@ void PlayerAttackHipShot2::GenerateProjectiles(Player* player) {
 		const float defSpeed = 400.f;
 		const float lifeSpan = 10.f;
 		const float range = 10.f;
-		const float scale = 1.f;
+		const float scale = 0.3f;
 
 		const auto posLeft = player->GetGun()->GetGunModelBone(Gun::GunBone::Left)->GetWorldMatrix().GetTransrate();
 		const auto posRight = player->GetGun()->GetGunModelBone(Gun::GunBone::Right)->GetWorldMatrix().GetTransrate();
