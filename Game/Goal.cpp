@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Camera/GameCamera.h"
 #include "Player/Pod/Pod.h"
+#include "Effect/SmokeEffect.h"
 
 Goal::Goal()
 {
@@ -21,6 +22,7 @@ Goal::~Goal()
 void Goal::Release()
 {
 	DeleteGO(m_model);
+	DeleteGO(m_smokeEffect);
 }
 
 void Goal::OnDestroy()
@@ -78,6 +80,18 @@ bool Goal::Start()
 	//Physics
 	m_physicsStaticObject.CreateMeshObject(m_model->GetModel(), m_lastPosition, m_model->GetRotation(), m_model->GetScale());
 
+	//Effect
+	m_smokeEffect = NewGO<SmokeEffect>(0);
+	m_smokeEffect->Init(m_smokeColor, m_smokeColor, 1.f, 7, true);
+	Vector3 smokeScale = Vector3(4.5f, 0.6f, 4.5f);
+	m_smokeEffect->SetSca(smokeScale);
+	m_smokeEffect->SetPos(m_lastPosition);
+	m_smokeEffect->Play();
+
+	//
+	auto player = GameManager::GetInstance().GetPlayer();
+	player->SetVelocity(Vector3::Zero);
+
 	return true;
 }
 
@@ -98,6 +112,9 @@ void Goal::Update()
 	m_appearTimer = min(m_appearTime, m_appearTimer +gameTime()->GetDeltaTime());
 	pos.Lerp(m_appearTimer / m_appearTime, m_firstPosition, m_lastPosition);
 	m_model->SetPosition(pos);
+	if (m_appearTimer == m_appearTime) {
+		m_smokeEffect->Stop();
+	}
 
 	if ((player->GetPosition() - m_openPosition).Length() <= m_openRange and !m_isOpened) {
 		m_isOpened = true;
@@ -123,7 +140,7 @@ void Goal::Update()
 		playerPosBegin.y = 9.f;
 		Quaternion rot = Quaternion::Identity;
 		rot.SetRotationDegY(-90.f);
-		const float walkSpeed = 3.f;
+		const float walkSpeed = 1.5f;
 		auto vel = m_forward * -1.f * walkSpeed;
 		vel.y = -1.f;
 

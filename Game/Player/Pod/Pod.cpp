@@ -437,7 +437,8 @@ void Pod::IdleRotation() {
 		target = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos);
 		if (target != nullptr) {
 			const float AUTO_TARGET_RANGE = 150.f;
-			if ((target->GetPosition() - m_pos).Length() <= AUTO_TARGET_RANGE) {
+			if ((target->GetPosition() - m_pos).Length() >= AUTO_TARGET_RANGE) {
+				target = nullptr;
 			}
 		}
 		else {
@@ -471,8 +472,10 @@ void Pod::IdleRotation() {
 	}
 	else {
 		auto player = GameManager::GetInstance().GetPlayer();
-		vecGoalForward = player->GetForward();
-		vecGoalForward.Normalize();
+		m_rotation = player->GetRotation();
+		return;
+		//vecGoalForward = player->GetForward();
+		//vecGoalForward.Normalize();
 	}
 
 	auto degToTar = atan2(vecGoalForward.x, vecGoalForward.z);

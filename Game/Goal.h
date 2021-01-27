@@ -1,4 +1,5 @@
 #pragma once
+class SmokeEffect;
 
 /// <summary>
 /// 
@@ -96,4 +97,8 @@ private:
 	const float m_sceneTransitionTime = 3.5f;
 	//Physics
 	PhysicsStaticObject m_physicsStaticObject;
+
+	//Effect
+	SmokeEffect* m_smokeEffect = nullptr;
+	const Vector4 m_smokeColor = { 0.882, 0.773, 0.616,0.1f };
 };
