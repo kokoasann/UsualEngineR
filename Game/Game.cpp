@@ -289,4 +289,8 @@ void Game::Render()
 
 void Game::PostRender()
 {
+	/*static Font font;
+	font.Begin();
+	font.Draw(L"ƒeƒXƒg‚Ä‚·‚ÆTESTtest", { 0,0 }, Vector4::White, 0, 1);
+	font.End();*/
 }
