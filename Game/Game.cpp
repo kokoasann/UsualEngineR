@@ -186,7 +186,7 @@ void Game::Update()
 
 	// GOAL DEBUG
 	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
-		GoalGatePerformance();
+		//GoalGatePerformance();
 	}
 	//
 
