@@ -69,7 +69,7 @@ private:
 	float m_lifeTimerSec = 0.0f;
 
 	//Model
-	ModelRender* m_model = nullptr;
+	//ModelRender* m_model = nullptr;
 	Vector3 m_position = { 0,15,-20 };
 	Vector3 m_velocity = { 0,0,0 };
 	Quaternion m_rotation = Quaternion::Identity;
@@ -84,6 +84,14 @@ private:
 	//float m_timeLimit = 0.f;
 
 	SphereCollider m_sphere;
+
+
+	Vector3 m_pos;
+	Quaternion m_rot;
+	Vector3 m_sca;
+
+	int m_instanceNum = 0;
+	Matrix* m_worldMatrix = nullptr;
 };
 
 
@@ -95,10 +103,22 @@ public:
 	void Release() override;
 	void OnDestroy() override;
 
+	void Awake() override;
+
 	void PostUpdate() override;
 
 	void Allocate(int num);
+
+	std::pair<int, Matrix*> GetInstanceMatrix();
+
+	void AddInstance();
+	void DeadInstance(int num);
 private:
+	StructuredBuffer m_structuredBuff;
+	std::vector<Matrix> m_instanceMatrix;
+	std::vector<bool> m_usingMatrix;
+	ModelRender* m_model = 0;
+
 	std::mutex m_mutex;
 
 	std::vector<Projectile*> m_bulletList;
@@ -110,3 +130,5 @@ private:
 	bool m_isAllocate = false;
 	int m_oldNum = 0;
 };
+
+extern PlayerBulletManager* g_playerBulletManager;

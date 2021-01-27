@@ -63,8 +63,11 @@ namespace UER
 			return;
 
 		
-
+		
 		auto& rc = g_graphicsEngine->GetRenderContext();
-		m_model.Draw(rc,m_mulColor);
+		if (!m_isInstancing)
+			m_model.Draw(rc,m_mulColor);
+		else
+			m_model.DrawInstanced(rc, m_instanceNum, m_mulColor);
 	}
 }

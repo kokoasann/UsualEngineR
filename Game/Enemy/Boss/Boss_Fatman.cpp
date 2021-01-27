@@ -51,6 +51,7 @@ void Boss_Fatman::Init()
 void Boss_Fatman::InitAnimation()
 {
 	SetAnimation(TO_INT(IEnemy::EnAnimation::enIdle), "Assets/modelData/boss/lf/anim/lf_idle.tka", true);
+	SetAnimation(TO_INT(Boss_Fatman::EnAnimEX::enAngry), "Assets/modelData/boss/lf/anim/lf_angry.tka", true);
 
 	m_model->InitAnimation(m_animationMap, m_animationMap.size());
 }

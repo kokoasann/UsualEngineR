@@ -4,6 +4,7 @@
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "GameManager.h"
+#include "Game.h"
 
 BossBombBattleState::BossBombBattleState()
 {
@@ -28,6 +29,11 @@ void BossBombBattleState::Enter(IEnemy* e)
 	e->SetAutoRotateFlag(false);
 
 	m_firstRot = e->GetRotation();
+
+	if (!m_isPerformed) {
+		GameManager::GetInstance().m_gameScene->OnEnterBattle(e);
+		m_isPerformed = true;
+	}
 }
 
 IEnemyState* BossBombBattleState::Update(IEnemy* e)
@@ -35,9 +41,17 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	float dtime = gameTime()->GetDeltaTime();
 	m_timer += dtime;
 
+	const auto& ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
+	const auto& epos = e->GetPosition();
+
 	float rand = GRandom().Rand();
 	if (m_timer >= m_timeLimit && true)
 	{
+		float dify = ppos.y - epos.y;
+		if (!GameManager::GetInstance().GetPlayer()->IsOnGround()&& dify > 20.f)
+		{
+			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Jump));
+		}
 		
 		if (rand < 0.4)
 		{
@@ -54,9 +68,6 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	}
 
 	Vector3 move = Vector3::Zero;
-	
-	const auto& ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
-	const auto& epos = e->GetPosition();
 
 	auto e2p = ppos - epos;
 	float e2pLen = e2p.Length();

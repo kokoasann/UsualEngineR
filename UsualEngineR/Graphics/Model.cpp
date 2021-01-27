@@ -113,6 +113,18 @@ namespace UER
 		
 	}
 
+	void Model::DrawInstanced(RenderContext& rc, int instanceNum, const Vector4& mulcolor)
+	{
+		m_meshParts.DrawInstanced(
+			rc,
+			instanceNum,
+			m_world,
+			g_camera3D->GetViewMatrix(),
+			g_camera3D->GetProjectionMatrix(),
+			mulcolor
+		);
+	}
+
 	void Model::DrawShadow(RenderContext& rc)
 	{
 		m_meshParts.DrawShadow(rc, m_world);

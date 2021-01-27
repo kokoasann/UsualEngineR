@@ -84,7 +84,7 @@ public:
 	}
 
 private:
-	ModelRender* m_model;
+	//ModelRender* m_model;
 	float m_scale;
 	
 	Vector3 m_dir;
@@ -100,6 +100,12 @@ private:
 
 	SphereCollider m_sphere;
 
+	Vector3 m_pos;
+	Quaternion m_rot;
+	Vector3 m_sca;
+
+	int m_instanceNum = 0;
+	Matrix* m_worldMatrix = nullptr;
 	//Ballistic* m_effect;
 };
 
@@ -110,10 +116,22 @@ public:
 	void Release() override;
 	void OnDestroy() override;
 
+	void Awake() override;
+
 	void PostUpdate() override;
 
 	void Allocate(int num);
+
+	std::pair<int, Matrix*> GetInstanceMatrix();
+
+	void AddInstance();
+	void DeadInstance(int num);
 private:
+	StructuredBuffer m_structuredBuff;
+	std::vector<Matrix> m_instanceMatrix;
+	std::vector<bool> m_usingMatrix;
+	ModelRender* m_model = 0;
+
 	std::mutex m_mutex;
 
 	std::vector<Enemy_Bullet*> m_bulletList;
@@ -127,3 +145,5 @@ private:
 
 	//bool m_isInit = false;
 };
+
+extern EnemyBulletManager* g_enemyBulletManager;

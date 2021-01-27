@@ -19,6 +19,7 @@ BossBombLaunchState::BossBombLaunchState():
 
 BossBombLaunchState::~BossBombLaunchState()
 {
+	DeleteGO(m_effect);
 }
 
 void BossBombLaunchState::Enter(IEnemy* e)

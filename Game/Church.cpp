@@ -62,20 +62,21 @@ void Church::Update()
 		//printf("player is not in chruch\n");
 	}
 
-	auto fade = GameManager::GetInstance().GetFade();
+	 auto& fade = Fade::GetInstance();
+	 fade.Update();
 	auto menu = GameManager::GetInstance().GetMenu();
 
-	if (fade->IsFaded() and m_doHealPlayer) {
+	if (fade.IsFaded() and m_doHealPlayer) {
 		player->ChargeEndurance(player->GetMaxEndurance());
 		player->ChargeBoost(player->GetMaxBoost());
 		player->Heal(player->GetMaxHP());
 		m_doHealPlayer = false;
-		fade->FadeIn();
+		fade.FadeIn();
 		m_isFadingIn = true;
 	}
 
 	if (m_isFadingIn) {
-		if (fade->IsFaded()) {
+		if (fade.IsFaded()) {
 			m_isFadingIn = false;
 			menu->ResumeGame();
 		}
@@ -110,10 +111,8 @@ const bool Church::IsPossibleToHeal() {
 
 void Church::DoHeal() {
 
-	auto fade = GameManager::GetInstance().GetFade();
 	auto menu = GameManager::GetInstance().GetMenu();
-
-	fade->FadeOut();
+	Fade::GetInstance().FadeOut();
 	m_doHealPlayer = true;
 	menu->PauseGame();
 

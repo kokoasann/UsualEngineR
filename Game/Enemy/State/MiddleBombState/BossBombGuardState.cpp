@@ -16,6 +16,8 @@ BossBombGuardState::~BossBombGuardState()
 void BossBombGuardState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Guard));
+	e->SetVelocity(Vector3::Zero);
+	e->SetExternalVelocity({ 0,-200.f,0 });
 	m_timer = 0.;
 }
 

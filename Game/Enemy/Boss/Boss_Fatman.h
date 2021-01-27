@@ -41,7 +41,7 @@ public:
 
 	enum class EnAnimEX :int
 	{
-		Expand = TO_INT(IEnemy::EnAnimation::enNumAnim),
+		enAngry = TO_INT(IEnemy::EnAnimation::enNumAnim),
 		Num,
 	};
 

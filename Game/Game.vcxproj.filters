@@ -381,6 +381,9 @@
       <Filter>Enemy\State\BombBoss</Filter>
     </ClInclude>
     <ClInclude Include="Result.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanAngryPerform.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -764,6 +767,9 @@
       <Filter>Enemy\State\BombBoss</Filter>
     </ClCompile>
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanAngryPerform.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -932,8 +938,6 @@
     <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\modelData\map_obj\exit_tex.png" />
+    <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
   </ItemGroup>
 </Project>

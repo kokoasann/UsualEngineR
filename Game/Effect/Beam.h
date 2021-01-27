@@ -88,6 +88,10 @@ public:
 	{
 		m_isCharge = isChange;
 	}
+	void SetIsLoop(const bool isLoop) 
+	{
+		m_isLoop = isLoop;
+	}
 	
 private:
 	PlaneParticleEffectRender*	m_effect;
@@ -101,4 +105,5 @@ private:
 
 	bool						m_isPlay = false;
 	bool						m_isCharge = false;
+	bool						m_isLoop = false;
 };
