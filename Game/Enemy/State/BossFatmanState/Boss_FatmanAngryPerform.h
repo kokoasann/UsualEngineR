@@ -1,5 +1,6 @@
 #pragma once
-
+class Beam;
+class MuzzleFlash;
 /// <summary>
 /// 
 /// </summary>
@@ -37,7 +38,21 @@ public:
 	/// </summary>
 	void Update() override;
 
+	void SetBeamIk(IK** b) {
+		
+			m_BeamIk = b;
+	}
+	void SetShootIk(IK** b) {
+		m_ShootIk = b;
+	}
 
 private:
+	const int IK_NUM = 2;
+
+	bool m_isPerformed = false;
+	IK** m_BeamIk = nullptr;
+	std::vector< Beam*> m_beams;
+	std::vector< MuzzleFlash*> m_muzzleFlashes;
+	IK** m_ShootIk = nullptr;
 
 };
