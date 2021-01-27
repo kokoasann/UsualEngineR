@@ -3,13 +3,20 @@
 #include "Enemy/IEnemy.h"
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Boss/Boss_Fatman.h"
+#include "GameManager.h"
+#include "../../../Game.h"
+#include "Camera/GameCamera.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanAngryPerform.h"
+
 
 Boss_FatmanMainState::Boss_FatmanMainState()
 {
+	
 }
 
 Boss_FatmanMainState::~Boss_FatmanMainState()
 {
+	
 }
 
 void Boss_FatmanMainState::Enter(IEnemy* e)
@@ -22,9 +29,57 @@ void Boss_FatmanMainState::Enter(IEnemy* e)
 	m_fatTimer = 0.f;
 
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
+
+	//IK情報。
+	for (int i = 0; i < IK_NUM; i++) {
+		m_BeamIk[i] = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L) + i);
+	}	
+	for (int i = 0; i < IK_NUM; i++) {
+		m_ShootIk[i] = e->GetIK(TO_INT(IEnemy::EnIK::enFoot_L) + i);
+	}	
+
+	//出会った時の演出。
+	if (!m_isPerformed) {
+		GameManager::GetInstance().m_gameScene->OnEnterBattle(e);
+		m_isPerformed = true;
+	}
+	//怒った時の演出。
+	if (!m_isAngryPerformed 
+		&& EnBattlePhase::Mad == Boss_Fatman::GetCurrentBattlePhase()) {
+		e->PlayAnimation(TO_INT(Boss_Fatman::EnAnimEX::enAngry));		
+
+		auto cam = GameManager::GetInstance().m_camera;
+		auto tar = e->GetPosition();
+		tar.y += 20.f;
+
+		auto eneForward = e->GetForward();
+		auto camEndPos = e->GetPosition() + eneForward * 35.f;
+		camEndPos.y += 20.f;
+		auto sec = 1.f;
+		auto interval = 1.7f;
+
+		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);
+
+		cam->Perform(
+			camEndPos, camEndPos,
+			tar, tar, sec, interval, GameCamera::State::enEnemyCamera
+		);
+		
+		m_bap = NewGO<Boss_FatmanAngryPerform>(0);
+		m_bap->SetBeamIk(m_BeamIk);
+		m_bap->SetShootIk(m_ShootIk);
+
+		m_isAngryPerformed = true;
+	}
 }
+
 IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 {
+	if (!m_isBmp) {
+		DeleteGO(m_bap);
+		m_isBmp = true;
+	}
+		
 	ChangeBattleState(e);
 
 	m_fatTimer += gameTime()->GetDeltaTime();
@@ -38,11 +93,10 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 	}
 
 	if (m_fatTimer > attackSpan) {
-		/*auto& p = GameManager::GetInstance().m_player;
-		const auto& ppos = p->GetPosition();
-		return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enAttackE));*/
+		auto& player = GameManager::GetInstance().m_player;
+		const auto& ppos = player->GetPosition();
+		//return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
 
-		auto player = GameManager::GetInstance().m_player;
 		if (player->GetCurrentHP() > 0.f) {
 			auto& epos = e->GetPosition();
 			auto& ppos = player->GetPosition();
