@@ -112,6 +112,9 @@ void Goal::Update()
 	m_appearTimer = min(m_appearTime, m_appearTimer +gameTime()->GetDeltaTime());
 	pos.Lerp(m_appearTimer / m_appearTime, m_firstPosition, m_lastPosition);
 	m_model->SetPosition(pos);
+	if (m_appearTimer == m_appearTime) {
+		m_smokeEffect->Stop();
+	}
 
 	if ((player->GetPosition() - m_openPosition).Length() <= m_openRange and !m_isOpened) {
 		m_isOpened = true;

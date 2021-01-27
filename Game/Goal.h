@@ -100,6 +100,5 @@ private:
 
 	//Effect
 	SmokeEffect* m_smokeEffect = nullptr;
-	Vector4 m_smokeColor = { 1.f,1.f,1.f,0.1f };
-
+	const Vector4 m_smokeColor = { 0.882, 0.773, 0.616,0.1f };
 };
