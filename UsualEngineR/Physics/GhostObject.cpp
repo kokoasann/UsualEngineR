@@ -20,6 +20,7 @@ namespace UER
 		btTrans.setRotation({ rot.x, rot.y, rot.z, rot.w });
 		m_ghost.setWorldTransform(btTrans);
 		m_ghost.setCollisionFlags(m_ghost.getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		m_ghost.setUserIndex(m_ghost.getUserIndex() | enCollisionAttr_NonHit);
 
 		//ï®óùÉGÉìÉWÉìÇ…ìoò^ÅB
 		Physics().AddCollisionObject(m_ghost);
