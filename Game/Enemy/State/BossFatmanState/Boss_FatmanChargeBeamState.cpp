@@ -64,8 +64,9 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 				if (BeamJudge(e,i)) {
 					//プレイヤーが飛んでいたら撃ち落とす。
 					auto& p = GameManager::GetInstance().m_player;
-					if (!p->IsOnGround()) {
+					if (!m_isKnockBack && !p->IsOnGround()){
 						p->ApplyDamage(m_damage, true, Vector3::Zero);
+						m_isKnockBack = true;
 					}
 					else {
 						p->ApplyDamage(m_damage);
@@ -75,6 +76,7 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 			}
 		}
 		else {
+			m_isKnockBack = false;
 			return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 		}
 	}
