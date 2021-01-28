@@ -34,6 +34,7 @@ void BossBombLaunchState::Enter(IEnemy* e)
 
 	m_firstRot = e->GetRotation();
 	m_timer = 0.f;
+	m_isLaunch = 0.f;
 }
 
 IEnemyState* BossBombLaunchState::Update(IEnemy* e)
@@ -62,27 +63,39 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 
 
 	if (e->GetModel()->IsAnimPlaying())
+	{
+		m_timeAnimEnd = m_timer;
 		return this;
+	}
+
+	if((m_timer-m_timeAnimEnd)-m_timeEnd >= 0.f)
+		return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Guard));
 
 	
-	const auto& mat = bone->GetWorldMatrix();
-	const auto& pmat = m_cannonBone->GetWorldMatrix();
+	if (!m_isLaunch)
+	{
+		const auto& mat = bone->GetWorldMatrix();
+		const auto& pmat = m_cannonBone->GetWorldMatrix();
 
-	Enemy_LaunchBomb* bomb = NewGO<Enemy_LaunchBomb>(0,true);
-	Vector3 v = Vector3::Up;
-	pmat.GetRotate().Apply(v);
-	//v.y += 0.3;
-	auto bonePos = mat.GetTransrate();
-	bomb->Init(bonePos, v*500., 1,20, m_damage,25);
-	CSoundSource* se = NewGO<CSoundSource>(0);
-	se->Init(L"Assets/sound/shoot.wav");
-	se->SetVolume(1.);
-	se->Play(false);
+		Enemy_LaunchBomb* bomb = NewGO<Enemy_LaunchBomb>(0, true);
+		Vector3 v = Vector3::Up;
+		pmat.GetRotate().Apply(v);
+		//v.y += 0.3;
+		auto bonePos = mat.GetTransrate();
+		bomb->Init(bonePos, v * 500., 1, 20, m_damage, 25);
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/shoot.wav");
+		se->SetVolume(1.);
+		se->Play(false);
 
-	m_effect->Play();
-	m_effect->SetPos(bonePos);
-	m_effect->SetRot(pmat.GetRotate());
+		m_effect->Play();
+		m_effect->SetPos(bonePos);
+		m_effect->SetRot(pmat.GetRotate());
+		
+		m_isLaunch = true;
+	}
 
+	return this;
 	return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Guard));
 	//return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 }

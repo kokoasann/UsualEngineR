@@ -4,8 +4,6 @@
 #include "GameManager.h"
 #include "Fade.h"
 
-//#define _USE_KANJI
-
 Result::Result()
 {
 
@@ -158,35 +156,61 @@ void Result::Render()
 
 void Result::PostRender()
 {
-
-	static Font font;
-	static const Vector4 FontColor = Vector4::White;
-	static const Vector2 timePos = { -500.f, 300.f };
-	static const float rot = 0.f;
-	static const float sca = 1.f;
-
 	//TIME
+	//LEFT
+	for (int i = 0; i < 6; i+=2) {
+		m_fontsPos[i] = Vector2(X1, Y1 - (LeftYSpace * i));
+	}
+	for (int i = 1; i < 6; i += 2) {
+		m_fontsPos[i] = Vector2(X2, Y1 - (LeftYSpace * (i - 1)));
+	}
+	//RIGHT
+	for (int i = 6; i < m_NUM_FONTS; i+=2) {
+		m_fontsPos[i] = Vector2(X3, Y1 - (RightYSpace * (i - 6)));
+	}
+	for (int i = 7; i < m_NUM_FONTS; i += 2) {
+		m_fontsPos[i] = Vector2(X4, Y1 - (RightYSpace * (i - 6 - 1)));
+	}
+
 	const int clearMin = (int)m_clearSec / 60.f;
 	const int clearHour = (clearMin / 60.f) >= 1.f ? (int)(clearMin / 60.f) : 0;
 	const int sec = max(0, (int)m_clearSec - (clearMin * 60.0));
-	//std::wstring time = L"Time  " + std::to_wstring(clearHour) + L":" + std::to_wstring((int)(clearMin - clearHour * 60.0)) + L":" + std::to_wstring(sec);
 
+	//TIME
+	m_texts[TO_INT(FONT_TYPE::TIME)] = L"Time";
+	m_texts[TO_INT(FONT_TYPE::TIME) + 1] = std::to_wstring(clearMin) + L":" + std::to_wstring(sec);
+	//std::wstring wstTimeStr = L"Time";
+	//std::wstring wstTimeVal = std::to_wstring(clearMin) + L":" + std::to_wstring(sec) + L"\n";
+	//POW
+	m_texts[TO_INT(FONT_TYPE::POW)] = L"POW ";
+	m_texts[TO_INT(FONT_TYPE::POW) + 1] = std::to_wstring(m_displayRoboCount);
+	//CORPSE
+	m_texts[TO_INT(FONT_TYPE::CORPSE)] = L"CRPS ";
+	m_texts[TO_INT(FONT_TYPE::CORPSE) + 1] = std::to_wstring(m_corpseCount);
 
-#ifndef _USE_KANJI
-	std::wstring time = L"Time " + std::to_wstring(clearMin) + L":" + std::to_wstring(sec) + L"\n";
-	std::wstring numPow = L"POW " + std::to_wstring(m_displayRoboCount) + L"\n";
-	std::wstring eliminatedCount = L"Corpse " + std::to_wstring(m_corpseCount) + L"\n";
-#else
-	std::wstring time = L"Time " + std::to_wstring(clearMin) + L"ï™" + std::to_wstring(sec) + L"ïb\n";
-	std::wstring numPow = L"ïﬂó∏êî " + std::to_wstring(m_displayRoboCount)  + L"\n";
-	std::wstring eliminatedCount = L"åÇîjêî " + std::to_wstring(m_corpseCount) + L"\n";
-#endif
+	//DEF
+	m_texts[TO_INT(FONT_TYPE::DEF)] = L"DEFAULT";
+	m_texts[TO_INT(FONT_TYPE::DEF) + 1] = std::to_wstring(m_displayRoboCount);
+	//MELEE
+	m_texts[TO_INT(FONT_TYPE::MELEE)] = L"MELEE";
+	m_texts[TO_INT(FONT_TYPE::MELEE) + 1] = std::to_wstring(m_displayRoboCount);
+	//REMOTE
+	m_texts[TO_INT(FONT_TYPE::REMOTE)] = L"REMOTE";
+	m_texts[TO_INT(FONT_TYPE::REMOTE) + 1] = std::to_wstring(m_displayRoboCount);
+	//BOMB
+	m_texts[TO_INT(FONT_TYPE::BOMB)] = L"BOMB";
+	m_texts[TO_INT(FONT_TYPE::BOMB) + 1] = std::to_wstring(m_displayRoboCount);
 
-	//
-	std::wstring text = time + numPow + eliminatedCount;
-	font.Begin();
-	font.Draw(text.c_str(), timePos, FontColor, rot, sca);
-	font.End();
+	for (int i = 0; i < 6; i++) {
+		m_fonts[i].Begin();
+		m_fonts[i].Draw(m_texts[i].c_str(), m_fontsPos[i], m_FontColor, m_fontRot, m_leftFontSca);
+		m_fonts->End();
+	}
 
+	for (int i = 6; i < m_NUM_FONTS;  i++) {
+		m_fonts[i].Begin();
+		m_fonts[i].Draw(m_texts[i].c_str(), m_fontsPos[i], m_FontColor, m_fontRot, m_rightFontSca);
+		m_fonts->End();
+	}
 
 }
