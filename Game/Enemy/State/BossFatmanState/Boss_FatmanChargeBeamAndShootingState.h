@@ -61,6 +61,8 @@ private:
 	IK*						m_chargebeamIk[2];			//IK。左右のIKの情報が格納されている。
 	bool					m_isEndChargeBeam = false;	//溜めビームが終わったかどうか。
 	float					m_sumMoveSpeed = 0.0f;
+	bool					m_isKnockBackCB = false;
+
 
 	//乱射。
 	float					m_shotTimer = 0.f;
@@ -68,4 +70,5 @@ private:
 	float					m_shootingDamage = 0.f;
 	IK*						m_shootingIk[2];			//IK。左右のIKの情報が格納されている。
 	bool					m_isEndShooting = false;	//乱射が終わったかどうか。
+	bool					m_isKnockBackSH = false;
 };

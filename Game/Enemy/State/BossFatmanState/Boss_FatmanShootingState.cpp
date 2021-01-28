@@ -37,6 +37,7 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 	m_stateTimer += gameTime()->GetDeltaTime();
 	const float maxTime = 5.f;
 	if (m_stateTimer > maxTime) {
+		m_isKnockBack = false;
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
@@ -117,8 +118,9 @@ void Boss_FatmanShootingState::BulletGenerate(IEnemy* e)
 		knockVector.Normalize();
 		const float knockParam = 200.f;
 		knockVector *= knockParam;
-		if (!p->IsOnGround()) {
+		if (!m_isKnockBack && !p->IsOnGround()) {
 			eb->SetDamage(m_damage, true, knockVector);
+			m_isKnockBack = false;
 		}
 		else {
 			eb->SetDamage(m_damage);
