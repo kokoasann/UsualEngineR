@@ -32,6 +32,7 @@ private:
 	const float		m_chargeTime = 4.0f;
 
 	bool			m_isSetPos = false;			//ビームを撃つ方向を設定。固定だから一度だけ設定する。
+	bool			m_isKnockBack = false;			
 	IK*				m_ik[2];					//IK。左右のIKの情報が格納されている。
 	enum IK{
 		Right,
