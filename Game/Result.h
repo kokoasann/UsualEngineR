@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	void Init(const double clearTime);
+	void Init(const double clearTime, const int eliminateCount);
 
 private:
 
@@ -79,4 +79,10 @@ private:
 	const float m_levelScale = 1.5f;
 
 	bool m_isTriggeredButtonA = false;
+
+	double m_clearSec = 0.f;
+	int m_corpseCount = 0;
+
+	int m_displayRoboCount = 0;
+	int m_robotCount = 0;
 };
