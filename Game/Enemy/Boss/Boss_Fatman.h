@@ -134,8 +134,8 @@ private:
 	float m_scale = 1.f;
 
 	//Physics
-	const float m_radius = 2.f;
-	const float m_height = 3.f;
+	const float m_radius = 6.0f;
+	const float m_height = 9.0f;
 
 	//バトルフェーズ。
 	static EnBattlePhase m_battlePhase;
