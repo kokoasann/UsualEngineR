@@ -72,7 +72,7 @@ void BossBombBashState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
 	m_timer = 0.;
-	m_sphere.Create(1.0);
+	//m_sphere.Create(1.0);
 	m_isBashHit = false;
 }
 
@@ -95,8 +95,13 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 		auto& p = GameManager::GetInstance().m_player;
 		auto f = e->GetForward();
 		f.Normalize();
-		p->ApplyDamage(10, true, f * 100);
+		p->ApplyDamage(p->GetMaxHP()/15, true, f * 200);
 		m_isBashHit = true;	//‚‚É‚ß‚è‚ñ‚Å–³ŒÀƒnƒ¨€–S‚ª‚ ‚è‚¦‚é‚Ì‚Å’Ç‰Á
+
+		CSoundSource* se = NewGO<CSoundSource>(0, "Bash");
+		se->Init(L"Assets/sound/Bash.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
 	}
 
 	//m_rigidBody.Create(info);
