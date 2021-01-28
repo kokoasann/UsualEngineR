@@ -68,6 +68,14 @@ BossBombBashState::~BossBombBashState()
 {
 }
 
+void BossBombBashState::Init(IEnemy* e)
+{
+	
+	m_sphere.Create(15.0f);
+	
+	BossBombData::GetInstance().shieldGhost->Create(&m_sphere, e->GetPosition(), Quaternion::Identity);
+}
+
 void BossBombBashState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
@@ -85,8 +93,22 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	//ボム敵データ取得
+	Init(e);
 	auto& BBData = BossBombData::GetInstance();
+	for (int i = 0; i > BBData.shieldGhost->GetGhost()->getNumOverlappingObjects(); i++)
+	{
+		auto o = BBData.shieldGhost->GetGhost()->getOverlappingObject(i);
+		int ind = o->getUserIndex();
+
+		if (ind & GameCollisionAttribute::Player)
+		{
+			auto& p = GameManager::GetInstance().m_player;
+			auto f = e->GetForward();
+			p->ApplyDamage(10, true, f*200);
+		}
+	}
+	//ボム敵データ取得
+	
 
 	//判定をとりだし
 	ContactTestResult ctr;
