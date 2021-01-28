@@ -88,9 +88,26 @@ void Boss_MiddleBomb::Init()
 			if (res == 0)
 			{
 				BossBombData::GetInstance().isJumpStart = true;
+				return;
 			}
 			else
 				BossBombData::GetInstance().isJumpStart = false;
+
+
+			res = std::wcscmp(eventName, L"bash_start");
+			if (res == 0)
+			{
+				printf("start\n");
+				BossBombData::GetInstance().isBashAttack = true;
+				return;
+			}
+			res = std::wcscmp(eventName, L"bash_end");
+			if (res == 0)
+			{
+				printf("end\n");
+				BossBombData::GetInstance().isBashAttack = false;
+				return;
+			}
 		});
 }
 void Boss_MiddleBomb::InitState()

@@ -68,11 +68,19 @@ BossBombBashState::~BossBombBashState()
 {
 }
 
+void BossBombBashState::Init(IEnemy* e)
+{
+	
+	m_sphere.Create(15.0f);
+	
+	BossBombData::GetInstance().shieldGhost->Create(&m_sphere, e->GetPosition(), Quaternion::Identity);
+}
+
 void BossBombBashState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
 	m_timer = 0.;
-	m_sphere.Create(1.0);
+	//m_sphere.Create(1.0);
 	m_isBashHit = false;
 }
 
@@ -85,8 +93,22 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	//ボム敵データ取得
+	Init(e);
 	auto& BBData = BossBombData::GetInstance();
+	for (int i = 0; i > BBData.shieldGhost->GetGhost()->getNumOverlappingObjects(); i++)
+	{
+		auto o = BBData.shieldGhost->GetGhost()->getOverlappingObject(i);
+		int ind = o->getUserIndex();
+
+		if (ind & GameCollisionAttribute::Player)
+		{
+			auto& p = GameManager::GetInstance().m_player;
+			auto f = e->GetForward();
+			p->ApplyDamage(10, true, f*200);
+		}
+	}
+	//ボム敵データ取得
+	
 
 	//判定をとりだし
 	ContactTestResult ctr;
@@ -95,8 +117,13 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 		auto& p = GameManager::GetInstance().m_player;
 		auto f = e->GetForward();
 		f.Normalize();
-		p->ApplyDamage(10, true, f * 100);
+		p->ApplyDamage(p->GetMaxHP()/15, true, f * 200);
 		m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
+
+		CSoundSource* se = NewGO<CSoundSource>(0, "Bash");
+		se->Init(L"Assets/sound/Bash.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
 	}
 
 	//m_rigidBody.Create(info);

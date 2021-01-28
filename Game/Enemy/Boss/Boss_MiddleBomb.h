@@ -80,4 +80,5 @@ public:
 	MeshCollider* meshColl = nullptr;
 	GhostObject* shieldGhost = nullptr;
 	bool isJumpStart = false;
+	bool isBashAttack = false;
 };
