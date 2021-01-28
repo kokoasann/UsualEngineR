@@ -71,7 +71,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	NewGO<Title>(0);
 	//NewGO<Game>(0);
-	//NewGO<Result>(0);
+	//auto result = NewGO<Result>(0);
+	//result->Init(60.0 * 30 + 20, 10);
+
 	NewGO<GameDebugger>(0);
 	//Ghost Object test
 	/*BoxCollider bc;

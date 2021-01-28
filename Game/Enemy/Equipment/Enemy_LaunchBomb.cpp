@@ -21,6 +21,11 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		int index = convexResult.m_hitCollisionObject->getUserIndex();
+		if (index & enCollisionAttr_NonHit)
+		{
+			//printf("NONONON");
+			return 0.f;
+		}
 		//キャラコンでもグラウンドでもない場合早期出社。
 		if (!(index & enCollisionAttr_Character
 			|| index & enCollisionAttr_Ground))

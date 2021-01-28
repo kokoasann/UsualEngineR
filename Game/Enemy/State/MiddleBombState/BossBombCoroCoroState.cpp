@@ -69,7 +69,7 @@ IEnemyState* BossBombCoroCoroState::Update(IEnemy* e)
 		return this;
 	}
 
-	if ((m_timer-m_timeAnimEnd) / m_timeEnd >= 1.)
+	if ((m_timer-m_timeAnimEnd) - m_timeEnd >= 0.f)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	
 

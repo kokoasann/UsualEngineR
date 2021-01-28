@@ -55,8 +55,10 @@ private:
 
 	RigidBody m_rigidBody;
 	MeshCollider m_meshColl;
-
+	MeshCollider m_meshColl_ghost;
 	Bone* m_shieldBone = nullptr;
+
+	GhostObject m_shieldGhost;
 
 	//Physics
 	const float m_radius = 1.f;
@@ -76,5 +78,7 @@ public:
 
 	RigidBody* rigidBody = nullptr;
 	MeshCollider* meshColl = nullptr;
+	GhostObject* shieldGhost = nullptr;
 	bool isJumpStart = false;
+	bool isBashAttack = false;
 };

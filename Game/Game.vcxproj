@@ -201,6 +201,7 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanShootingState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanBeamState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanShootingState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.cpp" />

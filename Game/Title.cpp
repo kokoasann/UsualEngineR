@@ -53,7 +53,7 @@ void Title::PreUpdate()
 
 void Title::Update()
 {
-	if (g_pad[0]->IsTrigger(enButtonA)) {
+	if (g_pad[0]->IsTrigger(enButtonA) and !m_isTrigeredStart) {
 		Fade::GetInstance().FadeOut();
 		m_isTrigeredStart = true;
 	}

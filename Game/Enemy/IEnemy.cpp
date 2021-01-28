@@ -12,6 +12,7 @@
 #include "Effect/ExplosionEffect.h"
 #include "Effect/SmokeEffect.h"
 #include "Game.h"
+#include "EnemyManager.h"
 
 void IEnemy::Awake() {
 }
@@ -92,6 +93,11 @@ void IEnemy::Update() {
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 		m_currentState->Enter(this);
+	}
+
+	if (!m_addedAsDeadBody and m_ability.hp <= 0.f) {
+		EnemyManager::GetEnemyManager().AddCorpseCount();
+		m_addedAsDeadBody = true;;
 	}
 
 }

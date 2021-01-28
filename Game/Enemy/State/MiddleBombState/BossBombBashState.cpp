@@ -68,36 +68,75 @@ BossBombBashState::~BossBombBashState()
 {
 }
 
+//判定変えてた
+//void BossBombBashState::Init(IEnemy* e)
+//{
+////	m_sphere.Create(15.0f);
+//	
+////	BossBombData::GetInstance().shieldGhost->Create(&m_sphere, e->GetPosition(), Quaternion::Identity);
+//}
+
 void BossBombBashState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
+	auto& BBData = BossBombData::GetInstance();
+	BBData.isBashAttack = true;
 	m_timer = 0.;
-	m_sphere.Create(1.0);
+	//m_sphere.Create(1.0);
 	m_isBashHit = false;
 }
 
 IEnemyState* BossBombBashState::Update(IEnemy* e)
 {
+	auto& BBData = BossBombData::GetInstance();
+
 	float dtime = gameTime()->GetDeltaTime();
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer > m_timeLimit)
 	{
+		//バッシュタイム終了
+		BBData.isBashAttack = false;
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	//ボム敵データ取得
-	auto& BBData = BossBombData::GetInstance();
+	//Init(e);
+
+	//バッシュアタック中かつ当たれば
+	if (BBData.isBashAttack && !m_isBashHit) {
+
+		auto o = BBData.shieldGhost->GetGhost()->getOverlappingObject(0);
+		int ind = o->getUserIndex();
+
+		if (ind & GameCollisionAttribute::Player)
+		{
+			auto& p = GameManager::GetInstance().m_player;
+			auto f = e->GetForward();
+			p->ApplyDamage(10, true, f * 200);
+
+			m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
+			CSoundSource* se = NewGO<CSoundSource>(0, "Bash");
+			se->Init(L"Assets/sound/Bash.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
+		}
+	}
+
 
 	//判定をとりだし
-	ContactTestResult ctr;
-	Physics().ContactTest(BBData.rigidBody->GetBody(), ctr);
-	if (ctr.isHit && !m_isBashHit) {
-		auto& p = GameManager::GetInstance().m_player;
-		auto f = e->GetForward();
-		f.Normalize();
-		p->ApplyDamage(10, true, f * 100);
-		m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
-	}
+	//ContactTestResult ctr;
+	//Physics().ContactTest(BBData.rigidBody->GetBody(), ctr);
+	//if (ctr.isHit && !m_isBashHit) {
+	//	auto& p = GameManager::GetInstance().m_player;
+	//	auto f = e->GetForward();
+	//	f.Normalize();
+	//	p->ApplyDamage(p->GetMaxHP()/15, true, f * 200);
+	//	m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
+
+	//	CSoundSource* se = NewGO<CSoundSource>(0, "Bash");
+	//	se->Init(L"Assets/sound/Bash.wav");
+	//	se->Play(false);
+	//	se->SetVolume(1.0f);
+	//}
 
 	//m_rigidBody.Create(info);
 	//m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);

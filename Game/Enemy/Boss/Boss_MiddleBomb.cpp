@@ -20,6 +20,7 @@ Boss_MiddleBomb::Boss_MiddleBomb()
 Boss_MiddleBomb::~Boss_MiddleBomb()
 {
 	Physics().RemoveRigidBody(m_rigidBody);
+	m_shieldGhost.Release();
 }
 
 void Boss_MiddleBomb::Init()
@@ -58,6 +59,12 @@ void Boss_MiddleBomb::Init()
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);
 	Physics().AddRigidBody(m_rigidBody);
 
+	Matrix offsetScaleMat;
+	offsetScaleMat.MakeScaling({ 1.3f,2.f,1.f });
+	m_meshColl_ghost.CreateFromSkinModel(model, &offsetScaleMat);
+	m_shieldGhost.Create(&m_meshColl_ghost, { 0,0,0 }, Quaternion::Identity);
+
+
 	SetAutoRotateFlag(false);
 
 	InitAnim();
@@ -73,6 +80,7 @@ void Boss_MiddleBomb::Init()
 
 	BossBombData::GetInstance().meshColl = &m_meshColl;
 	BossBombData::GetInstance().rigidBody = &m_rigidBody;
+	BossBombData::GetInstance().shieldGhost = &m_shieldGhost;
 
 	GetModel()->GetAnimation().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName)
 		{
@@ -80,9 +88,26 @@ void Boss_MiddleBomb::Init()
 			if (res == 0)
 			{
 				BossBombData::GetInstance().isJumpStart = true;
+				return;
 			}
 			else
 				BossBombData::GetInstance().isJumpStart = false;
+
+
+			res = std::wcscmp(eventName, L"bash_start");
+			if (res == 0)
+			{
+				printf("start\n");
+				BossBombData::GetInstance().isBashAttack = true;
+				return;
+			}
+			res = std::wcscmp(eventName, L"bash_end");
+			if (res == 0)
+			{
+				printf("end\n");
+				BossBombData::GetInstance().isBashAttack = false;
+				return;
+			}
 		});
 }
 void Boss_MiddleBomb::InitState()
@@ -164,6 +189,9 @@ void Boss_MiddleBomb::Execute()
 
 	m_ShieldModel->SetPosition(pos);
 	m_ShieldModel->SetRotation(rot);
+
+	m_shieldGhost.SetPosition(pos);
+	m_shieldGhost.SetRotation(rot);
 
 	/*btTransform tra;
 	m_rigidBody.GetBody()->getMotionState()->getWorldTransform(tra);

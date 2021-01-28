@@ -318,5 +318,7 @@ private:
 
 	bool m_isUseAutoRotateSystem = true;
 
+	bool m_addedAsDeadBody = false;
+
 };
 
