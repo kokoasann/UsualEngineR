@@ -109,8 +109,7 @@ void Game::OnEnemyDied(IEnemy* enemy) {
 	auto& eM = EnemyManager::GetEnemyManager();
 	if (enemy->IsBoss()) {
 		GameManager::GetInstance().AddDeadBossCount();
-		//TODO : const int NUM_BOSS = 3;
-		const int NUM_BOSS = 1; //debug code
+		const int NUM_BOSS = 3;
 		if (GameManager::GetInstance().GetDeadBossCount() == NUM_BOSS) {
 			m_isGenerateGoalAfterBossPerformance = true;
 		}
@@ -257,7 +256,8 @@ void Game::Update()
 	auto& fade = Fade::GetInstance();
 	if (fade.IsFaded() and m_isCleared) {
 		auto result = NewGO<Result>(0);
-		result->Init(m_clearTimer);
+		const int numCorpse = EnemyManager::GetEnemyManager().GetCorpseCount();
+		result->Init(m_clearTimer, numCorpse);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 	}

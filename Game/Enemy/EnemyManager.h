@@ -96,6 +96,15 @@ public:
 	{
 		m_enemies.push_back(e);
 	}
+
+	void AddCorpseCount(const int val = 1) {
+		assert(val > 0);
+		m_numCorpse += val;
+	}
+
+	const int GetCorpseCount() {
+		return m_numCorpse;
+	}
 private:
 
 	static const int m_numNormalEnemy = 2;
@@ -117,5 +126,7 @@ private:
 
 	const float BOSS_A_HP = 1500.f;
 	const float BOSS_A_STAMINA = 100.f;
+
+	int m_numCorpse = 0;
 };
 
