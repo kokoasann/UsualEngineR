@@ -52,6 +52,8 @@ IEnemyState* Boss_FatmanChargeBeamAndShootingState::Update(IEnemy* e)
 	Shooting(e);
 
 	if (m_isEndChargeBeam && m_isEndShooting) {
+		m_isKnockBackCB = false;
+		m_isKnockBackSH = false;
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	
@@ -104,8 +106,9 @@ void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
 				if (BeamJudge(e, i)) {
 					//プレイヤーが飛んでいたら撃ち落とす。
 					auto& p = GameManager::GetInstance().m_player;
-					if (!p->IsOnGround()) {
+					if (!m_isKnockBackCB && !p->IsOnGround()) {
 						p->ApplyDamage(m_chargeDamage, true, Vector3::Zero);
+						m_isKnockBackCB = true;
 					}
 					else {
 						p->ApplyDamage(m_chargeDamage);
@@ -325,8 +328,9 @@ void Boss_FatmanChargeBeamAndShootingState::BulletGenerate(IEnemy* e)
 		knockVector.Normalize();
 		const float knockParam = 200.f;
 		knockVector *= knockParam;
-		if (!p->IsOnGround()) {
+		if (!m_isKnockBackSH && !p->IsOnGround()) {
 			eb->SetDamage(m_shootingDamage, true, knockVector);
+			m_isKnockBackSH = true;
 		}
 		else {
 			eb->SetDamage(m_shootingDamage);

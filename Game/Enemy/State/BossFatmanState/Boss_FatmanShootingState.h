@@ -24,4 +24,5 @@ private:
 		Left,
 		IKNum
 	};
+	bool			m_isKnockBack = false;
 };
