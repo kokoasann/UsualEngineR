@@ -68,13 +68,13 @@ BossBombBashState::~BossBombBashState()
 {
 }
 
-void BossBombBashState::Init(IEnemy* e)
-{
-	
-	m_sphere.Create(15.0f);
-	
-	BossBombData::GetInstance().shieldGhost->Create(&m_sphere, e->GetPosition(), Quaternion::Identity);
-}
+//”»’è•Ï‚¦‚Ä‚½
+//void BossBombBashState::Init(IEnemy* e)
+//{
+////	m_sphere.Create(15.0f);
+//	
+////	BossBombData::GetInstance().shieldGhost->Create(&m_sphere, e->GetPosition(), Quaternion::Identity);
+//}
 
 void BossBombBashState::Enter(IEnemy* e)
 {
@@ -93,7 +93,7 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
-	Init(e);
+	//Init(e);
 	auto& BBData = BossBombData::GetInstance();
 	for (int i = 0; i > BBData.shieldGhost->GetGhost()->getNumOverlappingObjects(); i++)
 	{
