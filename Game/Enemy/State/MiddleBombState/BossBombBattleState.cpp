@@ -38,6 +38,8 @@ void BossBombBattleState::Enter(IEnemy* e)
 
 IEnemyState* BossBombBattleState::Update(IEnemy* e)
 {
+	if (e->GetCurrentHP() <= 0.f)
+		return e->GetState(TO_INT(IEnemy::EnState::enDeadState));
 	float dtime = gameTime()->GetDeltaTime();
 	m_timer += dtime;
 
@@ -48,7 +50,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	if (m_timer >= m_timeLimit && true)
 	{
 		float dify = ppos.y - epos.y;
-		if (!GameManager::GetInstance().GetPlayer()->IsOnGround()&& dify > 20.f)
+		if (!GameManager::GetInstance().GetPlayer()->IsOnGround()&& dify > 50.f)
 		{
 			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Jump));
 		}

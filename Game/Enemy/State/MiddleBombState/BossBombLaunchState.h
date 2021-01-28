@@ -16,7 +16,12 @@ private:
 	Quaternion m_firstRot;
 	float m_timer = 0.f;
 	float m_timeLimit = 0.2f;
+	float m_timeAnimEnd = 0.f;
+	float m_timeEnd = 0.2f;
+	bool m_isLaunch = false;
+
 	MuzzleFlash* m_effect;
+
 
 	const float m_damage;
 };
