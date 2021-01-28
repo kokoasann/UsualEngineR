@@ -12,6 +12,7 @@ public:
 	void  OnAttacked(IEnemy* e);
 	//void Init(IEnemy* e);
 private:
+
 	float m_timer = 0.;
 	float m_timeLimit = 2.;
 	SphereCollider m_sphere;
