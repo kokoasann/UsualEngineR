@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Gun.h"
 #include "Effect/MuzzleFlash.h"
-
+#include "GameManager.h"
+#include "GameSceneMenu.h"
 
 Gun::Gun()
 {
@@ -84,6 +85,9 @@ void Gun::PostUpdate()
 	}
 	else {
 		m_model->SetActive(true);
+		if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+			m_activeTimer += gameTime()->GetDeltaTime();
+		}
 	}
 }
 

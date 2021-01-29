@@ -68,6 +68,10 @@ public:
 		m_isUsed = flag;
 	}
 
+	const double GetActivatedTime() {
+		return m_activeTimer;
+	}
+
 private:
 
 	//Model
@@ -90,4 +94,7 @@ private:
 	Bone* m_shieldBones[3] = { nullptr };
 
 	Vector3 m_smokeEffectScale = Vector3::One * 0.02;
+
+	//timer
+	double m_activeTimer = 0.f;
 };

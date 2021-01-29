@@ -11,6 +11,7 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanTakeDistanceState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanStunState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamAndShootingState.h"
+#include "Enemy/State/BossFatmanState/Boss_FatmanDeadState.h"
 
 EnBattlePhase Boss_Fatman::m_battlePhase = EnBattlePhase::Normal;
 
@@ -60,7 +61,7 @@ void Boss_Fatman::InitAnimation()
 void Boss_Fatman::InitState()
 {
 	{
-		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new EnemyDeadState());
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new Boss_FatmanDeadState());
 		m_stateMap.insert(p);
 	}
 	{
