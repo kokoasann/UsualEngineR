@@ -12,6 +12,10 @@
 #include "Fade.h"
 #include "Goal.h"
 #include "Result.h"
+#include "Player/Player.h"
+#include "Player/Attachment/JetPack.h"
+#include "Player/Attachment/Gun.h"
+#include "Player/Attachment/Shield.h"
 
 void Game::Release()
 {
@@ -243,11 +247,11 @@ void Game::Update()
 		}
 	}
 
-	//if (g_pad[0]->IsTrigger(enButtonSelect)) {
-	//	GoalGatePerformance();
-	//}
+	if (g_pad[0]->IsTrigger(enButtonB)) {
+		GoalGatePerformance();
+	}
 
-	if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+	if (!GameManager::GetInstance().m_menu->IsGamePaused() and !m_isCleared) {
 		m_clearTimer += gameTime()->GetDeltaTime();
 	}
 
@@ -256,11 +260,51 @@ void Game::Update()
 	auto& fade = Fade::GetInstance();
 	if (fade.IsFaded() and m_isCleared) {
 		auto result = NewGO<Result>(0);
+		
+		const double meleeActiveTime = GameManager::GetInstance().m_player->GetJetPack()->GetActivatedTime();
+		const double remoteActiveTime = GameManager::GetInstance().m_player->GetGun()->GetActivatedTime();
+		const double bombActiveTime = GameManager::GetInstance().m_player->GetShield()->GetActivatedTime();
+
+		Result::SAttachmentPercentage ap;
+		ap.defaultAttachment = ((m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime)) / m_clearTimer) * 100.0;
+		ap.meleeAttachment =  (meleeActiveTime / m_clearTimer) * 100.0;
+		ap.remoteAttachment =  (remoteActiveTime / m_clearTimer) * 100.0;
+		ap.bombAttachment = (bombActiveTime / m_clearTimer) * 100.0;
+
+		//printf("Clear Time : %f\n default Time : %f (%f%%)\n melee Time : %f (%f%)\n remote Time : %f (%f%)\n bomb Time : %f (%f%)\n",
+		//	m_clearTimer,
+		//	m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime), (m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime)) / m_clearTimer,
+		//	meleeActiveTime, meleeActiveTime / m_clearTimer,
+		//	remoteActiveTime, remoteActiveTime / m_clearTimer,
+		//	bombActiveTime, bombActiveTime / m_clearTimer
+		//);
+
 		const int numCorpse = EnemyManager::GetEnemyManager().GetCorpseCount();
-		result->Init(m_clearTimer, numCorpse);
+		result->Init(m_clearTimer, numCorpse, ap);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 	}
+
+	////debug
+	//if (GameManager::GetInstance().m_player != nullptr) {
+	//	if (GameManager::GetInstance().m_player->GetJetPack() != nullptr) {
+	//		const double meleeActiveTime = GameManager::GetInstance().m_player->GetJetPack()->GetActivatedTime();
+	//		const double remoteActiveTime = GameManager::GetInstance().m_player->GetGun()->GetActivatedTime();
+	//		const double bombActiveTime = GameManager::GetInstance().m_player->GetShield()->GetActivatedTime();
+	//		Result::SAttachmentPercentage ap;
+	//		ap.defaultAttachment = (m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime)) / m_clearTimer;
+	//		ap.meleeAttachment = meleeActiveTime / m_clearTimer;
+	//		ap.remoteAttachment = remoteActiveTime / m_clearTimer;
+	//		ap.bombAttachment = bombActiveTime / m_clearTimer;
+	//		printf("Clear Time : %f\n default Time : %f (%f%%)\n melee Time : %f (%f%)\n remote Time : %f (%f%)\n bomb Time : %f (%f%)\n",
+	//			m_clearTimer, 
+	//			m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime), ((m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime)) / m_clearTimer) * 100.0,
+	//			meleeActiveTime, meleeActiveTime / m_clearTimer * 100.0,
+	//			remoteActiveTime, remoteActiveTime / m_clearTimer * 100.0,
+	//			bombActiveTime, bombActiveTime / m_clearTimer * 100.0
+	//		);
+	//	}
+	//}
 }
 
 void Game::PostUpdate()
