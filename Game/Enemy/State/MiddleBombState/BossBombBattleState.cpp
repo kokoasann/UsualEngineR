@@ -6,6 +6,8 @@
 #include "GameManager.h"
 #include "Game.h"
 
+#include "Camera/GameCamera.h"
+
 BossBombBattleState::BossBombBattleState()
 {
 }
@@ -20,7 +22,7 @@ void BossBombBattleState::Enter(IEnemy* e)
 	float perHP = e->GetCurrentHP()/e->GetMaxHP();
 	if (perHP <= 2. / 3.)
 	{
-		m_isAngry = true;
+		//m_isAngry = true;
 		m_timeLimit = 1.;
 	}
 
@@ -38,6 +40,30 @@ void BossBombBattleState::Enter(IEnemy* e)
 
 IEnemyState* BossBombBattleState::Update(IEnemy* e)
 {
+	if (!m_isAngry && BossBombData::GetInstance().feeling == BossBombData::EnFeel::Angry)
+	{
+		m_isAngry = true;
+		m_timeLimit = 1.;
+
+		//e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::));
+		auto cam = GameManager::GetInstance().m_camera;
+		auto tar = e->GetPosition();
+		tar.y += 20.f;
+
+		auto eneForward = e->GetForward();
+		auto camEndPos = e->GetPosition() + eneForward * 35.f;
+		camEndPos.y += 20.f;
+		auto sec = 1.f;
+		auto interval = 1.7f;
+
+		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(true);
+
+		cam->Perform(
+			camEndPos, camEndPos,
+			tar, tar, sec, interval, GameCamera::State::enEnemyCamera
+		);
+	}
+
 	if (e->GetCurrentHP() <= 0.f)
 		return e->GetState(TO_INT(IEnemy::EnState::enDeadState));
 	float dtime = gameTime()->GetDeltaTime();

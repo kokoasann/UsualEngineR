@@ -111,7 +111,7 @@ void Enemy_CorocoroBomb::Update()
 		float t = 1.f - min(len / m_fireRange, 1.f);
 		v *= m_fireRange * t * m_power;
 
-		for (int i = 0; i > m_ghost.GetGhost()->getNumOverlappingObjects(); i++)
+		for (int i = 0; i < m_ghost.GetGhost()->getNumOverlappingObjects(); i++)
 		{
 			auto o = m_ghost.GetGhost()->getOverlappingObject(i);
 			int ind = o->getUserIndex();
@@ -148,6 +148,12 @@ void Enemy_CorocoroBomb::Update()
 	{
 		m_effect->Play();
 		m_effect->SetPos(pos);
+
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/explosion.wav");
+		se->Play(false);
+		se->SetVolume(1.);
+
 		m_ghost.SetPosition(pos);
 		m_hitpos = pos;
 		m_isHit = true;
