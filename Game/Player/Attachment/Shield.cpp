@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Shield.h"
 #include "Effect/SmokeEffect.h"
+#include "GameManager.h"
+#include "GameSceneMenu.h"
 
 Shield::Shield()
 {
@@ -93,6 +95,11 @@ void Shield::PostUpdate()
 	}
 	else {
 		m_model->SetActive(true);
+
+		if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+			m_activeTimer += gameTime()->GetDeltaTime();
+		}
+
 		for (int i = 0; i < m_worldSmokeEffects.size(); i++) {
 			m_worldSmokeEffects[i]->Play();
 			m_worldSmokeEffects[i]->SetPos(m_shieldBones[i]->GetWorldMatrix().GetTransrate());
