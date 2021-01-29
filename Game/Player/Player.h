@@ -350,6 +350,10 @@ public:
 		return m_shield;
 	}
 
+	JetPack* const GetJetPack() {
+		return m_jetPack;
+	}
+
 	void FireThrusters() {
 		m_isUsingThrusters = true;
 		m_jetSE->Play(true);

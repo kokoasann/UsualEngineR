@@ -2,6 +2,8 @@
 #include "JetPack.h"
 #include "../../Enemy/EnemyManager.h"
 #include "../../Effect/JetEffect.h"
+#include "GameManager.h"
+#include "GameSceneMenu.h"
 
 JetPack::JetPack()
 {
@@ -147,6 +149,9 @@ void JetPack::Update()
 	}
 	else {
 		m_model->SetActive(true);
+		if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+			m_activeTimer += gameTime()->GetDeltaTime();
+		}
 	}
 
 }

@@ -70,11 +70,19 @@ struct BossBombData
 private:
 	BossBombData() {};
 public:
+
+	enum class EnFeel
+	{
+		Normale,
+		Angry,
+		Tired
+	};
 	static BossBombData& GetInstance()
 	{
 		static BossBombData data;
 		return data;
 	}
+	EnFeel feeling = EnFeel::Normale;
 
 	RigidBody* rigidBody = nullptr;
 	MeshCollider* meshColl = nullptr;
