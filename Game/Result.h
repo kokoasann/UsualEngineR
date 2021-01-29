@@ -10,6 +10,13 @@ public:
 	Result();
 	virtual ~Result();
 
+	struct SAttachmentPercentage {
+		float defaultAttachment;
+		float meleeAttachment;
+		float remoteAttachment;
+		float bombAttachment;
+	};
+
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
 	/// </summary>
@@ -56,7 +63,7 @@ public:
 	/// </summary>
 	void PostRender() override;
 
-	void Init(const double clearTime, const int eliminateCount);
+	void Init(const double clearTime, const int eliminateCount, const SAttachmentPercentage data);
 
 private:
 
@@ -83,8 +90,11 @@ private:
 	double m_clearSec = 0.f;
 	int m_corpseCount = 0;
 
+	SAttachmentPercentage m_attachmentPercentageData;
+
 	int m_displayRoboCount = 0;
 	int m_robotCount = 0;
+
 
 	//FONT
 	enum class FONT_TYPE {
@@ -110,7 +120,7 @@ private:
 	const float X1 = -500.f;
 	const float X2 = -300.f;
 	const float X3 =	100.f;
-	const float X4 =	450.f;
+	const float X4 =	400.f;
 
 	const float Y1 = 300.f;
 	const float LeftYSpace = 40.f;

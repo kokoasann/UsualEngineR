@@ -79,6 +79,10 @@ public:
 
 	void PlayFireEffects();
 
+	const double GetActivatedTime() {
+		return m_activeTimer;
+	}
+
 private:
 
 	//Model
@@ -106,4 +110,7 @@ private:
 	EffectsTransform m_effectTransforms;
 
 	std::vector<MuzzleFlash*> m_muzzleFlashes;
+
+	//tiemr
+	double m_activeTimer = 0.f;
 };

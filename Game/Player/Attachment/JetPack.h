@@ -77,6 +77,10 @@ public:
 		m_isUsingThrusters = false;
 	}
 
+	const double GetActivatedTime() {
+		return m_activeTimer;
+	}
+
 private:
 
 	//Model
@@ -94,4 +98,7 @@ private:
 	//PlaneParticleEffectRender* m_effects[4];
 	Bone* m_backpackBone[6] = { nullptr };
 	std::vector<JetEffect*> m_jetEffects;
+
+	//timer
+	double m_activeTimer = 0.f;
 };
