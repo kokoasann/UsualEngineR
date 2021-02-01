@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlayerFallState.h"
 #include "../../Camera/GameCamera.h"
+#include "HUD/KeyHelp.h"
 #include <cmath>
 
 PlayerFallState::PlayerFallState()
@@ -9,6 +10,9 @@ PlayerFallState::PlayerFallState()
 
 PlayerFallState::~PlayerFallState()
 {
+	if (m_keyHelp_brake != nullptr) {
+		DeleteGO(m_keyHelp_brake);
+	}
 }
 
 void PlayerFallState::Enter(Player* p){
@@ -20,6 +24,15 @@ void PlayerFallState::Enter(Player* p){
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player Enter Fall State\n");
 #endif
+	if (m_keyHelp_brake == nullptr) {
+		m_keyHelp_brake = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
+		m_keyHelp_brake->Init(keyHelpPos, L"R2:ƒQƒ“ƒ\ƒN");
+	}
+	else {
+		m_keyHelp_brake->SetActive(true);
+	}
+
 }
 
 IPlayerState* PlayerFallState::Update(Player* p) {
@@ -87,4 +100,5 @@ void PlayerFallState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Exit FallState\n");
 #endif
+	m_keyHelp_brake->SetActive(false);
 }
