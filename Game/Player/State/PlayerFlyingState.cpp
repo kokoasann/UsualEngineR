@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "Camera/GameCamera.h"
 #include "Enemy/EnemyManager.h"
+#include "HUD/KeyHelp.h"
 
 PlayerFlyingState::PlayerFlyingState()
 {
@@ -12,7 +13,11 @@ PlayerFlyingState::PlayerFlyingState()
 
 PlayerFlyingState::~PlayerFlyingState()
 {
-
+	if (m_keyHelp_Rise != nullptr) {
+		DeleteGO(m_keyHelp_Rise);
+		//DeleteGO(m_keyHelp_Faster);
+		DeleteGO(m_keyHelp_Switch);
+	}
 }
 
 void PlayerFlyingState::Enter(Player* p) {
@@ -38,6 +43,32 @@ void PlayerFlyingState::Enter(Player* p) {
 
 	p->PlayAnimation(Player::EnAnimation::enHovering);
 	p->FireThrusters();
+
+	if (m_keyHelp_Rise == nullptr) {
+		const float space = 25.f;
+		//Rise
+		m_keyHelp_Rise = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
+		// TODO (FONT) : m_keyHelp_Rise->Init(keyHelpPos, L"R2:上昇");
+		m_keyHelp_Rise->Init(keyHelpPos, L"R2:ジョウショウ");
+		//Faster
+		/*
+		m_keyHelp_Faster = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos2 = { 200.f,-100.f - space * 2 , 0.f };
+		//m_keyHelp_Faster->Init(keyHelpPos2, L"X:加速");
+		m_keyHelp_Faster->Init(keyHelpPos2, L"X:カソク");
+		*/
+		//SwitchToGround
+		m_keyHelp_Switch = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos3 = { 200.f,-100.f - space,0.f };
+		//m_keyHelp_Switch->Init(keyHelpPos3, L"A:落下");
+		m_keyHelp_Switch->Init(keyHelpPos3, L"A:ラッカ");
+	}
+	else {
+		m_keyHelp_Rise->SetActive(true);
+		//m_keyHelp_Faster->SetActive(true);
+		m_keyHelp_Switch->SetActive(true);
+	}
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
@@ -158,12 +189,26 @@ IPlayerState*  PlayerFlyingState::Update(Player* p) {
 
 	p->ChargeEndurance(m_ENDURANCE_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
+	//if (p->GetVelocity().Length() < 0.1) {
+	//	m_keyHelp_Rise->SetActive(false);
+	//	m_keyHelp_Faster->SetActive(false);
+	//	m_keyHelp_Switch->SetActive(true);
+	//}
+	//else {
+	//	m_keyHelp_Rise->SetActive(true);
+	//	m_keyHelp_Faster->SetActive(true);
+	//	m_keyHelp_Switch->SetActive(true);
+	//}
+
 	return this;
 }
 
 void PlayerFlyingState::Exit(Player* p) {
-	m_velocity = Vector3::Zero;
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player Exit Flying\n");
 #endif
+	m_velocity = Vector3::Zero;
+	m_keyHelp_Rise->SetActive(false);
+	//m_keyHelp_Faster->SetActive(false);
+	m_keyHelp_Switch->SetActive(false);
 }

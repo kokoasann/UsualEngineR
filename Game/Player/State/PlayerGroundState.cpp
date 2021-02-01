@@ -2,6 +2,7 @@
 #include "PlayerGroundState.h"
 #include "../../Camera/GameCamera.h"
 #include "../../GameManager.h"
+#include "HUD/KeyHelp.h"
 #include <cmath>
 
 PlayerGroundState::PlayerGroundState()
@@ -10,9 +11,37 @@ PlayerGroundState::PlayerGroundState()
 
 PlayerGroundState::~PlayerGroundState()
 {
+	if (m_keyHelp_Run != nullptr) {
+		DeleteGO(m_keyHelp_Run);
+		DeleteGO(m_keyHelp_Guard);
+		DeleteGO(m_keyHelp_Dive);
+	}
 }
 
 void PlayerGroundState::Enter(Player* p){
+
+	if (m_keyHelp_Run == nullptr) {
+		const float space = 25.f;
+		//
+		m_keyHelp_Run = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
+		m_keyHelp_Run->Init(keyHelpPos, L"X:ダッシュ");
+		//guard
+		m_keyHelp_Guard = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos2 = { 200.f,-100.f - space,0.f };
+		m_keyHelp_Guard->Init(keyHelpPos2, L"L2:ガード");
+		//m_keyHelp_Guard->Init(keyHelpPos2, L"L2:防御");
+
+		//dive
+		m_keyHelp_Dive = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos3 = { 200.f,-100.f - space * 2,0.f };
+		m_keyHelp_Dive->Init(keyHelpPos3, L"L1:回避");
+	}
+	else {
+		m_keyHelp_Run->SetActive(true);
+		m_keyHelp_Guard->SetActive(true);
+		m_keyHelp_Dive->SetActive(true);
+	}
 
 	p->StopThrusters();
 
@@ -64,14 +93,31 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 	//boost recharge
 	p->ChargeBoost(m_BOOST_AUTO_CHARGE_AMOUNT * gameTime()->GetDeltaTime());
 
+	//stop?
+	if (p->GetVelocity().Length() < 0.1) {
+		m_keyHelp_Run->SetActive(false);
+		m_keyHelp_Guard->SetActive(false);
+		m_keyHelp_Dive->SetActive(false);
+	}
+	else {
+		m_keyHelp_Run->SetActive(true);
+		m_keyHelp_Guard->SetActive(true);
+		m_keyHelp_Dive->SetActive(true);
+	}
+
+
 	return this;
 }
 
 void PlayerGroundState::Exit(Player* p) {
-	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Exit Ground\n");
 #endif
+
+	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
+	m_keyHelp_Run->SetActive(false);
+	m_keyHelp_Guard->SetActive(false);
+	m_keyHelp_Dive->SetActive(false);
 }
 
 
