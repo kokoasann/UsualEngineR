@@ -2,6 +2,7 @@
 #include "PlayerGroundState.h"
 #include "../../Camera/GameCamera.h"
 #include "../../GameManager.h"
+#include "HUD/KeyHelp.h"
 #include <cmath>
 
 PlayerGroundState::PlayerGroundState()
@@ -10,9 +11,21 @@ PlayerGroundState::PlayerGroundState()
 
 PlayerGroundState::~PlayerGroundState()
 {
+	if (m_keyHelp_Run != nullptr) {
+		DeleteGO(m_keyHelp_Run);
+	}
 }
 
 void PlayerGroundState::Enter(Player* p){
+
+	if (m_keyHelp_Run == nullptr) {
+		m_keyHelp_Run = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
+		m_keyHelp_Run->Init(keyHelpPos, L"Xƒ_ƒbƒVƒ…");
+	}
+	else {
+		m_keyHelp_Run->SetActive(true);
+	}
 
 	p->StopThrusters();
 
@@ -68,10 +81,12 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 }
 
 void PlayerGroundState::Exit(Player* p) {
-	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Exit Ground\n");
 #endif
+
+	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
+	m_keyHelp_Run->SetActive(false);
 }
 
 

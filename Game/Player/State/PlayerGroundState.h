@@ -4,6 +4,8 @@
 #include "Player/Attack/DistantPreset/PlayerAttackHipShot2.h"
 
 class Player;
+class KeyHelp;
+
 /// <summary>
 /// 
 /// </summary>
@@ -39,4 +41,5 @@ private:
 	bool m_hasEnoughStaminaToRun = true;
 
 	PlayerAttackHipShot2 m_hipShot;
+	KeyHelp* m_keyHelp_Run = nullptr;
 };

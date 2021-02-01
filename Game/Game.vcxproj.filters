@@ -387,6 +387,9 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.h">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
+    <ClInclude Include="HUD\KeyHelp.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -776,6 +779,9 @@
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.cpp">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
+    <ClCompile Include="HUD\KeyHelp.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -946,5 +952,8 @@
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
     <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
     <ImageContentTask Include="Assets\Image\title.png" />
+    <ImageContentTask Include="Assets\Image\KeyHelpBack.png">
+      <Filter>HUD</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

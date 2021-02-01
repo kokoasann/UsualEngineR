@@ -271,6 +271,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSceneMenu.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="HUD\KeyHelp.h" />
     <ClInclude Include="HUD\TargetMarker.h" />
     <ClInclude Include="Item\EnergyPotion.h" />
     <ClInclude Include="Item\IItem.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSceneMenu.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="HUD\KeyHelp.cpp" />
     <ClCompile Include="HUD\TargetMarker.cpp" />
     <ClCompile Include="Item\EnergyPotion.cpp" />
     <ClCompile Include="Item\IItem.cpp" />
@@ -578,6 +580,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\Image\title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\Image\KeyHelpBack.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
