@@ -10,4 +10,6 @@ public:
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
 private:
+	SphereCollider		m_sphereCollider;
+	const float			m_radius = 5.0f;
 };

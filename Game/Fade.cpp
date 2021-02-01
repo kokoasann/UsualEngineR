@@ -16,7 +16,7 @@ Fade::Fade()
 
 Fade::~Fade()
 {
-	DeleteGO(m_panel);
+	//DeleteGO(m_panel);
 }
 
 void Fade::Update()

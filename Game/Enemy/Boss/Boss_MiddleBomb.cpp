@@ -180,6 +180,15 @@ void Boss_MiddleBomb::InitAnim()
 
 void Boss_MiddleBomb::Execute()
 {
+	if(m_ability.hp / m_ability.max_hp < 1.f / 5.f)
+	{
+		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Tired;
+	}
+	else if (m_ability.hp / m_ability.max_hp < 2.f / 3.f)
+	{
+		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Angry;
+	}
+
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 

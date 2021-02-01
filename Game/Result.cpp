@@ -72,7 +72,7 @@ bool Result::Start()
 }
 
 
-void Result::Init(const double clearTime, const int eliminateCount) {
+void Result::Init(const double clearTime, const int eliminateCount, const SAttachmentPercentage data) {
 
 	//Robots
 	ModelInitData mid;
@@ -83,9 +83,11 @@ void Result::Init(const double clearTime, const int eliminateCount) {
 
 	const int NUM_ROBOT = 100;
 
-	m_corpseCount = eliminateCount;
+	m_attachmentPercentageData = data;
 
+	m_corpseCount = eliminateCount;
 	m_clearSec = clearTime;
+
 	float clearMin = clearTime / 60.0;
 	//printf("clear time : %f(min)\n", clearTime / 60.0);
 	const float WorstMin = 60.f;
@@ -131,7 +133,7 @@ void Result::PreUpdate()
 void Result::Update()
 {
 
-	if (g_pad[0]->IsTrigger(EnButton::enButtonA)) {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonA) and !m_isTriggeredButtonA) {
 		Fade::GetInstance().FadeOut();
 		m_isTriggeredButtonA =  true;
 	}
@@ -190,16 +192,16 @@ void Result::PostRender()
 
 	//DEF
 	m_texts[TO_INT(FONT_TYPE::DEF)] = L"DEFAULT";
-	m_texts[TO_INT(FONT_TYPE::DEF) + 1] = std::to_wstring(m_displayRoboCount);
+	m_texts[TO_INT(FONT_TYPE::DEF) + 1] = std::to_wstring((int)m_attachmentPercentageData.defaultAttachment) + L"%";
 	//MELEE
 	m_texts[TO_INT(FONT_TYPE::MELEE)] = L"MELEE";
-	m_texts[TO_INT(FONT_TYPE::MELEE) + 1] = std::to_wstring(m_displayRoboCount);
+	m_texts[TO_INT(FONT_TYPE::MELEE) + 1] = std::to_wstring((int)m_attachmentPercentageData.meleeAttachment) + L"%";
 	//REMOTE
 	m_texts[TO_INT(FONT_TYPE::REMOTE)] = L"REMOTE";
-	m_texts[TO_INT(FONT_TYPE::REMOTE) + 1] = std::to_wstring(m_displayRoboCount);
+	m_texts[TO_INT(FONT_TYPE::REMOTE) + 1] = std::to_wstring((int)m_attachmentPercentageData.remoteAttachment) + L"%";
 	//BOMB
 	m_texts[TO_INT(FONT_TYPE::BOMB)] = L"BOMB";
-	m_texts[TO_INT(FONT_TYPE::BOMB) + 1] = std::to_wstring(m_displayRoboCount);
+	m_texts[TO_INT(FONT_TYPE::BOMB) + 1] = std::to_wstring((int)m_attachmentPercentageData.bombAttachment) + L"%";
 
 	for (int i = 0; i < 6; i++) {
 		m_fonts[i].Begin();

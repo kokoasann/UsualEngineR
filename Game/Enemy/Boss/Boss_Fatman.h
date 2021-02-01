@@ -1,6 +1,7 @@
 #pragma once
 #include "GameManager.h"
 #include "Enemy/IEnemy.h"
+#include "Effect/ExplosionEffect.h"
 
 enum class EnBattlePhase
 {
@@ -29,7 +30,7 @@ public:
 		return Player::EnAttackType::enNone;
 	}
 
-	
+
 	enum class EnStateEX :int
 	{
 		enAttackC = TO_INT(IEnemy::EnState::enNumState),
@@ -125,6 +126,15 @@ public:
 	static EnBattlePhase GetCurrentBattlePhase() {
 		return m_battlePhase;
 	}
+
+
+	void Explode() override {
+		auto forward = GetForward();
+		forward *= -30.f;
+		m_explodeEffect->SetPos(m_position + forward);
+		//m_explodeEffect->SetPos(Vector3::One);
+		m_explodeEffect->Play();
+	}
 private:
 	/// <summary>
 	/// アニメーションの初期化。
@@ -134,8 +144,8 @@ private:
 	float m_scale = 1.f;
 
 	//Physics
-	const float m_radius = 2.f;
-	const float m_height = 3.f;
+	const float m_radius = 6.f;
+	const float m_height = 9.f;
 
 	//バトルフェーズ。
 	static EnBattlePhase m_battlePhase;
