@@ -41,5 +41,6 @@ private:
 	bool m_hasEnoughStaminaToRun = true;
 
 	PlayerAttackHipShot2 m_hipShot;
+
 	KeyHelp* m_keyHelp_Run = nullptr;
 };

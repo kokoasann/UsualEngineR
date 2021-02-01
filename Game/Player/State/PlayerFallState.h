@@ -3,6 +3,8 @@
 #include "../Player.h"
 
 class Player;
+class KeyHelp;
+
 /// <summary>
 /// 
 /// </summary>
@@ -24,5 +26,7 @@ private:
 	Vector3 m_velocityGoal = Vector3::Zero;
 	const float m_QUICKNESS = 70.f;
 	const float m_ENDURANCE_AUTO_CHARGE_AMOUNT = 5.f;
+
+	KeyHelp* m_keyHelp_brake = nullptr;
 
 };

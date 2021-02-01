@@ -2,6 +2,7 @@
 #include "IPlayerSstate.h"
 #include "Player/Attack/DistantPreset/PlayerAttackHipShot2.h"
 class Player;
+class KeyHelp;
 
 /// <summary>
 /// 
@@ -41,4 +42,8 @@ private:
 	//const float m_RISE_BOOST_EFFICIENCY = 0.f;
 
 	PlayerAttackHipShot2 m_hipShot;
+
+	KeyHelp* m_keyHelp_Rise = nullptr;
+	KeyHelp* m_keyHelp_Faster = nullptr;
+	KeyHelp* m_keyHelp_Switch = nullptr;
 };
