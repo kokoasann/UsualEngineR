@@ -78,6 +78,21 @@ BossBombBashState::~BossBombBashState()
 
 void BossBombBashState::Enter(IEnemy* e)
 {
+	Vector3 RotVec = GameManager::GetInstance().m_player->GetPosition() - e->GetPosition();
+	RotVec.y = 0.f;
+	RotVec.Normalize();
+
+	e->SetVelocity(RotVec);
+	e->SetAutoRotateFlag(true);
+
+	//SetAutoRotateという機能を見つけたのでコメントアウト
+	//float angle = atan2(RotVec.x, RotVec.z);
+	//Quaternion rot;
+	//rot.SetRotation(Vector3::AxisY, angle);
+
+	//e->GetModel()->SetRotation(rot);
+
+	//e->SetVelocity(Vector3::Zero);
 	e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Bash));
 	auto& BBData = BossBombData::GetInstance();
 	BBData.isBashAttack = true;
@@ -94,32 +109,34 @@ IEnemyState* BossBombBashState::Update(IEnemy* e)
 	m_timer += gameTime()->GetDeltaTime();
 	if (m_timer > m_timeLimit)
 	{
-		//バッシュタイム終了
-		BBData.isBashAttack = false;
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
-
 	//Init(e);
 
 	//バッシュアタック中かつ当たれば
 	if (BBData.isBashAttack && !m_isBashHit) {
 
-		auto o = BBData.shieldGhost->GetGhost()->getOverlappingObject(0);
-		int ind = o->getUserIndex();
-
-		if (ind & GameCollisionAttribute::Player)
+		for (int i = 0; i < BBData.shieldGhost->GetGhost()->getNumOverlappingObjects(); i++)
 		{
-			auto& p = GameManager::GetInstance().m_player;
-			auto f = e->GetForward();
-			p->ApplyDamage(10, true, f * 200);
+			auto o = BBData.shieldGhost->GetGhost()->getOverlappingObject(i);
+			int ind = o->getUserIndex();
 
-			m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
-			CSoundSource* se = NewGO<CSoundSource>(0, "Bash");
-			se->Init(L"Assets/sound/Bash.wav");
-			se->Play(false);
-			se->SetVolume(1.0f);
+			BBData.shieldGhost->GetGhost()->getOverlappingObject(i);
+			if (ind & GameCollisionAttribute::Player)
+			{
+				auto& p = GameManager::GetInstance().m_player;
+				auto f = e->GetForward();
+				p->ApplyDamage(10, true, f * 200);
+
+				m_isBashHit = true;	//盾にめり込んで無限ハメ→死亡がありえるので追加
+				CSoundSource* se = NewGO<CSoundSource>(0, "Bash");
+				se->Init(L"Assets/sound/Bash.wav");
+				se->Play(false);
+				se->SetVolume(1.0f);
+			}
 		}
 	}
+
 
 
 	//判定をとりだし
