@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "KeyHelp.h"
-
+#include "GameManager.h"
+#include "GameSceneMenu.h"
 
 KeyHelp::KeyHelp()
 {
@@ -72,6 +73,8 @@ void KeyHelp::Render()
 
 void KeyHelp::PostRender()
 {
+
+	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	m_keyHelpText.Begin();
 	m_keyHelpText.Draw(m_text.c_str(), Vector2(m_pos.x, m_pos.y) + m_fontPosOffset, m_color, m_rot, m_fontScale, Vector2::Zero);

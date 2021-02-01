@@ -247,10 +247,6 @@ void Game::Update()
 		}
 	}
 
-	if (g_pad[0]->IsTrigger(enButtonB)) {
-		GoalGatePerformance();
-	}
-
 	if (!GameManager::GetInstance().m_menu->IsGamePaused() and !m_isCleared) {
 		m_clearTimer += gameTime()->GetDeltaTime();
 	}
