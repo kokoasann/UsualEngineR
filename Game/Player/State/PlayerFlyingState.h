@@ -44,6 +44,6 @@ private:
 	PlayerAttackHipShot2 m_hipShot;
 
 	KeyHelp* m_keyHelp_Rise = nullptr;
-	KeyHelp* m_keyHelp_Faster = nullptr;
 	KeyHelp* m_keyHelp_Switch = nullptr;
+	//KeyHelp* m_keyHelp_Faster = nullptr;
 };

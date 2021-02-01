@@ -63,7 +63,7 @@ private:
 
 	Sprite m_keyHelpSp;
 	const Vector3 m_spScale = Vector3::One * 0.25;
-	const Vector3 m_spPosOffset = Vector3(-100.f, -20.f, 0.f);
+	const Vector3 m_spPosOffset = Vector3(-100.f, -13.f, 0.f);
 	const float m_flSpHeight = 100.f;
 	const float m_flSpWidth = 500.f;
 
