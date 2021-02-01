@@ -1,6 +1,7 @@
 #pragma once
 #include "IItem.h"
 
+class SmokeEffect;
 //‰ñ•œƒAƒCƒeƒ€
 class RedPotion : public IItem
 {
@@ -13,6 +14,8 @@ public:
 private:
 	const float m_healAmount = 10.f;
 
+	//effect
+	SmokeEffect* m_effect = nullptr;
 	//model
 	ModelRender* m_model = nullptr;
 	Vector3 m_scale = { 0.5f,0.5,0.5f };

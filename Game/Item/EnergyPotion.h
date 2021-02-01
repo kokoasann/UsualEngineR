@@ -1,6 +1,7 @@
 #pragma once
 #include "IItem.h"
 
+class SmokeEffect;
 //回復アイテム
 class EnergyPotion : public IItem
 {
@@ -15,6 +16,8 @@ private:
 
 	//model
 	ModelRender* m_model = nullptr;
+	//effect
+	SmokeEffect* m_effect = nullptr;
 	Vector3 m_scale = { 0.5f,0.5,0.5f };
 	Vector4 m_color = { 1,1,0,1 };
 };
