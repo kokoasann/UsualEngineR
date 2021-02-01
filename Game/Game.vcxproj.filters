@@ -390,6 +390,9 @@
     <ClInclude Include="HUD\KeyHelp.h">
       <Filter>HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Navimesh\Navimesh.h">
+      <Filter>Navimesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -782,6 +785,9 @@
     <ClCompile Include="HUD\KeyHelp.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="Navimesh\Navimesh.cpp">
+      <Filter>Navimesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -804,6 +810,9 @@
     </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{b917d3ea-13bd-43e9-9dc1-1c8eb96241fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{2b5750be-4ae0-4728-98c8-6df557e23033}</UniqueIdentifier>
     </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{62cde16a-a71a-4a78-8f80-8f4fbfe8379f}</UniqueIdentifier>
@@ -916,8 +925,8 @@
     <Filter Include="Enemy\State\BombBoss">
       <UniqueIdentifier>{e1d361dc-842f-47e0-866e-533f59df503d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item">
-      <UniqueIdentifier>{2b5750be-4ae0-4728-98c8-6df557e23033}</UniqueIdentifier>
+    <Filter Include="Navimesh">
+      <UniqueIdentifier>{e7b9cec7-b88e-435b-bc65-9e44d9b458b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
