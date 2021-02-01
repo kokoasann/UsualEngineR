@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy/State/IEnemyState.h"
+class MuzzleFlash;
 
 class Boss_FatmanShootingState final : public IEnemyState
 {
@@ -25,4 +26,5 @@ private:
 		IKNum
 	};
 	bool			m_isKnockBack = false;
+	std::vector< MuzzleFlash*> m_muzzleFlashes;
 };

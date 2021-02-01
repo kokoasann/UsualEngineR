@@ -22,7 +22,8 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 	{
 		int index = convexResult.m_hitCollisionObject->getUserIndex();
 		if (!(index & enCollisionAttr_Character
-			|| index & enCollisionAttr_Ground))
+			|| index & enCollisionAttr_Ground)
+			|| index & GameCollisionAttribute::BombShield)
 		{
 			return 0.f;
 		}

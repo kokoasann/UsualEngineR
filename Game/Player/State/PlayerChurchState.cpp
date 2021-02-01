@@ -4,6 +4,7 @@
 #include "../../GameManager.h"
 #include "Church.h"
 #include "GameSceneMenu.h";
+#include "HUD/KeyHelp.h"
 
 PlayerChurchState::PlayerChurchState()
 {
@@ -12,7 +13,9 @@ PlayerChurchState::PlayerChurchState()
 
 PlayerChurchState::~PlayerChurchState()
 {
-
+	if (m_keyHelp_Heal != nullptr) {
+		DeleteGO(m_keyHelp_Heal);
+	}
 }
 
 void PlayerChurchState::Enter(Player* p) {
@@ -24,6 +27,17 @@ void PlayerChurchState::Enter(Player* p) {
 
 	m_velocity = p->GetLocalVelocity();
 	p->PlayAnimation(Player::EnAnimation::enWalk, m_AnimInterpolate);
+
+	if (m_keyHelp_Heal == nullptr) {
+		m_keyHelp_Heal = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
+		// TODO (FONT): m_keyHelp_Heal->Init(keyHelpPos, L"B:‰ñ•œ");
+		m_keyHelp_Heal->Init(keyHelpPos, L"B:heal");
+	}
+	else {
+		m_keyHelp_Heal->SetActive(true);
+	}
+
 
 }
 
@@ -124,7 +138,6 @@ void PlayerChurchState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player : Exit Church State\n");
 #endif
-
 	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
-
+	m_keyHelp_Heal->SetActive(false);
 }

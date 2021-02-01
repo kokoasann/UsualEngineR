@@ -29,11 +29,18 @@ void BossBombCoroCoroState::Enter(IEnemy* e)
 	m_firstRot = e->GetRotation();
 	m_timer = 0.f;
 	m_isLaunch = false;
+	m_launceNum = 0;
+
+	m_timeLaunch = 0.f;
+	m_isLaunchSleep = false;
 }
 
 IEnemyState* BossBombCoroCoroState::Update(IEnemy* e)
 {
 	m_timer += gameTime()->GetDeltaTime();
+
+	
+
 	float t = m_timer / m_timeLimit;
 	t = min(t, 1.f);
 
@@ -45,13 +52,47 @@ IEnemyState* BossBombCoroCoroState::Update(IEnemy* e)
 
 	auto e2p = ppos - epos;
 	e2p.y = 0.;
+	float e2pLen = e2p.Length();
 	e2p.Normalize();
 
-	auto ikpos = ppos;
-	ikpos.y = epos.y;
-	ikpos -= e2p * 5.f;
-	ik->SetNextTarget(ikpos);
-
+	Vector3 ikpos = epos;
+	if (BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
+	{
+		auto ikpos = ppos;
+		ikpos.y = epos.y;
+		ikpos -= e2p * 5.f;
+		ik->SetNextTarget(ikpos);
+	}
+	else
+	{
+		float t = min((m_timer - (m_timeLaunch - m_timeLaunchSpan)) / m_timeLaunchSpan,1.f);
+		
+		Quaternion rot;
+		Vector3 e2pDir = e2p;
+		switch (m_launceNum)
+		{
+		case 0:
+			rot.SetRotationDegY(0.f);
+			rot.Apply(e2pDir);
+			ikpos += e2pDir * max(e2pLen - 5.f, 5.f);
+			
+			break;
+		case 1:
+			rot.SetRotationDegY(5.f);
+			rot.Apply(e2pDir);
+			ikpos += e2pDir * max(e2pLen - 5.f, 5.f);
+			ikpos = Math::Lerp(t, m_oldIKpos, ikpos);
+			break;
+		case 2:
+			rot.SetRotationDegY(15.f);
+			rot.Apply(e2pDir);
+			ikpos += e2pDir * max(e2pLen - 5.f, 5.f);
+			ikpos = Math::Lerp(t, m_oldIKpos, ikpos);
+			break;
+		}
+		
+		ik->SetNextTarget(ikpos);
+	}
 	
 	//Quaternion rot(Vector3::Front, e2p);
 	{
@@ -63,13 +104,24 @@ IEnemyState* BossBombCoroCoroState::Update(IEnemy* e)
 		e->SetRotation(rot);
 	}
 
+	//
+	if (m_isLaunchSleep)
+	{
+		if (m_timer >= m_timeLaunch)
+			m_isLaunchSleep = false;
+		else
+			return this;
+	}
+
+
 	if (e->GetModel()->IsAnimPlaying())
 	{
-		m_timeAnimEnd = m_timer;
+		//if(BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
+			
 		return this;
 	}
 
-	if ((m_timer-m_timeAnimEnd) - m_timeEnd >= 0.f)
+	if ((m_timer-m_timeAnimEnd) - m_timeEnd >= 0.f && m_isLaunch)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	
 
@@ -86,7 +138,25 @@ IEnemyState* BossBombCoroCoroState::Update(IEnemy* e)
 		Enemy_CorocoroBomb* bomb = NewGO<Enemy_CorocoroBomb>(0, true);
 
 		bomb->Init(bonePos, v * 100, 1, 20, 1, 25,1.5f);
-		m_isLaunch = true;
+
+		m_launceNum++;
+		if (BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
+		{
+			m_timeAnimEnd = m_timer;
+			m_isLaunch = true;
+		}
+		else if (m_launceNum >= 3)
+		{
+			m_timeAnimEnd = m_timer;
+			m_isLaunch = true;
+		}
+		else
+		{
+			m_timeLaunch = m_timer + m_timeLaunchSpan;
+			m_isLaunchSleep = true;
+
+			m_oldIKpos = ikpos;
+		}
 	}
 	return this;
 }

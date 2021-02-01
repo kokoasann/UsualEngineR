@@ -1,6 +1,8 @@
 #pragma once
 #include "IPlayerSstate.h"
 
+class KeyHelp;
+
 class PlayerChurchState :public IPlayerState
 {
 public:
@@ -33,4 +35,5 @@ private:
 
 	bool m_hasEnoughStaminaToRun = true;
 
+	KeyHelp* m_keyHelp_Heal = nullptr;
 };

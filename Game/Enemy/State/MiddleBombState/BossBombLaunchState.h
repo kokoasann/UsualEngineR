@@ -15,13 +15,21 @@ private:
 	Bone* m_cannonBone = nullptr;
 	Quaternion m_firstRot;
 	float m_timer = 0.f;
-	float m_timeLimit = 0.2f;
+	const float m_timeLimit = 0.2f;
 	float m_timeAnimEnd = 0.f;
-	float m_timeEnd = 0.2f;
+	const float m_timeEnd = 0.2f;
+
+	const float m_timeLaunchSpan = 0.5f;
+	float m_timeLaunch = 0.f;
+	bool m_isLaunchSleep = false;
+
 	bool m_isLaunch = false;
 
 	MuzzleFlash* m_effect;
 
-
 	const float m_damage;
+
+	
+	int m_launceNum = 0;
+	Vector3 m_oldIKpos = Vector3::Zero;
 };

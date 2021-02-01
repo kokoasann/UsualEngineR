@@ -34,7 +34,11 @@ void BossBombLaunchState::Enter(IEnemy* e)
 
 	m_firstRot = e->GetRotation();
 	m_timer = 0.f;
-	m_isLaunch = 0.f;
+	m_isLaunch = false;
+
+	m_launceNum = 0;
+	m_timeLaunch = 0.f;
+	m_isLaunchSleep = false;
 }
 
 IEnemyState* BossBombLaunchState::Update(IEnemy* e)
@@ -46,9 +50,34 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 	auto ik = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L));
 	auto bone = ik->GetEffectorBone();
 
-	ik->SetNextTarget(GameManager::GetInstance().GetPlayer()->GetPosition());
-	
 	auto e2p = GameManager::GetInstance().GetPlayer()->GetPosition() - e->GetPosition();
+
+	if (BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
+	{
+		ik->SetNextTarget(GameManager::GetInstance().GetPlayer()->GetPosition());
+	}
+	else
+	{
+		switch (m_launceNum)
+		{
+		case 0:
+			ik->SetNextTarget(GameManager::GetInstance().GetPlayer()->GetPosition());
+			break;
+		case 1:
+		{
+			auto t = min((m_timer - (m_timeLaunch - m_timeLaunchSpan)) / m_timeLaunchSpan, 1.f);
+			Quaternion rot;
+			rot.SetRotationDegY(5.f);
+			auto ikpos = e2p;
+			rot.Apply(ikpos);
+			ikpos += e->GetPosition();
+			ikpos.Lerp(t, m_oldIKpos, ikpos);
+			ik->SetNextTarget(ikpos);
+		}
+			break;
+		}
+	}
+	
 	e2p.y = 0.;
 	e2p.Normalize();
 	//Quaternion rot(Vector3::Front, e2p);
@@ -61,14 +90,23 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 		e->SetRotation(rot);
 	}
 
+	//
+	if (m_isLaunchSleep)
+	{
+		if (m_timer >= m_timeLaunch)
+			m_isLaunchSleep = false;
+		else
+			return this;
+	}
+
 
 	if (e->GetModel()->IsAnimPlaying())
 	{
-		m_timeAnimEnd = m_timer;
-		return this;
+		//if (BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
+			return this;
 	}
 
-	if((m_timer-m_timeAnimEnd)-m_timeEnd >= 0.f)
+	if ((m_timer - m_timeAnimEnd) - m_timeEnd >= 0.f && m_isLaunch)
 		return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Guard));
 
 	
@@ -92,7 +130,24 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 		m_effect->SetPos(bonePos);
 		m_effect->SetRot(pmat.GetRotate());
 		
-		m_isLaunch = true;
+		m_launceNum++;
+		if (BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
+		{
+			m_timeAnimEnd = m_timer;
+			m_isLaunch = true;
+		}
+		else if (m_launceNum >= 2)
+		{
+			m_timeAnimEnd = m_timer;
+			m_isLaunch = true;
+		}
+		else
+		{
+			m_timeLaunch = m_timer + m_timeLaunchSpan;
+			m_isLaunchSleep = true;
+
+			m_oldIKpos = GameManager::GetInstance().GetPlayer()->GetPosition();
+		}
 	}
 
 	return this;

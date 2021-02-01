@@ -313,6 +313,7 @@ class Cell:
         self.center = None
         #triangle polygon index
         self.adjacentCell = []
+        self.vertPos = []
         
     def addCell(self,cellind):
         self.adjacentCell.append(cellind)
@@ -341,8 +342,18 @@ def wrightCell(o,f):
         center.y = center.z
         center.z = y
         cell.center = center
+        
+        for i in tri.vertices:
+            v = mesh.vertices[i].co.copy()
+            y = v.y
+            v.y = v.z
+            v.z = y
+            cell.vertPos.append(v)
+        
         cellList.append(cell)
-    
+        
+        
+        
     for cell in cellList:
         #print("build adjacent")
         for aCell in cellList:
@@ -351,13 +362,23 @@ def wrightCell(o,f):
             if aCell.isAdjacentCell(cell):
                 cell.addCell(aCell.index)
                 
+    f.write(struct.pack("<I",len(cellList)))
     for cell in cellList:
         #print("wright cell")
-        f.write(struct.pack("<I",cell.index))
-        for v in cell.center:
-            f.write(struct.pack("<f",v))
+        #f.write(struct.pack("<I",cell.index))
+        for vp in cell.vertPos:
+            for v in vp:
+                f.write(struct.pack("<f",v))
         for v in cell.adjacentCell:
             f.write(struct.pack("<I",v))
+            
+        if 3-len(cell.adjacentCell) != 0:
+            for i in range(3-len(cell.adjacentCell)):
+                f.write(struct.pack("<i",-1))
+                
+        for v in cell.center:
+            f.write(struct.pack("<f",v))
+        
         
     
         

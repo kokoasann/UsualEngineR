@@ -387,6 +387,12 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.h">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
+    <ClInclude Include="HUD\KeyHelp.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Navimesh\Navimesh.h">
+      <Filter>Navimesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -776,6 +782,12 @@
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.cpp">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
+    <ClCompile Include="HUD\KeyHelp.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Navimesh\Navimesh.cpp">
+      <Filter>Navimesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -913,6 +925,9 @@
     <Filter Include="Enemy\State\BombBoss">
       <UniqueIdentifier>{e1d361dc-842f-47e0-866e-533f59df503d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Navimesh">
+      <UniqueIdentifier>{e7b9cec7-b88e-435b-bc65-9e44d9b458b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Enemy\Zako\Ene_zako.txt" />
@@ -946,5 +961,8 @@
     <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
     <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
     <ImageContentTask Include="Assets\Image\title.png" />
+    <ImageContentTask Include="Assets\Image\KeyHelpBack.png">
+      <Filter>HUD</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>
