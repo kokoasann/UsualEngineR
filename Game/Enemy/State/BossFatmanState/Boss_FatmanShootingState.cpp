@@ -5,9 +5,17 @@
 #include "GameManager.h"
 #include "Enemy/Equipment/Enemy_Bullet.h"
 #include "Enemy/Boss/Boss_Fatman.h"
+#include "Effect/MuzzleFlash.h"
 
 Boss_FatmanShootingState::Boss_FatmanShootingState()
 {
+	MuzzleFlashEffectInitData mfid;
+	for (int i = 0; i < IKNum; i++) {
+		auto muzzleFlash = NewGO<MuzzleFlash>(0);
+		muzzleFlash->Init(mfid);
+		muzzleFlash->SetSca(Vector3::One * 0.1);
+		m_muzzleFlashes.push_back(muzzleFlash);
+	}
 }
 
 Boss_FatmanShootingState::~Boss_FatmanShootingState()
@@ -50,6 +58,13 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 		}
 		
 		m_shotTimer = 0.f;
+	}
+
+	//マズルフラッシュ。
+	for (int ikNo = 0; ikNo < IKNum; ikNo++) {
+		m_muzzleFlashes[ikNo]->SetPos(m_ik[ikNo]->GetEffectorBone()->GetWorldMatrix().GetTransrate());
+		m_muzzleFlashes[ikNo]->SetRot(m_ik[ikNo]->GetEffectorBone()->GetWorldMatrix().GetRotate());
+		m_muzzleFlashes[ikNo]->Play();
 	}
 	return this;
 }
