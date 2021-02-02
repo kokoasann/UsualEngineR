@@ -29,8 +29,7 @@ void PlayerGroundState::Enter(Player* p){
 		//guard
 		m_keyHelp_Guard = NewGO<KeyHelp>(0);
 		Vector3 keyHelpPos2 = { 200.f,-100.f - space,0.f };
-		m_keyHelp_Guard->Init(keyHelpPos2, L"L2:ÉKÅ[Éh");
-		//m_keyHelp_Guard->Init(keyHelpPos2, L"L2:ñhå‰");
+		m_keyHelp_Guard->Init(keyHelpPos2, L"L2:ñhå‰");
 
 		//dive
 		m_keyHelp_Dive = NewGO<KeyHelp>(0);

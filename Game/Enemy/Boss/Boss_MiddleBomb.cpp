@@ -180,11 +180,12 @@ void Boss_MiddleBomb::InitAnim()
 
 void Boss_MiddleBomb::Execute()
 {
-	if(m_ability.hp / m_ability.max_hp < 1.f / 5.f)
+	const float hpper = m_ability.hp / m_ability.max_hp;
+	if(hpper < 1.f / 5.f)
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Tired;
 	}
-	else if (m_ability.hp / m_ability.max_hp < 2.f / 3.f)
+	else if (hpper < 2.9f / 3.f)
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Angry;
 	}

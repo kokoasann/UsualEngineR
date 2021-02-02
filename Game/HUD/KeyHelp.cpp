@@ -73,13 +73,12 @@ void KeyHelp::Render()
 
 void KeyHelp::PostRender()
 {
-
 	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
-
+	//sprite
+	auto& rc = g_graphicsEngine->GetRenderContext();
+	m_keyHelpSp.Draw(rc, g_camera2D->GetViewMatrix(), g_camera2D->GetProjectionMatrix(), Vector4::White);
+	//font
 	m_keyHelpText.Begin();
 	m_keyHelpText.Draw(m_text.c_str(), Vector2(m_pos.x, m_pos.y) + m_fontPosOffset, m_color, m_rot, m_fontScale, Vector2::Zero);
 	m_keyHelpText.End();
-
-	auto& rc = g_graphicsEngine->GetRenderContext();
-	m_keyHelpSp.Draw(rc, g_camera2D->GetViewMatrix(), g_camera2D->GetProjectionMatrix(), Vector4::White);
 }

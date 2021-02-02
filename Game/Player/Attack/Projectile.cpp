@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Projectile.h"
 #include "../../Enemy/EnemyManager.h"
-#include "../../Enemy/Equipment/Enemy_Bullet.h"
+//#include "../../Enemy/Equipment/Enemy_Bullet.h"
 
 PlayerBulletManager* g_playerBulletManager;
 
@@ -21,11 +21,17 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		int index = convexResult.m_hitCollisionObject->getUserIndex();
+		printf("YESY\n");
+		if (index & GameCollisionAttribute::BombShield)
+			printf("bomb shield\n");
 		if (!(index & enCollisionAttr_Character
-			|| index & enCollisionAttr_Ground))
+			|| index & enCollisionAttr_Ground
+			|| index & GameCollisionAttribute::BombShield)
+			)
 		{
 			return 0.f;
 		}
+		
 
 		isHit = true;
 		Vector3 hitp = *(Vector3*)&convexResult.m_hitPointLocal;
@@ -35,7 +41,8 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 		{
 			hitPos = *(Vector3*)&convexResult.m_hitPointLocal;
 			dist = dis;
-			collAttr = index;
+			if(index != -1)
+				collAttr = index;
 		}
 		return 0.0f;
 	}

@@ -142,6 +142,7 @@ void Enemy_CorocoroBomb::Update()
 	Vector3 pos = tra.getOrigin();
 	m_model->SetPosition(pos);
 	m_model->SetRotation(tra.getRotation());
+	body->applyGravity();
 
 	
 	if (m_timer >= m_timeLimit)

@@ -43,7 +43,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	if (!m_isAngry && BossBombData::GetInstance().feeling == BossBombData::EnFeel::Angry)
 	{
 		m_isAngry = true;
-		m_timeLimit = 1.;
+		m_timeLimit = 0.5;
 
 		//e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::));
 		auto cam = GameManager::GetInstance().m_camera;
@@ -72,9 +72,15 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	const auto& ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
 	const auto& epos = e->GetPosition();
 
+	auto e2p = ppos - epos;
+	float e2pLen = e2p.Length();
+
 	float rand = GRandom().Rand();
 	if (m_timer >= m_timeLimit && true)
 	{
+		if (e2pLen < m_distanceBash)
+			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Bash));
+
 		float dify = ppos.y - epos.y;
 		if (!GameManager::GetInstance().GetPlayer()->IsOnGround()&& dify > 50.f)
 		{
@@ -97,12 +103,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 
 	Vector3 move = Vector3::Zero;
 
-	auto e2p = ppos - epos;
-	float e2pLen = e2p.Length();
-
-	if (e2pLen < m_distanceBash)
-		return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Bash));
-
+	
 	auto e2pDir = e2p;
 	e2pDir.y = 0.f;
 	e2pDir.Normalize();
