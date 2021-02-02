@@ -10,6 +10,8 @@
 #include "Enemy/State/MiddleBombState/BossBombCoroCoroState.h"
 #include "Enemy/State/MiddleBombState/BossBombFullFrontalState.h"
 #include "Enemy/State/MiddleBombState/BossBombBashState.h"
+#include "Enemy/State/MiddleBombState/BossBombRollingState.h"
+#include "Enemy/State/MiddleBombState/BossBombStunState.h"
 
 
 Boss_MiddleBomb::Boss_MiddleBomb()
@@ -141,11 +143,19 @@ void Boss_MiddleBomb::InitState()
 		m_stateMap.insert(s);
 	}
 	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Rolling), new BossBombRollingState());
+		m_stateMap.insert(s);
+	}
+	{
 		auto s = std::make_pair(TO_INT(EnStateEX::Guard), new BossBombGuardState());
 		m_stateMap.insert(s);
 	}
 	{
 		auto s = std::make_pair(TO_INT(EnStateEX::Jump), new BossBombJumpState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnState::enStunState), new BossBombStunState());
 		m_stateMap.insert(s);
 	}
 }

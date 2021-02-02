@@ -96,4 +96,20 @@ namespace UER
 
 #endif
 	}
+
+	template<class E, class T>
+	static void DebugPrintBinary(E user, const char* label, T value)
+	{
+#if DEBUG_FUNC
+
+		std::string str = label;
+		str += ": ";
+		char st[256];
+		sprintf(st, "%x", value);
+		str += st;
+
+		DebugPrintLineConsole(TO_INT(user), str.c_str());
+
+#endif
+	}
 }
