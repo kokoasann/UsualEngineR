@@ -37,10 +37,29 @@ EnergyPotion::~EnergyPotion() {
 
 void EnergyPotion::Apply(Player* player) {
 	player->ChargeBoost(player->GetMaxBoost());
+	CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+	se->Init(L"Assets/sound/Heal.wav");
+	se->Play(false);
+	se->SetVolume(1.0f);
 }
 
 void EnergyPotion::Update() {
-	m_model->SetPosition(m_position);
-	m_effect->SetPos(m_position);
+	//サインカーブのカウント用変数
+	m_count++;
+
+	gameTime()->GetDeltaTime();
+	//サインカーブの変化量をいれる
+	float sinValue = sin(m_PI * 2 / gameTime()->GetDeltaTime() * m_count);
+	const float rotateSpeed = 300.0f;
+	m_angle += rotateSpeed * gameTime()->GetDeltaTime();
+
+	Vector3 updownPos = m_position;
+	updownPos.y += sinValue;
+	m_model->SetPosition(updownPos);
+	m_effect->SetPos(updownPos);
+
+	Quaternion m_qrot;
+	m_qrot.SetRotationDeg(Vector3::AxisY, m_angle);
+	m_model->SetRotation(m_qrot);
 }
 

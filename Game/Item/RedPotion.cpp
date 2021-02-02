@@ -16,7 +16,6 @@ RedPotion::RedPotion() {
 	m_effect->SetSca(Vector3::One * 0.15f);
 	//仮としてプレイヤーの位置
 	//上にまき散らす。
-	m_effect->SetPos(m_position);
 	m_effect->Play();
 
 	m_model = NewGO<ModelRender>(0);
@@ -37,10 +36,29 @@ void RedPotion::Apply(Player* player) {
 
 	player->Heal(m_healAmount);
 	DebugPrint_WATA("Heal\n");
+	CSoundSource* se = NewGO<CSoundSource>(0, "Punch");
+	se->Init(L"Assets/sound/Heal.wav");
+	se->Play(false);
+	se->SetVolume(1.0f);
 }
 
 void RedPotion::Update() {
-	m_model->SetPosition(m_position);
-	m_effect->SetPos(m_position);
+	//サインカーブのカウント用変数
+	m_count++;
+
+	//サインカーブの変化量をいれる 60のところはdeltaTime()が分からなかったので仮の数値
+	float sinValue = sin(m_PI * 2 / gameTime()->GetDeltaTime() * m_count);
+	const float rotateSpeed = 300.0f;
+	m_angle += rotateSpeed * gameTime()->GetDeltaTime();
+
+	Vector3 updownPos = m_position;
+	updownPos.y += sinValue;
+	m_model->SetPosition(updownPos);
+	m_effect->SetPos(updownPos);
+
+	Quaternion m_qrot;
+	m_qrot.SetRotationDeg(Vector3::AxisY, m_angle);
+	m_model->SetRotation(m_qrot);
+
 }
 
