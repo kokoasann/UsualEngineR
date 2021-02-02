@@ -121,6 +121,7 @@ public:
 	}
 
 private:
+	bool IsHitBombShield(const Vector3& vel);
 
 	void ShotLaserBeam();
 	void ThrownBehave();
@@ -152,7 +153,7 @@ private:
 	Vector3 m_velocity = Vector3::Zero;
 
 	//laser
-	const float m_LaserDamageAmount = 10.f * 1.f / 2.f;
+	const float m_LaserDamageAmount = 10.f;
 
 	//Thrown
 	float m_thrownTime = 1.f;
@@ -215,4 +216,5 @@ private:
 	CSoundSource* m_laserSE = nullptr;
 	CSoundSource* m_gunSE = nullptr;
 
+	SphereCollider m_sphere;
 };
