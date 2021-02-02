@@ -340,14 +340,14 @@ def wrightCell(o,f):
         print(center)
         y = center.y
         center.y = center.z
-        center.z = y
+        center.z = y * -1
         cell.center = center
         
         for i in tri.vertices:
             v = mesh.vertices[i].co.copy()
             y = v.y
             v.y = v.z
-            v.z = y
+            v.z = y * -1
             cell.vertPos.append(v)
         
         cellList.append(cell)

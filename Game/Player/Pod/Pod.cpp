@@ -10,6 +10,45 @@
 #include "Effect/ExplosionEffect.h"
 #include "Effect/Beam.h"
 
+
+struct PodSweepResult : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit = false;
+	Vector3 hitPos = Vector3::Zero;
+	const Vector3& startPos;
+	float dist = FLT_MAX;
+	int collAttr = enCollisionAttr_None;
+
+	PodSweepResult(const Vector3& v) :
+		startPos(v)
+	{
+
+	}
+
+	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		int index = convexResult.m_hitCollisionObject->getUserIndex();
+		if (
+			(index & enCollisionAttr_NonHit) or (index & enCollisionAttr_Character) or (index & enCollisionAttr_Ground)
+			)
+		{
+			return 0.f;
+		}
+
+		isHit = true;
+		Vector3 hitp = *(Vector3*)&convexResult.m_hitPointLocal;
+		Vector3 div = startPos - hitp;
+		float dis = div.Length();
+		if (dis < dist)
+		{
+			hitPos = *(Vector3*)&convexResult.m_hitPointLocal;
+			dist = dis;
+			collAttr = index;
+		}
+		return 0.0f;
+	}
+};
+
 Pod::Pod()
 {
 
@@ -32,6 +71,9 @@ void Pod::Release()
 
 	m_beamEffect->Stop();
 	DeleteGO(m_beamEffect);
+
+	m_sphere.Release();
+
 }
 
 void Pod::OnDestroy()
@@ -47,6 +89,8 @@ void Pod::Awake()
 
 bool Pod::Start()
 {
+
+	m_sphere.Create(0.5f);
 
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
@@ -201,7 +245,7 @@ void Pod::PostUpdate()
 			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
 				if (m_ability.currentStamina >= skillCosts.LaserCost) {
 					ShotLaserBeam();
-					//TODO : UseStamina(skillCosts.LaserCost);
+					UseStamina(skillCosts.LaserCost);
 				}
 			}
 		}
@@ -243,6 +287,7 @@ void Pod::PostUpdate()
 
 	}
 	else {
+		//Rotate
 		if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
 			Quaternion rot = Quaternion::Identity;
 			auto theta = atan2(m_velocity.x, m_velocity.z);
@@ -347,6 +392,11 @@ void Pod::ThrownBehave() {
 	m_pos = m_pos + m_velocity * delta;
 	m_timer += delta;
 
+	if (IsHitBombShield(m_velocity * delta) or m_timer > m_thrownTime) {
+		m_state = PodState::enBack;
+		return;
+	}
+
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 		if ((m_pos - epos).Length() < m_thrownAttackRange) {
@@ -355,9 +405,6 @@ void Pod::ThrownBehave() {
 		}
 	}
 
-	if (m_timer > m_thrownTime) {
-		m_state = PodState::enBack;
-	}
 }
 
 void Pod::Rampage() {
@@ -373,14 +420,16 @@ void Pod::Rampage() {
 	const float speed = 100.f;
 	auto vecToEnemy = epos - m_pos;
 	vecToEnemy.Normalize();
-	m_pos += vecToEnemy * speed * delta;
+	auto rampageVelocity = vecToEnemy * speed * delta;
+	m_pos += rampageVelocity;
 
-	if ((m_pos - epos).Length() < m_thrownAttackRange) {
-		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount);
+	if (IsHitBombShield(rampageVelocity) or m_timer > m_rampageTime) {
+		m_state = PodState::enBack;
+		return;
 	}
 
-	if (m_timer > m_rampageTime) {
-		m_state = PodState::enBack;
+	if ((m_pos - epos).Length() < m_thrownAttackRange) {
+		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount * delta);
 	}
 }
 
@@ -399,6 +448,11 @@ void Pod::Kamikaze() {
 	vecToEnemy.Normalize();
 	m_pos += vecToEnemy * speed * delta;
 
+	if (IsHitBombShield(vecToEnemy * speed * delta) or m_timer > m_rampageTime) {
+		m_state = PodState::enBack;
+		return;
+	}
+
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
 		m_laserSE = NewGO<CSoundSource>(0);
@@ -407,10 +461,6 @@ void Pod::Kamikaze() {
 		m_explosionEffect->SetPos(m_pos);
 		m_explosionEffect->Play();
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
-		m_state = PodState::enBack;
-	}
-
-	if (m_timer > m_rampageTime) {
 		m_state = PodState::enBack;
 	}
 }
@@ -539,4 +589,27 @@ void Pod::CalcIdlePosition() {
 	auto idlePos = player->GetPosition() + addPos + player->GetVelocity() * gameTime()->GetDeltaTime();
 	m_pos = idlePos;
 
+}
+
+bool Pod::IsHitBombShield(const Vector3& vel) {
+	//sweeptest
+	btTransform start, end;
+	start.setIdentity();
+	end.setIdentity();
+	start.setOrigin({ m_pos.x, m_pos.y, m_pos.z });
+	auto endPos = m_pos + vel;
+	end.setOrigin({ endPos.x, endPos.y, endPos.z });
+	//printf("velocity : x : %f / y %f / z %f\n", rampageVelocity.x, rampageVelocity.y, rampageVelocity.z);
+	//printf("start pos : x : %f / y %f / z %f\n", m_pos.x, m_pos.y, m_pos.z);
+	//printf("end pos : x : %f / y %f / z %f\n", endPos.x, endPos.y, endPos.z);
+	PodSweepResult sr(m_pos);
+	Physics().ConvexSweepTest(m_sphere.GetBody(), start, end, sr);
+	if (sr.isHit)
+	{
+		if (sr.collAttr & GameCollisionAttribute::BombShield)
+		{
+			return true;
+		}
+	}
+	return false;
 }
