@@ -77,7 +77,6 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 
 	if (e2pLen < m_distanceRolling)
 	{
-		printf("OUTOUTOUT\n");
 		m_timerRollingDistance += dtime;
 		if (m_timerRollingDistance >= m_timeRollingDistance)
 		{
@@ -87,7 +86,6 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	}
 	else
 	{
-		printf("INININ\n");
 		m_timerRollingDistance = 0.f;
 	}
 
