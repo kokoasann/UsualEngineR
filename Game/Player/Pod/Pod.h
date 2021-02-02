@@ -4,6 +4,8 @@
 class Player;
 class JetEffect;
 class ExplosionEffect;
+class Beam;
+
 /// <summary>
 /// 
 /// </summary>
@@ -207,6 +209,8 @@ private:
 	Color m_mulCol = Color::White;
 	//Color m_smokeCol = { 0.3,0.3,0.3,0.5f };
 	ExplosionEffect* m_explosionEffect = nullptr;
+	Beam* m_beamEffect = nullptr;
+
 
 	CSoundSource* m_laserSE = nullptr;
 	CSoundSource* m_gunSE = nullptr;

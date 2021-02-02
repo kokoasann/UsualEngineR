@@ -188,10 +188,9 @@ void Game::Update()
 {
 
 	// GOAL DEBUG
-	if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
+	//if (g_pad[0]->IsTrigger(EnButton::enButtonB)) {
 		//GoalGatePerformance();
-	}
-	//
+	//}
 
 	if (GameManager::GetInstance().m_stage->HasMapLoadingDone() and m_isCreateEnemyManager == false) {
 		auto& eM = EnemyManager::GetEnemyManager();
@@ -316,11 +315,13 @@ void Game::PostUpdate()
 		}
 	}
 
+	/*
 	if (g_pad[0]->IsTrigger(enButtonLB3)) {
 		NewGO<Title>(0);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 	}
+	*/
 }
 
 void Game::Render()

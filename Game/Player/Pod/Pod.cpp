@@ -8,6 +8,7 @@
 #include "../../Effect/JetEffect.h"
 #include "../Attack/Projectile.h"
 #include "Effect/ExplosionEffect.h"
+#include "Effect/Beam.h"
 
 Pod::Pod()
 {
@@ -28,6 +29,9 @@ void Pod::Release()
 
 	m_explosionEffect->Stop();
 	DeleteGO(m_explosionEffect);
+
+	m_beamEffect->Stop();
+	DeleteGO(m_beamEffect);
 }
 
 void Pod::OnDestroy()
@@ -68,12 +72,11 @@ bool Pod::Start()
 	m_jetEffects.push_back(jetEffect);
 	m_jetEffects.push_back(jetEffect1);
 
-	//m_smokeEffect = NewGO<SmokeEffect>(0);
-
-	//m_smokeEffect->Init(Color::Black, Color::Black);
-	//Color smokeCol = Color(0.1, 0.1, 0.1, 1.0);
-	//m_smokeEffect->Init(m_smokeCol, m_smokeCol);
-	//m_smokeEffect->Play();
+	//beam effect
+	BeamEffectInitData bid;
+	m_beamEffect = NewGO<Beam>(0);
+	m_beamEffect->Init(bid);
+	m_beamEffect->SetSca(Vector3::One * 0.03);
 
 	//Bone
 	m_podBones.resize(TO_INT(EnPodBone::enNumBoneType));
@@ -198,7 +201,7 @@ void Pod::PostUpdate()
 			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
 				if (m_ability.currentStamina >= skillCosts.LaserCost) {
 					ShotLaserBeam();
-					UseStamina(skillCosts.LaserCost);
+					//TODO : UseStamina(skillCosts.LaserCost);
 				}
 			}
 		}
@@ -267,6 +270,7 @@ void Pod::PostUpdate()
 
 	m_model->SetPosition(m_pos);
 	m_model->SetRotation(m_rotation);
+	m_beamEffect->SetPos(m_pos);
 }
 
 void Pod::Render()
@@ -286,8 +290,17 @@ void Pod::ShotLaserBeam() {
 	m_laserSE->Init(L"Assets/sound/chara/beam.wav", true);
 	m_laserSE->Play(false);
 
+
+	//effect
+	m_beamEffect->Play();
+	auto burrelRot = m_podBones.at(TO_INT(EnPodBone::Burrel_R2))->GetWorldMatrix().GetRotate();
+	m_beamEffect->SetRot(burrelRot);
+
 	//laser
-	const float laserRange = 30.f;
+	const float laserRangeLX = 30.f; //local x range
+	const float laserRangeLY = 50.f; //local y range
+	const float laserRangeLZ = 300.f; //local z range
+
 	auto player = GameManager::GetInstance().GetPlayer();
 	const auto& podPos = player->GetPod()->GetPosition();
 
@@ -313,16 +326,20 @@ void Pod::ShotLaserBeam() {
 
 		if (front < 0) {
 			DebugPrint_WATA("Enemy's position is pod's back!!!!\n");
-			return;
+			continue;
 		}
 
-		auto d = N.Dot(vecPodToEnemy);
+		//local x diff
+		const float xD = N.Dot(vecPodToEnemy);
+		//local y diff
+		const float yD = m_pos.y - epos.y;
+		//dist
+		const float dist = (m_pos - epos).Length();
 
-		if (std::abs(d) < laserRange) {
+		if (std::abs(xD) < laserRangeLX and std::abs(yD) < laserRangeLY and dist < laserRangeLZ) {
 			EnemyManager::GetEnemyManager().GetEnemies().at(i)->ApplyDamage(m_LaserDamageAmount);
 		}
 	}
-	//
 }
 
 void Pod::ThrownBehave() {

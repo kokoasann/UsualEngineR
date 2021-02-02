@@ -12,8 +12,8 @@ RedPotion::RedPotion() {
 
 	m_effect = NewGO<SmokeEffect>(0);
 	//※densityは2.f未満だと表示されないようです
-	m_effect->Init(Vector4(1.8f, 0.4f, 0.2f, 0.7f), Vector4(0.8f, 0.6f, 0.1f, 0.f), /*lifeSpanParam*/0.8f, /*density*/2.f, false);
-	m_effect->SetSca(Vector3::One * 0.2f);
+	m_effect->Init(Vector4(1.9f, 0.4f, 0.4f, 0.8f), Vector4(0.9f, 0.2f, 0.2f, 0.f), /*lifeSpanParam*/0.6f, /*density*/2.f, false);
+	m_effect->SetSca(Vector3::One * 0.15f);
 	//仮としてプレイヤーの位置
 	//上にまき散らす。
 	m_effect->SetPos(m_position);
@@ -41,5 +41,6 @@ void RedPotion::Apply(Player* player) {
 
 void RedPotion::Update() {
 	m_model->SetPosition(m_position);
+	m_effect->SetPos(m_position);
 }
 
