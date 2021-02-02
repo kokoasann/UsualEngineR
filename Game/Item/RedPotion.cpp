@@ -12,12 +12,12 @@ RedPotion::RedPotion() {
 
 	m_effect = NewGO<SmokeEffect>(0);
 	//※densityは2.f未満だと表示されないようです
-	m_effect->Init(Vector4(1.9f, 0.4f, 0.4f, 0.8f), Vector4(0.9f, 0.2f, 0.2f, 0.f), /*lifeSpanParam*/0.6f, /*density*/2.f, false);
+	m_effect->Init(Vector4(1.9f, 0.4f, 0.4f, 0.05f), Vector4(0.9f, 0.2f, 0.2f, 0.f), /*lifeSpanParam*/0.6f, /*density*/2.f, false);
 	m_effect->SetSca(Vector3::One * 0.15f);
 	//仮としてプレイヤーの位置
 	//上にまき散らす。
+	m_effect->SetSpeed(10.0f);
 	m_effect->Play();
-
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(m_scale);
@@ -43,14 +43,14 @@ void RedPotion::Apply(Player* player) {
 }
 
 void RedPotion::Update() {
-	//サインカーブのカウント用変数
-	m_count++;
-
+	m_deltaTimeSt += gameTime()->GetDeltaTime();
 	//サインカーブの変化量をいれる 60のところはdeltaTime()が分からなかったので仮の数値
-	float sinValue = sin(m_PI * 2 / gameTime()->GetDeltaTime() * m_count);
-	const float rotateSpeed = 300.0f;
+	float sinValue = sin(m_PI * 2 * m_deltaTimeSt);
+	//sinValue *= gameTime()->GetDeltaTime();
+	const float rotateSpeed = 120.0f;
 	m_angle += rotateSpeed * gameTime()->GetDeltaTime();
 
+	
 	Vector3 updownPos = m_position;
 	updownPos.y += sinValue;
 	m_model->SetPosition(updownPos);
