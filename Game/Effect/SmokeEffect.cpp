@@ -55,8 +55,8 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const float life
 {
 	struct ParticleData
 	{
-		Vector3 pos;
-		Vector3 dir;
+		//Vector3 pos;
+		//Vector3 dir;
 		float lifeTime;
 	};
 
@@ -95,13 +95,13 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const float life
 					//pos.y += GRandom().Rand() * 45.;
 
 					ParticleData pd;
-					pd.pos = pos;
-					pd.dir = pos;
-					pd.dir.y += 40.f;
-					pd.dir.Normalize();
+					//pd.pos = pos;
+					//pd.dir = pos;
+					//pd.dir.y += 40.f;
+					//pd.dir.Normalize();
 					pd.lifeTime = GRandom().Rand() * m_lifeSpanParam;
 					//pd.lifeTime = lifeSpan;
-					pd.dir.x = GRandom().Rand() * 80.;
+					//pd.dir.x = GRandom().Rand() * 80.;
 					pThis->AddParticle(pos, g_vec3One * (GRandom().Rand() * 4.), g_quatIdentity, m_colS, pd.lifeTime, pd, m_isWorld);
 				}
 			}
@@ -112,10 +112,11 @@ void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const float life
 		[&]PLANE_PARTICLE_UPDATE_FUNC(data, deltaTime, extendData)
 	{
 		ParticleData* pd = reinterpret_cast<ParticleData*>(extendData);
-		float t = data.lifeTime / pd->lifeTime;
-		data.particleData.pos.y += 50.f * deltaTime;
+		//float t = data.lifeTime / pd->lifeTime;
+		float t = min(data.lifeTime / pd->lifeTime,1.f);
+		data.particleData.pos.y += m_speed * deltaTime;
 
-		t = 1.f - (powf(1.f - t * 2.f, 4.f));
+		t = (powf(1.f - t * 2.f, 4.f));
 
 		data.particleData.mulColor.Lerp(t, m_colS, m_colE);
 	});
