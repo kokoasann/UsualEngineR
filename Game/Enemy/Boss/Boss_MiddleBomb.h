@@ -45,6 +45,7 @@ public:
 		Bash,
 		Guard,
 		Jump,
+		Angry,
 		Num,
 	};
 private:
@@ -90,4 +91,5 @@ public:
 	GhostObject* shieldGhost = nullptr;
 	bool isJumpStart = false;
 	bool isBashAttack = false;
+	bool isStartBattle = false;
 };
