@@ -10,7 +10,6 @@
 #include "Effect/ExplosionEffect.h"
 #include "Effect/Beam.h"
 
-
 struct PodSweepResult : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit = false;
@@ -80,7 +79,6 @@ void Pod::OnDestroy()
 {
 	Release();
 }
-
 
 void Pod::Awake()
 {
@@ -164,7 +162,6 @@ bool Pod::Start()
 	return true;
 }
 
-
 void Pod::PreUpdate()
 {
 
@@ -200,6 +197,8 @@ void Pod::PostUpdate()
 	//printf("Pod's stamina : %f\n", m_ability.currentStamina);
 
 	if (m_state == PodState::enIdle) {
+
+		m_isChasingEnemy = false;
 
 		IdleRotation();
 		CalcIdlePosition();
@@ -256,6 +255,7 @@ void Pod::PostUpdate()
 				if (m_ability.currentStamina >= skillCosts.RampageCost) {
 					m_timer = 0.f;
 					m_state = PodState::enRampage;
+					m_isChasingEnemy = true;
 					UseStamina(skillCosts.RampageCost);
 					//SE
 					auto se = NewGO<CSoundSource>(0);
@@ -271,6 +271,7 @@ void Pod::PostUpdate()
 				if (m_ability.currentStamina >= skillCosts.KamikazeCost) {
 					m_timer = 0.f;
 					m_state = PodState::enKamikaze;
+					m_isChasingEnemy = true;
 					UseStamina(skillCosts.KamikazeCost);
 					//SE
 					auto se = NewGO<CSoundSource>(0);
@@ -408,6 +409,7 @@ void Pod::ThrownBehave() {
 }
 
 void Pod::Rampage() {
+
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
@@ -417,11 +419,44 @@ void Pod::Rampage() {
 	}
 
 	auto& epos = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->GetPosition();
-	const float speed = 100.f;
-	auto vecToEnemy = epos - m_pos;
+	static const Vector3 targetOffset = Vector3(0.f, 5.f, 0.f);
+	static const float speed = 100.f;
+	auto vecToEnemy = epos - m_pos + targetOffset;
 	vecToEnemy.Normalize();
-	auto rampageVelocity = vecToEnemy * speed * delta;
-	m_pos += rampageVelocity;
+
+	Vector3 rampageVelocity = Vector3::Zero;
+	if (m_isChasingEnemy) {
+		//chasing
+		rampageVelocity = vecToEnemy * speed * delta;
+		m_pos += rampageVelocity;
+	}
+	else
+	{
+		//attacking
+		const float chaseDist = 15.f;
+		if ((m_pos - epos).Length() > chaseDist) {
+			m_isChasingEnemy = true;
+			return;
+		}
+
+		const float repetitiveMoveRange = 10.f;
+		const float repetitiveMoveSpeed = 5.f;
+		Vector3 npos;
+
+		if (m_repetitiveMovementParam == 1.0f or m_repetitiveMovementParam == 0.0f) {
+			m_isIncreasing = !m_isIncreasing;
+		}
+
+		if (m_isIncreasing) {
+			m_repetitiveMovementParam = min(1.f, m_repetitiveMovementParam + repetitiveMoveSpeed * delta);
+		}
+		else {
+			m_repetitiveMovementParam = max(0.f, m_repetitiveMovementParam - repetitiveMoveSpeed * delta);
+		}
+
+		npos.Lerp(m_repetitiveMovementParam, epos + targetOffset - Vector3(repetitiveMoveRange, 0, 0), epos + targetOffset + Vector3(repetitiveMoveRange, 0, 0));
+		m_pos = npos;
+	}
 
 	if (IsHitBombShield(rampageVelocity) or m_timer > m_rampageTime) {
 		m_state = PodState::enBack;
@@ -429,6 +464,7 @@ void Pod::Rampage() {
 	}
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
+		m_isChasingEnemy = false;
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount * delta);
 	}
 }

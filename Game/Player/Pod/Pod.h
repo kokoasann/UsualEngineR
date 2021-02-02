@@ -161,8 +161,11 @@ private:
 	const float m_thrownAttackRange = 30.f;
 
 	//Rampage
+	bool m_isIncreasing = true;
+	float m_repetitiveMovementParam = 0.5f;
+	bool m_isChasingEnemy = false;
 	const float m_rampageTime = 5.f;
-	const float m_rampagingDamageAmount = 10.f * 1.f / 3.f;
+	const float m_rampagingDamageAmount = 10.f;
 
 	//Kamikaze
 	const float m_kamikazeDamageAmount = 10.f;
