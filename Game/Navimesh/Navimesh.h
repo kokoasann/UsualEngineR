@@ -23,7 +23,7 @@ struct CellBinary {
 };
 //ƒZƒ‹ƒNƒ‰ƒX
 struct Cell {
-	enum State {
+	enum NaviState {
 		State_NotResearch,
 		State_Opened,
 		State_Closed,
@@ -35,7 +35,7 @@ struct Cell {
 	float		costFromStart;
 	float		costToGoal;
 	Cell*		parentCell;
-	State		state = State_NotResearch; 
+	NaviState	state = State_NotResearch;
 };
 
 class Floor;

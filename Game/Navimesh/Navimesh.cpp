@@ -125,10 +125,11 @@ Navimesh::~Navimesh()
 void Navimesh::BuildNavimeshFromBinary()
 {
 	//アセットフォルダからナビメッシュのデータをロードする。
-	FILE* fp = fopen("stage.hnv", "rb");
+	FILE* fp = fopen("Assets/navmesh/map.nvm", "rb");
 	if (fp == nullptr) {
 		//ファイルオープンに失敗
 		//MessageBox(nullptr, "エラー", "stage.hnvが開けませんでした。", MB_OK);
+		return;
 	}
 	int numCell;
 	fread(&numCell, sizeof(int), 1, fp);
