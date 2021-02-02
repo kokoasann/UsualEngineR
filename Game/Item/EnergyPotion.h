@@ -19,6 +19,8 @@ private:
 
 	float m_PI = 3.14159265;
 	int m_count = 0;
+
+	float m_deltaTimeSt = 0;
 	//model
 	ModelRender* m_model = nullptr;
 	//effect
