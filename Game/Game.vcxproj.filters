@@ -393,6 +393,9 @@
     <ClInclude Include="Navimesh\Navimesh.h">
       <Filter>Navimesh</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\MiddleBombState\BossBombRollingState.h">
+      <Filter>Enemy\State\BombBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -787,6 +790,9 @@
     </ClCompile>
     <ClCompile Include="Navimesh\Navimesh.cpp">
       <Filter>Navimesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\MiddleBombState\BossBombRollingState.cpp">
+      <Filter>Enemy\State\BombBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
