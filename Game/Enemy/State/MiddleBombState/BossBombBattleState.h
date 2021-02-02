@@ -15,10 +15,14 @@ private:
 	float m_timeLimit = 2.f;
 	float m_timeRotate = 0.5f;
 
+	float m_timerRollingDistance = 0.f;
+	float m_timeRollingDistance = 1.f;
+
 	bool m_isAngry = false;
 
 	float m_distance = 50.f;
 	float m_distanceBash = 30.f;
+	float m_distanceRolling = 10.f;
 	float m_speed = 500.f;
 
 	Quaternion m_firstRot;

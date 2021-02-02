@@ -5,7 +5,7 @@
 
 PlayerBulletManager* g_playerBulletManager;
 
-struct SweepResult : public btCollisionWorld::ConvexResultCallback
+struct ProjectileSweepResult : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit = false;
 	Vector3 hitPos = Vector3::Zero;
@@ -13,7 +13,7 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 	float dist = FLT_MAX;
 	int collAttr = enCollisionAttr_None;
 
-	SweepResult(const Vector3& v) :
+	ProjectileSweepResult(const Vector3& v) :
 		startPos(v)
 	{
 	}
@@ -21,9 +21,7 @@ struct SweepResult : public btCollisionWorld::ConvexResultCallback
 	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		int index = convexResult.m_hitCollisionObject->getUserIndex();
-		printf("YESY\n");
-		if (index & GameCollisionAttribute::BombShield)
-			printf("bomb shield\n");
+		
 		if (!(index & enCollisionAttr_Character
 			|| index & enCollisionAttr_Ground
 			|| index & GameCollisionAttribute::BombShield)
@@ -165,7 +163,7 @@ void Projectile::Update()
 	end.setIdentity();
 	start.setOrigin({ oldpos.x, oldpos.y, oldpos.z });
 	end.setOrigin({ newpos.x, newpos.y, newpos.z });
-	SweepResult cb(oldpos);
+	ProjectileSweepResult cb(oldpos);
 	Physics().ConvexSweepTest(m_sphere.GetBody(), start, end, cb);
 
 	if (cb.isHit)

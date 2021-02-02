@@ -1,4 +1,6 @@
 #pragma once
+#include "Navimesh/Navimesh.h"
+
 class GameStage;
 class Player;
 class EnemyTest;
@@ -60,6 +62,9 @@ public:
 
 	//Goal
 	Goal* m_goal = nullptr;
+
+	//Navimesh
+	Navimesh m_nvm;
 
 	void AddDeadBossCount() {
 		m_deadBossCount++;

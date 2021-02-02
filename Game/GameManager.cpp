@@ -25,6 +25,7 @@ void GameManager::InitGameWorld() {
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);
 	//m_player->SetGameCamera(m_camera);
+	m_nvm.Init();
 }
 
 void GameManager::Release() {

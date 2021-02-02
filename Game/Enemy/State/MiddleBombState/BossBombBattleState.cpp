@@ -75,9 +75,24 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	auto e2p = ppos - epos;
 	float e2pLen = e2p.Length();
 
+	if (e2pLen < m_distanceRolling)
+	{
+		m_timerRollingDistance += dtime;
+		if (m_timerRollingDistance >= m_timeRollingDistance)
+		{
+			m_timerRollingDistance = 0.f;
+			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Rolling));
+		}
+	}
+	else
+	{
+		m_timerRollingDistance = 0.f;
+	}
+
 	float rand = GRandom().Rand();
 	if (m_timer >= m_timeLimit && true)
 	{
+		
 		if (e2pLen < m_distanceBash)
 			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Bash));
 
