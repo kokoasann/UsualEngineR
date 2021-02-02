@@ -31,8 +31,7 @@ void PlayerChurchState::Enter(Player* p) {
 	if (m_keyHelp_Heal == nullptr) {
 		m_keyHelp_Heal = NewGO<KeyHelp>(0);
 		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
-		// TODO (FONT): m_keyHelp_Heal->Init(keyHelpPos, L"B:‰ñ•œ");
-		m_keyHelp_Heal->Init(keyHelpPos, L"B:heal");
+		m_keyHelp_Heal->Init(keyHelpPos, L"B:‰ñ•œ");
 	}
 	else {
 		m_keyHelp_Heal->SetActive(true);

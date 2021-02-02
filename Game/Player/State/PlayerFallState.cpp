@@ -27,7 +27,7 @@ void PlayerFallState::Enter(Player* p){
 	if (m_keyHelp_brake == nullptr) {
 		m_keyHelp_brake = NewGO<KeyHelp>(0);
 		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
-		m_keyHelp_brake->Init(keyHelpPos, L"R2:ƒQƒ“ƒ\ƒN");
+		m_keyHelp_brake->Init(keyHelpPos, L"R2:Œ¸‘¬");
 	}
 	else {
 		m_keyHelp_brake->SetActive(true);

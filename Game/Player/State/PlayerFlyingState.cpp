@@ -49,8 +49,7 @@ void PlayerFlyingState::Enter(Player* p) {
 		//Rise
 		m_keyHelp_Rise = NewGO<KeyHelp>(0);
 		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
-		// TODO (FONT) : m_keyHelp_Rise->Init(keyHelpPos, L"R2:上昇");
-		m_keyHelp_Rise->Init(keyHelpPos, L"R2:ジョウショウ");
+		m_keyHelp_Rise->Init(keyHelpPos, L"R2:上昇");
 		//Faster
 		/*
 		m_keyHelp_Faster = NewGO<KeyHelp>(0);
@@ -61,8 +60,7 @@ void PlayerFlyingState::Enter(Player* p) {
 		//SwitchToGround
 		m_keyHelp_Switch = NewGO<KeyHelp>(0);
 		Vector3 keyHelpPos3 = { 200.f,-100.f - space,0.f };
-		//m_keyHelp_Switch->Init(keyHelpPos3, L"A:落下");
-		m_keyHelp_Switch->Init(keyHelpPos3, L"A:ラッカ");
+		m_keyHelp_Switch->Init(keyHelpPos3, L"A:落下");
 	}
 	else {
 		m_keyHelp_Rise->SetActive(true);
