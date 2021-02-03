@@ -17,187 +17,88 @@ void Boss_FatmanTakeDistanceState::Enter(IEnemy* e)
 {
 	const auto& rot = Boss_Fatman::EnemyToPlayerRotation(e, false);
 	e->GetModel()->SetRotation(rot);
+	e->PlayAnimation(TO_INT(Boss_Fatman::EnAnimEX::enbackStep));
 }
-
-struct WallFromBossCallBack : public btCollisionWorld::ConvexResultCallback
-{
-	//障害物があるかないか判定。
-	bool isHit = false;
-	Vector3 wallNormalVec;
-	Vector3 startPos;
-	float dist = FLT_MAX;
-
-	//衝突したら勝手に呼んでくれる。
-	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
-	{
-		int index = convexResult.m_hitCollisionObject->getUserIndex();
-
-		//上方向と法線のなす角度を求める。
-		Vector3 hitNormalTmp = convexResult.m_hitNormalLocal;
-		float angle = hitNormalTmp.Dot(g_vec3Up);
-		angle = acosf(angle);
-
-		if (angle > Math::PI * 0.1f	//地面の傾斜が54度より小さいので地面とみなす。
-			&& index & enCollisionAttr_Ground){
-			Vector3 hitpos = convexResult.m_hitPointLocal;
-			Vector3 hp = startPos - hitpos;
-			float disttmp = hp.Length();
-			if (dist > disttmp) {
-				dist = disttmp;
-				//当たった。
-				isHit = true;
-				wallNormalVec = convexResult.m_hitNormalLocal;
-				wallNormalVec.y = 0.0f;
-				wallNormalVec.Normalize();
-			}			
-		}
-		return 0.0f;
-	}
-
-};
-
-
-struct WallCallBack : public btCollisionWorld::ConvexResultCallback
-{
-	//障害物があるかないか判定。
-	bool isHit = false;
-	Vector3 startPos;
-	Vector3 wallNormalVec;
-	float dist = FLT_MAX;
-
-	//衝突したら勝手に呼んでくれる。
-	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
-	{
-		int index = convexResult.m_hitCollisionObject->getUserIndex();
-
-		//上方向と法線のなす角度を求める。
-		Vector3 hitNormalTmp = convexResult.m_hitNormalLocal;
-		float angle = hitNormalTmp.Dot(g_vec3Up);
-		angle = acosf(angle);
-
-		if (angle > Math::PI * 0.33f	//地面の傾斜が54度より小さいので地面とみなす。
-			&& index & enCollisionAttr_Ground){
-			Vector3 hitpos = convexResult.m_hitPointLocal;
-			Vector3 hp = startPos - hitpos;
-			float disttmp = hp.Length();
-			if (dist > disttmp) {
-				dist = disttmp;
-				//当たった。
-				isHit = true;
-				wallNormalVec = convexResult.m_hitNormalLocal;
-				wallNormalVec.y = 0.0f;
-				wallNormalVec.Normalize();
-			}			
-		}
-		return 0.0f;
-	}
-
-};
 
 IEnemyState* Boss_FatmanTakeDistanceState::Update(IEnemy* e)
 {
-	
+	//モデルの回転。
+	e->GetModel()->SetRotation(Boss_Fatman::EnemyToPlayerRotation(e));
+
+	//計算のためのデータ。
 	auto& p = GameManager::GetInstance().m_player;
 	const auto& epos = e->GetPosition();
 	const auto& ppos = p->GetPosition();
 	auto vecToBoss = epos - ppos;
 	float distance = vecToBoss.Length();
-
+	
+	//距離をとれているか判定。
 	if (std::abs(distance) > 100.f){
 		e->SetVelocity(Vector3::Zero);
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
-	vecToBoss.Normalize();
-	const float applyMovespeed = 20.0f;
-	Vector3 movespeed = vecToBoss * applyMovespeed;
-	//コリジョンの移動の始点と終点の設定。
-	btTransform start, end;
-	Vector3 startPos;
+
+	//ボスに一番近いセルを調査。
+	auto allCell = GameManager::GetInstance().m_nvm.GetCell();
+	Vector3 enemyDiff = allCell[0]->centerPos - epos;
+	Cell* bossCell = allCell[0];	//ボスに一番近いセル。
+	for (auto& all : allCell)
 	{
-		//回転の設定。
-		start.setIdentity();
-		end.setIdentity();
-		//座標の設定。
-		startPos = epos;
-		startPos.y += 5.0f;
-		start.setOrigin(btVector3(startPos.x, startPos.y, startPos.z));
-		Vector3 endPos = startPos + movespeed * gameTime()->GetDeltaTime();
-		end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
-	}
-	WallFromBossCallBack cb;
-	cb.startPos = startPos;
-	//startからendまでコリジョンを移動させて当たり判定を取る。
-	Physics().ConvexSweepTest((const btConvexShape*)m_sphereCollider.GetBody(), start, end, cb, 0.f);
-	//重力。
-	Vector3 gravity = Vector3::Zero;
-	gravity.y = -5000.f;
-	if (cb.isHit) {
-		Vector3 vec;
-		vec.Cross(Vector3::AxisY, cb.wallNormalVec);
-		vec.y = 0.0f;
-		vec.Normalize();
-		vec *= applyMovespeed;
+		//newEnemyDiffの更新
+		Vector3 newEnemyDiff = all->centerPos - epos;
 
-		Vector3 ENewPos = vec + epos;
-		Vector3 distvec = ENewPos - ppos;
-
-		Vector3 ENewPos2 = vec * -1 + epos;
-		Vector3 distvec2 = ENewPos2 - ppos;
-
-		if (distvec.Length() > distvec2.Length()) {
-			vec *= -1;
+		//enemyから一番近いセルを求める
+		//enemyDiffより距離が短いセルがあったら
+		if (enemyDiff.Length() > newEnemyDiff.Length())
+		{
+			//差とセルを登録
+			enemyDiff = newEnemyDiff;
+			bossCell = all;
 		}
+	}
 
-		vec += gravity;
-		e->SetVelocity(vec);
+	//ボスのいるセルの隣接セルからプレイヤーまで
+	//一番長い距離の隣接セルを調べる。
+	const int vertexNum = 3;		//セルの頂点の数。
+	Cell* longDistLinkCell = nullptr;	//一番長い距離の隣接セル。
+	int startCellNo;
+	//初期設定。
+	for (int i = 0; i < vertexNum; i++) {
+		if (bossCell->linkCells[i] != NULL) {
+			longDistLinkCell = bossCell->linkCells[i];
+			startCellNo = i;
+			break;
+		}
+	}
+	//調査開始。
+	for (int i = startCellNo + 1; i < vertexNum; i++) {
+		auto vec1 = longDistLinkCell->centerPos - ppos;
+		float dist1 = vec1.Length();
+
+		Vector3 vec2;
+		if (bossCell->linkCells[i] != NULL) {
+			vec2 = bossCell->linkCells[i]->centerPos - ppos;
+		}
+		float dist2 = vec2.Length();
+
+		if (dist1 < dist2) {
+			longDistLinkCell = bossCell->linkCells[i];
+		}
+	}
+
+	//移動。
+	auto vecBossToCell = longDistLinkCell->centerPos - epos;
+	const float	ARRIVAL_DISTANCE =	5.0f;		//到着したかどうか判定するための距離。
+	if (vecBossToCell.Length() > ARRIVAL_DISTANCE) {
+		vecBossToCell.Normalize();
+		const float applyMovespeed = 100.0f;
+		Vector3 movespeed = vecBossToCell * applyMovespeed;
+		Vector3 diff = longDistLinkCell->centerPos - epos;
+		e->SetVelocity(movespeed);
 	}
 	else {
-		//コリジョンの移動の始点と終点の設定。
-		btTransform start, end;
-		Vector3 startPos;
-		{
-			//回転の設定。
-			start.setIdentity();
-			end.setIdentity();
-			//座標の設定。
-			startPos = epos;
-			startPos.y += 5.0f;
-			start.setOrigin(btVector3(startPos.x, startPos.y, startPos.z));
-			Vector3 moveVec = Vector3::AxisY * -1;
-			Vector3 endPos = startPos + moveVec * 20.0f;
-			end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
-		}
-		WallCallBack cb;
-		cb.startPos = startPos;
-		//startからendまでコリジョンを移動させて当たり判定を取る。
-		Physics().ConvexSweepTest((const btConvexShape*)m_sphereCollider.GetBody(), start, end, cb, 0.f);
-
-		if (cb.isHit) {
-			movespeed *= -1;
-			Vector3 vec;
-			vec.Cross(Vector3::AxisY, cb.wallNormalVec);
-			vec.y = 0.0f;
-			vec.Normalize();
-			vec *= applyMovespeed;
-
-			Vector3 ENewPos = vec + epos;
-			Vector3 distvec = ENewPos - ppos;
-
-			Vector3 ENewPos2 = vec * -1 + epos;
-			Vector3 distvec2 = ENewPos2 - ppos;
-
-			if (distvec.Length() > distvec2.Length()) {
-				vec *= -1;
-			}
-
-			vec += gravity;
-			e->SetVelocity(vec);
-			return this;
-		}
-
-		movespeed += gravity;
-		e->SetVelocity(movespeed);
-	}	
+		e->SetVelocity(Vector3::Zero);
+	}
 	return this;
 }
 
