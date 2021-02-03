@@ -52,6 +52,16 @@ namespace UER
 
 		void DrawFrame(const wchar_t* text, const Vector2& pos, const Vector4& color, float rot, float sca, const Vector2& pivot);
 
+		/// <summary>
+		/// 文字列の描画した時のサイズを出力。
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
+		Vector2 MeasureString(const wchar_t* str)
+		{
+			auto v = m_spriteFont->MeasureString(str);
+			return Vector2(v.m128_f32[0], v.m128_f32[1]);
+		}
 	private:
 		DirectX::SpriteBatch* m_spriteBatch = nullptr;		//スプライトバッチ
 		DirectX::SpriteFont* m_spriteFont = nullptr;		//フォント

@@ -993,15 +993,15 @@ namespace UER
 					//剛体の位置を更新。
 					trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 
-					DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "Contact Test");
+					/*DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "Contact Test");
 					DebugPrintVector3(TO_INT(EDebugConsoleKind::master), res.hitNormal);
 					DebugPrintValue(EDebugConsoleKind::master, "DIST", res.dist);
-					DebugPrintValue(EDebugConsoleKind::master, "T", t);
+					DebugPrintValue(EDebugConsoleKind::master, "T", t);*/
 				}
 				else
 					return;
 			}
-			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "Contact Test END");
+			//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "Contact Test END");
 		}
 	}
 	/*!

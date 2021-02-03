@@ -17,7 +17,7 @@ private:
 	float m_angle = 0.0f;
 
 	float m_PI = 3.14159265;
-	int m_count = 0;
+	float m_deltaTimeSt = 0;
 	//effect
 	SmokeEffect* m_effect = nullptr;
 	//model

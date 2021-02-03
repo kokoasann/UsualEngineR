@@ -10,6 +10,8 @@
 #include "Enemy/State/MiddleBombState/BossBombCoroCoroState.h"
 #include "Enemy/State/MiddleBombState/BossBombFullFrontalState.h"
 #include "Enemy/State/MiddleBombState/BossBombBashState.h"
+#include "Enemy/State/MiddleBombState/BossBombRollingState.h"
+#include "Enemy/State/MiddleBombState/BossBombStunState.h"
 
 
 Boss_MiddleBomb::Boss_MiddleBomb()
@@ -141,11 +143,19 @@ void Boss_MiddleBomb::InitState()
 		m_stateMap.insert(s);
 	}
 	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Rolling), new BossBombRollingState());
+		m_stateMap.insert(s);
+	}
+	{
 		auto s = std::make_pair(TO_INT(EnStateEX::Guard), new BossBombGuardState());
 		m_stateMap.insert(s);
 	}
 	{
 		auto s = std::make_pair(TO_INT(EnStateEX::Jump), new BossBombJumpState());
+		m_stateMap.insert(s);
+	}
+	{
+		auto s = std::make_pair(TO_INT(EnState::enStunState), new BossBombStunState());
 		m_stateMap.insert(s);
 	}
 }
@@ -173,6 +183,7 @@ void Boss_MiddleBomb::InitAnim()
 	SetAnimation(TO_INT(EnAnimEX::Bash), "Assets/modelData/boss/mb/anim/mb_bash.tka", false);
 	SetAnimation(TO_INT(EnAnimEX::Guard), "Assets/modelData/boss/mb/anim/mb_guard.tka", false);
 	SetAnimation(TO_INT(EnAnimEX::Jump), "Assets/modelData/boss/mb/anim/mb_jump.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::Angry), "Assets/modelData/boss/mb/anim/mb_angry.tka", false);
 
 	m_model->InitAnimation(m_animationMap, TO_INT(EnAnimEX::Num));
 	m_model->Play(TO_INT(IEnemy::EnAnimation::enIdle));
