@@ -180,6 +180,8 @@ void Pod::Update()
 
 void Pod::PostUpdate()
 {
+	const auto delta = gameTime()->GetDeltaTime();
+	const auto player = GameManager::GetInstance().GetPlayer();
 
 	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
@@ -187,14 +189,15 @@ void Pod::PostUpdate()
 	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
 
-	//m_rotation = mp_player->GetRotation();
+
+	auto& preset = player->GetCurrentAttackPreset();
+	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault) {
+		if (m_gunSE->IsPlaying()) {
+			m_gunSE->Stop();
+		}
+	}
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
-
-	auto delta = gameTime()->GetDeltaTime();
-	auto player = GameManager::GetInstance().GetPlayer();
-
-	//printf("Pod's stamina : %f\n", m_ability.currentStamina);
 
 	if (m_state == PodState::enIdle) {
 
@@ -230,11 +233,6 @@ void Pod::PostUpdate()
 				isShooting = true;
 				if (!m_gunSE->IsPlaying()) {
 					m_gunSE->Play(true);
-				}
-			}
-			else {
-				if (m_gunSE->IsPlaying()) {
-					m_gunSE->Stop();
 				}
 			}
 		}
