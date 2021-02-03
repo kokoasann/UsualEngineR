@@ -31,9 +31,9 @@ void Navimesh::BuildNavimeshFromBinary()
 		Cell* cell = new Cell;
 
 		for (int j = 0; j < 3; j++) {
-			cell->vertexPos[j] = cellBinarys[i].vertexPos[j];
+			cell->vertexPos[j] = cellBinarys[i].vertexPos[j] * 100.0f;
 		}
-		cell->centerPos = cellBinarys[i].centerPos;
+		cell->centerPos = cellBinarys[i].centerPos * 100.0f;
 		m_cells.push_back(cell);
 	}
 
