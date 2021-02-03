@@ -457,7 +457,7 @@ void GameCamera::CalcLerpPerformanceCamera() {
 			ChangePlayerCam();
 		}
 		GameManager::GetInstance().m_menu->ResumeGame();
-
+		m_isPerforming = false;
 		g_graphicsEngine->GetPostEffect().SetUseFocusBlurFrag(false);
 
 	}
@@ -581,6 +581,7 @@ void GameCamera::Perform(
 	const Vector3& cameraBeginPos, const Vector3& cameraEndPos, const Vector3& targetBeginPos, const Vector3& targetEndPos, const float sec, const float resumeInterval, const State stateAfterPerform)
 {
 	GameManager::GetInstance().m_menu->PauseGame();
+	m_isPerforming = true;
 	m_pfrmTimer = 0.f;
 	m_state = State::enLerpPerformanceCamera;
 	m_pfrmCameraChangeRatio = 0.f;

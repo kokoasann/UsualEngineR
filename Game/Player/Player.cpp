@@ -299,6 +299,9 @@ void Player::PreUpdate()
 {
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
+	SoundEngine().SetListenerPosition(m_position);
+	m_jetSE->SetPosition(m_position);
+
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
 	//DebugPrintVector3(EDebugConsoloUser::WATA, m_velocity);
 	m_position = m_charaCon.GetPosition();

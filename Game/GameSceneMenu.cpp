@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameSceneMenu.h"
-
+#include "GameManager.h"
+#include "Game.h"
+#include "Camera/GameCamera.h"
 
 GameSceneMenu::GameSceneMenu()
 {
@@ -60,7 +62,7 @@ void GameSceneMenu::Update()
 
 void GameSceneMenu::PostUpdate()
 {
-	if (g_pad[0]->IsTrigger(enButtonStart)) {
+	if (g_pad[0]->IsTrigger(enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
 		if (m_isPaused) {
 			m_isMenuActivated = true;
 			m_selectedTypeID = TO_INT(EnMenuButtonType::Close);
@@ -79,6 +81,21 @@ void GameSceneMenu::PostUpdate()
 		m_selectedTypeID = min(TO_INT(EnMenuButtonType::NumType) - 1, m_selectedTypeID + 1);
 	}
 
+	if (g_pad[0]->IsTrigger(enButtonA)) {
+		const auto& gameManager = GameManager::GetInstance();
+		switch (m_selectedTypeID) {
+		case TO_INT(EnMenuButtonType::Restart):
+			gameManager.m_gameScene->Restart();
+			break;
+		case TO_INT(EnMenuButtonType::ToTitle):
+			gameManager.m_gameScene->ToTitle();
+			break;
+		case TO_INT(EnMenuButtonType::Close):
+			ResumeGame();
+			m_isMenuActivated = false;
+			break;
+		}
+	}
 }
 
 
