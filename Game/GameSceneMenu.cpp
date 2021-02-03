@@ -96,18 +96,22 @@ void GameSceneMenu::PostRender()
 	m_menuSprite.Draw(rc, g_camera2D->GetViewMatrix(), g_camera2D->GetProjectionMatrix(), m_spriteMulCol);
 
 	//font
-	static const Vector2 fontTopPos = { -170.f, 240.f };
+	static const Vector2 pivot = { 0.f, 0.f };
+	static const Vector2 fontTopPos = { 0.f, 240.f };
 	static const float space = 150.f;
 	for (int i = 0; i < TO_INT(EnMenuButtonType::NumType); i++) {
 		m_fonts[i].Begin();
 		auto pos = fontTopPos;
 		pos.y -= i * space;
+		
 		if (i == m_selectedTypeID) {
 			std::wstring text = L"[" + m_texts[i] + L"]";
-			m_fonts[i].Draw(text.c_str(), pos, m_FontColor, 0, m_FontScale);
+			pos.x -= ((m_fonts[i].MeasureString(text.c_str()).x / 2.f));
+			m_fonts[i].Draw(text.c_str(), pos, m_FontColor, 0, m_FontScale, pivot);
 		}
 		else {
-			m_fonts[i].Draw(m_texts[i].c_str(), pos, m_FontColor, 0, m_FontScale);
+			pos.x -= (m_fonts[i].MeasureString(m_texts[i].c_str()).x / 2.f);
+			m_fonts[i].Draw(m_texts[i].c_str(), pos, m_FontColor, 0, m_FontScale, pivot);
 		}
 
 		m_fonts[i].End();
