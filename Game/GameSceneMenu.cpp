@@ -2,6 +2,7 @@
 #include "GameSceneMenu.h"
 #include "GameManager.h"
 #include "Game.h"
+#include "Camera/GameCamera.h"
 
 GameSceneMenu::GameSceneMenu()
 {
@@ -61,7 +62,7 @@ void GameSceneMenu::Update()
 
 void GameSceneMenu::PostUpdate()
 {
-	if (g_pad[0]->IsTrigger(enButtonStart)) {
+	if (g_pad[0]->IsTrigger(enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
 		if (m_isPaused) {
 			m_isMenuActivated = true;
 			m_selectedTypeID = TO_INT(EnMenuButtonType::Close);

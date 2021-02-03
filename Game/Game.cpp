@@ -285,7 +285,7 @@ void Game::PostUpdate()
 {
 	Fade::GetInstance().Update();
 
-	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
 		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
 			GameManager::GetInstance().m_menu->ResumeGame();
 		}
