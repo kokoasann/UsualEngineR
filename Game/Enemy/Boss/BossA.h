@@ -77,6 +77,11 @@ public:
 		m_explodeEffect->SetPos(m_position + forward);
 		//m_explodeEffect->SetPos(Vector3::One);
 		m_explodeEffect->Play();
+		StopJetSE();
+		auto explodeSe = NewGO<CSoundSource>(0);
+		explodeSe->Init(L"Assets/sound/chara/explosion.wav", true);
+		explodeSe->SetPosition(m_position);
+		explodeSe->Play(false);
 	}
 
 private:
@@ -88,6 +93,7 @@ private:
 	//Physics
 	const float m_radius = 5.5f;
 	const float m_height = 7.5f;
+
 	//Hands
 	//SphereCollider		m_rightHandCollider;
 	//const float m_HandRadius = 1.f;
