@@ -33,7 +33,7 @@ IEnemyState* Boss_FatmanTakeDistanceState::Update(IEnemy* e)
 	float distance = vecToBoss.Length();
 	
 	//‹——£‚ð‚Æ‚ê‚Ä‚¢‚é‚©”»’èB
-	if (std::abs(distance) > 100.f){
+	if (std::abs(distance) > Boss_Fatman::TAKE_DISTANCE){
 		e->SetVelocity(Vector3::Zero);
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
