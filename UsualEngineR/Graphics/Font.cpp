@@ -32,6 +32,7 @@ namespace UER
 	}
 	void Font::Draw(const wchar_t* text, const Vector2& pos, const Vector4& color, float rot, float sca, const Vector2& pivot)
 	{
+		m_spriteFont->MeasureString()
 		Vector2 piv = pivot;
 		piv.y = 1.0f - piv.y;
 		Vector2 position;
