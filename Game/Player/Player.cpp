@@ -49,10 +49,13 @@ struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
 	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		int index = convexResult.m_hitCollisionObject->getUserIndex();
-
-		if (!(index & GameCollisionAttribute::Enemy))
+		
+		if (!bool(index & GameCollisionAttribute::Enemy) || index == -1)
 			return 0.f;
-
+		if (index == -1)
+		{
+			DebugPrintValue(EDebugConsoloUser::WATA, "indx", index);
+		}
 		//if (!(index & enCollisionAttr_Character))
 			//return 0.f;
 
@@ -420,10 +423,16 @@ const bool Player::ColCheck(const Player::EnPlayerBone& bone) {
 	//btVector3 velocity(0,0,0);
 	btScalar allowedCcdPenetration = 0.f;
 
-	btTransform t_from = btTransform(btQuaternion::getIdentity());
+	/*btTransform t_from = btTransform(btQuaternion::getIdentity());
 	t_from.setOrigin(btVector3(bonePos.x, bonePos.y, bonePos.z));
 	btTransform t_to = t_from;
-	t_to.setOrigin(t_to.getOrigin() + velocity);
+	t_to.setOrigin(t_to.getOrigin() + velocity);*/
+	btTransform t_from = btTransform(btQuaternion::getIdentity());
+	t_from.setOrigin(btVector3(m_position.x, m_position.y, m_position.z));
+	btTransform t_to;
+	t_to.setIdentity();
+	t_to.setOrigin(btVector3(bonePos.x, bonePos.y, bonePos.z));
+
 	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
 	PlayerResultCallback cb(t_from.getOrigin());
 
