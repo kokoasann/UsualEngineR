@@ -24,12 +24,17 @@ void BossBombIdleState::Enter(IEnemy* e)
 	m_isAttacked = false;
 
 	e->SetAutoRotateFlag(false);
+	
+	auto ik = e->GetIK(TO_INT(IEnemy::EnIK::enArm_R));
+	m_oldIKPos = ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();
 }
 
 IEnemyState* BossBombIdleState::Update(IEnemy* e)
 {
 	if(m_isAttacked)
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+
+	m_timer += gameTime()->GetDeltaTime();
 
 	e->SetExternalVelocity({ 0,-500,0 });
 	
@@ -39,12 +44,17 @@ IEnemyState* BossBombIdleState::Update(IEnemy* e)
 	if (BossBombData::GetInstance().isStartBattle)
 	{
 		float t = m_timer / m_timeRotate;
+
+		auto ik = e->GetIK(TO_INT(IEnemy::EnIK::enArm_R));
+
 		if (t >= 1.f)
 		{
 			Quaternion rot;
 			auto theta = atan2(d.x, d.z);
 			rot.SetRotationY(theta);
 			e->SetRotation(rot);
+
+			ik->SetNextTarget(p->GetPosition());
 		}
 		else
 		{
@@ -54,6 +64,9 @@ IEnemyState* BossBombIdleState::Update(IEnemy* e)
 			rot.SetRotationY(theta);
 			rot.Slerp(t, m_firstRot, rot);
 			e->SetRotation(rot);
+
+			
+			ik->SetNextTarget(Math::Lerp(t, m_oldIKPos, p->GetPosition()));
 		}
 	}
 

@@ -61,8 +61,8 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 		tar.y += 20.f;
 
 		auto eneForward = e->GetForward();
-		auto camEndPos = e->GetPosition() + eneForward * 35.f;
-		camEndPos.y += 20.f;
+		auto camEndPos = e->GetPosition() + eneForward * 10.f;
+		camEndPos.y += 10.f;
 		auto sec = 1.f;
 		auto interval = 1.7f;
 
