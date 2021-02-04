@@ -1,23 +1,23 @@
 #include "stdafx.h"
-#include "DropItemBom.h"
+#include "DropItemFat.h"
 #include "../EnemyManager.h"
 #include "../../Player/Player.h"
 #include "GameManager.h"
 #include "Game.h"
 
-DropItemBom::DropItemBom()
+DropItemFat::DropItemFat()
 {
 
 }
 
-DropItemBom::~DropItemBom()
+DropItemFat::~DropItemFat()
 {
 
 }
 
 
 
-void DropItemBom::Release()
+void DropItemFat::Release()
 {
 	DeleteGO(m_model);
 	if (m_effect != nullptr) {
@@ -26,22 +26,22 @@ void DropItemBom::Release()
 	}
 }
 
-void DropItemBom::OnDestroy()
+void DropItemFat::OnDestroy()
 {
 	Release();
 }
 
 
-void DropItemBom::Awake()
+void DropItemFat::Awake()
 {
 
 }
 
-bool DropItemBom::Start()
+bool DropItemFat::Start()
 {
 	//Model
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/m/Shield/Shield.tkm";
+	mid.m_tkmFilePath = "Assets/modelData/m/Gun/Gun.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";
@@ -54,11 +54,10 @@ bool DropItemBom::Start()
 	m_effect = NewGO<SmokeEffect>(0);
 	//effectの色を輝かせたいときは1.0fより上の数値に設定。
 	//※densityは2.f未満だと表示されないようです
-	m_effect->Init(Vector4(0.9f, 0.9f, 1.95f, 0.05f), Vector4(0.8f, 0.8f, 1.80f, 0.f), /*lifeSpanParam*/0.6f, /*density*/2.f, false);
+	m_effect->Init(Vector4(1.47f, 0.74f, 0.72f, 0.05f), Vector4(1.42f, 0.73f, 0.70f, 0.f), /*lifeSpanParam*/0.6f, /*density*/2.f, false);
 	m_effect->SetSca(Vector3::One * 0.75f);
 	//仮としてプレイヤーの位置
 	//上にまき散らす。
-	m_effect->SetPos(m_position);
 	m_effect->SetSpeed(10.0f);
 	m_effect->Play();
 
@@ -66,12 +65,12 @@ bool DropItemBom::Start()
 }
 
 
-void DropItemBom::PreUpdate()
+void DropItemFat::PreUpdate()
 {
 
 }
 
-void DropItemBom::Update()
+void DropItemFat::Update()
 {
 	//deltaTimeためる変数
 	m_deltaTimeSt += gameTime()->GetDeltaTime();
@@ -82,9 +81,10 @@ void DropItemBom::Update()
 	m_angle += rotateSpeed * gameTime()->GetDeltaTime();
 
 
-	Vector3 updownPos = m_position;
 	const float Yrift = 15.0f;		//モデルが埋まらないための補正値
+	Vector3 updownPos = m_position;
 	updownPos.y += sinValue + Yrift;
+
 	m_model->SetPosition(updownPos);
 	m_effect->SetPos(updownPos);
 
@@ -93,7 +93,7 @@ void DropItemBom::Update()
 	m_model->SetRotation(m_qrot);
 }
 
-void DropItemBom::PostUpdate()
+void DropItemFat::PostUpdate()
 {
 	auto p = GameManager::GetInstance().m_player;
 
@@ -117,12 +117,12 @@ void DropItemBom::PostUpdate()
 }
 
 
-void DropItemBom::Render()
+void DropItemFat::Render()
 {
 
 }
 
-void DropItemBom::PostRender()
+void DropItemFat::PostRender()
 {
 
 }

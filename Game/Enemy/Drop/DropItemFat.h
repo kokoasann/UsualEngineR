@@ -5,11 +5,11 @@
 /// 
 /// </summary>
 class SmokeEffect;
-class DropItemBom :public GameObject
+class DropItemFat :public GameObject
 {
 public:
-	DropItemBom();
-	virtual ~DropItemBom();
+	DropItemFat();
+	virtual ~DropItemFat();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -69,7 +69,7 @@ private:
 
 	//Model
 	ModelRender* m_model = nullptr;
-	Vector3 m_position = { 0,75,-20 };
+	Vector3 m_position = { 0,15,-20 };	
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 1.f;
 

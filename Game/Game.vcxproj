@@ -191,6 +191,7 @@
     <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h" />
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\Drop\DropItemBom.h" />
+    <ClInclude Include="Enemy\Drop\DropItemFat.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
     <ClInclude Include="Enemy\Equipment\Enemy_Bullet.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemBom.cpp" />
+    <ClCompile Include="Enemy\Drop\DropItemFat.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
     <ClCompile Include="Enemy\Equipment\Enemy_Bullet.cpp" />
