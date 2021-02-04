@@ -30,6 +30,9 @@ void EnemyTeleportationState::Enter(IEnemy* e) {
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
 	e->UseStamina(m_cost);
+	auto tpse = NewGO<CSoundSource>(0);
+	tpse->Init(L"Assets/sound/TPSE.wav", false);
+	tpse->Play(false);
 }
 
 IEnemyState* EnemyTeleportationState::Update(IEnemy* e) {
