@@ -32,8 +32,7 @@ void EnemyMeleePunchState::Enter(IEnemy* e) {
 
 	player->ApplyDamage(m_damageAmount);
 	auto punchSE = NewGO<CSoundSource>(0);
-	punchSE->Init(L"Assets/sound/chara/punch_2_1.wav", true);
-	punchSE->SetPosition(e->GetPosition());
+	punchSE->Init(L"Assets/sound/chara/punch_2_1.wav", false);
 	punchSE->Play(false);
 
 #ifdef _PRINT_ENEMY_STATE
