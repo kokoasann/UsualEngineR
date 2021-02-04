@@ -17,4 +17,7 @@ private:
 	Quaternion m_firstRot = Quaternion::Identity;
 
 	bool m_isAttacked = false;
+
+	const float m_ikMoveSpeed = 20.f;
+	Vector3 m_oldIKPos = Vector3::Zero;
 };

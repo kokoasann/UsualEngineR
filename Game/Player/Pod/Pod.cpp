@@ -157,7 +157,7 @@ bool Pod::Start()
 	m_explosionEffect->SetSca(Vector3::One * 0.2f);
 
 	m_gunSE = NewGO<CSoundSource>(0);
-	m_gunSE->Init(L"Assets/sound/chara/mg.wav", true);
+	m_gunSE->Init(L"Assets/sound/chara/mg.wav", false);
 
 	return true;
 }
@@ -180,6 +180,8 @@ void Pod::Update()
 
 void Pod::PostUpdate()
 {
+	const auto delta = gameTime()->GetDeltaTime();
+	const auto player = GameManager::GetInstance().GetPlayer();
 
 	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
@@ -187,14 +189,15 @@ void Pod::PostUpdate()
 	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
 
-	//m_rotation = mp_player->GetRotation();
+
+	auto& preset = player->GetCurrentAttackPreset();
+	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault) {
+		if (m_gunSE->IsPlaying()) {
+			m_gunSE->Stop();
+		}
+	}
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
-
-	auto delta = gameTime()->GetDeltaTime();
-	auto player = GameManager::GetInstance().GetPlayer();
-
-	//printf("Pod's stamina : %f\n", m_ability.currentStamina);
 
 	if (m_state == PodState::enIdle) {
 
@@ -232,11 +235,6 @@ void Pod::PostUpdate()
 					m_gunSE->Play(true);
 				}
 			}
-			else {
-				if (m_gunSE->IsPlaying()) {
-					m_gunSE->Stop();
-				}
-			}
 		}
 
 		//Laser
@@ -259,7 +257,7 @@ void Pod::PostUpdate()
 					UseStamina(skillCosts.RampageCost);
 					//SE
 					auto se = NewGO<CSoundSource>(0);
-					se->Init(L"Assets/sound/chara/missile.wav", true);
+					se->Init(L"Assets/sound/chara/missile.wav", false);
 					se->Play(false);
 				}
 			}
@@ -275,7 +273,7 @@ void Pod::PostUpdate()
 					UseStamina(skillCosts.KamikazeCost);
 					//SE
 					auto se = NewGO<CSoundSource>(0);
-					se->Init(L"Assets/sound/chara/missile.wav", true);
+					se->Init(L"Assets/sound/chara/missile.wav", false);
 					se->Play(false);
 				}
 			}
@@ -333,7 +331,7 @@ void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
 
 	m_laserSE = NewGO<CSoundSource>(0);
-	m_laserSE->Init(L"Assets/sound/chara/beam.wav", true);
+	m_laserSE->Init(L"Assets/sound/chara/beam.wav", false);
 	m_laserSE->Play(false);
 
 
@@ -492,7 +490,7 @@ void Pod::Kamikaze() {
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
 		m_laserSE = NewGO<CSoundSource>(0);
-		m_laserSE->Init(L"Assets/sound/chara/explosion.wav", true);
+		m_laserSE->Init(L"Assets/sound/chara/explosion.wav", false);
 		m_laserSE->Play(false);
 		m_explosionEffect->SetPos(m_pos);
 		m_explosionEffect->Play();

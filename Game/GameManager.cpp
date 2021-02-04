@@ -18,9 +18,9 @@ void GameManager::InitGameWorld() {
 	//m_player = NewGO<Player>(0, "Player");
 	m_camera = NewGO<GameCamera>(0);
 	m_stage = NewGO<GameStage>(0);
-	m_gameHUD = NewGO<GameHUD>(0);
+	m_gameHUD = NewGO<GameHUD>(1);
 	m_itemManager = NewGO<ItemManager>(0);
-	m_menu = NewGO<GameSceneMenu>(0);
+	m_menu = NewGO<GameSceneMenu>(2);
 	m_church = NewGO<Church>(0);
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);

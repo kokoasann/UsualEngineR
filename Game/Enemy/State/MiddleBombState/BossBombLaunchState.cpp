@@ -50,18 +50,20 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 	auto ik = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L));
 	auto bone = ik->GetEffectorBone();
 
-	auto e2p = GameManager::GetInstance().GetPlayer()->GetPosition() - e->GetPosition();
+	auto ppos = GameManager::GetInstance().GetPlayer()->GetPosition();
+	ppos.y += 5.f;
+	auto e2p = ppos - e->GetPosition();
 
 	if (BossBombData::GetInstance().feeling == BossBombData::EnFeel::Normale)
 	{
-		ik->SetNextTarget(GameManager::GetInstance().GetPlayer()->GetPosition());
+		ik->SetNextTarget(ppos);
 	}
 	else
 	{
 		switch (m_launceNum)
 		{
 		case 0:
-			ik->SetNextTarget(GameManager::GetInstance().GetPlayer()->GetPosition());
+			ik->SetNextTarget(ppos);
 			break;
 		case 1:
 		{
@@ -146,7 +148,7 @@ IEnemyState* BossBombLaunchState::Update(IEnemy* e)
 			m_timeLaunch = m_timer + m_timeLaunchSpan;
 			m_isLaunchSleep = true;
 
-			m_oldIKpos = GameManager::GetInstance().GetPlayer()->GetPosition();
+			m_oldIKpos = ppos;
 		}
 	}
 
