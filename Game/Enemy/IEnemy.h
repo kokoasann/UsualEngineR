@@ -333,5 +333,7 @@ private:
 	bool m_isUseAutoRotateSystem = true;
 
 	bool m_addedAsDeadBody = false;
+
+	const int m_ResetPos = 7.f;
 };
 
