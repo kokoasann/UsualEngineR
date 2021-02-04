@@ -18,7 +18,17 @@ BossBombBattleState::~BossBombBattleState()
 
 void BossBombBattleState::Enter(IEnemy* e)
 {
-	e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enIdle));
+	BossBombData::GetInstance().isStartBattle = true;
+
+	if (!m_isAngry && BossBombData::GetInstance().feeling == BossBombData::EnFeel::Angry)
+	{
+		e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Angry),0);
+	}
+	else
+	{
+		e->PlayAnimation(TO_INT(IEnemy::EnAnimation::enIdle));
+	}
+
 	float perHP = e->GetCurrentHP()/e->GetMaxHP();
 	if (perHP <= 2. / 3.)
 	{
@@ -45,14 +55,14 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 		m_isAngry = true;
 		m_timeLimit = 0.5;
 
-		//e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::));
+		//e->PlayAnimation(TO_INT(Boss_MiddleBomb::EnAnimEX::Angry));
 		auto cam = GameManager::GetInstance().m_camera;
 		auto tar = e->GetPosition();
 		tar.y += 20.f;
 
 		auto eneForward = e->GetForward();
-		auto camEndPos = e->GetPosition() + eneForward * 35.f;
-		camEndPos.y += 20.f;
+		auto camEndPos = e->GetPosition() + eneForward * 10.f;
+		camEndPos.y += 10.f;
 		auto sec = 1.f;
 		auto interval = 1.7f;
 
@@ -75,6 +85,8 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 	auto e2p = ppos - epos;
 	float e2pLen = e2p.Length();
 
+	
+
 	if (e2pLen < m_distanceRolling)
 	{
 		m_timerRollingDistance += dtime;
@@ -83,6 +95,10 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 			m_timerRollingDistance = 0.f;
 			return e->GetState(TO_INT(Boss_MiddleBomb::EnStateEX::Rolling));
 		}
+	}
+	else if (e2pLen > 250.f)
+	{
+		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 	else
 	{

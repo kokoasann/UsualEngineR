@@ -471,8 +471,9 @@ XMVECTOR XM_CALLCONV SpriteFont::MeasureString(_In_z_ wchar_t const* text) const
     {
         UNREFERENCED_PARAMETER(advance);
 
-        auto w = static_cast<float>(glyph->Subrect.right - glyph->Subrect.left);
-        auto h = static_cast<float>(glyph->Subrect.bottom - glyph->Subrect.top) + glyph->YOffset;
+        //auto w = static_cast<float>(glyph->Subrect.right - glyph->Subrect.left);
+        auto w = static_cast<float>(advance);
+        auto h = static_cast<float>(glyph->Subrect.bottom - glyph->Subrect.top + glyph->YOffset);
 
         h = std::max(h, pImpl->lineSpacing);
 

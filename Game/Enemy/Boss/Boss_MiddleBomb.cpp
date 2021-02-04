@@ -59,6 +59,7 @@ void Boss_MiddleBomb::Init()
 	info.mass = 0;
 	m_rigidBody.Create(info);
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);
+	m_rigidBody.GetBody()->setUserPointer((void*)1999);
 	Physics().AddRigidBody(m_rigidBody);
 
 	Matrix offsetScaleMat;
@@ -71,6 +72,13 @@ void Boss_MiddleBomb::Init()
 
 	InitAnim();
 
+	{
+		auto ske = m_model->GetModel().GetSkelton();
+		m_shieldBone = ske->GetBone(ske->FindBoneID(L"Shield"));
+		auto ik = m_model->CreateIK(m_shieldBone, 1, 0.5f);
+		SetIK(TO_INT(EnIK::enArm_R), ik);
+		ik->SetIKMode(IK::enMode_NoneHit);
+	}
 
 	//State
 	SetState(m_stateMap[static_cast<int>(IEnemy::EnState::enIdleState)]);
@@ -163,6 +171,7 @@ void Boss_MiddleBomb::InitIK()
 {
 	auto ske = m_model->GetModel().GetSkelton();
 	m_shieldBone = ske->GetBone(ske->FindBoneID(L"Shield"));
+
 	{
 		auto ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 0.5f);
 		SetIK(TO_INT(EnIK::enHead), ik);
@@ -183,6 +192,7 @@ void Boss_MiddleBomb::InitAnim()
 	SetAnimation(TO_INT(EnAnimEX::Bash), "Assets/modelData/boss/mb/anim/mb_bash.tka", false);
 	SetAnimation(TO_INT(EnAnimEX::Guard), "Assets/modelData/boss/mb/anim/mb_guard.tka", false);
 	SetAnimation(TO_INT(EnAnimEX::Jump), "Assets/modelData/boss/mb/anim/mb_jump.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::Angry), "Assets/modelData/boss/mb/anim/mb_angry.tka", false);
 
 	m_model->InitAnimation(m_animationMap, TO_INT(EnAnimEX::Num));
 	m_model->Play(TO_INT(IEnemy::EnAnimation::enIdle));

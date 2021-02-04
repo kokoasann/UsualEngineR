@@ -187,7 +187,7 @@ namespace UER
 				return 0.f;
 
 			
-			if (cp.getDistance() < dist)
+			if (cp.getDistance() <= dist)
 			{
 				isHit = true;
 				hitNormal = cp.m_normalWorldOnB;

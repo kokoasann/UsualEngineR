@@ -45,6 +45,7 @@ public:
 		Bash,
 		Guard,
 		Jump,
+		Angry,
 		Num,
 	};
 private:
@@ -62,7 +63,7 @@ private:
 	GhostObject m_shieldGhost;
 
 	//Physics
-	const float m_radius = 3.f;
+	const float m_radius = 1.f;
 	const float m_height = 7.f;
 };
 
@@ -90,4 +91,5 @@ public:
 	GhostObject* shieldGhost = nullptr;
 	bool isJumpStart = false;
 	bool isBashAttack = false;
+	bool isStartBattle = false;
 };

@@ -58,6 +58,12 @@ IEnemyState* EnemyMeleeThrusterAttackState::Update(IEnemy* e) {
 		vecToPlayer.Normalize();
 		vecToPlayer *= knockBackParam;
 		player->ApplyDamage(m_damage * delta, true, vecToPlayer);
+
+		auto punchSE = NewGO<CSoundSource>(0);
+		punchSE->Init(L"Assets/sound/chara/punch_2_1.wav", true);
+		punchSE->SetPosition(e->GetPosition());
+		punchSE->Play(false);
+
 	}
 
 	if (m_fireTimer > m_fireTime) {

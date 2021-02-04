@@ -115,6 +115,7 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 	if (!m_isPerformed) {
 		GameManager::GetInstance().m_gameScene->OnEnterBattle(e);
 		m_isPerformed = true;
+		e->PlayJetSE();
 	}
 
 }

@@ -105,6 +105,10 @@ public:
 		m_cameraChangeRatio = 0.f;
 	}
 
+	const bool IsPerforming() {
+		return m_isPerforming;
+	}
+
 private:
 	
 	State m_state = State::enPlayerCamera;
@@ -177,6 +181,8 @@ private:
 	//カメラの急な動きを防ぐ用.
 	float m_oldDist = 100.f;
 	bool m_isInitedInitialDist = false;
+
+	bool m_isPerforming = false;
 };
 
 static const void DebugLogVec3(const Vector3& vec) {

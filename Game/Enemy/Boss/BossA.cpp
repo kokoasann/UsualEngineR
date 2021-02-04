@@ -151,6 +151,10 @@ void BossA::Init() {
 	//m_rightHandCollider.Create(m_HandRadius);
 
 
+	//SE
+	m_jetSE = NewGO< CSoundSource>(0);
+	m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
+
 }
 
 void BossA::InitState() {
@@ -172,6 +176,7 @@ void BossA::Terminate() {
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
+	DeleteGO(m_jetSE);
 }
 
 void BossA::Execute() {
@@ -214,6 +219,7 @@ void BossA::Execute() {
 	//btCollisionWorld::ConvexResultCallback callback();
 	//Physics().ConvexSweepTest((const btConvexShape*)m_rightHandCollider.GetBody(), btStart, btEnd, callback);
 
+	m_jetSE->SetPosition(m_position);
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {

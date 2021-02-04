@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameSceneMenu.h"
-
+#include "GameManager.h"
+#include "Game.h"
+#include "Camera/GameCamera.h"
 
 GameSceneMenu::GameSceneMenu()
 {
@@ -60,7 +62,7 @@ void GameSceneMenu::Update()
 
 void GameSceneMenu::PostUpdate()
 {
-	if (g_pad[0]->IsTrigger(enButtonStart)) {
+	if (g_pad[0]->IsTrigger(enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
 		if (m_isPaused) {
 			m_isMenuActivated = true;
 			m_selectedTypeID = TO_INT(EnMenuButtonType::Close);
@@ -79,6 +81,21 @@ void GameSceneMenu::PostUpdate()
 		m_selectedTypeID = min(TO_INT(EnMenuButtonType::NumType) - 1, m_selectedTypeID + 1);
 	}
 
+	if (g_pad[0]->IsTrigger(enButtonA)) {
+		const auto& gameManager = GameManager::GetInstance();
+		switch (m_selectedTypeID) {
+		case TO_INT(EnMenuButtonType::Restart):
+			gameManager.m_gameScene->Restart();
+			break;
+		case TO_INT(EnMenuButtonType::ToTitle):
+			gameManager.m_gameScene->ToTitle();
+			break;
+		case TO_INT(EnMenuButtonType::Close):
+			ResumeGame();
+			m_isMenuActivated = false;
+			break;
+		}
+	}
 }
 
 
@@ -96,18 +113,22 @@ void GameSceneMenu::PostRender()
 	m_menuSprite.Draw(rc, g_camera2D->GetViewMatrix(), g_camera2D->GetProjectionMatrix(), m_spriteMulCol);
 
 	//font
-	static const Vector2 fontTopPos = { -170.f, 240.f };
+	static const Vector2 pivot = { 0.f, 0.f };
+	static const Vector2 fontTopPos = { 0.f, 240.f };
 	static const float space = 150.f;
 	for (int i = 0; i < TO_INT(EnMenuButtonType::NumType); i++) {
 		m_fonts[i].Begin();
 		auto pos = fontTopPos;
 		pos.y -= i * space;
+		
 		if (i == m_selectedTypeID) {
 			std::wstring text = L"[" + m_texts[i] + L"]";
-			m_fonts[i].Draw(text.c_str(), pos, m_FontColor, 0, m_FontScale);
+			pos.x -= ((m_fonts[i].MeasureString(text.c_str()).x / 2.f));
+			m_fonts[i].Draw(text.c_str(), pos, m_FontColor, 0, m_FontScale, pivot);
 		}
 		else {
-			m_fonts[i].Draw(m_texts[i].c_str(), pos, m_FontColor, 0, m_FontScale);
+			pos.x -= (m_fonts[i].MeasureString(m_texts[i].c_str()).x / 2.f);
+			m_fonts[i].Draw(m_texts[i].c_str(), pos, m_FontColor, 0, m_FontScale, pivot);
 		}
 
 		m_fonts[i].End();
