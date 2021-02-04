@@ -28,6 +28,7 @@ Boss_Fatman::~Boss_Fatman()
 
 void Boss_Fatman::Init()
 {
+	m_isNormalEnemy = false;
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/boss/lf/lf.tkm";
