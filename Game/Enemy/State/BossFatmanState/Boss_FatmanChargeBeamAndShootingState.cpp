@@ -16,6 +16,12 @@ Boss_FatmanChargeBeamAndShootingState::Boss_FatmanChargeBeamAndShootingState()
 		beam->SetSca(Vector3::One * 0.03);
 		m_beams.push_back(beam);
 	}
+	m_chargeSE = NewGO<CSoundSource>(0, "sound");
+	m_chargeSE->Init(L"Assets/sound/boss_fatman/charge.wav");
+	m_beamSE = NewGO<CSoundSource>(0, "sound");
+	m_beamSE->Init(L"Assets/sound/chara/beam.wav");
+	m_shootSE = NewGO<CSoundSource>(0, "sound");
+	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan.wav");
 }
 
 Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
@@ -24,6 +30,9 @@ Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
 	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
 	}
+	DeleteGO(m_chargeSE);
+	DeleteGO(m_beamSE);
+	DeleteGO(m_shootSE);
 }
 
 void Boss_FatmanChargeBeamAndShootingState::Enter(IEnemy* e)
@@ -54,6 +63,8 @@ IEnemyState* Boss_FatmanChargeBeamAndShootingState::Update(IEnemy* e)
 	if (m_isEndChargeBeam && m_isEndShooting) {
 		m_isKnockBackCB = false;
 		m_isKnockBackSH = false;
+		m_beamSE->Stop();
+		m_shootSE->Stop();
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	
@@ -86,8 +97,7 @@ void Boss_FatmanChargeBeamAndShootingState::InitChargeBeam(IEnemy* e)
 	}
 	m_isEndChargeBeam = false;
 
-	m_chargeSE = NewGO< CSoundSource>(0);
-	m_chargeSE->Init(L"Assets/sound/boss_fatman/charge.wav", true);
+	
 }
 
 void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
@@ -137,9 +147,18 @@ bool Boss_FatmanChargeBeamAndShootingState::Charge(IEnemy* e)
 		chargeTime = 2.0f;
 	}
 
+
 	m_chargeTimer += gameTime()->GetDeltaTime();
 	if (m_chargeTimer > chargeTime) {
+		m_isChargeSound = false;
+		m_chargeSE->Stop();
 		return true;
+	}
+
+	if (!m_isChargeSound) {
+		m_chargeSE->Play(false);
+		m_chargeSE->SetVolume(0.08f);
+		m_isChargeSound = true;
 	}
 
 	for (int i = 0; i < IK_NUM; i++) {
@@ -226,6 +245,10 @@ bool Boss_FatmanChargeBeamAndShootingState::BeamJudge(IEnemy* e, int ikNo)
 	m_beams[ikNo]->SetRot(m_chargebeamIk[ikNo]->GetEffectorBone()->GetWorldMatrix().GetRotate());
 	m_beams[ikNo]->Play();
 
+	if (!m_beamSE->IsPlaying()) {
+		m_beamSE->Play(true);
+	}
+
 	const float beamWidth = 15.0f;		//ÉrÅ[ÉÄÇÃïùÅB
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {
 		return true;
@@ -265,6 +288,9 @@ void Boss_FatmanChargeBeamAndShootingState::Shooting(IEnemy* e)
 		rand *= 3.f;
 		for (int i = 0; i <= rand; i++) {
 			BulletGenerate(e);
+			if (!m_shootSE->IsPlaying()) {
+				m_shootSE->Play(true);
+			}
 		}
 
 		m_shotTimer = 0.f;
