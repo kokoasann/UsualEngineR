@@ -22,6 +22,7 @@
 #include "../Camera/GameCamera.h"
 #include "Effect/ExplosionEffect.h"
 #include "Attack/Bomb.h"
+#include "Navimesh/Navimesh.h"
 
 const float Player::m_HP_MAX = 500.f;
 
@@ -49,10 +50,13 @@ struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
 	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		int index = convexResult.m_hitCollisionObject->getUserIndex();
-
-		if (!(index & GameCollisionAttribute::Enemy))
+		
+		if (!bool(index & GameCollisionAttribute::Enemy) || index == -1)
 			return 0.f;
-
+		/*if (index == -1)
+		{
+			DebugPrintValue(EDebugConsoloUser::WATA, "indx", index);
+		}*/
 		//if (!(index & enCollisionAttr_Character))
 			//return 0.f;
 
@@ -296,6 +300,9 @@ void Player::PreUpdate()
 {
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
+	SoundEngine().SetListenerPosition(m_position);
+	m_jetSE->SetPosition(m_position);
+
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
 	//DebugPrintVector3(EDebugConsoloUser::WATA, m_velocity);
 	m_position = m_charaCon.GetPosition();
@@ -305,6 +312,8 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+
+
 	//Attachments
 	//Jetpack
 	if (m_currentAttackPreset == EnAttackPreset::enMeleePreset) {
@@ -409,6 +418,22 @@ void Player::PostUpdate()
 	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 	*/
 
+	if (m_position.y <= m_ResetPos) {
+		Vector3 nearestCellPos = Vector3::Zero;
+		float nearestDist = FLT_MAX;
+		auto& cells = GameManager::GetInstance().m_nvm.GetCell();
+		const auto playerPos = Vector3(m_position.x, 0.f, m_position.z);
+		for (auto cell : cells) {
+			const auto cellCenterPos = Vector3(cell->centerPos.x, 0.f, cell->centerPos.z);
+			auto dist = (cellCenterPos - playerPos).LengthSq();
+			if (dist < nearestDist) {
+				nearestDist = dist;
+				nearestCellPos = cell->centerPos;
+			}
+		}
+		SetPosition(nearestCellPos);
+	}
+
 }
 
 const bool Player::ColCheck(const Player::EnPlayerBone& bone) {
@@ -420,10 +445,16 @@ const bool Player::ColCheck(const Player::EnPlayerBone& bone) {
 	//btVector3 velocity(0,0,0);
 	btScalar allowedCcdPenetration = 0.f;
 
-	btTransform t_from = btTransform(btQuaternion::getIdentity());
+	/*btTransform t_from = btTransform(btQuaternion::getIdentity());
 	t_from.setOrigin(btVector3(bonePos.x, bonePos.y, bonePos.z));
 	btTransform t_to = t_from;
-	t_to.setOrigin(t_to.getOrigin() + velocity);
+	t_to.setOrigin(t_to.getOrigin() + velocity);*/
+	btTransform t_from = btTransform(btQuaternion::getIdentity());
+	t_from.setOrigin(btVector3(m_position.x, m_position.y, m_position.z));
+	btTransform t_to;
+	t_to.setIdentity();
+	t_to.setOrigin(btVector3(bonePos.x, bonePos.y, bonePos.z));
+
 	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
 	PlayerResultCallback cb(t_from.getOrigin());
 

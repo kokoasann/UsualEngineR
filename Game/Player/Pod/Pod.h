@@ -121,6 +121,7 @@ public:
 	}
 
 private:
+	bool IsHitBombShield(const Vector3& vel);
 
 	void ShotLaserBeam();
 	void ThrownBehave();
@@ -152,7 +153,7 @@ private:
 	Vector3 m_velocity = Vector3::Zero;
 
 	//laser
-	const float m_LaserDamageAmount = 10.f * 1.f / 2.f;
+	const float m_LaserDamageAmount = 10.f;
 
 	//Thrown
 	float m_thrownTime = 1.f;
@@ -160,8 +161,11 @@ private:
 	const float m_thrownAttackRange = 30.f;
 
 	//Rampage
+	bool m_isIncreasing = true;
+	float m_repetitiveMovementParam = 0.5f;
+	bool m_isChasingEnemy = false;
 	const float m_rampageTime = 5.f;
-	const float m_rampagingDamageAmount = 10.f * 1.f / 3.f;
+	const float m_rampagingDamageAmount = 10.f;
 
 	//Kamikaze
 	const float m_kamikazeDamageAmount = 10.f;
@@ -215,4 +219,5 @@ private:
 	CSoundSource* m_laserSE = nullptr;
 	CSoundSource* m_gunSE = nullptr;
 
+	SphereCollider m_sphere;
 };

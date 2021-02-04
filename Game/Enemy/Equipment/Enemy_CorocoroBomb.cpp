@@ -18,6 +18,7 @@ Enemy_CorocoroBomb::~Enemy_CorocoroBomb()
 void Enemy_CorocoroBomb::Release()
 {
 	DeleteGO(m_model);
+	DeleteGO(m_effect);
 	if (!m_isHit)
 	{
 		Physics().RemoveRigidBody(m_rigidBody);

@@ -13,7 +13,14 @@ public:
 
 private:
 	const float m_chargeAmount = 10.f;
+	const float modelpos_Y = 0.0f;
 
+	float m_angle = 0.0f;
+
+	float m_PI = 3.14159265;
+	int m_count = 0;
+
+	float m_deltaTimeSt = 0;
 	//model
 	ModelRender* m_model = nullptr;
 	//effect

@@ -14,6 +14,7 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanDeadState.h"
 
 EnBattlePhase Boss_Fatman::m_battlePhase = EnBattlePhase::Normal;
+const float Boss_Fatman::TAKE_DISTANCE = 70.0f;
 
 Boss_Fatman::Boss_Fatman()
 {
@@ -27,6 +28,7 @@ Boss_Fatman::~Boss_Fatman()
 
 void Boss_Fatman::Init()
 {
+	m_isNormalEnemy = false;
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/boss/lf/lf.tkm";

@@ -279,34 +279,13 @@ void Game::Update()
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 	}
-
-	////debug
-	//if (GameManager::GetInstance().m_player != nullptr) {
-	//	if (GameManager::GetInstance().m_player->GetJetPack() != nullptr) {
-	//		const double meleeActiveTime = GameManager::GetInstance().m_player->GetJetPack()->GetActivatedTime();
-	//		const double remoteActiveTime = GameManager::GetInstance().m_player->GetGun()->GetActivatedTime();
-	//		const double bombActiveTime = GameManager::GetInstance().m_player->GetShield()->GetActivatedTime();
-	//		Result::SAttachmentPercentage ap;
-	//		ap.defaultAttachment = (m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime)) / m_clearTimer;
-	//		ap.meleeAttachment = meleeActiveTime / m_clearTimer;
-	//		ap.remoteAttachment = remoteActiveTime / m_clearTimer;
-	//		ap.bombAttachment = bombActiveTime / m_clearTimer;
-	//		printf("Clear Time : %f\n default Time : %f (%f%%)\n melee Time : %f (%f%)\n remote Time : %f (%f%)\n bomb Time : %f (%f%)\n",
-	//			m_clearTimer, 
-	//			m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime), ((m_clearTimer - (meleeActiveTime + remoteActiveTime + bombActiveTime)) / m_clearTimer) * 100.0,
-	//			meleeActiveTime, meleeActiveTime / m_clearTimer * 100.0,
-	//			remoteActiveTime, remoteActiveTime / m_clearTimer * 100.0,
-	//			bombActiveTime, bombActiveTime / m_clearTimer * 100.0
-	//		);
-	//	}
-	//}
 }
 
 void Game::PostUpdate()
 {
 	Fade::GetInstance().Update();
 
-	if (g_pad[0]->IsTrigger(EnButton::enButtonStart)) {
+	if (g_pad[0]->IsTrigger(EnButton::enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
 		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
 			GameManager::GetInstance().m_menu->ResumeGame();
 		}
@@ -315,13 +294,17 @@ void Game::PostUpdate()
 		}
 	}
 
-	/*
-	if (g_pad[0]->IsTrigger(enButtonLB3)) {
-		NewGO<Title>(0);
+	if (Fade::GetInstance().IsFaded() and m_restartFlag) {
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
+		NewGO<Game>(0);
 	}
-	*/
+
+	if (Fade::GetInstance().IsFaded() and m_toTitleFlag) {
+		auto go = reinterpret_cast<GameObject*>(this);
+		DeleteGO(go);
+		NewGO<Title>(0);
+	}
 }
 
 void Game::Render()
@@ -334,4 +317,15 @@ void Game::PostRender()
 	font.Begin();
 	font.Draw(L"ƒeƒXƒg‚Ä‚·‚ÆTESTtest", { 0,0 }, Vector4::White, 0, 1);
 	font.End();*/
+}
+
+
+void Game::Restart() {
+	Fade::GetInstance().FadeOut();
+	m_restartFlag = true;
+}
+
+void Game::ToTitle() {
+	Fade::GetInstance().FadeOut();
+	m_toTitleFlag = true;
 }

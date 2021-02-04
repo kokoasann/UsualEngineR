@@ -206,6 +206,17 @@ public:
 		return m_jetEffects;
 	}
 
+	void PlayJetSE() {
+		if (m_jetSE != nullptr) {
+			m_jetSE->Play(true);
+		}
+	}
+
+	void StopJetSE() {
+		if (m_jetSE != nullptr)
+			m_jetSE->Stop();
+	}
+
 	void SetRotation(const Quaternion& rot) {
 		m_rotation = rot;
 	}
@@ -297,6 +308,9 @@ protected:
 	SmokeEffect* m_smokeEffect = nullptr;
 	Vector4 m_smokeColor = { 1.f,1.f,1.f,0.1f };
 
+	//SE
+	CSoundSource* m_jetSE = nullptr;
+
 	//Physics
 	CharacterController m_charaCon;
 	Vector3 m_velocity = Vector3::Zero;
@@ -320,5 +334,6 @@ private:
 
 	bool m_addedAsDeadBody = false;
 
+	const int m_ResetPos = 7.f;
 };
 

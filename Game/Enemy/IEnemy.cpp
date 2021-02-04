@@ -100,6 +100,23 @@ void IEnemy::Update() {
 		m_addedAsDeadBody = true;;
 	}
 
+	if (m_position.y <= m_ResetPos) {
+		Vector3 nearestCellPos = Vector3::Zero;
+		float nearestDist = FLT_MAX;
+		auto& cells = GameManager::GetInstance().m_nvm.GetCell();
+		const auto myPos = Vector3(m_position.x, 0.f, m_position.z);
+		for (auto cell : cells) {
+			const auto cellCenterPos = Vector3(cell->centerPos.x, 0.f, cell->centerPos.z);
+			auto dist = (cellCenterPos - myPos).LengthSq();
+			if (dist < nearestDist) {
+				nearestDist = dist;
+				nearestCellPos = cell->centerPos;
+			}
+		}
+		SetPosition(nearestCellPos);
+	}
+
+
 }
 
 void IEnemy::SetState(IEnemyState* s) {

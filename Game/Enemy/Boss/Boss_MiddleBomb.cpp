@@ -10,6 +10,8 @@
 #include "Enemy/State/MiddleBombState/BossBombCoroCoroState.h"
 #include "Enemy/State/MiddleBombState/BossBombFullFrontalState.h"
 #include "Enemy/State/MiddleBombState/BossBombBashState.h"
+#include "Enemy/State/MiddleBombState/BossBombRollingState.h"
+#include "Enemy/State/MiddleBombState/BossBombStunState.h"
 
 
 Boss_MiddleBomb::Boss_MiddleBomb()
@@ -25,6 +27,8 @@ Boss_MiddleBomb::~Boss_MiddleBomb()
 
 void Boss_MiddleBomb::Init()
 {
+	m_isNormalEnemy = false;
+
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/boss/mb/mb.tkm";
@@ -57,6 +61,7 @@ void Boss_MiddleBomb::Init()
 	info.mass = 0;
 	m_rigidBody.Create(info);
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Wall | GameCollisionAttribute::BombShield);
+	m_rigidBody.GetBody()->setUserPointer((void*)1999);
 	Physics().AddRigidBody(m_rigidBody);
 
 	Matrix offsetScaleMat;
@@ -69,6 +74,13 @@ void Boss_MiddleBomb::Init()
 
 	InitAnim();
 
+	{
+		auto ske = m_model->GetModel().GetSkelton();
+		m_shieldBone = ske->GetBone(ske->FindBoneID(L"Shield"));
+		auto ik = m_model->CreateIK(m_shieldBone, 1, 0.5f);
+		SetIK(TO_INT(EnIK::enArm_R), ik);
+		ik->SetIKMode(IK::enMode_NoneHit);
+	}
 
 	//State
 	SetState(m_stateMap[static_cast<int>(IEnemy::EnState::enIdleState)]);
@@ -141,6 +153,10 @@ void Boss_MiddleBomb::InitState()
 		m_stateMap.insert(s);
 	}
 	{
+		auto s = std::make_pair(TO_INT(EnStateEX::Rolling), new BossBombRollingState());
+		m_stateMap.insert(s);
+	}
+	{
 		auto s = std::make_pair(TO_INT(EnStateEX::Guard), new BossBombGuardState());
 		m_stateMap.insert(s);
 	}
@@ -148,11 +164,16 @@ void Boss_MiddleBomb::InitState()
 		auto s = std::make_pair(TO_INT(EnStateEX::Jump), new BossBombJumpState());
 		m_stateMap.insert(s);
 	}
+	{
+		auto s = std::make_pair(TO_INT(EnState::enStunState), new BossBombStunState());
+		m_stateMap.insert(s);
+	}
 }
 void Boss_MiddleBomb::InitIK()
 {
 	auto ske = m_model->GetModel().GetSkelton();
 	m_shieldBone = ske->GetBone(ske->FindBoneID(L"Shield"));
+
 	{
 		auto ik = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Head_IK")), 1, 0.5f);
 		SetIK(TO_INT(EnIK::enHead), ik);
@@ -173,6 +194,7 @@ void Boss_MiddleBomb::InitAnim()
 	SetAnimation(TO_INT(EnAnimEX::Bash), "Assets/modelData/boss/mb/anim/mb_bash.tka", false);
 	SetAnimation(TO_INT(EnAnimEX::Guard), "Assets/modelData/boss/mb/anim/mb_guard.tka", false);
 	SetAnimation(TO_INT(EnAnimEX::Jump), "Assets/modelData/boss/mb/anim/mb_jump.tka", false);
+	SetAnimation(TO_INT(EnAnimEX::Angry), "Assets/modelData/boss/mb/anim/mb_angry.tka", false);
 
 	m_model->InitAnimation(m_animationMap, TO_INT(EnAnimEX::Num));
 	m_model->Play(TO_INT(IEnemy::EnAnimation::enIdle));
@@ -185,7 +207,7 @@ void Boss_MiddleBomb::Execute()
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Tired;
 	}
-	else if (hpper < 2.9f / 3.f)
+	else if (hpper < 2.f / 3.f)
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Angry;
 	}

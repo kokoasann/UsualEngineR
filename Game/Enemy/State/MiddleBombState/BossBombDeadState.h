@@ -11,4 +11,5 @@ public:
 	void Exit(IEnemy* e) override;
 	void  OnAttacked(IEnemy* e);
 private:
+	Vector3 m_pos = Vector3::Zero;
 };

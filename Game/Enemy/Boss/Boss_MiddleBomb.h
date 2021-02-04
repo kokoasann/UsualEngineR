@@ -31,6 +31,7 @@ public:
 		Corocoro,
 		FullFrontal = TO_INT(IEnemy::EnState::enNumState),
 		Bash,
+		Rolling,
 		Guard,
 		Jump,
 		Num,
@@ -44,6 +45,7 @@ public:
 		Bash,
 		Guard,
 		Jump,
+		Angry,
 		Num,
 	};
 private:
@@ -62,7 +64,7 @@ private:
 
 	//Physics
 	const float m_radius = 1.f;
-	const float m_height = 3.f;
+	const float m_height = 7.f;
 };
 
 struct BossBombData
@@ -89,4 +91,5 @@ public:
 	GhostObject* shieldGhost = nullptr;
 	bool isJumpStart = false;
 	bool isBashAttack = false;
+	bool isStartBattle = false;
 };

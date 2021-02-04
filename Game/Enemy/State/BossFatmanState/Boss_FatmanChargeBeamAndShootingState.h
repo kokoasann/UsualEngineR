@@ -62,7 +62,7 @@ private:
 	bool					m_isEndChargeBeam = false;	//溜めビームが終わったかどうか。
 	float					m_sumMoveSpeed = 0.0f;
 	bool					m_isKnockBackCB = false;
-
+	CSoundSource*			m_chargeSE = nullptr;
 
 	//乱射。
 	float					m_shotTimer = 0.f;

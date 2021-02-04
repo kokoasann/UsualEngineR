@@ -323,7 +323,7 @@ class Cell:
         for v in cell.verts:
             if v in self.verts:
                 cnt += 1
-        if cnt == 2:
+        if cnt >= 2:
             return True
         return False
         
@@ -335,19 +335,19 @@ def wrightCell(o,f):
     
     for tri in mesh.loop_triangles:
         cell = Cell(tri.index)
-        cell.verts = tri.loops
+        cell.verts = tri.vertices
         center = tri.center.copy()
         print(center)
         y = center.y
         center.y = center.z
-        center.z = y
+        center.z = y * -1
         cell.center = center
         
         for i in tri.vertices:
             v = mesh.vertices[i].co.copy()
             y = v.y
             v.y = v.z
-            v.z = y
+            v.z = y * -1
             cell.vertPos.append(v)
         
         cellList.append(cell)
@@ -364,16 +364,19 @@ def wrightCell(o,f):
                 
     f.write(struct.pack("<I",len(cellList)))
     for cell in cellList:
+        #print("C")
         #print("wright cell")
         #f.write(struct.pack("<I",cell.index))
         for vp in cell.vertPos:
             for v in vp:
                 f.write(struct.pack("<f",v))
         for v in cell.adjacentCell:
+            #print(v)
             f.write(struct.pack("<I",v))
             
         if 3-len(cell.adjacentCell) != 0:
             for i in range(3-len(cell.adjacentCell)):
+                #print(-1)
                 f.write(struct.pack("<i",-1))
                 
         for v in cell.center:

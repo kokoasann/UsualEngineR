@@ -59,6 +59,22 @@ bool GameStage::Start()
 					mr->SetMulColor({ 0.4,0.4,0.4,1 });
 					return true;
 				});
+
+			{
+				/*mid.m_upAxis = EUpAxis::enUpAxisY;
+				m_mapDeco[0] = NewGO<ModelRender>(0);
+				m_mapDeco[0]->SetScale(Vector3::One * m_levelScale);
+				mid.m_tkmFilePath = "Assets/modelData/map_deco/map_middle.tkm";
+				m_mapDeco[0]->Init(mid);
+				m_mapDeco[0]->SetMulColor({ 0.4,0.4,0.4,1 });
+
+				m_mapDeco[1] = NewGO<ModelRender>(0);
+				m_mapDeco[1]->SetScale(Vector3::One * m_levelScale);
+				mid.m_tkmFilePath = "Assets/modelData/map_deco/map_far.tkm";
+				m_mapDeco[1]->Init(mid);
+				m_mapDeco[1]->SetMulColor({ 0.4,0.4,0.4,1 });*/
+			}
+
 			//m_isEndLoad = true;
 		});
 
@@ -142,6 +158,7 @@ bool GameStage::Start()
 			m_mbgs.push_back(m);
 			return true;
 		});
+
 
 	m_sandSmoke = NewGO<VolumetricEffectRender>(0);
 	m_sandSmoke->Init("Assets/modelData/test/block.tkm");

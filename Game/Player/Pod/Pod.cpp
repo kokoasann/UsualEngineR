@@ -10,6 +10,44 @@
 #include "Effect/ExplosionEffect.h"
 #include "Effect/Beam.h"
 
+struct PodSweepResult : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit = false;
+	Vector3 hitPos = Vector3::Zero;
+	const Vector3& startPos;
+	float dist = FLT_MAX;
+	int collAttr = enCollisionAttr_None;
+
+	PodSweepResult(const Vector3& v) :
+		startPos(v)
+	{
+
+	}
+
+	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		int index = convexResult.m_hitCollisionObject->getUserIndex();
+		if (
+			(index & enCollisionAttr_NonHit) or (index & enCollisionAttr_Character) or (index & enCollisionAttr_Ground)
+			)
+		{
+			return 0.f;
+		}
+
+		isHit = true;
+		Vector3 hitp = *(Vector3*)&convexResult.m_hitPointLocal;
+		Vector3 div = startPos - hitp;
+		float dis = div.Length();
+		if (dis < dist)
+		{
+			hitPos = *(Vector3*)&convexResult.m_hitPointLocal;
+			dist = dis;
+			collAttr = index;
+		}
+		return 0.0f;
+	}
+};
+
 Pod::Pod()
 {
 
@@ -32,13 +70,15 @@ void Pod::Release()
 
 	m_beamEffect->Stop();
 	DeleteGO(m_beamEffect);
+
+	m_sphere.Release();
+
 }
 
 void Pod::OnDestroy()
 {
 	Release();
 }
-
 
 void Pod::Awake()
 {
@@ -47,6 +87,8 @@ void Pod::Awake()
 
 bool Pod::Start()
 {
+
+	m_sphere.Create(0.5f);
 
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
@@ -115,11 +157,10 @@ bool Pod::Start()
 	m_explosionEffect->SetSca(Vector3::One * 0.2f);
 
 	m_gunSE = NewGO<CSoundSource>(0);
-	m_gunSE->Init(L"Assets/sound/chara/mg.wav", true);
+	m_gunSE->Init(L"Assets/sound/chara/mg.wav", false);
 
 	return true;
 }
-
 
 void Pod::PreUpdate()
 {
@@ -139,6 +180,8 @@ void Pod::Update()
 
 void Pod::PostUpdate()
 {
+	const auto delta = gameTime()->GetDeltaTime();
+	const auto player = GameManager::GetInstance().GetPlayer();
 
 	m_jetEffects[BACK]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[BACK]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Back))->GetWorldMatrix().GetRotate());
@@ -146,16 +189,19 @@ void Pod::PostUpdate()
 	m_jetEffects[UNDER]->SetPosition(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetTransrate());
 	m_jetEffects[UNDER]->SetRotation(m_podBones.at(TO_INT(EnPodBone::Thruster_Under))->GetWorldMatrix().GetRotate());
 
-	//m_rotation = mp_player->GetRotation();
+
+	auto& preset = player->GetCurrentAttackPreset();
+	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault) {
+		if (m_gunSE->IsPlaying()) {
+			m_gunSE->Stop();
+		}
+	}
 
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
-	auto delta = gameTime()->GetDeltaTime();
-	auto player = GameManager::GetInstance().GetPlayer();
-
-	//printf("Pod's stamina : %f\n", m_ability.currentStamina);
-
 	if (m_state == PodState::enIdle) {
+
+		m_isChasingEnemy = false;
 
 		IdleRotation();
 		CalcIdlePosition();
@@ -189,11 +235,6 @@ void Pod::PostUpdate()
 					m_gunSE->Play(true);
 				}
 			}
-			else {
-				if (m_gunSE->IsPlaying()) {
-					m_gunSE->Stop();
-				}
-			}
 		}
 
 		//Laser
@@ -201,7 +242,7 @@ void Pod::PostUpdate()
 			if (g_pad[0]->IsTrigger(EnButton::enButtonRB1) and !m_overheat) {
 				if (m_ability.currentStamina >= skillCosts.LaserCost) {
 					ShotLaserBeam();
-					//TODO : UseStamina(skillCosts.LaserCost);
+					UseStamina(skillCosts.LaserCost);
 				}
 			}
 		}
@@ -212,10 +253,11 @@ void Pod::PostUpdate()
 				if (m_ability.currentStamina >= skillCosts.RampageCost) {
 					m_timer = 0.f;
 					m_state = PodState::enRampage;
+					m_isChasingEnemy = true;
 					UseStamina(skillCosts.RampageCost);
 					//SE
 					auto se = NewGO<CSoundSource>(0);
-					se->Init(L"Assets/sound/chara/missile.wav", true);
+					se->Init(L"Assets/sound/chara/missile.wav", false);
 					se->Play(false);
 				}
 			}
@@ -227,10 +269,11 @@ void Pod::PostUpdate()
 				if (m_ability.currentStamina >= skillCosts.KamikazeCost) {
 					m_timer = 0.f;
 					m_state = PodState::enKamikaze;
+					m_isChasingEnemy = true;
 					UseStamina(skillCosts.KamikazeCost);
 					//SE
 					auto se = NewGO<CSoundSource>(0);
-					se->Init(L"Assets/sound/chara/missile.wav", true);
+					se->Init(L"Assets/sound/chara/missile.wav", false);
 					se->Play(false);
 				}
 			}
@@ -243,6 +286,7 @@ void Pod::PostUpdate()
 
 	}
 	else {
+		//Rotate
 		if (m_velocity.x != 0.f or m_velocity.z != 0.f) {
 			Quaternion rot = Quaternion::Identity;
 			auto theta = atan2(m_velocity.x, m_velocity.z);
@@ -287,7 +331,7 @@ void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
 
 	m_laserSE = NewGO<CSoundSource>(0);
-	m_laserSE->Init(L"Assets/sound/chara/beam.wav", true);
+	m_laserSE->Init(L"Assets/sound/chara/beam.wav", false);
 	m_laserSE->Play(false);
 
 
@@ -347,6 +391,11 @@ void Pod::ThrownBehave() {
 	m_pos = m_pos + m_velocity * delta;
 	m_timer += delta;
 
+	if (IsHitBombShield(m_velocity * delta) or m_timer > m_thrownTime) {
+		m_state = PodState::enBack;
+		return;
+	}
+
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();
 		if ((m_pos - epos).Length() < m_thrownAttackRange) {
@@ -355,12 +404,10 @@ void Pod::ThrownBehave() {
 		}
 	}
 
-	if (m_timer > m_thrownTime) {
-		m_state = PodState::enBack;
-	}
 }
 
 void Pod::Rampage() {
+
 	const auto delta = gameTime()->GetDeltaTime();
 	m_timer += delta;
 
@@ -370,17 +417,53 @@ void Pod::Rampage() {
 	}
 
 	auto& epos = EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->GetPosition();
-	const float speed = 100.f;
-	auto vecToEnemy = epos - m_pos;
+	static const Vector3 targetOffset = Vector3(0.f, 5.f, 0.f);
+	static const float speed = 100.f;
+	auto vecToEnemy = epos - m_pos + targetOffset;
 	vecToEnemy.Normalize();
-	m_pos += vecToEnemy * speed * delta;
 
-	if ((m_pos - epos).Length() < m_thrownAttackRange) {
-		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount);
+	Vector3 rampageVelocity = Vector3::Zero;
+	if (m_isChasingEnemy) {
+		//chasing
+		rampageVelocity = vecToEnemy * speed * delta;
+		m_pos += rampageVelocity;
+	}
+	else
+	{
+		//attacking
+		const float chaseDist = 15.f;
+		if ((m_pos - epos).Length() > chaseDist) {
+			m_isChasingEnemy = true;
+			return;
+		}
+
+		const float repetitiveMoveRange = 10.f;
+		const float repetitiveMoveSpeed = 5.f;
+		Vector3 npos;
+
+		if (m_repetitiveMovementParam == 1.0f or m_repetitiveMovementParam == 0.0f) {
+			m_isIncreasing = !m_isIncreasing;
+		}
+
+		if (m_isIncreasing) {
+			m_repetitiveMovementParam = min(1.f, m_repetitiveMovementParam + repetitiveMoveSpeed * delta);
+		}
+		else {
+			m_repetitiveMovementParam = max(0.f, m_repetitiveMovementParam - repetitiveMoveSpeed * delta);
+		}
+
+		npos.Lerp(m_repetitiveMovementParam, epos + targetOffset - Vector3(repetitiveMoveRange, 0, 0), epos + targetOffset + Vector3(repetitiveMoveRange, 0, 0));
+		m_pos = npos;
 	}
 
-	if (m_timer > m_rampageTime) {
+	if (IsHitBombShield(rampageVelocity) or m_timer > m_rampageTime) {
 		m_state = PodState::enBack;
+		return;
+	}
+
+	if ((m_pos - epos).Length() < m_thrownAttackRange) {
+		m_isChasingEnemy = false;
+		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_rampagingDamageAmount * delta);
 	}
 }
 
@@ -399,18 +482,19 @@ void Pod::Kamikaze() {
 	vecToEnemy.Normalize();
 	m_pos += vecToEnemy * speed * delta;
 
+	if (IsHitBombShield(vecToEnemy * speed * delta) or m_timer > m_rampageTime) {
+		m_state = PodState::enBack;
+		return;
+	}
+
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
 		m_laserSE = NewGO<CSoundSource>(0);
-		m_laserSE->Init(L"Assets/sound/chara/explosion.wav", true);
+		m_laserSE->Init(L"Assets/sound/chara/explosion.wav", false);
 		m_laserSE->Play(false);
 		m_explosionEffect->SetPos(m_pos);
 		m_explosionEffect->Play();
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);
-		m_state = PodState::enBack;
-	}
-
-	if (m_timer > m_rampageTime) {
 		m_state = PodState::enBack;
 	}
 }
@@ -539,4 +623,27 @@ void Pod::CalcIdlePosition() {
 	auto idlePos = player->GetPosition() + addPos + player->GetVelocity() * gameTime()->GetDeltaTime();
 	m_pos = idlePos;
 
+}
+
+bool Pod::IsHitBombShield(const Vector3& vel) {
+	//sweeptest
+	btTransform start, end;
+	start.setIdentity();
+	end.setIdentity();
+	start.setOrigin({ m_pos.x, m_pos.y, m_pos.z });
+	auto endPos = m_pos + vel;
+	end.setOrigin({ endPos.x, endPos.y, endPos.z });
+	//printf("velocity : x : %f / y %f / z %f\n", rampageVelocity.x, rampageVelocity.y, rampageVelocity.z);
+	//printf("start pos : x : %f / y %f / z %f\n", m_pos.x, m_pos.y, m_pos.z);
+	//printf("end pos : x : %f / y %f / z %f\n", endPos.x, endPos.y, endPos.z);
+	PodSweepResult sr(m_pos);
+	Physics().ConvexSweepTest(m_sphere.GetBody(), start, end, sr);
+	if (sr.isHit)
+	{
+		if (sr.collAttr & GameCollisionAttribute::BombShield)
+		{
+			return true;
+		}
+	}
+	return false;
 }

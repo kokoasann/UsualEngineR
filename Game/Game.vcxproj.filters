@@ -396,6 +396,12 @@
     <ClInclude Include="Enemy\State\MiddleBombState\BossBombRollingState.h">
       <Filter>Enemy\State\BombBoss</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Drop\DropItemBom.h">
+      <Filter>Enemy\Drop</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Drop\DropItemFat.h">
+      <Filter>Enemy\Drop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -793,6 +799,12 @@
     </ClCompile>
     <ClCompile Include="Enemy\State\MiddleBombState\BossBombRollingState.cpp">
       <Filter>Enemy\State\BombBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Drop\DropItemBom.cpp">
+      <Filter>Enemy\Drop</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Drop\DropItemFat.cpp">
+      <Filter>Enemy\Drop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -62,6 +62,11 @@ public:
 		m_effect->SetRot(rot);
 	}
 
+	void SetSpeed(float s)
+	{
+		m_speed = s;
+	}
+
 	void Play()
 	{
 		m_effect->SetGenerateFlag(true);
@@ -83,4 +88,5 @@ private:
 	Vector4 m_colS = Vector4::White;
 	Vector4 m_colE = Vector4::White;
 
+	float m_speed = 50.f;
 };

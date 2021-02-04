@@ -13,7 +13,11 @@ public:
 
 private:
 	const float m_healAmount = 10.f;
+	float modelpos_Y = 0.0f;
+	float m_angle = 0.0f;
 
+	float m_PI = 3.14159265;
+	float m_deltaTimeSt = 0;
 	//effect
 	SmokeEffect* m_effect = nullptr;
 	//model
