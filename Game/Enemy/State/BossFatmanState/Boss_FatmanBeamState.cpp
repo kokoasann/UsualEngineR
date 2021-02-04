@@ -15,6 +15,8 @@ Boss_FatmanBeamState::Boss_FatmanBeamState()
 		beam->SetSca(Vector3::One * 0.03);
 		m_beams.push_back(beam);
 	}
+	m_beamSE = NewGO<CSoundSource>(0);
+	m_beamSE->Init(L"Assets/sound/chara/beam.wav");
 }
 
 Boss_FatmanBeamState::~Boss_FatmanBeamState()
@@ -22,6 +24,7 @@ Boss_FatmanBeamState::~Boss_FatmanBeamState()
 	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
 	}
+	DeleteGO(m_beamSE);
 }
 
 //ƒ‚ƒfƒ‹‚É‰ñ“]‚Ì”½‰f‚Í‚³‚¹‚È‚¢‚©‚à‚µ‚ê‚È‚¢B
@@ -60,6 +63,7 @@ IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 	UpdateRotation(e);
 	
 	if (m_isState && m_maxSenkei > 1.0f) {
+		m_beamSE->Stop();
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
@@ -90,7 +94,7 @@ IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 		m_beams[i]->SetPos(m_ik[i]->GetEffectorBone()->GetWorldMatrix().GetTransrate());
 		m_beams[i]->SetRot(m_ik[i]->GetEffectorBone()->GetWorldMatrix().GetRotate());
 	}
-
+	m_beamSE->Play(true);
 	return this;
 }
 
