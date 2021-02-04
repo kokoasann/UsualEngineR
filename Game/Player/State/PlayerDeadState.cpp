@@ -17,6 +17,8 @@ void PlayerDeadState::Enter(Player* p) {
 #endif
 	auto& vel = p->GetLocalVelocity();
 	p->SetVelocity(Vector3::Zero);
+	p->SetLocalVelocity(Vector3::Zero);
+	p->SetExternalVelocity(Vector3::Zero);
 	p->PlayAnimation(Player::EnAnimation::enDead);
 }
 
