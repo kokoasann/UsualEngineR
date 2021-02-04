@@ -541,6 +541,8 @@ private:
 	const float m_HandRadius = 5.f;
 
 	//Effect
-	
 	ExplosionEffect* m_explosionEffect = nullptr;
+
+	//
+	const int m_ResetPos= 7.f;
 };

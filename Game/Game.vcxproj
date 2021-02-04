@@ -574,23 +574,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m\Gun\Gun_tex.png" />
+    <ImageContentTask Include="Assets\modelData\m\Gun\Gun_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png" />
+    <ImageContentTask Include="Assets\modelData\m\Shield\Shield_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png" />
-    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png" />
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_Shield_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\SAGYO\boss\mb\mb_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png" />
+    <ImageContentTask Include="Assets\modelData\map_obj\exit_tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\title.png" />
+    <ImageContentTask Include="Assets\Image\title.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\Image\KeyHelpBack.png" />
+    <ImageContentTask Include="Assets\Image\KeyHelpBack.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -95,7 +95,7 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 	if (m_fatTimer > attackSpan) {
 		auto& player = GameManager::GetInstance().m_player;
 		const auto& ppos = player->GetPosition();
-		//return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
+		//return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enTakeDistance));
 
 		if (player->GetCurrentHP() > 0.f) {
 			auto& epos = e->GetPosition();
@@ -108,7 +108,7 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 
 			//離れたら遠距離攻撃。
 			//もしくはプレイヤーが飛んでいたら遠距離攻撃。
-			if (vecToPlayer.Length() > attackRange or diffY > flyRange) {
+			if (vecToPlayer.Length() > Boss_Fatman::TAKE_DISTANCE or diffY > flyRange) {
 				switch (Boss_Fatman::GetCurrentBattlePhase()) {
 				case EnBattlePhase::Normal:
 					return LongRangeAttack(e);

@@ -135,6 +135,8 @@ public:
 		//m_explodeEffect->SetPos(Vector3::One);
 		m_explodeEffect->Play();
 	}
+	static const float TAKE_DISTANCE;
+
 private:
 	/// <summary>
 	/// アニメーションの初期化。
@@ -146,6 +148,7 @@ private:
 	//Physics
 	const float m_radius = 6.f;
 	const float m_height = 9.f;
+
 
 	//バトルフェーズ。
 	static EnBattlePhase m_battlePhase;
