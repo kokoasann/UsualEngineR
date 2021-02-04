@@ -26,5 +26,5 @@ private:
 	Vector3 m_velocityGoal = Vector3::Zero;
 
 	Vector3 m_velFriction = Vector3::Zero;
-	const float m_friction = 100.f;
+	const float m_friction = 200.f;
 };
