@@ -85,6 +85,9 @@ void Boss_FatmanChargeBeamAndShootingState::InitChargeBeam(IEnemy* e)
 		m_chargebeamIk[i] = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L) + i);
 	}
 	m_isEndChargeBeam = false;
+
+	m_chargeSE = NewGO< CSoundSource>(0);
+	m_chargeSE->Init(L"Assets/sound/boss_fatman/charge.wav", true);
 }
 
 void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
