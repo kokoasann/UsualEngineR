@@ -106,7 +106,7 @@ void EnemyManager::SpawnEnemies() {
 			else if (objData.name == L"BombBoss")
 			{
 				auto bene = NewGO<Boss_MiddleBomb>(0);
-				ab.InitHP(BOSS_A_HP);
+				ab.InitHP(1);//‚È‚¨‚·I
 				ab.InitStamina(BOSS_A_STAMINA);
 				bene->SetAbility(ab);
 				bene->SetPosition(objData.position * 100.f);
