@@ -22,6 +22,7 @@
 #include "../Camera/GameCamera.h"
 #include "Effect/ExplosionEffect.h"
 #include "Attack/Bomb.h"
+#include "Navimesh/Navimesh.h"
 
 const float Player::m_HP_MAX = 500.f;
 
@@ -311,6 +312,8 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+
+
 	//Attachments
 	//Jetpack
 	if (m_currentAttackPreset == EnAttackPreset::enMeleePreset) {
@@ -414,6 +417,22 @@ void Player::PostUpdate()
 	m_thrusterEffects[RIGHT]->SetRot(boneSoleRMat.GetRotate());
 	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 	*/
+
+	if (m_position.y <= m_ResetPos) {
+		Vector3 nearestCellPos = Vector3::Zero;
+		float nearestDist = FLT_MAX;
+		auto& cells = GameManager::GetInstance().m_nvm.GetCell();
+		const auto playerPos = Vector3(m_position.x, 0.f, m_position.z);
+		for (auto cell : cells) {
+			const auto cellCenterPos = Vector3(cell->centerPos.x, 0.f, cell->centerPos.z);
+			auto dist = (cellCenterPos - playerPos).LengthSq();
+			if (dist < nearestDist) {
+				nearestDist = dist;
+				nearestCellPos = cell->centerPos;
+			}
+		}
+		SetPosition(nearestCellPos);
+	}
 
 }
 
