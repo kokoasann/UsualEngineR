@@ -76,6 +76,7 @@ private:
 
 	std::vector<ModelRender*> m_mbgs;
 
+	ModelRender* m_mapDeco[2] = {nullptr};
 
 	VolumetricEffectRender* m_sandSmoke = nullptr;
 };
