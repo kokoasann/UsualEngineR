@@ -405,6 +405,9 @@
     <ClInclude Include="EventMovie\EventMovie.h">
       <Filter>EventMovie</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanIdleState.h">
+      <Filter>Enemy\State\BossFatman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -811,6 +814,9 @@
     </ClCompile>
     <ClCompile Include="EventMovie\EventMovie.cpp">
       <Filter>EventMovie</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanIdleState.cpp">
+      <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
