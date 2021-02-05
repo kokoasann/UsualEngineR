@@ -204,6 +204,7 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.h" />
+    <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanIdleState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanShootingState.h" />
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.h" />
@@ -266,6 +267,7 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortBig.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h" />
+    <ClInclude Include="EventMovie\EventMovie.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCollisionAttribute.h" />
@@ -349,6 +351,7 @@
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamAndShootingState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanChargeBeamState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanDeadState.cpp" />
+    <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanIdleState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanMainState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanShootingState.cpp" />
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanStunState.cpp" />
@@ -411,6 +414,7 @@
     <ClCompile Include="Enemy\Zako\Zako_ShortBig.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp" />
+    <ClCompile Include="EventMovie\EventMovie.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCollisionAttribute.cpp" />

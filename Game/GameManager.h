@@ -70,6 +70,10 @@ public:
 		m_deadBossCount++;
 	}
 
+	void ResetDeadBossCount() {
+		m_deadBossCount = 0;
+	}
+
 	const int GetDeadBossCount() {
 		return m_deadBossCount;
 	}

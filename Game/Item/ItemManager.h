@@ -1,4 +1,6 @@
 #pragma once
+#include "level/Level.h"
+
 class IItem;
 
 /// <summary>
@@ -59,4 +61,6 @@ public:
 
 private:
 	std::vector<IItem*> m_items;
+
+	Level m_itemLevel;
 };

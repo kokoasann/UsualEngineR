@@ -12,4 +12,6 @@ public:
 private:
 	SphereCollider		m_sphereCollider;
 	const float			m_radius = 3.0f;
+	CSoundSource* m_takeDistSE = nullptr;
+
 };

@@ -301,6 +301,7 @@ bool GameHUD::Start()
 			presetSp->SetSca(Vector3::One * m_weaponScale);
 			presetSp->SetPivot(m_PRESET_PIVOT);
 			presetSp->SetMulColor({ 0.8,0. ,0.,1.f });
+			presetSp->SetActive(false);
 		}
 		{
 			m_presetSp[TO_INT(Player::EnAttackPreset::enMeleePreset)] = NewGO<SpriteRender>(0);
@@ -313,6 +314,7 @@ bool GameHUD::Start()
 			presetSp->SetSca(Vector3::One * m_weaponScale);
 			presetSp->SetPivot(m_PRESET_PIVOT);
 			presetSp->SetMulColor({ 0.,0.8 ,0.,1.f });
+			presetSp->SetActive(false);
 		}
 		{
 			m_presetSp[TO_INT(Player::EnAttackPreset::enExplosivePreset)] = NewGO<SpriteRender>(0);
@@ -325,6 +327,7 @@ bool GameHUD::Start()
 			presetSp->SetSca(Vector3::One * m_weaponScale);
 			presetSp->SetPivot(m_PRESET_PIVOT);
 			presetSp->SetMulColor({ 0.,0. ,0.8,1.f });
+			presetSp->SetActive(false);
 		}
 	}
 
@@ -375,7 +378,11 @@ void GameHUD::Update()
 
 	//Player Weapon
 	auto preset = player->GetCurrentAttackPreset();
-
+	const bool*ispreset = player->GetAttackPresetFrag();
+	for (int i = 0; i < 4; i++)
+	{
+		m_presetSp[i]->SetActive(ispreset[i]);
+	}
 	
 	if (m_lateFramePreset != preset)
 	{

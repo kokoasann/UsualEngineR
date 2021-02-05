@@ -7,6 +7,8 @@
 Boss_FatmanTakeDistanceState::Boss_FatmanTakeDistanceState()
 {
 	m_sphereCollider.Create(m_radius);
+	m_takeDistSE = NewGO<CSoundSource>(0);
+	m_takeDistSE->Init(L"Assets/sound/chara/footstep1.wav");
 }
 
 Boss_FatmanTakeDistanceState::~Boss_FatmanTakeDistanceState()

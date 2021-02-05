@@ -62,7 +62,9 @@ private:
 	bool					m_isEndChargeBeam = false;	//溜めビームが終わったかどうか。
 	float					m_sumMoveSpeed = 0.0f;
 	bool					m_isKnockBackCB = false;
+	bool					m_isChargeSound = false;
 	CSoundSource*			m_chargeSE = nullptr;
+	CSoundSource*			m_beamSE = nullptr;
 
 	//乱射。
 	float					m_shotTimer = 0.f;
@@ -71,4 +73,5 @@ private:
 	IK*						m_shootingIk[2];			//IK。左右のIKの情報が格納されている。
 	bool					m_isEndShooting = false;	//乱射が終わったかどうか。
 	bool					m_isKnockBackSH = false;
+	CSoundSource*			m_shootSE = nullptr;
 };
