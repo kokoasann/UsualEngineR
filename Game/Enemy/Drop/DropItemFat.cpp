@@ -50,6 +50,7 @@ bool DropItemFat::Start()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
+	m_position.y += 10.f;
 
 	m_effect = NewGO<SmokeEffect>(0);
 	//effectの色を輝かせたいときは1.0fより上の数値に設定。
@@ -81,9 +82,8 @@ void DropItemFat::Update()
 	m_angle += rotateSpeed * gameTime()->GetDeltaTime();
 
 
-	const float Yrift = 15.0f;		//モデルが埋まらないための補正値
 	Vector3 updownPos = m_position;
-	updownPos.y += sinValue + Yrift;
+	updownPos.y += sinValue;
 
 	m_model->SetPosition(updownPos);
 	m_effect->SetPos(updownPos);

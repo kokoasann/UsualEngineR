@@ -38,14 +38,26 @@ void ItemManager::Awake()
 
 bool ItemManager::Start()
 {
+	m_itemLevel.Init("Assets/level/map_item_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			if (objData.name == L"HPItem")
+			{
+				auto item = new RedPotion();
+				item->SetPosition(objData.position*100.f);
+				m_items.push_back(item);
+			}
+			else if (objData.name == L"ENItem")
+			{
+				auto energy = new EnergyPotion();
+				energy->SetPosition(objData.position * 100.f);
+				m_items.push_back(energy);
+			}
+			return true;
+		});
 
-	auto item = new RedPotion();
-	m_items.push_back(item);
-	item->SetPosition({ 0,10,0. });
+	
 
-	auto energy = new EnergyPotion();
-	energy->SetPosition({ 150,10,0. });
-	m_items.push_back(energy);
+	
 
 	return true;
 }

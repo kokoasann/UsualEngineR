@@ -11,6 +11,7 @@
 #include "Enemy/Zako/Zako_ExplosionMonster.h"
 #include "Enemy/Zako/Zako_LongBig.h"
 #include "Enemy/Zako/Zako_ShortBig.h"
+#include "Game.h"
 
 
 GameDebugger::GameDebugger()
@@ -114,6 +115,11 @@ bool GameDebugger::Start()
 			e->SetAbility(ab);
 			e->SetPosition(GameManager::GetInstance().GetPlayer()->GetPosition());
 			EnemyManager::GetEnemyManager().AddEnemy(e);
+		}));
+
+	DebugSwitchAddButton(DebugSwitchNewSwitch_Button('Q', 0, [&]()
+		{
+			GameManager::GetInstance().m_gameScene->GoalGatePerformance();
 		}));
 	return true;
 }
