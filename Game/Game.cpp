@@ -144,6 +144,7 @@ void Game::OnItemUnlocked() {
 bool Game::Start()
 {
 	GameManager::GetInstance().InitGameWorld();
+	GameManager::GetInstance().ResetDeadBossCount();
 	GameManager::GetInstance().m_gameScene = this;
 
 	m_clearTimer  = 0.f;
