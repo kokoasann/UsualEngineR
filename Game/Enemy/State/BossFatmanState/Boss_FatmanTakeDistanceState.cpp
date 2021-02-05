@@ -7,8 +7,6 @@
 Boss_FatmanTakeDistanceState::Boss_FatmanTakeDistanceState()
 {
 	m_sphereCollider.Create(m_radius);
-	m_takeDistSE = NewGO<CSoundSource>(0);
-	m_takeDistSE->Init(L"Assets/sound/chara/footstep1.wav");
 }
 
 Boss_FatmanTakeDistanceState::~Boss_FatmanTakeDistanceState()
@@ -20,6 +18,9 @@ void Boss_FatmanTakeDistanceState::Enter(IEnemy* e)
 	const auto& rot = Boss_Fatman::EnemyToPlayerRotation(e, false);
 	e->GetModel()->SetRotation(rot);
 	e->PlayAnimation(TO_INT(Boss_Fatman::EnAnimEX::enbackStep));
+	CSoundSource* se = NewGO<CSoundSource>(0);
+	se->Init(L"Assets/sound/chara/beam.wav");
+	se->Play(false);
 }
 
 IEnemyState* Boss_FatmanTakeDistanceState::Update(IEnemy* e)

@@ -59,9 +59,10 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 		rand *= 3.f;
 		for (int i = 0; i <= rand; i++){
 			BulletGenerate(e);
-			m_shootSE->Play(true);
-		}
-		
+			if (!m_shootSE->IsPlaying()) {
+				m_shootSE->Play(true);
+			}
+		}		
 		m_shotTimer = 0.f;
 	}
 

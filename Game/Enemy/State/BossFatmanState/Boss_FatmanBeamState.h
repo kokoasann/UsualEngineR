@@ -53,5 +53,4 @@ private:
 		Left,
 		IKNum
 	};
-	CSoundSource* m_beamSE = nullptr;
 };

@@ -14,4 +14,5 @@ private:
 	const float		m_damage = Player::GetMaxHP() / 10.f;
 	float			m_timer = 0.f;
 	Vector3			m_playerPosition = Vector3::Zero;
+	bool			m_isSound = false;
 };

@@ -15,6 +15,8 @@ Boss_FatmanChargeBeamState::Boss_FatmanChargeBeamState()
 		beam->SetSca(Vector3::One * 0.03);
 		m_beams.push_back(beam);
 	}
+	/*m_beamSE = NewGO<CSoundSource>(0, "sound");
+	m_beamSE->Init(L"Assets/sound/chara/beam.wav");*/
 }
 
 Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
@@ -23,6 +25,7 @@ Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
 	for (int i = 0; i < m_beams.size(), i++;) {
 		DeleteGO(m_beams.at(i));
 	}
+	//DeleteGO(m_beamSE);
 }
 
 void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
@@ -43,6 +46,10 @@ void Boss_FatmanChargeBeamState::Enter(IEnemy* e)
 	for (int i = 0; i < IKNum; i++){
 		m_ik[i] = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L) + i);
 	}
+
+	CSoundSource* se = NewGO<CSoundSource>(0);
+	se->Init(L"Assets/sound/boss_fatman/charge.wav");
+	se->Play(false);
 }
 
 IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
@@ -77,6 +84,8 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 		}
 		else {
 			m_isKnockBack = false;
+			m_isBeamSound = false;
+			m_beamSE->Stop();
 			return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 		}
 	}
@@ -122,18 +131,10 @@ bool Boss_FatmanChargeBeamState::Charge(IEnemy* e)
 		const float yUp = 4.f;
 		ppos.y += yUp;
 
-		//Vector3 vecEtoP = ppos - epos;
-		//m_beams[i]->SetToPlayerDir(vecEtoP);
-
-		////外積。直行した縦のベクトル。
-		//Vector3 EHeight;
-		//EHeight.Cross(vecEtoP, Vector3::Right);
-		//EHeight.Normalize();
-		//m_beams[i]->SetHolizontalDir(EHeight);
-
 		//エフェクトの再生。
 		m_beams[i]->Play();		
-		m_beams[i]->SetRot(m_ik[i]->GetEffectorBone()->GetWorldMatrix().GetRotate());
+		m_beams[i]->SetRot(m_ik[i]->GetEffectorBone()->GetWorldMatrix().GetRotate());		
+
 		//IKで砲身を動かす。
 		m_ik[i]->SetNextTarget(ppos);
 	}
@@ -191,6 +192,17 @@ bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e, int ikNo)
 	m_beams[ikNo]->SetPos(epos);
 	m_beams[ikNo]->SetRot(m_ik[ikNo]->GetEffectorBone()->GetWorldMatrix().GetRotate());
 	m_beams[ikNo]->Play();
+
+	/*if (!m_beamSE->IsPlaying()) {
+		m_beamSE->Play(true);
+	}*/
+
+	if (!m_isBeamSound) {
+		m_isBeamSound = true;
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/beam.wav");
+		se->Play(false);
+	}
 
 	const float beamWidth = 15.0f;		//ビームの幅。
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {

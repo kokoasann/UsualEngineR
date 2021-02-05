@@ -31,8 +31,14 @@ IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 	auto vecToPlayer = ppos - epos;
 	float distanceToCurrentP = vecToPlayer.Length();
 
-	const float distance = 5.f;
+	const float distance = 10.f;
 	if (std::abs(distanceToCurrentP) < distance){
+		if (!m_isSound) {
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/chara/punch_2_1.wav");
+			se->Play(false);
+			m_isSound = true;
+		}
 		//プレイヤーがノックバック。
 		auto& p = GameManager::GetInstance().m_player;
 		const auto& epos = e->GetPosition();
@@ -49,6 +55,7 @@ IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 	auto vecToPlayer2 = m_playerPosition - epos;
 	float distanceToOldP = vecToPlayer2.Length();
 	if (std::abs(distanceToOldP) < distance) {
+		m_isSound = false;
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 

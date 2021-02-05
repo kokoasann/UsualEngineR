@@ -246,7 +246,7 @@ bool Boss_FatmanChargeBeamAndShootingState::BeamJudge(IEnemy* e, int ikNo)
 	m_beams[ikNo]->Play();
 
 	if (!m_beamSE->IsPlaying()) {
-		m_beamSE->Play(true);
+		m_beamSE->Play(false);
 	}
 
 	const float beamWidth = 15.0f;		//ƒr[ƒ€‚Ì•B
