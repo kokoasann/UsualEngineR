@@ -20,6 +20,10 @@ DropItemBom::~DropItemBom()
 void DropItemBom::Release()
 {
 	DeleteGO(m_model);
+	if (m_effect != nullptr) {
+		m_effect->Stop();
+		DeleteGO(m_effect);
+	}
 }
 
 void DropItemBom::OnDestroy()
@@ -47,6 +51,17 @@ bool DropItemBom::Start()
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One * m_scale);
 
+	m_effect = NewGO<SmokeEffect>(0);
+	//effectの色を輝かせたいときは1.0fより上の数値に設定。
+	//※densityは2.f未満だと表示されないようです
+	m_effect->Init(Vector4(0.9f, 0.9f, 1.95f, 0.05f), Vector4(0.8f, 0.8f, 1.80f, 0.f), /*lifeSpanParam*/0.6f, /*density*/2.f, false);
+	m_effect->SetSca(Vector3::One * 0.75f);
+	//仮としてプレイヤーの位置
+	//上にまき散らす。
+	m_effect->SetPos(m_position);
+	m_effect->SetSpeed(10.0f);
+	m_effect->Play();
+
 	return true;
 }
 
@@ -58,7 +73,24 @@ void DropItemBom::PreUpdate()
 
 void DropItemBom::Update()
 {
-	m_model->SetPosition(m_position);
+	//deltaTimeためる変数
+	m_deltaTimeSt += gameTime()->GetDeltaTime();
+	//サインカーブの変化量をいれる 
+	float sinValue = sin(m_PI * 2 * m_deltaTimeSt);
+	//sinValue *= gameTime()->GetDeltaTime();
+	const float rotateSpeed = 120.0f;
+	m_angle += rotateSpeed * gameTime()->GetDeltaTime();
+
+
+	Vector3 updownPos = m_position;
+	const float Yrift = 15.0f;		//モデルが埋まらないための補正値
+	updownPos.y += sinValue + Yrift;
+	m_model->SetPosition(updownPos);
+	m_effect->SetPos(updownPos);
+
+	Quaternion m_qrot;
+	m_qrot.SetRotationDeg(Vector3::AxisY, m_angle);
+	m_model->SetRotation(m_qrot);
 }
 
 void DropItemBom::PostUpdate()
@@ -81,6 +113,7 @@ void DropItemBom::PostUpdate()
 		auto gameObj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(gameObj);
 	}
+
 }
 
 

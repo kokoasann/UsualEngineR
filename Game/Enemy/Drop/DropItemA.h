@@ -1,6 +1,8 @@
 #pragma once
 #include "../../Player/Player.h"
 
+class SmokeEffect;
+
 /// <summary>
 /// 
 /// </summary>
@@ -72,4 +74,8 @@ private:
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 1.f;
 
+	float m_count = 0.f;
+
+	//effect
+	SmokeEffect* m_effect = nullptr;
 };

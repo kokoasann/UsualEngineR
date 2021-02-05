@@ -4,6 +4,7 @@
 /// <summary>
 /// 
 /// </summary>
+class SmokeEffect;
 class DropItemBom :public GameObject
 {
 public:
@@ -68,8 +69,14 @@ private:
 
 	//Model
 	ModelRender* m_model = nullptr;
-	Vector3 m_position = { 0,15,-20 };
+	Vector3 m_position = { 0,75,-20 };
 	Quaternion m_rotation = Quaternion::Identity;
 	const float m_scale = 1.f;
+
+	//effectŠÖ˜A
+	SmokeEffect* m_effect = nullptr;
+	float m_PI = 3.14159265;
+	float m_angle = 0.0f;
+	float m_deltaTimeSt = 0;
 
 };

@@ -27,4 +27,5 @@ private:
 	};
 	bool			m_isKnockBack = false;
 	std::vector< MuzzleFlash*> m_muzzleFlashes;
+	CSoundSource* m_shootSE = nullptr;
 };

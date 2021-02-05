@@ -27,6 +27,8 @@ Boss_MiddleBomb::~Boss_MiddleBomb()
 
 void Boss_MiddleBomb::Init()
 {
+	m_isNormalEnemy = false;
+
 	//Model
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/boss/mb/mb.tkm";
@@ -205,7 +207,7 @@ void Boss_MiddleBomb::Execute()
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Tired;
 	}
-	else if (hpper < 2.9f / 3.f)
+	else if (hpper < 2.f / 3.f)
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Angry;
 	}

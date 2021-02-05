@@ -191,6 +191,7 @@
     <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h" />
     <ClInclude Include="Enemy\Drop\DropItemA.h" />
     <ClInclude Include="Enemy\Drop\DropItemBom.h" />
+    <ClInclude Include="Enemy\Drop\DropItemFat.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\EnemyTest.h" />
     <ClInclude Include="Enemy\Equipment\Enemy_Bullet.h" />
@@ -265,6 +266,7 @@
     <ClInclude Include="Enemy\Zako\Zako_ShortBig.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortDistanceMonster.h" />
     <ClInclude Include="Enemy\Zako\Zako_ShortRangeMonster.h" />
+    <ClInclude Include="EventMovie\EventMovie.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCollisionAttribute.h" />
@@ -335,6 +337,7 @@
     <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemA.cpp" />
     <ClCompile Include="Enemy\Drop\DropItemBom.cpp" />
+    <ClCompile Include="Enemy\Drop\DropItemFat.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\EnemyTest.cpp" />
     <ClCompile Include="Enemy\Equipment\Enemy_Bullet.cpp" />
@@ -409,6 +412,7 @@
     <ClCompile Include="Enemy\Zako\Zako_ShortBig.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortDistanceMonster.cpp" />
     <ClCompile Include="Enemy\Zako\Zako_ShortRangeMonster.cpp" />
+    <ClCompile Include="EventMovie\EventMovie.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCollisionAttribute.cpp" />

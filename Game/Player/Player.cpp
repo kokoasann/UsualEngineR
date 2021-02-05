@@ -53,10 +53,10 @@ struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
 		
 		if (!bool(index & GameCollisionAttribute::Enemy) || index == -1)
 			return 0.f;
-		if (index == -1)
+		/*if (index == -1)
 		{
 			DebugPrintValue(EDebugConsoloUser::WATA, "indx", index);
-		}
+		}*/
 		//if (!(index & enCollisionAttr_Character))
 			//return 0.f;
 

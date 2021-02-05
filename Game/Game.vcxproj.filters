@@ -399,6 +399,12 @@
     <ClInclude Include="Enemy\Drop\DropItemBom.h">
       <Filter>Enemy\Drop</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Drop\DropItemFat.h">
+      <Filter>Enemy\Drop</Filter>
+    </ClInclude>
+    <ClInclude Include="EventMovie\EventMovie.h">
+      <Filter>EventMovie</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -800,6 +806,12 @@
     <ClCompile Include="Enemy\Drop\DropItemBom.cpp">
       <Filter>Enemy\Drop</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Drop\DropItemFat.cpp">
+      <Filter>Enemy\Drop</Filter>
+    </ClCompile>
+    <ClCompile Include="EventMovie\EventMovie.cpp">
+      <Filter>EventMovie</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -939,6 +951,9 @@
     </Filter>
     <Filter Include="Navimesh">
       <UniqueIdentifier>{e7b9cec7-b88e-435b-bc65-9e44d9b458b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventMovie">
+      <UniqueIdentifier>{e0b006df-0e2e-41f4-b56f-846a6c0bb568}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
