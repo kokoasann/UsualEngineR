@@ -21,6 +21,11 @@ DropItemA::~DropItemA()
 void DropItemA::Release()
 {
 	DeleteGO(m_model);
+
+	if (m_effect != nullptr) {
+		m_effect->Stop();
+		DeleteGO(m_effect);
+	}
 }
 
 void DropItemA::OnDestroy()
@@ -49,10 +54,12 @@ bool DropItemA::Start()
 	m_model->SetScale(Vector3::One * m_scale);
 	m_position.y += 10.f;
 
+	//Effect
 	m_effect = NewGO<SmokeEffect>(0);
-	m_effect->Init(Vector4(2.98f, 2.92f, 1.5f, 0.2f), Vector4(0.92f, 0.93f, 0.2f, 0.f), 0.1f, 2.f, false);
-	m_effect->SetSca(Vector3::One * 0.45f);
+	m_effect->Init(Vector4(0.6f, 1.36f, 0.79f, 0.05f), Vector4(0.2f, 0.96f, 0.39f, 0.f), 0.6f, 2.f, false);
+	m_effect->SetSca(Vector3::One * 0.75f);
 	m_effect->SetPos(m_position);
+	m_effect->SetSpeed(10.0f);
 	m_effect->Play();
 
 	return true;
@@ -66,12 +73,13 @@ void DropItemA::PreUpdate()
 
 void DropItemA::Update()
 {
+	//Rotation
 	float rotSpeed = 50.f;
 	Quaternion rot;
 	rot.SetRotationDeg(Vector3::AxisY, rotSpeed * gameTime()->GetDeltaTime());
 	m_rotation.Multiply(rot);
 	m_model->SetRotation(m_rotation);
-
+	//Move
 	m_position.y += sin(m_count) * 8.f * gameTime()->GetDeltaTime();
 	m_count += 10.0f * gameTime()->GetDeltaTime();
 	m_model->SetPosition(m_position);
@@ -86,11 +94,6 @@ void DropItemA::PostUpdate()
 	if (p == nullptr) {
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
-
-		if (m_effect != nullptr) {
-			m_effect->Stop();
-			DeleteGO(m_effect);
-		}
 		return;
 	}
 
@@ -103,11 +106,6 @@ void DropItemA::PostUpdate()
 
 		auto gameObj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(gameObj);
-
-		if (m_effect != nullptr) {
-			m_effect->Stop();
-			DeleteGO(m_effect);
-		}
 	}
 }
 
