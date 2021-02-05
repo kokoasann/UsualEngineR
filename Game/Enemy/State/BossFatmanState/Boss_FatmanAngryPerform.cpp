@@ -24,10 +24,6 @@ Boss_FatmanAngryPerform::Boss_FatmanAngryPerform()
 
 Boss_FatmanAngryPerform::~Boss_FatmanAngryPerform()
 {	
-}
-
-void Boss_FatmanAngryPerform::Release()
-{
 	//¶¬‚µ‚½”‚¾‚¯íœB
 	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
@@ -35,6 +31,10 @@ void Boss_FatmanAngryPerform::Release()
 	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
 		DeleteGO(m_muzzleFlashes.at(i));
 	}
+}
+
+void Boss_FatmanAngryPerform::Release()
+{
 }
 
 void Boss_FatmanAngryPerform::OnDestroy()
