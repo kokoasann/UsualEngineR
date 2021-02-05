@@ -28,6 +28,7 @@ private:
 	bool m_isPerformed = false;
 	bool m_isAngryPerformed = false;
 	bool m_isBmp = false;
+	bool m_isAngry = false;
 	Boss_FatmanAngryPerform* m_bap = nullptr;
 
 	//IKä÷åWÅB

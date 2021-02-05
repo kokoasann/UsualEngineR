@@ -75,7 +75,7 @@ void Boss_FatmanMainState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 {
-	if (!m_isBmp) {
+	if (!m_isBmp && m_isAngryPerformed) {
 		DeleteGO(m_bap);
 		m_isBmp = true;
 	}
@@ -95,7 +95,7 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 	if (m_fatTimer > attackSpan) {
 		auto& player = GameManager::GetInstance().m_player;
 		const auto& ppos = player->GetPosition();
-		//return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enTakeDistance));
+		//return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enAttackC));
 
 		if (player->GetCurrentHP() > 0.f) {
 			auto& epos = e->GetPosition();
