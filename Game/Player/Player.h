@@ -321,6 +321,10 @@ public:
 	const EnAttackPreset& GetCurrentAttackPreset() const{
 		return m_currentAttackPreset;
 	}
+	const bool* GetAttackPresetFrag() const
+	{
+		return m_canUsePreset;
+	}
 
 	void UnlockPreset(const EnAttackPreset& preset) {
 		m_canUsePreset[TO_INT(preset)] = true;
@@ -455,8 +459,8 @@ private:
 
 	//Current Attack Type
 	EnAttackPreset m_currentAttackPreset = EnAttackPreset::enDefault;
-	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
-	//bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, false, false, false};
+	//bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, true, true , true};
+	bool m_canUsePreset[TO_INT(EnAttackPreset::enNumPreset)] = { true, false, false, false};
 
 	//State
 	IPlayerState* m_nextState = nullptr;

@@ -178,6 +178,8 @@ bool GameStage::Start()
 		//fd.ratioParlin = 
 	}
 
+	
+
 	static float i = 1;
 	DebugSwitchAddButton(DebugSwitchNewSwitch_Button('Z', VK_LEFT, [&]()
 		{
