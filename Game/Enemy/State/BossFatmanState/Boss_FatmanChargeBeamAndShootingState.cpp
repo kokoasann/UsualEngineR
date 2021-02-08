@@ -16,8 +16,6 @@ Boss_FatmanChargeBeamAndShootingState::Boss_FatmanChargeBeamAndShootingState()
 		beam->SetSca(Vector3::One * 0.03);
 		m_beams.push_back(beam);
 	}
-	m_chargeSE = NewGO<CSoundSource>(0, "sound");
-	m_chargeSE->Init(L"Assets/sound/boss_fatman/charge.wav");
 	m_shootSE = NewGO<CSoundSource>(0, "sound");
 	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan.wav");
 }
@@ -28,7 +26,6 @@ Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
 	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
 	}
-	DeleteGO(m_chargeSE);
 	DeleteGO(m_shootSE);
 }
 
@@ -129,16 +126,12 @@ void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
 			m_isEndChargeBeam = true;
 		}
 	}
-
 }
 
 bool Boss_FatmanChargeBeamAndShootingState::Charge(IEnemy* e)
 {
-	float chargeTime = 0.0f;		//—­‚ß‚Ä‚¢‚éŽžŠÔB
-	if (EnBattlePhase::Mad == Boss_Fatman::GetCurrentBattlePhase()) {
-		chargeTime = 1.0f;
-	}
-	else if (EnBattlePhase::Tired == Boss_Fatman::GetCurrentBattlePhase()) {
+	float chargeTime = 1.0f;		//—­‚ß‚Ä‚¢‚éŽžŠÔB
+	if (EnBattlePhase::Tired == Boss_Fatman::GetCurrentBattlePhase()) {
 		chargeTime = 2.0f;
 	}
 
@@ -146,13 +139,13 @@ bool Boss_FatmanChargeBeamAndShootingState::Charge(IEnemy* e)
 	m_chargeTimer += gameTime()->GetDeltaTime();
 	if (m_chargeTimer > chargeTime) {
 		m_isChargeSound = false;
-		m_chargeSE->Stop();
 		return true;
 	}
 
 	if (!m_isChargeSound) {
-		m_chargeSE->Play(false);
-		m_chargeSE->SetVolume(0.08f);
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/boss_fatman/charge.wav");
+		se->Play(false);
 		m_isChargeSound = true;
 	}
 
