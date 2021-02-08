@@ -18,8 +18,6 @@ Boss_FatmanChargeBeamAndShootingState::Boss_FatmanChargeBeamAndShootingState()
 	}
 	m_chargeSE = NewGO<CSoundSource>(0, "sound");
 	m_chargeSE->Init(L"Assets/sound/boss_fatman/charge.wav");
-	m_beamSE = NewGO<CSoundSource>(0, "sound");
-	m_beamSE->Init(L"Assets/sound/chara/beam.wav");
 	m_shootSE = NewGO<CSoundSource>(0, "sound");
 	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan.wav");
 }
@@ -31,7 +29,6 @@ Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
 		DeleteGO(m_beams.at(i));
 	}
 	DeleteGO(m_chargeSE);
-	DeleteGO(m_beamSE);
 	DeleteGO(m_shootSE);
 }
 
@@ -63,7 +60,7 @@ IEnemyState* Boss_FatmanChargeBeamAndShootingState::Update(IEnemy* e)
 	if (m_isEndChargeBeam && m_isEndShooting) {
 		m_isKnockBackCB = false;
 		m_isKnockBackSH = false;
-		m_beamSE->Stop();
+		m_isBeamSound = false;
 		m_shootSE->Stop();
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
@@ -96,8 +93,6 @@ void Boss_FatmanChargeBeamAndShootingState::InitChargeBeam(IEnemy* e)
 		m_chargebeamIk[i] = e->GetIK(TO_INT(IEnemy::EnIK::enArm_L) + i);
 	}
 	m_isEndChargeBeam = false;
-
-	
 }
 
 void Boss_FatmanChargeBeamAndShootingState::ChargeBeam(IEnemy* e)
@@ -245,8 +240,11 @@ bool Boss_FatmanChargeBeamAndShootingState::BeamJudge(IEnemy* e, int ikNo)
 	m_beams[ikNo]->SetRot(m_chargebeamIk[ikNo]->GetEffectorBone()->GetWorldMatrix().GetRotate());
 	m_beams[ikNo]->Play();
 
-	if (!m_beamSE->IsPlaying()) {
-		m_beamSE->Play(false);
+	if (!m_isBeamSound) {
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/beam.wav");
+		se->Play(false);
+		m_isBeamSound = true;
 	}
 
 	const float beamWidth = 15.0f;		//ÉrÅ[ÉÄÇÃïùÅB
