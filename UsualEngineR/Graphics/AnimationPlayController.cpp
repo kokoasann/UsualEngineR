@@ -62,8 +62,12 @@ namespace UER {
 		const auto& keyFramePtrListArray = m_animationClip->GetKeyFramePtrListArray();
 		const auto& topBoneKeyFrameList = m_animationClip->GetTopBoneKeyFrameList();
 
+		float lastFrameTime = 0.f;
 		//float lastFrameTime = topBoneKeyFrameList[m_currentKeyFrameNoLastFrame]->time;
-		float lastFrameTime = topBoneKeyFrameList[m_lastKeyFrameNo]->time;
+		if(m_lastKeyFrameNo > topBoneKeyFrameList.size()) //たまに飛び出ちゃうので、その時は最初のやつを使う。
+			lastFrameTime = topBoneKeyFrameList[0]->time;
+		else
+			lastFrameTime = topBoneKeyFrameList[m_lastKeyFrameNo]->time;
 		float frameTime = topBoneKeyFrameList[m_currentKeyFrameNo]->time - lastFrameTime;
 
 		float time = m_time - lastFrameTime;

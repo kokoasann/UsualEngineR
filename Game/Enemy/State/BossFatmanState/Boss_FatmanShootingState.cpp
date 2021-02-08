@@ -17,7 +17,7 @@ Boss_FatmanShootingState::Boss_FatmanShootingState()
 		m_muzzleFlashes.push_back(muzzleFlash);
 	}
 	m_shootSE = NewGO<CSoundSource>(0);
-	m_shootSE->Init(L"Assets/sound/chara/mg.wav");
+	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan.wav");
 }
 
 Boss_FatmanShootingState::~Boss_FatmanShootingState()
@@ -49,7 +49,6 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 	const float maxTime = 5.f;
 	if (m_stateTimer > maxTime) {
 		m_isKnockBack = false;
-		m_shootSE->Stop();
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 
@@ -77,6 +76,7 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 
 void Boss_FatmanShootingState::Exit(IEnemy* e)
 {
+	m_shootSE->Stop();
 }
 
 void Boss_FatmanShootingState::BulletGenerate(IEnemy* e)

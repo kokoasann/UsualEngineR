@@ -108,7 +108,7 @@ void DropItemBom::PostUpdate()
 	if (dist < m_GRASP_RANGE) {
 		//p->UnlockSkill(m_typeId);
 		GameManager::GetInstance().m_gameScene->OnItemUnlocked();
-		p->UnlockPreset(Player::EnAttackPreset::enMeleePreset);
+		p->UnlockPreset(Player::EnAttackPreset::enExplosivePreset);
 
 		auto gameObj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(gameObj);
