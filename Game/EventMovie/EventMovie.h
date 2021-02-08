@@ -129,7 +129,13 @@ public:
 	{
 		m_offset = v;
 	}
+
+	void Play() {
+
+	}
+
 private:
+
 	Vector3 m_offset;
 	Camera* m_camera = nullptr;
 	EventListennerFunc m_eventListennerFunc;
@@ -139,4 +145,9 @@ private:
 	std::vector<ModelRender*> m_actors;
 	std::vector<SEventMovieFrame> m_frames;
 	Matrix* m_objMats = nullptr;
+
+	unsigned m_frameIndex = 0;
+
+	double m_timer = 0.f;
+	int m_eventMarkerIndex = 0;
 };
