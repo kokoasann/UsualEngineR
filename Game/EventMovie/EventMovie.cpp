@@ -104,7 +104,7 @@ void EventMovie::PreUpdate()
 
 void EventMovie::Update()
 {
-	if (!g_pad[0]->IsPress(enButtonA)) return;
+//	if (!g_pad[0]->IsPress(enButtonA)) return;
 
 	if (m_eventMovieMarker.size() > m_eventMarkerIndex) {
 		const float Time = m_eventMovieMarker[m_eventMarkerIndex].time;
@@ -125,7 +125,7 @@ void EventMovie::Update()
 			m_camera->SetPosition(m_frames[m_frameIndex].camMat.GetTransrate());
 			Vector3 target = Vector3(0, -1, 0);
 			m_frames[m_frameIndex].camMat.GetRotate().Apply(target);
-			m_camera->SetTarget(target);
+			m_camera->SetTarget(target + m_camera->GetPosition());
 
 			const int numObj = m_actors.size();
 			for (int i = 0; i < numObj; i++) {

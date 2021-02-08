@@ -1,5 +1,5 @@
 #pragma once
-
+#include <unordered_map>
 class EventMovie;
 
 /// <summary>
@@ -65,6 +65,11 @@ private:
 
 	ModelRender* CreateModelRender(const std::string& name);
 	EventMovie* m_eventMovie = nullptr;
-	std::map<std::string, ModelRender*> m_modelRenderMap;
 	std::vector<ModelRender*> m_modelRenders;
+
+	ModelRender* m_chara;
+	ModelRender* m_bomb;
+	ModelRender* m_melee;
+	ModelRender* m_fat;
+	std::vector<ModelRender*> m_pods;
 };
