@@ -65,11 +65,11 @@ private:
 
 	ModelRender* CreateModelRender(const std::string& name);
 	EventMovie* m_eventMovie = nullptr;
-	std::vector<ModelRender*> m_modelRenders;
+	std::vector<ModelRender*> m_modelRenders;//まとめて解放する用。
 
-	ModelRender* m_chara;
-	ModelRender* m_bomb;
-	ModelRender* m_melee;
-	ModelRender* m_fat;
+	ModelRender* m_chara = nullptr;
+	ModelRender* m_bomb = nullptr;
+	ModelRender* m_melee = nullptr;
+	ModelRender* m_fat = nullptr;
 	std::vector<ModelRender*> m_pods;
 };
