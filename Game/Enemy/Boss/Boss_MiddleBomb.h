@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Enemy/IEnemy.h"
+#include "Effect/ExplosionEffect.h"
 /// <summary>
 /// 
 /// </summary>
@@ -48,6 +49,19 @@ public:
 		Angry,
 		Num,
 	};
+
+	void Explode() override {
+		auto forward = GetForward();
+		forward *= -30.f;
+		m_explodeEffect->SetPos(m_position + forward);
+		//m_explodeEffect->SetPos(Vector3::One);
+		m_explodeEffect->Play();
+		StopJetSE();
+		auto explodeSe = NewGO<CSoundSource>(0);
+		explodeSe->Init(L"Assets/sound/chara/explosion.wav", true);
+		explodeSe->SetPosition(m_position);
+		explodeSe->Play(false);
+	}
 private:
 	void InitAnim();
 private:
