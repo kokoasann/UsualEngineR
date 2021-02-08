@@ -104,6 +104,40 @@ void EventMovie::PreUpdate()
 
 void EventMovie::Update()
 {
+	if (!g_pad[0]->IsPress(enButtonA)) return;
+
+	if (m_eventMovieMarker.size() > m_eventMarkerIndex) {
+		const float Time = m_eventMovieMarker[m_eventMarkerIndex].time;
+		if (m_timer >= Time) {
+			m_eventListennerFunc(m_eventMovieMarker[m_eventMarkerIndex].markerName);
+			//printf("time : %f\nmarkerName : ", Time);
+			//printf(m_eventMovieMarker[m_eventMarkerIndex].markerName.c_str());
+			//printf("\n");
+			m_eventMarkerIndex++;
+		}
+	}
+
+	if (m_frames.size() > m_frameIndex) {
+		const float Time = m_frames[m_frameIndex].time;
+		if (m_timer >= Time) {
+			//printf("frame : %f\n", Time);
+			//camera
+			m_camera->SetPosition(m_frames[m_frameIndex].camMat.GetTransrate());
+			Vector3 target = Vector3(0, -1, 0);
+			m_frames[m_frameIndex].camMat.GetRotate().Apply(target);
+			m_camera->SetTarget(target);
+
+			const int numObj = m_actors.size();
+			for (int i = 0; i < numObj; i++) {
+				m_actors[i]->SetPosition(m_frames[m_frameIndex].objMats[i].GetTransrate());
+				m_actors[i]->SetRotation(m_frames[m_frameIndex].objMats[i].GetRotate());
+				m_actors[i]->SetScale(m_frames[m_frameIndex].objMats[i].GetScale());
+			}
+			m_frameIndex++;
+		}
+	}
+
+	m_timer += gameTime()->GetDeltaTime();
 
 }
 
@@ -122,3 +156,4 @@ void EventMovie::PostRender()
 {
 
 }
+
