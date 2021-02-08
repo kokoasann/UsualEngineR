@@ -98,7 +98,7 @@ class OT_Export(bpy.types.Operator):
                 
                 cam = bpy.context.scene.objects["Camera"]
                 cammat = cam.matrix_world.copy()
-                cammat = transToYUp(cammat)
+                #cammat = transToYUp(cammat)
                 cammat.transpose()
                 for vec3 in cammat:
                     for i , m in enumerate(vec3):
@@ -107,8 +107,9 @@ class OT_Export(bpy.types.Operator):
                             
                 for obj in bpy.context.selected_objects:
                     mat = obj.matrix_world.copy()
-                    mat = transToYUp(mat)
+                    #mat = transToYUp(mat)
                     mat.transpose()
+                    #print(mat)
                     for vec3 in mat:
                         for i , m in enumerate(vec3):
                             #if i != 3:
