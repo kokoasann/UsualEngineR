@@ -6,13 +6,13 @@
 	{
 		float time
 		int nameNum
-		wchar_t name[nameNum]
+		char name[nameNum+1] // +1はNULL文字分。
 	}
 	struct Object
 	{
 		int id
 		int nameNum
-		wchar_t name[nameNum]
+		char name[nameNum+1]
 	}
 	struct Frame
 	{
@@ -32,23 +32,9 @@
 
 */
 
-struct SEventMovieMarker
-{
-	float time = 0.f;
-	wchar_t* markerName = nullptr;
-};
 
-struct SEventMovieObject
-{
-	wchar_t* objName = nullptr;
-	int id = -1;
-};
-
-struct SEventMovieFrame
-{
-	float time = 0.f;
-
-};
+using ActorInitFunc = std::function<ModelRender* (const std::string&)>;
+using EventListennerFunc = std::function<void(const std::string&)>;
 
 /// <summary>
 /// 
@@ -56,6 +42,31 @@ struct SEventMovieFrame
 class EventMovie :public GameObject
 {
 public:
+	struct SEventMovieMarker
+	{
+		float time = 0.f;
+		std::string markerName;
+	};
+
+	struct SEventMovieObject
+	{
+		std::string objName;
+		int id = -1;
+	};
+
+	struct SEventMovieFrame
+	{
+		float time = 0.f;
+		Matrix camMat;
+		Matrix* objMats = nullptr;
+	};
+
+	struct Matrix4x3
+	{
+		Vector3 v[4];
+	};
+
+
 	EventMovie();
 	virtual ~EventMovie();
 
@@ -69,6 +80,15 @@ public:
 	/// 面倒くさければRelease関数と同じでもよい。
 	/// </summary>
 	virtual void OnDestroy() override;
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="path"></param>
+	/// /// <param name="camera"> メインカメラ </param>
+	/// <param name="actorInitFunc"> アクターを初期化する関数 引数の文字列はアクターの名前　戻り値はアクターのモデル このモデルに行列をぶち込んでいく</param>
+	/// <param name="eventListennerFunc"> animationの animetion event みたいなもの。これでアクターのアニメーションをさせたりフェードアウトさせたりする </param>
+	void Init(const char* path,Camera* camera,const ActorInitFunc& actorInitFunc,const EventListennerFunc& eventListennerFunc);
 
 	/// <summary>
 	/// NewGO時に即座に呼ばれる関数。
@@ -104,6 +124,19 @@ public:
 	/// 手前に表示するやつの描画。
 	/// </summary>
 	void PostRender() override;
-private:
 
+	void SetOffset(const Vector3& v)
+	{
+		m_offset = v;
+	}
+private:
+	Vector3 m_offset;
+	Camera* m_camera = nullptr;
+	EventListennerFunc m_eventListennerFunc;
+
+	std::vector<SEventMovieMarker> m_eventMovieMarker;
+
+	std::vector<ModelRender*> m_actors;
+	std::vector<SEventMovieFrame> m_frames;
+	Matrix* m_objMats = nullptr;
 };
