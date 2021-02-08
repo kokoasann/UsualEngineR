@@ -284,6 +284,7 @@
     <ClInclude Include="Item\RedPotion.h" />
     <ClInclude Include="Level\GameStage.h" />
     <ClInclude Include="Navimesh\Navimesh.h" />
+    <ClInclude Include="OpeningScene.h" />
     <ClInclude Include="Player\Attachment\Gun.h" />
     <ClInclude Include="Player\Attachment\JetPack.h" />
     <ClInclude Include="Player\Attachment\Shield.h" />
@@ -432,6 +433,7 @@
     <ClCompile Include="Level\GameStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Navimesh\Navimesh.cpp" />
+    <ClCompile Include="OpeningScene.cpp" />
     <ClCompile Include="Player\Attachment\Gun.cpp" />
     <ClCompile Include="Player\Attachment\JetPack.cpp" />
     <ClCompile Include="Player\Attachment\Shield.cpp" />

@@ -408,6 +408,7 @@
     <ClInclude Include="Enemy\State\BossFatmanState\Boss_FatmanIdleState.h">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
+    <ClInclude Include="OpeningScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -818,6 +819,7 @@
     <ClCompile Include="Enemy\State\BossFatmanState\Boss_FatmanIdleState.cpp">
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
+    <ClCompile Include="OpeningScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

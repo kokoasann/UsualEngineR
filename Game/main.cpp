@@ -3,6 +3,7 @@
 
 #include "Game.h"
 #include "Title.h"
+#include "OpeningScene.h"
 #include "Test/Test.h"
 #include "Result.h"
 #include "GameDebugger.h"
@@ -70,6 +71,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//test->Test_CreateTransform();
 
 	NewGO<Title>(0);
+	//NewGO<OpeningScene>(0);
 	//NewGO<Game>(0);
 
 	//auto result = NewGO<Result>(0);
