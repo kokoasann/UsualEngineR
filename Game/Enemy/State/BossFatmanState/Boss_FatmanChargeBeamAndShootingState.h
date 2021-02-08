@@ -63,8 +63,7 @@ private:
 	float					m_sumMoveSpeed = 0.0f;
 	bool					m_isKnockBackCB = false;
 	bool					m_isChargeSound = false;
-	CSoundSource*			m_chargeSE = nullptr;
-	CSoundSource*			m_beamSE = nullptr;
+	bool					m_isBeamSound = false;
 
 	//—ËB
 	float					m_shotTimer = 0.f;
