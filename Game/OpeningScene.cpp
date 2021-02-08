@@ -103,6 +103,7 @@ ModelRender* OpeningScene::CreateModelRender(const std::string& name) {
 		mid.m_tkmFilePath = "Assets/modelData/boss/lf/lf.tkm";
 		mid.m_tksFilePath = "Assets/modelData/boss/lf/lf.tks";
 		modelR->Init(mid);
+		m_fat = modelR;
 	}else
 	//bomb
 	if (std::strcmp(name.c_str(), "bomb") == 0) {
@@ -126,7 +127,7 @@ ModelRender* OpeningScene::CreateModelRender(const std::string& name) {
 		mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
 		mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
 		modelR->Init(mid);
-
+		m_pods.push_back(modelR);
 	}
 
 	return modelR;
