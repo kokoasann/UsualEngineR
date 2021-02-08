@@ -58,7 +58,6 @@ IEnemyState* Boss_FatmanChargeBeamAndShootingState::Update(IEnemy* e)
 		m_isKnockBackCB = false;
 		m_isKnockBackSH = false;
 		m_isBeamSound = false;
-		m_shootSE->Stop();
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	
@@ -67,6 +66,7 @@ IEnemyState* Boss_FatmanChargeBeamAndShootingState::Update(IEnemy* e)
 
 void Boss_FatmanChargeBeamAndShootingState::Exit(IEnemy* e)
 {
+	m_shootSE->Stop();
 }
 
 void Boss_FatmanChargeBeamAndShootingState::OnAttacked(IEnemy* e)
