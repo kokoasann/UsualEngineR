@@ -415,6 +415,7 @@
     <ClInclude Include="Player\State\PlayerMovieState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="EndingScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -832,6 +833,7 @@
     <ClCompile Include="Player\State\PlayerMovieState.cpp">
       <Filter>Player\State</Filter>
     </ClCompile>
+    <ClCompile Include="EndingScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
