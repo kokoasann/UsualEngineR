@@ -42,11 +42,19 @@ bool EndingScene::Start()
 	GameManager::GetInstance().GetGameCamera()->SetActive(false);
 	GameManager::GetInstance().GetPlayer()->SetState(GameManager::GetInstance().GetPlayer()->GetState(Player::EnState::enMovie));
 	
-	m_edBack = NewGO<ModelRender>(0);
+	
 	ModelInitData mid;
 	mid.m_upAxis = enUpAxisY;
 	mid.m_tkmFilePath = "Assets/modelData/edBack/edBack.tkm";
+	m_edBack = NewGO<ModelRender>(0);
 	m_edBack->Init(mid);
+	m_edBack->SetMulColor({ 0,0,0,1 });
+	mid.m_tkmFilePath = "Assets/modelData/edBack/edBack_cross.tkm";
+	m_edBack_cross = NewGO<ModelRender>(0);
+	m_edBack_cross->Init(mid);
+	//m_edBack_cross->SetMulColor({ 11,11,11,1 });
+	m_edBack_cross->SetMulColor({ 50,1,1,1 });
+	g_graphicsEngine->GetPostEffect().GetBloom().SetStreekFrag(false);
 
 	m_movie = NewGO<EventMovie>(0);
 	m_movie->Init("Assets/eventMovie/ed.evm", g_camera3D,
@@ -93,7 +101,7 @@ bool EndingScene::Start()
 			}
 			else if (std::strcmp(name.c_str(), "light_exit") == 0)
 			{
-				m_exit->SetMulColor({ 10,10,10,1 });
+				//m_exit->SetMulColor({ 3,3,3,1 });
 			}
 			else if (std::strcmp(name.c_str(), "dark_exit") == 0)
 			{
