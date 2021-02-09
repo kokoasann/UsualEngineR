@@ -24,6 +24,7 @@ OpeningScene::~OpeningScene()
 void OpeningScene::Release()
 {
 	GameManager::GetInstance().SetGameState(GameManager::EnGameState::InGame);
+	GameManager::GetInstance().SpawnPod();
 
 	DeleteGO(m_eventMovie);
 	for (auto mr : m_modelRenders) {
