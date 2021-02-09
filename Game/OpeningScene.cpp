@@ -85,6 +85,37 @@ bool OpeningScene::Start()
 	};
 
 	EventListennerFunc eventListenerFunc = [&](const std::string& name) {
+
+		if (std::strcmp(name.c_str(), "start") == 0) {
+			GameManager::GetInstance().GetPlayer()->PlayAnimation(Player::EnAnimation::enWalk);
+		}
+
+		if (std::strcmp(name.c_str(), "m_idle") == 0) {
+			EnemyManager::GetEnemyManager().GetMeleeBoss()->PlayAnimation(IEnemy::EnAnimation::enIdle);
+			GameManager::GetInstance().GetPlayer()->PlayAnimation(Player::EnAnimation::enIdle);
+		}
+
+		//lol panch = punch.
+		if (std::strcmp(name.c_str(), "melee_panch") == 0) {
+			EnemyManager::GetEnemyManager().GetMeleeBoss()->PlayAnimation(IEnemy::EnAnimation::enAttackA);
+		}
+
+		if (std::strcmp(name.c_str(), "melee_idle") == 0) {
+			EnemyManager::GetEnemyManager().GetMeleeBoss()->PlayAnimation(IEnemy::EnAnimation::enIdle);
+		}
+
+		if (std::strcmp(name.c_str(), "targeting") == 0) {
+			EnemyManager::GetEnemyManager().GetBombBoss()->PlayAnimation(IEnemy::EnAnimation::enAttackA);
+		}
+
+		if (std::strcmp(name.c_str(), "black_out") == 0) {
+			Fade::GetInstance().BlackOut();
+		}
+
+		if (std::strcmp(name.c_str(), "in") == 0) {
+			Fade::GetInstance().MakeBright();
+		}
+
 		if (std::strcmp(name.c_str(), "fade_out") == 0) {
 			Fade::GetInstance().FadeOut();
 			m_isFadingToGame = true;
