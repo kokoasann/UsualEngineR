@@ -40,7 +40,7 @@ void EndingScene::Awake()
 bool EndingScene::Start()
 {
 	GameManager::GetInstance().GetGameCamera()->SetActive(false);
-	GameManager::GetInstance().GetPlayer()->SetState(GameManager::GetInstance().GetPlayer()->GetState(Player::EnState::))
+	//GameManager::GetInstance().GetPlayer()->SetState(GameManager::GetInstance().GetPlayer()->GetState(Player::EnState::))
 	m_movie = NewGO<EventMovie>(0);
 	m_movie->Init("Assets/eventMovie/ed.evm", g_camera3D,
 		[&](const std::string& name)->ModelRender*
