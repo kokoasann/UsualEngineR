@@ -218,6 +218,7 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h" />
+    <ClInclude Include="Enemy\State\EnemyMovieState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="Player\State\PlayerFlyingState.h" />
     <ClInclude Include="Player\State\PlayerGroundState.h" />
     <ClInclude Include="Player\State\PlayerGuardState.h" />
+    <ClInclude Include="Player\State\PlayerMovieState.h" />
     <ClInclude Include="Player\State\PlayerStunState.h" />
     <ClInclude Include="PositionChecker.h" />
     <ClInclude Include="PowaPowa.h" />
@@ -366,6 +368,7 @@
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp" />
+    <ClCompile Include="Enemy\State\EnemyMovieState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp" />
@@ -463,6 +466,7 @@
     <ClCompile Include="Player\State\PlayerFlyingState.cpp" />
     <ClCompile Include="Player\State\PlayerGroundState.cpp" />
     <ClCompile Include="Player\State\PlayerGuardState.cpp" />
+    <ClCompile Include="Player\State\PlayerMovieState.cpp" />
     <ClCompile Include="Player\State\PlayerStunState.cpp" />
     <ClCompile Include="PositionChecker.cpp" />
     <ClCompile Include="PowaPowa.cpp" />
