@@ -301,7 +301,7 @@ void Player::PreUpdate()
 {
 	if (GameManager::GetInstance().GetCurrentGameState() == GameManager::EnGameState::Loading) return;
 
-	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	SoundEngine().SetListenerPosition(m_position);
 	m_jetSE->SetPosition(m_position);
