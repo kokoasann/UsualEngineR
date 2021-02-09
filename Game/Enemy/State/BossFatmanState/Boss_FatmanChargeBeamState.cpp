@@ -204,7 +204,7 @@ bool Boss_FatmanChargeBeamState::BeamJudge(IEnemy* e, int ikNo)
 		se->Play(false);
 	}
 
-	const float beamWidth = 15.0f;		//ビームの幅。
+	const float beamWidth = 8.0f;		//ビームの幅。
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {
 		return true;
 	}
