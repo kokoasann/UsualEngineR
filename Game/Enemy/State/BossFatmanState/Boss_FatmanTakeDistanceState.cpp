@@ -19,7 +19,7 @@ void Boss_FatmanTakeDistanceState::Enter(IEnemy* e)
 	e->GetModel()->SetRotation(rot);
 	e->PlayAnimation(TO_INT(Boss_Fatman::EnAnimEX::enbackStep));
 	CSoundSource* se = NewGO<CSoundSource>(0);
-	se->Init(L"Assets/sound/chara/beam.wav");
+	se->Init(L"Assets/sound/boss_fatman/backstep.wav");
 	se->Play(false);
 }
 
