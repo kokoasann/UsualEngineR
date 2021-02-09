@@ -34,6 +34,7 @@ public:
 	void Release();
 
 	void SpawnPlayer();
+	void SpawnPod();
 
 	EnGameState& GetCurrentGameState() {
 		return m_gameState;
