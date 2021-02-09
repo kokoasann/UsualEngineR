@@ -109,7 +109,6 @@ void EventMovie::PreUpdate()
 
 void EventMovie::Update()
 {
-//	if (!g_pad[0]->IsPress(enButtonA)) return;
 
 	for (int i = 0; i < m_eventMovieMarker.size(); i++) {
 		const float EventTime = m_eventMovieMarker[i].time;
