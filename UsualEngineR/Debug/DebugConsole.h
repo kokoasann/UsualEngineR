@@ -72,7 +72,7 @@ namespace UER
 		char c = 'x';
 		for (int i = 0; i < 4; i++)
 		{
-			sprintf(st, "%cx: %f %cy: %f %cz: %f  %cw: %f", c, v.m[i][0], c, v.m[i][1], c, v.m[i][2], c, v.m[i][2], c, v.m[i][3]);
+			sprintf(st, "%cx: %f %cy: %f %cz: %f  %cw: %f", c, v.m[i][0], c, v.m[i][1], c, v.m[i][2], c, v.m[i][3]);
 			DebugPrintLineConsole(TO_INT(user), st);
 			c += 1;
 			if (i == 2)

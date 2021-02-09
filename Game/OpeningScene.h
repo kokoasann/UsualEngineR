@@ -1,5 +1,5 @@
 #pragma once
-
+#include <unordered_map>
 class EventMovie;
 
 /// <summary>
@@ -57,7 +57,19 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
-	void InitModelRenderMap();
+
+	template<class T, class U>
+	bool contain(const std::basic_string<T>& s, const U& v) {
+		return s.find(v) != std::basic_string<T>::npos;
+	}
+
+	ModelRender* CreateModelRender(const std::string& name);
 	EventMovie* m_eventMovie = nullptr;
-	std::map<std::string, ModelRender*> m_modelRenderMap;
+	std::vector<ModelRender*> m_modelRenders;//まとめて解放する用。
+
+	ModelRender* m_chara = nullptr;
+	ModelRender* m_bomb = nullptr;
+	ModelRender* m_melee = nullptr;
+	ModelRender* m_fat = nullptr;
+	std::vector<ModelRender*> m_pods;
 };

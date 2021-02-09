@@ -17,6 +17,9 @@ OpeningScene::~OpeningScene()
 void OpeningScene::Release()
 {
 	DeleteGO(m_eventMovie);
+	for (auto mr : m_modelRenders) {
+		DeleteGO(mr);
+	}
 }
 
 void OpeningScene::OnDestroy()
@@ -33,31 +36,24 @@ void OpeningScene::Awake()
 bool OpeningScene::Start()
 {
 
-	InitModelRenderMap();
-
 	m_eventMovie = NewGO<EventMovie>(0);
 
 	ActorInitFunc actorInitFunc = [&](const std::string& name){
-		printf("actor init : ");
-		printf(name.c_str());
-		puts("");
-
-		auto model = NewGO<ModelRender>(0);
-		ModelInitData mid;
-		//mid.m_tkmFilePath = L"Assets/modelData/"
-		//model->Init()
-		return model;
+		//printf("actor init : ");
+		//printf(name.c_str());
+		//puts("");
+		auto modelRender = CreateModelRender(name);
+		m_modelRenders.push_back(modelRender);
+		return modelRender;
 	};
 
 	EventListennerFunc eventListenerFunc = [&](const std::string& name){
-		printf("Event Listener : ");
-		printf(name.c_str());
-		puts("");
-
 		return;
 	};
 
+	g_camera3D->SetViewAngle(Math::DegToRad(30));	// I‚í‚Á‚½‚ç60‚É’¼‚µ‚Ä‚Ë!!
 	m_eventMovie->Init("Assets/eventMovie/op.evm", g_camera3D,actorInitFunc,eventListenerFunc);
+	//m_eventMovie->Init("Assets/eventMovie/untitled.evm", g_camera3D, actorInitFunc, eventListenerFunc);
 
 	return true;
 }
@@ -70,7 +66,6 @@ void OpeningScene::PreUpdate()
 
 void OpeningScene::Update()
 {
-
 }
 
 void OpeningScene::PostUpdate()
@@ -89,18 +84,63 @@ void OpeningScene::PostRender()
 
 }
 
-void OpeningScene::InitModelRenderMap() {
+ModelRender* OpeningScene::CreateModelRender(const std::string& name) {
 
 	ModelInitData mid;
-	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
+	//mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
+	auto modelR = NewGO<ModelRender>(0);
 
-	{
-		auto modelR = NewGO<ModelRender>(0);
+	//chara
+	if (std::strcmp(name.c_str(), "m") == 0) {
+		//printf("create m\n");
+		mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 		mid.m_tkmFilePath = "Assets/modelData/m/m_ExBone.tkm";
 		mid.m_tksFilePath = "Assets/modelData/m/m_ExBone.tks";
 		modelR->Init(mid);
-		m_modelRenderMap.insert(std::make_pair("m", modelR));
+
+		static std::map<int, CAnimationClipPtr> animMap;
+		animMap.insert(std::make_pair(0, std::make_unique<CAnimationClip>()));
+		animMap.at(0)->Load("Assets/modelData/m/anim/m_idle.tka");
+		animMap.at(0)->BuildKeyFramesAndAnimationEvents();
+		animMap.at(0)->SetLoopFlag(false);
+		modelR->InitAnimation(animMap, animMap.size());
+
+		m_chara = modelR;
+	}else 
+	//fat
+	if (std::strcmp(name.c_str(), "fat") == 0) {
+		//printf("create fat\n");
+		mid.m_tkmFilePath = "Assets/modelData/boss/lf/lf.tkm";
+		mid.m_tksFilePath = "Assets/modelData/boss/lf/lf.tks";
+		modelR->Init(mid);
+		m_fat = modelR;
+	}else
+	//bomb
+	if (std::strcmp(name.c_str(), "bomb") == 0) {
+		//printf("create bomb\n");
+		mid.m_tkmFilePath = "Assets/modelData/boss/mb/mb.tkm";
+		mid.m_tksFilePath = "Assets/modelData/boss/mb/mb.tks";
+		modelR->Init(mid);
+		m_bomb = modelR;
+	}else
+	//melee
+	if (std::strcmp(name.c_str(), "melee") == 0) {
+		//printf("create melee\n");
+		mid.m_tkmFilePath = "Assets/modelData/boss/sp/sp.tkm";
+		mid.m_tksFilePath = "Assets/modelData/boss/sp/sp.tks";
+		modelR->Init(mid);
+		m_melee = modelR;
+	}else
+	//pod
+	if (contain(name, "pod")) {
+		//printf("create pod\n");
+		mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+		mid.m_tksFilePath = "Assets/modelData/AssistantMachine/am.tks";
+		modelR->Init(mid);
+		m_pods.push_back(modelR);
 	}
 
+	return modelR;
 }
+

@@ -30,12 +30,29 @@ bl_info = {
 def transToYUp(matrix):
     #ZUpをYUpに変えるための回転行列
     rotMat = math.Matrix([ [1, 0,0,0],\
-                                [0, 0,1,0],\
-                                [0,-1,0,0],\
-                                [0, 0,0,1]])
+                            [0, 0,1,0],\
+                            [0,-1,0,0],\
+                            [0, 0,0,1]])
+#    print(rotMat.to_quaternion())
     matrix = rotMat @ matrix
     return matrix
 
+def transToYUpVec(vec):
+    rotMat = math.Matrix([ [1, 0,0,0],\
+                            [0, 0,1,0],\
+                            [0,-1,0,0],\
+                            [0, 0,0,1]])
+    vec = rotMat.to_quaternion() @ vec
+    return vec
+
+def rotX180(matrix):
+    #ZUpをYUpに変えるための回転行列
+    rotMat = math.Matrix([ [1, 0,0,0],\
+                            [0,-1,0,0],\
+                            [0,0,-1,0],\
+                            [0,0,0,1]])
+    matrix = rotMat @ matrix
+    return matrix
 
 class PT_Panel(bpy.types.Panel):
     bl_label = "eventMovieExp"
@@ -98,16 +115,58 @@ class OT_Export(bpy.types.Operator):
                 
                 cam = bpy.context.scene.objects["Camera"]
                 cammat = cam.matrix_world.copy()
-                cammat = transToYUp(cammat)
+                
+                tra = transToYUpVec(cammat.to_translation())
+                tra = math.Matrix.Translation(tra).to_4x4()
+                rot = cammat.to_quaternion().to_matrix().to_4x4()
+                
+                rotMat = math.Matrix([ [1, 0,0,0],\
+                                        [0, 0,-1,0],\
+                                        [0,1,0,0],\
+                                        [0, 0,0,1]])
+                
+                #rot = rot @ rotMat
+                rot = transToYUp(rot)
+                cammat = tra @ rot
+                
+                #cammat = transToYUp(cammat)
                 cammat.transpose()
                 for vec3 in cammat:
                     for i , m in enumerate(vec3):
                         #if i != 3:
                         f.write(struct.pack("<f", m))
-                            
+                        
                 for obj in bpy.context.selected_objects:
                     mat = obj.matrix_world.copy()
-                    mat = transToYUp(mat)
+                    sca = mat.to_scale()
+                    sca = math.Matrix.Diagonal(sca).to_4x4()
+                    tra = transToYUpVec(mat.to_translation())
+                    tra = math.Matrix.Translation(tra).to_4x4()
+                    #tra = transToYUp(tra)
+                    
+                    rot = mat.to_quaternion().to_matrix().to_4x4()
+                    #print(rot)
+                    #rot = rotX180(rot)
+                    rot = transToYUp(rot)
+                    rotMat = math.Matrix([ [1, 0,0,0],\
+                                            [0, 0,-1,0],\
+                                            [0,1,0,0],\
+                                            [0, 0,0,1]])
+                    rotX = math.Matrix([[1, 0,0,0],\
+                                        [0,-1,0,0],\
+                                        [0, 0,-1,0],\
+                                        [0, 0,0,1]])
+                    rotY = math.Matrix([[0, 0,1,0],\
+                                        [0, 1,0,0],\
+                                        [-1,0,0,0],\
+                                        [0, 0,0,1]])
+                    rot = rot @ rotMat
+                    mat = tra @ rot @ sca
+                    #print(sca)
+                    #print(rot)
+                    #print(tra)
+                    #print("")
+                    
                     mat.transpose()
                     for vec3 in mat:
                         for i , m in enumerate(vec3):
