@@ -51,7 +51,9 @@ bool OpeningScene::Start()
 		return;
 	};
 
+	g_camera3D->SetViewAngle(Math::DegToRad(30));	// I‚í‚Á‚½‚ç60‚É’¼‚µ‚Ä‚Ë!!
 	m_eventMovie->Init("Assets/eventMovie/op.evm", g_camera3D,actorInitFunc,eventListenerFunc);
+	//m_eventMovie->Init("Assets/eventMovie/untitled.evm", g_camera3D, actorInitFunc, eventListenerFunc);
 
 	return true;
 }
@@ -85,16 +87,25 @@ void OpeningScene::PostRender()
 ModelRender* OpeningScene::CreateModelRender(const std::string& name) {
 
 	ModelInitData mid;
-	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
-	mid.m_upAxis = EUpAxis::enUpAxisZ;
+	//mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
+	mid.m_upAxis = EUpAxis::enUpAxisY;
 	auto modelR = NewGO<ModelRender>(0);
 
 	//chara
 	if (std::strcmp(name.c_str(), "m") == 0) {
 		//printf("create m\n");
+		mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 		mid.m_tkmFilePath = "Assets/modelData/m/m_ExBone.tkm";
 		mid.m_tksFilePath = "Assets/modelData/m/m_ExBone.tks";
 		modelR->Init(mid);
+
+		static std::map<int, CAnimationClipPtr> animMap;
+		animMap.insert(std::make_pair(0, std::make_unique<CAnimationClip>()));
+		animMap.at(0)->Load("Assets/modelData/m/anim/m_idle.tka");
+		animMap.at(0)->BuildKeyFramesAndAnimationEvents();
+		animMap.at(0)->SetLoopFlag(false);
+		modelR->InitAnimation(animMap, animMap.size());
+
 		m_chara = modelR;
 	}else 
 	//fat
