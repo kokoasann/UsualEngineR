@@ -10,10 +10,10 @@
 #include "State/PlayerDeadState.h"
 #include "State/PlayerStunState.h"
 #include "State/PlayerChurchState.h"
+#include "State/PlayerMovieState.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/IEnemy.h"
 #include "Pod/Pod.h"
-#include "../GameManager.h"
 #include "../GameSceneMenu.h"
 #include "Attachment/JetPack.h"
 #include "Attachment/Gun.h"
@@ -78,7 +78,7 @@ void Player::Release()
 {
 	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
 	DeleteGO(m_model);
-	DeleteGO(m_pod);
+	//DeleteGO(m_pod);
 	DeleteGO(m_jetPack);
 	DeleteGO(m_gun);
 	DeleteGO(m_shield);
@@ -203,8 +203,9 @@ bool Player::Start()
 	m_stateList[static_cast<int>(EnState::enStun)] = new PlayerStunState();
 	m_stateList[static_cast<int>(EnState::enGuard)] = new PlayerGuardState();
 	m_stateList[static_cast<int>(EnState::enChurch)] = new PlayerChurchState();
+	m_stateList[static_cast<int>(EnState::enMovie)] = new PlayerMovieState();
 
-	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enFlying)];
+	m_currentState = m_nextState = m_stateList[static_cast<int>(EnState::enMovie)];
 	m_nextState->Enter(this);
 
 	//Physics
@@ -213,7 +214,7 @@ bool Player::Start()
 	m_sphereCollider.Create(m_HandRadius);
 
 	//Pod
-	m_pod = NewGO<Pod>(0);
+//	m_pod = NewGO<Pod>(0);
 
 	//Attachment
 	m_playerBones.resize(TO_INT(EnPlayerBone::enNumBoneType));
@@ -298,6 +299,8 @@ void Player::InitIK() {
 
 void Player::PreUpdate()
 {
+	if (GameManager::GetInstance().GetCurrentGameState() == GameManager::EnGameState::Loading) return;
+
 	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	SoundEngine().SetListenerPosition(m_position);
@@ -348,10 +351,13 @@ void Player::Update()
 		m_shield->SetUsingState(false);
 	}
 
+	if (GameManager::GetInstance().GetCurrentGameState() != GameManager::EnGameState::InGame) return;
 
-	if (GameManager::GetInstance().m_menu->IsGamePaused()) return;
+	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
-	SearchTarget();
+	if (GameManager::GetInstance().m_gameScene != nullptr) {
+		SearchTarget();
+	}
 	UpdateAttackType();
 
 	//Calc forward
@@ -363,15 +369,18 @@ void Player::Update()
 
 	m_nextState = m_currentState->Update(this);
 
-	if (m_hp <= 0) {
-		m_nextState = m_stateList[static_cast<int>(EnState::enDead)];
-	}
+	if (GameManager::GetInstance().m_gameScene != nullptr) {
 
-	if (m_isInChurch) {
-		m_nextState = m_stateList[static_cast<int>(EnState::enChurch)];
-	}
-	else if(m_currentState == m_stateList[static_cast<int>(EnState::enChurch)]){
-		m_nextState = m_stateList[static_cast<int>(EnState::enGround)];
+		if (m_hp <= 0) {
+			m_nextState = m_stateList[static_cast<int>(EnState::enDead)];
+		}
+
+		if (m_isInChurch) {
+			m_nextState = m_stateList[static_cast<int>(EnState::enChurch)];
+		}
+		else if (m_currentState == m_stateList[static_cast<int>(EnState::enChurch)]) {
+			m_nextState = m_stateList[static_cast<int>(EnState::enGround)];
+		}
 	}
 
 	if (m_nextState != m_currentState) {
@@ -418,20 +427,24 @@ void Player::PostUpdate()
 	m_thrusterEffects[RIGHT]->SetPos(boneSoleRMat.GetTransrate());
 	*/
 
-	if (m_position.y <= m_ResetPos) {
-		Vector3 nearestCellPos = Vector3::Zero;
-		float nearestDist = FLT_MAX;
-		auto& cells = GameManager::GetInstance().m_nvm.GetCell();
-		const auto playerPos = Vector3(m_position.x, 0.f, m_position.z);
-		for (auto cell : cells) {
-			const auto cellCenterPos = Vector3(cell->centerPos.x, 0.f, cell->centerPos.z);
-			auto dist = (cellCenterPos - playerPos).LengthSq();
-			if (dist < nearestDist) {
-				nearestDist = dist;
-				nearestCellPos = cell->centerPos;
+	//if (GameManager::GetInstance().m_gameScene != nullptr) {
+	if (GameManager::GetInstance().GetCurrentGameState() == GameManager::EnGameState::InGame) {
+
+		if (m_position.y <= m_ResetPos) {
+			Vector3 nearestCellPos = Vector3::Zero;
+			float nearestDist = FLT_MAX;
+			auto& cells = GameManager::GetInstance().m_nvm.GetCell();
+			const auto playerPos = Vector3(m_position.x, 0.f, m_position.z);
+			for (auto cell : cells) {
+				const auto cellCenterPos = Vector3(cell->centerPos.x, 0.f, cell->centerPos.z);
+				auto dist = (cellCenterPos - playerPos).LengthSq();
+				if (dist < nearestDist) {
+					nearestDist = dist;
+					nearestCellPos = cell->centerPos;
+				}
 			}
+			SetPosition(nearestCellPos);
 		}
-		SetPosition(nearestCellPos);
 	}
 
 }
