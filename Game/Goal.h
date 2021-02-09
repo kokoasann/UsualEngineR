@@ -64,6 +64,10 @@ public:
 		return m_rotation;
 	}
 
+	ModelRender* GetModelRender()
+	{
+		return m_model;
+	}
 private:
 
 	//model
