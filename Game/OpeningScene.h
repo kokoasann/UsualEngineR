@@ -1,6 +1,8 @@
 #pragma once
 #include <unordered_map>
 class EventMovie;
+class Player;
+class IEnemy;
 
 /// <summary>
 /// 
@@ -63,13 +65,11 @@ private:
 		return s.find(v) != std::basic_string<T>::npos;
 	}
 
-	ModelRender* CreateModelRender(const std::string& name);
+	ModelRender* GetItsModelRender(const std::string& name);
 	EventMovie* m_eventMovie = nullptr;
 	std::vector<ModelRender*> m_modelRenders;//まとめて解放する用。
 
-	ModelRender* m_chara = nullptr;
-	ModelRender* m_bomb = nullptr;
-	ModelRender* m_melee = nullptr;
-	ModelRender* m_fat = nullptr;
 	std::vector<ModelRender*> m_pods;
+
+	bool m_isPlayed = false;
 };
