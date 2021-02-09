@@ -122,10 +122,10 @@ void EventMovie::Update()
 		if (m_timer >= Time) {
 			//printf("frame : %f\n", Time);
 			//camera
-			m_camera->SetPosition(m_frames[m_frameIndex].camMat.GetTransrate());
-			Vector3 target = Vector3(0, -1, 0);
+			m_camera->SetPosition(m_frames[m_frameIndex].camMat.GetTransrate() * 1.f);
+			Vector3 target = Vector3(0, 0,-1);
 			m_frames[m_frameIndex].camMat.GetRotate().Apply(target);
-			m_camera->SetTarget(target + m_camera->GetPosition());
+			m_camera->SetTarget(target + m_frames[m_frameIndex].camMat.GetTransrate());
 
 			const int numObj = m_actors.size();
 			for (int i = 0; i < numObj; i++) {
