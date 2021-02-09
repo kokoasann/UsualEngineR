@@ -204,8 +204,6 @@ void Game::Update()
 		GameManager::GetInstance().SpawnPlayer();
 
 		Fade::GetInstance().FadeIn();
-
-		GameManager::GetInstance().SetGameState(GameManager::EnGameState::InGame);
 	}
 
 	if (m_boss != nullptr && !m_isBossCamPerform)

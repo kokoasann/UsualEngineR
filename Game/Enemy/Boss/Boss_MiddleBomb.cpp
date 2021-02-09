@@ -200,6 +200,23 @@ void Boss_MiddleBomb::InitAnim()
 	m_model->Play(TO_INT(IEnemy::EnAnimation::enIdle));
 }
 
+void Boss_MiddleBomb::ExecuteCommon()
+{
+	const auto& wm = m_shieldBone->GetWorldMatrix();
+	auto pos = wm.GetTransrate();
+	auto rot = wm.GetRotate();
+
+	m_ShieldModel->SetPosition(pos);
+	m_ShieldModel->SetRotation(rot);
+
+	m_shieldGhost.SetPosition(pos);
+	m_shieldGhost.SetRotation(rot);
+
+	auto& tra = m_rigidBody.GetBody()->getWorldTransform();
+	tra.setOrigin({ pos.x, pos.y, pos.z });
+	tra.setRotation({ rot.x ,rot.y ,rot.z ,rot.w });
+}
+
 void Boss_MiddleBomb::Execute()
 {
 	const float hpper = m_ability.hp / m_ability.max_hp;
@@ -215,25 +232,11 @@ void Boss_MiddleBomb::Execute()
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 
-	const auto& wm = m_shieldBone->GetWorldMatrix();
-	auto pos = wm.GetTransrate();
-	auto rot = wm.GetRotate();
-
-	m_ShieldModel->SetPosition(pos);
-	m_ShieldModel->SetRotation(rot);
-
-	m_shieldGhost.SetPosition(pos);
-	m_shieldGhost.SetRotation(rot);
-
 	/*btTransform tra;
 	m_rigidBody.GetBody()->getMotionState()->getWorldTransform(tra);
 	tra.setOrigin({ pos.x, pos.y, pos.z });
 	tra.setRotation({rot.x ,rot.y ,rot.z ,rot.w });
 	m_rigidBody.GetBody()->getMotionState()->setWorldTransform(tra);*/
-
-	auto& tra = m_rigidBody.GetBody()->getWorldTransform();
-	tra.setOrigin({ pos.x, pos.y, pos.z });
-	tra.setRotation({ rot.x ,rot.y ,rot.z ,rot.w });
 	//m_rigidBody.GetBody()->setWorldTransform(tra);
 }
 

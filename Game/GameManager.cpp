@@ -53,7 +53,10 @@ void GameManager::Release() {
 void GameManager::SpawnPlayer() {
 	if(m_player == nullptr)
 		m_player = NewGO<Player>(0);
-	if(m_pod ==nullptr)
+}
+
+void GameManager::SpawnPod() {
+	if (m_pod == nullptr)
 		m_pod = NewGO<Pod>(0);
 }
 

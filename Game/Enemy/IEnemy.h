@@ -47,7 +47,8 @@ public:
 	virtual void Init() {};
 	virtual void InitState();
 	virtual void InitIK() {};
-	virtual void Execute() {};
+	virtual void Execute() {}; //in game
+	virtual void ExecuteCommon() {}; //common
 	virtual void Terminate() {};
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
 	virtual void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) {}
@@ -273,11 +274,12 @@ public:
 	{
 		return m_charaCon.GetRadius();
 	}
+
+	void SetState(IEnemyState* s);
+
 protected:
 	//ÉLÉÉÉâÉRÉìçÏê¨
 	void InitCharacon(const float radius, const float height, const Vector3& pos, const bool isUseRigidBody);
-
-	void SetState(IEnemyState* s);
 	bool m_isNormalEnemy = true;
 
 	std::map<int, IEnemyState*> m_stateMap;

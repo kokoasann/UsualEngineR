@@ -149,5 +149,6 @@ private:
 	unsigned m_frameIndex = 0;
 
 	double m_timer = 0.f;
-	int m_eventMarkerIndex = 0;
+
+	std::map<int, bool> m_eventMap; //Is m_eventMovieMarker["key"]'s callback called?
 };
