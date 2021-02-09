@@ -144,6 +144,11 @@ void Boss_FatmanBeamState::Judge(IEnemy* e)
 		EWidth.Cross(vecBeamDir, Vector3::Up);
 		EWidth.Normalize();
 
+		//外積。縦方向に伸びた、VecPtoEに直行するベクトル。
+		Vector3 EHeight;
+		EHeight.Cross(vecBeamDir, Vector3::Right);
+		EHeight.Normalize();
+
 		//pposは現在のプレイヤーの位置。
 		const auto& p = GameManager::GetInstance().m_player;
 		const auto& ppos = p->GetPosition();
@@ -153,12 +158,15 @@ void Boss_FatmanBeamState::Judge(IEnemy* e)
 		//プレイヤーと敵を並べたと仮定したときの距離。
 		float distance = EWidth.Dot(vecArmtoCurrentP);
 
+		//プレイヤーと敵を縦に並べたと仮定したときの距離。
+		float dirH = EHeight.Dot(vecArmtoCurrentP);
+
 		//正面にいるかどうか判定するための内積。
 		//マイナスだったら後ろ。
 		float front = vecBeamDir.Dot(vecArmtoCurrentP);
 
-		const float beamWidth = 15.0f;		//ビームの幅。
-		if (std::abs(distance) < beamWidth and front > 0) {
+		const float beamWidth = 8.0f;		//ビームの幅。
+		if (std::abs(distance) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {
 			//プレイヤーが飛んでいたら撃ち落とす。
 			auto& p = GameManager::GetInstance().m_player;
 			if (!p->IsOnGround()) {
