@@ -28,6 +28,14 @@ public:
 		m_isFaded = false;
 	}
 
+	void BlackOut() {
+		m_panel->SetMulColor({ 0,0,0,1 });
+	}
+
+	void MakeBright() {
+		m_panel->SetMulColor({ 0,0,0,0 });
+	}
+
 	const bool IsFaded() {
 		return m_isFaded;
 	}
