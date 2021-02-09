@@ -17,7 +17,7 @@ Boss_FatmanChargeBeamAndShootingState::Boss_FatmanChargeBeamAndShootingState()
 		m_beams.push_back(beam);
 	}
 	m_shootSE = NewGO<CSoundSource>(0, "sound");
-	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan.wav");
+	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan2.wav");
 }
 
 Boss_FatmanChargeBeamAndShootingState::~Boss_FatmanChargeBeamAndShootingState()
@@ -240,7 +240,7 @@ bool Boss_FatmanChargeBeamAndShootingState::BeamJudge(IEnemy* e, int ikNo)
 		m_isBeamSound = true;
 	}
 
-	const float beamWidth = 15.0f;		//ビームの幅。
+	const float beamWidth = 8.0f;		//ビームの幅。
 	if (std::abs(dirW) < beamWidth and std::abs(dirH) < beamWidth and front > 0) {
 		return true;
 	}

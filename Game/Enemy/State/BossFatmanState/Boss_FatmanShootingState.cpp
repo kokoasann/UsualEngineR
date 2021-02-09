@@ -17,7 +17,7 @@ Boss_FatmanShootingState::Boss_FatmanShootingState()
 		m_muzzleFlashes.push_back(muzzleFlash);
 	}
 	m_shootSE = NewGO<CSoundSource>(0);
-	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan.wav");
+	m_shootSE->Init(L"Assets/sound/boss_fatman/Balkan2.wav");
 }
 
 Boss_FatmanShootingState::~Boss_FatmanShootingState()
