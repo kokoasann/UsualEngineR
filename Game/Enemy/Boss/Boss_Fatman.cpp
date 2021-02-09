@@ -66,7 +66,7 @@ void Boss_Fatman::InitState()
 		m_stateMap.insert(p);
 	}
 	{
-		auto p = std::make_pair(TO_INT(IEnemy::EnState::enStunState), new Boss_FatmanStunState());
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enStunState), new Boss_FatmanMainState());
 		m_stateMap.insert(p);
 	}
 	{
