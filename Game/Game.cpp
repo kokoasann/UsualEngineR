@@ -283,8 +283,14 @@ void Game::Update()
 		auto go = reinterpret_cast<GameObject*>(this);
 		//DeleteGO(go);
 
+		DeleteGO(GameManager::GetInstance().m_stage);
+		EnemyManager::GetEnemyManager().Release();
+		DeleteGO(GameManager::GetInstance().m_gameHUD);
+		//DeleteGO(GameManager::GetInstance().m_itemManager);
+
 		NewGO<EndingScene>(0);
 		m_engingFlag = true;
+		SetActive(false);
 	}
 }
 

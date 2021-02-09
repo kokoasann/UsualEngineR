@@ -32,6 +32,15 @@ public:
 		return m_isFaded;
 	}
 
+	void SetFadeColor(const Vector3& c)
+	{
+		m_color = c;
+	}
+	void SetFadeSpeed(float s)
+	{
+		m_fadeSpeed = s;
+	}
+
 private:
 	enum class State {
 		enFadeIn,
@@ -51,4 +60,5 @@ private:
 
 	bool m_isFaded = false;
 
+	Vector3 m_color = Vector3::Zero;
 };

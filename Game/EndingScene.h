@@ -61,4 +61,5 @@ private:
 	ModelRender* m_player;
 	ModelRender* m_exit;
 	ModelRender* m_plane;
+	ModelRender* m_edBack;
 };

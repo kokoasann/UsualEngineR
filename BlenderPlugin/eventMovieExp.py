@@ -54,7 +54,7 @@ def rotX180(matrix):
     matrix = rotMat @ matrix
     return matrix
 
-class PT_Panel(bpy.types.Panel):
+class PT_Panel_EventMovie(bpy.types.Panel):
     bl_label = "eventMovieExp"
     bl_space_type = "PROPERTIES"
     bl_region_type = "WINDOW"
@@ -62,12 +62,12 @@ class PT_Panel(bpy.types.Panel):
     
     def draw(self, context):
         #print(type(context))
-        self.layout.operator("event_movie_exp.export")
+        self.layout.operator("event_movie_exp.export_movie")
 
 
-class OT_Export(bpy.types.Operator):
-    bl_idname = "event_movie_exp.export"
-    bl_label = "Export Material"
+class OT_Export_EventMovie(bpy.types.Operator):
+    bl_idname = "event_movie_exp.export_movie"
+    bl_label = "Export Event Movie"
     
     filename_ext = ".evm"
     filepath : StringProperty(
@@ -179,8 +179,8 @@ class OT_Export(bpy.types.Operator):
     
     
 classs = (
-    PT_Panel,
-    OT_Export,
+    PT_Panel_EventMovie,
+    OT_Export_EventMovie,
 )
 
 def register():

@@ -65,7 +65,8 @@ namespace UER {
 		float lastFrameTime = 0.f;
 		//float lastFrameTime = topBoneKeyFrameList[m_currentKeyFrameNoLastFrame]->time;
 		if(m_lastKeyFrameNo > topBoneKeyFrameList.size()) //たまに飛び出ちゃうので、その時は最初のやつを使う。
-			lastFrameTime = topBoneKeyFrameList[0]->time;
+			//lastFrameTime = topBoneKeyFrameList[0]->time;
+			lastFrameTime = topBoneKeyFrameList[m_currentKeyFrameNoLastFrame]->time;
 		else
 			lastFrameTime = topBoneKeyFrameList[m_lastKeyFrameNo]->time;
 		float frameTime = topBoneKeyFrameList[m_currentKeyFrameNo]->time - lastFrameTime;
@@ -85,9 +86,13 @@ namespace UER {
 			}
 			//現在再生中のキーフレームを取ってくる。
 			KeyFrame* keyframe = keyFrameList.at(m_currentKeyFrameNo);
-
+			
 			//auto lastKeyframe = keyFrameList.at(m_currentKeyFrameNoLastFrame);
-			auto lastKeyframe = keyFrameList.at(m_lastKeyFrameNo);
+			KeyFrame* lastKeyframe;
+			if(m_lastKeyFrameNo > keyFrameList.size())
+				lastKeyframe = keyFrameList.at(m_currentKeyFrameNoLastFrame);
+			else
+				lastKeyframe = keyFrameList.at(m_lastKeyFrameNo);
 
 			Matrix transform;
 			const Matrix& lastTra = lastKeyframe->transform;
