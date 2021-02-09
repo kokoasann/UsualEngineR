@@ -9,6 +9,8 @@
 #include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "Player/Player.h"
 #include "Game.h"
+#include "Fade.h"
+
 
 OpeningScene::OpeningScene()
 {
@@ -70,8 +72,7 @@ void OpeningScene::Awake()
 
 bool OpeningScene::Start()
 {
-
-	//m_melee->SetState(m_melee->GetState(TO_INT(IEnemy::EnState::enMovieState)));
+	Fade::GetInstance().FadeIn();
 
 	m_eventMovie = NewGO<EventMovie>(0);
 
@@ -84,6 +85,10 @@ bool OpeningScene::Start()
 	};
 
 	EventListennerFunc eventListenerFunc = [&](const std::string& name) {
+		if (std::strcmp(name.c_str(), "fade_out") == 0) {
+			Fade::GetInstance().FadeOut();
+			m_isFadingToGame = true;
+		}
 		return;
 	};
 
@@ -100,16 +105,16 @@ void OpeningScene::PreUpdate()
 
 void OpeningScene::Update()
 {
-	if (g_pad[0]->IsTrigger(enButtonA)) {
+	if (m_isFadingToGame and Fade::GetInstance().IsFaded()) {
 		auto opobj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(opobj);
 		NewGO<Game>(0);
 	}
+	Fade::GetInstance().Update();
 }
 
 void OpeningScene::PostUpdate()
 {
-
 }
 
 

@@ -72,4 +72,6 @@ private:
 	std::vector<ModelRender*> m_pods;
 
 	bool m_isPlayed = false;
+
+	bool m_isFadingToGame = false;
 };
