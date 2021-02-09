@@ -409,6 +409,12 @@
       <Filter>Enemy\State\BossFatman</Filter>
     </ClInclude>
     <ClInclude Include="OpeningScene.h" />
+    <ClInclude Include="Enemy\State\EnemyMovieState.h">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\State\PlayerMovieState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -820,6 +826,12 @@
       <Filter>Enemy\State\BossFatman</Filter>
     </ClCompile>
     <ClCompile Include="OpeningScene.cpp" />
+    <ClCompile Include="Enemy\State\EnemyMovieState.cpp">
+      <Filter>Enemy\State\DefaultState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\State\PlayerMovieState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
