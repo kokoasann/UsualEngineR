@@ -12,11 +12,19 @@ class Game;
 class Goal;
 class Church;
 class Fade;
+class Pod;
 
 class GameManager
 {
 
 public:
+
+	enum class EnGameState {
+		InGame,
+		Loading,
+		End
+	};
+
 	static GameManager& GetInstance() {
 		static GameManager gm;
 		return gm;
@@ -27,8 +35,20 @@ public:
 
 	void SpawnPlayer();
 
+	EnGameState& GetCurrentGameState() {
+		return m_gameState;
+	}
+
+	void SetGameState(const EnGameState state) {
+		m_gameState = state;
+	}
+
 	Player* GetPlayer() const{
 		return m_player;
+	}
+
+	Pod* GetPod() const {
+		return m_pod;
 	}
 
 	GameCamera* GetGameCamera() const {
@@ -45,6 +65,7 @@ public:
 
 	GameCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
+	Pod* m_pod = nullptr;
 
 	//Level
 	GameStage* m_stage = nullptr;
@@ -83,4 +104,6 @@ public:
 private:
 	Church* m_church = nullptr;
 	int m_deadBossCount = 0;
+
+	EnGameState m_gameState = EnGameState::Loading;
 };
