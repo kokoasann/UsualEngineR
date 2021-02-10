@@ -49,7 +49,7 @@ IEnemyState* Boss_FatmanShootingState::Update(IEnemy* e)
 	const float maxTime = 5.f;
 	if (m_stateTimer > maxTime) {
 		m_isKnockBack = false;
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 	}
 
 	//ˆê’èŠÔŠu‚Å’e‚ğŒ‚‚ÂB

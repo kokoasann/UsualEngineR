@@ -86,7 +86,7 @@ IEnemyState* Boss_FatmanChargeBeamState::Update(IEnemy* e)
 			m_isKnockBack = false;
 			m_isBeamSound = false;
 			//m_beamSE->Stop();
-			return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+			return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 		}
 	}
 	return this;

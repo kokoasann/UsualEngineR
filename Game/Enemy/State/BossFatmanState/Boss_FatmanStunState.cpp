@@ -17,7 +17,7 @@ void Boss_FatmanStunState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanStunState::Update(IEnemy* e)
 {
-	return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+	return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 }
 
 void Boss_FatmanStunState::Exit(IEnemy* e)
