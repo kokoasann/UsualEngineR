@@ -79,4 +79,6 @@ private:
 
 	std::vector<MuzzleFlash*> m_muzzleFlashEffects;
 	std::vector<Beam*> m_beamEffects;
+
+	ModelRender* m_model = nullptr;
 };

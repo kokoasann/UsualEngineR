@@ -48,6 +48,10 @@ void IEnemy::Release() {
 	for (auto& state : m_stateMap) {
 		delete state.second;
 	}
+	for (auto& anim : m_animationMap)
+	{
+		delete anim.second.release();
+	}
 
 	DeleteGO(m_smokeEffect);
 	DeleteGO(m_explodeEffect);
