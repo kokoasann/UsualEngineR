@@ -90,6 +90,8 @@ void Player::Release()
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
+
+	GameManager::GetInstance().m_player = nullptr;
 	//DeleteGO(m_thrusterEffects[RIGHT]);
 	//DeleteGO(m_thrusterEffects[LEFT]);
 }
@@ -352,7 +354,6 @@ void Player::Update()
 	}
 
 	if (GameManager::GetInstance().GetCurrentGameState() != GameManager::EnGameState::InGame) return;
-
 	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
 	if (GameManager::GetInstance().m_gameScene != nullptr) {
