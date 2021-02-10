@@ -3,6 +3,8 @@
 class EventMovie;
 class Player;
 class IEnemy;
+class MuzzleFlash;
+class Beam;
 
 /// <summary>
 /// 
@@ -72,6 +74,9 @@ private:
 	std::vector<ModelRender*> m_pods;
 
 	bool m_isPlayed = false;
-
+	bool m_isTargeting = false;
 	bool m_isFadingToGame = false;
+
+	std::vector<MuzzleFlash*> m_muzzleFlashEffects;
+	std::vector<Beam*> m_beamEffects;
 };

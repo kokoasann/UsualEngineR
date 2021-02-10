@@ -7,6 +7,8 @@
 #include "Enemy/Boss/BossA.h"
 #include "Enemy/Boss/Boss_Fatman.h"
 #include "Enemy/Boss/Boss_MiddleBomb.h"
+#include "Effect/MuzzleFlash.h"
+#include "Effect/Beam.h"
 #include "Player/Player.h"
 #include "Game.h"
 #include "Fade.h"
@@ -26,13 +28,16 @@ OpeningScene::~OpeningScene()
 void OpeningScene::Release()
 {
 	GameManager::GetInstance().SetGameState(GameManager::EnGameState::InGame);
-	GameManager::GetInstance().SpawnPod();
 
 	DeleteGO(m_eventMovie);
 	for (auto mr : m_modelRenders) {
 		DeleteGO(mr);
 	}
 	g_camera3D->SetViewAngle(Math::DegToRad(60));
+
+	for (auto effect : m_muzzleFlashEffects) {
+		DeleteGO(effect);
+	}
 
 	//auto meleeIdleState = m_melee->GetStateMap().at(TO_INT(IEnemy::EnState::enIdleState));
 	//m_melee->SetState(meleeIdleState);
@@ -47,6 +52,9 @@ void OpeningScene::OnDestroy()
 
 void OpeningScene::Awake()
 {
+
+	GameManager::GetInstance().SetGameState(GameManager::EnGameState::Loading);
+
 	//chara 
 	GameManager::GetInstance().SpawnPlayer();
 
@@ -60,19 +68,25 @@ void OpeningScene::Awake()
 	auto melee = NewGO<BossA>(0);
 	melee->SetAbility(ab);
 	EnemyManager::GetEnemyManager().SetMeleeBoss(melee);
+	EnemyManager::GetEnemyManager().AddEnemy(melee);
 	//fat
 	auto fat = NewGO<Boss_Fatman>(0);
 	fat->SetAbility(ab);
 	EnemyManager::GetEnemyManager().SetFatBoss(fat);
+	EnemyManager::GetEnemyManager().AddEnemy(fat);
 	//bomb
 	auto bomb = NewGO<Boss_MiddleBomb>(0);
 	bomb->SetAbility(ab);
 	EnemyManager::GetEnemyManager().SetBombBoss(bomb);
+	EnemyManager::GetEnemyManager().AddEnemy(bomb);
 }
 
 bool OpeningScene::Start()
 {
 	Fade::GetInstance().FadeIn();
+
+	auto player = GameManager::GetInstance().GetPlayer();
+	player->SetStateSudden(player->GetState(Player::EnState::enMovie));
 
 	m_eventMovie = NewGO<EventMovie>(0);
 
@@ -105,7 +119,53 @@ bool OpeningScene::Start()
 		}
 
 		if (std::strcmp(name.c_str(), "targeting") == 0) {
-			EnemyManager::GetEnemyManager().GetBombBoss()->PlayAnimation(IEnemy::EnAnimation::enAttackA);
+			auto bomb = EnemyManager::GetEnemyManager().GetBombBoss();
+			bomb->PlayAnimation(TO_INT(IEnemy::EnAnimation::enAttackA));
+			m_isTargeting = true;
+		}
+
+
+		if (std::strcmp(name.c_str(), "fire") == 0) {
+			const int NumMazzleFlashes = 3;
+			MuzzleFlashEffectInitData eid;
+			for (int i = 0; i < NumMazzleFlashes; i++) {
+				auto muzzleFlash = NewGO<MuzzleFlash>(0);
+				muzzleFlash->Init(eid);
+				m_muzzleFlashEffects.push_back(muzzleFlash);
+			}
+
+			const int NumBeamEffects = 2;
+			for (int i = 0; i < NumBeamEffects; i++) {
+				auto beamEff = NewGO<Beam>(0);
+				BeamEffectInitData beid;
+				beamEff->Init(beid);
+				m_beamEffects.push_back(beamEff);
+			}
+
+			//fat's arms
+			const float muzzleFlashScale = 0.25f;
+			auto fat = EnemyManager::GetEnemyManager().GetFatBoss();
+			const auto& ArmLMat = fat->GetIK(TO_INT(IEnemy::EnIK::enFoot_L))->GetEffectorBone()->GetWorldMatrix();
+			const auto& ArmRMat = fat->GetIK(TO_INT(IEnemy::EnIK::enFoot_R))->GetEffectorBone()->GetWorldMatrix();
+			//L
+			m_muzzleFlashEffects[0]->SetSca(Vector3::One * muzzleFlashScale);
+			m_muzzleFlashEffects[0]->Play();
+			m_muzzleFlashEffects[0]->SetPos(ArmLMat.GetTransrate());
+			m_muzzleFlashEffects[0]->SetRot(ArmLMat.GetRotate());
+			//R
+			m_muzzleFlashEffects[1]->SetSca(Vector3::One * muzzleFlashScale);
+			m_muzzleFlashEffects[1]->Play();
+			m_muzzleFlashEffects[1]->SetPos(ArmRMat.GetTransrate());
+			m_muzzleFlashEffects[1]->SetRot(ArmRMat.GetRotate());
+
+			//Bomb
+			auto bomb = EnemyManager::GetEnemyManager().GetBombBoss();
+			const auto& muzzleMat = bomb->GetIK(TO_INT(IEnemy::EnIK::enArm_L))->GetEffectorBone()->GetWorldMatrix();
+			m_muzzleFlashEffects[2]->SetSca(Vector3::One * muzzleFlashScale);
+			m_muzzleFlashEffects[2]->Play();
+			m_muzzleFlashEffects[2]->SetPos(muzzleMat.GetTransrate());
+			m_muzzleFlashEffects[2]->SetRot(muzzleMat.GetRotate());
+
 		}
 
 		if (std::strcmp(name.c_str(), "black_out") == 0) {
@@ -136,6 +196,19 @@ void OpeningScene::PreUpdate()
 
 void OpeningScene::Update()
 {
+
+	if (m_isTargeting) {
+		auto fat = EnemyManager::GetEnemyManager().GetFatBoss();
+		fat->GetIK(TO_INT(IEnemy::EnIK::enArm_L))->SetNextTarget(g_camera3D->GetPosition());
+		fat->GetIK(TO_INT(IEnemy::EnIK::enArm_R))->SetNextTarget(g_camera3D->GetPosition());
+		fat->GetIK(TO_INT(IEnemy::EnIK::enFoot_L))->SetNextTarget(g_camera3D->GetPosition());
+		fat->GetIK(TO_INT(IEnemy::EnIK::enFoot_R))->SetNextTarget(g_camera3D->GetPosition());
+
+		auto bomb = EnemyManager::GetEnemyManager().GetBombBoss();
+		bomb->GetIK(TO_INT(IEnemy::EnIK::enArm_L))->SetNextTarget(g_camera3D->GetPosition());
+
+	}
+
 	if (m_isFadingToGame and Fade::GetInstance().IsFaded()) {
 		auto opobj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(opobj);

@@ -202,6 +202,7 @@ void Game::Update()
 
 		//ついでにプレイヤーもここで生成・・・.
 		GameManager::GetInstance().SpawnPlayer();
+		GameManager::GetInstance().SpawnPod();
 
 		Fade::GetInstance().FadeIn();
 	}
@@ -286,7 +287,8 @@ void Game::Update()
 		DeleteGO(GameManager::GetInstance().m_gameHUD);
 		//DeleteGO(GameManager::GetInstance().m_itemManager);
 
-		NewGO<EndingScene>(0);
+		EndingScene* end = NewGO<EndingScene>(0);
+		end->Init(m_clearTimer);
 		m_engingFlag = true;
 		SetActive(false);
 	}
@@ -312,6 +314,8 @@ void Game::PostUpdate()
 	}
 
 	if (Fade::GetInstance().IsFaded() and m_toTitleFlag) {
+		auto player = GameManager::GetInstance().GetPlayer();
+		player->SetStateSudden(player->GetState(Player::EnState::enMovie));
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 		NewGO<Title>(0);

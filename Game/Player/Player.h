@@ -399,6 +399,22 @@ public:
 
 	}
 
+	void SetStateSudden(IPlayerState* s) {
+
+		if (m_currentState == nullptr) {
+			m_previousState = m_currentState = s;
+			m_currentState->Enter(this);
+			return;
+		}
+
+		if (s == m_currentState) return;
+		m_nextState = s;
+		m_currentState->Exit(this);
+		m_previousState = m_currentState;
+		m_currentState = m_nextState;
+		m_currentState->Enter(this);
+	}
+
 	void SetChruchFlag(const bool isInChurch) {
 		m_isInChurch = isInChurch;
 	}
