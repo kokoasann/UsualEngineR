@@ -12,4 +12,8 @@ public:
 private:
 	SphereCollider		m_sphereCollider;
 	const float			m_radius = 3.0f;
+
+	Cell*				m_longDistLinkCell = nullptr;
+	bool				m_isArrival = false;
+	int					m_count = 0;
 };

@@ -35,7 +35,7 @@ IEnemyState* Boss_FatmanIdleState::Update(IEnemy* e)
 	const float chaseRange = 100.f;
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 	}
 	return this;
 }
