@@ -38,6 +38,10 @@ namespace UER
 		{
 			m_isUseFocusBlur = b;
 		}
+		Bloom& GetBloom()
+		{
+			return m_bloom;
+		}
 	private:
 		Primitive m_primitive;
 		Texture m_backBufferTexture[2];

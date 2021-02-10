@@ -12,8 +12,8 @@ public:
 	void Init() override;
 	void InitState() override;
 	void Execute() override;
+	void ExecuteCommon() override;
 	void Terminate() override;
-
 	Player::EnAttackType GetDropID() override{
 		return Player::EnAttackType::enRemoteAttackPreset;
 	}

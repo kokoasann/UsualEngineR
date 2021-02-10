@@ -24,6 +24,11 @@ namespace UER
 		void Render(RenderContext& rc);
 
 		void CombineRender(RenderContext& rc, RenderTarget* rt);
+
+		void SetStreekFrag(bool b)
+		{
+			m_isAndStreeks = b;
+		}
 	private:
 		PostEffect* m_postEffect = nullptr;
 
@@ -45,7 +50,10 @@ namespace UER
 		DescriptorHeap m_descCombine;
 
 		TextureCopy m_copy;
+		TextureCopy m_copy_single;
 
 		LightStreeks m_lightStreeks;
+
+		bool m_isAndStreeks = true;
 	};
 }

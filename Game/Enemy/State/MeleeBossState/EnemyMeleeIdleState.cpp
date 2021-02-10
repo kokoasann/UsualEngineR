@@ -31,6 +31,7 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 
 	auto player = GameManager::GetInstance().GetPlayer();
+	if (player == nullptr) return this;
 
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();

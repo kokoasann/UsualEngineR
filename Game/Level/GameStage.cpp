@@ -19,6 +19,7 @@ void GameStage::Release()
 	m_threadForLevel.Release();
 	std::for_each(m_mapmodel.begin(), m_mapmodel.end(), [](ModelRender* model) { DeleteGO(model); });
 	DeleteGO(m_sandSmoke);
+	std::for_each(m_mbgs.begin(), m_mbgs.end(), [](ModelRender* model) { DeleteGO(model); });
 }
 
 void GameStage::OnDestroy()

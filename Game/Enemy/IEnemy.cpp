@@ -67,6 +67,11 @@ void IEnemy::Update() {
 
 	if (GameManager::GetInstance().m_menu != nullptr and GameManager::GetInstance().m_menu->IsGamePaused()) return;
 
+	if (GameManager::GetInstance().GetCurrentGameState() == GameManager::EnGameState::Loading) {
+		ExecuteCommon();
+		return;
+	}
+
 	m_nextState = m_currentState->Update(this);
 	m_charaCon.Execute(gameTime()->GetDeltaTime(), m_velocity + m_externalVelocity);
 	m_position = m_charaCon.GetPosition();
@@ -83,6 +88,7 @@ void IEnemy::Update() {
 	}
 
 	Execute();
+	ExecuteCommon();
 
 	if (m_healthBar != nullptr) {
 		m_healthBar->SetParentPos(m_position);

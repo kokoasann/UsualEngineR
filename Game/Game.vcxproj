@@ -186,6 +186,7 @@
     <ClInclude Include="Effect\JetEffect.h" />
     <ClInclude Include="Effect\MuzzleFlash.h" />
     <ClInclude Include="Effect\SmokeEffect.h" />
+    <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\Boss\Boss_Fatman.h" />
     <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h" />
@@ -218,7 +219,6 @@
     <ClInclude Include="Enemy\State\EnemyLongDistanceAttackState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyLongDistanceTargetingState.h" />
-    <ClInclude Include="Enemy\State\EnemyMovieState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeBlownState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeComingState.h" />
     <ClInclude Include="Enemy\State\EnemyShortRangeDanceState.h" />
@@ -336,6 +336,7 @@
     <ClCompile Include="Effect\JetEffect.cpp" />
     <ClCompile Include="Effect\MuzzleFlash.cpp" />
     <ClCompile Include="Effect\SmokeEffect.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_Fatman.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp" />
@@ -368,7 +369,6 @@
     <ClCompile Include="Enemy\State\EnemyLongDistanceAttackState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyLongDistanceTargetingState.cpp" />
-    <ClCompile Include="Enemy\State\EnemyMovieState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeBlownState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeComingState.cpp" />
     <ClCompile Include="Enemy\State\EnemyShortRangeDanceState.cpp" />

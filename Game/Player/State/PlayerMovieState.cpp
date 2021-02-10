@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "PlayerMovieState.h"
 
-
 PlayerMovieState::PlayerMovieState()
 {
 
@@ -12,52 +11,20 @@ PlayerMovieState::~PlayerMovieState()
 
 }
 
-
-
-void PlayerMovieState::Release()
-{
-
-}
-
-void PlayerMovieState::OnDestroy()
-{
-	Release();
+void PlayerMovieState::Enter(Player* p) {
+#ifdef _PRINT_PLAYER_STATE
+	DebugPrint_WATA("Player : Enter Movie State\n");
+#endif
 }
 
 
-void PlayerMovieState::Awake()
-{
-
-}
-
-bool PlayerMovieState::Start()
-{
-	return true;
+IPlayerState* PlayerMovieState::Update(Player* p) {
+	return this;
 }
 
 
-void PlayerMovieState::PreUpdate()
-{
-
-}
-
-void PlayerMovieState::Update()
-{
-
-}
-
-void PlayerMovieState::PostUpdate()
-{
-
-}
-
-
-void PlayerMovieState::Render()
-{
-
-}
-
-void PlayerMovieState::PostRender()
-{
-
+void PlayerMovieState::Exit(Player* p) {
+#ifdef _PRINT_PLAYER_STATE
+	DebugPrint_WATA("Player : Exit Movie State\n");
+#endif
 }

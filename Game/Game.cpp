@@ -17,6 +17,8 @@
 #include "Player/Attachment/Gun.h"
 #include "Player/Attachment/Shield.h"
 
+#include "EndingScene.h"
+
 void Game::Release()
 {
 	GameManager::GetInstance().Release();
@@ -202,7 +204,6 @@ void Game::Update()
 		GameManager::GetInstance().SpawnPlayer();
 
 		Fade::GetInstance().FadeIn();
-
 	}
 
 	if (m_boss != nullptr && !m_isBossCamPerform)
@@ -254,8 +255,8 @@ void Game::Update()
 	//printf("Clear Timer : %f\n", m_clearTimer);
 
 	auto& fade = Fade::GetInstance();
-	if (fade.IsFaded() and m_isCleared) {
-		auto result = NewGO<Result>(0);
+	if (fade.IsFaded() and m_isCleared and !m_engingFlag) {
+		//auto result = NewGO<Result>(0);
 		
 		const double meleeActiveTime = GameManager::GetInstance().m_player->GetJetPack()->GetActivatedTime();
 		const double remoteActiveTime = GameManager::GetInstance().m_player->GetGun()->GetActivatedTime();
@@ -276,9 +277,18 @@ void Game::Update()
 		//);
 
 		const int numCorpse = EnemyManager::GetEnemyManager().GetCorpseCount();
-		result->Init(m_clearTimer, numCorpse, ap);
+		//result->Init(m_clearTimer, numCorpse, ap);
 		auto go = reinterpret_cast<GameObject*>(this);
-		DeleteGO(go);
+		//DeleteGO(go);
+
+		DeleteGO(GameManager::GetInstance().m_stage);
+		EnemyManager::GetEnemyManager().Release();
+		DeleteGO(GameManager::GetInstance().m_gameHUD);
+		//DeleteGO(GameManager::GetInstance().m_itemManager);
+
+		NewGO<EndingScene>(0);
+		m_engingFlag = true;
+		SetActive(false);
 	}
 }
 

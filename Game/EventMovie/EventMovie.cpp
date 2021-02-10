@@ -84,6 +84,11 @@ void EventMovie::Init(const char* path, Camera* camera, const ActorInitFunc& act
 	}
 
 	m_eventListennerFunc = eventListennerFunc;
+
+	//init map
+	for (int i = 0; i < m_eventMovieMarker.size(); i++) {
+		m_eventMap.insert(std::make_pair(i, false));
+	}
 }
 
 void EventMovie::Awake()
@@ -104,16 +109,15 @@ void EventMovie::PreUpdate()
 
 void EventMovie::Update()
 {
-//	if (!g_pad[0]->IsPress(enButtonA)) return;
 
-	if (m_eventMovieMarker.size() > m_eventMarkerIndex) {
-		const float Time = m_eventMovieMarker[m_eventMarkerIndex].time;
-		if (m_timer >= Time) {
-			m_eventListennerFunc(m_eventMovieMarker[m_eventMarkerIndex].markerName);
-			//printf("time : %f\nmarkerName : ", Time);
-			//printf(m_eventMovieMarker[m_eventMarkerIndex].markerName.c_str());
+	for (int i = 0; i < m_eventMovieMarker.size(); i++) {
+		const float EventTime = m_eventMovieMarker[i].time;
+		if (m_timer >= EventTime and !m_eventMap[i]) {
+			m_eventListennerFunc(m_eventMovieMarker[i].markerName);
+			m_eventMap[i] = true;
+			//printf("markerName : ");
+			//printf(m_eventMovieMarker[i].markerName.c_str());
 			//printf("\n");
-			m_eventMarkerIndex++;
 		}
 	}
 

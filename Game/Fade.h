@@ -28,8 +28,25 @@ public:
 		m_isFaded = false;
 	}
 
+	void BlackOut() {
+		m_panel->SetMulColor({ 0,0,0,1 });
+	}
+
+	void MakeBright() {
+		m_panel->SetMulColor({ 0,0,0,0 });
+	}
+
 	const bool IsFaded() {
 		return m_isFaded;
+	}
+
+	void SetFadeColor(const Vector3& c)
+	{
+		m_color = c;
+	}
+	void SetFadeSpeed(float s)
+	{
+		m_fadeSpeed = s;
 	}
 
 private:
@@ -51,4 +68,5 @@ private:
 
 	bool m_isFaded = false;
 
+	Vector3 m_color = Vector3::Zero;
 };

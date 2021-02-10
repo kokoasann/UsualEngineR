@@ -92,4 +92,6 @@ private:
 
 	bool m_restartFlag = false;
 	bool m_toTitleFlag = false;
+
+	bool m_engingFlag = false;
 };

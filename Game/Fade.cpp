@@ -42,7 +42,8 @@ void Fade::Update()
 			m_isFaded = true;
 		}
 	}
-
-	m_panel->SetMulColor({ 0,0,0,m_alpha });
+	Vector4 c = m_color;
+	c.w = m_alpha;
+	m_panel->SetMulColor(c);
 
 }

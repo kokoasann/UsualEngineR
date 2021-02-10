@@ -97,7 +97,10 @@ namespace UER
 			lightStreeksTex
 		};
 		m_copy.Init(texList, TextureCopy::BlendMethod::BM_Add,TextureCopy::TextureNum::Double);
-
+		Texture* txList[] = {
+			&m_combineRT.GetRenderTargetTexture()
+		};
+		m_copy_single.Init(txList, TextureCopy::BlendMethod::BM_Add, TextureCopy::TextureNum::Single);
 		
 	}
 	void Bloom::Render(RenderContext& rc)
@@ -165,6 +168,9 @@ namespace UER
 
 		rc.WaitUntilToPossibleSetRenderTarget(*rt);
 		rc.WaitUntilFinishDrawingToRenderTarget(m_combineRT);
-		m_copy.Render(rc, *rt, m_postEffect->GetPrimitive());
+		if(m_isAndStreeks)
+			m_copy.Render(rc, *rt, m_postEffect->GetPrimitive());
+		else
+			m_copy_single.Render(rc, *rt, m_postEffect->GetPrimitive());
 	}
 }

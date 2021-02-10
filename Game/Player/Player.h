@@ -2,6 +2,7 @@
 #include "State/IPlayerSstate.h"
 #include "../../UsualEngineR/Character/CharacterController.h"
 #include "Effect/ParticleEffect.h"
+#include "../GameManager.h"
 
 class IEnemy;
 class GameCamera;
@@ -29,6 +30,7 @@ public:
 		enStun,
 		enDead,
 		enChurch,
+		enMovie,
 		enNumState
 	};
 
@@ -331,7 +333,7 @@ public:
 	}
 
 	Pod* GetPod() const {
-		return m_pod;
+		return GameManager::GetInstance().GetPod();
 	}
 
 	Model& GetModel() {
@@ -495,7 +497,7 @@ private:
 	const float m_charaConHeight = 6.f;
 
 	//Pod
-	Pod* m_pod = nullptr;
+	//Pod* m_pod = nullptr;
 
 	//Attachments
 	std::vector<Bone*> m_playerBones;

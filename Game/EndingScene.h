@@ -1,13 +1,14 @@
 #pragma once
 
+class EventMovie;
 /// <summary>
 /// 
 /// </summary>
-class EnemyMovieState :public GameObject
+class EndingScene :public GameObject
 {
 public:
-	EnemyMovieState();
-	virtual ~EnemyMovieState();
+	EndingScene();
+	virtual ~EndingScene();
 
 	/// <summary>
 	/// 本開放。確保したものを開放するための関数。
@@ -55,5 +56,11 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
+	EventMovie* m_movie;
 
+	ModelRender* m_player;
+	ModelRender* m_exit;
+	ModelRender* m_plane;
+	ModelRender* m_edBack;
+	ModelRender* m_edBack_cross;
 };

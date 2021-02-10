@@ -180,9 +180,30 @@ void BossA::Terminate() {
 }
 
 void BossA::Execute() {
+
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
+	////Physics
+	////btVector3 velocity = m_forward;
+	//btVector3 velocity(0, 1, 0);// = m_forward;
+	//btScalar allowedCcdPenetration = 0.f;
 
+	//btTransform t_from = m_handpos;
+	//btTransform t_to = t_from;
+	//t_to.setOrigin(t_to.getOrigin() + velocity);
+	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
+
+	//btCollisionWorld::ConvexResultCallback callback();
+	//Physics().ConvexSweepTest((const btConvexShape*)m_rightHandCollider.GetBody(), btStart, btEnd, callback);
+
+
+	//体力がなくなったら死亡ステートへ遷移
+	if (m_ability.hp <= 0) {
+		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enDeadState)));
+	}
+}
+
+void BossA::ExecuteCommon() {
 	//Effect
 	m_smokeEffect->SetPos(m_position);
 
@@ -206,23 +227,5 @@ void BossA::Execute() {
 	m_jetEffects[TO_INT(EnJetBone::Skirt)]->SetRotation(m_bones.at(TO_INT(EnJetBone::Skirt))->GetWorldMatrix().GetRotate());
 
 
-	////Physics
-	////btVector3 velocity = m_forward;
-	//btVector3 velocity(0, 1, 0);// = m_forward;
-	//btScalar allowedCcdPenetration = 0.f;
-
-	//btTransform t_from = m_handpos;
-	//btTransform t_to = t_from;
-	//t_to.setOrigin(t_to.getOrigin() + velocity);
-	//btCollisionWorld::ClosestConvexResultCallback cb(t_from.getOrigin(), t_to.getOrigin());
-
-	//btCollisionWorld::ConvexResultCallback callback();
-	//Physics().ConvexSweepTest((const btConvexShape*)m_rightHandCollider.GetBody(), btStart, btEnd, callback);
-
 	m_jetSE->SetPosition(m_position);
-
-	//体力がなくなったら死亡ステートへ遷移
-	if (m_ability.hp <= 0) {
-		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enDeadState)));
-	}
 }

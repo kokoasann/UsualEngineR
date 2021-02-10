@@ -12,6 +12,7 @@
 #include "Goal.h"
 #include "Church.h"
 #include "Fade.h"
+#include "Player/Pod/Pod.h"
 
 void GameManager::InitGameWorld() {
 
@@ -45,11 +46,18 @@ void GameManager::Release() {
 	m_goal = nullptr;
 	DeleteGO(m_church);
 	m_church = nullptr;
+	DeleteGO(m_pod);
+	m_pod = nullptr;
 }
 
 void GameManager::SpawnPlayer() {
 	if(m_player == nullptr)
 		m_player = NewGO<Player>(0);
+}
+
+void GameManager::SpawnPod() {
+	if (m_pod == nullptr)
+		m_pod = NewGO<Pod>(0);
 }
 
 void GameManager::AppearGoal() {

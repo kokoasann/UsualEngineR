@@ -2,6 +2,7 @@
 #include "DropItemA.h"
 #include "../EnemyManager.h"
 #include "../../Player/Player.h"
+#include "Level/GameStage.h"
 #include "GameManager.h"
 #include "Game.h"
 #include "Effect/SmokeEffect.h"
@@ -89,14 +90,15 @@ void DropItemA::Update()
 
 void DropItemA::PostUpdate()
 {
-	auto p = GameManager::GetInstance().m_player;
+	auto s = GameManager::GetInstance().m_stage;
 
-	if (p == nullptr) {
+	if (s == nullptr) {
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 		return;
 	}
 
+	auto p = GameManager::GetInstance().m_player;
 	auto dist = (p->GetPosition() - m_position).Length();
 
 	if (dist < m_GRASP_RANGE) {

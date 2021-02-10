@@ -48,6 +48,8 @@ void JetEffect::Update()
 
 void JetEffect::PostUpdate()
 {
+	if (m_particleEffect == nullptr) return;
+
 	m_particleEffect->SetPos(m_pos);
 	m_particleEffect->SetRot(m_rot);
 	m_particleEffect->SetSca(Vector3::One * EFFECT_SCALE);

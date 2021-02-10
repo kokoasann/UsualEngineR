@@ -105,6 +105,27 @@ public:
 	const int GetCorpseCount() {
 		return m_numCorpse;
 	}
+
+	 void SetMeleeBoss(IEnemy* instance) {
+		 m_meleeBoss = instance;
+	}
+	IEnemy* GetMeleeBoss() {
+		return m_meleeBoss;
+	}
+
+	void SetBombBoss(IEnemy* instance) {
+		m_bombBoss = instance;
+	}
+	IEnemy* GetBombBoss() {
+		return m_bombBoss;
+	}
+
+	void SetFatBoss(IEnemy* instance) {
+		m_fatBoss = instance;
+	}
+	IEnemy* GetFatBoss() {
+		return m_fatBoss;
+	}
 private:
 
 	static const int m_numNormalEnemy = 2;
@@ -123,6 +144,10 @@ private:
 	const float m_defaultHeight = 130.f;
 	std::vector<IEnemy*> m_enemies;
 	IEnemy* m_targetEnemy = nullptr;
+
+	IEnemy* m_meleeBoss = nullptr;
+	IEnemy* m_bombBoss = nullptr;
+	IEnemy* m_fatBoss = nullptr;
 
 	const float BOSS_A_HP = 1500.f;
 	const float BOSS_A_STAMINA = 100.f;

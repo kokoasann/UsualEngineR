@@ -2,6 +2,7 @@
 #include "Title.h"
 #include "Game.h"
 #include "Fade.h"
+#include "OpeningScene.h"
 
 Title::Title()
 {
@@ -59,7 +60,9 @@ void Title::Update()
 	}
 
 	if (Fade::GetInstance().IsFaded() and m_isTrigeredStart) {
-		NewGO<Game>(0);
+
+		//NewGO<Game>(0);
+		NewGO<OpeningScene>(0);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 	}
