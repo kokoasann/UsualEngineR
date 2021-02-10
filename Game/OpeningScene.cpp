@@ -42,6 +42,8 @@ void OpeningScene::Release()
 	for (auto effect : m_beamEffects) {
 		DeleteGO(effect);
 	}
+
+	DeleteGO(m_model);
 	//auto meleeIdleState = m_melee->GetStateMap().at(TO_INT(IEnemy::EnState::enIdleState));
 	//m_melee->SetState(meleeIdleState);
 
@@ -86,6 +88,12 @@ void OpeningScene::Awake()
 
 bool OpeningScene::Start()
 {
+	ModelInitData mid;
+	mid.m_tkmFilePath = "Assets/modelData/opField/opField.tkm";
+	mid.m_upAxis = EUpAxis::enUpAxisY;
+	m_model = NewGO<ModelRender>(0);
+	m_model->Init(mid);
+	m_model->SetScale(Vector3::One);
 	Fade::GetInstance().FadeIn();
 
 	auto player = GameManager::GetInstance().GetPlayer();
@@ -115,10 +123,17 @@ bool OpeningScene::Start()
 		//lol panch = punch.
 		if (std::strcmp(name.c_str(), "melee_panch") == 0) {
 			CSoundSource* se = NewGO<CSoundSource>(0);
-			se->Init(L"Assets/sound/chara/punch_2_1.wav");
+			se->Init(L"Assets/sound/chara/footstep2.wav");
 			se->SetVolume(1);
 			se->Play(false);
 			EnemyManager::GetEnemyManager().GetMeleeBoss()->PlayAnimation(IEnemy::EnAnimation::enAttackA);
+		}
+
+		if (std::strcmp(name.c_str(), "m_take_on") == 0) {
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/chara/punch_2_1.wav");
+			se->SetVolume(1);
+			se->Play(false);
 		}
 
 		if (std::strcmp(name.c_str(), "melee_idle") == 0) {
@@ -129,7 +144,7 @@ bool OpeningScene::Start()
 			auto bomb = EnemyManager::GetEnemyManager().GetBombBoss();
 			bomb->PlayAnimation(TO_INT(IEnemy::EnAnimation::enAttackA));
 			m_isTargeting = true;
-			
+
 			//beam
 			const int NumBeamEffects = 2;
 			for (int i = 0; i < NumBeamEffects; i++) {
@@ -151,6 +166,14 @@ bool OpeningScene::Start()
 
 			m_beamEffects[0]->Play();
 			m_beamEffects[1]->Play();
+
+			{
+				CSoundSource* se = NewGO<CSoundSource>(0);
+				se->Init(L"Assets/sound/boss_fatman/charge.wav");
+				se->SetVolume(1);
+				se->Play(false);
+			}
+
 		}
 
 
