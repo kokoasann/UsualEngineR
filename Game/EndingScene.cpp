@@ -37,6 +37,7 @@ void EndingScene::Release()
 	DeleteGO(m_gogogo);
 	DeleteGO(m_movie);
 	DeleteGO(m_plane);
+	DeleteGO(GameManager::GetInstance().m_player);
 }
 
 void EndingScene::OnDestroy()
@@ -184,8 +185,7 @@ void EndingScene::Update()
 
 		if (Fade::GetInstance().IsFaded())
 		{
-			auto pthis = this;
-			DeleteGO(pthis);
+			
 
 
 			auto result = NewGO<Result>(0);
@@ -206,6 +206,9 @@ void EndingScene::Update()
 			auto& fade = Fade::GetInstance();
 			fade.SetFadeSpeed(1);
 			fade.SetFadeColor({ 0.f,0.f,0.f});
+
+			auto pthis = this;
+			DeleteGO(pthis);
 		}
 	}
 }
