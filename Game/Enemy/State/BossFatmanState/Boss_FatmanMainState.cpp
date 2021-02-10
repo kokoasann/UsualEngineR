@@ -99,13 +99,9 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 			auto& ppos = player->GetPosition();
 			auto vecToPlayer = ppos - epos;
 
-			float diffY = ppos.y - epos.y;
-			const float flyRange = 5.f;
-			const float attackRange = 75.f;
-
 			//離れたら遠距離攻撃。
 			//もしくはプレイヤーが飛んでいたら遠距離攻撃。
-			if (vecToPlayer.Length() > Boss_Fatman::TAKE_DISTANCE or diffY > flyRange) {
+			if (vecToPlayer.Length() > Boss_Fatman::TAKE_DISTANCE or !player->IsOnGround()) {
 				m_fatTimer = 0.f;
 				switch (Boss_Fatman::GetCurrentBattlePhase()) {
 				case EnBattlePhase::Normal:
@@ -113,19 +109,15 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 					break;
 				case EnBattlePhase::Mad:
 				case EnBattlePhase::Tired:
-					//離れたら遠距離攻撃。
-					//もしくはプレイヤーが飛んでいたら遠距離攻撃。
-					if (vecToPlayer.Length() > attackRange or diffY > flyRange) {
-						//確率で行動変化。
-						auto rand = GRandom().Rand();
-						if (rand < 0.5f) {
-							//ビーム。
-							return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
-						}
-						else {
-							//溜めビーム＆乱射。
-							return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enAttackE));
-						}
+					//確率で行動変化。
+					auto rand = GRandom().Rand();
+					if (rand < 0.5f) {
+						//ビーム。
+						return e->GetState(TO_INT(IEnemy::EnState::enAttackA));
+					}
+					else {
+						//溜めビーム＆乱射。
+						return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enAttackE));
 					}
 					break;
 				}
