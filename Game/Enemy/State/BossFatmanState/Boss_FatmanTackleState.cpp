@@ -21,6 +21,7 @@ void Boss_FatmanTackleState::Enter(IEnemy* e)
 	auto& p = GameManager::GetInstance().m_player;
 	const auto& ppos = p->GetPosition();
 	m_playerPosition = ppos;
+	e->SetVelocity(Vector3::Zero);
 }
 
 IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
@@ -49,14 +50,14 @@ IEnemyState* Boss_FatmanTackleState::Update(IEnemy* e)
 		const float knockbackParam = 300.f;
 		vecToPlayer *= knockbackParam;
 		p->ApplyDamage(m_damage, true, vecToPlayer);
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 	}
 	
 	auto vecToPlayer2 = m_playerPosition - epos;
 	float distanceToOldP = vecToPlayer2.Length();
 	if (std::abs(distanceToOldP) < distance) {
 		m_isSound = false;
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 	}
 
 	vecToPlayer2.Normalize();

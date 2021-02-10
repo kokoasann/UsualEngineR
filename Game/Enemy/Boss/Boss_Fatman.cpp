@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Boss_Fatman.h"
-#include "Enemy/EnemyManager.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanBeamState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamState.h"
@@ -49,6 +48,10 @@ void Boss_Fatman::Init()
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
+
+	//m_bgm = NewGO<CSoundSource>(0);
+	//m_bgm->Init(L"Assets/sound/boss_fatman/backstep.wav");
+	//m_bgm->SetVolume(0.0f);
 }
 
 void Boss_Fatman::InitAnimation()
@@ -66,16 +69,16 @@ void Boss_Fatman::InitState()
 		auto p = std::make_pair(TO_INT(IEnemy::EnState::enDeadState), new Boss_FatmanDeadState());
 		m_stateMap.insert(p);
 	}
+	/*{
+		auto p = std::make_pair(TO_INT(IEnemy::EnState::enBattleState), new Boss_FatmanMainState());
+		m_stateMap.insert(p);
+	}*/
 	{
 		auto p = std::make_pair(TO_INT(IEnemy::EnState::enStunState), new Boss_FatmanMainState());
 		m_stateMap.insert(p);
 	}
 	{
 		auto p = std::make_pair(TO_INT(IEnemy::EnState::enIdleState), new Boss_FatmanIdleState());
-		m_stateMap.insert(p);
-	}
-	{
-		auto p = std::make_pair(TO_INT(IEnemy::EnState::enBattleState), new Boss_FatmanMainState());
 		m_stateMap.insert(p);
 	}
 	{
@@ -138,6 +141,14 @@ void Boss_Fatman::Execute()
 	m_model->SetPosition(m_position);
 	//m_model->SetRotation(m_rotation);
 
+	/*if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enBattleState))) {
+		if (m_bgm->GetVolume() < 1.0f) {
+			const float addVolume = 0.1f;
+			m_volume += addVolume * gameTime()->GetDeltaTime();
+			m_bgm->SetVolume(m_volume);
+		}
+	}*/
+
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
 		SetState(m_stateMap[TO_INT(IEnemy::EnState::enDeadState)]);
@@ -147,5 +158,5 @@ void Boss_Fatman::Execute()
 void Boss_Fatman::Terminate()
 {
 	DeleteGO(m_model);
-	EnemyManager::GetEnemyManager().SetFatBoss(nullptr);
+	//DeleteGO(m_bgm);
 }

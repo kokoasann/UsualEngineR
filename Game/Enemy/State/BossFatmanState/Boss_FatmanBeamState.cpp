@@ -64,7 +64,7 @@ IEnemyState* Boss_FatmanBeamState::Update(IEnemy* e)
 	UpdateRotation(e);
 	
 	if (m_isState && m_maxSenkei > 1.0f) {
-		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
+		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 	}
 
 	if (m_countRot > 0.f) {
