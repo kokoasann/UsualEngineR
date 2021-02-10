@@ -287,7 +287,8 @@ void Game::Update()
 		DeleteGO(GameManager::GetInstance().m_gameHUD);
 		//DeleteGO(GameManager::GetInstance().m_itemManager);
 
-		NewGO<EndingScene>(0);
+		EndingScene* end = NewGO<EndingScene>(0);
+		end->Init(m_clearTimer);
 		m_engingFlag = true;
 		SetActive(false);
 	}

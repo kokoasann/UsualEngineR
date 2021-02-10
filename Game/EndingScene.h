@@ -21,6 +21,11 @@ public:
 	/// </summary>
 	virtual void OnDestroy() override;
 
+	void Init(float clearTimer)
+	{
+		m_clearTimer = clearTimer;
+	}
+
 	/// <summary>
 	/// NewGO時に即座に呼ばれる関数。
 	/// コンストラクタの代わりに使おう。
@@ -63,4 +68,11 @@ private:
 	ModelRender* m_plane;
 	ModelRender* m_edBack;
 	ModelRender* m_edBack_cross;
+
+	CSoundSource* m_esca;
+	CSoundSource* m_gogogo;
+	bool m_isTake_on = false;
+	bool m_isFadeOut = false;
+
+	float m_clearTimer = 0.f;
 };
