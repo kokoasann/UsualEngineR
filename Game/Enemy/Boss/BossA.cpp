@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "BossA.h"
 #include "../../Effect/JetEffect.h"
+#include "Enemy/EnemyManager.h"
 #include "../State/MeleeBossState/EnemyMeleePunchState.h"
 #include "../State/MeleeBossState//EnemyDashPunchState.h"
 #include "../State/MeleeBossState/EnemyMeleeBattleState.h"
@@ -177,6 +178,7 @@ void BossA::Terminate() {
 		DeleteGO(m_jetEffects[i]);
 	}
 	DeleteGO(m_jetSE);
+	EnemyManager::GetEnemyManager().SetMeleeBoss(nullptr);
 }
 
 void BossA::Execute() {
