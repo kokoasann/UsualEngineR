@@ -39,6 +39,9 @@ void OpeningScene::Release()
 		DeleteGO(effect);
 	}
 
+	for (auto effect : m_beamEffects) {
+		DeleteGO(effect);
+	}
 	//auto meleeIdleState = m_melee->GetStateMap().at(TO_INT(IEnemy::EnState::enIdleState));
 	//m_melee->SetState(meleeIdleState);
 
@@ -111,6 +114,10 @@ bool OpeningScene::Start()
 
 		//lol panch = punch.
 		if (std::strcmp(name.c_str(), "melee_panch") == 0) {
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/chara/punch_2_1.wav");
+			se->SetVolume(1);
+			se->Play(false);
 			EnemyManager::GetEnemyManager().GetMeleeBoss()->PlayAnimation(IEnemy::EnAnimation::enAttackA);
 		}
 
@@ -122,24 +129,43 @@ bool OpeningScene::Start()
 			auto bomb = EnemyManager::GetEnemyManager().GetBombBoss();
 			bomb->PlayAnimation(TO_INT(IEnemy::EnAnimation::enAttackA));
 			m_isTargeting = true;
-		}
-
-
-		if (std::strcmp(name.c_str(), "fire") == 0) {
-			const int NumMazzleFlashes = 3;
-			MuzzleFlashEffectInitData eid;
-			for (int i = 0; i < NumMazzleFlashes; i++) {
-				auto muzzleFlash = NewGO<MuzzleFlash>(0);
-				muzzleFlash->Init(eid);
-				m_muzzleFlashEffects.push_back(muzzleFlash);
-			}
-
+			
+			//beam
 			const int NumBeamEffects = 2;
 			for (int i = 0; i < NumBeamEffects; i++) {
 				auto beamEff = NewGO<Beam>(0);
 				BeamEffectInitData beid;
 				beamEff->Init(beid);
 				m_beamEffects.push_back(beamEff);
+			}
+
+			auto fat = EnemyManager::GetEnemyManager().GetFatBoss();
+
+			m_beamEffects[0]->SetChange(true);
+			m_beamEffects[0]->SetSca(Vector3::One * 0.01f);
+			m_beamEffects[0]->SetIsLoop(true);
+
+			m_beamEffects[1]->SetChange(true);
+			m_beamEffects[1]->SetSca(Vector3::One * 0.01f);
+			m_beamEffects[1]->SetIsLoop(true);
+
+			m_beamEffects[0]->Play();
+			m_beamEffects[1]->Play();
+		}
+
+
+		if (std::strcmp(name.c_str(), "fire") == 0) {
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/shoot.wav");
+			se->SetVolume(1.);
+			se->Play(false);
+
+			const int NumMazzleFlashes = 3;
+			MuzzleFlashEffectInitData eid;
+			for (int i = 0; i < NumMazzleFlashes; i++) {
+				auto muzzleFlash = NewGO<MuzzleFlash>(0);
+				muzzleFlash->Init(eid);
+				m_muzzleFlashEffects.push_back(muzzleFlash);
 			}
 
 			//fat's arms
@@ -207,6 +233,14 @@ void OpeningScene::Update()
 		auto bomb = EnemyManager::GetEnemyManager().GetBombBoss();
 		bomb->GetIK(TO_INT(IEnemy::EnIK::enArm_L))->SetNextTarget(g_camera3D->GetPosition());
 
+		//
+		const auto& ArmLMat = fat->GetIK(TO_INT(IEnemy::EnIK::enArm_L))->GetEffectorBone()->GetWorldMatrix();
+		const auto& ArmRMat = fat->GetIK(TO_INT(IEnemy::EnIK::enArm_R))->GetEffectorBone()->GetWorldMatrix();
+
+		m_beamEffects[0]->SetPos(ArmLMat.GetTransrate());
+		m_beamEffects[0]->SetRot(ArmLMat.GetRotate());
+		m_beamEffects[1]->SetPos(ArmRMat.GetTransrate());
+		m_beamEffects[1]->SetRot(ArmRMat.GetRotate());
 	}
 
 	if (m_isFadingToGame and Fade::GetInstance().IsFaded()) {
