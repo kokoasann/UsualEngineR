@@ -153,6 +153,9 @@ void EnemyManager::Release() {
 	}
 	m_enemies.clear();
 	m_enemies.shrink_to_fit();
+
+	m_numCorpse = 0;
+	m_targetEnemy = nullptr;
 }
 
 void EnemyManager::ApplyAoeDamage(const Vector3& attackOriginPos, float range, float damageAmount) {
