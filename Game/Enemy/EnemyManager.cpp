@@ -85,35 +85,41 @@ void EnemyManager::SpawnEnemies() {
 				m_enemies.push_back(e);
 			}
 			else if (objData.name == L"MeleeBoss") {
-				//auto bene = NewGO<BossA>(0);
+				if (m_meleeBoss == nullptr) {
+					m_meleeBoss = NewGO<BossA>(0);
+					m_enemies.push_back(m_meleeBoss);
+				}
 				ab.InitHP(BOSS_A_HP);
 				ab.InitStamina(BOSS_A_STAMINA);
 				m_meleeBoss->SetAbility(ab);
 				m_meleeBoss->SetPosition(objData.position * 100.f);
 				m_meleeBoss->SetRotation(objData.rotation);
-				m_enemies.push_back(m_meleeBoss);
-				auto meleeIdleState = m_meleeBoss->GetStateMap().at(TO_INT(IEnemy::EnState::enIdleState));
-				m_meleeBoss->SetState(meleeIdleState);
+				//auto meleeIdleState = m_meleeBoss->GetStateMap().at(TO_INT(IEnemy::EnState::enIdleState));
+				//m_meleeBoss->SetState(meleeIdleState);
 			}
 			else if (objData.name == L"LongFatBoss")
 			{
-				//auto bene = NewGO<Boss_Fatman>(0);
+				if (m_fatBoss == nullptr) {
+					m_fatBoss = NewGO<Boss_Fatman>(0);
+					m_enemies.push_back(m_fatBoss);
+				}
 				ab.InitHP(BOSS_A_HP);
 				ab.InitStamina(BOSS_A_STAMINA);
 				m_fatBoss->SetAbility(ab);
 				m_fatBoss->SetPosition(objData.position * 100.f);
 				m_fatBoss->SetRotation(objData.rotation);
-				m_enemies.push_back(m_fatBoss);
 			}
 			else if (objData.name == L"BombBoss")
 			{
-				//auto bene = NewGO<Boss_MiddleBomb>(0);
+				if (m_bombBoss == nullptr) {
+					m_bombBoss = NewGO<Boss_MiddleBomb>(0);
+					m_enemies.push_back(m_bombBoss);
+				}
 				ab.InitHP(BOSS_A_HP*0.4);//‚È‚¨‚·I
 				ab.InitStamina(BOSS_A_STAMINA);
 				m_bombBoss->SetAbility(ab);
 				m_bombBoss->SetPosition(objData.position * 100.f);
 				m_bombBoss->SetRotation(objData.rotation);
-				m_enemies.push_back(m_bombBoss);
 			}
 			return true;
 		}
