@@ -85,6 +85,9 @@ bool OpeningScene::Start()
 {
 	Fade::GetInstance().FadeIn();
 
+	auto player = GameManager::GetInstance().GetPlayer();
+	player->SetStateSudden(player->GetState(Player::EnState::enMovie));
+
 	m_eventMovie = NewGO<EventMovie>(0);
 
 	ActorInitFunc actorInitFunc = [&](const std::string& name) {
