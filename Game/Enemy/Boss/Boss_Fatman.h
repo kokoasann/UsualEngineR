@@ -153,6 +153,6 @@ private:
 	static EnBattlePhase m_battlePhase;
 
 	//サウンド。
-	/*CSoundSource*	m_bgm = nullptr;
-	float			m_volume = 0.0f;*/
+	CSoundSource*	m_bgm = nullptr;
+	float			m_volume = 0.0f;
 };
