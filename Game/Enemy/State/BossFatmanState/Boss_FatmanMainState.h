@@ -22,7 +22,9 @@ private:
 	/// </summary>
 	void ChangeBattleState(IEnemy* e);
 private:
-	float m_fatTimer = 0.f;
+	float	m_fatTimer = 0.f;
+	bool	m_isTakeDistance = false;
+	bool	m_isTackle = false;
 
 	//‰‰oŠÖŒWB
 	bool m_isPerformed = false;

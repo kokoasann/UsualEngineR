@@ -30,8 +30,8 @@ void GameManager::InitGameWorld() {
 }
 
 void GameManager::Release() {
-	DeleteGO(m_player);
-	m_player = nullptr;
+	//DeleteGO(m_player);
+	//m_player = nullptr;
 	DeleteGO(m_camera);
 	m_camera = nullptr;
 	DeleteGO(m_stage);
@@ -51,13 +51,19 @@ void GameManager::Release() {
 }
 
 void GameManager::SpawnPlayer() {
-	if(m_player == nullptr)
+	if (m_player == nullptr) {
 		m_player = NewGO<Player>(0);
+	}
+	else {
+		m_player->Respawn();
+	}
+	
 }
 
 void GameManager::SpawnPod() {
-	if (m_pod == nullptr)
+	if (m_pod == nullptr) {
 		m_pod = NewGO<Pod>(0);
+	}
 }
 
 void GameManager::AppearGoal() {

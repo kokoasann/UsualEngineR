@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Boss_MiddleBomb.h"
-
+#include "Enemy/EnemyManager.h"
 #include "Enemy/State/MiddleBombState/BossBombIdleState.h"
 #include "Enemy/State/MiddleBombState/BossBombDeadState.h"
 #include "Enemy/State/MiddleBombState/BossBombBattleState.h"
@@ -244,5 +244,6 @@ void Boss_MiddleBomb::Terminate()
 {
 	DeleteGO(m_model);
 	DeleteGO(m_ShieldModel);
+	EnemyManager::GetEnemyManager().SetBombBoss(nullptr);
 }
 

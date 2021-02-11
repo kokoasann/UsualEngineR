@@ -13,10 +13,10 @@ namespace UER
 
 	void Model::Release()
 	{
-		/*for (auto ik : m_ikList)
+		for (auto ik : m_ikList)
 		{
 			delete ik;
-		}*/
+		}
 	}
 
 	void Model::Init(const ModelInitData& initData)
