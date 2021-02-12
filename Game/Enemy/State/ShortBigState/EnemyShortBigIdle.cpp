@@ -27,14 +27,14 @@ IEnemyState* EnemyShortBigIdle::Update(IEnemy* e)
 
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
+	auto vecToPlayer = ppos - epos;
 
 	//プレイヤーが空中にいるなら動かない。
 	const float airPlayerYPos = 70.0f;
-	if (ppos.y > airPlayerYPos) {
+	if (vecToPlayer.y > airPlayerYPos) {
 		return this;
 	}
 
-	auto vecToPlayer = ppos - epos;
 	const float chaseRange = 100.f;
 
 	if ((vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) or m_isAttacked) {
