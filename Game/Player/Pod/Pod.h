@@ -216,7 +216,7 @@ private:
 	Beam* m_beamEffect = nullptr;
 
 
-	CSoundSource* m_laserSE = nullptr;
+	//CSoundSource* m_laserSE = nullptr;
 	CSoundSource* m_gunSE = nullptr;
 
 	SphereCollider m_sphere;

@@ -13,8 +13,6 @@ BossBombDeadState::BossBombDeadState()
 
 BossBombDeadState::~BossBombDeadState()
 {
-	auto item = NewGO<DropItemBom>(0);
-	item->SetPosition(m_pos);
 }
 
 void BossBombDeadState::Enter(IEnemy* e)

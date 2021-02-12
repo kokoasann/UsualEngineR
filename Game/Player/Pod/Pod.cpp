@@ -330,10 +330,9 @@ void Pod::PostRender()
 void Pod::ShotLaserBeam() {
 	DebugPrint_WATA("Pod : laser beam\n");
 
-	m_laserSE = NewGO<CSoundSource>(0);
-	m_laserSE->Init(L"Assets/sound/chara/beam.wav", false);
-	m_laserSE->Play(false);
-
+	auto laserSE = NewGO<CSoundSource>(0);
+	laserSE->Init(L"Assets/sound/chara/beam.wav", false);
+	laserSE->Play(false);
 
 	//effect
 	m_beamEffect->Play();
@@ -489,9 +488,9 @@ void Pod::Kamikaze() {
 
 	if ((m_pos - epos).Length() < m_thrownAttackRange) {
 		//Explode
-		m_laserSE = NewGO<CSoundSource>(0);
-		m_laserSE->Init(L"Assets/sound/chara/explosion.wav", false);
-		m_laserSE->Play(false);
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/explosion.wav", false);
+		se->Play(false);
 		m_explosionEffect->SetPos(m_pos);
 		m_explosionEffect->Play();
 		EnemyManager::GetEnemyManager().GetNearestEnemy(m_pos)->ApplyDamage(m_kamikazeDamageAmount);

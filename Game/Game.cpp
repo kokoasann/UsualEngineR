@@ -212,6 +212,7 @@ void Game::Update()
 		if (m_timer > 1.7f)
 		{
 			if (m_boss->GetCurrentState() == m_boss->GetState(TO_INT(IEnemy::EnState::enDeadState))) {
+				m_boss->SpawnDropItem();
 				GameObject* enemy = reinterpret_cast<GameObject*>(m_boss);
 				EnemyManager::GetEnemyManager().DestroyEnemy(m_boss);
 				GameManager::GetInstance().m_camera->ChangePlayerCam();

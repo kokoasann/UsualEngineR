@@ -14,6 +14,8 @@ public:
 	void Execute() override;
 	void ExecuteCommon() override;
 	void Terminate() override;
+	void SpawnDropItem() override;
+
 	Player::EnAttackType GetDropID() override{
 		return Player::EnAttackType::enRemoteAttackPreset;
 	}
@@ -93,7 +95,9 @@ private:
 	//Physics
 	const float m_radius = 5.5f;
 	const float m_height = 7.5f;
-
+	//サウンド。
+	CSoundSource* m_bgm = nullptr;
+	float			m_volume = 0.0f;
 	//Hands
 	//SphereCollider		m_rightHandCollider;
 	//const float m_HandRadius = 1.f;

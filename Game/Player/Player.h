@@ -332,6 +332,13 @@ public:
 		m_canUsePreset[TO_INT(preset)] = true;
 	}
 
+	void LockAllDropPreset() {
+		for (int i = 1; i < TO_INT(EnAttackPreset::enNumPreset); i++) {
+			m_canUsePreset[i] = false;
+		}
+		m_currentAttackPreset = EnAttackPreset::enDefault;
+	}
+
 	Pod* GetPod() const {
 		return GameManager::GetInstance().GetPod();
 	}

@@ -12,8 +12,6 @@ EnemyMeleeDeadState::EnemyMeleeDeadState() {
 }
 
 EnemyMeleeDeadState::~EnemyMeleeDeadState() {
-	auto item = NewGO<DropItemA>(0);
-	item->SetPosition(m_pos);
 }
 
 void EnemyMeleeDeadState::Enter(IEnemy* e) {

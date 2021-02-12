@@ -53,6 +53,7 @@ public:
 	virtual  Player::EnAttackType GetDropID() { return Player::EnAttackType::enNone; }
 	virtual void PlayAnimation(const EnAnimation& anim, const float interpolate = 0.2f) {}
 	virtual void PlayAnimation(const int animNo, const float interpolate = 0.2f) {}
+	virtual void SpawnDropItem() {};
 
 	virtual void Awake() override final;
 	virtual bool Start() override final;

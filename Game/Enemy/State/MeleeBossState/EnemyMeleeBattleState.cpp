@@ -67,6 +67,10 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 				tar, tar, sec, interval, GameCamera::State::enEnemyCamera
 			);
 
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/Boss_Shout.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
 
 			e->SetSmokeFlag(true);
 

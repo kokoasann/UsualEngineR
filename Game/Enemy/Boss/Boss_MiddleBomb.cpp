@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Boss_MiddleBomb.h"
+#include "Enemy/Drop/DropItemBom.h"
 #include "Enemy/EnemyManager.h"
 #include "Enemy/State/MiddleBombState/BossBombIdleState.h"
 #include "Enemy/State/MiddleBombState/BossBombDeadState.h"
@@ -93,6 +94,10 @@ void Boss_MiddleBomb::Init()
 	BossBombData::GetInstance().meshColl = &m_meshColl;
 	BossBombData::GetInstance().rigidBody = &m_rigidBody;
 	BossBombData::GetInstance().shieldGhost = &m_shieldGhost;
+
+	m_bgm = NewGO<CSoundSource>(0);
+	m_bgm->Init(L"Assets/sound/Encounter.wav");
+	m_bgm->SetVolume(0.0f);
 
 	GetModel()->GetAnimation().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName)
 		{
@@ -229,6 +234,17 @@ void Boss_MiddleBomb::Execute()
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Angry;
 	}
 
+	if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enStunState))) {
+		if (!m_bgm->IsPlaying()) {
+			m_bgm->Play(true);
+		}
+		if (m_bgm->GetVolume() < 1.0f) {
+			const float addVolume = 0.1f;
+			m_volume += addVolume * gameTime()->GetDeltaTime();
+			m_bgm->SetVolume(m_volume);
+		}
+	}
+
 	m_model->SetPosition(m_position);
 	m_model->SetRotation(m_rotation);
 
@@ -244,6 +260,11 @@ void Boss_MiddleBomb::Terminate()
 {
 	DeleteGO(m_model);
 	DeleteGO(m_ShieldModel);
+	DeleteGO(m_bgm);
 	EnemyManager::GetEnemyManager().SetBombBoss(nullptr);
 }
 
+void Boss_MiddleBomb::SpawnDropItem() {
+	auto item = NewGO<DropItemBom>(0);
+	item->SetPosition(m_position);
+}
