@@ -413,6 +413,9 @@
       <Filter>Player\State</Filter>
     </ClInclude>
     <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="Enemy\BossBGM.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -828,6 +831,9 @@
       <Filter>Player\State</Filter>
     </ClCompile>
     <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="Enemy\BossBGM.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
