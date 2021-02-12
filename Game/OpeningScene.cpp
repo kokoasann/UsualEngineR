@@ -40,6 +40,7 @@ void OpeningScene::Release()
 	}
 
 	for (auto effect : m_beamEffects) {
+		effect->Stop();
 		DeleteGO(effect);
 	}
 

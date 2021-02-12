@@ -3,7 +3,7 @@
 #include "../../Player/Player.h"
 #include "physics/SphereCollider.h"
 #include "Effect/ExplosionEffect.h"
-
+class BossBGM;
 class JetEffect;
 
 class BossA :public IEnemy
@@ -96,8 +96,7 @@ private:
 	const float m_radius = 5.5f;
 	const float m_height = 7.5f;
 	//サウンド。
-	CSoundSource* m_bgm = nullptr;
-	float			m_volume = 0.0f;
+	BossBGM* m_bgm = nullptr;
 	//Hands
 	//SphereCollider		m_rightHandCollider;
 	//const float m_HandRadius = 1.f;

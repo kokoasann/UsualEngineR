@@ -1,5 +1,9 @@
 #pragma once
+//#include "GameManager.h"
+class IEnemy;
 
+
+//class CSoundSource;
 /// <summary>
 /// 
 /// </summary>
@@ -36,7 +40,16 @@ public:
 	/// </summary>
 	void Update() override;
 
-
+	void SetIEnemy(IEnemy* e) {
+		m_IEnemy = e;
+	}
+	void SetState(const int& s) {
+		m_state = s;
+	}
 private:
-
+	IEnemy* m_IEnemy = nullptr;
+	int m_state = 0;
+	//saund
+	CSoundSource*	m_bgm = nullptr;
+	float			m_volume = 0.0f;
 };
