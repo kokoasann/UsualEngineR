@@ -82,12 +82,13 @@
 
 
 #if DEBUG_FUNC
+
+
+
+#endif
 #include "Debug/DebugPopup.h"
 #include "Debug/Debug.h"
 #include "Debug/DebugSwitch.h"
-
-#endif
-
 
 #include "system/system.h"
 

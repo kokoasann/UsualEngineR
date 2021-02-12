@@ -49,8 +49,11 @@ namespace UER
 
 		dynamicWorld->setGravity(btVector3(0, 0, 0));
 
+#if DEBUG_FUNC
 		m_debugDraw.Init();
+
 		dynamicWorld->setDebugDrawer(&m_debugDraw);
+#endif
 		dynamicWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 	}
 	void PhysicsWorld::Update()
