@@ -97,7 +97,6 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 	}
 
 	if (m_fatTimer > attackSpan) {
-		//return e->GetState(TO_INT(Boss_Fatman::EnStateEX::enAttackE));
 		auto& player = GameManager::GetInstance().m_player;
 		if (player->GetCurrentHP() > 0.f) {
 			const auto& ppos = player->GetPosition();
@@ -105,7 +104,7 @@ IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)
 			auto vecToPlayer = ppos - epos;
 
 			//‚à‚Ì‚·‚²‚¢—£‚ê‚½‚ç’âŽ~B
-			const float idleDist = 500.0f;
+			const float idleDist = 400.0f;
 			if (vecToPlayer.Length() > idleDist) {
 				return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 			}

@@ -2,6 +2,7 @@
 
 #include "Enemy/IEnemy.h"
 #include "Effect/ExplosionEffect.h"
+class BossBGM;
 /// <summary>
 /// 
 /// </summary>
@@ -83,8 +84,7 @@ private:
 	const float m_radius = 3.f;
 	const float m_height = 7.f;
 	//サウンド。
-	CSoundSource* m_bgm = nullptr;
-	float			m_volume = 0.0f;
+	BossBGM* m_bgm = nullptr;
 };
 
 struct BossBombData
