@@ -153,7 +153,4 @@ private:
 
 	//バトルフェーズ。
 	static EnBattlePhase m_battlePhase;
-
-	//サウンド。
-	BossBGM* m_bgm = nullptr;
 };

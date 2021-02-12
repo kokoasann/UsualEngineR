@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "EnemyMeleeIdleState.h"
 #include "../../EnemyManager.h"
+#include "GameManager.h"
+#include "Game.h"
 #include "../../IEnemy.h"
 #include "../../../Player/Player.h"
 #include "../../Boss/BossA.h"
+#include "Enemy/BossBGM.h"
 
 EnemyMeleeIdleState::EnemyMeleeIdleState() {
 
@@ -23,6 +26,9 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 
 	m_isAttacked = false;
 
+	if (GameManager::GetInstance().m_bgm != nullptr) {
+		GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+	}
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee idle\n");
 #endif
@@ -45,6 +51,9 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 //		e->SetVelocity(vel);
 
 	if ((vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) or m_isAttacked) {
+		if (GameManager::GetInstance().m_bgm != nullptr) {
+			GameManager::GetInstance().m_bgm->AddBgmCount(1);
+		}
 		return e->GetStateMap().at(TO_INT(IEnemy::EnState::enBattleState));
 	}
 

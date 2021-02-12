@@ -13,6 +13,7 @@
 #include "Church.h"
 #include "Fade.h"
 #include "Player/Pod/Pod.h"
+#include "Enemy/BossBGM.h"
 
 void GameManager::InitGameWorld() {
 
@@ -23,6 +24,8 @@ void GameManager::InitGameWorld() {
 	m_itemManager = NewGO<ItemManager>(0);
 	m_menu = NewGO<GameSceneMenu>(2);
 	m_church = NewGO<Church>(0);
+	m_bgm = NewGO<BossBGM>(0);
+
 	//m_gameHUD->SetPlayer(m_player);
 	//m_camera->SetPlayer(m_player);
 	//m_player->SetGameCamera(m_camera);
@@ -48,6 +51,8 @@ void GameManager::Release() {
 	m_church = nullptr;
 	DeleteGO(m_pod);
 	m_pod = nullptr;
+	DeleteGO(m_bgm);
+	m_bgm = nullptr;
 }
 
 void GameManager::SpawnPlayer() {
