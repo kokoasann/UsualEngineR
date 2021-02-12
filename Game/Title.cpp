@@ -39,7 +39,6 @@ bool Title::Start()
 	if (!m_seLoaded) {
 		m_seLoaded = true;
 		LoadSoundSources();
-		printf("load se\n");
 	}
 
 	Fade::GetInstance().FadeIn();
