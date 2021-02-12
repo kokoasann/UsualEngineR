@@ -13,6 +13,7 @@
 #include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamAndShootingState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanDeadState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanIdleState.h"
+#include "Enemy/BossBGM.h"
 
 EnBattlePhase Boss_Fatman::m_battlePhase = EnBattlePhase::Normal;
 const float Boss_Fatman::TAKE_DISTANCE = 70.0f;
@@ -51,9 +52,10 @@ void Boss_Fatman::Init()
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
 
-	m_bgm = NewGO<CSoundSource>(0);
-	m_bgm->Init(L"Assets/sound/Encounter.wav");
-	m_bgm->SetVolume(0.0f);
+	m_bgm = NewGO<BossBGM>(0);
+	m_bgm->SetIEnemy(this);
+	m_bgm->SetState(TO_INT(IEnemy::EnState::enStunState));
+
 }
 
 void Boss_Fatman::InitAnimation()
@@ -142,17 +144,6 @@ void Boss_Fatman::Execute()
 {
 	m_model->SetPosition(m_position);
 	//m_model->SetRotation(m_rotation);
-
-	if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enStunState))) {
-		if (!m_bgm->IsPlaying()) {
-			m_bgm->Play(true);
-		}
-		if (m_bgm->GetVolume() < 1.0f) {
-			const float addVolume = 0.1f;
-			m_volume += addVolume * gameTime()->GetDeltaTime();
-			m_bgm->SetVolume(m_volume);
-		}
-	}
 
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
