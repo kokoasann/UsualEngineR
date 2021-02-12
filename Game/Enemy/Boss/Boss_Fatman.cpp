@@ -51,11 +51,6 @@ void Boss_Fatman::Init()
 
 	//Physics
 	InitCharacon(m_radius, m_height, m_position, true);
-
-	m_bgm = NewGO<BossBGM>(0);
-	m_bgm->SetIEnemy(this);
-	m_bgm->SetState(TO_INT(IEnemy::EnState::enStunState));
-
 }
 
 void Boss_Fatman::InitAnimation()
@@ -154,7 +149,6 @@ void Boss_Fatman::Execute()
 void Boss_Fatman::Terminate()
 {
 	DeleteGO(m_model);
-	DeleteGO(m_bgm);
 	EnemyManager::GetEnemyManager().SetFatBoss(nullptr);
 }
 

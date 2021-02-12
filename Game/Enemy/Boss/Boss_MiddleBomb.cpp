@@ -95,10 +95,6 @@ void Boss_MiddleBomb::Init()
 	BossBombData::GetInstance().rigidBody = &m_rigidBody;
 	BossBombData::GetInstance().shieldGhost = &m_shieldGhost;
 
-	m_bgm = NewGO<BossBGM>(0);
-	m_bgm->SetIEnemy(this);
-	m_bgm->SetState(TO_INT(IEnemy::EnState::enBattleState));
-
 	GetModel()->GetAnimation().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName)
 		{
 			int res = std::wcscmp(eventName, L"jump_start");
@@ -249,7 +245,6 @@ void Boss_MiddleBomb::Terminate()
 {
 	DeleteGO(m_model);
 	DeleteGO(m_ShieldModel);
-	DeleteGO(m_bgm);
 	EnemyManager::GetEnemyManager().SetBombBoss(nullptr);
 }
 

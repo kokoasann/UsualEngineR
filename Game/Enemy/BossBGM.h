@@ -40,16 +40,19 @@ public:
 	/// </summary>
 	void Update() override;
 
-	void SetIEnemy(IEnemy* e) {
-		m_IEnemy = e;
+	
+	void AddBgmCount(int count) {
+		m_bgmCount += count;
+		m_bgmCount = max(0.f, m_bgmCount);
 	}
-	void SetState(const int& s) {
-		m_state = s;
+	int GetBgmCount() {
+		return m_bgmCount;
 	}
 private:
-	IEnemy* m_IEnemy = nullptr;
-	int m_state = 0;
+
 	//saund
 	CSoundSource*	m_bgm = nullptr;
 	float			m_volume = 0.0f;
+	int m_bgmCount = 0;
+
 };

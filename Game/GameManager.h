@@ -13,6 +13,7 @@ class Goal;
 class Church;
 class Fade;
 class Pod;
+class BossBGM;
 
 class GameManager
 {
@@ -87,6 +88,8 @@ public:
 
 	//Navimesh
 	Navimesh m_nvm;
+
+	BossBGM* m_bgm = nullptr;
 
 	void AddDeadBossCount() {
 		m_deadBossCount++;

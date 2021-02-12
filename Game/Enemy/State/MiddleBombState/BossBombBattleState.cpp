@@ -5,6 +5,7 @@
 #include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "GameManager.h"
 #include "Game.h"
+#include "Enemy/BossBGM.h"
 
 #include "Camera/GameCamera.h"
 
