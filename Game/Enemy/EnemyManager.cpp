@@ -89,7 +89,7 @@ void EnemyManager::SpawnEnemies() {
 					m_meleeBoss = NewGO<BossA>(0);
 					m_enemies.push_back(m_meleeBoss);
 				}
-				ab.InitHP(BOSS_A_HP);
+				ab.InitHP(BOSS_A_HP*0.1);
 				ab.InitStamina(BOSS_A_STAMINA);
 				m_meleeBoss->SetAbility(ab);
 				m_meleeBoss->SetPosition(objData.position * 100.f);
@@ -115,7 +115,7 @@ void EnemyManager::SpawnEnemies() {
 					m_bombBoss = NewGO<Boss_MiddleBomb>(0);
 					m_enemies.push_back(m_bombBoss);
 				}
-				ab.InitHP(BOSS_A_HP*0.4);//‚È‚¨‚·I
+				ab.InitHP(BOSS_A_HP*0.1);//‚È‚¨‚·I
 				ab.InitStamina(BOSS_A_STAMINA);
 				m_bombBoss->SetAbility(ab);
 				m_bombBoss->SetPosition(objData.position * 100.f);

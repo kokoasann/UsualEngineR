@@ -23,6 +23,10 @@ void Boss_FatmanDeadState::Enter(IEnemy* e)
 	m_pos = e->GetPosition();
 	if (!m_isPerformed) {
 		GameManager::GetInstance().m_gameScene->OnEnemyDied(e);
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Boss_Shout.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
 		m_isPerformed = true;
 	}
 }

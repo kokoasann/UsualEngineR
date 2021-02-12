@@ -47,6 +47,11 @@ void Boss_FatmanMainState::Enter(IEnemy* e)
 		&& EnBattlePhase::Mad == Boss_Fatman::GetCurrentBattlePhase()) {
 		e->PlayAnimation(TO_INT(Boss_Fatman::EnAnimEX::enAngry));
 
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Boss_Shout.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
+
 		m_isAngryPerformed = true;
 
 		auto cam = GameManager::GetInstance().m_camera;
