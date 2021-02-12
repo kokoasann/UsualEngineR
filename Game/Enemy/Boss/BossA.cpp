@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BossA.h"
+#include "Enemy/Drop/DropItemA.h"
 #include "../../Effect/JetEffect.h"
 #include "Enemy/EnemyManager.h"
 #include "../State/MeleeBossState/EnemyMeleePunchState.h"
@@ -242,4 +243,9 @@ void BossA::ExecuteCommon() {
 
 
 	m_jetSE->SetPosition(m_position);
+}
+
+void BossA::SpawnDropItem() {
+	auto item = NewGO<DropItemA>(0);
+	item->SetPosition(m_position);
 }

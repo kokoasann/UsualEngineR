@@ -14,6 +14,8 @@ public:
 	void Execute() override;
 	void ExecuteCommon() override;
 	void Terminate() override;
+	void SpawnDropItem() override;
+
 	Player::EnAttackType GetDropID() override{
 		return Player::EnAttackType::enRemoteAttackPreset;
 	}

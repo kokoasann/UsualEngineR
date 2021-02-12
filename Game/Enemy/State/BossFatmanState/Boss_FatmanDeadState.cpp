@@ -13,8 +13,6 @@ Boss_FatmanDeadState::Boss_FatmanDeadState()
 
 Boss_FatmanDeadState::~Boss_FatmanDeadState()
 {
-	auto item = NewGO<DropItemFat>(0);
-	item->SetPosition(m_pos);
 }
 
 void Boss_FatmanDeadState::Enter(IEnemy* e)

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Boss_Fatman.h"
 #include "Enemy/EnemyManager.h"
+#include "Enemy/Drop/DropItemFat.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanMainState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanBeamState.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanChargeBeamState.h"
@@ -164,4 +165,9 @@ void Boss_Fatman::Terminate()
 	DeleteGO(m_model);
 	DeleteGO(m_bgm);
 	EnemyManager::GetEnemyManager().SetFatBoss(nullptr);
+}
+
+void Boss_Fatman::SpawnDropItem() {
+	auto item = NewGO<DropItemFat>(0);
+	item->SetPosition(m_position);
 }

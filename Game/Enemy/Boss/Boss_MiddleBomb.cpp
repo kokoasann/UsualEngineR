@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Boss_MiddleBomb.h"
+#include "Enemy/Drop/DropItemBom.h"
 #include "Enemy/EnemyManager.h"
 #include "Enemy/State/MiddleBombState/BossBombIdleState.h"
 #include "Enemy/State/MiddleBombState/BossBombDeadState.h"
@@ -263,3 +264,7 @@ void Boss_MiddleBomb::Terminate()
 	EnemyManager::GetEnemyManager().SetBombBoss(nullptr);
 }
 
+void Boss_MiddleBomb::SpawnDropItem() {
+	auto item = NewGO<DropItemBom>(0);
+	item->SetPosition(m_position);
+}

@@ -17,6 +17,8 @@ public:
 	void ExecuteCommon() override;
 	void Execute() override;
 	void Terminate() override;
+	void SpawnDropItem() override;
+
 	Player::EnAttackType GetDropID() override
 	{
 		return Player::EnAttackType::enNone;
