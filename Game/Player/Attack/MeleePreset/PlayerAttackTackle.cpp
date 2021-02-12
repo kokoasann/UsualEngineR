@@ -2,6 +2,7 @@
 #include "PlayerAttackTackle.h"
 #include "../../Player.h"
 #include "../../../Enemy/EnemyManager.h"
+#include "Camera/GameCamera.h"
 
 PlayerAttackTackle::PlayerAttackTackle() {
 
@@ -25,15 +26,26 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
 	player->FireThrusters();
 
+	m_tackleVelocity = player->GetForward();
+
+	auto gc = GameManager::GetInstance().GetGameCamera();
+	if (gc != nullptr and gc->IsTargettingEnemy()) {
+		auto target = EnemyManager::GetEnemyManager().GetTargettingEnemy();
+		m_tackleVelocity = target->GetPosition() - player->GetPosition();
+		m_tackleVelocity.Normalize();
+
+		auto& crot = g_camera3D->GetCameraRotation();
+		player->SetRotation(crot);
+	}
+
+	m_tackleVelocity *= m_tacklePower;
+	player->SetVelocity(m_tackleVelocity);
+
 }
 
 void PlayerAttackTackle::Execute(Player* player) {
 	auto delta = gameTime()->GetDeltaTime();
 	//m_timer += delta;
-
-	auto vel = player->GetForward();
-	vel *= m_tacklePower;
-	player->SetVelocity(vel);
 
 	for (int i = 0; i < EnemyManager::GetEnemyManager().GetEnemies().size(); i++) {
 		auto& epos = EnemyManager::GetEnemyManager().GetEnemies().at(i)->GetPosition();

@@ -28,10 +28,12 @@ private:
 	float m_timer = 0.f;
 
 	const float m_tacklePower = 500.f;
-	float m_range = 7.f;
+	float m_range = 10.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 2.f;
 
 	const float m_knockBackPower = 230.f;
+
+	Vector3 m_tackleVelocity = Vector3::Zero;
 };
 
 
