@@ -56,6 +56,7 @@ void GameManager::SpawnPlayer() {
 	}
 	else {
 		m_player->Respawn();
+		m_player->LockAllDropPreset();
 	}
 	
 }
