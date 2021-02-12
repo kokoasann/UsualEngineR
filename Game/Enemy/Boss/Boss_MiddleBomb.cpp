@@ -13,7 +13,7 @@
 #include "Enemy/State/MiddleBombState/BossBombBashState.h"
 #include "Enemy/State/MiddleBombState/BossBombRollingState.h"
 #include "Enemy/State/MiddleBombState/BossBombStunState.h"
-
+#include "Enemy/BossBGM.h"
 
 Boss_MiddleBomb::Boss_MiddleBomb()
 {
@@ -95,9 +95,9 @@ void Boss_MiddleBomb::Init()
 	BossBombData::GetInstance().rigidBody = &m_rigidBody;
 	BossBombData::GetInstance().shieldGhost = &m_shieldGhost;
 
-	m_bgm = NewGO<CSoundSource>(0);
-	m_bgm->Init(L"Assets/sound/Encounter.wav");
-	m_bgm->SetVolume(0.0f);
+	m_bgm = NewGO<BossBGM>(0);
+	m_bgm->SetIEnemy(this);
+	m_bgm->SetState(TO_INT(IEnemy::EnState::enBattleState));
 
 	GetModel()->GetAnimation().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName)
 		{
@@ -232,17 +232,6 @@ void Boss_MiddleBomb::Execute()
 	else if (hpper < 2.f / 3.f)
 	{
 		BossBombData::GetInstance().feeling = BossBombData::EnFeel::Angry;
-	}
-
-	if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enStunState))) {
-		if (!m_bgm->IsPlaying()) {
-			m_bgm->Play(true);
-		}
-		if (m_bgm->GetVolume() < 1.0f) {
-			const float addVolume = 0.1f;
-			m_volume += addVolume * gameTime()->GetDeltaTime();
-			m_bgm->SetVolume(m_volume);
-		}
 	}
 
 	m_model->SetPosition(m_position);
