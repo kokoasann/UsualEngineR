@@ -4,6 +4,8 @@
 #include "Fade.h"
 #include "OpeningScene.h"
 
+bool Title::m_seLoaded = false;
+
 Title::Title()
 {
 
@@ -34,6 +36,12 @@ void Title::Awake()
 
 bool Title::Start()
 {
+	if (!m_seLoaded) {
+		m_seLoaded = true;
+		LoadSoundSources();
+		printf("load se\n");
+	}
+
 	Fade::GetInstance().FadeIn();
 
 	SpriteInitData sd;
@@ -83,4 +91,196 @@ void Title::Render()
 void Title::PostRender()
 {
 
+}
+
+
+void Title::LoadSoundSources() {
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Bash.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Big_NockDown.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Boss_Shout.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Big_NockDown.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Encounter.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/esca.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Goblin_Punch1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Goblin_StrongPunch1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Goblin_Voice1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/gogogo.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Heal.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/Heal2.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/kick-low1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/LongEnemy_Fire.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/LongEnemy_Target.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/mini_Explosion.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/omoi_panchi.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/shoot.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/TPSE.wav");
+		DeleteGO(se);
+	}
+
+	//fatman
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/boss_fatman/backstep.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/boss_fatman/Balkan.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/boss_fatman/Balkan2.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/boss_fatman/charge.wav");
+		DeleteGO(se);
+	}
+	//chara
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/beam.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/explosion.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/footstep1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/footstep2.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/hugeExplosion.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/jetSe.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/mg.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/missile.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/punch_2_1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/punch_2_2.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/punch1.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/punch2.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/punch3.wav");
+		DeleteGO(se);
+	}
+	{
+		auto se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/chara/shoot.wav");
+		DeleteGO(se);
+	}
 }
