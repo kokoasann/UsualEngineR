@@ -24,6 +24,11 @@ void Result::Release()
 
 	DeleteGO(m_ground);
 	DeleteGO(m_backSprite);
+
+	for (auto back : m_attachBack)
+	{
+		DeleteGO(back);
+	}
 }
 
 void Result::OnDestroy()
@@ -56,13 +61,27 @@ bool Result::Start()
 
 	//Sprite
 	SpriteInitData sd;
-	sd.m_ddsFilePath[0] = "Assets/Image/targetMarker.dds";
-	sd.m_height = 256;
-	sd.m_width = 256;
+	sd.m_ddsFilePath[0] = "Assets/Image/resultBack.dds";
+	sd.m_height = 512;
+	sd.m_width = 1260;
 	m_backSprite = NewGO<SpriteRender>(0);
 	m_backSprite->Init(sd);
 	m_backSprite->SetPos(m_backSpPos);
 	m_backSprite->SetSca(m_backSpScale);
+
+
+	sd.m_ddsFilePath[0] = "Assets/Image/white.dds";
+	sd.m_height = 16;
+	sd.m_width = 16;
+	for (int i = 0; i < 4; i += 1) {
+		m_attachBack[i] = NewGO<SpriteRender>(0);
+		m_attachBack[i]->Init(sd);
+		m_attachBack[i]->SetPivot({ 1,1 });
+		m_attachBack[i]->SetSca({ 17,3.5,0 });
+		m_attachBack[i]->SetMulColor(m_attachColor[i]);
+		m_attachBack[i]->SetPos({ X3, Y1 - (RightYSpace * (i*2+1))+5.f ,0 });
+		//m_attachBack[i]->SetMulColor({})
+	}
 
 	Fade::GetInstance().FadeIn();
 
