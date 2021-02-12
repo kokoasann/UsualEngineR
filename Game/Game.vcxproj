@@ -187,6 +187,7 @@
     <ClInclude Include="Effect\MuzzleFlash.h" />
     <ClInclude Include="Effect\SmokeEffect.h" />
     <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="Enemy\BossBGM.h" />
     <ClInclude Include="Enemy\Boss\BossA.h" />
     <ClInclude Include="Enemy\Boss\Boss_Fatman.h" />
     <ClInclude Include="Enemy\Boss\Boss_MiddleBomb.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="Effect\MuzzleFlash.cpp" />
     <ClCompile Include="Effect\SmokeEffect.cpp" />
     <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="Enemy\BossBGM.cpp" />
     <ClCompile Include="Enemy\Boss\BossA.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_Fatman.cpp" />
     <ClCompile Include="Enemy\Boss\Boss_MiddleBomb.cpp" />
