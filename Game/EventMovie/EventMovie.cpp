@@ -115,9 +115,9 @@ void EventMovie::Update()
 		if (m_timer >= EventTime and !m_eventMap[i]) {
 			m_eventListennerFunc(m_eventMovieMarker[i].markerName);
 			m_eventMap[i] = true;
-			printf("markerName : ");
-			printf(m_eventMovieMarker[i].markerName.c_str());
-			printf("\n");
+			//printf("markerName : ");
+			//printf(m_eventMovieMarker[i].markerName.c_str());
+			//printf("\n");
 		}
 	}
 
