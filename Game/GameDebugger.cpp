@@ -121,6 +121,13 @@ bool GameDebugger::Start()
 		{
 			GameManager::GetInstance().m_gameScene->GoalGatePerformance();
 		}));
+
+	DebugSwitchAddButton(DebugSwitchNewSwitch_Button('C', 0, [&]()
+		{
+			GameManager::GetInstance().m_player->UnlockPreset(Player::EnAttackPreset::enExplosivePreset);
+			GameManager::GetInstance().m_player->UnlockPreset(Player::EnAttackPreset::enMeleePreset);
+			GameManager::GetInstance().m_player->UnlockPreset(Player::EnAttackPreset::enRemoteAttackPreset);
+		}));
 	return true;
 }
 

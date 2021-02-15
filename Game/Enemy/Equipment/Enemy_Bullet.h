@@ -126,6 +126,15 @@ public:
 
 	void AddInstance();
 	void DeadInstance(int num);
+
+	void InstanceNULL()
+	{
+		for (int i=0;i<m_usingMatrix.size();i++)
+		{
+			m_usingMatrix[i] = false;
+		}
+		m_model->SetInstanceNum(0);
+	}
 private:
 	StructuredBuffer m_structuredBuff;
 	std::vector<Matrix> m_instanceMatrix;

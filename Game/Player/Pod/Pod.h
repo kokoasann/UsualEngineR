@@ -5,6 +5,7 @@ class Player;
 class JetEffect;
 class ExplosionEffect;
 class Beam;
+class PlayerBulletManager;
 
 /// <summary>
 /// 
@@ -220,4 +221,6 @@ private:
 	CSoundSource* m_gunSE = nullptr;
 
 	SphereCollider m_sphere;
+
+	PlayerBulletManager* m_playerBulletManager;
 };

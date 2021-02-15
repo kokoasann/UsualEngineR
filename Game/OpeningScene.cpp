@@ -268,6 +268,11 @@ void OpeningScene::Update()
 		m_beamEffects[1]->SetRot(ArmRMat.GetRotate());
 	}
 
+	if (g_pad[0]->IsTrigger(enButtonA) and !m_isFadingToGame) {
+		m_isFadingToGame = true;
+		Fade::GetInstance().FadeOut();
+	}
+
 	if (m_isFadingToGame and Fade::GetInstance().IsFaded()) {
 		auto opobj = reinterpret_cast<GameObject*>(this);
 		DeleteGO(opobj);

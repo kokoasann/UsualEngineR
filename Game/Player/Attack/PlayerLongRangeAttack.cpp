@@ -48,10 +48,10 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 			vel = vecPodToEnemy;
 		}
 
-		auto projectileR1 = NewGO<Projectile>(0, true);
-		auto projectileR2 = NewGO<Projectile>(0, true);
-		auto projectileL1 = NewGO<Projectile>(0, true);
-		auto projectileL2 = NewGO<Projectile>(0, true);
+		auto projectileR1 = NewGO<Projectile>(1, true);
+		auto projectileR2 = NewGO<Projectile>(1, true);
+		auto projectileL1 = NewGO<Projectile>(1, true);
+		auto projectileL2 = NewGO<Projectile>(1, true);
 
 		//projectile->Init(p->GetPod()->GetPosition(), vel);
 		vel.Normalize();
@@ -63,19 +63,19 @@ void PlayerLongRangeAttack::Execute(Player* p) {
 
 		float speed = defSpeed + p->GetVelocity().Length();
 
-		projectileR1->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R1)], scale, vel, speed, lifeSpan, range);
+		projectileR1->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R1)] - pvel, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperRight))->SetSca(Vector3::One * flashScale);
 
-		projectileR2->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R2)], scale, vel, speed, lifeSpan, range);
+		projectileR2->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_R2)] - pvel, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::UpperLeft))->SetSca(Vector3::One * flashScale);
 
-		projectileL1->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L1)], scale, vel, speed, lifeSpan, range);
+		projectileL1->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L1)] - pvel, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerRight))->SetSca(Vector3::One * flashScale);
 
-		projectileL2->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L2)], scale, vel, speed, lifeSpan, range);
+		projectileL2->Init(m_effectTransforms.m_posList[TO_INT(Pod::EnPodBone::Burrel_L2)] - pvel, scale, vel, speed, lifeSpan, range);
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->Play();
 		m_muzzleFlashes.at(TO_INT(EnMuzzles::LowerLeft))->SetSca(Vector3::One * flashScale);
 
