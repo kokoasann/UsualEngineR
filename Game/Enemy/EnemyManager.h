@@ -1,6 +1,7 @@
 #pragma once
 #include "../Enemy/IEnemy.h"
 class Player;
+class EnemyBulletManager;
 
 class EnemyManager
 {
@@ -153,5 +154,7 @@ private:
 	const float BOSS_A_STAMINA = 100.f;
 
 	int m_numCorpse = 0;
+
+	EnemyBulletManager* m_enemyBulletManager = 0;
 };
 
