@@ -241,6 +241,8 @@ void GameStage::Update()
 			Physics().AddRigidBody(*rb);
 			rb->GetBody()->setUserIndex(enCollisionAttr_None);
 			rb->GetBody()->setUserIndex(enCollisionAttr_Ground);
+			rb->GetBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
+			//rb->GetBody()->setActivationState(DISABLE_DEACTIVATION);;
 		}
 		m_isRegistRigidBody = true;
 	}
