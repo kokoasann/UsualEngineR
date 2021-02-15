@@ -43,7 +43,7 @@ IEnemyState* EnemyShortRangeComingState::Update(IEnemy* e)
 
 	//プレイヤーが空中にいるなら動かない。
 	const float airPlayerYPos = 70.0f;
-	if (ppos.y > airPlayerYPos) {
+	if (vecToPlayer.y > airPlayerYPos) {
 		return e->GetState(TO_INT(IEnemy::EnState::enIdleState));
 	}
 

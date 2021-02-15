@@ -4,6 +4,8 @@
 #include "Enemy/EnemyManager.h"
 #include "Enemy/Boss/Boss_MiddleBomb.h"
 #include "GameManager.h"
+#include "Game.h"
+#include "Enemy/BossBGM.h"
 
 BossBombIdleState::BossBombIdleState()
 {
@@ -27,6 +29,10 @@ void BossBombIdleState::Enter(IEnemy* e)
 	
 	auto ik = e->GetIK(TO_INT(IEnemy::EnIK::enArm_R));
 	m_oldIKPos = ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();
+	if (GameManager::GetInstance().m_bgm != nullptr) {
+
+		GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+	}
 }
 
 IEnemyState* BossBombIdleState::Update(IEnemy* e)
@@ -73,6 +79,10 @@ IEnemyState* BossBombIdleState::Update(IEnemy* e)
 	float len = d.Length();
 	if (len < 100.)
 	{
+		if (GameManager::GetInstance().m_bgm != nullptr) {
+
+			GameManager::GetInstance().m_bgm->AddBgmCount(1);
+		}
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}
 	return this;

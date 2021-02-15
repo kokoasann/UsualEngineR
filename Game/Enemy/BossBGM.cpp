@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "BossBGM.h"
 #include "Enemy/IEnemy.h"
+#include "GameManager.h"
+#include "Game.h"
 
 BossBGM::BossBGM()
 {
@@ -30,7 +32,6 @@ bool BossBGM::Start()
 	m_bgm = NewGO<CSoundSource>(0);
 	m_bgm->Init(L"Assets/sound/Encounter.wav");
 	m_bgm->SetVolume(0.0f);
-	//m_state = TO_INT(IEnemy::EnState::enBattleState);
 	return true;
 }
 
@@ -42,7 +43,9 @@ void BossBGM::PreUpdate()
 
 void BossBGM::Update()
 {
-	if (m_IEnemy->GetCurrentState() == m_IEnemy->GetState(m_state)) {
+	
+	//if (enemy->GetCurrentState() == enemy->GetState(m_state)) {}
+	if (m_bgmCount > 0) {
 		if (!m_bgm->IsPlaying()) {
 			m_bgm->Play(true);
 		}
@@ -51,9 +54,9 @@ void BossBGM::Update()
 			m_volume += addVolume * gameTime()->GetDeltaTime();
 			m_bgm->SetVolume(m_volume);
 		}
+
 	}
-	
-	if (m_IEnemy->GetCurrentState() == m_IEnemy->GetState(TO_INT(IEnemy::EnState::enIdleState))) {
+	else {
 		if (m_bgm->GetVolume() <= 0.0f) {
 			m_bgm->Stop();
 		}

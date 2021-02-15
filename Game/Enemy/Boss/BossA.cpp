@@ -152,10 +152,6 @@ void BossA::Init() {
 
 	//m_rightHandCollider.Create(m_HandRadius);
 
-	m_bgm = NewGO<BossBGM>(0);
-	m_bgm->SetIEnemy(this);
-	m_bgm->SetState(TO_INT(IEnemy::EnState::enBattleState));
-
 	//SE
 	m_jetSE = NewGO< CSoundSource>(0);
 	m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
@@ -178,7 +174,6 @@ void BossA::InitState() {
 
 void BossA::Terminate() {
 	DeleteGO(m_model);
-	DeleteGO(m_bgm);
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}

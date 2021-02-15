@@ -188,7 +188,7 @@ void EndingScene::Update()
 			
 
 
-			auto result = NewGO<Result>(0);
+			auto result = NewGO<Result>(3);
 
 			const double meleeActiveTime = GameManager::GetInstance().m_player->GetJetPack()->GetActivatedTime();
 			const double remoteActiveTime = GameManager::GetInstance().m_player->GetGun()->GetActivatedTime();

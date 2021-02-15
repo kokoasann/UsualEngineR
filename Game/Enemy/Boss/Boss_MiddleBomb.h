@@ -83,8 +83,6 @@ private:
 	//Physics
 	const float m_radius = 3.f;
 	const float m_height = 7.f;
-	//サウンド。
-	BossBGM* m_bgm = nullptr;
 };
 
 struct BossBombData

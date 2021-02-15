@@ -7,6 +7,7 @@
 #include "../../../Game.h"
 #include "Camera/GameCamera.h"
 #include "Enemy/State/BossFatmanState/Boss_FatmanAngryPerform.h"
+#include "Enemy/BossBGM.h"
 
 
 Boss_FatmanMainState::Boss_FatmanMainState()
@@ -75,6 +76,7 @@ void Boss_FatmanMainState::Enter(IEnemy* e)
 		m_bap->SetBeamIk(m_BeamIk);
 		m_bap->SetShootIk(m_ShootIk);
 	}
+
 }
 
 IEnemyState* Boss_FatmanMainState::Update(IEnemy* e)

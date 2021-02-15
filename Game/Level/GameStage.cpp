@@ -78,7 +78,9 @@ bool GameStage::Start()
 
 			//m_isEndLoad = true;
 		});
+	{
 
+	}
 	{
 		ModelInitData mid;
 		mid.m_upAxis = EUpAxis::enUpAxisY;
@@ -116,11 +118,21 @@ bool GameStage::Start()
 
 	m_threadForCreatingMeshCol.Execute([&]() {
 		ModelInitData mid;
-		mid.m_upAxis = EUpAxis::enUpAxisZ;
+		mid.m_upAxis = EUpAxis::enUpAxisY;
 		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
 		mid.m_vsEntryPointFunc = "VSMain";
 		mid.m_psEntryPointFunc = "PSMain";
 
+		mid.m_tkmFilePath = "Assets/modelData/map/map_wall.tkm";
+		Model model;
+		model.Init(mid);
+
+		RigidBodyMutex.lock();
+
+		//m_mapWall.CreateMeshObject(model, Vector3::Zero, Quaternion::Identity, { 100,100,100 });
+
+		RigidBodyMutex.unlock();
+		mid.m_upAxis = EUpAxis::enUpAxisZ;
 		m_phyLevel.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
 			{
 				std::string name(objData.name.begin(), objData.name.end());

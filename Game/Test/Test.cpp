@@ -287,7 +287,7 @@ void Test::Awake()
 	m_backpackBone[3] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_R.001"));
 	m_backpackBone[4] = mm->GetModel().GetSkelton()->GetBone(mm->GetModel().GetSkelton()->FindBoneID(L"Bombe_R.002"));
 
-
+	/*
 	std::function<void()> func1 = [&]()
 	{
 		ExplosionEffect* ef = NewGO<ExplosionEffect>(0);
@@ -298,7 +298,7 @@ void Test::Awake()
 	{
 	};
 	DebugSwitchAddCheck(DebugSwitchNewSwitch('Q', (char)0, func1, func2));
-	
+	*/
 }
 
 void Test::Update()

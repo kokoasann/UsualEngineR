@@ -80,7 +80,8 @@ private:
 	//Back Sprite
 	SpriteRender* m_backSprite = nullptr;
 	Vector3 m_backSpPos = Vector3(0.f, 220.f, 0.f);
-	Vector3 m_backSpScale = Vector3(5.5f, 2.f, 1.f);
+	//Vector3 m_backSpScale = Vector3(5.5f, 2.f, 1.f);
+	Vector3 m_backSpScale = Vector3(1.f, 1.f, 1.f);
 
 	Level m_level;
 	const float m_levelScale = 1.5f;
@@ -125,4 +126,12 @@ private:
 	const float Y1 = 300.f;
 	const float LeftYSpace = 40.f;
 	const float RightYSpace =30.f;
+
+	SpriteRender* m_attachBack[4] = {nullptr};
+	Vector4 m_attachColor[4] = {
+		{ 0.5,0.5 ,0.5,1.f },
+		{ 0.8,0. ,0.,1.f },
+		{ 0.,0.8 ,0.,1.f },
+		{ 0.,0. ,0.8,1.f }
+	};
 };
