@@ -38,10 +38,10 @@ namespace UER
 
 				tkFile* tk = new tkFile;
 				tk->Load(path);
-				m_resources.at(hash).isLoaded = true;
 				m_resources.at(hash).file = tk;
 
 				res = tk;
+				m_resources.at(hash).isLoaded = true;
 			}
 			else
 			{
