@@ -2,7 +2,7 @@
 #include "GameManager.h"
 #include "Enemy/IEnemy.h"
 #include "Effect/ExplosionEffect.h"
-
+class BossBGM;
 enum class EnBattlePhase
 {
 	Normal,
@@ -153,8 +153,4 @@ private:
 
 	//バトルフェーズ。
 	static EnBattlePhase m_battlePhase;
-
-	//サウンド。
-	CSoundSource*	m_bgm = nullptr;
-	float			m_volume = 0.0f;
 };

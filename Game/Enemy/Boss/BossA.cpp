@@ -13,7 +13,7 @@
 #include "../State/MeleeBossState/EnemyTeleportationState.h"
 #include "../State/MeleeBossState/EnemyMeleeThrusterAttackState.h"
 #include "Enemy/State/EnemyStunState.h"
-
+#include "Enemy/BossBGM.h"
 void BossA::Init() {
 
 	//Model
@@ -152,9 +152,6 @@ void BossA::Init() {
 
 	//m_rightHandCollider.Create(m_HandRadius);
 
-	m_bgm = NewGO<CSoundSource>(0);
-	m_bgm->Init(L"Assets/sound/Encounter.wav");
-	m_bgm->SetVolume(0.0f);
 	//SE
 	m_jetSE = NewGO< CSoundSource>(0);
 	m_jetSE->Init(L"Assets/sound/chara/jetSe.wav", true);
@@ -177,7 +174,6 @@ void BossA::InitState() {
 
 void BossA::Terminate() {
 	DeleteGO(m_model);
-	DeleteGO(m_bgm);
 	for (int i = 0; i < m_jetEffects.size(); i++) {
 		DeleteGO(m_jetEffects[i]);
 	}
@@ -201,17 +197,7 @@ void BossA::Execute() {
 
 	//btCollisionWorld::ConvexResultCallback callback();
 	//Physics().ConvexSweepTest((const btConvexShape*)m_rightHandCollider.GetBody(), btStart, btEnd, callback);
-	if (GetCurrentState() == GetState(TO_INT(IEnemy::EnState::enStunState))) {
-		if (!m_bgm->IsPlaying()) {
-			m_bgm->Play(true);
-		}
-		if (m_bgm->GetVolume() < 1.0f) {
-			const float addVolume = 0.1f;
-			m_volume += addVolume * gameTime()->GetDeltaTime();
-			m_bgm->SetVolume(m_volume);
-		}
-	}
-
+	
 	//体力がなくなったら死亡ステートへ遷移
 	if (m_ability.hp <= 0) {
 		SetState(m_stateMap.at(TO_INT(IEnemy::EnState::enDeadState)));

@@ -29,7 +29,7 @@ private:
 	float m_REVOLVE_TIME = 1.f;
 
 	const float m_tacklePower = 150.f;
-	float m_range = 7.f;
+	float m_range = 10.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 7.f;
 
 	const float m_StaminaCost = 30.f;
@@ -39,6 +39,7 @@ private:
 
 	bool m_canDoAttack = true;
 
+	Vector3 m_tackleVelocity = Vector3::Zero;
 };
 
 

@@ -40,6 +40,7 @@ void OpeningScene::Release()
 	}
 
 	for (auto effect : m_beamEffects) {
+		effect->Stop();
 		DeleteGO(effect);
 	}
 
@@ -94,6 +95,7 @@ bool OpeningScene::Start()
 	m_model = NewGO<ModelRender>(0);
 	m_model->Init(mid);
 	m_model->SetScale(Vector3::One);
+	m_model->SetMulColor({ 0.6,0.6,0.6,1 });
 	Fade::GetInstance().FadeIn();
 
 	auto player = GameManager::GetInstance().GetPlayer();

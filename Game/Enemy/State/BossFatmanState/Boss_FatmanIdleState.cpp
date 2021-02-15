@@ -2,7 +2,9 @@
 #include "Boss_FatmanIdleState.h"
 #include "Enemy/IEnemy.h"
 #include "Enemy/EnemyManager.h"
-
+#include "GameManager.h"
+#include "Game.h"
+#include "Enemy/BossBGM.h"
 Boss_FatmanIdleState::Boss_FatmanIdleState()
 {
 }
@@ -14,6 +16,9 @@ Boss_FatmanIdleState::~Boss_FatmanIdleState()
 void Boss_FatmanIdleState::Enter(IEnemy* e)
 {
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
+	if (GameManager::GetInstance().m_bgm != nullptr) {
+			GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+	}
 }
 
 IEnemyState* Boss_FatmanIdleState::Update(IEnemy* e)
@@ -35,6 +40,10 @@ IEnemyState* Boss_FatmanIdleState::Update(IEnemy* e)
 	const float chaseRange = 100.f;
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
+		if (GameManager::GetInstance().m_bgm != nullptr) {
+
+			GameManager::GetInstance().m_bgm->AddBgmCount(1);
+		}
 		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
 	}
 	return this;

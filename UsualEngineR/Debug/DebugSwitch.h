@@ -3,7 +3,6 @@
 
 namespace UER
 {
-//#if DEBUG_FUNC
 #if 1
 	class DebugSwitch
 	{

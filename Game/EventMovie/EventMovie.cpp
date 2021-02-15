@@ -141,9 +141,9 @@ void EventMovie::Update()
 		}
 	}
 
-	if(g_pad[0]->IsPress(enButtonA)){
+	/*if(g_pad[0]->IsPress(enButtonA)){
 		m_timer += gameTime()->GetDeltaTime() * 5;
-	}
+	}*/
 
 	m_timer += gameTime()->GetDeltaTime();
 

@@ -8,6 +8,7 @@
 #include "GameManager.h"
 #include "../../../Game.h"
 #include "Camera/GameCamera.h"
+#include "Enemy/BossBGM.h"
 
 EnemyMeleeBattleState::EnemyMeleeBattleState() {
 
@@ -22,7 +23,10 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee battle\n");
 #endif
+	if (GameManager::GetInstance().m_bgm != nullptr) {
 
+		GameManager::GetInstance().m_bgm->AddBgmCount(1);
+	}
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
 	auto& effects = e->GetJetEffects();

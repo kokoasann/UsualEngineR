@@ -55,8 +55,10 @@ public:
 	/// </summary>
 	void PostRender() override;
 private:
+	void LoadSoundSources();
 	//Back Sprite
 	SpriteRender* m_backSprite = nullptr;
 	Vector3 m_backSpPos = Vector3::Zero;
 	bool m_isTrigeredStart = false;
+	static bool m_seLoaded;
 };
