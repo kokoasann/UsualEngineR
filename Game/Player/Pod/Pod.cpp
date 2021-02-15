@@ -541,9 +541,6 @@ void Pod::IdleRotation() {
 				target = nullptr;
 			}
 		}
-		else {
-			target = nullptr;
-		}
 		EnemyManager::GetEnemyManager().SetTargetEnemy(target);
 	}
 
@@ -574,8 +571,6 @@ void Pod::IdleRotation() {
 		auto player = GameManager::GetInstance().GetPlayer();
 		m_rotation = player->GetRotation();
 		return;
-		//vecGoalForward = player->GetForward();
-		//vecGoalForward.Normalize();
 	}
 
 	auto degToTar = atan2(vecGoalForward.x, vecGoalForward.z);
@@ -589,7 +584,8 @@ void Pod::IdleRotation() {
 
 	Quaternion rot = Quaternion::Identity;
 
-	const float deadVal = 0.05;
+	const float deadVal = 0.1;
+
 	if (fct.y > deadVal) {
 		rot.SetRotationDegY(ROT_SPEED * delta);
 		m_rotation.Multiply(rot);
