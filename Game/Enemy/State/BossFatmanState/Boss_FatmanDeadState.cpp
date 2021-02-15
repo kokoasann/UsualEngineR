@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Boss_FatmanDeadState.h"
 #include "Enemy/IEnemy.h"
+#include "Enemy/BossBGM.h"
 #include "Enemy/EnemyManager.h"
 #include "../../Drop/DropItemFat.h"
 #include "GameManager.h"
@@ -17,6 +18,7 @@ Boss_FatmanDeadState::~Boss_FatmanDeadState()
 
 void Boss_FatmanDeadState::Enter(IEnemy* e)
 {
+	GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Fat, false);
 
 	m_pos = e->GetPosition();
 	if (!m_isPerformed) {

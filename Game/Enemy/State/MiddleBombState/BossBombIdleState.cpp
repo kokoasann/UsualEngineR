@@ -31,7 +31,9 @@ void BossBombIdleState::Enter(IEnemy* e)
 	m_oldIKPos = ik->GetEffectorBone()->GetWorldMatrix().GetTransrate();
 	if (GameManager::GetInstance().m_bgm != nullptr) {
 
-		GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+		//GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+		GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Bomb, false);
+
 	}
 }
 
@@ -81,7 +83,8 @@ IEnemyState* BossBombIdleState::Update(IEnemy* e)
 	{
 		if (GameManager::GetInstance().m_bgm != nullptr) {
 
-			GameManager::GetInstance().m_bgm->AddBgmCount(1);
+			//GameManager::GetInstance().m_bgm->AddBgmCount(1);
+			GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Bomb, true);
 		}
 		return e->GetState(TO_INT(IEnemy::EnState::enBattleState));
 	}

@@ -1,5 +1,7 @@
 #pragma once
 //#include "GameManager.h"
+#include "Enemy/IEnemy.h"
+
 class IEnemy;
 
 
@@ -41,6 +43,7 @@ public:
 	void Update() override;
 
 	
+	/*
 	void AddBgmCount(int count) {
 		m_bgmCount += count;
 		m_bgmCount = max(0.f, m_bgmCount);
@@ -48,11 +51,19 @@ public:
 	int GetBgmCount() {
 		return m_bgmCount;
 	}
+	*/
+
+	void SetInBattleFlag(IEnemy::EnBossType type, const bool flag) {
+		m_inBattleFlagMap[type] = flag;
+	}
+
 private:
+
+	std::map<IEnemy::EnBossType, bool> m_inBattleFlagMap;
 
 	//saund
 	CSoundSource*	m_bgm = nullptr;
 	float			m_volume = 0.0f;
-	int m_bgmCount = 0;
+	//int m_bgmCount = 0;
 
 };

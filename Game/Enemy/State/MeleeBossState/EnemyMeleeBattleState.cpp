@@ -24,8 +24,8 @@ void EnemyMeleeBattleState::Enter(IEnemy* e) {
 	DebugPrint_WATA("Enter enemy melee battle\n");
 #endif
 	if (GameManager::GetInstance().m_bgm != nullptr) {
-
-		GameManager::GetInstance().m_bgm->AddBgmCount(1);
+		//GameManager::GetInstance().m_bgm->AddBgmCount(1);
+		GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Melee, true);
 	}
 	e->PlayAnimation(IEnemy::EnAnimation::enIdle);
 
