@@ -73,6 +73,7 @@ void Pod::Release()
 
 	m_sphere.Release();
 
+	m_playerBulletManager->InstanceNULL();
 }
 
 void Pod::OnDestroy()
@@ -151,6 +152,7 @@ bool Pod::Start()
 	//bullets
 	auto pbm = NewGO<PlayerBulletManager>(0);
 	pbm->Allocate(70);
+	m_playerBulletManager = pbm;
 
 	m_explosionEffect = NewGO<ExplosionEffect>(0);
 	m_explosionEffect->Init();
