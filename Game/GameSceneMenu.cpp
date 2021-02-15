@@ -40,6 +40,7 @@ bool GameSceneMenu::Start()
 	sd.m_width = m_flSpWidth;
 	m_menuSprite.Init(sd);
 	m_menuSprite.Update(m_menuSpritePos, Quaternion::Identity, m_menuSpriteScale);
+	m_isDecided = false;
 
 	m_texts.resize(TO_INT(EnMenuButtonType::NumType));
 	m_fonts.resize(TO_INT(EnMenuButtonType::NumType));
@@ -66,33 +67,63 @@ void GameSceneMenu::PostUpdate()
 		if (m_isPaused) {
 			m_isMenuActivated = true;
 			m_selectedTypeID = TO_INT(EnMenuButtonType::Close);
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/system/Menu_Open.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
 		}
 		else {
 			m_isMenuActivated = false;
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/system/Cancel.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
 		}
 	}
 
 	if (!m_isMenuActivated) return;
 
-	if (g_pad[0]->IsTrigger(enButtonUp)) {
-		m_selectedTypeID = max(0, m_selectedTypeID - 1);
+	//Œˆ’è‚ª‰Ÿ‚³‚ê‚Ä‚È‚¯‚ê‚ÎƒJ[ƒ\ƒ‹ˆÚ“®‚ª‚Å‚«‚é
+	if (!m_isDecided) {
+		if (g_pad[0]->IsTrigger(enButtonUp)) {
+			m_selectedTypeID = max(0, m_selectedTypeID - 1);
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/system/Cursor.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
+		}
+		if (g_pad[0]->IsTrigger(enButtonDown)) {
+			m_selectedTypeID = min(TO_INT(EnMenuButtonType::NumType) - 1, m_selectedTypeID + 1);
+			CSoundSource* se = NewGO<CSoundSource>(0);
+			se->Init(L"Assets/sound/system/Cursor.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
+		}
 	}
-	if (g_pad[0]->IsTrigger(enButtonDown)) {
-		m_selectedTypeID = min(TO_INT(EnMenuButtonType::NumType) - 1, m_selectedTypeID + 1);
-	}
-
-	if (g_pad[0]->IsTrigger(enButtonA)) {
+	if (g_pad[0]->IsTrigger(enButtonA)&&!m_isDecided) {
+		m_isDecided = true;
 		const auto& gameManager = GameManager::GetInstance();
+		CSoundSource* se = NewGO<CSoundSource>(0);
 		switch (m_selectedTypeID) {
 		case TO_INT(EnMenuButtonType::Restart):
 			gameManager.m_gameScene->Restart();
+			se->Init(L"Assets/sound/system/Decisition_Game.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
 			break;
 		case TO_INT(EnMenuButtonType::ToTitle):
 			gameManager.m_gameScene->ToTitle();
+			se->Init(L"Assets/sound/system/Decisition_Game.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
 			break;
 		case TO_INT(EnMenuButtonType::Close):
 			ResumeGame();
 			m_isMenuActivated = false;
+			se->Init(L"Assets/sound/system/Cancel.wav");
+			se->Play(false);
+			se->SetVolume(1.0f);
+			m_isDecided = false;
 			break;
 		}
 	}

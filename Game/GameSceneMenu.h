@@ -74,6 +74,8 @@ private:
 
 	bool m_isMenuActivated = false;
 
+	bool m_isDecided = false;
+
 	enum class EnMenuButtonType {
 		Restart,
 		ToTitle,

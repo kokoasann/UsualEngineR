@@ -64,6 +64,10 @@ void Title::Update()
 	if (g_pad[0]->IsTrigger(enButtonA) and !m_isTrigeredStart) {
 		Fade::GetInstance().FadeOut();
 		m_isTrigeredStart = true;
+		CSoundSource* se = NewGO<CSoundSource>(0);
+		se->Init(L"Assets/sound/system/Decisition_Title.wav");
+		se->Play(false);
+		se->SetVolume(1.0f);
 	}
 
 	if (Fade::GetInstance().IsFaded() and m_isTrigeredStart) {
