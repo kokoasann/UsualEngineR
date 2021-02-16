@@ -229,6 +229,12 @@ namespace UER
 		m_collider.Release();
 	}
 
+	void IK::InitGhost()
+	{
+		m_isUseGhost = true;
+		m_ghost.Create(&m_collider,Vector3::Zero,Quaternion::Identity);
+	}
+
 	void IK::InitRigidBody(const Vector3& pos)
 	{
 		RigidBodyInfo rbinfo;
@@ -592,12 +598,39 @@ namespace UER
 
 	void IK::UpdateTarget_NoneHit(const Matrix& worldMat)
 	{
+		if (m_isUseGhost)
+		{
+			DebugPrintValue(EDebugConsoleKind::common, "hit num", m_ghost.GetGhost()->getNumOverlappingObjects());
+			bool hit = false;
+			for (int i = 0; i < m_ghost.GetGhost()->getNumOverlappingObjects(); i++)
+			{
+				auto o = m_ghost.GetGhost()->getOverlappingObject(i);
+				int ind = o->getUserIndex();
+				if (!(ind & enCollisionAttr_Character
+					|| ind & enCollisionAttr_NonHitIK
+					|| ind & enCollisionAttr_NonHit))
+				{
+					//printf("HIT!!!");
+					m_isHit = true;
+					hit = true;
+					break;
+				}
+			}
+			if (!hit)
+			{
+				m_isHit = false;
+			}
+				
+		}
+
 		m_oldTarget = m_target;
 		if (m_isSetNextTarget)
 			m_target = m_nextTarget;
 		
 		if (m_isUseRigidBody)
 			UpdateRigidBody(m_target);
+
+		m_ghost.SetPosition(m_effectorBone->GetWorldMatrix().GetTransrate());
 	}
 
 	void IK::UpdateTarget_NoAnimHit(const Matrix& worldMat)

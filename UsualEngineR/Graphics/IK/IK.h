@@ -2,6 +2,7 @@
 
 #include "physics/SphereCollider.h"
 #include "Physics/RigidBody.h"
+#include "Physics/GhostObject.h"
 
 namespace UER
 {
@@ -33,6 +34,8 @@ namespace UER
 		/// デストラクタ
 		/// </summary>
 		~IK();
+
+		void InitGhost();
 
 		/// <summary>
 		/// IKのターゲットとなる場所を更新する
@@ -275,6 +278,9 @@ namespace UER
 		btCollisionObject* m_hitCollision = nullptr;
 
 		bool m_isToggleNoAnimHit = false;
+
+		bool m_isUseGhost = false;
+		GhostObject m_ghost;
 	};
 
 }
