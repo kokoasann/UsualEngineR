@@ -6,7 +6,7 @@
 
 #include "Effect/Ballistic.h"
 
-EnemyBulletManager* g_enemyBulletManager;
+EnemyBulletManager* g_enemyBulletManager = 0;
 
 struct SweepResult : public btCollisionWorld::ConvexResultCallback
 {
@@ -206,6 +206,17 @@ void Enemy_Bullet::PostUpdate()
 Ç±Ç¡Ç©ÇÁEnemyBulletManager
 
 /////////////////////////////////////////////////////////////////////*/
+
+EnemyBulletManager* EnemyBulletManager::GetInstance()
+{
+	{
+		if (g_enemyBulletManager == nullptr)
+		{
+			return NewGO<EnemyBulletManager>(0);
+		}
+		return g_enemyBulletManager;
+	}
+}
 
 void EnemyBulletManager::Release()
 {

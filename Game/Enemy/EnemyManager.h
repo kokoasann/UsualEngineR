@@ -155,6 +155,6 @@ private:
 
 	int m_numCorpse = 0;
 
-	EnemyBulletManager* m_enemyBulletManager = 0;
+	//EnemyBulletManager* m_enemyBulletManager = 0;
 };
 

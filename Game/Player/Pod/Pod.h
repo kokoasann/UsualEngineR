@@ -222,5 +222,5 @@ private:
 
 	SphereCollider m_sphere;
 
-	PlayerBulletManager* m_playerBulletManager;
+	//PlayerBulletManager* m_playerBulletManager;
 };
