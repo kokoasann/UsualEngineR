@@ -170,9 +170,8 @@ void Player::Awake()
 	SetAnimation(TO_INT(EnAnimation::enTackle), "Assets/modelData/m/anim/m_tackle_olt.tka", false);
 	//RevolvingTackle
 	SetAnimation(TO_INT(EnAnimation::enRevolvingTackle), "Assets/modelData/m/anim/m_rolling_attack.tka", true);
-
 	//Dead
-	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_idle.tka", true);
+	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_death.tka", true);
 
 	//Event
 	//auto& animation = GetModelRender().GetAnimation();

@@ -33,6 +33,12 @@ void PlayerDeadState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player - Exit Dead State\n");
 #endif
+
+	for (int i = 0; i < TO_INT(Player::EnPlayerBone::enNumBoneType); i++) {
+		auto bonePos = p->GetIK(i)->GetEffectorBone()->GetWorldMatrix().GetTransrate();
+		p->GetIK(i)->SetIKMode(IK::IKMode::enMode_NoneHit);
+	}
+
 }
 
 IPlayerState* PlayerDeadState::Update(Player* p) {
@@ -47,10 +53,9 @@ IPlayerState* PlayerDeadState::Update(Player* p) {
 		p->GetIK(i)->SetIKMode(IK::IKMode::enMode_NoAnimHit);
 	}
 
-	static const float GravityAddVal = 5.f;
+	static const float GravityAddVal = 30.f;
 	m_gravity += GravityAddVal * delta;
 
-	return this;
 
 	if (m_respawnTimer > m_fadeOutTime and !m_isFadedToRespawn) {
 		Fade::GetInstance().FadeOut();
