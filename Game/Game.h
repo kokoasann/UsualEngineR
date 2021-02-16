@@ -94,4 +94,6 @@ private:
 	bool m_toTitleFlag = false;
 
 	bool m_engingFlag = false;
+
+	CSoundSource* m_windSE = nullptr;
 };

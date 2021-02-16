@@ -32,6 +32,9 @@ void Game::OnDestroy()
 
 void Game::Awake()
 {
+	m_windSE = NewGO < CSoundSource>(0);
+	m_windSE->Init(L"Assets/sound/windoOo.wav", false);
+	m_windSE->Play(true);
 }
 
 void Game::OnGoal() {
@@ -292,6 +295,12 @@ void Game::Update()
 		end->Init(m_clearTimer);
 		m_engingFlag = true;
 		SetActive(false);
+
+		if (m_windSE != nullptr) {
+			m_windSE->Stop();
+			DeleteGO(m_windSE);
+			m_windSE = nullptr;
+		}
 	}
 }
 
@@ -339,9 +348,19 @@ void Game::PostRender()
 void Game::Restart() {
 	Fade::GetInstance().FadeOut();
 	m_restartFlag = true;
+	if (m_windSE != nullptr) {
+		m_windSE->Stop();
+		DeleteGO(m_windSE);
+		m_windSE = nullptr;
+	}
 }
 
 void Game::ToTitle() {
 	Fade::GetInstance().FadeOut();
 	m_toTitleFlag = true;
+	if (m_windSE != nullptr) {
+		m_windSE->Stop();
+		DeleteGO(m_windSE);
+		m_windSE = nullptr;
+	}
 }
