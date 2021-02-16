@@ -26,10 +26,18 @@ void PlayerDeadState::Enter(Player* p) {
 	explodeSe->Init(L"Assets/sound/chara/explosion.wav");
 	explodeSe->Play(false);
 	m_isFadedToRespawn = false;
+	m_gravity = 9.f;
+	m_respawnTimer = 0.f;
+
+	for (int i = 0; i < TO_INT(Player::EnPlayerBone::enNumBoneType); i++) {
+		auto bonePos = p->GetIK(i)->GetEffectorBone()->GetWorldMatrix().GetTransrate();
+		p->GetIK(i)->SetIKMode(IK::IKMode::enMode_NoAnimHit);
+		bonePos.y += 1.f;
+		p->GetIK(i)->SetNextTarget(bonePos);
+	}
 }
 
 void PlayerDeadState::Exit(Player* p) {
-	m_respawnTimer = 0.f;
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Player - Exit Dead State\n");
 #endif
@@ -49,13 +57,17 @@ IPlayerState* PlayerDeadState::Update(Player* p) {
 	for (int i = 0; i < TO_INT(Player::EnPlayerBone::enNumBoneType); i++) {
 		auto bonePos = p->GetIK(i)->GetEffectorBone()->GetWorldMatrix().GetTransrate();
 		bonePos.y -= m_gravity * gameTime()->GetDeltaTime();
-		p->GetIK(i)->SetNextTarget(bonePos);
-		p->GetIK(i)->SetIKMode(IK::IKMode::enMode_NoAnimHit);
+		if (!p->GetIK(i)->IsHit()) {
+			p->GetIK(i)->SetNextTarget(bonePos);
+		}
 	}
 
 	static const float GravityAddVal = 30.f;
 	m_gravity += GravityAddVal * delta;
 
+	auto plpos = p->GetPosition();
+	plpos.y -= 9 * delta;
+	p->SetPosition(plpos);
 
 	if (m_respawnTimer > m_fadeOutTime and !m_isFadedToRespawn) {
 		Fade::GetInstance().FadeOut();
@@ -67,6 +79,7 @@ IPlayerState* PlayerDeadState::Update(Player* p) {
 		GameManager::GetInstance().m_camera->Reset();
 		auto nextState = p->GetState(Player::EnState::enFlying);
 		Fade::GetInstance().FadeIn();
+
 		return nextState;
 	}
 
