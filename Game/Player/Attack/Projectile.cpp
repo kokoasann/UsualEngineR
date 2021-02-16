@@ -3,7 +3,7 @@
 #include "../../Enemy/EnemyManager.h"
 //#include "../../Enemy/Equipment/Enemy_Bullet.h"
 
-PlayerBulletManager* g_playerBulletManager;
+PlayerBulletManager* g_playerBulletManager = 0;
 
 struct ProjectileSweepResult : public btCollisionWorld::ConvexResultCallback
 {
@@ -206,6 +206,15 @@ void Projectile::PostUpdate()
 ////////////////////////////////
 //PlayerBulletManager
 ////////////////////////////////
+
+PlayerBulletManager* PlayerBulletManager::GetInstance()
+{
+	if (g_playerBulletManager == nullptr)
+	{
+		return NewGO<PlayerBulletManager>(0);
+	}
+	return g_playerBulletManager;
+}
 
 void PlayerBulletManager::Release()
 {
