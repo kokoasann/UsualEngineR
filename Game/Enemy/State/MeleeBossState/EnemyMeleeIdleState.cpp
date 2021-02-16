@@ -27,7 +27,8 @@ void EnemyMeleeIdleState::Enter(IEnemy* e) {
 	m_isAttacked = false;
 
 	if (GameManager::GetInstance().m_bgm != nullptr) {
-		GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+		//GameManager::GetInstance().m_bgm->AddBgmCount(-1);
+		GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Melee, false);
 	}
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee idle\n");
@@ -52,7 +53,8 @@ IEnemyState* EnemyMeleeIdleState::Update(IEnemy* e) {
 
 	if ((vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) or m_isAttacked) {
 		if (GameManager::GetInstance().m_bgm != nullptr) {
-			GameManager::GetInstance().m_bgm->AddBgmCount(1);
+			//GameManager::GetInstance().m_bgm->AddBgmCount(1);
+			GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Melee, true);
 		}
 		return e->GetStateMap().at(TO_INT(IEnemy::EnState::enBattleState));
 	}

@@ -6,6 +6,7 @@
 #include "../../Drop/DropItemA.h"
 #include "GameManager.h"
 #include "Game.h"
+#include "Enemy/BossBGM.h"
 
 EnemyMeleeDeadState::EnemyMeleeDeadState() {
 
@@ -19,6 +20,8 @@ void EnemyMeleeDeadState::Enter(IEnemy* e) {
 #ifdef _PRINT_ENEMY_STATE
 	DebugPrint_WATA("Enter enemy melee dead\n");
 #endif
+
+	GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Melee, false);
 
 	m_pos = e->GetPosition();
 	//m_pos.y += 15.f;

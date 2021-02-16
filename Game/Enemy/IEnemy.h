@@ -22,6 +22,12 @@ public:
 		enNumState
 	};
 
+	enum class EnBossType {
+		Melee,
+		Fat,
+		Bomb
+	};
+
 	enum class EnAnimation {
 		enIdle,
 		enWalk,
