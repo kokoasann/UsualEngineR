@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlayerDeadState.h"
+#include "Fade.h"
 #include "../Player.h"
 #include "../../GameManager.h"
 #include "../../Camera/GameCamera.h"
@@ -20,6 +21,11 @@ void PlayerDeadState::Enter(Player* p) {
 	p->SetLocalVelocity(Vector3::Zero);
 	p->SetExternalVelocity(Vector3::Zero);
 	p->PlayAnimation(Player::EnAnimation::enDead);
+	p->Explode();
+	auto explodeSe = NewGO<CSoundSource>(0);
+	explodeSe->Init(L"Assets/sound/chara/explosion.wav");
+	explodeSe->Play(false);
+	m_isFadedToRespawn = false;
 }
 
 void PlayerDeadState::Exit(Player* p) {
@@ -34,10 +40,16 @@ IPlayerState* PlayerDeadState::Update(Player* p) {
 	auto delta = gameTime()->GetDeltaTime();
 	m_respawnTimer += delta;
 
+	if (m_respawnTimer > m_fadeOutTime and !m_isFadedToRespawn) {
+		Fade::GetInstance().FadeOut();
+		m_isFadedToRespawn = true;
+	}
+
 	if (m_respawnTimer > m_RespawnTime) {
 		p->Respawn();
 		GameManager::GetInstance().m_camera->Reset();
 		auto nextState = p->GetState(Player::EnState::enFlying);
+		Fade::GetInstance().FadeIn();
 		return nextState;
 	}
 
