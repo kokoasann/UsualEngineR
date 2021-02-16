@@ -132,12 +132,14 @@ bool GameStage::Start()
 		//m_mapWall.CreateMeshObject(model, Vector3::Zero, Quaternion::Identity, { 100,100,100 });
 
 		RigidBodyMutex.unlock();
-		mid.m_upAxis = EUpAxis::enUpAxisZ;
-		m_phyLevel.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
+		mid.m_upAxis = EUpAxis::enUpAxisY;
+		//m_phyLevel.Init("Assets/level/map_physics_level.tkl", [&](LevelObjectData& objData)->bool
+		m_phyLevel.Init("Assets/level/map_physics_commit_level.tkl", [&](LevelObjectData& objData)->bool
 			{
 				std::string name(objData.name.begin(), objData.name.end());
 				char filePath[256];
-				sprintf_s(filePath, "Assets/modelData/map_physics/%s.tkm", name.c_str());
+				//sprintf_s(filePath, "Assets/modelData/map_physics/%s.tkm", name.c_str());
+				sprintf_s(filePath, "Assets/modelData/map_physics_/%s.tkm", name.c_str());
 				mid.m_tkmFilePath = filePath;
 
 				Model model;
