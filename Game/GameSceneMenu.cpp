@@ -70,7 +70,7 @@ void GameSceneMenu::PostUpdate()
 			CSoundSource* se = NewGO<CSoundSource>(0);
 			se->Init(L"Assets/sound/system/Menu_Open.wav");
 			se->Play(false);
-			se->SetVolume(1.0f);
+			se->SetVolume(0.5f);
 		}
 		else {
 			m_isMenuActivated = false;
