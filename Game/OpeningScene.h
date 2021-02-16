@@ -81,4 +81,5 @@ private:
 	std::vector<Beam*> m_beamEffects;
 
 	ModelRender* m_model = nullptr;
+	CSoundSource* m_windSE = nullptr;
 };
