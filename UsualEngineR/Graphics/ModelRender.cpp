@@ -59,7 +59,7 @@ namespace UER
 	}
 	void ModelRender::Render()
 	{
-		if (!m_isRender || !m_isInit)
+		if (!m_isRender || !m_isInit || m_instanceNum<=0)
 			return;
 
 		

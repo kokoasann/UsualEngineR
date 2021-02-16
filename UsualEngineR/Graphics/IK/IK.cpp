@@ -325,7 +325,7 @@ namespace UER
 		while(true)
 		{
 
-			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), bstart, bend, sr);
+			//Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), bstart, bend, sr);
 			if (sr.isHit)
 			{
 				auto meri = target - sr.hitPos;
@@ -600,7 +600,7 @@ namespace UER
 	{
 		if (m_isUseGhost)
 		{
-			DebugPrintValue(EDebugConsoleKind::common, "hit num", m_ghost.GetGhost()->getNumOverlappingObjects());
+			//DebugPrintValue(EDebugConsoleKind::common, "hit num", m_ghost.GetGhost()->getNumOverlappingObjects());
 			bool hit = false;
 			for (int i = 0; i < m_ghost.GetGhost()->getNumOverlappingObjects(); i++)
 			{
