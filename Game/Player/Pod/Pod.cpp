@@ -194,7 +194,7 @@ void Pod::PostUpdate()
 
 
 	auto& preset = player->GetCurrentAttackPreset();
-	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault) {
+	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault or GameManager::GetInstance().GetMenu()->IsGamePaused() or m_overheat) {
 		if (m_gunSE->IsPlaying()) {
 			m_gunSE->Stop();
 		}
