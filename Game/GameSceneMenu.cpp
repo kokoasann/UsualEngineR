@@ -81,6 +81,11 @@ void GameSceneMenu::PostUpdate()
 		}
 	}
 
+	if (!m_isPaused) {
+		m_isMenuActivated = false;
+	}
+
+
 	if (!m_isMenuActivated) return;
 
 	//Œˆ’è‚ª‰Ÿ‚³‚ê‚Ä‚È‚¯‚ê‚ÎƒJ[ƒ\ƒ‹ˆÚ“®‚ª‚Å‚«‚é
