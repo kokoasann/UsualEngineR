@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Church.h"
+#include "Fade.h"
 #include "GameManager.h"
 #include "Player/Player.h"
 #include "PowaPowa.h"
@@ -101,12 +102,9 @@ void Church::PostRender()
 
 
 const bool Church::IsPossibleToHeal() {
-
 	auto player = GameManager::GetInstance().GetPlayer();
 	auto len = (player->GetPosition() - m_powa->GetPosition()).Length();
-
-	return len < m_powa->GetRange();
-
+	return len < m_powa->GetRange() and Fade::GetInstance().GetState() == Fade::State::enIdle;
 }
 
 void Church::DoHeal() {
