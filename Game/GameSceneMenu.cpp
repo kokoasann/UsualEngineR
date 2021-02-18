@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Fade.h"
 #include "GameSceneMenu.h"
 #include "GameManager.h"
 #include "Game.h"
@@ -63,7 +64,7 @@ void GameSceneMenu::Update()
 
 void GameSceneMenu::PostUpdate()
 {
-	if (g_pad[0]->IsTrigger(enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
+	if (g_pad[0]->IsTrigger(enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming() and Fade::GetInstance().GetState() == Fade::State::enIdle) {
 		if (m_isPaused) {
 			m_isMenuActivated = true;
 			m_selectedTypeID = TO_INT(EnMenuButtonType::Close);
@@ -79,6 +80,10 @@ void GameSceneMenu::PostUpdate()
 			se->Play(false);
 			se->SetVolume(1.0f);
 		}
+	}
+
+	if (!m_isPaused) {
+		m_isMenuActivated = false;
 	}
 
 	if (!m_isMenuActivated) return;
