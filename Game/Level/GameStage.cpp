@@ -82,41 +82,44 @@ bool GameStage::Start()
 
 	}
 	{
-		ModelInitData mid;
-		mid.m_upAxis = EUpAxis::enUpAxisY;
-		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-		mid.m_vsEntryPointFunc = "VSMain";
-		mid.m_psEntryPointFunc = "PSMain";
-		//m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
-		m_footholdLevel.Init("Assets/level/map_commit_obj_level2.tkl", [&](LevelObjectData& objData)->bool
-			{
-				std::string name(objData.name.begin(), objData.name.end());
-				char filePath[256];
-				//sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
-				sprintf_s(filePath, "Assets/modelData/map_obj/%s.tkm", name.c_str());
-				ModelRender* mr = NewGO<ModelRender>(0);
-				mr->SetScale(objData.scale * m_levelScale);
-				mr->SetPosition(objData.position * m_levelScale);
-				mr->SetRotation(objData.rotation);
-				mid.m_tkmFilePath = filePath;
-				mr->Init(mid);
-				m_mapmodel.push_back(mr);
-				mr->SetMulColor({ 0.6,0.6,0.6,1 });
-
-
-				RigidBodyMutex.lock();
-
-				m_mapObjPSOList[m_mapObjPSOCount].CreateMeshObject(mr->GetModel(), objData.position * m_levelScale, objData.rotation, objData.scale * m_levelScale, true);
-				m_mapObjPSOList[m_mapObjPSOCount].GetRigidBody().GetBody()->setUserIndex(enCollisionAttr_Ground);
-				Physics().AddRigidBody(m_mapObjPSOList[m_mapObjPSOCount].GetRigidBody());
-				m_mapObjPSOCount++;
-
-				RigidBodyMutex.unlock();
-				return true;
-			});
+		
 	}
 
 	m_threadForCreatingMeshCol.Execute([&]() {
+		{
+			ModelInitData mid;
+			mid.m_upAxis = EUpAxis::enUpAxisY;
+			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
+			mid.m_vsEntryPointFunc = "VSMain";
+			mid.m_psEntryPointFunc = "PSMain";
+			//m_level.Init("Assets/level/map_level.tkl", [&](LevelObjectData& objData)->bool
+			m_footholdLevel.Init("Assets/level/map_commit_obj_level2.tkl", [&](LevelObjectData& objData)->bool
+				{
+					std::string name(objData.name.begin(), objData.name.end());
+					char filePath[256];
+					//sprintf_s(filePath, "Assets/modelData/map/%s.tkm", name.c_str());
+					sprintf_s(filePath, "Assets/modelData/map_obj/%s.tkm", name.c_str());
+					ModelRender* mr = NewGO<ModelRender>(0);
+					mr->SetScale(objData.scale * m_levelScale);
+					mr->SetPosition(objData.position * m_levelScale);
+					mr->SetRotation(objData.rotation);
+					mid.m_tkmFilePath = filePath;
+					mr->Init(mid);
+					m_mapmodel.push_back(mr);
+					mr->SetMulColor({ 0.6,0.6,0.6,1 });
+
+
+					RigidBodyMutex.lock();
+
+					m_mapObjPSOList[m_mapObjPSOCount].CreateMeshObject(mr->GetModel(), objData.position * m_levelScale, objData.rotation, objData.scale * m_levelScale, true);
+					m_mapObjPSOList[m_mapObjPSOCount].GetRigidBody().GetBody()->setUserIndex(enCollisionAttr_Ground);
+					Physics().AddRigidBody(m_mapObjPSOList[m_mapObjPSOCount].GetRigidBody());
+					m_mapObjPSOCount++;
+
+					RigidBodyMutex.unlock();
+					return true;
+				});
+		}
 		ModelInitData mid;
 		mid.m_upAxis = EUpAxis::enUpAxisY;
 		mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
@@ -154,25 +157,27 @@ bool GameStage::Start()
 			});
 		m_isLoaded = true;
 		DebugPrint_WATA("Level meash has been created");
+
+		m_decoLevel.Init("Assets/level/map_MBG_level.tkl", [&](LevelObjectData& objData)->bool
+			{
+				ModelInitData mid;
+				mid.m_upAxis = EUpAxis::enUpAxisY;
+				mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
+				mid.m_vsEntryPointFunc = "VSMain";
+				mid.m_psEntryPointFunc = "PSMain";
+				mid.m_tkmFilePath = "Assets/modelData/m_BG/m_BG1.tkm";
+				ModelRender* m = NewGO<ModelRender>(0);
+				m->Init(mid);
+				m->SetPosition(objData.position * m_levelScale);
+				m->SetRotation(objData.rotation);
+				m->SetScale(objData.scale * m_levelScale);
+				m->SetMulColor({ 1,0.8,0.4,1. });
+				m_mbgs.push_back(m);
+				return true;
+			});
 		});
 
-	m_decoLevel.Init("Assets/level/map_MBG_level.tkl", [&](LevelObjectData& objData)->bool
-		{
-			ModelInitData mid;
-			mid.m_upAxis = EUpAxis::enUpAxisY;
-			mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
-			mid.m_vsEntryPointFunc = "VSMain";
-			mid.m_psEntryPointFunc = "PSMain";
-			mid.m_tkmFilePath = "Assets/modelData/m_BG/m_BG1.tkm";
-			ModelRender* m = NewGO<ModelRender>(0);
-			m->Init(mid);
-			m->SetPosition(objData.position * m_levelScale);
-			m->SetRotation(objData.rotation);
-			m->SetScale(objData.scale* m_levelScale);
-			m->SetMulColor({ 1,0.8,0.4,1. });
-			m_mbgs.push_back(m);
-			return true;
-		});
+	
 
 
 	m_sandSmoke = NewGO<VolumetricEffectRender>(0);

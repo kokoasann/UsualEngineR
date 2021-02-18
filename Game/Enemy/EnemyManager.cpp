@@ -49,10 +49,10 @@ void EnemyManager::SpawnEnemies() {
 	static bool isCreatedEnemyBulletManager = false;
 	if (!isCreatedEnemyBulletManager)
 	{
-		EnemyBulletManager* ebm = NewGO<EnemyBulletManager>(0);
+		EnemyBulletManager* ebm = EnemyBulletManager::GetInstance();
 		ebm->Allocate(400);
 		isCreatedEnemyBulletManager = true;
-		m_enemyBulletManager = ebm;
+		//m_enemyBulletManager = ebm;
 	}
 	//AllocateGO<Enemy_Bullet>(70, 0);
 	Level level;
@@ -158,7 +158,7 @@ void EnemyManager::Release() {
 	m_numCorpse = 0;
 	m_targetEnemy = nullptr;
 
-	m_enemyBulletManager->InstanceNULL();
+	//EnemyBulletManager::GetInstance()->InstanceNULL();
 }
 
 void EnemyManager::ApplyAoeDamage(const Vector3& attackOriginPos, float range, float damageAmount) {

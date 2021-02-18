@@ -113,6 +113,8 @@ private:
 class EnemyBulletManager final : public GameObject
 {
 public:
+	static EnemyBulletManager* GetInstance();
+	
 	void Release() override;
 	void OnDestroy() override;
 

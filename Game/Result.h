@@ -73,9 +73,14 @@ private:
 	int m_numRobot = 50;
 
 	ModelRender* m_ground = nullptr;
+	ModelRender* m_back = nullptr;
+	ModelRender* m_magma = nullptr;
 
 	const Vector3 m_resultCameraPos = Vector3(0.f, 9.f, 8.2f);
 	const Vector3 m_resultCameraTarget = Vector3(0.f, 5.f, 0.f);
+
+
+	
 
 	//Back Sprite
 	SpriteRender* m_backSprite = nullptr;
@@ -84,6 +89,9 @@ private:
 	Vector3 m_backSpScale = Vector3(1.f, 1.f, 1.f);
 
 	Level m_level;
+	Level m_deathLevel;
+	Level m_backLevel;
+	
 	const float m_levelScale = 1.5f;
 
 	bool m_isTriggeredButtonA = false;
@@ -109,16 +117,16 @@ private:
 	};
 
 	static const int m_NUM_FONTS = 14;
-	Font m_fonts[m_NUM_FONTS];
+	Font m_fonts[1];
 	Vector2 m_fontsPos[m_NUM_FONTS];
 	std::wstring m_texts[m_NUM_FONTS];
 
-	const Vector4 m_FontColor = Vector4::White;
+	const Vector4 m_FontColor = {0.9,0.9 ,0.9 ,1};
 	const float m_fontRot = 0.f;
 	const float m_leftFontSca = 1.f;
 	const float m_rightFontSca = 0.8f;
 
-	const float X1 = -500.f;
+	const float X1 = -580.f;
 	const float X2 = -300.f;
 	const float X3 =	100.f;
 	const float X4 =	400.f;
@@ -130,8 +138,8 @@ private:
 	SpriteRender* m_attachBack[4] = {nullptr};
 	Vector4 m_attachColor[4] = {
 		{ 0.5,0.5 ,0.5,1.f },
-		{ 0.8,0. ,0.,1.f },
 		{ 0.,0.8 ,0.,1.f },
+		{ 0.8,0. ,0.,1.f },
 		{ 0.,0. ,0.8,1.f }
 	};
 };

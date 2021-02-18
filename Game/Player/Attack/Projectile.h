@@ -100,6 +100,8 @@ private:
 class PlayerBulletManager final : public GameObject
 {
 public:
+	static PlayerBulletManager* GetInstance();	
+
 	void Release() override;
 	void OnDestroy() override;
 

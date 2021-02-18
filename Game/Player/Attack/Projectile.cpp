@@ -3,7 +3,7 @@
 #include "../../Enemy/EnemyManager.h"
 //#include "../../Enemy/Equipment/Enemy_Bullet.h"
 
-PlayerBulletManager* g_playerBulletManager;
+PlayerBulletManager* g_playerBulletManager = 0;
 
 struct ProjectileSweepResult : public btCollisionWorld::ConvexResultCallback
 {
@@ -95,7 +95,7 @@ void Projectile::Init(const Vector3& pos, float scale, const Vector3& dir, float
 	m_range = attackRenge;
 
 	Quaternion rot;
-	rot.SetRotation(Vector3::AxisZ * -1.f, m_dir);
+	rot.SetRotation(Vector3::AxisZ, m_dir);
 
 	{
 		auto pair = g_playerBulletManager->GetInstanceMatrix();
@@ -207,6 +207,15 @@ void Projectile::PostUpdate()
 //PlayerBulletManager
 ////////////////////////////////
 
+PlayerBulletManager* PlayerBulletManager::GetInstance()
+{
+	if (g_playerBulletManager == nullptr)
+	{
+		return NewGO<PlayerBulletManager>(0);
+	}
+	return g_playerBulletManager;
+}
+
 void PlayerBulletManager::Release()
 {
 }
@@ -220,7 +229,7 @@ void PlayerBulletManager::Awake()
 {
 	m_structuredBuff.Init(sizeof(Matrix), 1024, 0);
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_tkmFilePath = "Assets/modelData/bullet/bullet.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_vsfxFilePath = "Assets/shader/NoAnimInstancingModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";

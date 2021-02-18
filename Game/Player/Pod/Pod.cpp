@@ -73,7 +73,8 @@ void Pod::Release()
 
 	m_sphere.Release();
 
-	m_playerBulletManager->InstanceNULL();
+	//PlayerBulletManager::GetInstance()->InstanceNULL();
+	//DeleteGO(m_playerBulletManager);
 }
 
 void Pod::OnDestroy()
@@ -150,9 +151,9 @@ bool Pod::Start()
 	}
 
 	//bullets
-	auto pbm = NewGO<PlayerBulletManager>(0);
+	auto pbm = PlayerBulletManager::GetInstance();
 	pbm->Allocate(70);
-	m_playerBulletManager = pbm;
+	//m_playerBulletManager = pbm;
 
 	m_explosionEffect = NewGO<ExplosionEffect>(0);
 	m_explosionEffect->Init();
@@ -193,7 +194,7 @@ void Pod::PostUpdate()
 
 
 	auto& preset = player->GetCurrentAttackPreset();
-	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault) {
+	if (!g_pad[0]->IsPress(EnButton::enButtonRB1) or preset != Player::EnAttackPreset::enDefault or GameManager::GetInstance().GetMenu()->IsGamePaused() or m_overheat) {
 		if (m_gunSE->IsPlaying()) {
 			m_gunSE->Stop();
 		}

@@ -14,6 +14,12 @@ public:
 	Fade();
 	~Fade();
 
+	enum class State {
+		enFadeIn,
+		enFadeOut,
+		enIdle,
+	};
+
 	void Update();
 
 	void FadeIn() {
@@ -49,12 +55,11 @@ public:
 		m_fadeSpeed = s;
 	}
 
+	const Fade::State& GetState() {
+		return m_state;
+	}
+
 private:
-	enum class State {
-		enFadeIn,
-		enFadeOut,
-		enIdle,
-	};
 
 	State m_state = State::enIdle;
 

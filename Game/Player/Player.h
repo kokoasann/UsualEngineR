@@ -174,6 +174,9 @@ public:
 		m_hp = m_HP_MAX;
 		m_endurance = m_ENDURANCE_MAX;
 		m_boost = m_BOOST_MAX;
+		SetVelocity(Vector3::Zero);
+		SetLocalVelocity(Vector3::Zero);
+		SetExternalVelocity(Vector3::Zero);
 	}
 
 	void SetVelocity(const Vector3& velocity) {

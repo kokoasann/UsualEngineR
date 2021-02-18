@@ -170,9 +170,8 @@ void Player::Awake()
 	SetAnimation(TO_INT(EnAnimation::enTackle), "Assets/modelData/m/anim/m_tackle_olt.tka", false);
 	//RevolvingTackle
 	SetAnimation(TO_INT(EnAnimation::enRevolvingTackle), "Assets/modelData/m/anim/m_rolling_attack.tka", true);
-
 	//Dead
-	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_idle.tka", true);
+	SetAnimation(TO_INT(EnAnimation::enDead), "Assets/modelData/m/anim/m_death.tka", true);
 
 	//Event
 	//auto& animation = GetModelRender().GetAnimation();
@@ -273,12 +272,12 @@ void Player::InitIK() {
 	float radius = 0.5f;
 	auto ske = m_model->GetModel().GetSkelton();
 	{
-		IK* ikHandL = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Hand_L")), 1, radius);
+		IK* ikHandL = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Hand_L")), 3, radius);
 		ikHandL->SetIKMode(IK::enMode_NoneHit);
 		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enHand_L), ikHandL));
 	}
 	{
-		IK* ikHandR = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Hand_R")), 1, radius);
+		IK* ikHandR = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Hand_R")), 3, radius);
 		ikHandR->SetIKMode(IK::enMode_NoneHit);
 		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enHand_R), ikHandR));
 	}
@@ -295,7 +294,7 @@ void Player::InitIK() {
 		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enSOLE_L), Sole_L));
 	}
 	{
-		IK* bone004 = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.004")), 1, radius);
+		IK* bone004 = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Bone.004")), 3, radius);
 		bone004->SetIKMode(IK::enMode_NoneHit);
 		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enBack), bone004));
 	}

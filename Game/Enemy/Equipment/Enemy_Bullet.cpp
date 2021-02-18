@@ -6,7 +6,7 @@
 
 #include "Effect/Ballistic.h"
 
-EnemyBulletManager* g_enemyBulletManager;
+EnemyBulletManager* g_enemyBulletManager = 0;
 
 struct SweepResult : public btCollisionWorld::ConvexResultCallback
 {
@@ -207,6 +207,17 @@ void Enemy_Bullet::PostUpdate()
 
 /////////////////////////////////////////////////////////////////////*/
 
+EnemyBulletManager* EnemyBulletManager::GetInstance()
+{
+	{
+		if (g_enemyBulletManager == nullptr)
+		{
+			return NewGO<EnemyBulletManager>(0);
+		}
+		return g_enemyBulletManager;
+	}
+}
+
 void EnemyBulletManager::Release()
 {
 }
@@ -220,7 +231,7 @@ void EnemyBulletManager::Awake()
 {
 	m_structuredBuff.Init(sizeof(Matrix), 1024,0);
 	ModelInitData mid;
-	mid.m_tkmFilePath = "Assets/modelData/test/test_criss.tkm";
+	mid.m_tkmFilePath = "Assets/modelData/bullet/bullet.tkm";
 	mid.m_upAxis = EUpAxis::enUpAxisY;
 	mid.m_vsfxFilePath = "Assets/shader/NoAnimInstancingModel.fx";
 	mid.m_vsEntryPointFunc = "VSMain";

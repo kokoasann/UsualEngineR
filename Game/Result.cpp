@@ -51,10 +51,10 @@ bool Result::Start()
 	mid.m_vsfxFilePath = "Assets/shader/AnimModel.fx";
 
 	//Ground
-	m_ground = NewGO<ModelRender>(0);
+	/*m_ground = NewGO<ModelRender>(0);
 	m_ground->Init(mid);
 	m_ground->SetScale(Vector3(1000.f,0.5f,1000.f));
-	m_ground->SetPosition(Vector3(0.f,-5.f,0.f));
+	m_ground->SetPosition(Vector3(0.f,-5.f,0.f));*/
 
 	g_camera3D->SetPosition(m_resultCameraPos);
 	g_camera3D->SetTarget(m_resultCameraTarget);
@@ -109,7 +109,7 @@ void Result::Init(const double clearTime, const int eliminateCount, const SAttac
 
 	float clearMin = clearTime / 60.0;
 	//printf("clear time : %f(min)\n", clearTime / 60.0);
-	const float WorstMin = 60.f;
+	const float WorstMin = 0.1f;
 	const float BestMin = WorstMin / 2.f;
 
 	if (clearMin >= WorstMin) {
@@ -141,6 +141,60 @@ void Result::Init(const double clearTime, const int eliminateCount, const SAttac
 			return true;
 		});
 
+	int count = 0;
+	m_deathLevel.Init("Assets/level/resultPOWs_death_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			if (count >= 100-m_displayRoboCount) return true;
+			std::string name(objData.name.begin(), objData.name.end());
+			ModelRender* mr = NewGO<ModelRender>(0);
+			mr->SetScale(Vector3::One * m_levelScale);
+			mid.m_tkmFilePath = "Assets/modelData/AssistantMachine/am.tkm";
+			mr->Init(mid);
+			mr->SetScale(objData.scale * m_levelScale);
+			mr->SetPosition(objData.position * m_levelScale);
+			mr->SetRotation(objData.rotation);
+			m_robots.push_back(mr);
+			mr->SetMulColor({ 0.4,0.4,0.4,1 });
+			count++;
+			//printf("robo count : %d\n", robotCount);
+			return true;
+		});
+
+	mid.m_tksFilePath = nullptr;
+	mid.m_vsfxFilePath = "Assets/shader/NoAnimModel.fx";
+	m_backLevel.Init("Assets/level/blastFurnace_level.tkl", [&](LevelObjectData& objData)->bool
+		{
+			//std::string name(objData.name.begin(), objData.name.end());
+			ModelRender* mr = NewGO<ModelRender>(0);
+			mr->SetScale(objData.scale * m_levelScale);
+			mr->SetPosition(objData.position * m_levelScale + Vector3::Down * 1.5);
+			mr->SetRotation(objData.rotation);
+
+			if (objData.name == L"Plane")
+			{
+				mid.m_tkmFilePath = "Assets/modelData/plane/plane.tkm";
+				mr->SetMulColor({ 8.,0.4,0.1,1 });
+				m_magma = mr;
+			}
+			else if (objData.name == L"BF")
+			{
+				mid.m_tkmFilePath = "Assets/modelData/blastFurnace/blastFurnace.tkm";
+				mr->SetMulColor({ 0.4,0.4,0.5,1 });
+				m_ground = mr;
+			}
+			else if(objData.name == L"Back")
+			{
+				mid.m_tkmFilePath = "Assets/modelData/plane/plane.tkm";
+				mr->SetMulColor({ 0.1,0.1,0.1,1 });
+				m_back = mr;
+				mr->SetPosition({0,10,0});
+			}
+			mr->Init(mid);
+			
+			
+			m_robots.push_back(mr);
+			return true;
+		});
 }
 
 
@@ -198,13 +252,13 @@ void Result::PostRender()
 	const int sec = max(0, (int)m_clearSec - (clearMin * 60.0));
 
 	//TIME
-	m_texts[TO_INT(FONT_TYPE::TIME)] = L"Time";
+	m_texts[TO_INT(FONT_TYPE::TIME)] = L"ClearTime";
 	m_texts[TO_INT(FONT_TYPE::TIME) + 1] = std::to_wstring(clearMin) + L":" + std::to_wstring(sec);
 	//std::wstring wstTimeStr = L"Time";
 	//std::wstring wstTimeVal = std::to_wstring(clearMin) + L":" + std::to_wstring(sec) + L"\n";
 	//POW
 	m_texts[TO_INT(FONT_TYPE::POW)] = L"POW ";
-	m_texts[TO_INT(FONT_TYPE::POW) + 1] = std::to_wstring(m_displayRoboCount);
+	m_texts[TO_INT(FONT_TYPE::POW) + 1] = std::to_wstring(m_displayRoboCount)+L"/100";
 	//CORPSE
 	m_texts[TO_INT(FONT_TYPE::CORPSE)] = L"CRPS ";
 	m_texts[TO_INT(FONT_TYPE::CORPSE) + 1] = std::to_wstring(m_corpseCount);
@@ -222,16 +276,14 @@ void Result::PostRender()
 	m_texts[TO_INT(FONT_TYPE::BOMB)] = L"BOMB";
 	m_texts[TO_INT(FONT_TYPE::BOMB) + 1] = std::to_wstring((int)m_attachmentPercentageData.bombAttachment) + L"%";
 
-	for (int i = 0; i < 6; i++) {
-		m_fonts[i].Begin();
-		m_fonts[i].Draw(m_texts[i].c_str(), m_fontsPos[i], m_FontColor, m_fontRot, m_leftFontSca);
-		m_fonts->End();
+	m_fonts[0].Begin();
+	m_fonts[0].Draw(m_texts[0].c_str(), { m_fontsPos[0].x ,m_fontsPos[0].y-25}, m_FontColor, m_fontRot, m_leftFontSca * 0.6f);
+	for (int i = 1; i < 6; i++) {
+		m_fonts[0].Draw(m_texts[i].c_str(), m_fontsPos[i], m_FontColor, m_fontRot, m_leftFontSca);
 	}
 
 	for (int i = 6; i < m_NUM_FONTS;  i++) {
-		m_fonts[i].Begin();
-		m_fonts[i].Draw(m_texts[i].c_str(), m_fontsPos[i], m_FontColor, m_fontRot, m_rightFontSca);
-		m_fonts->End();
+		m_fonts[0].Draw(m_texts[i].c_str(), m_fontsPos[i], m_FontColor, m_fontRot, m_rightFontSca);
 	}
-
+	m_fonts[0].End();
 }

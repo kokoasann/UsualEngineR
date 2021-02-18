@@ -10,7 +10,10 @@ public:
 	IPlayerState* Update(Player*) override;
 	void Exit(Player*) override;
 private:
-	const float m_RespawnTime = 1.f;
+	const float m_RespawnTime = 5.f;
+	const float m_fadeOutTime = 3.0f;
 	float m_respawnTimer = 0.f;
+	bool m_isFadedToRespawn = false;
+	float m_gravity = 9.f;
 };
 

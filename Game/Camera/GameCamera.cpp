@@ -336,7 +336,7 @@ void GameCamera::CalcEnemyCamera() {
 
 void GameCamera::CalcPlayerCamera() {
 	auto xf = g_pad[0]->GetRStickXF();
-	auto yf = g_pad[0]->GetRStickYF();
+	auto yf = g_pad[0]->GetRStickYF()*-1.f;
 
 	static const float upperLimit = 0.95f;
 	static const float lowerLimit = -0.5f;

@@ -45,6 +45,9 @@ void OpeningScene::Release()
 	}
 
 	DeleteGO(m_model);
+
+	m_windSE->Stop();
+	DeleteGO(m_windSE);
 	//auto meleeIdleState = m_melee->GetStateMap().at(TO_INT(IEnemy::EnState::enIdleState));
 	//m_melee->SetState(meleeIdleState);
 
@@ -65,6 +68,10 @@ void OpeningScene::Awake()
 	GameManager::GetInstance().SpawnPlayer();
 
 	//m_chara = NewGO<Player>(0);
+
+	m_windSE = NewGO < CSoundSource>(0);
+	m_windSE->Init(L"Assets/sound/GoldenWind.wav", false);
+	m_windSE->Play(true);
 
 	//enemy
 	IEnemy::StAbility ab;
@@ -221,10 +228,12 @@ bool OpeningScene::Start()
 
 		if (std::strcmp(name.c_str(), "black_out") == 0) {
 			Fade::GetInstance().BlackOut();
+			m_windSE->Stop();
 		}
 
 		if (std::strcmp(name.c_str(), "in") == 0) {
 			Fade::GetInstance().MakeBright();
+			m_windSE->Play(true);
 		}
 
 		if (std::strcmp(name.c_str(), "fade_out") == 0) {
