@@ -308,12 +308,19 @@ void Game::PostUpdate()
 {
 	Fade::GetInstance().Update();
 
-	if (g_pad[0]->IsTrigger(EnButton::enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
-		if (GameManager::GetInstance().m_menu->IsGamePaused()) {
-			GameManager::GetInstance().m_menu->ResumeGame();
-		}
-		else {
-			GameManager::GetInstance().m_menu->PauseGame();
+	{
+		auto player = GameManager::GetInstance().m_player;
+		float HP = player->GetCurrentHP();
+		//‘Ì—Í0ˆÈ‰º‚È‚çƒ|[ƒY‚³‚¹‚È‚¢
+		if (HP <= 0.f)
+			return;
+		if (g_pad[0]->IsTrigger(EnButton::enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
+			if (GameManager::GetInstance().m_menu->IsGamePaused()) {
+				GameManager::GetInstance().m_menu->ResumeGame();
+			}
+			else {
+				GameManager::GetInstance().m_menu->PauseGame();
+			}
 		}
 	}
 
