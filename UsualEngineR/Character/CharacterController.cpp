@@ -355,7 +355,7 @@ namespace UER
 					else
 					{
 						//移動確定。
-						m_position.y = callback.hitPos.y - (m_height * 0.5f + m_radius);
+						m_position.y = callback.hitPos.y;// -(m_height * 0.5f + m_radius);
 						//m_position.y += 0.1f;
 						if (m_isUseRigidBody)
 						{
@@ -1068,6 +1068,7 @@ namespace UER
 					}
 				}
 				//if (!isNearFloor && callback.isHitWall && isFall && 1)
+#if 0
 				if (callback.isHitWall /*&& isFall*/ && 0)
 				{
 					m_isJump = false;
@@ -1107,6 +1108,7 @@ namespace UER
 					//Vector3 newpos(nowPos.x, nextPos.y, nowPos.z);
 					//ExecuteWall(newpos, nextPos, originalXZDir, Ypos);
 				}
+#endif
 				//nextPos.y += m_height * 0.5f + m_radius;
 				//if (!(callback.isHit || callback.isHitWall))
 				if (!callback.isHit)
@@ -1152,7 +1154,7 @@ namespace UER
 			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 			if (callback.isHit)
 			{
-				nowPos.y = callback.hitPos.y - m_radius + m_height * 0.5f;
+				nowPos.y = callback.hitPos.y;// -m_radius + m_height * 0.5f;
 			}
 			else
 			{
