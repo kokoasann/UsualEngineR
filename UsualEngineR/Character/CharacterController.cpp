@@ -166,6 +166,44 @@ namespace UER
 		}
 	};
 
+	struct SweepResultNormal : public btCollisionWorld::ConvexResultCallback
+	{
+		bool isHit = false;						//衝突フラグ。
+		Vector3 hitPos = g_vec3Zero;		//衝突点。
+		Vector3 startPos = g_vec3Zero;		//レイの始点。
+		float dist = FLT_MAX;					//衝突点までの距離。一番近い衝突点を求めるため。FLT_MAXは単精度の浮動小数点が取りうる最大の値。
+		Vector3 hitNormal = g_vec3Zero;	//衝突点の法線。
+		btCollisionObject* me = nullptr;		//自分自身。自分自身との衝突を除外するためのメンバ。
+		int nonHitCollisionAttr = 0;
+
+		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+		{
+			if (convexResult.m_hitCollisionObject == me
+				|| convexResult.m_hitCollisionObject->getUserIndex() & enCollisionAttr_NonHit
+				|| convexResult.m_hitCollisionObject->getUserIndex() & nonHitCollisionAttr
+				)
+			{
+				//自分に衝突した。or 地面に衝突した。
+				return 0.0f;
+			}
+
+			isHit = true;
+			Vector3 hitPosTmp;
+			hitPosTmp.Set(convexResult.m_hitPointLocal);
+			//交点との距離を調べる。
+			Vector3 vDist;
+			vDist.Subtract(hitPosTmp, startPos);
+			float distTmp = vDist.Length();
+			if (distTmp < dist)
+			{
+				//この衝突点の方が近いので、最近傍の衝突点を更新する。
+				hitPos = hitPosTmp;
+				dist = distTmp;
+				hitNormal.Set(convexResult.m_hitNormalLocal);
+			}
+		}
+	};
+
 	struct ContactTestResult :public btCollisionWorld::ContactResultCallback
 	{
 		bool isHit = false;
@@ -241,6 +279,7 @@ namespace UER
 			m_isJump = true;
 			m_isOnGround = false;
 		}
+
 		//次の移動先となる座標を計算する。
 		Vector3 nextPosition = m_position;
 		//速度からこのフレームでの移動量を求める。オイラー積分。
@@ -248,6 +287,92 @@ namespace UER
 		addPos *= deltaTime;
 		nextPosition += addPos;
 
+		float addlen = addPos.Length();
+		if (addlen == 0.f)
+			return m_position;
+
+		//addPos のXZ
+		Vector3 originalXZDir = addPos;
+		originalXZDir.y = 0.0f;
+
+		//直接飛ばしてみる
+		{
+			btTransform start, end;
+			start.setIdentity();
+			end.setIdentity();
+			//始点はカプセルコライダーの中心座標 + 0.2の座標をposTmpに求める。
+			start.setOrigin(btVector3(m_position.x, (m_position.y + m_height * 0.5f + m_radius), m_position.z));
+			//終点は次の移動先。XZ平面での衝突を調べるので、yはposTmp.yを設定する。
+			end.setOrigin(btVector3(nextPosition.x, (nextPosition.y), nextPosition.z));
+
+			SweepResultNormal callback;
+			if (m_isUseRigidBody)
+				callback.me = m_rigidBody.GetBody();
+			callback.startPos = m_position;
+			callback.nonHitCollisionAttr = m_nonHitCollisionAttr;
+
+			//衝突検出。
+			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			if (!callback.isHit)	//なんも当たんないのでそのまま移動。
+			{
+				//移動確定。
+				m_position = nextPosition;
+				//m_position.y += 0.1f;
+				if (m_isUseRigidBody)
+				{
+					btRigidBody* btBody = m_rigidBody.GetBody();
+					//剛体を動かす。
+					btBody->setActivationState(DISABLE_DEACTIVATION);
+					btTransform& trans = btBody->getWorldTransform();
+					//剛体の位置を更新。
+					trans.setOrigin(btVector3(m_position.x, m_position.y/* + m_height * 0.5f + m_radius*/, m_position.z));
+					//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
+				}
+				m_isOnGround = false;
+				return m_position;
+			}
+			else
+			{
+				float len = originalXZDir.Length();
+				if (len <= FLT_EPSILON)		//落下しかしてないからそのまま着地。
+				{
+					if (addPos.y < 0)
+					{
+						//移動確定。
+						m_position.y = callback.hitPos.y;
+						//m_position.y += 0.1f;
+						if (m_isUseRigidBody)
+						{
+							btRigidBody* btBody = m_rigidBody.GetBody();
+							//剛体を動かす。
+							btBody->setActivationState(DISABLE_DEACTIVATION);
+							btTransform& trans = btBody->getWorldTransform();
+							//剛体の位置を更新。
+							trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
+							//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
+						}
+					}
+					else
+					{
+						//移動確定。
+						m_position.y = callback.hitPos.y - (m_height * 0.5f + m_radius);
+						//m_position.y += 0.1f;
+						if (m_isUseRigidBody)
+						{
+							btRigidBody* btBody = m_rigidBody.GetBody();
+							//剛体を動かす。
+							btBody->setActivationState(DISABLE_DEACTIVATION);
+							btTransform& trans = btBody->getWorldTransform();
+							//剛体の位置を更新。
+							trans.setOrigin(btVector3(m_position.x, m_position.y, m_position.z));
+							//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
+						}
+					}
+					m_isOnGround = true;
+					return m_position;
+				}
+			}
+		}
 		Vector3 addV = addPos;
 		addV.Normalize();
 
@@ -261,8 +386,7 @@ namespace UER
 
 		float Ypos = 0.f;
 
-		Vector3 originalXZDir = addPos;
-		originalXZDir.y = 0.0f;
+		
 		originalXZDir.Normalize();
 		//XZ平面での衝突検出と衝突解決を行う。
 #if 0
@@ -533,6 +657,8 @@ namespace UER
 		}
 
 		ExecuteFloor(m_position, nextPosition, originalXZDir, Ypos);
+		//m_position.y = nextPosition.y;
+		ExecuteCeil(m_position, nextPosition, originalXZDir, Ypos);
 
 		if (std::isnan(nextPosition.x) || std::isnan(nextPosition.y) || std::isnan(nextPosition.z) || std::isinf(nextPosition.x))
 		{
@@ -547,7 +673,7 @@ namespace UER
 #endif
 
 		//移動確定。
-		m_position = nextPosition;
+		//m_position.y = nextPosition.y;
 		//m_position.y += 0.1f;
 		if (m_isUseRigidBody)
 		{
@@ -848,7 +974,7 @@ namespace UER
 		Vector3 endPos;
 		//endPos.Set(start.getOrigin());
 		endPos.Set(nextPos);
-		if (m_isOnGround == false) {
+		if (!m_isOnGround) {
 			if (addPosY > 0.0f) {
 				//ジャンプ中とかで上昇中。
 				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
@@ -864,95 +990,131 @@ namespace UER
 			}
 			else
 			{
-				endPos.y -= 0.01f;
+				isFall = true;
+				endPos.y = start.getOrigin().y() - 0.01;
 			}
 		}
 		else {
-			//地面上にいない場合は1m下を見る。
 			//endPos.y -= 1.f;
-			endPos.y -= (m_radius + m_height * 0.5f)+0.05f;
+			//endPos.y -= (m_radius + m_height * 0.5f)+0.05f;
 			//endPos.y += addPos.y;
+
+			if (addPosY > 0.0f) {
+				//ジャンプ中とかで上昇中。
+				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
+				//endPos.y -= addPos.y * 0.005f;
+				//endPos.y -= 0.01f;
+				endPos.y = start.getOrigin().y() - 0.001;
+			}
+			else if (addPosY < 0.f)
+			{
+				//落下している場合はそのまま下を調べる。
+				isFall = true;
+				endPos.y += addPosY;
+			}
+			else
+			{
+				isFall = true;
+				endPos.y = start.getOrigin().y() - 0.01;
+			}
 		}
 		//end.setOrigin(btVector3(endPos.x, endPos.y/*+ Ypos*/, endPos.z));
 		end.setOrigin(btVector3(endPos.x, endPos.y + m_radius + m_height * 0.5f/* + Ypos*/, endPos.z));
-		SweepResultGround callback;
-		if (m_isUseRigidBody)
-			callback.me = m_rigidBody.GetBody();
-		callback.startPos.Set(start.getOrigin());
-		callback.nonHitCollisionAttr = m_nonHitCollisionAttr;
+
+		
 		//衝突検出。
 		//if (fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON) {
-		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) {
-			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
-			bool isNearFloor = callback.dist < callback.wallDist;
-			isNearFloor = true;
-			//if (isNearFloor && callback.isHit) 
-			if (callback.isHit)
+		if (fabsf(end.getOrigin().y() - start.getOrigin().y()) > FLT_EPSILON) 
+		{
 			{
-				//当たった。
-				//moveSpeed.y = 0.0f;
-				m_isJump = false;
-				m_isOnGround = true;
-				nextPos.y = callback.hitPos.y + m_offsetY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
-				//nextPos = callback.hitPos;
-				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
-				//DebugPrintVector3(EDebugConsoleKind::master, nextPos-callback.hitPos);
-				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
-				//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
-				isDebugPrinted = true;
-
-				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+				SweepResultGround callback;
+				if (m_isUseRigidBody)
+					callback.me = m_rigidBody.GetBody();
+				callback.startPos.Set(start.getOrigin());
+				callback.nonHitCollisionAttr = m_nonHitCollisionAttr;
+				Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+				bool isNearFloor = callback.dist < callback.wallDist;
+				isNearFloor = true;
+				//if (isNearFloor && callback.isHit) 
+				if (callback.isHit)
 				{
-					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					//当たった。
+					//moveSpeed.y = 0.0f;
+					m_isJump = false;
+					m_isOnGround = true;
+					//nextPos.y = callback.hitPos.y + m_offsetY;// + m_height * 0.5f + m_radius;//+m_height * 0.1f;
+					nowPos.y = callback.hitPos.y;
+					if (addPosY <= 0.f)
+					{
+						nextPos.y = nowPos.y;
+					}
+					//nextPos = callback.hitPos;
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT FLOOR");
+					//DebugPrintVector3(EDebugConsoleKind::master, nextPos-callback.hitPos);
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");
+					//DebugPrintVector3(EDebugConsoleKind::master, nextPos);
+					isDebugPrinted = true;
+
+					if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+					{
+						//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					}
 				}
-			}
-			//if (!isNearFloor && callback.isHitWall && isFall && 1)
-			if (callback.isHitWall /*&& isFall*/ && 0)
-			{
-				m_isJump = false;
-				m_isOnGround = true;
-
-				Vector3 vT0, vT1;
-				//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
-				vT0.Set(nextPos.x, 0.0f, nextPos.z);
-				vT1.Set(callback.wallHitPos.x, 0.0f, callback.wallHitPos.z);
-				//めり込みが発生している移動ベクトルを求める。
-				Vector3 vMerikomi;
-				vMerikomi = vT0 - vT1;
-				//XZ平面での衝突した壁の法線を求める。。
-				Vector3 hitNormalXZ = callback.wallNormal;
-				hitNormalXZ.y = 0.0f;
-				hitNormalXZ.Normalize();
-				//めり込みベクトルを壁の法線に射影する。
-				float fT0 = hitNormalXZ.Dot(vMerikomi);
-				//押し戻し返すベクトルを求める。
-				//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
-				Vector3 vOffset;
-				vOffset = hitNormalXZ;
-				vOffset *= -fT0 + m_radius + m_offsetXZ;
-				//nextPos += hitNormalXZ * (m_radius + m_offsetXZ);
-				nextPos += vOffset;
-				//nextPos.y = callback.wallHitPos.y;
-
-				//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
-				isDebugPrinted = true;
-
-				if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+				else
 				{
-					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					if (addPosY < 0.f)
+					{
+						nowPos.y = nextPos.y;
+					}
 				}
+				//if (!isNearFloor && callback.isHitWall && isFall && 1)
+				if (callback.isHitWall /*&& isFall*/ && 0)
+				{
+					m_isJump = false;
+					m_isOnGround = true;
 
-				//m_position = nextPosition;
-				//Vector3 newpos(nowPos.x, nextPos.y, nowPos.z);
-				//ExecuteWall(newpos, nextPos, originalXZDir, Ypos);
-			}
-			//nextPos.y += m_height * 0.5f + m_radius;
-			//if (!(callback.isHit || callback.isHitWall))
-			if (!callback.isHit)
-			{
-				//地面上にいない。
-				m_isOnGround = false;
+					Vector3 vT0, vT1;
+					//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
+					vT0.Set(nextPos.x, 0.0f, nextPos.z);
+					vT1.Set(callback.wallHitPos.x, 0.0f, callback.wallHitPos.z);
+					//めり込みが発生している移動ベクトルを求める。
+					Vector3 vMerikomi;
+					vMerikomi = vT0 - vT1;
+					//XZ平面での衝突した壁の法線を求める。。
+					Vector3 hitNormalXZ = callback.wallNormal;
+					hitNormalXZ.y = 0.0f;
+					hitNormalXZ.Normalize();
+					//めり込みベクトルを壁の法線に射影する。
+					float fT0 = hitNormalXZ.Dot(vMerikomi);
+					//押し戻し返すベクトルを求める。
+					//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
+					Vector3 vOffset;
+					vOffset = hitNormalXZ;
+					vOffset *= -fT0 + m_radius + m_offsetXZ;
+					//nextPos += hitNormalXZ * (m_radius + m_offsetXZ);
+					nextPos += vOffset;
+					//nextPos.y = callback.wallHitPos.y;
 
+					//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "HIT WALL IN FLOOR");
+					isDebugPrinted = true;
+
+					if (std::isnan(nextPos.x) || std::isnan(nextPos.y) || std::isnan(nextPos.z) || std::isinf(nextPos.x))
+					{
+						//DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "nextPos is Nan !!!!");
+					}
+
+					//m_position = nextPosition;
+					//Vector3 newpos(nowPos.x, nextPos.y, nowPos.z);
+					//ExecuteWall(newpos, nextPos, originalXZDir, Ypos);
+				}
+				//nextPos.y += m_height * 0.5f + m_radius;
+				//if (!(callback.isHit || callback.isHitWall))
+				if (!callback.isHit)
+				{
+					//地面上にいない。
+					m_isOnGround = false;
+
+				}
 			}
 		}
 		else
@@ -963,6 +1125,43 @@ namespace UER
 			
 			DebugPrintLineConsole(TO_INT(EDebugConsoleKind::master), "");*/
 			isDebugPrinted = true;
+		}
+	}
+	void CharacterController::ExecuteCeil(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos)
+	{
+		float addPosY = nextPos.y - nowPos.y;
+
+		if (addPosY > 0.f)
+		{
+			m_isJump = true;
+			m_isOnGround = false;
+
+			btTransform start, end;
+			start.setIdentity();
+			end.setIdentity();
+			//始点はカプセルコライダーの中心。
+			//start.setOrigin(btVector3(nowPos.x, (nowPos.y), nowPos.z));
+			start.setOrigin(btVector3(nowPos.x, (nowPos.y + m_height * 0.5f + m_radius)/* + Ypos*/, nowPos.z));
+			end.setOrigin(btVector3(nextPos.x, nextPos.y + m_radius + m_height * 0.5f/* + Ypos*/, nextPos.z));
+
+			SweepResultNormal callback;
+			if (m_isUseRigidBody)
+				callback.me = m_rigidBody.GetBody();
+			callback.startPos.Set(start.getOrigin());
+			callback.nonHitCollisionAttr = m_nonHitCollisionAttr;
+			Physics().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			if (callback.isHit)
+			{
+				nowPos.y = callback.hitPos.y - m_radius + m_height * 0.5f;
+			}
+			else
+			{
+				nowPos.y = nextPos.y;
+			}
+		}
+		else
+		{
+			
 		}
 	}
 	void CharacterController::ExebuteContactTest(const Vector3& addV)

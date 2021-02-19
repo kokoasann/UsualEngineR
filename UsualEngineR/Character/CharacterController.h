@@ -38,6 +38,7 @@ namespace UER
 
 		void ExecuteWall(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
 		void ExecuteFloor(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
+		void ExecuteCeil(Vector3& nowPos, Vector3& nextPos, const Vector3& originalXZDir, float& Ypos);
 
 		void ExebuteContactTest(const Vector3& addV);
 		/*!
