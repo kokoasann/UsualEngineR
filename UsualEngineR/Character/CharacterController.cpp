@@ -325,7 +325,7 @@ namespace UER
 					btBody->setActivationState(DISABLE_DEACTIVATION);
 					btTransform& trans = btBody->getWorldTransform();
 					//剛体の位置を更新。
-					trans.setOrigin(btVector3(m_position.x, m_position.y/* + m_height * 0.5f + m_radius*/, m_position.z));
+					trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 					//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 				}
 				m_isOnGround = false;
@@ -355,8 +355,7 @@ namespace UER
 					else
 					{
 						//移動確定。
-						m_position.y = callback.hitPos.y;// -(m_height * 0.5f + m_radius);
-						//m_position.y += 0.1f;
+						m_position.y = callback.hitPos.y;
 						if (m_isUseRigidBody)
 						{
 							btRigidBody* btBody = m_rigidBody.GetBody();
@@ -364,7 +363,7 @@ namespace UER
 							btBody->setActivationState(DISABLE_DEACTIVATION);
 							btTransform& trans = btBody->getWorldTransform();
 							//剛体の位置を更新。
-							trans.setOrigin(btVector3(m_position.x, m_position.y, m_position.z));
+							trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 							//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 						}
 					}
@@ -373,6 +372,7 @@ namespace UER
 				}
 			}
 		}
+
 		Vector3 addV = addPos;
 		addV.Normalize();
 
@@ -980,7 +980,8 @@ namespace UER
 				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
 				//endPos.y -= addPos.y * 0.005f;
 				//endPos.y -= 0.01f;
-				endPos.y = start.getOrigin().y() - 0.001;
+				//endPos.y = start.getOrigin().y() - 0.01;
+				endPos.y = nowPos.y -0.01;
 			}
 			else if (addPosY < 0.f)
 			{
@@ -991,7 +992,7 @@ namespace UER
 			else
 			{
 				isFall = true;
-				endPos.y = start.getOrigin().y() - 0.01;
+				endPos.y = nowPos.y - 0.01;
 			}
 		}
 		else {
@@ -1004,7 +1005,7 @@ namespace UER
 				//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
 				//endPos.y -= addPos.y * 0.005f;
 				//endPos.y -= 0.01f;
-				endPos.y = start.getOrigin().y() - 0.001;
+				endPos.y = nowPos.y - 0.01;
 			}
 			else if (addPosY < 0.f)
 			{
@@ -1015,7 +1016,7 @@ namespace UER
 			else
 			{
 				isFall = true;
-				endPos.y = start.getOrigin().y() - 0.01;
+				endPos.y = nowPos.y - 10.;
 			}
 		}
 		//end.setOrigin(btVector3(endPos.x, endPos.y/*+ Ypos*/, endPos.z));
@@ -1144,7 +1145,7 @@ namespace UER
 			//始点はカプセルコライダーの中心。
 			//start.setOrigin(btVector3(nowPos.x, (nowPos.y), nowPos.z));
 			start.setOrigin(btVector3(nowPos.x, (nowPos.y + m_height * 0.5f + m_radius)/* + Ypos*/, nowPos.z));
-			end.setOrigin(btVector3(nextPos.x, nextPos.y + m_radius + m_height * 0.5f/* + Ypos*/, nextPos.z));
+			end.setOrigin(btVector3(nextPos.x, nextPos.y + m_height * 0.5f + m_radius/* + Ypos*/, nextPos.z));
 
 			SweepResultNormal callback;
 			if (m_isUseRigidBody)
@@ -1163,7 +1164,8 @@ namespace UER
 		}
 		else
 		{
-			
+			nextPos.y = nowPos.y;
+			//DebugPrint(L"CEIL DOWN\n");
 		}
 	}
 	void CharacterController::ExebuteContactTest(const Vector3& addV)
