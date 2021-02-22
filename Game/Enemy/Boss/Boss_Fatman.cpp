@@ -20,7 +20,7 @@ const float Boss_Fatman::TAKE_DISTANCE = 70.0f;
 
 Boss_Fatman::Boss_Fatman()
 {
-
+	m_battlePhase = EnBattlePhase::Normal;
 }
 
 Boss_Fatman::~Boss_Fatman()
