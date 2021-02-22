@@ -335,7 +335,7 @@ void Game::PostUpdate()
 		player->SetStateSudden(player->GetState(Player::EnState::enMovie));
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
-		NewGO<Title>(0);
+		NewGO<Title>(1);
 	}
 }
 
