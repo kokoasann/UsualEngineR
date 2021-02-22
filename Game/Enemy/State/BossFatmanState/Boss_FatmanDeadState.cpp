@@ -6,7 +6,6 @@
 #include "../../Drop/DropItemFat.h"
 #include "GameManager.h"
 #include "Game.h"
-#include "Effect/ExplosionEffect.h"
 
 Boss_FatmanDeadState::Boss_FatmanDeadState()
 {
