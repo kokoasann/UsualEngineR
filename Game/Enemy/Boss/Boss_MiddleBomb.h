@@ -102,6 +102,15 @@ public:
 		static BossBombData data;
 		return data;
 	}
+
+	void ReInit()
+	{
+		feeling = EnFeel::Normale;
+		isJumpStart = false;
+		isBashAttack = false;
+		isStartBattle = false;
+	}
+
 	EnFeel feeling = EnFeel::Normale;
 
 	RigidBody* rigidBody = nullptr;
