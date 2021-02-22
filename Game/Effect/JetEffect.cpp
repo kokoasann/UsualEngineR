@@ -69,6 +69,8 @@ void JetEffect::PostRender()
 
 void JetEffect::Init(const JetEffectInitParam& initParam) {
 
+	DeleteGO(m_particleEffect);
+
 	EFFECT_SCALE = initParam.effectScale;
 	EFFECT_SCALE_INV = initParam.effectScale_inv;
 	PARTICLE_SCALE = initParam.particleScale;

@@ -16,16 +16,18 @@ ExplosionEffect::~ExplosionEffect()
 
 void ExplosionEffect::Release()
 {
-
+	DeleteGO(m_effect);
 }
 
 void ExplosionEffect::OnDestroy()
 {
-
+	Release();
 }
 
 void ExplosionEffect::Init()
 {
+	Release();
+
 	enum class ParticleKind
 	{
 		Big,

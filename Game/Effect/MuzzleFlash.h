@@ -81,7 +81,7 @@ public:
 		m_effect->SetSca(sca);
 	}
 private:
-	PlaneParticleEffectRender* m_effect;
+	PlaneParticleEffectRender* m_effect = nullptr;
 
 	float m_particleLifeTime = 0.07f;
 	float m_particleScale = 1.f;

@@ -16,12 +16,12 @@ Beam::~Beam()
 
 void Beam::Release()
 {
-
+	DeleteGO(m_effect);
 }
 
 void Beam::OnDestroy()
 {
-
+	Release();
 }
 
 
@@ -53,6 +53,8 @@ void Beam::PostUpdate()
 
 void Beam::Init(const BeamEffectInitData& bid)
 {
+	DeleteGO(m_effect);
+
 	m_particleScale = bid.particleScale;
 	m_chargeColor = bid.chargeColor;
 	m_beamColor = bid.beamColor;
