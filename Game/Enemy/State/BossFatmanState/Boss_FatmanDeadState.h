@@ -1,6 +1,5 @@
 #pragma once
 #include "Enemy/State/IEnemyState.h"
-class ExplosionEffect;
 
 class Boss_FatmanDeadState final : public IEnemyState
 {
@@ -15,6 +14,5 @@ private:
 	bool m_isPerformed = false;
 	bool m_isEffect = false;
 	Vector3 m_pos = Vector3::Zero;
-	ExplosionEffect* m_effect = nullptr;
 	float m_timer = 0.f;
 };
