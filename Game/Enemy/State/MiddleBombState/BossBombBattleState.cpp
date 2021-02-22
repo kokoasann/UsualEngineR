@@ -177,6 +177,7 @@ IEnemyState* BossBombBattleState::Update(IEnemy* e)
 		}
 	}
 
+	move.y -= 500.f;
 	e->SetVelocity(move);
 	return this;
 }

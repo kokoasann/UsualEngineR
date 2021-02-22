@@ -44,7 +44,7 @@ IEnemyState* BossBombIdleState::Update(IEnemy* e)
 
 	m_timer += gameTime()->GetDeltaTime();
 
-	e->SetExternalVelocity({ 0,-500,0 });
+	//e->SetVelocity({ 0,-500,0 });
 	
 	auto p = GameManager::GetInstance().GetPlayer();
 	auto d = p->GetPosition() - e->GetPosition();
