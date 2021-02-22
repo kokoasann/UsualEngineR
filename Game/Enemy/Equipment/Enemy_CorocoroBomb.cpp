@@ -70,7 +70,7 @@ void Enemy_CorocoroBomb::Init(const Vector3& pos, const Vector3& fireVelo, float
 	m_fireRange = fireRange;
 	m_power = power;
 	m_fireColl.Create(fireRange);
-	m_ghost.Create(&m_fireColl, Vector3::Zero, Quaternion::Identity);
+	m_ghost.Create(&m_fireColl, {0,-3000,0}, Quaternion::Identity);
 
 	m_coll.Create(size);
 	RigidBodyInfo info;
