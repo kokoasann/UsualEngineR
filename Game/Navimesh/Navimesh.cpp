@@ -8,6 +8,7 @@ Navimesh::Navimesh()
 
 Navimesh::~Navimesh()
 {
+	Release();
 }
 
 void Navimesh::BuildNavimeshFromBinary()
@@ -49,6 +50,15 @@ void Navimesh::BuildNavimeshFromBinary()
 	}
 	delete[] cellBinarys;
 	fclose(fp);
+}
+
+void Navimesh::Release()
+{
+	for (int i = 0; i < m_cells.size(); i++)
+	{
+		delete m_cells[i];
+	}
+	m_cells.clear();
 }
 
 void Navimesh::Init()

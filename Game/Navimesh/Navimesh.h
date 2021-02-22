@@ -18,6 +18,8 @@ class Navimesh
 public:
 	Navimesh();
 	~Navimesh();
+
+	void Release();
 	void Init();
 	const std::vector<Cell*>& GetCell() const
 	{
