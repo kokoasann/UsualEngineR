@@ -58,7 +58,14 @@ private:
 	void LoadSoundSources();
 	//Back Sprite
 	SpriteRender* m_backSprite = nullptr;
+	SpriteRender* m_forwardSprite = nullptr;
 	Vector3 m_backSpPos = Vector3::Zero;
 	bool m_isTrigeredStart = false;
 	static bool m_seLoaded;
+
+	float m_timer = 0;
+	float m_colorTimer = 0.f;
+	float m_colorTimer_max = 1.f;
+	bool m_isAddColor = true;
+	Font m_font;
 };

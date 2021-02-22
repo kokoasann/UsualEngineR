@@ -212,7 +212,7 @@ void Result::Update()
 	}
 
 	if (Fade::GetInstance().IsFaded() and m_isTriggeredButtonA) {
-		NewGO<Title>(0);
+		NewGO<Title>(1);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
 	}

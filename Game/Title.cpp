@@ -21,6 +21,7 @@ Title::~Title()
 void Title::Release()
 {
 	DeleteGO(m_backSprite);
+	DeleteGO(m_forwardSprite);
 }
 
 void Title::OnDestroy()
@@ -44,13 +45,19 @@ bool Title::Start()
 	Fade::GetInstance().FadeIn();
 
 	SpriteInitData sd;
-	sd.m_ddsFilePath[0] = "Assets/Image/title.dds";
+	sd.m_ddsFilePath[0] = "Assets/Image/titleBack.dds";
 	sd.m_width = 1280;
 	sd.m_height = 720;
 	m_backSprite = NewGO<SpriteRender>(0);
 	m_backSprite->Init(sd);
 	m_backSprite->SetPos(m_backSpPos);
 
+	sd.m_ddsFilePath[0] = "Assets/Image/powpoww.dds";
+	m_forwardSprite = NewGO<SpriteRender>(0);
+	m_forwardSprite->Init(sd);
+	m_forwardSprite->SetPos(m_backSpPos);
+
+	g_graphicsEngine->GetPostEffect().GetBloom().SetStreekFrag(false);
 	return true;
 }
 
@@ -61,6 +68,27 @@ void Title::PreUpdate()
 
 void Title::Update()
 {
+	float dtime = gameTime()->GetDeltaTime();
+	m_timer += dtime;
+	if (m_isAddColor)
+	{
+		m_colorTimer += dtime;
+		if (m_colorTimer >= m_colorTimer_max)
+		{
+			m_colorTimer = m_colorTimer_max;
+			m_isAddColor = false;
+		}
+	}
+	else
+	{
+		m_colorTimer -= dtime;
+		if (m_colorTimer <= 0)
+		{
+			m_colorTimer = 0.f;
+			m_isAddColor = true;
+		}
+	}
+
 	if (g_pad[0]->IsTrigger(enButtonA) and !m_isTrigeredStart) {
 		Fade::GetInstance().FadeOut();
 		m_isTrigeredStart = true;
@@ -76,6 +104,7 @@ void Title::Update()
 		NewGO<OpeningScene>(0);
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
+		g_graphicsEngine->GetPostEffect().GetBloom().SetStreekFrag(true);
 	}
 
 }
@@ -93,7 +122,14 @@ void Title::Render()
 
 void Title::PostRender()
 {
+	m_font.Begin();
 
+	m_font.Draw(L"Last of Iron", { 80,300 }, { 1,1,1,1 }, 0, 1);
+
+	float f = Math::Lerp(m_colorTimer / m_colorTimer_max, 1.f, 1.5f);
+	m_font.Draw(L"Push \"A\"", { 50,-250 }, { f,f,f,1}, 0, 0.7);
+
+	m_font.End();
 }
 
 
