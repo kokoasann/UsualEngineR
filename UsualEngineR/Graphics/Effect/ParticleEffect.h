@@ -253,19 +253,27 @@ namespace UER
 	private:
 
 	};*/
-
+	class PlaneParticleEffectRender;
+	extern int dbg_cnt;
+	extern std::vector<PlaneParticleEffectRender*> dbg_ptrs;
 	class PlaneParticleEffectRender final:public GameObject
 	{
 	public:
+		
 		void Release() override
 		{
 			m_effect.Release();
+			
 		}
 		void OnDestroy() override
 		{
 			Release();
+			//DebugPrintValue(EDebugConsoleKind::common, "dbg_cnt sub", --dbg_cnt);
+			//auto it = std::find(dbg_ptrs.begin(), dbg_ptrs.end(), this);
+			//dbg_ptrs.erase(it);
 		}
 
+		void Awake() override;
 		void Init(const PlaneParticleEffectInitData& pid);
 
 		void Update() override;
