@@ -262,7 +262,13 @@ namespace UER
 		m_graphicsMemory = std::make_unique<DirectX::GraphicsMemory>(m_d3dDevice);
 
 		DirectX::RenderTargetState rtstate(DXGI_FORMAT_R32G32B32A32_FLOAT, DXGI_FORMAT_D16_UNORM);
-		DirectX::SpriteBatchPipelineStateDescription pd(rtstate);
+		auto blendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+		blendState.RenderTarget[0].BlendEnable = TRUE;
+		blendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		blendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		blendState.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+		blendState.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_INV_SRC_ALPHA;
+		DirectX::SpriteBatchPipelineStateDescription pd(rtstate,&blendState);
 		D3D12_DESCRIPTOR_HEAP_DESC ddesc = {};
 		ddesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 		ddesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;

@@ -30,9 +30,9 @@ void PlayerFallState::Enter(Player* p){
 		m_keyHelp_brake->Init(keyHelpPos, L"R2:Œ¸‘¬");
 	}
 	else {
-		m_keyHelp_brake->SetActive(true);
+		//m_keyHelp_brake->SetActive(true);
 	}
-
+	m_keyHelp_brake->Display();
 }
 
 IPlayerState* PlayerFallState::Update(Player* p) {
@@ -100,5 +100,7 @@ void PlayerFallState::Exit(Player* p) {
 #ifdef _PRINT_PLAYER_STATE
 	DebugPrint_WATA("Exit FallState\n");
 #endif
-	m_keyHelp_brake->SetActive(false);
+	//m_keyHelp_brake->SetActive(false);
+	
+	m_keyHelp_brake->Undisplay();
 }

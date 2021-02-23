@@ -57,6 +57,15 @@ public:
 
 	void Init(const Vector3& pos, const std::wstring text);
 
+	void Display();
+	void Undisplay();
+
+
+	void SetPos(const Vector3& pos)
+	{
+		m_pos = pos;
+		m_keyHelpSp.Update(m_pos + m_spPosOffset, Quaternion::Identity, m_spScale);
+	}
 private:
 	Vector3 m_pos = Vector3::Zero;
 	const float m_rot = 0.f;
@@ -73,4 +82,9 @@ private:
 	std::wstring m_text;
 	const Vector2 m_fontPosOffset = Vector2(-150.f, 0.f);
 
+
+	float m_timer = 0.f;
+	float m_dispTime = 0.2f;
+
+	bool m_isDisp = false;
 };
