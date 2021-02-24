@@ -49,12 +49,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
 
 
-	/*
+	
 	AllocConsole();
 	freopen("CON", "r", stdin);
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
-	*/
+	
 
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！
