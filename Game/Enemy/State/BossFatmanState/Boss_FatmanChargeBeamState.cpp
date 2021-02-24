@@ -5,8 +5,10 @@
 #include "Enemy/Boss/Boss_Fatman.h"
 #include "Effect/Beam.h"
 
+static int s = 0;
 Boss_FatmanChargeBeamState::Boss_FatmanChargeBeamState()
 {
+	DebugPrintValue(EDebugConsoloUser::COMMON, "SSS", --s);
 	//骨の数だけビームを生成する。
 	for (int i = 0; i < IKNum; i++) {
 		Beam* beam = NewGO<Beam>(0);
@@ -21,8 +23,9 @@ Boss_FatmanChargeBeamState::Boss_FatmanChargeBeamState()
 
 Boss_FatmanChargeBeamState::~Boss_FatmanChargeBeamState()
 {
+	DebugPrintValue(EDebugConsoloUser::COMMON, "SSS", ++s);
 	//生成した数だけ削除。
-	for (int i = 0; i < m_beams.size(), i++;) {
+	for (int i = 0; i < m_beams.size(); i++) {
 		DeleteGO(m_beams.at(i));
 	}
 	//DeleteGO(m_beamSE);

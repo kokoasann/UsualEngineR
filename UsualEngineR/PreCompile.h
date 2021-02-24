@@ -1,7 +1,7 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
-#define DEBUG_FUNC 1
+#define DEBUG_FUNC 0
 
 #define TO_INT(en) static_cast<int>(en)
 #define TO_UINT(en) static_cast<unsigned int>(en)
