@@ -15,5 +15,8 @@ private:
 	float m_respawnTimer = 0.f;
 	bool m_isFadedToRespawn = false;
 	float m_gravity = 9.f;
+
+	Vector3 m_velocity = Vector3::Zero;
+	Vector3 m_fricVel = Vector3::Zero;
 };
 

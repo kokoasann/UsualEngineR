@@ -307,8 +307,13 @@ namespace UER
 
 
 
-
-
+	int dbg_cnt = 0;
+	std::vector<PlaneParticleEffectRender*> dbg_ptrs;
+	void PlaneParticleEffectRender::Awake()
+	{
+		//DebugPrintValue(EDebugConsoleKind::common, "dbg_cnt add", ++dbg_cnt);
+		//dbg_ptrs.push_back(this);
+	}
 	void PlaneParticleEffectRender::Init(const PlaneParticleEffectInitData& pid)
 	{
 		m_effect.Init(pid);

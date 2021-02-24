@@ -71,7 +71,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//auto test = NewGO<Test>(0);
 	//test->Test_CreateTransform();
 
-	NewGO<Title>(0);
+	NewGO<Title>(1);
 	//NewGO<OpeningScene>(0);
 	//NewGO<Game>(0);
 

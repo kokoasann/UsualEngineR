@@ -35,6 +35,12 @@ void PlayerDeadState::Enter(Player* p) {
 		bonePos.y += 1.f;
 		p->GetIK(i)->SetNextTarget(bonePos);
 	}
+
+	m_velocity = p->m_knockBackImpulse;
+	m_fricVel = m_velocity;
+	m_fricVel.y = 0;
+	m_fricVel.Normalize();
+	p->m_knockBackImpulse = Vector3::Zero;
 }
 
 void PlayerDeadState::Exit(Player* p) {
@@ -47,6 +53,9 @@ void PlayerDeadState::Exit(Player* p) {
 		p->GetIK(i)->SetIKMode(IK::IKMode::enMode_NoneHit);
 	}
 
+	p->SetVelocity(Vector3::Zero);
+	p->SetLocalVelocity(Vector3::Zero);
+	p->SetExternalVelocity(Vector3::Zero);
 }
 
 IPlayerState* PlayerDeadState::Update(Player* p) {
@@ -54,9 +63,25 @@ IPlayerState* PlayerDeadState::Update(Player* p) {
 	auto delta = gameTime()->GetDeltaTime();
 	m_respawnTimer += delta;
 
+	m_velocity.y -= m_gravity * delta;
+	if (p->IsOnGround())
+	{
+		const float fricPow = 10;
+		auto veloXZ = m_velocity;
+		if (veloXZ.Length() > fricPow)
+		{
+			m_velocity -= m_fricVel * fricPow;
+		}
+		else
+		{
+			m_velocity.x = 0;
+			m_velocity.z = 0;
+		}
+	}
+
 	for (int i = 0; i < TO_INT(Player::EnPlayerBone::enNumBoneType); i++) {
-		auto bonePos = p->GetIK(i)->GetEffectorBone()->GetWorldMatrix().GetTransrate();
-		bonePos.y -= m_gravity * gameTime()->GetDeltaTime();
+		auto bonePos = p->GetIK(i)->GetEffectorBone()->GetWorldMatrix().GetTransrate() + m_velocity;
+		//bonePos.y -= m_gravity * gameTime()->GetDeltaTime();
 		if (!p->GetIK(i)->IsHit()) {
 			p->GetIK(i)->SetNextTarget(bonePos);
 		}
@@ -67,7 +92,10 @@ IPlayerState* PlayerDeadState::Update(Player* p) {
 
 	auto plpos = p->GetPosition();
 	plpos.y -= 9 * delta;
-	p->SetPosition(plpos);
+	//p->SetVelocity(plpos);
+	//p->SetPosition(plpos);
+
+	p->SetVelocity(m_velocity);
 
 	if (m_respawnTimer > m_fadeOutTime and !m_isFadedToRespawn) {
 		Fade::GetInstance().FadeOut();

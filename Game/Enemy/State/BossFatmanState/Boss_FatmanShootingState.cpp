@@ -22,6 +22,10 @@ Boss_FatmanShootingState::Boss_FatmanShootingState()
 
 Boss_FatmanShootingState::~Boss_FatmanShootingState()
 {
+	//¶¬‚µ‚½”‚¾‚¯íœB
+	for (int i = 0; i < m_muzzleFlashes.size(); i++) {
+		DeleteGO(m_muzzleFlashes.at(i));
+	}
 	DeleteGO(m_shootSE);
 }
 

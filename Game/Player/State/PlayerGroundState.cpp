@@ -5,6 +5,8 @@
 #include "HUD/KeyHelp.h"
 #include <cmath>
 
+#include "Enemy/EnemyManager.h"
+
 PlayerGroundState::PlayerGroundState()
 {
 }
@@ -19,28 +21,71 @@ PlayerGroundState::~PlayerGroundState()
 }
 
 void PlayerGroundState::Enter(Player* p){
-
+	const float space = 25.f;
 	if (m_keyHelp_Run == nullptr) {
-		const float space = 25.f;
+		
 		//
 		m_keyHelp_Run = NewGO<KeyHelp>(0);
 		Vector3 keyHelpPos = { 200.f,-100.f,0.f };
 		m_keyHelp_Run->Init(keyHelpPos, L"X:ダッシュ");
 		//guard
 		m_keyHelp_Guard = NewGO<KeyHelp>(0);
-		Vector3 keyHelpPos2 = { 200.f,-100.f - space,0.f };
+		//Vector3 keyHelpPos2 = { 200.f,-100.f - space,0.f };
+		Vector3 keyHelpPos2 = { 200.f,-100.f,0.f };
 		m_keyHelp_Guard->Init(keyHelpPos2, L"L2:防御");
 
 		//dive
 		m_keyHelp_Dive = NewGO<KeyHelp>(0);
-		Vector3 keyHelpPos3 = { 200.f,-100.f - space * 2,0.f };
+		//Vector3 keyHelpPos3 = { 200.f,-100.f - space * 2,0.f };
+		Vector3 keyHelpPos3 = { 200.f,-100.f - space,0.f };
 		m_keyHelp_Dive->Init(keyHelpPos3, L"L1:回避");
+
+		// target
+		m_keyHelp_Target = NewGO<KeyHelp>(0);
+		Vector3 keyHelpPos4 = { 200.f,-100.f,0.f };
+		m_keyHelp_Target->Init(keyHelpPos4, L"R3:照準");
+
+		m_keyHelp_Guard->SetActive(false);
+		m_keyHelp_Dive->SetActive(false);
+
+		m_keyHelp_Target->SetActive(false);
+
+		m_keyHelp_Run->Undisplay();
+		m_keyHelp_Guard->Undisplay();
+		m_keyHelp_Dive->Undisplay();
+		m_keyHelp_Target->Undisplay();
 	}
 	else {
-		m_keyHelp_Run->SetActive(true);
-		m_keyHelp_Guard->SetActive(true);
-		m_keyHelp_Dive->SetActive(true);
+		m_keyHelp_Run->SetActive(false);
+		
+		m_keyHelp_Guard->SetActive(false);
+		m_keyHelp_Dive->SetActive(false);
+
+		m_keyHelp_Target->SetActive(false);
+
+		m_keyHelp_Run->Undisplay();
+		m_keyHelp_Guard->Undisplay();
+		m_keyHelp_Dive->Undisplay();
+		m_keyHelp_Target->Undisplay();
 	}
+	//ターゲッティングしている
+	if (GameManager::GetInstance().m_camera->IsTargettingEnemy())
+	{
+		//m_keyHelp_Guard->SetActive(true);
+		//m_keyHelp_Dive->SetActive(true);
+
+		m_keyHelp_Guard->Display();
+		m_keyHelp_Dive->Display();
+		m_keyHelp_Run->SetPos({ 200.f,-100.f - space,0.f });
+	}
+	//近くに敵がいる
+	else if(EnemyManager::GetEnemyManager().GetTargettingEnemy() == nullptr)
+	{
+		//m_keyHelp_Target->SetActive(true);
+		m_keyHelp_Target->Display();
+		m_keyHelp_Run->SetPos({ 200.f,-100.f - space*2.f,0.f });
+	}
+
 
 	p->StopThrusters();
 
@@ -94,16 +139,70 @@ IPlayerState* PlayerGroundState::Update(Player* p) {
 
 	//stop?
 	if (p->GetVelocity().Length() < 0.1) {
-		m_keyHelp_Run->SetActive(false);
-		m_keyHelp_Guard->SetActive(false);
-		m_keyHelp_Dive->SetActive(false);
+		//m_keyHelp_Run->SetActive(false);
+		m_keyHelp_Run->Undisplay();
 	}
 	else {
-		m_keyHelp_Run->SetActive(true);
-		m_keyHelp_Guard->SetActive(true);
-		m_keyHelp_Dive->SetActive(true);
+		if (!m_keyHelp_Run->IsActive())
+			m_keyHelp_Run->Display();
+		//m_keyHelp_Run->SetActive(true);
+		const float space = 25.f;
+		if (isEnemyCamera)
+		{
+			m_keyHelp_Run->SetPos({ 200.f,-100.f - space * 2.f ,0 });
+		}
+		else if (EnemyManager::GetEnemyManager().GetTargettingEnemy() != nullptr)
+		{
+			m_keyHelp_Run->SetPos({ 200.f,-100.f - space ,0 });
+		}
+		else
+		{
+			m_keyHelp_Run->SetPos({ 200.f,-100.f,0 });
+		}
 	}
 
+	//近くに敵がいる
+	if (EnemyManager::GetEnemyManager().GetTargettingEnemy() == nullptr)
+	{
+		//m_keyHelp_Target->SetActive(false);
+		if (m_keyHelp_Target->IsActive())
+		{
+			m_keyHelp_Target->Undisplay();
+		}
+	}
+	else
+	{
+		
+		//m_keyHelp_Target->SetActive(true);
+		if (!isEnemyCamera &&!m_keyHelp_Target->IsActive())
+		{
+			m_keyHelp_Target->Display();
+		}
+		
+	}
+	//ターゲッティングしている
+	if (isEnemyCamera)
+	{
+		//m_keyHelp_Guard->SetActive(true);
+		//m_keyHelp_Dive->SetActive(true);
+		//m_keyHelp_Target->SetActive(false);
+		if (!m_keyHelp_Guard->IsActive())
+		{
+			m_keyHelp_Guard->Display();
+			m_keyHelp_Dive->Display();
+			m_keyHelp_Target->Undisplay();
+		}
+	}
+	else
+	{
+		//m_keyHelp_Guard->SetActive(false);
+		//m_keyHelp_Dive->SetActive(false);
+		if (m_keyHelp_Guard->IsActive())
+		{
+			m_keyHelp_Guard->Undisplay();
+			m_keyHelp_Dive->Undisplay();
+		}
+	}
 
 	return this;
 }
@@ -114,9 +213,14 @@ void PlayerGroundState::Exit(Player* p) {
 #endif
 
 	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
-	m_keyHelp_Run->SetActive(false);
-	m_keyHelp_Guard->SetActive(false);
-	m_keyHelp_Dive->SetActive(false);
+	//m_keyHelp_Run->SetActive(false);
+	//m_keyHelp_Guard->SetActive(false);
+	//m_keyHelp_Dive->SetActive(false);
+
+	m_keyHelp_Run->Undisplay();
+	m_keyHelp_Target->Undisplay();
+	m_keyHelp_Guard->Undisplay();
+	m_keyHelp_Dive->Undisplay();
 }
 
 

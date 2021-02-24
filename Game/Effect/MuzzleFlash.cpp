@@ -21,12 +21,14 @@ void MuzzleFlash::Release()
 
 void MuzzleFlash::OnDestroy()
 {
-
+	Release();
 }
 
 
 void MuzzleFlash::Init(const MuzzleFlashEffectInitData& mfid)
 {
+	Release();
+
 	m_particleLifeTime = mfid.particleLifeTime;
 	m_particleScale = mfid.particleScale;
 	m_particleColor = mfid.particleColor;

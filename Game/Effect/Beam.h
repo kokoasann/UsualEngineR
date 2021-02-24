@@ -94,7 +94,7 @@ public:
 	}
 	
 private:
-	PlaneParticleEffectRender*	m_effect;
+	PlaneParticleEffectRender*	m_effect = nullptr;
 	Vector3						m_position = Vector3::Zero;
 	Vector3						m_holizontalDir = Vector3::AxisX;
 	Vector3						m_direction = Vector3::AxisY;

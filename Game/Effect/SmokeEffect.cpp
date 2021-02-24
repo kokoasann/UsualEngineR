@@ -53,6 +53,8 @@ void SmokeEffect::PostUpdate()
 
 void SmokeEffect::Init(const Vector4& col, const Vector4& colE, const float lifeSpanParam, const int density, const bool isWorld)
 {
+	Release();
+
 	struct ParticleData
 	{
 		//Vector3 pos;

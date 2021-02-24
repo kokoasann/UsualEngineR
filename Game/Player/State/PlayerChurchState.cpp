@@ -34,10 +34,10 @@ void PlayerChurchState::Enter(Player* p) {
 		m_keyHelp_Heal->Init(keyHelpPos, L"B:‰ñ•œ");
 	}
 	else {
-		m_keyHelp_Heal->SetActive(true);
+		//m_keyHelp_Heal->SetActive(true);
 	}
 
-
+	m_keyHelp_Heal->Display();
 }
 
 IPlayerState* PlayerChurchState::Update(Player* p) {
@@ -138,5 +138,7 @@ void PlayerChurchState::Exit(Player* p) {
 	DebugPrint_WATA("Player : Exit Church State\n");
 #endif
 	p->GetModelRender().SetAnimPlaySpeed(m_DefaultAnimSpeed);
-	m_keyHelp_Heal->SetActive(false);
+	//m_keyHelp_Heal->SetActive(false);
+
+	m_keyHelp_Heal->Undisplay();
 }

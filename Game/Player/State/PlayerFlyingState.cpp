@@ -63,10 +63,12 @@ void PlayerFlyingState::Enter(Player* p) {
 		m_keyHelp_Switch->Init(keyHelpPos3, L"A:—Ž‰º");
 	}
 	else {
-		m_keyHelp_Rise->SetActive(true);
+		//m_keyHelp_Rise->SetActive(true);
 		//m_keyHelp_Faster->SetActive(true);
-		m_keyHelp_Switch->SetActive(true);
+		//m_keyHelp_Switch->SetActive(true);
 	}
+	m_keyHelp_Rise->Display();
+	m_keyHelp_Switch->Display();
 }
 
 IPlayerState*  PlayerFlyingState::Update(Player* p) {
@@ -206,7 +208,10 @@ void PlayerFlyingState::Exit(Player* p) {
 	DebugPrint_WATA("Player Exit Flying\n");
 #endif
 	m_velocity = Vector3::Zero;
-	m_keyHelp_Rise->SetActive(false);
+	//m_keyHelp_Rise->SetActive(false);
 	//m_keyHelp_Faster->SetActive(false);
-	m_keyHelp_Switch->SetActive(false);
+	//m_keyHelp_Switch->SetActive(false);
+
+	m_keyHelp_Rise->Undisplay();
+	m_keyHelp_Switch->Undisplay();
 }

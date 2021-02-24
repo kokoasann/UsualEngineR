@@ -53,6 +53,8 @@ void GameManager::Release() {
 	m_pod = nullptr;
 	DeleteGO(m_bgm);
 	m_bgm = nullptr;
+
+	m_nvm.Release();
 }
 
 void GameManager::SpawnPlayer() {

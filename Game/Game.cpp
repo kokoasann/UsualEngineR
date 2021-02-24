@@ -314,6 +314,8 @@ void Game::PostUpdate()
 		//‘Ì—Í0ˆÈ‰º‚È‚çƒ|[ƒY‚³‚¹‚È‚¢
 		if (HP <= 0.f)
 			return;
+		if (player->GetCurrentState() == player->GetState((Player::EnState::enStun)))
+			return;
 		if (g_pad[0]->IsTrigger(EnButton::enButtonStart) and !GameManager::GetInstance().GetGameCamera()->IsPerforming()) {
 			if (GameManager::GetInstance().m_menu->IsGamePaused()) {
 				GameManager::GetInstance().m_menu->ResumeGame();
@@ -335,7 +337,7 @@ void Game::PostUpdate()
 		player->SetStateSudden(player->GetState(Player::EnState::enMovie));
 		auto go = reinterpret_cast<GameObject*>(this);
 		DeleteGO(go);
-		NewGO<Title>(0);
+		NewGO<Title>(1);
 	}
 }
 

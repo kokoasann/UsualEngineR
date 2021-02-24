@@ -91,6 +91,7 @@ void Boss_MiddleBomb::Init()
 	m_charaCon.AddNonHitCollisionAttribute(TO_INT(GameCollisionAttribute::BombShield));
 	m_isNormalEnemy = false;
 
+	BossBombData::GetInstance().ReInit();
 	BossBombData::GetInstance().meshColl = &m_meshColl;
 	BossBombData::GetInstance().rigidBody = &m_rigidBody;
 	BossBombData::GetInstance().shieldGhost = &m_shieldGhost;
