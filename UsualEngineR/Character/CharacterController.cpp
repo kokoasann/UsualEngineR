@@ -309,7 +309,7 @@ namespace UER
 
 			//距離が近いので戻る.
 			if ((spos - nextPosition).Length() <= FLT_EPSILON)
-				return;
+				return m_position;
 
 			SweepResultNormal callback;
 			if (m_isUseRigidBody)
