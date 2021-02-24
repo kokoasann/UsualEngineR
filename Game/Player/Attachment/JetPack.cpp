@@ -149,8 +149,10 @@ void JetPack::Update()
 	}
 	else {
 		m_model->SetActive(true);
-		if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
-			m_activeTimer += gameTime()->GetDeltaTime();
+		if (GameManager::GetInstance().m_menu != nullptr) {
+			if (!GameManager::GetInstance().m_menu->IsGamePaused()) {
+				m_activeTimer += gameTime()->GetDeltaTime();
+			}
 		}
 	}
 
