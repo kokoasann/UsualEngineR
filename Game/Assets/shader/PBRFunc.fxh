@@ -37,7 +37,7 @@ float BRDF( float3 L, float3 V, float3 N )
     //float G = max( 0.0f, min(1.0, min(t * NdotV, t * NdotL)) );
     float G = saturate(min(t * NdotV, t * NdotL));
 
-	float m = 3.14159265 * NdotV * NdotL;
+	float m = PI * NdotV * NdotL;
 	/*
     NdotH = NdotH + NdotH;
     float G = (NdotV < NdotL) ? 
@@ -55,8 +55,12 @@ float BRDF( float3 L, float3 V, float3 N )
 
 float SchlickFresnel(float u, float f0, float f90)
 {
+  //return f90;
   //return f0 + (f90-f0)*pow(1.0f-u,5.0f);
-  return mad((f90-f0),pow(1.0f-u,5.0f),f0);
+  //return mad((f90-f0),pow(1.0f-u,5.0f),f0);
+  return 1.f + (f0-1.f) * pow(1.f-f90,5.f);
+  //return f0 + (1.f-f0) * pow(1.f-f90,5.f);
+  //return mad((f0-u),pow(1.0f-f90,5.0f),f0);
 }
 
 float3 NormalizedDisneyDiffuse(float3 N, float3 L, float3 V, float roughness)
@@ -70,15 +74,20 @@ float3 NormalizedDisneyDiffuse(float3 N, float3 L, float3 V, float roughness)
   float energyFactor = lerp(1.0f, RCP_1_51, roughness);
   //光源に向かうベクトルとハーフベクトルがどれだけ似ているかを内積で求める。
   float dotLH = saturate(dot(L,H));
+  //float dotLH = dot(L,H);
   //法線と光源に向かうベクトルがどれだけ似ているかを内積で求める。
   float dotNL = saturate(dot(N,L));
+  //float dotNL = dot(N,L);
   //法線と視線に向かうベクトルがどれだけ似ているかを内積で求める。
   float dotNV = saturate(dot(N,V));
+  //float dotNV = dot(N,V);
 
   //float Fd90 = energyBias + 2.0 * dotLH * dotLH * roughness;
-  float Fd90 = mad(2.0, dotLH * dotLH * roughness,energyBias);
+  //float Fd90 = mad(2.0, dotLH * dotLH * roughness,energyBias);
+  float Fd90 = mad(2.0, dotLH * dotLH * 1.f,0.5);
   
   float FL = SchlickFresnel(1.0f, Fd90, dotNL);
   float FV = SchlickFresnel(1.0f, Fd90, dotNV);
-  return (FL*FV)*rcp(PI);
+  return (FL*FV);
+  //return (FL*FV)*rcp(PI);
 }

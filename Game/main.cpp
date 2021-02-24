@@ -94,28 +94,28 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	Vector3 dir = { 0.707,0.707,0 };
 	dir.Normalize();
 	auto lig = NewGO<LightDirection>(0);
-	lig->SetDir(dir);
-	lig->SetCol(g_vec3One * 0.8);
+	lig->SetDir(dir*-1.f);
+	lig->SetCol(g_vec3One * 1.);
 
 	lig = NewGO<LightDirection>(0);
 	dir = { -0.1,-1,0 };
 	dir.Normalize();
-	lig->SetDir(dir);
+	lig->SetDir(dir * -1.f);
 	lig->SetCol(Vector3(0.7,0.4,0.1) * .5);
 	lig = NewGO<LightDirection>(0);
 	dir = { 0,1,0 };
 	dir.Normalize();
-	lig->SetDir(dir);
+	lig->SetDir(dir * -1.f);
 	lig->SetCol(Vector3(0.3, 0.4, 0.9) * .7);
 
 	lig = NewGO<LightDirection>(0);
-	lig->SetDir({ -0.707,0.707,0 });
+	lig->SetDir(Vector3{ -0.707,0.707,0 }*-1.f);
 	lig->SetCol(g_vec3One * 0.3);
 	lig = NewGO<LightDirection>(0);
-	lig->SetDir({ 0,0.707,-0.707 });
+	lig->SetDir(Vector3{ 0,0.707,-0.707 }*-1.f);
 	lig->SetCol(g_vec3One * 0.1);
 	lig = NewGO<LightDirection>(0);
-	lig->SetDir({ 0,0.707,0.707 });
+	lig->SetDir(Vector3{ 0,0.707,0.707 }*-1.f);
 	lig->SetCol(g_vec3One * 0.1);
 
 	g_engine->GameLoop();
