@@ -282,13 +282,13 @@ void Player::InitIK() {
 	{
 		IK* Sole_R = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Sole_R")), 3, radius);
 		Sole_R->SetIKMode(IK::enMode_NoneHit);
-		Sole_R->InitGhost();
+		//Sole_R->InitGhost();
 		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enSOLE_R), Sole_R));
 	}
 	{
 		IK* Sole_L = m_model->CreateIK(ske->GetBone(ske->FindBoneID(L"Sole_L")), 3, radius);
 		Sole_L->SetIKMode(IK::enMode_NoneHit);
-		Sole_L->InitGhost();
+		//Sole_L->InitGhost();
 		m_ikMap.insert(std::make_pair(TO_INT(EnPlayerBone::enSOLE_L), Sole_L));
 	}
 	{
