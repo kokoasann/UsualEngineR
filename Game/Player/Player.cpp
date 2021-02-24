@@ -73,14 +73,8 @@ struct  PlayerResultCallback : public btCollisionWorld::ConvexResultCallback
 		return 0.0f;
 	}
 };
-int& DBG_CNT()
-{
-	static int dbg_cnt = 0;
-	return dbg_cnt;
-}
 void Player::Release()
 {
-	DebugPrintValue(EDebugConsoloUser::COMMON, "ene_cnt", ++DBG_CNT());
 	std::for_each(m_stateList.begin(), m_stateList.end(), [](IPlayerState* state) { delete state; });
 	DeleteGO(m_model);
 	//DeleteGO(m_pod);
@@ -109,7 +103,6 @@ void Player::OnDestroy()
 
 void Player::Awake()
 {
-	DebugPrintValue(EDebugConsoloUser::COMMON, "ene_cnt", --DBG_CNT());
 	ModelInitData mid;
 	mid.m_tkmFilePath = "Assets/modelData/m/m_ExBone.tkm";
 	mid.m_tksFilePath = "Assets/modelData/m/m_ExBone.tks";
