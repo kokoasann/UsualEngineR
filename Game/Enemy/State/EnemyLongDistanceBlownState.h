@@ -6,7 +6,7 @@ class EnemyLongDistanceBlownState final : public IEnemyState
 {
 public:
 	EnemyLongDistanceBlownState();
-	~EnemyLongDistanceBlownState();
+	~EnemyLongDistanceBlownState() override;
 	void Enter(IEnemy* e) override;
 	IEnemyState* Update(IEnemy* e) override;
 	void Exit(IEnemy* e) override;
