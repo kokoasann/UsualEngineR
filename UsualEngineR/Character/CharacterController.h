@@ -54,6 +54,12 @@ namespace UER
 		void SetPosition(const Vector3& pos)
 		{
 			m_position = pos;
+			btRigidBody* btBody = m_rigidBody.GetBody();
+			//剛体を動かす。
+			btBody->setActivationState(DISABLE_DEACTIVATION);
+			btTransform& trans = btBody->getWorldTransform();
+			//剛体の位置を更新。
+			trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 		}
 
 		/*!
