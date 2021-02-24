@@ -24,16 +24,6 @@ void Boss_FatmanIdleState::Enter(IEnemy* e)
 
 IEnemyState* Boss_FatmanIdleState::Update(IEnemy* e)
 {
-	static float time = 0.f;
-	time += gameTime()->GetDeltaTime();
-	auto add = std::sin(time);
-	Vector3 vel = Vector3::Zero;
-	vel.x = add;
-	vel.y -= 10.f;
-	//e->SetVelocity(vel);
-
-	e->SetVelocity({ 0,-30,0 });
-
 	auto player = GameManager::GetInstance().m_player;
 	auto& epos = e->GetPosition();
 	auto& ppos = player->GetPosition();
@@ -42,7 +32,6 @@ IEnemyState* Boss_FatmanIdleState::Update(IEnemy* e)
 
 	if (vecToPlayer.Length() < chaseRange and player->GetCurrentHP() > 0.f) {
 		if (GameManager::GetInstance().m_bgm != nullptr) {
-			//GameManager::GetInstance().m_bgm->AddBgmCount(1);
 			GameManager::GetInstance().m_bgm->SetInBattleFlag(IEnemy::EnBossType::Fat, true);
 		}
 		return e->GetState(TO_INT(IEnemy::EnState::enStunState));
