@@ -300,10 +300,16 @@ namespace UER
 			btTransform start, end;
 			start.setIdentity();
 			end.setIdentity();
+
+			auto spos = Vector3{ m_position.x, (m_position.y + m_height * 0.5f + m_radius), m_position.z };
 			//始点はカプセルコライダーの中心座標 + 0.2の座標をposTmpに求める。
-			start.setOrigin(btVector3(m_position.x, (m_position.y + m_height * 0.5f + m_radius), m_position.z));
+			start.setOrigin(btVector3(spos.x, spos.y, spos.z));
 			//終点は次の移動先。XZ平面での衝突を調べるので、yはposTmp.yを設定する。
 			end.setOrigin(btVector3(nextPosition.x, (nextPosition.y), nextPosition.z));
+
+			//距離が近いので戻る.
+			if ((spos - nextPosition).Length() <= FLT_EPSILON)
+				return;
 
 			SweepResultNormal callback;
 			if (m_isUseRigidBody)
