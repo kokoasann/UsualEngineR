@@ -33,6 +33,8 @@ float3 DrawProcess(
 		//) * lig_DirLights[ligNo].color *(specular) * NdotL;
 		)*NdotL;
 
+		//diffuse = NdotL;
+
 		//スペキュラ反射
 		float spec = BRDF
 		(
@@ -58,7 +60,8 @@ float3 DrawProcess(
 			specular
 		//) * lig_DirLights[ligNo].color *(specular) * NdotL;
 		)*NdotL;
-		//diffuse = ;
+
+		//diffuse = NdotL;
 
 		//スペキュラ反射
 		float spec = BRDF
