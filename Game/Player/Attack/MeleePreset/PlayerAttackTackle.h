@@ -31,9 +31,15 @@ private:
 	float m_range = 10.f;
 	const float m_damageAmount = m_DEFAULT_ATTACK_DAMAGE * 2.f;
 
+	const float m_BoostCost = 30.f;
+
+
 	const float m_knockBackPower = 230.f;
 
 	Vector3 m_tackleVelocity = Vector3::Zero;
+
+	bool m_canDoAttack = true;
+
 };
 
 
