@@ -17,10 +17,21 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 	std::string s = "attack tackle combo :" + std::to_string(combo);
 	DebugPrint_WATA(s.c_str());
 #endif
+
+	if (player->GetCurrentBoost() < m_BoostCost) {
+		m_canDoAttack = false;
+		return;
+	}
+	else {
+		m_canDoAttack = true;
+	}
+
 	m_isDone = false;
 	m_isContinuAttack = false;
 	m_timer = 0.f;
 	player->PlayAnimation(Player::EnAnimation::enTackle);
+
+	player->UseBoost(m_BoostCost);
 
 	//auto& enemyManager = EnemyManager::GetEnemyManager();
 	//enemyManager.ApplyAoeDamage(/*attack origin*/ player->GetPosition(), m_range, m_damageAmount * combo);
@@ -44,6 +55,12 @@ void PlayerAttackTackle::Init(Player* player, int combo) {
 }
 
 void PlayerAttackTackle::Execute(Player* player) {
+
+	if (!m_canDoAttack) {
+		m_isDone = true;
+		return;
+	}
+
 	auto delta = gameTime()->GetDeltaTime();
 	//m_timer += delta;
 
