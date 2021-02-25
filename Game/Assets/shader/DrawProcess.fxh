@@ -24,24 +24,24 @@ float3 DrawProcess(
 		//Disney
 		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir )*-1.f);
 		
-		float3 diffuse = NormalizedDisneyDiffuse
+		float diffuse = NormalizedDisneyDiffuse
 		(
 			normal,
 			lig_DirLights[ligNo].dir,
 			toEye,
 			specular
 		//) * lig_DirLights[ligNo].color *(specular) * NdotL;
-		) * lig_DirLights[ligNo].color * NdotL;
+		)*NdotL;
 
 		//スペキュラ反射
-		float3 spec = BRDF
+		float spec = BRDF
 		(
 			lig_DirLights[ligNo].dir,
 			toEye,
 			normal
-		) * lig_DirLights[ligNo].color * specular;
+		) * specular;
 
-		lig += (diffuse + spec) ;
+		lig += (diffuse + spec) * lig_DirLights[ligNo].color;
 		lig *= 1.f - ShadowRecieve(worldPos, uv, depth);
 		//lig += ShadowRecieve_Debug(worldPos, uv, depth);
 	}
@@ -50,24 +50,25 @@ float3 DrawProcess(
 		//Disney
 		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir )*-1.f);
 		
-		float3 diffuse = NormalizedDisneyDiffuse
+		float diffuse = NormalizedDisneyDiffuse
 		(
 			normal,
 			lig_DirLights[ligNo].dir,
 			toEye,
 			specular
 		//) * lig_DirLights[ligNo].color *(specular) * NdotL;
-		) * lig_DirLights[ligNo].color * NdotL;
+		)*NdotL;
+		//diffuse = ;
 
 		//スペキュラ反射
-		float3 spec = BRDF
+		float spec = BRDF
 		(
 			lig_DirLights[ligNo].dir,
 			toEye,
 			normal
-		) * lig_DirLights[ligNo].color * specular;
+		) * specular;
 
-		lig += (diffuse + spec) ;
+		lig += (diffuse + spec) * lig_DirLights[ligNo].color;
 	}
 
 	float3 res = albedo * rcp(PI) * lig;

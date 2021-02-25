@@ -50,10 +50,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 
 	
-	AllocConsole();
+	/*AllocConsole();
 	freopen("CON", "r", stdin);
 	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
+	freopen("CON", "w", stderr);*/
 	
 
 	//////////////////////////////////////
@@ -95,7 +95,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	dir.Normalize();
 	auto lig = NewGO<LightDirection>(0);
 	lig->SetDir(dir*-1.f);
-	lig->SetCol(g_vec3One * 1.);
+	lig->SetCol(g_vec3One * 2.);
 
 	lig = NewGO<LightDirection>(0);
 	dir = { -0.1,-1,0 };
