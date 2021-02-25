@@ -20,6 +20,7 @@ BossBombFullFrontalState::BossBombFullFrontalState():
 
 BossBombFullFrontalState::~BossBombFullFrontalState()
 {
+	DeleteGO(m_effect);
 }
 
 void BossBombFullFrontalState::Enter(IEnemy* e)

@@ -14,6 +14,7 @@ EnemyLongDistanceBlownState::EnemyLongDistanceBlownState()
 
 EnemyLongDistanceBlownState::~EnemyLongDistanceBlownState()
 {
+	DeleteGO(m_effect);
 }
 
 void EnemyLongDistanceBlownState::Enter(IEnemy* e)

@@ -44,6 +44,8 @@ namespace UER
 	class Model {
 	
 	public:
+
+		virtual ~Model();
 		/// <summary>
 		/// 
 		/// </summary>

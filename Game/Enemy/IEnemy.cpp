@@ -27,13 +27,9 @@ void IEnemy::InitState() {
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enAttackB), new EnemySlashState()));
 	m_stateMap.insert(std::make_pair(TO_INT(EnState::enDeadState), new EnemySlashState()));
 }
-int& DBG_CNT()
-{
-	static int dbg_cnt = 0;
-	return dbg_cnt;
-}
+
 bool IEnemy::Start() {
-	DebugPrintValue(EDebugConsoloUser::COMMON, "ene_cnt", ++DBG_CNT());
+	
 	
 	InitIK();
 	if (m_isNormalEnemy) {
@@ -50,7 +46,6 @@ bool IEnemy::Start() {
 }
 
 void IEnemy::Release() {
-	DebugPrintValue(EDebugConsoloUser::COMMON, "ene_cnt", --DBG_CNT());
 	for (auto& state : m_stateMap) {
 		delete state.second;
 	}

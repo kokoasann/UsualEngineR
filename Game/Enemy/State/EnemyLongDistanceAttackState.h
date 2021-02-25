@@ -9,7 +9,7 @@ class MuzzleFlash;
 class EnemyLongDistanceAttackState final :public IEnemyState
 {
 public:
-	~EnemyLongDistanceAttackState();
+	~EnemyLongDistanceAttackState() override;
 
 	void Init(IK* ik, float bulletSpeed, EnemyLongDistanceTargetingState* ldt);
 

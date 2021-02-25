@@ -22,15 +22,16 @@ float3 DrawProcess(
 	{
 		int ligNo = 0;
 		//Disney
-		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir ));
+		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir )*-1.f);
 		
 		float3 diffuse = NormalizedDisneyDiffuse
 		(
 			normal,
 			lig_DirLights[ligNo].dir,
 			toEye,
-			1.0f-specular
-		) * lig_DirLights[ligNo].color *( 1.0f-specular) * NdotL;
+			specular
+		//) * lig_DirLights[ligNo].color *(specular) * NdotL;
+		) * lig_DirLights[ligNo].color * NdotL;
 
 		//スペキュラ反射
 		float3 spec = BRDF
@@ -47,15 +48,16 @@ float3 DrawProcess(
     
 	for( int ligNo = 1; ligNo < lig_DLcount; ligNo++ ){
 		//Disney
-		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir ));
+		float NdotL = saturate( dot( normal, lig_DirLights[ligNo].dir )*-1.f);
 		
 		float3 diffuse = NormalizedDisneyDiffuse
 		(
 			normal,
 			lig_DirLights[ligNo].dir,
 			toEye,
-			1.0f-specular
-		) * lig_DirLights[ligNo].color *( 1.0f-specular) * NdotL;
+			specular
+		//) * lig_DirLights[ligNo].color *(specular) * NdotL;
+		) * lig_DirLights[ligNo].color * NdotL;
 
 		//スペキュラ反射
 		float3 spec = BRDF
@@ -68,6 +70,6 @@ float3 DrawProcess(
 		lig += (diffuse + spec) ;
 	}
 
-	float3 res = albedo * lig;
+	float3 res = albedo * rcp(PI) * lig;
     return res;
 }

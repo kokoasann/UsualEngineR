@@ -11,6 +11,11 @@ namespace UER
 	static int c=0;
 	static std::mutex debugMute;
 
+	Model::~Model()
+	{
+		Release();
+	}
+
 	void Model::Release()
 	{
 		for (auto ik : m_ikList)

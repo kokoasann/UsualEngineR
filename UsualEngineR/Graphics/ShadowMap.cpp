@@ -55,7 +55,7 @@ namespace UER
 			m_lightDirection = Vector3::Up;
 		m_lightDirection.Normalize();
 
-		m_lightDirection *= -1.f;
+		//m_lightDirection *= -1.f;
 
 		Camera& MainCamera = *g_camera3D;
 		//m_lightHeight = MainCamera.GetPosition().y + 500.f;
